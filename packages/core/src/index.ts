@@ -1,1 +1,1 @@
-export * from './lib/core';
+export * as Wallet from './lib/wallet';

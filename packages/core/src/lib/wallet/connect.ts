@@ -1,0 +1,51 @@
+import { OfflineSigner } from '@cosmjs/proto-signing';
+import { getChainSuggest } from './config';
+import { WalletConnect, WalletWindowKey } from './types';
+
+declare global {
+  interface Window {
+    keplr: {
+      getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
+      experimentalSuggestChain: (config: object) => Promise<void>;
+      enable: (chainId: string) => Promise<void>;
+    };
+    leap: {
+      getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
+      experimentalSuggestChain: (config: object) => Promise<void>;
+      enable: (chainId: string) => Promise<void>;
+    };
+    coin98: { cosmos: (chainId: string) => Promise<unknown> };
+    falcon: {
+      getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
+      experimentalSuggestChain: (config: object) => Promise<void>;
+      enable: (chainId: string) => Promise<void>;
+    };
+  }
+}
+
+export const connect = async (
+  inputWallet: WalletWindowKey,
+  chainId: string,
+  restUrl?: string,
+  rpcUrl?: string
+): Promise<WalletConnect> => {
+  const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
+
+  if (typeof window === 'undefined' || !window) {
+    throw new Error('Window is undefined');
+  }
+
+  // Enable wallet before attempting to call any methods
+  await window[windowKey].enable(chainId);
+
+  if (inputWallet === 'keplr') {
+    await window.keplr.experimentalSuggestChain(
+      getChainSuggest(chainId, restUrl, rpcUrl)
+    );
+  }
+
+  const offlineSigner = await window[windowKey].getOfflineSigner(chainId);
+  const accounts = await offlineSigner.getAccounts();
+
+  return { offlineSigner, accounts };
+};

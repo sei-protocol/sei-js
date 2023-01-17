@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@cosmjs/proto-signing": "^0.29.5",
     "@swc/helpers": "~0.4.11",
     "tslib": "^2.3.0"
   },
