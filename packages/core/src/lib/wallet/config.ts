@@ -1,4 +1,27 @@
-import { SupportedWallet } from './types';
+import { SupportedWallet, WalletWindowKey } from './types';
+
+const KEPLR_WALLET: SupportedWallet = {
+  windowKey: 'keplr',
+};
+
+const LEAP_WALLET: SupportedWallet = {
+  windowKey: 'leap',
+};
+
+const FALCON_WALLET: SupportedWallet = {
+  windowKey: 'falcon',
+};
+
+const COIN_98_WALLET: SupportedWallet = {
+  windowKey: 'coin98',
+};
+
+export const SUPPORTED_WALLETS: SupportedWallet[] = [
+  KEPLR_WALLET,
+  LEAP_WALLET,
+  COIN_98_WALLET,
+  FALCON_WALLET,
+];
 
 const baseDenomTokenId = `factory/sei1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqpeheyc/uust2`;
 const prefix = 'sei';
@@ -92,25 +115,13 @@ export const getChainSuggest = (
   };
 };
 
-const KEPLR_WALLET: SupportedWallet = {
-  windowKey: 'keplr',
+export const suggestChain = async (
+  inputWallet: WalletWindowKey,
+  chainId?: string,
+  restUrl?: string,
+  rpcUrl?: string
+): Promise<void> => {
+  const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
+  const config = getChainSuggest(chainId, restUrl, rpcUrl);
+  await window[windowKey].experimentalSuggestChain(config);
 };
-
-const LEAP_WALLET: SupportedWallet = {
-  windowKey: 'leap',
-};
-
-const FALCON_WALLET: SupportedWallet = {
-  windowKey: 'falcon',
-};
-
-const COIN_98_WALLET: SupportedWallet = {
-  windowKey: 'coin98',
-};
-
-export const SUPPORTED_WALLETS: SupportedWallet[] = [
-  KEPLR_WALLET,
-  LEAP_WALLET,
-  COIN_98_WALLET,
-  FALCON_WALLET,
-];

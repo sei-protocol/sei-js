@@ -1,21 +1,20 @@
 import { OfflineSigner } from '@cosmjs/proto-signing';
-import { getChainSuggest } from './config';
 import { WalletConnect, WalletWindowKey } from './types';
 
 declare global {
   interface Window {
-    keplr: {
+    keplr?: {
       getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
       experimentalSuggestChain: (config: object) => Promise<void>;
       enable: (chainId: string) => Promise<void>;
     };
-    leap: {
+    leap?: {
       getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
       experimentalSuggestChain: (config: object) => Promise<void>;
       enable: (chainId: string) => Promise<void>;
     };
-    coin98: { cosmos: (chainId: string) => Promise<unknown> };
-    falcon: {
+    coin98?: { cosmos: (chainId: string) => Promise<unknown> };
+    falcon?: {
       getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
       experimentalSuggestChain: (config: object) => Promise<void>;
       enable: (chainId: string) => Promise<void>;
@@ -25,26 +24,23 @@ declare global {
 
 export const connect = async (
   inputWallet: WalletWindowKey,
-  chainId: string,
-  restUrl?: string,
-  rpcUrl?: string
+  chainId: string
 ): Promise<WalletConnect> => {
   const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
 
   if (typeof window === 'undefined' || !window) {
-    throw new Error('Window is undefined');
+    throw new Error('Window is undefined.');
+  }
+
+  const walletProvider = window[windowKey];
+  if (!walletProvider) {
+    throw new Error(`Wallet ${inputWallet} is not installed.`);
   }
 
   // Enable wallet before attempting to call any methods
-  await window[windowKey].enable(chainId);
+  await walletProvider.enable(chainId);
 
-  if (inputWallet === 'keplr') {
-    await window.keplr.experimentalSuggestChain(
-      getChainSuggest(chainId, restUrl, rpcUrl)
-    );
-  }
-
-  const offlineSigner = await window[windowKey].getOfflineSigner(chainId);
+  const offlineSigner = await walletProvider.getOfflineSigner(chainId);
   const accounts = await offlineSigner.getAccounts();
 
   return { offlineSigner, accounts };
