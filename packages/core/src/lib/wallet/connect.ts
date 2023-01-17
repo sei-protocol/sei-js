@@ -1,4 +1,5 @@
 import { OfflineSigner } from '@cosmjs/proto-signing';
+import { getChainSuggest } from './config';
 import { WalletConnect, WalletWindowKey } from './types';
 
 declare global {
@@ -24,7 +25,9 @@ declare global {
 
 export const connect = async (
   inputWallet: WalletWindowKey,
-  chainId: string
+  chainId: string,
+  restUrl?: string,
+  rpcUrl?: string
 ): Promise<WalletConnect> => {
   const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
 
@@ -39,6 +42,12 @@ export const connect = async (
 
   // Enable wallet before attempting to call any methods
   await walletProvider.enable(chainId);
+
+  if (inputWallet === 'keplr') {
+    await walletProvider.experimentalSuggestChain(
+      getChainSuggest(chainId, restUrl, rpcUrl)
+    );
+  }
 
   const offlineSigner = await walletProvider.getOfflineSigner(chainId);
   const accounts = await offlineSigner.getAccounts();

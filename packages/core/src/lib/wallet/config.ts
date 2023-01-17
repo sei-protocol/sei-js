@@ -121,7 +121,16 @@ export const suggestChain = async (
   restUrl?: string,
   rpcUrl?: string
 ): Promise<void> => {
+  if (typeof window === 'undefined' || !window) {
+    throw new Error('Window is undefined.');
+  }
+
   const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
+  const walletProvider = window[windowKey];
+  if (!walletProvider) {
+    throw new Error(`Wallet ${inputWallet} is not installed.`);
+  }
+
   const config = getChainSuggest(chainId, restUrl, rpcUrl);
-  await window[windowKey].experimentalSuggestChain(config);
+  await walletProvider.experimentalSuggestChain(config);
 };
