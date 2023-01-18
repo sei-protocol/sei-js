@@ -16,7 +16,7 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
   const chainId = useMemo(() => {
     const { chainConfiguration } = walletOptions;
     if (chainConfiguration === 'testnet') return 'atlantic-1';
-    if (chainConfiguration === 'devnet') return 'sei-devnet-1';
+    if (chainConfiguration === 'devnet') return 'sei-devnet-2';
     return chainConfiguration.chainId;
   }, [walletOptions.chainConfiguration]);
 
@@ -25,7 +25,7 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
     if (chainConfiguration === 'testnet')
       return 'https://sei-chain-incentivized.com/sei-chain-app';
     if (chainConfiguration === 'devnet')
-      return 'https://sei-chain-devnet.com/sei-chain-app';
+      return 'https://rest.sei-devnet-2.seinetwork.io';
     return chainConfiguration.restUrl;
   }, [walletOptions.chainConfiguration]);
 
@@ -34,7 +34,7 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
     if (chainConfiguration === 'testnet')
       return 'https://sei-chain-incentivized.com/sei-chain-tm/';
     if (chainConfiguration === 'devnet')
-      return 'https://sei-chain-devnet.com/sei-chain-tm/';
+      return 'https://rpc.sei-devnet-2.seinetwork.io';
     return chainConfiguration.restUrl;
   }, [walletOptions.chainConfiguration]);
 
