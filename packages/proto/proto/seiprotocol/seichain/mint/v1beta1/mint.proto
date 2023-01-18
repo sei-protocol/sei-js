@@ -1,0 +1,41 @@
+syntax = "proto3";
+package seiprotocol.seichain.mint;
+
+option go_package = "github.com/sei-protocol/sei-chain/x/mint/types";
+
+import "gogoproto/gogo.proto";
+
+// Minter represents the minting state.
+message Minter {
+  // current epoch provisions
+  string epoch_provisions = 1 [
+    (gogoproto.moretags) = "yaml:\"epoch_provisions\"",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+    ];
+}
+
+message ScheduledTokenRelease {
+  string date = 1; // yyyy-mm-dd
+  int64 token_release_amount = 2;
+}
+
+// Params holds parameters for the mint module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+
+  // type of coin to mint
+  string mint_denom = 1;
+  // epoch provisions from the first epoch
+  string genesis_epoch_provisions = 2 [
+    (gogoproto.moretags) = "yaml:\"genesis_epoch_provisions\"",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  // List of token release schedules
+  repeated ScheduledTokenRelease token_release_schedule = 3 [
+    (gogoproto.moretags) = "yaml:\"token_release_schedule\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
