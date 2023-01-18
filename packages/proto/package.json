@@ -2,6 +2,8 @@
   "name": "@sei-js/proto",
   "version": "0.0.1",
   "type": "commonjs",
+  "main": "main/index.js",
+  "typings": "types/index.d.ts",
   "scripts": {
     "build": "cross-env BABEL_ENV=production babel src --out-dir main --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
     "build:ts": "tsc --project ./tsconfig.json",

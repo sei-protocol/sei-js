@@ -4,19 +4,27 @@
   "sourceRoot": "packages/proto/src",
   "projectType": "library",
   "targets": {
-    "build": {
+    "build:js": {
       "executor": "nx:run-script",
       "options": {
         "script": "build"
       },
-      "outputs": ["{projectRoot}/main"],
-      "dependsOn": ["codegen"]
+      "outputs": ["{projectRoot}/main"]
     },
-    "buidl": {
+    "build:ts": {
       "executor": "nx:run-script",
       "options": {
-        "script": "buidl"
-      }
+        "script": "build:ts"
+      },
+      "outputs": ["{projectRoot}/types"]
+    },
+    "build": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "buidl || true"
+      },
+      "outputs": ["{projectRoot}/main", "{projectRoot}/types"],
+      "dependsOn": ["codegen"]
     },
     "publish": {
       "executor": "nx:run-commands",
