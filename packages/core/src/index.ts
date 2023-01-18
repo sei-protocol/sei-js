@@ -1,3 +1,3 @@
-export * as Wallet from './lib/wallet';
-export * as QueryClient from './lib/queryClient';
-export * as SigningClient from './lib/signingClient';
+export * from './lib/wallet';
+export * from './lib/queryClient';
+export * from './lib/signingClient';
