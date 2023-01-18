@@ -1,13 +1,14 @@
 {
   "name": "sei-js",
-  "version": "0.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "build:all": "nx run-many --target=build",
     "build:since": "nx affected --target=build",
     "test:all": "nx run-many --target=test",
     "test:since": "nx affected --target=test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "version:all": "nx run workspace:version"
   },
   "private": true,
   "dependencies": {
