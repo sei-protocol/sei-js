@@ -1,15 +1,15 @@
-import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "@osmonauts/helpers";
-import { MsgCreateDenom, MsgMint, MsgBurn, MsgChangeAdmin } from "./tx";
+import { AminoMsg } from '@cosmjs/amino';
+import { Long } from '@osmonauts/helpers';
+import { MsgCreateDenom, MsgMint, MsgBurn, MsgChangeAdmin } from './tx';
 export interface AminoMsgCreateDenom extends AminoMsg {
-  type: "/seiprotocol.seichain.tokenfactory.MsgCreateDenom";
+  type: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom';
   value: {
     sender: string;
     subdenom: string;
   };
 }
 export interface AminoMsgMint extends AminoMsg {
-  type: "/seiprotocol.seichain.tokenfactory.MsgMint";
+  type: '/seiprotocol.seichain.tokenfactory.MsgMint';
   value: {
     sender: string;
     amount: {
@@ -19,7 +19,7 @@ export interface AminoMsgMint extends AminoMsg {
   };
 }
 export interface AminoMsgBurn extends AminoMsg {
-  type: "/seiprotocol.seichain.tokenfactory.MsgBurn";
+  type: '/seiprotocol.seichain.tokenfactory.MsgBurn';
   value: {
     sender: string;
     amount: {
@@ -29,7 +29,7 @@ export interface AminoMsgBurn extends AminoMsg {
   };
 }
 export interface AminoMsgChangeAdmin extends AminoMsg {
-  type: "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin";
+  type: '/seiprotocol.seichain.tokenfactory.MsgChangeAdmin';
   value: {
     sender: string;
     denom: string;
@@ -37,12 +37,12 @@ export interface AminoMsgChangeAdmin extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  "/seiprotocol.seichain.tokenfactory.MsgCreateDenom": {
-    aminoType: "/seiprotocol.seichain.tokenfactory.MsgCreateDenom",
+  '/seiprotocol.seichain.tokenfactory.MsgCreateDenom': {
+    aminoType: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom',
     toAmino: ({
       sender,
       subdenom
-    }: MsgCreateDenom): AminoMsgCreateDenom["value"] => {
+    }: MsgCreateDenom): AminoMsgCreateDenom['value'] => {
       return {
         sender,
         subdenom
@@ -51,19 +51,19 @@ export const AminoConverter = {
     fromAmino: ({
       sender,
       subdenom
-    }: AminoMsgCreateDenom["value"]): MsgCreateDenom => {
+    }: AminoMsgCreateDenom['value']): MsgCreateDenom => {
       return {
         sender,
         subdenom
       };
     }
   },
-  "/seiprotocol.seichain.tokenfactory.MsgMint": {
-    aminoType: "/seiprotocol.seichain.tokenfactory.MsgMint",
+  '/seiprotocol.seichain.tokenfactory.MsgMint': {
+    aminoType: '/seiprotocol.seichain.tokenfactory.MsgMint',
     toAmino: ({
       sender,
       amount
-    }: MsgMint): AminoMsgMint["value"] => {
+    }: MsgMint): AminoMsgMint['value'] => {
       return {
         sender,
         amount: {
@@ -75,7 +75,7 @@ export const AminoConverter = {
     fromAmino: ({
       sender,
       amount
-    }: AminoMsgMint["value"]): MsgMint => {
+    }: AminoMsgMint['value']): MsgMint => {
       return {
         sender,
         amount: {
@@ -85,12 +85,12 @@ export const AminoConverter = {
       };
     }
   },
-  "/seiprotocol.seichain.tokenfactory.MsgBurn": {
-    aminoType: "/seiprotocol.seichain.tokenfactory.MsgBurn",
+  '/seiprotocol.seichain.tokenfactory.MsgBurn': {
+    aminoType: '/seiprotocol.seichain.tokenfactory.MsgBurn',
     toAmino: ({
       sender,
       amount
-    }: MsgBurn): AminoMsgBurn["value"] => {
+    }: MsgBurn): AminoMsgBurn['value'] => {
       return {
         sender,
         amount: {
@@ -102,7 +102,7 @@ export const AminoConverter = {
     fromAmino: ({
       sender,
       amount
-    }: AminoMsgBurn["value"]): MsgBurn => {
+    }: AminoMsgBurn['value']): MsgBurn => {
       return {
         sender,
         amount: {
@@ -112,13 +112,13 @@ export const AminoConverter = {
       };
     }
   },
-  "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin": {
-    aminoType: "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin",
+  '/seiprotocol.seichain.tokenfactory.MsgChangeAdmin': {
+    aminoType: '/seiprotocol.seichain.tokenfactory.MsgChangeAdmin',
     toAmino: ({
       sender,
       denom,
       newAdmin
-    }: MsgChangeAdmin): AminoMsgChangeAdmin["value"] => {
+    }: MsgChangeAdmin): AminoMsgChangeAdmin['value'] => {
       return {
         sender,
         denom,
@@ -129,7 +129,7 @@ export const AminoConverter = {
       sender,
       denom,
       new_admin
-    }: AminoMsgChangeAdmin["value"]): MsgChangeAdmin => {
+    }: AminoMsgChangeAdmin['value']): MsgChangeAdmin => {
       return {
         sender,
         denom,

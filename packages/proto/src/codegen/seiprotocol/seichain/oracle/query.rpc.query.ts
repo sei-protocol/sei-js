@@ -1,7 +1,7 @@
-import { Rpc } from "@osmonauts/helpers";
-import * as _m0 from "protobufjs/minimal";
-import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryExchangeRateRequest, QueryExchangeRateResponse, QueryExchangeRatesRequest, QueryExchangeRatesResponse, QueryActivesRequest, QueryActivesResponse, QueryVoteTargetsRequest, QueryVoteTargetsResponse, QueryPriceSnapshotHistoryRequest, QueryPriceSnapshotHistoryResponse, QueryTwapsRequest, QueryTwapsResponse, QueryFeederDelegationRequest, QueryFeederDelegationResponse, QueryVotePenaltyCounterRequest, QueryVotePenaltyCounterResponse, QueryAggregateVoteRequest, QueryAggregateVoteResponse, QueryAggregateVotesRequest, QueryAggregateVotesResponse, QueryParamsRequest, QueryParamsResponse } from "./query";
+import { Rpc } from '@osmonauts/helpers';
+import * as _m0 from 'protobufjs/minimal';
+import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
+import { QueryExchangeRateRequest, QueryExchangeRateResponse, QueryExchangeRatesRequest, QueryExchangeRatesResponse, QueryActivesRequest, QueryActivesResponse, QueryVoteTargetsRequest, QueryVoteTargetsResponse, QueryPriceSnapshotHistoryRequest, QueryPriceSnapshotHistoryResponse, QueryTwapsRequest, QueryTwapsResponse, QueryFeederDelegationRequest, QueryFeederDelegationResponse, QueryVotePenaltyCounterRequest, QueryVotePenaltyCounterResponse, QueryAggregateVoteRequest, QueryAggregateVoteResponse, QueryAggregateVotesRequest, QueryAggregateVotesResponse, QueryParamsRequest, QueryParamsResponse } from './query';
 /** Query defines the RPC service */
 
 export interface Query {
@@ -59,67 +59,67 @@ export class QueryClientImpl implements Query {
 
   exchangeRate(request: QueryExchangeRateRequest): Promise<QueryExchangeRateResponse> {
     const data = QueryExchangeRateRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "ExchangeRate", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'ExchangeRate', data);
     return promise.then(data => QueryExchangeRateResponse.decode(new _m0.Reader(data)));
   }
 
   exchangeRates(request: QueryExchangeRatesRequest = {}): Promise<QueryExchangeRatesResponse> {
     const data = QueryExchangeRatesRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "ExchangeRates", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'ExchangeRates', data);
     return promise.then(data => QueryExchangeRatesResponse.decode(new _m0.Reader(data)));
   }
 
   actives(request: QueryActivesRequest = {}): Promise<QueryActivesResponse> {
     const data = QueryActivesRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "Actives", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'Actives', data);
     return promise.then(data => QueryActivesResponse.decode(new _m0.Reader(data)));
   }
 
   voteTargets(request: QueryVoteTargetsRequest = {}): Promise<QueryVoteTargetsResponse> {
     const data = QueryVoteTargetsRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "VoteTargets", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'VoteTargets', data);
     return promise.then(data => QueryVoteTargetsResponse.decode(new _m0.Reader(data)));
   }
 
   priceSnapshotHistory(request: QueryPriceSnapshotHistoryRequest = {}): Promise<QueryPriceSnapshotHistoryResponse> {
     const data = QueryPriceSnapshotHistoryRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "PriceSnapshotHistory", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'PriceSnapshotHistory', data);
     return promise.then(data => QueryPriceSnapshotHistoryResponse.decode(new _m0.Reader(data)));
   }
 
   twaps(request: QueryTwapsRequest): Promise<QueryTwapsResponse> {
     const data = QueryTwapsRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "Twaps", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'Twaps', data);
     return promise.then(data => QueryTwapsResponse.decode(new _m0.Reader(data)));
   }
 
   feederDelegation(request: QueryFeederDelegationRequest): Promise<QueryFeederDelegationResponse> {
     const data = QueryFeederDelegationRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "FeederDelegation", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'FeederDelegation', data);
     return promise.then(data => QueryFeederDelegationResponse.decode(new _m0.Reader(data)));
   }
 
   votePenaltyCounter(request: QueryVotePenaltyCounterRequest): Promise<QueryVotePenaltyCounterResponse> {
     const data = QueryVotePenaltyCounterRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "VotePenaltyCounter", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'VotePenaltyCounter', data);
     return promise.then(data => QueryVotePenaltyCounterResponse.decode(new _m0.Reader(data)));
   }
 
   aggregateVote(request: QueryAggregateVoteRequest): Promise<QueryAggregateVoteResponse> {
     const data = QueryAggregateVoteRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "AggregateVote", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'AggregateVote', data);
     return promise.then(data => QueryAggregateVoteResponse.decode(new _m0.Reader(data)));
   }
 
   aggregateVotes(request: QueryAggregateVotesRequest = {}): Promise<QueryAggregateVotesResponse> {
     const data = QueryAggregateVotesRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "AggregateVotes", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'AggregateVotes', data);
     return promise.then(data => QueryAggregateVotesResponse.decode(new _m0.Reader(data)));
   }
 
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.oracle.Query", "Params", data);
+    const promise = this.rpc.request('seiprotocol.seichain.oracle.Query', 'Params', data);
     return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 

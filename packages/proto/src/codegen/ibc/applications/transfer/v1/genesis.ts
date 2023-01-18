@@ -1,6 +1,6 @@
-import { DenomTrace, DenomTraceSDKType, Params, ParamsSDKType } from "./transfer";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DenomTrace, DenomTraceSDKType, Params, ParamsSDKType } from './transfer';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** GenesisState defines the ibc-transfer genesis state */
 
 export interface GenesisState {
@@ -18,7 +18,7 @@ export interface GenesisStateSDKType {
 
 function createBaseGenesisState(): GenesisState {
   return {
-    portId: "",
+    portId: '',
     denomTraces: [],
     params: undefined
   };
@@ -26,7 +26,7 @@ function createBaseGenesisState(): GenesisState {
 
 export const GenesisState = {
   encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
@@ -43,7 +43,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -73,7 +73,7 @@ export const GenesisState = {
 
   fromPartial(object: DeepPartial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
-    message.portId = object.portId ?? "";
+    message.portId = object.portId ?? '';
     message.denomTraces = object.denomTraces?.map(e => DenomTrace.fromPartial(e)) || [];
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;

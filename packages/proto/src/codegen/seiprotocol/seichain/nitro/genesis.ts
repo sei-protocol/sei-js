@@ -1,6 +1,6 @@
-import { Params, ParamsSDKType } from "./params";
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import { Params, ParamsSDKType } from './params';
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 export interface GenesisState {
   params: Params;
   slot: Long;
@@ -20,8 +20,8 @@ function createBaseGenesisState(): GenesisState {
   return {
     params: undefined,
     slot: Long.UZERO,
-    sender: "",
-    stateRoot: "",
+    sender: '',
+    stateRoot: '',
     txs: []
   };
 }
@@ -36,11 +36,11 @@ export const GenesisState = {
       writer.uint32(16).uint64(message.slot);
     }
 
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(26).string(message.sender);
     }
 
-    if (message.stateRoot !== "") {
+    if (message.stateRoot !== '') {
       writer.uint32(34).string(message.stateRoot);
     }
 
@@ -53,7 +53,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -93,8 +93,8 @@ export const GenesisState = {
     const message = createBaseGenesisState();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.slot = object.slot !== undefined && object.slot !== null ? Long.fromValue(object.slot) : Long.UZERO;
-    message.sender = object.sender ?? "";
-    message.stateRoot = object.stateRoot ?? "";
+    message.sender = object.sender ?? '';
+    message.stateRoot = object.stateRoot ?? '';
     message.txs = object.txs?.map(e => e) || [];
     return message;
   }

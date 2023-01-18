@@ -1,7 +1,7 @@
-import { Params, ParamsSDKType } from "./params";
-import { DenomAuthorityMetadata, DenomAuthorityMetadataSDKType } from "./authorityMetadata";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Params, ParamsSDKType } from './params';
+import { DenomAuthorityMetadata, DenomAuthorityMetadataSDKType } from './authorityMetadata';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** GenesisState defines the tokenfactory module's genesis state. */
 
 export interface GenesisState {
@@ -59,7 +59,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -94,14 +94,14 @@ export const GenesisState = {
 
 function createBaseGenesisDenom(): GenesisDenom {
   return {
-    denom: "",
+    denom: '',
     authorityMetadata: undefined
   };
 }
 
 export const GenesisDenom = {
   encode(message: GenesisDenom, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
@@ -114,7 +114,7 @@ export const GenesisDenom = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisDenom {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisDenom();
 
     while (reader.pos < end) {
@@ -140,7 +140,7 @@ export const GenesisDenom = {
 
   fromPartial(object: DeepPartial<GenesisDenom>): GenesisDenom {
     const message = createBaseGenesisDenom();
-    message.denom = object.denom ?? "";
+    message.denom = object.denom ?? '';
     message.authorityMetadata = object.authorityMetadata !== undefined && object.authorityMetadata !== null ? DenomAuthorityMetadata.fromPartial(object.authorityMetadata) : undefined;
     return message;
   }

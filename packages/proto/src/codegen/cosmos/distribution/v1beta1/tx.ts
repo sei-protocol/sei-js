@@ -1,6 +1,6 @@
-import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Coin, CoinSDKType } from '../../base/v1beta1/coin';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /**
  * MsgSetWithdrawAddress sets the withdraw address for
  * a delegator (or validator self-delegation).
@@ -106,18 +106,18 @@ export interface MsgFundCommunityPoolResponseSDKType {}
 
 function createBaseMsgSetWithdrawAddress(): MsgSetWithdrawAddress {
   return {
-    delegatorAddress: "",
-    withdrawAddress: ""
+    delegatorAddress: '',
+    withdrawAddress: ''
   };
 }
 
 export const MsgSetWithdrawAddress = {
   encode(message: MsgSetWithdrawAddress, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.delegatorAddress !== "") {
+    if (message.delegatorAddress !== '') {
       writer.uint32(10).string(message.delegatorAddress);
     }
 
-    if (message.withdrawAddress !== "") {
+    if (message.withdrawAddress !== '') {
       writer.uint32(18).string(message.withdrawAddress);
     }
 
@@ -126,7 +126,7 @@ export const MsgSetWithdrawAddress = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetWithdrawAddress {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetWithdrawAddress();
 
     while (reader.pos < end) {
@@ -152,8 +152,8 @@ export const MsgSetWithdrawAddress = {
 
   fromPartial(object: DeepPartial<MsgSetWithdrawAddress>): MsgSetWithdrawAddress {
     const message = createBaseMsgSetWithdrawAddress();
-    message.delegatorAddress = object.delegatorAddress ?? "";
-    message.withdrawAddress = object.withdrawAddress ?? "";
+    message.delegatorAddress = object.delegatorAddress ?? '';
+    message.withdrawAddress = object.withdrawAddress ?? '';
     return message;
   }
 
@@ -170,7 +170,7 @@ export const MsgSetWithdrawAddressResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetWithdrawAddressResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetWithdrawAddressResponse();
 
     while (reader.pos < end) {
@@ -195,18 +195,18 @@ export const MsgSetWithdrawAddressResponse = {
 
 function createBaseMsgWithdrawDelegatorReward(): MsgWithdrawDelegatorReward {
   return {
-    delegatorAddress: "",
-    validatorAddress: ""
+    delegatorAddress: '',
+    validatorAddress: ''
   };
 }
 
 export const MsgWithdrawDelegatorReward = {
   encode(message: MsgWithdrawDelegatorReward, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.delegatorAddress !== "") {
+    if (message.delegatorAddress !== '') {
       writer.uint32(10).string(message.delegatorAddress);
     }
 
-    if (message.validatorAddress !== "") {
+    if (message.validatorAddress !== '') {
       writer.uint32(18).string(message.validatorAddress);
     }
 
@@ -215,7 +215,7 @@ export const MsgWithdrawDelegatorReward = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDelegatorReward {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawDelegatorReward();
 
     while (reader.pos < end) {
@@ -241,8 +241,8 @@ export const MsgWithdrawDelegatorReward = {
 
   fromPartial(object: DeepPartial<MsgWithdrawDelegatorReward>): MsgWithdrawDelegatorReward {
     const message = createBaseMsgWithdrawDelegatorReward();
-    message.delegatorAddress = object.delegatorAddress ?? "";
-    message.validatorAddress = object.validatorAddress ?? "";
+    message.delegatorAddress = object.delegatorAddress ?? '';
+    message.validatorAddress = object.validatorAddress ?? '';
     return message;
   }
 
@@ -265,7 +265,7 @@ export const MsgWithdrawDelegatorRewardResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDelegatorRewardResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawDelegatorRewardResponse();
 
     while (reader.pos < end) {
@@ -295,13 +295,13 @@ export const MsgWithdrawDelegatorRewardResponse = {
 
 function createBaseMsgWithdrawValidatorCommission(): MsgWithdrawValidatorCommission {
   return {
-    validatorAddress: ""
+    validatorAddress: ''
   };
 }
 
 export const MsgWithdrawValidatorCommission = {
   encode(message: MsgWithdrawValidatorCommission, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.validatorAddress !== "") {
+    if (message.validatorAddress !== '') {
       writer.uint32(10).string(message.validatorAddress);
     }
 
@@ -310,7 +310,7 @@ export const MsgWithdrawValidatorCommission = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawValidatorCommission {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawValidatorCommission();
 
     while (reader.pos < end) {
@@ -332,7 +332,7 @@ export const MsgWithdrawValidatorCommission = {
 
   fromPartial(object: DeepPartial<MsgWithdrawValidatorCommission>): MsgWithdrawValidatorCommission {
     const message = createBaseMsgWithdrawValidatorCommission();
-    message.validatorAddress = object.validatorAddress ?? "";
+    message.validatorAddress = object.validatorAddress ?? '';
     return message;
   }
 
@@ -355,7 +355,7 @@ export const MsgWithdrawValidatorCommissionResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawValidatorCommissionResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawValidatorCommissionResponse();
 
     while (reader.pos < end) {
@@ -386,7 +386,7 @@ export const MsgWithdrawValidatorCommissionResponse = {
 function createBaseMsgFundCommunityPool(): MsgFundCommunityPool {
   return {
     amount: [],
-    depositor: ""
+    depositor: ''
   };
 }
 
@@ -396,7 +396,7 @@ export const MsgFundCommunityPool = {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.depositor !== "") {
+    if (message.depositor !== '') {
       writer.uint32(18).string(message.depositor);
     }
 
@@ -405,7 +405,7 @@ export const MsgFundCommunityPool = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundCommunityPool {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgFundCommunityPool();
 
     while (reader.pos < end) {
@@ -432,7 +432,7 @@ export const MsgFundCommunityPool = {
   fromPartial(object: DeepPartial<MsgFundCommunityPool>): MsgFundCommunityPool {
     const message = createBaseMsgFundCommunityPool();
     message.amount = object.amount?.map(e => Coin.fromPartial(e)) || [];
-    message.depositor = object.depositor ?? "";
+    message.depositor = object.depositor ?? '';
     return message;
   }
 
@@ -449,7 +449,7 @@ export const MsgFundCommunityPoolResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundCommunityPoolResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgFundCommunityPoolResponse();
 
     while (reader.pos < end) {

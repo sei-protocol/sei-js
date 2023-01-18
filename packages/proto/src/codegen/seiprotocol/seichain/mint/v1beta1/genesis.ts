@@ -1,6 +1,6 @@
-import { Minter, MinterSDKType, Params, ParamsSDKType } from "./mint";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Minter, MinterSDKType, Params, ParamsSDKType } from './mint';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** GenesisState defines the mint module's genesis state. */
 
 export interface GenesisState {
@@ -42,7 +42,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {

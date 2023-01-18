@@ -1,8 +1,8 @@
-import { Counterparty, CounterpartySDKType, Version, VersionSDKType } from "./connection";
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
-import { Height, HeightSDKType } from "../../client/v1/client";
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import { Counterparty, CounterpartySDKType, Version, VersionSDKType } from './connection';
+import { Any, AnySDKType } from '../../../../google/protobuf/any';
+import { Height, HeightSDKType } from '../../client/v1/client';
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 /**
  * MsgConnectionOpenInit defines the msg sent by an account on Chain A to
  * initialize a connection with Chain B.
@@ -210,17 +210,17 @@ export interface MsgConnectionOpenConfirmResponseSDKType {}
 
 function createBaseMsgConnectionOpenInit(): MsgConnectionOpenInit {
   return {
-    clientId: "",
+    clientId: '',
     counterparty: undefined,
     version: undefined,
     delayPeriod: Long.UZERO,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgConnectionOpenInit = {
   encode(message: MsgConnectionOpenInit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -236,7 +236,7 @@ export const MsgConnectionOpenInit = {
       writer.uint32(32).uint64(message.delayPeriod);
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(42).string(message.signer);
     }
 
@@ -245,7 +245,7 @@ export const MsgConnectionOpenInit = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenInit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenInit();
 
     while (reader.pos < end) {
@@ -283,11 +283,11 @@ export const MsgConnectionOpenInit = {
 
   fromPartial(object: DeepPartial<MsgConnectionOpenInit>): MsgConnectionOpenInit {
     const message = createBaseMsgConnectionOpenInit();
-    message.clientId = object.clientId ?? "";
+    message.clientId = object.clientId ?? '';
     message.counterparty = object.counterparty !== undefined && object.counterparty !== null ? Counterparty.fromPartial(object.counterparty) : undefined;
     message.version = object.version !== undefined && object.version !== null ? Version.fromPartial(object.version) : undefined;
     message.delayPeriod = object.delayPeriod !== undefined && object.delayPeriod !== null ? Long.fromValue(object.delayPeriod) : Long.UZERO;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -304,7 +304,7 @@ export const MsgConnectionOpenInitResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenInitResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenInitResponse();
 
     while (reader.pos < end) {
@@ -329,8 +329,8 @@ export const MsgConnectionOpenInitResponse = {
 
 function createBaseMsgConnectionOpenTry(): MsgConnectionOpenTry {
   return {
-    clientId: "",
-    previousConnectionId: "",
+    clientId: '',
+    previousConnectionId: '',
     clientState: undefined,
     counterparty: undefined,
     delayPeriod: Long.UZERO,
@@ -340,17 +340,17 @@ function createBaseMsgConnectionOpenTry(): MsgConnectionOpenTry {
     proofClient: new Uint8Array(),
     proofConsensus: new Uint8Array(),
     consensusHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgConnectionOpenTry = {
   encode(message: MsgConnectionOpenTry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
-    if (message.previousConnectionId !== "") {
+    if (message.previousConnectionId !== '') {
       writer.uint32(18).string(message.previousConnectionId);
     }
 
@@ -390,7 +390,7 @@ export const MsgConnectionOpenTry = {
       Height.encode(message.consensusHeight, writer.uint32(90).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(98).string(message.signer);
     }
 
@@ -399,7 +399,7 @@ export const MsgConnectionOpenTry = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenTry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenTry();
 
     while (reader.pos < end) {
@@ -465,8 +465,8 @@ export const MsgConnectionOpenTry = {
 
   fromPartial(object: DeepPartial<MsgConnectionOpenTry>): MsgConnectionOpenTry {
     const message = createBaseMsgConnectionOpenTry();
-    message.clientId = object.clientId ?? "";
-    message.previousConnectionId = object.previousConnectionId ?? "";
+    message.clientId = object.clientId ?? '';
+    message.previousConnectionId = object.previousConnectionId ?? '';
     message.clientState = object.clientState !== undefined && object.clientState !== null ? Any.fromPartial(object.clientState) : undefined;
     message.counterparty = object.counterparty !== undefined && object.counterparty !== null ? Counterparty.fromPartial(object.counterparty) : undefined;
     message.delayPeriod = object.delayPeriod !== undefined && object.delayPeriod !== null ? Long.fromValue(object.delayPeriod) : Long.UZERO;
@@ -476,7 +476,7 @@ export const MsgConnectionOpenTry = {
     message.proofClient = object.proofClient ?? new Uint8Array();
     message.proofConsensus = object.proofConsensus ?? new Uint8Array();
     message.consensusHeight = object.consensusHeight !== undefined && object.consensusHeight !== null ? Height.fromPartial(object.consensusHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -493,7 +493,7 @@ export const MsgConnectionOpenTryResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenTryResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenTryResponse();
 
     while (reader.pos < end) {
@@ -518,8 +518,8 @@ export const MsgConnectionOpenTryResponse = {
 
 function createBaseMsgConnectionOpenAck(): MsgConnectionOpenAck {
   return {
-    connectionId: "",
-    counterpartyConnectionId: "",
+    connectionId: '',
+    counterpartyConnectionId: '',
     version: undefined,
     clientState: undefined,
     proofHeight: undefined,
@@ -527,17 +527,17 @@ function createBaseMsgConnectionOpenAck(): MsgConnectionOpenAck {
     proofClient: new Uint8Array(),
     proofConsensus: new Uint8Array(),
     consensusHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgConnectionOpenAck = {
   encode(message: MsgConnectionOpenAck, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.connectionId !== "") {
+    if (message.connectionId !== '') {
       writer.uint32(10).string(message.connectionId);
     }
 
-    if (message.counterpartyConnectionId !== "") {
+    if (message.counterpartyConnectionId !== '') {
       writer.uint32(18).string(message.counterpartyConnectionId);
     }
 
@@ -569,7 +569,7 @@ export const MsgConnectionOpenAck = {
       Height.encode(message.consensusHeight, writer.uint32(74).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(82).string(message.signer);
     }
 
@@ -578,7 +578,7 @@ export const MsgConnectionOpenAck = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenAck {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenAck();
 
     while (reader.pos < end) {
@@ -636,8 +636,8 @@ export const MsgConnectionOpenAck = {
 
   fromPartial(object: DeepPartial<MsgConnectionOpenAck>): MsgConnectionOpenAck {
     const message = createBaseMsgConnectionOpenAck();
-    message.connectionId = object.connectionId ?? "";
-    message.counterpartyConnectionId = object.counterpartyConnectionId ?? "";
+    message.connectionId = object.connectionId ?? '';
+    message.counterpartyConnectionId = object.counterpartyConnectionId ?? '';
     message.version = object.version !== undefined && object.version !== null ? Version.fromPartial(object.version) : undefined;
     message.clientState = object.clientState !== undefined && object.clientState !== null ? Any.fromPartial(object.clientState) : undefined;
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
@@ -645,7 +645,7 @@ export const MsgConnectionOpenAck = {
     message.proofClient = object.proofClient ?? new Uint8Array();
     message.proofConsensus = object.proofConsensus ?? new Uint8Array();
     message.consensusHeight = object.consensusHeight !== undefined && object.consensusHeight !== null ? Height.fromPartial(object.consensusHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -662,7 +662,7 @@ export const MsgConnectionOpenAckResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenAckResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenAckResponse();
 
     while (reader.pos < end) {
@@ -687,16 +687,16 @@ export const MsgConnectionOpenAckResponse = {
 
 function createBaseMsgConnectionOpenConfirm(): MsgConnectionOpenConfirm {
   return {
-    connectionId: "",
+    connectionId: '',
     proofAck: new Uint8Array(),
     proofHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgConnectionOpenConfirm = {
   encode(message: MsgConnectionOpenConfirm, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.connectionId !== "") {
+    if (message.connectionId !== '') {
       writer.uint32(10).string(message.connectionId);
     }
 
@@ -708,7 +708,7 @@ export const MsgConnectionOpenConfirm = {
       Height.encode(message.proofHeight, writer.uint32(26).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(34).string(message.signer);
     }
 
@@ -717,7 +717,7 @@ export const MsgConnectionOpenConfirm = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenConfirm {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenConfirm();
 
     while (reader.pos < end) {
@@ -751,10 +751,10 @@ export const MsgConnectionOpenConfirm = {
 
   fromPartial(object: DeepPartial<MsgConnectionOpenConfirm>): MsgConnectionOpenConfirm {
     const message = createBaseMsgConnectionOpenConfirm();
-    message.connectionId = object.connectionId ?? "";
+    message.connectionId = object.connectionId ?? '';
     message.proofAck = object.proofAck ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -771,7 +771,7 @@ export const MsgConnectionOpenConfirmResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConnectionOpenConfirmResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConnectionOpenConfirmResponse();
 
     while (reader.pos < end) {

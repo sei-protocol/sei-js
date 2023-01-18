@@ -1,6 +1,6 @@
-import { setPaginationParams } from "@osmonauts/helpers";
-import { LCDClient } from "@osmonauts/lcd";
-import { QueryContractInfoRequest, QueryContractInfoResponseSDKType, QueryContractHistoryRequest, QueryContractHistoryResponseSDKType, QueryContractsByCodeRequest, QueryContractsByCodeResponseSDKType, QueryAllContractStateRequest, QueryAllContractStateResponseSDKType, QueryRawContractStateRequest, QueryRawContractStateResponseSDKType, QuerySmartContractStateRequest, QuerySmartContractStateResponseSDKType, QueryCodeRequest, QueryCodeResponseSDKType, QueryCodesRequest, QueryCodesResponseSDKType, QueryPinnedCodesRequest, QueryPinnedCodesResponseSDKType } from "./query";
+import { setPaginationParams } from '@osmonauts/helpers';
+import { LCDClient } from '@osmonauts/lcd';
+import { QueryContractInfoRequest, QueryContractInfoResponseSDKType, QueryContractHistoryRequest, QueryContractHistoryResponseSDKType, QueryContractsByCodeRequest, QueryContractsByCodeResponseSDKType, QueryAllContractStateRequest, QueryAllContractStateResponseSDKType, QueryRawContractStateRequest, QueryRawContractStateResponseSDKType, QuerySmartContractStateRequest, QuerySmartContractStateResponseSDKType, QueryCodeRequest, QueryCodeResponseSDKType, QueryCodesRequest, QueryCodesResponseSDKType, QueryPinnedCodesRequest, QueryPinnedCodesResponseSDKType } from './query';
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -35,7 +35,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -50,7 +50,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -65,7 +65,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -103,7 +103,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -120,7 +120,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 

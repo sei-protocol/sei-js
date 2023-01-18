@@ -1,6 +1,6 @@
-import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Coin, CoinSDKType } from '../../base/v1beta1/coin';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** Params defines the parameters for the bank module. */
 
 export interface Params {
@@ -242,7 +242,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {
@@ -277,14 +277,14 @@ export const Params = {
 
 function createBaseSendEnabled(): SendEnabled {
   return {
-    denom: "",
+    denom: '',
     enabled: false
   };
 }
 
 export const SendEnabled = {
   encode(message: SendEnabled, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
@@ -297,7 +297,7 @@ export const SendEnabled = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SendEnabled {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSendEnabled();
 
     while (reader.pos < end) {
@@ -323,7 +323,7 @@ export const SendEnabled = {
 
   fromPartial(object: DeepPartial<SendEnabled>): SendEnabled {
     const message = createBaseSendEnabled();
-    message.denom = object.denom ?? "";
+    message.denom = object.denom ?? '';
     message.enabled = object.enabled ?? false;
     return message;
   }
@@ -332,14 +332,14 @@ export const SendEnabled = {
 
 function createBaseInput(): Input {
   return {
-    address: "",
+    address: '',
     coins: []
   };
 }
 
 export const Input = {
   encode(message: Input, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== "") {
+    if (message.address !== '') {
       writer.uint32(10).string(message.address);
     }
 
@@ -352,7 +352,7 @@ export const Input = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Input {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInput();
 
     while (reader.pos < end) {
@@ -378,7 +378,7 @@ export const Input = {
 
   fromPartial(object: DeepPartial<Input>): Input {
     const message = createBaseInput();
-    message.address = object.address ?? "";
+    message.address = object.address ?? '';
     message.coins = object.coins?.map(e => Coin.fromPartial(e)) || [];
     return message;
   }
@@ -387,14 +387,14 @@ export const Input = {
 
 function createBaseOutput(): Output {
   return {
-    address: "",
+    address: '',
     coins: []
   };
 }
 
 export const Output = {
   encode(message: Output, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== "") {
+    if (message.address !== '') {
       writer.uint32(10).string(message.address);
     }
 
@@ -407,7 +407,7 @@ export const Output = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Output {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOutput();
 
     while (reader.pos < end) {
@@ -433,7 +433,7 @@ export const Output = {
 
   fromPartial(object: DeepPartial<Output>): Output {
     const message = createBaseOutput();
-    message.address = object.address ?? "";
+    message.address = object.address ?? '';
     message.coins = object.coins?.map(e => Coin.fromPartial(e)) || [];
     return message;
   }
@@ -457,7 +457,7 @@ export const Supply = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Supply {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSupply();
 
     while (reader.pos < end) {
@@ -487,7 +487,7 @@ export const Supply = {
 
 function createBaseDenomUnit(): DenomUnit {
   return {
-    denom: "",
+    denom: '',
     exponent: 0,
     aliases: []
   };
@@ -495,7 +495,7 @@ function createBaseDenomUnit(): DenomUnit {
 
 export const DenomUnit = {
   encode(message: DenomUnit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
@@ -512,7 +512,7 @@ export const DenomUnit = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DenomUnit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDenomUnit();
 
     while (reader.pos < end) {
@@ -542,7 +542,7 @@ export const DenomUnit = {
 
   fromPartial(object: DeepPartial<DenomUnit>): DenomUnit {
     const message = createBaseDenomUnit();
-    message.denom = object.denom ?? "";
+    message.denom = object.denom ?? '';
     message.exponent = object.exponent ?? 0;
     message.aliases = object.aliases?.map(e => e) || [];
     return message;
@@ -552,20 +552,20 @@ export const DenomUnit = {
 
 function createBaseMetadata(): Metadata {
   return {
-    description: "",
+    description: '',
     denomUnits: [],
-    base: "",
-    display: "",
-    name: "",
-    symbol: "",
-    uri: "",
-    uriHash: ""
+    base: '',
+    display: '',
+    name: '',
+    symbol: '',
+    uri: '',
+    uriHash: ''
   };
 }
 
 export const Metadata = {
   encode(message: Metadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(10).string(message.description);
     }
 
@@ -573,27 +573,27 @@ export const Metadata = {
       DenomUnit.encode(v!, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.base !== "") {
+    if (message.base !== '') {
       writer.uint32(26).string(message.base);
     }
 
-    if (message.display !== "") {
+    if (message.display !== '') {
       writer.uint32(34).string(message.display);
     }
 
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(42).string(message.name);
     }
 
-    if (message.symbol !== "") {
+    if (message.symbol !== '') {
       writer.uint32(50).string(message.symbol);
     }
 
-    if (message.uri !== "") {
+    if (message.uri !== '') {
       writer.uint32(58).string(message.uri);
     }
 
-    if (message.uriHash !== "") {
+    if (message.uriHash !== '') {
       writer.uint32(66).string(message.uriHash);
     }
 
@@ -602,7 +602,7 @@ export const Metadata = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Metadata {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMetadata();
 
     while (reader.pos < end) {
@@ -652,14 +652,14 @@ export const Metadata = {
 
   fromPartial(object: DeepPartial<Metadata>): Metadata {
     const message = createBaseMetadata();
-    message.description = object.description ?? "";
+    message.description = object.description ?? '';
     message.denomUnits = object.denomUnits?.map(e => DenomUnit.fromPartial(e)) || [];
-    message.base = object.base ?? "";
-    message.display = object.display ?? "";
-    message.name = object.name ?? "";
-    message.symbol = object.symbol ?? "";
-    message.uri = object.uri ?? "";
-    message.uriHash = object.uriHash ?? "";
+    message.base = object.base ?? '';
+    message.display = object.display ?? '';
+    message.name = object.name ?? '';
+    message.symbol = object.symbol ?? '';
+    message.uri = object.uri ?? '';
+    message.uriHash = object.uriHash ?? '';
     return message;
   }
 

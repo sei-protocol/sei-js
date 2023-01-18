@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 export interface OrderEntry {
   price: string;
   quantity: string;
@@ -27,21 +27,21 @@ export interface AllocationSDKType {
 
 function createBaseOrderEntry(): OrderEntry {
   return {
-    price: "",
-    quantity: "",
+    price: '',
+    quantity: '',
     allocations: [],
-    priceDenom: "",
-    assetDenom: ""
+    priceDenom: '',
+    assetDenom: ''
   };
 }
 
 export const OrderEntry = {
   encode(message: OrderEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.price !== "") {
+    if (message.price !== '') {
       writer.uint32(10).string(message.price);
     }
 
-    if (message.quantity !== "") {
+    if (message.quantity !== '') {
       writer.uint32(18).string(message.quantity);
     }
 
@@ -49,11 +49,11 @@ export const OrderEntry = {
       Allocation.encode(v!, writer.uint32(26).fork()).ldelim();
     }
 
-    if (message.priceDenom !== "") {
+    if (message.priceDenom !== '') {
       writer.uint32(34).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== "") {
+    if (message.assetDenom !== '') {
       writer.uint32(42).string(message.assetDenom);
     }
 
@@ -62,7 +62,7 @@ export const OrderEntry = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): OrderEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOrderEntry();
 
     while (reader.pos < end) {
@@ -100,11 +100,11 @@ export const OrderEntry = {
 
   fromPartial(object: DeepPartial<OrderEntry>): OrderEntry {
     const message = createBaseOrderEntry();
-    message.price = object.price ?? "";
-    message.quantity = object.quantity ?? "";
+    message.price = object.price ?? '';
+    message.quantity = object.quantity ?? '';
     message.allocations = object.allocations?.map(e => Allocation.fromPartial(e)) || [];
-    message.priceDenom = object.priceDenom ?? "";
-    message.assetDenom = object.assetDenom ?? "";
+    message.priceDenom = object.priceDenom ?? '';
+    message.assetDenom = object.assetDenom ?? '';
     return message;
   }
 
@@ -113,8 +113,8 @@ export const OrderEntry = {
 function createBaseAllocation(): Allocation {
   return {
     orderId: Long.UZERO,
-    quantity: "",
-    account: ""
+    quantity: '',
+    account: ''
   };
 }
 
@@ -124,11 +124,11 @@ export const Allocation = {
       writer.uint32(8).uint64(message.orderId);
     }
 
-    if (message.quantity !== "") {
+    if (message.quantity !== '') {
       writer.uint32(18).string(message.quantity);
     }
 
-    if (message.account !== "") {
+    if (message.account !== '') {
       writer.uint32(26).string(message.account);
     }
 
@@ -137,7 +137,7 @@ export const Allocation = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Allocation {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAllocation();
 
     while (reader.pos < end) {
@@ -168,8 +168,8 @@ export const Allocation = {
   fromPartial(object: DeepPartial<Allocation>): Allocation {
     const message = createBaseAllocation();
     message.orderId = object.orderId !== undefined && object.orderId !== null ? Long.fromValue(object.orderId) : Long.UZERO;
-    message.quantity = object.quantity ?? "";
-    message.account = object.account ?? "";
+    message.quantity = object.quantity ?? '';
+    message.account = object.account ?? '';
     return message;
   }
 

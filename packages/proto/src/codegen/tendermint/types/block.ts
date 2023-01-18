@@ -1,7 +1,7 @@
-import { Header, HeaderSDKType, Data, DataSDKType, Commit, CommitSDKType } from "./types";
-import { EvidenceList, EvidenceListSDKType } from "./evidence";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Header, HeaderSDKType, Data, DataSDKType, Commit, CommitSDKType } from './types';
+import { EvidenceList, EvidenceListSDKType } from './evidence';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 export interface Block {
   header: Header;
   data: Data;
@@ -47,7 +47,7 @@ export const Block = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Block {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlock();
 
     while (reader.pos < end) {

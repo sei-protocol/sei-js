@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 export enum HashOp {
   /** NO_HASH - NO_HASH is the default if no data passed. Note this is an illegal argument some places. */
   NO_HASH = 0,
@@ -27,31 +27,31 @@ export enum HashOpSDKType {
 export function hashOpFromJSON(object: any): HashOp {
   switch (object) {
     case 0:
-    case "NO_HASH":
+    case 'NO_HASH':
       return HashOp.NO_HASH;
 
     case 1:
-    case "SHA256":
+    case 'SHA256':
       return HashOp.SHA256;
 
     case 2:
-    case "SHA512":
+    case 'SHA512':
       return HashOp.SHA512;
 
     case 3:
-    case "KECCAK":
+    case 'KECCAK':
       return HashOp.KECCAK;
 
     case 4:
-    case "RIPEMD160":
+    case 'RIPEMD160':
       return HashOp.RIPEMD160;
 
     case 5:
-    case "BITCOIN":
+    case 'BITCOIN':
       return HashOp.BITCOIN;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return HashOp.UNRECOGNIZED;
   }
@@ -59,25 +59,25 @@ export function hashOpFromJSON(object: any): HashOp {
 export function hashOpToJSON(object: HashOp): string {
   switch (object) {
     case HashOp.NO_HASH:
-      return "NO_HASH";
+      return 'NO_HASH';
 
     case HashOp.SHA256:
-      return "SHA256";
+      return 'SHA256';
 
     case HashOp.SHA512:
-      return "SHA512";
+      return 'SHA512';
 
     case HashOp.KECCAK:
-      return "KECCAK";
+      return 'KECCAK';
 
     case HashOp.RIPEMD160:
-      return "RIPEMD160";
+      return 'RIPEMD160';
 
     case HashOp.BITCOIN:
-      return "BITCOIN";
+      return 'BITCOIN';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /**
@@ -155,43 +155,43 @@ export enum LengthOpSDKType {
 export function lengthOpFromJSON(object: any): LengthOp {
   switch (object) {
     case 0:
-    case "NO_PREFIX":
+    case 'NO_PREFIX':
       return LengthOp.NO_PREFIX;
 
     case 1:
-    case "VAR_PROTO":
+    case 'VAR_PROTO':
       return LengthOp.VAR_PROTO;
 
     case 2:
-    case "VAR_RLP":
+    case 'VAR_RLP':
       return LengthOp.VAR_RLP;
 
     case 3:
-    case "FIXED32_BIG":
+    case 'FIXED32_BIG':
       return LengthOp.FIXED32_BIG;
 
     case 4:
-    case "FIXED32_LITTLE":
+    case 'FIXED32_LITTLE':
       return LengthOp.FIXED32_LITTLE;
 
     case 5:
-    case "FIXED64_BIG":
+    case 'FIXED64_BIG':
       return LengthOp.FIXED64_BIG;
 
     case 6:
-    case "FIXED64_LITTLE":
+    case 'FIXED64_LITTLE':
       return LengthOp.FIXED64_LITTLE;
 
     case 7:
-    case "REQUIRE_32_BYTES":
+    case 'REQUIRE_32_BYTES':
       return LengthOp.REQUIRE_32_BYTES;
 
     case 8:
-    case "REQUIRE_64_BYTES":
+    case 'REQUIRE_64_BYTES':
       return LengthOp.REQUIRE_64_BYTES;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return LengthOp.UNRECOGNIZED;
   }
@@ -199,34 +199,34 @@ export function lengthOpFromJSON(object: any): LengthOp {
 export function lengthOpToJSON(object: LengthOp): string {
   switch (object) {
     case LengthOp.NO_PREFIX:
-      return "NO_PREFIX";
+      return 'NO_PREFIX';
 
     case LengthOp.VAR_PROTO:
-      return "VAR_PROTO";
+      return 'VAR_PROTO';
 
     case LengthOp.VAR_RLP:
-      return "VAR_RLP";
+      return 'VAR_RLP';
 
     case LengthOp.FIXED32_BIG:
-      return "FIXED32_BIG";
+      return 'FIXED32_BIG';
 
     case LengthOp.FIXED32_LITTLE:
-      return "FIXED32_LITTLE";
+      return 'FIXED32_LITTLE';
 
     case LengthOp.FIXED64_BIG:
-      return "FIXED64_BIG";
+      return 'FIXED64_BIG';
 
     case LengthOp.FIXED64_LITTLE:
-      return "FIXED64_LITTLE";
+      return 'FIXED64_LITTLE';
 
     case LengthOp.REQUIRE_32_BYTES:
-      return "REQUIRE_32_BYTES";
+      return 'REQUIRE_32_BYTES';
 
     case LengthOp.REQUIRE_64_BYTES:
-      return "REQUIRE_64_BYTES";
+      return 'REQUIRE_64_BYTES';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /**
@@ -642,7 +642,7 @@ export const ExistenceProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ExistenceProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseExistenceProof();
 
     while (reader.pos < end) {
@@ -712,7 +712,7 @@ export const NonExistenceProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): NonExistenceProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseNonExistenceProof();
 
     while (reader.pos < end) {
@@ -782,7 +782,7 @@ export const CommitmentProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CommitmentProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommitmentProof();
 
     while (reader.pos < end) {
@@ -862,7 +862,7 @@ export const LeafOp = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LeafOp {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLeafOp();
 
     while (reader.pos < end) {
@@ -937,7 +937,7 @@ export const InnerOp = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InnerOp {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInnerOp();
 
     while (reader.pos < end) {
@@ -1007,7 +1007,7 @@ export const ProofSpec = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ProofSpec {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofSpec();
 
     while (reader.pos < end) {
@@ -1096,7 +1096,7 @@ export const InnerSpec = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InnerSpec {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInnerSpec();
 
     while (reader.pos < end) {
@@ -1175,7 +1175,7 @@ export const BatchProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BatchProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBatchProof();
 
     while (reader.pos < end) {
@@ -1225,7 +1225,7 @@ export const BatchEntry = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BatchEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBatchEntry();
 
     while (reader.pos < end) {
@@ -1280,7 +1280,7 @@ export const CompressedBatchProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedBatchProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCompressedBatchProof();
 
     while (reader.pos < end) {
@@ -1335,7 +1335,7 @@ export const CompressedBatchEntry = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedBatchEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCompressedBatchEntry();
 
     while (reader.pos < end) {
@@ -1403,7 +1403,7 @@ export const CompressedExistenceProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedExistenceProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCompressedExistenceProof();
 
     while (reader.pos < end) {
@@ -1482,7 +1482,7 @@ export const CompressedNonExistenceProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CompressedNonExistenceProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCompressedNonExistenceProof();
 
     while (reader.pos < end) {

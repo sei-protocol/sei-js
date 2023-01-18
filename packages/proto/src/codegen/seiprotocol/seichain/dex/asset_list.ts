@@ -1,6 +1,6 @@
-import { Metadata, MetadataSDKType } from "../../../cosmos/bank/v1beta1/bank";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Metadata, MetadataSDKType } from '../../../cosmos/bank/v1beta1/bank';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 export interface AssetIBCInfo {
   sourceChannel: string;
   dstChannel: string;
@@ -30,28 +30,28 @@ export interface AssetMetadataSDKType {
 
 function createBaseAssetIBCInfo(): AssetIBCInfo {
   return {
-    sourceChannel: "",
-    dstChannel: "",
-    sourceDenom: "",
-    sourceChainID: ""
+    sourceChannel: '',
+    dstChannel: '',
+    sourceDenom: '',
+    sourceChainID: ''
   };
 }
 
 export const AssetIBCInfo = {
   encode(message: AssetIBCInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sourceChannel !== "") {
+    if (message.sourceChannel !== '') {
       writer.uint32(10).string(message.sourceChannel);
     }
 
-    if (message.dstChannel !== "") {
+    if (message.dstChannel !== '') {
       writer.uint32(18).string(message.dstChannel);
     }
 
-    if (message.sourceDenom !== "") {
+    if (message.sourceDenom !== '') {
       writer.uint32(26).string(message.sourceDenom);
     }
 
-    if (message.sourceChainID !== "") {
+    if (message.sourceChainID !== '') {
       writer.uint32(34).string(message.sourceChainID);
     }
 
@@ -60,7 +60,7 @@ export const AssetIBCInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AssetIBCInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAssetIBCInfo();
 
     while (reader.pos < end) {
@@ -94,10 +94,10 @@ export const AssetIBCInfo = {
 
   fromPartial(object: DeepPartial<AssetIBCInfo>): AssetIBCInfo {
     const message = createBaseAssetIBCInfo();
-    message.sourceChannel = object.sourceChannel ?? "";
-    message.dstChannel = object.dstChannel ?? "";
-    message.sourceDenom = object.sourceDenom ?? "";
-    message.sourceChainID = object.sourceChainID ?? "";
+    message.sourceChannel = object.sourceChannel ?? '';
+    message.dstChannel = object.dstChannel ?? '';
+    message.sourceDenom = object.sourceDenom ?? '';
+    message.sourceChainID = object.sourceChainID ?? '';
     return message;
   }
 
@@ -106,7 +106,7 @@ export const AssetIBCInfo = {
 function createBaseAssetMetadata(): AssetMetadata {
   return {
     ibcInfo: undefined,
-    typeAsset: "",
+    typeAsset: '',
     metadata: undefined
   };
 }
@@ -117,7 +117,7 @@ export const AssetMetadata = {
       AssetIBCInfo.encode(message.ibcInfo, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.typeAsset !== "") {
+    if (message.typeAsset !== '') {
       writer.uint32(18).string(message.typeAsset);
     }
 
@@ -130,7 +130,7 @@ export const AssetMetadata = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AssetMetadata {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAssetMetadata();
 
     while (reader.pos < end) {
@@ -161,7 +161,7 @@ export const AssetMetadata = {
   fromPartial(object: DeepPartial<AssetMetadata>): AssetMetadata {
     const message = createBaseAssetMetadata();
     message.ibcInfo = object.ibcInfo !== undefined && object.ibcInfo !== null ? AssetIBCInfo.fromPartial(object.ibcInfo) : undefined;
-    message.typeAsset = object.typeAsset ?? "";
+    message.typeAsset = object.typeAsset ?? '';
     message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
     return message;
   }

@@ -1,7 +1,7 @@
-import { Rpc } from "@osmonauts/helpers";
-import * as _m0 from "protobufjs/minimal";
-import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryDenomTraceRequest, QueryDenomTraceResponse, QueryDenomTracesRequest, QueryDenomTracesResponse, QueryParamsRequest, QueryParamsResponse } from "./query";
+import { Rpc } from '@osmonauts/helpers';
+import * as _m0 from 'protobufjs/minimal';
+import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
+import { QueryDenomTraceRequest, QueryDenomTraceResponse, QueryDenomTracesRequest, QueryDenomTracesResponse, QueryParamsRequest, QueryParamsResponse } from './query';
 /** Query defines the RPC service */
 
 export interface Query {
@@ -27,7 +27,7 @@ export class QueryClientImpl implements Query {
 
   denomTrace(request: QueryDenomTraceRequest): Promise<QueryDenomTraceResponse> {
     const data = QueryDenomTraceRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.applications.transfer.v1.Query", "DenomTrace", data);
+    const promise = this.rpc.request('ibc.applications.transfer.v1.Query', 'DenomTrace', data);
     return promise.then(data => QueryDenomTraceResponse.decode(new _m0.Reader(data)));
   }
 
@@ -35,13 +35,13 @@ export class QueryClientImpl implements Query {
     pagination: undefined
   }): Promise<QueryDenomTracesResponse> {
     const data = QueryDenomTracesRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.applications.transfer.v1.Query", "DenomTraces", data);
+    const promise = this.rpc.request('ibc.applications.transfer.v1.Query', 'DenomTraces', data);
     return promise.then(data => QueryDenomTracesResponse.decode(new _m0.Reader(data)));
   }
 
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.applications.transfer.v1.Query", "Params", data);
+    const promise = this.rpc.request('ibc.applications.transfer.v1.Query', 'Params', data);
     return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 

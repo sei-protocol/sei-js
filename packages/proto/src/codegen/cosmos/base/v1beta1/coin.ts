@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /**
  * Coin defines a token with a denomination and an amount.
  *
@@ -67,18 +67,18 @@ export interface DecProtoSDKType {
 
 function createBaseCoin(): Coin {
   return {
-    denom: "",
-    amount: ""
+    denom: '',
+    amount: ''
   };
 }
 
 export const Coin = {
   encode(message: Coin, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
-    if (message.amount !== "") {
+    if (message.amount !== '') {
       writer.uint32(18).string(message.amount);
     }
 
@@ -87,7 +87,7 @@ export const Coin = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Coin {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCoin();
 
     while (reader.pos < end) {
@@ -113,8 +113,8 @@ export const Coin = {
 
   fromPartial(object: DeepPartial<Coin>): Coin {
     const message = createBaseCoin();
-    message.denom = object.denom ?? "";
-    message.amount = object.amount ?? "";
+    message.denom = object.denom ?? '';
+    message.amount = object.amount ?? '';
     return message;
   }
 
@@ -122,18 +122,18 @@ export const Coin = {
 
 function createBaseDecCoin(): DecCoin {
   return {
-    denom: "",
-    amount: ""
+    denom: '',
+    amount: ''
   };
 }
 
 export const DecCoin = {
   encode(message: DecCoin, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
-    if (message.amount !== "") {
+    if (message.amount !== '') {
       writer.uint32(18).string(message.amount);
     }
 
@@ -142,7 +142,7 @@ export const DecCoin = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DecCoin {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDecCoin();
 
     while (reader.pos < end) {
@@ -168,8 +168,8 @@ export const DecCoin = {
 
   fromPartial(object: DeepPartial<DecCoin>): DecCoin {
     const message = createBaseDecCoin();
-    message.denom = object.denom ?? "";
-    message.amount = object.amount ?? "";
+    message.denom = object.denom ?? '';
+    message.amount = object.amount ?? '';
     return message;
   }
 
@@ -177,13 +177,13 @@ export const DecCoin = {
 
 function createBaseIntProto(): IntProto {
   return {
-    int: ""
+    int: ''
   };
 }
 
 export const IntProto = {
   encode(message: IntProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.int !== "") {
+    if (message.int !== '') {
       writer.uint32(10).string(message.int);
     }
 
@@ -192,7 +192,7 @@ export const IntProto = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): IntProto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseIntProto();
 
     while (reader.pos < end) {
@@ -214,7 +214,7 @@ export const IntProto = {
 
   fromPartial(object: DeepPartial<IntProto>): IntProto {
     const message = createBaseIntProto();
-    message.int = object.int ?? "";
+    message.int = object.int ?? '';
     return message;
   }
 
@@ -222,13 +222,13 @@ export const IntProto = {
 
 function createBaseDecProto(): DecProto {
   return {
-    dec: ""
+    dec: ''
   };
 }
 
 export const DecProto = {
   encode(message: DecProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.dec !== "") {
+    if (message.dec !== '') {
       writer.uint32(10).string(message.dec);
     }
 
@@ -237,7 +237,7 @@ export const DecProto = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DecProto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDecProto();
 
     while (reader.pos < end) {
@@ -259,7 +259,7 @@ export const DecProto = {
 
   fromPartial(object: DeepPartial<DecProto>): DecProto {
     const message = createBaseDecProto();
-    message.dec = object.dec ?? "";
+    message.dec = object.dec ?? '';
     return message;
   }
 

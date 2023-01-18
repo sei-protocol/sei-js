@@ -1,6 +1,6 @@
-import { Plan, PlanSDKType, ModuleVersion, ModuleVersionSDKType } from "./upgrade";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import { Plan, PlanSDKType, ModuleVersion, ModuleVersionSDKType } from './upgrade';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /**
  * QueryCurrentPlanRequest is the request type for the Query/CurrentPlan RPC
  * method.
@@ -213,7 +213,7 @@ export const QueryCurrentPlanRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCurrentPlanRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryCurrentPlanRequest();
 
     while (reader.pos < end) {
@@ -253,7 +253,7 @@ export const QueryCurrentPlanResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCurrentPlanResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryCurrentPlanResponse();
 
     while (reader.pos < end) {
@@ -283,13 +283,13 @@ export const QueryCurrentPlanResponse = {
 
 function createBaseQueryAppliedPlanRequest(): QueryAppliedPlanRequest {
   return {
-    name: ""
+    name: ''
   };
 }
 
 export const QueryAppliedPlanRequest = {
   encode(message: QueryAppliedPlanRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
@@ -298,7 +298,7 @@ export const QueryAppliedPlanRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAppliedPlanRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAppliedPlanRequest();
 
     while (reader.pos < end) {
@@ -320,7 +320,7 @@ export const QueryAppliedPlanRequest = {
 
   fromPartial(object: DeepPartial<QueryAppliedPlanRequest>): QueryAppliedPlanRequest {
     const message = createBaseQueryAppliedPlanRequest();
-    message.name = object.name ?? "";
+    message.name = object.name ?? '';
     return message;
   }
 
@@ -343,7 +343,7 @@ export const QueryAppliedPlanResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAppliedPlanResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAppliedPlanResponse();
 
     while (reader.pos < end) {
@@ -388,7 +388,7 @@ export const QueryUpgradedConsensusStateRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryUpgradedConsensusStateRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryUpgradedConsensusStateRequest();
 
     while (reader.pos < end) {
@@ -433,7 +433,7 @@ export const QueryUpgradedConsensusStateResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryUpgradedConsensusStateResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryUpgradedConsensusStateResponse();
 
     while (reader.pos < end) {
@@ -463,13 +463,13 @@ export const QueryUpgradedConsensusStateResponse = {
 
 function createBaseQueryModuleVersionsRequest(): QueryModuleVersionsRequest {
   return {
-    moduleName: ""
+    moduleName: ''
   };
 }
 
 export const QueryModuleVersionsRequest = {
   encode(message: QueryModuleVersionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.moduleName !== "") {
+    if (message.moduleName !== '') {
       writer.uint32(10).string(message.moduleName);
     }
 
@@ -478,7 +478,7 @@ export const QueryModuleVersionsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleVersionsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleVersionsRequest();
 
     while (reader.pos < end) {
@@ -500,7 +500,7 @@ export const QueryModuleVersionsRequest = {
 
   fromPartial(object: DeepPartial<QueryModuleVersionsRequest>): QueryModuleVersionsRequest {
     const message = createBaseQueryModuleVersionsRequest();
-    message.moduleName = object.moduleName ?? "";
+    message.moduleName = object.moduleName ?? '';
     return message;
   }
 
@@ -523,7 +523,7 @@ export const QueryModuleVersionsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleVersionsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleVersionsResponse();
 
     while (reader.pos < end) {
@@ -562,7 +562,7 @@ export const QueryAuthorityRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAuthorityRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAuthorityRequest();
 
     while (reader.pos < end) {
@@ -587,13 +587,13 @@ export const QueryAuthorityRequest = {
 
 function createBaseQueryAuthorityResponse(): QueryAuthorityResponse {
   return {
-    address: ""
+    address: ''
   };
 }
 
 export const QueryAuthorityResponse = {
   encode(message: QueryAuthorityResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== "") {
+    if (message.address !== '') {
       writer.uint32(10).string(message.address);
     }
 
@@ -602,7 +602,7 @@ export const QueryAuthorityResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAuthorityResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAuthorityResponse();
 
     while (reader.pos < end) {
@@ -624,7 +624,7 @@ export const QueryAuthorityResponse = {
 
   fromPartial(object: DeepPartial<QueryAuthorityResponse>): QueryAuthorityResponse {
     const message = createBaseQueryAuthorityResponse();
-    message.address = object.address ?? "";
+    message.address = object.address ?? '';
     return message;
   }
 

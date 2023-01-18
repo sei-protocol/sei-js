@@ -1,7 +1,7 @@
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
-import { BIP44Params, BIP44ParamsSDKType } from "../../hd/v1/hd";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Any, AnySDKType } from '../../../../google/protobuf/any';
+import { BIP44Params, BIP44ParamsSDKType } from '../../hd/v1/hd';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** Record is used for representing a key in the keyring. */
 
 export interface Record {
@@ -87,7 +87,7 @@ export interface Record_OfflineSDKType {}
 
 function createBaseRecord(): Record {
   return {
-    name: "",
+    name: '',
     pubKey: undefined,
     local: undefined,
     ledger: undefined,
@@ -98,7 +98,7 @@ function createBaseRecord(): Record {
 
 export const Record = {
   encode(message: Record, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
@@ -127,7 +127,7 @@ export const Record = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Record {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord();
 
     while (reader.pos < end) {
@@ -169,7 +169,7 @@ export const Record = {
 
   fromPartial(object: DeepPartial<Record>): Record {
     const message = createBaseRecord();
-    message.name = object.name ?? "";
+    message.name = object.name ?? '';
     message.pubKey = object.pubKey !== undefined && object.pubKey !== null ? Any.fromPartial(object.pubKey) : undefined;
     message.local = object.local !== undefined && object.local !== null ? Record_Local.fromPartial(object.local) : undefined;
     message.ledger = object.ledger !== undefined && object.ledger !== null ? Record_Ledger.fromPartial(object.ledger) : undefined;
@@ -183,7 +183,7 @@ export const Record = {
 function createBaseRecord_Local(): Record_Local {
   return {
     privKey: undefined,
-    privKeyType: ""
+    privKeyType: ''
   };
 }
 
@@ -193,7 +193,7 @@ export const Record_Local = {
       Any.encode(message.privKey, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.privKeyType !== "") {
+    if (message.privKeyType !== '') {
       writer.uint32(18).string(message.privKeyType);
     }
 
@@ -202,7 +202,7 @@ export const Record_Local = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Record_Local {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Local();
 
     while (reader.pos < end) {
@@ -229,7 +229,7 @@ export const Record_Local = {
   fromPartial(object: DeepPartial<Record_Local>): Record_Local {
     const message = createBaseRecord_Local();
     message.privKey = object.privKey !== undefined && object.privKey !== null ? Any.fromPartial(object.privKey) : undefined;
-    message.privKeyType = object.privKeyType ?? "";
+    message.privKeyType = object.privKeyType ?? '';
     return message;
   }
 
@@ -252,7 +252,7 @@ export const Record_Ledger = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Record_Ledger {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Ledger();
 
     while (reader.pos < end) {
@@ -291,7 +291,7 @@ export const Record_Multi = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Record_Multi {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Multi();
 
     while (reader.pos < end) {
@@ -325,7 +325,7 @@ export const Record_Offline = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Record_Offline {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Offline();
 
     while (reader.pos < end) {

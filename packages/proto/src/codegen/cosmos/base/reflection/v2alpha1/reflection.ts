@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** AppDescriptor describes a cosmos-sdk based application */
 
 export interface AppDescriptor {
@@ -495,7 +495,7 @@ export const AppDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AppDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAppDescriptor();
 
     while (reader.pos < end) {
@@ -550,14 +550,14 @@ export const AppDescriptor = {
 
 function createBaseTxDescriptor(): TxDescriptor {
   return {
-    fullname: "",
+    fullname: '',
     msgs: []
   };
 }
 
 export const TxDescriptor = {
   encode(message: TxDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.fullname !== "") {
+    if (message.fullname !== '') {
       writer.uint32(10).string(message.fullname);
     }
 
@@ -570,7 +570,7 @@ export const TxDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TxDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTxDescriptor();
 
     while (reader.pos < end) {
@@ -596,7 +596,7 @@ export const TxDescriptor = {
 
   fromPartial(object: DeepPartial<TxDescriptor>): TxDescriptor {
     const message = createBaseTxDescriptor();
-    message.fullname = object.fullname ?? "";
+    message.fullname = object.fullname ?? '';
     message.msgs = object.msgs?.map(e => MsgDescriptor.fromPartial(e)) || [];
     return message;
   }
@@ -620,7 +620,7 @@ export const AuthnDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AuthnDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAuthnDescriptor();
 
     while (reader.pos < end) {
@@ -650,15 +650,15 @@ export const AuthnDescriptor = {
 
 function createBaseSigningModeDescriptor(): SigningModeDescriptor {
   return {
-    name: "",
+    name: '',
     number: 0,
-    authnInfoProviderMethodFullname: ""
+    authnInfoProviderMethodFullname: ''
   };
 }
 
 export const SigningModeDescriptor = {
   encode(message: SigningModeDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
@@ -666,7 +666,7 @@ export const SigningModeDescriptor = {
       writer.uint32(16).int32(message.number);
     }
 
-    if (message.authnInfoProviderMethodFullname !== "") {
+    if (message.authnInfoProviderMethodFullname !== '') {
       writer.uint32(26).string(message.authnInfoProviderMethodFullname);
     }
 
@@ -675,7 +675,7 @@ export const SigningModeDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SigningModeDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSigningModeDescriptor();
 
     while (reader.pos < end) {
@@ -705,9 +705,9 @@ export const SigningModeDescriptor = {
 
   fromPartial(object: DeepPartial<SigningModeDescriptor>): SigningModeDescriptor {
     const message = createBaseSigningModeDescriptor();
-    message.name = object.name ?? "";
+    message.name = object.name ?? '';
     message.number = object.number ?? 0;
-    message.authnInfoProviderMethodFullname = object.authnInfoProviderMethodFullname ?? "";
+    message.authnInfoProviderMethodFullname = object.authnInfoProviderMethodFullname ?? '';
     return message;
   }
 
@@ -715,13 +715,13 @@ export const SigningModeDescriptor = {
 
 function createBaseChainDescriptor(): ChainDescriptor {
   return {
-    id: ""
+    id: ''
   };
 }
 
 export const ChainDescriptor = {
   encode(message: ChainDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.id !== "") {
+    if (message.id !== '') {
       writer.uint32(10).string(message.id);
     }
 
@@ -730,7 +730,7 @@ export const ChainDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ChainDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChainDescriptor();
 
     while (reader.pos < end) {
@@ -752,7 +752,7 @@ export const ChainDescriptor = {
 
   fromPartial(object: DeepPartial<ChainDescriptor>): ChainDescriptor {
     const message = createBaseChainDescriptor();
-    message.id = object.id ?? "";
+    message.id = object.id ?? '';
     return message;
   }
 
@@ -775,7 +775,7 @@ export const CodecDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CodecDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCodecDescriptor();
 
     while (reader.pos < end) {
@@ -805,7 +805,7 @@ export const CodecDescriptor = {
 
 function createBaseInterfaceDescriptor(): InterfaceDescriptor {
   return {
-    fullname: "",
+    fullname: '',
     interfaceAcceptingMessages: [],
     interfaceImplementers: []
   };
@@ -813,7 +813,7 @@ function createBaseInterfaceDescriptor(): InterfaceDescriptor {
 
 export const InterfaceDescriptor = {
   encode(message: InterfaceDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.fullname !== "") {
+    if (message.fullname !== '') {
       writer.uint32(10).string(message.fullname);
     }
 
@@ -830,7 +830,7 @@ export const InterfaceDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InterfaceDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceDescriptor();
 
     while (reader.pos < end) {
@@ -860,7 +860,7 @@ export const InterfaceDescriptor = {
 
   fromPartial(object: DeepPartial<InterfaceDescriptor>): InterfaceDescriptor {
     const message = createBaseInterfaceDescriptor();
-    message.fullname = object.fullname ?? "";
+    message.fullname = object.fullname ?? '';
     message.interfaceAcceptingMessages = object.interfaceAcceptingMessages?.map(e => InterfaceAcceptingMessageDescriptor.fromPartial(e)) || [];
     message.interfaceImplementers = object.interfaceImplementers?.map(e => InterfaceImplementerDescriptor.fromPartial(e)) || [];
     return message;
@@ -870,18 +870,18 @@ export const InterfaceDescriptor = {
 
 function createBaseInterfaceImplementerDescriptor(): InterfaceImplementerDescriptor {
   return {
-    fullname: "",
-    typeUrl: ""
+    fullname: '',
+    typeUrl: ''
   };
 }
 
 export const InterfaceImplementerDescriptor = {
   encode(message: InterfaceImplementerDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.fullname !== "") {
+    if (message.fullname !== '') {
       writer.uint32(10).string(message.fullname);
     }
 
-    if (message.typeUrl !== "") {
+    if (message.typeUrl !== '') {
       writer.uint32(18).string(message.typeUrl);
     }
 
@@ -890,7 +890,7 @@ export const InterfaceImplementerDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InterfaceImplementerDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceImplementerDescriptor();
 
     while (reader.pos < end) {
@@ -916,8 +916,8 @@ export const InterfaceImplementerDescriptor = {
 
   fromPartial(object: DeepPartial<InterfaceImplementerDescriptor>): InterfaceImplementerDescriptor {
     const message = createBaseInterfaceImplementerDescriptor();
-    message.fullname = object.fullname ?? "";
-    message.typeUrl = object.typeUrl ?? "";
+    message.fullname = object.fullname ?? '';
+    message.typeUrl = object.typeUrl ?? '';
     return message;
   }
 
@@ -925,14 +925,14 @@ export const InterfaceImplementerDescriptor = {
 
 function createBaseInterfaceAcceptingMessageDescriptor(): InterfaceAcceptingMessageDescriptor {
   return {
-    fullname: "",
+    fullname: '',
     fieldDescriptorNames: []
   };
 }
 
 export const InterfaceAcceptingMessageDescriptor = {
   encode(message: InterfaceAcceptingMessageDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.fullname !== "") {
+    if (message.fullname !== '') {
       writer.uint32(10).string(message.fullname);
     }
 
@@ -945,7 +945,7 @@ export const InterfaceAcceptingMessageDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InterfaceAcceptingMessageDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceAcceptingMessageDescriptor();
 
     while (reader.pos < end) {
@@ -971,7 +971,7 @@ export const InterfaceAcceptingMessageDescriptor = {
 
   fromPartial(object: DeepPartial<InterfaceAcceptingMessageDescriptor>): InterfaceAcceptingMessageDescriptor {
     const message = createBaseInterfaceAcceptingMessageDescriptor();
-    message.fullname = object.fullname ?? "";
+    message.fullname = object.fullname ?? '';
     message.fieldDescriptorNames = object.fieldDescriptorNames?.map(e => e) || [];
     return message;
   }
@@ -980,13 +980,13 @@ export const InterfaceAcceptingMessageDescriptor = {
 
 function createBaseConfigurationDescriptor(): ConfigurationDescriptor {
   return {
-    bech32AccountAddressPrefix: ""
+    bech32AccountAddressPrefix: ''
   };
 }
 
 export const ConfigurationDescriptor = {
   encode(message: ConfigurationDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.bech32AccountAddressPrefix !== "") {
+    if (message.bech32AccountAddressPrefix !== '') {
       writer.uint32(10).string(message.bech32AccountAddressPrefix);
     }
 
@@ -995,7 +995,7 @@ export const ConfigurationDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConfigurationDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConfigurationDescriptor();
 
     while (reader.pos < end) {
@@ -1017,7 +1017,7 @@ export const ConfigurationDescriptor = {
 
   fromPartial(object: DeepPartial<ConfigurationDescriptor>): ConfigurationDescriptor {
     const message = createBaseConfigurationDescriptor();
-    message.bech32AccountAddressPrefix = object.bech32AccountAddressPrefix ?? "";
+    message.bech32AccountAddressPrefix = object.bech32AccountAddressPrefix ?? '';
     return message;
   }
 
@@ -1025,13 +1025,13 @@ export const ConfigurationDescriptor = {
 
 function createBaseMsgDescriptor(): MsgDescriptor {
   return {
-    msgTypeUrl: ""
+    msgTypeUrl: ''
   };
 }
 
 export const MsgDescriptor = {
   encode(message: MsgDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.msgTypeUrl !== "") {
+    if (message.msgTypeUrl !== '') {
       writer.uint32(10).string(message.msgTypeUrl);
     }
 
@@ -1040,7 +1040,7 @@ export const MsgDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDescriptor();
 
     while (reader.pos < end) {
@@ -1062,7 +1062,7 @@ export const MsgDescriptor = {
 
   fromPartial(object: DeepPartial<MsgDescriptor>): MsgDescriptor {
     const message = createBaseMsgDescriptor();
-    message.msgTypeUrl = object.msgTypeUrl ?? "";
+    message.msgTypeUrl = object.msgTypeUrl ?? '';
     return message;
   }
 
@@ -1079,7 +1079,7 @@ export const GetAuthnDescriptorRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetAuthnDescriptorRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetAuthnDescriptorRequest();
 
     while (reader.pos < end) {
@@ -1119,7 +1119,7 @@ export const GetAuthnDescriptorResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetAuthnDescriptorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetAuthnDescriptorResponse();
 
     while (reader.pos < end) {
@@ -1158,7 +1158,7 @@ export const GetChainDescriptorRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetChainDescriptorRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetChainDescriptorRequest();
 
     while (reader.pos < end) {
@@ -1198,7 +1198,7 @@ export const GetChainDescriptorResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetChainDescriptorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetChainDescriptorResponse();
 
     while (reader.pos < end) {
@@ -1237,7 +1237,7 @@ export const GetCodecDescriptorRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetCodecDescriptorRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetCodecDescriptorRequest();
 
     while (reader.pos < end) {
@@ -1277,7 +1277,7 @@ export const GetCodecDescriptorResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetCodecDescriptorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetCodecDescriptorResponse();
 
     while (reader.pos < end) {
@@ -1316,7 +1316,7 @@ export const GetConfigurationDescriptorRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetConfigurationDescriptorRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetConfigurationDescriptorRequest();
 
     while (reader.pos < end) {
@@ -1356,7 +1356,7 @@ export const GetConfigurationDescriptorResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetConfigurationDescriptorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetConfigurationDescriptorResponse();
 
     while (reader.pos < end) {
@@ -1395,7 +1395,7 @@ export const GetQueryServicesDescriptorRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetQueryServicesDescriptorRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetQueryServicesDescriptorRequest();
 
     while (reader.pos < end) {
@@ -1435,7 +1435,7 @@ export const GetQueryServicesDescriptorResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetQueryServicesDescriptorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetQueryServicesDescriptorResponse();
 
     while (reader.pos < end) {
@@ -1474,7 +1474,7 @@ export const GetTxDescriptorRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetTxDescriptorRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxDescriptorRequest();
 
     while (reader.pos < end) {
@@ -1514,7 +1514,7 @@ export const GetTxDescriptorResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetTxDescriptorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxDescriptorResponse();
 
     while (reader.pos < end) {
@@ -1559,7 +1559,7 @@ export const QueryServicesDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryServicesDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryServicesDescriptor();
 
     while (reader.pos < end) {
@@ -1589,7 +1589,7 @@ export const QueryServicesDescriptor = {
 
 function createBaseQueryServiceDescriptor(): QueryServiceDescriptor {
   return {
-    fullname: "",
+    fullname: '',
     isModule: false,
     methods: []
   };
@@ -1597,7 +1597,7 @@ function createBaseQueryServiceDescriptor(): QueryServiceDescriptor {
 
 export const QueryServiceDescriptor = {
   encode(message: QueryServiceDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.fullname !== "") {
+    if (message.fullname !== '') {
       writer.uint32(10).string(message.fullname);
     }
 
@@ -1614,7 +1614,7 @@ export const QueryServiceDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryServiceDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryServiceDescriptor();
 
     while (reader.pos < end) {
@@ -1644,7 +1644,7 @@ export const QueryServiceDescriptor = {
 
   fromPartial(object: DeepPartial<QueryServiceDescriptor>): QueryServiceDescriptor {
     const message = createBaseQueryServiceDescriptor();
-    message.fullname = object.fullname ?? "";
+    message.fullname = object.fullname ?? '';
     message.isModule = object.isModule ?? false;
     message.methods = object.methods?.map(e => QueryMethodDescriptor.fromPartial(e)) || [];
     return message;
@@ -1654,18 +1654,18 @@ export const QueryServiceDescriptor = {
 
 function createBaseQueryMethodDescriptor(): QueryMethodDescriptor {
   return {
-    name: "",
-    fullQueryPath: ""
+    name: '',
+    fullQueryPath: ''
   };
 }
 
 export const QueryMethodDescriptor = {
   encode(message: QueryMethodDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
-    if (message.fullQueryPath !== "") {
+    if (message.fullQueryPath !== '') {
       writer.uint32(18).string(message.fullQueryPath);
     }
 
@@ -1674,7 +1674,7 @@ export const QueryMethodDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryMethodDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryMethodDescriptor();
 
     while (reader.pos < end) {
@@ -1700,8 +1700,8 @@ export const QueryMethodDescriptor = {
 
   fromPartial(object: DeepPartial<QueryMethodDescriptor>): QueryMethodDescriptor {
     const message = createBaseQueryMethodDescriptor();
-    message.name = object.name ?? "";
-    message.fullQueryPath = object.fullQueryPath ?? "";
+    message.name = object.name ?? '';
+    message.fullQueryPath = object.fullQueryPath ?? '';
     return message;
   }
 

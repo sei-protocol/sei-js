@@ -1,7 +1,7 @@
-import { Timestamp } from "../../../google/protobuf/timestamp";
-import { Any, AnySDKType } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
-import { toTimestamp, fromTimestamp, Long, DeepPartial } from "@osmonauts/helpers";
+import { Timestamp } from '../../../google/protobuf/timestamp';
+import { Any, AnySDKType } from '../../../google/protobuf/any';
+import * as _m0 from 'protobufjs/minimal';
+import { toTimestamp, fromTimestamp, Long, DeepPartial } from '@osmonauts/helpers';
 /** Plan specifies information about a planned upgrade and when it should occur. */
 
 export interface Plan {
@@ -173,17 +173,17 @@ export interface ModuleVersionSDKType {
 
 function createBasePlan(): Plan {
   return {
-    name: "",
+    name: '',
     time: undefined,
     height: Long.ZERO,
-    info: "",
+    info: '',
     upgradedClientState: undefined
   };
 }
 
 export const Plan = {
   encode(message: Plan, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
@@ -195,7 +195,7 @@ export const Plan = {
       writer.uint32(24).int64(message.height);
     }
 
-    if (message.info !== "") {
+    if (message.info !== '') {
       writer.uint32(34).string(message.info);
     }
 
@@ -208,7 +208,7 @@ export const Plan = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Plan {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePlan();
 
     while (reader.pos < end) {
@@ -246,10 +246,10 @@ export const Plan = {
 
   fromPartial(object: DeepPartial<Plan>): Plan {
     const message = createBasePlan();
-    message.name = object.name ?? "";
+    message.name = object.name ?? '';
     message.time = object.time ?? undefined;
     message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
-    message.info = object.info ?? "";
+    message.info = object.info ?? '';
     message.upgradedClientState = object.upgradedClientState !== undefined && object.upgradedClientState !== null ? Any.fromPartial(object.upgradedClientState) : undefined;
     return message;
   }
@@ -258,19 +258,19 @@ export const Plan = {
 
 function createBaseSoftwareUpgradeProposal(): SoftwareUpgradeProposal {
   return {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     plan: undefined
   };
 }
 
 export const SoftwareUpgradeProposal = {
   encode(message: SoftwareUpgradeProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -283,7 +283,7 @@ export const SoftwareUpgradeProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SoftwareUpgradeProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSoftwareUpgradeProposal();
 
     while (reader.pos < end) {
@@ -313,8 +313,8 @@ export const SoftwareUpgradeProposal = {
 
   fromPartial(object: DeepPartial<SoftwareUpgradeProposal>): SoftwareUpgradeProposal {
     const message = createBaseSoftwareUpgradeProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
     message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     return message;
   }
@@ -323,18 +323,18 @@ export const SoftwareUpgradeProposal = {
 
 function createBaseCancelSoftwareUpgradeProposal(): CancelSoftwareUpgradeProposal {
   return {
-    title: "",
-    description: ""
+    title: '',
+    description: ''
   };
 }
 
 export const CancelSoftwareUpgradeProposal = {
   encode(message: CancelSoftwareUpgradeProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -343,7 +343,7 @@ export const CancelSoftwareUpgradeProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CancelSoftwareUpgradeProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCancelSoftwareUpgradeProposal();
 
     while (reader.pos < end) {
@@ -369,8 +369,8 @@ export const CancelSoftwareUpgradeProposal = {
 
   fromPartial(object: DeepPartial<CancelSoftwareUpgradeProposal>): CancelSoftwareUpgradeProposal {
     const message = createBaseCancelSoftwareUpgradeProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
     return message;
   }
 
@@ -378,14 +378,14 @@ export const CancelSoftwareUpgradeProposal = {
 
 function createBaseModuleVersion(): ModuleVersion {
   return {
-    name: "",
+    name: '',
     version: Long.UZERO
   };
 }
 
 export const ModuleVersion = {
   encode(message: ModuleVersion, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
@@ -398,7 +398,7 @@ export const ModuleVersion = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModuleVersion {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModuleVersion();
 
     while (reader.pos < end) {
@@ -424,7 +424,7 @@ export const ModuleVersion = {
 
   fromPartial(object: DeepPartial<ModuleVersion>): ModuleVersion {
     const message = createBaseModuleVersion();
-    message.name = object.name ?? "";
+    message.name = object.name ?? '';
     message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.UZERO;
     return message;
   }

@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 /**
  * A Timestamp represents a point in time independent of any time zone or local
  * calendar, encoded as a count of seconds and fractions of seconds at
@@ -225,7 +225,7 @@ export const Timestamp = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Timestamp {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTimestamp();
 
     while (reader.pos < end) {

@@ -1,9 +1,9 @@
-import { Proof, ProofSDKType } from "../crypto/proof";
-import { Consensus, ConsensusSDKType } from "../version/types";
-import { Timestamp } from "../../google/protobuf/timestamp";
-import { ValidatorSet, ValidatorSetSDKType } from "./validator";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, toTimestamp, Long, fromTimestamp } from "@osmonauts/helpers";
+import { Proof, ProofSDKType } from '../crypto/proof';
+import { Consensus, ConsensusSDKType } from '../version/types';
+import { Timestamp } from '../../google/protobuf/timestamp';
+import { ValidatorSet, ValidatorSetSDKType } from './validator';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, toTimestamp, Long, fromTimestamp } from '@osmonauts/helpers';
 /** BlockIdFlag indicates which BlcokID the signature is for */
 
 export enum BlockIDFlag {
@@ -25,23 +25,23 @@ export enum BlockIDFlagSDKType {
 export function blockIDFlagFromJSON(object: any): BlockIDFlag {
   switch (object) {
     case 0:
-    case "BLOCK_ID_FLAG_UNKNOWN":
+    case 'BLOCK_ID_FLAG_UNKNOWN':
       return BlockIDFlag.BLOCK_ID_FLAG_UNKNOWN;
 
     case 1:
-    case "BLOCK_ID_FLAG_ABSENT":
+    case 'BLOCK_ID_FLAG_ABSENT':
       return BlockIDFlag.BLOCK_ID_FLAG_ABSENT;
 
     case 2:
-    case "BLOCK_ID_FLAG_COMMIT":
+    case 'BLOCK_ID_FLAG_COMMIT':
       return BlockIDFlag.BLOCK_ID_FLAG_COMMIT;
 
     case 3:
-    case "BLOCK_ID_FLAG_NIL":
+    case 'BLOCK_ID_FLAG_NIL':
       return BlockIDFlag.BLOCK_ID_FLAG_NIL;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return BlockIDFlag.UNRECOGNIZED;
   }
@@ -49,19 +49,19 @@ export function blockIDFlagFromJSON(object: any): BlockIDFlag {
 export function blockIDFlagToJSON(object: BlockIDFlag): string {
   switch (object) {
     case BlockIDFlag.BLOCK_ID_FLAG_UNKNOWN:
-      return "BLOCK_ID_FLAG_UNKNOWN";
+      return 'BLOCK_ID_FLAG_UNKNOWN';
 
     case BlockIDFlag.BLOCK_ID_FLAG_ABSENT:
-      return "BLOCK_ID_FLAG_ABSENT";
+      return 'BLOCK_ID_FLAG_ABSENT';
 
     case BlockIDFlag.BLOCK_ID_FLAG_COMMIT:
-      return "BLOCK_ID_FLAG_COMMIT";
+      return 'BLOCK_ID_FLAG_COMMIT';
 
     case BlockIDFlag.BLOCK_ID_FLAG_NIL:
-      return "BLOCK_ID_FLAG_NIL";
+      return 'BLOCK_ID_FLAG_NIL';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /** SignedMsgType is a type of signed message in the consensus. */
@@ -93,23 +93,23 @@ export enum SignedMsgTypeSDKType {
 export function signedMsgTypeFromJSON(object: any): SignedMsgType {
   switch (object) {
     case 0:
-    case "SIGNED_MSG_TYPE_UNKNOWN":
+    case 'SIGNED_MSG_TYPE_UNKNOWN':
       return SignedMsgType.SIGNED_MSG_TYPE_UNKNOWN;
 
     case 1:
-    case "SIGNED_MSG_TYPE_PREVOTE":
+    case 'SIGNED_MSG_TYPE_PREVOTE':
       return SignedMsgType.SIGNED_MSG_TYPE_PREVOTE;
 
     case 2:
-    case "SIGNED_MSG_TYPE_PRECOMMIT":
+    case 'SIGNED_MSG_TYPE_PRECOMMIT':
       return SignedMsgType.SIGNED_MSG_TYPE_PRECOMMIT;
 
     case 32:
-    case "SIGNED_MSG_TYPE_PROPOSAL":
+    case 'SIGNED_MSG_TYPE_PROPOSAL':
       return SignedMsgType.SIGNED_MSG_TYPE_PROPOSAL;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return SignedMsgType.UNRECOGNIZED;
   }
@@ -117,19 +117,19 @@ export function signedMsgTypeFromJSON(object: any): SignedMsgType {
 export function signedMsgTypeToJSON(object: SignedMsgType): string {
   switch (object) {
     case SignedMsgType.SIGNED_MSG_TYPE_UNKNOWN:
-      return "SIGNED_MSG_TYPE_UNKNOWN";
+      return 'SIGNED_MSG_TYPE_UNKNOWN';
 
     case SignedMsgType.SIGNED_MSG_TYPE_PREVOTE:
-      return "SIGNED_MSG_TYPE_PREVOTE";
+      return 'SIGNED_MSG_TYPE_PREVOTE';
 
     case SignedMsgType.SIGNED_MSG_TYPE_PRECOMMIT:
-      return "SIGNED_MSG_TYPE_PRECOMMIT";
+      return 'SIGNED_MSG_TYPE_PRECOMMIT';
 
     case SignedMsgType.SIGNED_MSG_TYPE_PROPOSAL:
-      return "SIGNED_MSG_TYPE_PROPOSAL";
+      return 'SIGNED_MSG_TYPE_PROPOSAL';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /** PartsetHeader */
@@ -405,7 +405,7 @@ export const PartSetHeader = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PartSetHeader {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePartSetHeader();
 
     while (reader.pos < end) {
@@ -465,7 +465,7 @@ export const Part = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Part {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePart();
 
     while (reader.pos < end) {
@@ -525,7 +525,7 @@ export const BlockID = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BlockID {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlockID();
 
     while (reader.pos < end) {
@@ -561,7 +561,7 @@ export const BlockID = {
 function createBaseHeader(): Header {
   return {
     version: undefined,
-    chainId: "",
+    chainId: '',
     height: Long.ZERO,
     time: undefined,
     lastBlockId: undefined,
@@ -583,7 +583,7 @@ export const Header = {
       Consensus.encode(message.version, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.chainId !== "") {
+    if (message.chainId !== '') {
       writer.uint32(18).string(message.chainId);
     }
 
@@ -640,7 +640,7 @@ export const Header = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Header {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeader();
 
     while (reader.pos < end) {
@@ -715,7 +715,7 @@ export const Header = {
   fromPartial(object: DeepPartial<Header>): Header {
     const message = createBaseHeader();
     message.version = object.version !== undefined && object.version !== null ? Consensus.fromPartial(object.version) : undefined;
-    message.chainId = object.chainId ?? "";
+    message.chainId = object.chainId ?? '';
     message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
     message.time = object.time ?? undefined;
     message.lastBlockId = object.lastBlockId !== undefined && object.lastBlockId !== null ? BlockID.fromPartial(object.lastBlockId) : undefined;
@@ -750,7 +750,7 @@ export const Data = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Data {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseData();
 
     while (reader.pos < end) {
@@ -830,7 +830,7 @@ export const Vote = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Vote {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVote();
 
     while (reader.pos < end) {
@@ -925,7 +925,7 @@ export const Commit = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Commit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommit();
 
     while (reader.pos < end) {
@@ -1000,7 +1000,7 @@ export const CommitSig = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CommitSig {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommitSig();
 
     while (reader.pos < end) {
@@ -1090,7 +1090,7 @@ export const Proposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Proposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProposal();
 
     while (reader.pos < end) {
@@ -1170,7 +1170,7 @@ export const SignedHeader = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignedHeader {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignedHeader();
 
     while (reader.pos < end) {
@@ -1225,7 +1225,7 @@ export const LightBlock = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LightBlock {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLightBlock();
 
     while (reader.pos < end) {
@@ -1290,7 +1290,7 @@ export const BlockMeta = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BlockMeta {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlockMeta();
 
     while (reader.pos < end) {
@@ -1360,7 +1360,7 @@ export const TxProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TxProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTxProof();
 
     while (reader.pos < end) {

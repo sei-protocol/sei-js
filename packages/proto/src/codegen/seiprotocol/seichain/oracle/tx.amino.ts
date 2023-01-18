@@ -1,7 +1,7 @@
-import { AminoMsg } from "@cosmjs/amino";
-import { MsgAggregateExchangeRateVote, MsgDelegateFeedConsent } from "./tx";
+import { AminoMsg } from '@cosmjs/amino';
+import { MsgAggregateExchangeRateVote, MsgDelegateFeedConsent } from './tx';
 export interface AminoMsgAggregateExchangeRateVote extends AminoMsg {
-  type: "/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote";
+  type: '/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote';
   value: {
     exchange_rates: string;
     feeder: string;
@@ -9,20 +9,20 @@ export interface AminoMsgAggregateExchangeRateVote extends AminoMsg {
   };
 }
 export interface AminoMsgDelegateFeedConsent extends AminoMsg {
-  type: "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent";
+  type: '/seiprotocol.seichain.oracle.MsgDelegateFeedConsent';
   value: {
     operator: string;
     delegate: string;
   };
 }
 export const AminoConverter = {
-  "/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote": {
-    aminoType: "/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote",
+  '/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote': {
+    aminoType: '/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote',
     toAmino: ({
       exchangeRates,
       feeder,
       validator
-    }: MsgAggregateExchangeRateVote): AminoMsgAggregateExchangeRateVote["value"] => {
+    }: MsgAggregateExchangeRateVote): AminoMsgAggregateExchangeRateVote['value'] => {
       return {
         exchange_rates: exchangeRates,
         feeder,
@@ -33,7 +33,7 @@ export const AminoConverter = {
       exchange_rates,
       feeder,
       validator
-    }: AminoMsgAggregateExchangeRateVote["value"]): MsgAggregateExchangeRateVote => {
+    }: AminoMsgAggregateExchangeRateVote['value']): MsgAggregateExchangeRateVote => {
       return {
         exchangeRates: exchange_rates,
         feeder,
@@ -41,12 +41,12 @@ export const AminoConverter = {
       };
     }
   },
-  "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent": {
-    aminoType: "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent",
+  '/seiprotocol.seichain.oracle.MsgDelegateFeedConsent': {
+    aminoType: '/seiprotocol.seichain.oracle.MsgDelegateFeedConsent',
     toAmino: ({
       operator,
       delegate
-    }: MsgDelegateFeedConsent): AminoMsgDelegateFeedConsent["value"] => {
+    }: MsgDelegateFeedConsent): AminoMsgDelegateFeedConsent['value'] => {
       return {
         operator,
         delegate
@@ -55,7 +55,7 @@ export const AminoConverter = {
     fromAmino: ({
       operator,
       delegate
-    }: AminoMsgDelegateFeedConsent["value"]): MsgDelegateFeedConsent => {
+    }: AminoMsgDelegateFeedConsent['value']): MsgDelegateFeedConsent => {
       return {
         operator,
         delegate

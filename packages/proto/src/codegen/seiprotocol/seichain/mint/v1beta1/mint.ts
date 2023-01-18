@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /** Minter represents the minting state. */
 
 export interface Minter {
@@ -49,13 +49,13 @@ export interface ParamsSDKType {
 
 function createBaseMinter(): Minter {
   return {
-    epochProvisions: ""
+    epochProvisions: ''
   };
 }
 
 export const Minter = {
   encode(message: Minter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.epochProvisions !== "") {
+    if (message.epochProvisions !== '') {
       writer.uint32(10).string(message.epochProvisions);
     }
 
@@ -64,7 +64,7 @@ export const Minter = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Minter {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMinter();
 
     while (reader.pos < end) {
@@ -86,7 +86,7 @@ export const Minter = {
 
   fromPartial(object: DeepPartial<Minter>): Minter {
     const message = createBaseMinter();
-    message.epochProvisions = object.epochProvisions ?? "";
+    message.epochProvisions = object.epochProvisions ?? '';
     return message;
   }
 
@@ -94,14 +94,14 @@ export const Minter = {
 
 function createBaseScheduledTokenRelease(): ScheduledTokenRelease {
   return {
-    date: "",
+    date: '',
     tokenReleaseAmount: Long.ZERO
   };
 }
 
 export const ScheduledTokenRelease = {
   encode(message: ScheduledTokenRelease, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.date !== "") {
+    if (message.date !== '') {
       writer.uint32(10).string(message.date);
     }
 
@@ -114,7 +114,7 @@ export const ScheduledTokenRelease = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ScheduledTokenRelease {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseScheduledTokenRelease();
 
     while (reader.pos < end) {
@@ -140,7 +140,7 @@ export const ScheduledTokenRelease = {
 
   fromPartial(object: DeepPartial<ScheduledTokenRelease>): ScheduledTokenRelease {
     const message = createBaseScheduledTokenRelease();
-    message.date = object.date ?? "";
+    message.date = object.date ?? '';
     message.tokenReleaseAmount = object.tokenReleaseAmount !== undefined && object.tokenReleaseAmount !== null ? Long.fromValue(object.tokenReleaseAmount) : Long.ZERO;
     return message;
   }
@@ -149,19 +149,19 @@ export const ScheduledTokenRelease = {
 
 function createBaseParams(): Params {
   return {
-    mintDenom: "",
-    genesisEpochProvisions: "",
+    mintDenom: '',
+    genesisEpochProvisions: '',
     tokenReleaseSchedule: []
   };
 }
 
 export const Params = {
   encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.mintDenom !== "") {
+    if (message.mintDenom !== '') {
       writer.uint32(10).string(message.mintDenom);
     }
 
-    if (message.genesisEpochProvisions !== "") {
+    if (message.genesisEpochProvisions !== '') {
       writer.uint32(18).string(message.genesisEpochProvisions);
     }
 
@@ -174,7 +174,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {
@@ -204,8 +204,8 @@ export const Params = {
 
   fromPartial(object: DeepPartial<Params>): Params {
     const message = createBaseParams();
-    message.mintDenom = object.mintDenom ?? "";
-    message.genesisEpochProvisions = object.genesisEpochProvisions ?? "";
+    message.mintDenom = object.mintDenom ?? '';
+    message.genesisEpochProvisions = object.genesisEpochProvisions ?? '';
     message.tokenReleaseSchedule = object.tokenReleaseSchedule?.map(e => ScheduledTokenRelease.fromPartial(e)) || [];
     return message;
   }

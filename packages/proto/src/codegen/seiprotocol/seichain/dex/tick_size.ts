@@ -1,6 +1,6 @@
-import { Pair, PairSDKType } from "./pair";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Pair, PairSDKType } from './pair';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 export interface TickSize {
   pair: Pair;
   ticksize: string;
@@ -15,8 +15,8 @@ export interface TickSizeSDKType {
 function createBaseTickSize(): TickSize {
   return {
     pair: undefined,
-    ticksize: "",
-    contractAddr: ""
+    ticksize: '',
+    contractAddr: ''
   };
 }
 
@@ -26,11 +26,11 @@ export const TickSize = {
       Pair.encode(message.pair, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.ticksize !== "") {
+    if (message.ticksize !== '') {
       writer.uint32(18).string(message.ticksize);
     }
 
-    if (message.contractAddr !== "") {
+    if (message.contractAddr !== '') {
       writer.uint32(26).string(message.contractAddr);
     }
 
@@ -39,7 +39,7 @@ export const TickSize = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TickSize {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTickSize();
 
     while (reader.pos < end) {
@@ -70,8 +70,8 @@ export const TickSize = {
   fromPartial(object: DeepPartial<TickSize>): TickSize {
     const message = createBaseTickSize();
     message.pair = object.pair !== undefined && object.pair !== null ? Pair.fromPartial(object.pair) : undefined;
-    message.ticksize = object.ticksize ?? "";
-    message.contractAddr = object.contractAddr ?? "";
+    message.ticksize = object.ticksize ?? '';
+    message.contractAddr = object.contractAddr ?? '';
     return message;
   }
 

@@ -14,5 +14,16 @@
       "files": ["*.js", "*.jsx"],
       "rules": {}
     }
-  ]
+  ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "@typescript-eslint/no-namespace": "warn",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "no-case-declarations": "warn"
+  }
 }

@@ -1,7 +1,7 @@
-import { Coin, CoinSDKType } from "../../../../cosmos/base/v1beta1/coin";
-import { Height, HeightSDKType } from "../../../core/client/v1/client";
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import { Coin, CoinSDKType } from '../../../../cosmos/base/v1beta1/coin';
+import { Height, HeightSDKType } from '../../../core/client/v1/client';
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 /**
  * MsgTransfer defines a msg to transfer fungible tokens (i.e Coins) between
  * ICS20 enabled chains. See ICS Spec here:
@@ -79,11 +79,11 @@ export interface MsgTransferResponseSDKType {}
 
 function createBaseMsgTransfer(): MsgTransfer {
   return {
-    sourcePort: "",
-    sourceChannel: "",
+    sourcePort: '',
+    sourceChannel: '',
     token: undefined,
-    sender: "",
-    receiver: "",
+    sender: '',
+    receiver: '',
     timeoutHeight: undefined,
     timeoutTimestamp: Long.UZERO
   };
@@ -91,11 +91,11 @@ function createBaseMsgTransfer(): MsgTransfer {
 
 export const MsgTransfer = {
   encode(message: MsgTransfer, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sourcePort !== "") {
+    if (message.sourcePort !== '') {
       writer.uint32(10).string(message.sourcePort);
     }
 
-    if (message.sourceChannel !== "") {
+    if (message.sourceChannel !== '') {
       writer.uint32(18).string(message.sourceChannel);
     }
 
@@ -103,11 +103,11 @@ export const MsgTransfer = {
       Coin.encode(message.token, writer.uint32(26).fork()).ldelim();
     }
 
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(34).string(message.sender);
     }
 
-    if (message.receiver !== "") {
+    if (message.receiver !== '') {
       writer.uint32(42).string(message.receiver);
     }
 
@@ -124,7 +124,7 @@ export const MsgTransfer = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransfer {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgTransfer();
 
     while (reader.pos < end) {
@@ -170,11 +170,11 @@ export const MsgTransfer = {
 
   fromPartial(object: DeepPartial<MsgTransfer>): MsgTransfer {
     const message = createBaseMsgTransfer();
-    message.sourcePort = object.sourcePort ?? "";
-    message.sourceChannel = object.sourceChannel ?? "";
+    message.sourcePort = object.sourcePort ?? '';
+    message.sourceChannel = object.sourceChannel ?? '';
     message.token = object.token !== undefined && object.token !== null ? Coin.fromPartial(object.token) : undefined;
-    message.sender = object.sender ?? "";
-    message.receiver = object.receiver ?? "";
+    message.sender = object.sender ?? '';
+    message.receiver = object.receiver ?? '';
     message.timeoutHeight = object.timeoutHeight !== undefined && object.timeoutHeight !== null ? Height.fromPartial(object.timeoutHeight) : undefined;
     message.timeoutTimestamp = object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null ? Long.fromValue(object.timeoutTimestamp) : Long.UZERO;
     return message;
@@ -193,7 +193,7 @@ export const MsgTransferResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransferResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgTransferResponse();
 
     while (reader.pos < end) {

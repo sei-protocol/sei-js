@@ -1,6 +1,6 @@
-import { setPaginationParams } from "@osmonauts/helpers";
-import { LCDClient } from "@osmonauts/lcd";
-import { QueryBalanceRequest, QueryBalanceResponseSDKType, QueryAllBalancesRequest, QueryAllBalancesResponseSDKType, QuerySpendableBalancesRequest, QuerySpendableBalancesResponseSDKType, QueryTotalSupplyRequest, QueryTotalSupplyResponseSDKType, QuerySupplyOfRequest, QuerySupplyOfResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomMetadataRequest, QueryDenomMetadataResponseSDKType, QueryDenomsMetadataRequest, QueryDenomsMetadataResponseSDKType, QueryDenomOwnersRequest, QueryDenomOwnersResponseSDKType } from "./query";
+import { setPaginationParams } from '@osmonauts/helpers';
+import { LCDClient } from '@osmonauts/lcd';
+import { QueryBalanceRequest, QueryBalanceResponseSDKType, QueryAllBalancesRequest, QueryAllBalancesResponseSDKType, QuerySpendableBalancesRequest, QuerySpendableBalancesResponseSDKType, QueryTotalSupplyRequest, QueryTotalSupplyResponseSDKType, QuerySupplyOfRequest, QuerySupplyOfResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomMetadataRequest, QueryDenomMetadataResponseSDKType, QueryDenomsMetadataRequest, QueryDenomsMetadataResponseSDKType, QueryDenomOwnersRequest, QueryDenomOwnersResponseSDKType } from './query';
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -28,7 +28,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.denom !== "undefined") {
+    if (typeof params?.denom !== 'undefined') {
       options.params.denom = params.denom;
     }
 
@@ -43,7 +43,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -59,7 +59,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -76,7 +76,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -91,7 +91,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.denom !== "undefined") {
+    if (typeof params?.denom !== 'undefined') {
       options.params.denom = params.denom;
     }
 
@@ -123,7 +123,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -139,7 +139,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 

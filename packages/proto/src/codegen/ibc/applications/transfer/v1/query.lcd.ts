@@ -1,6 +1,6 @@
-import { setPaginationParams } from "@osmonauts/helpers";
-import { LCDClient } from "@osmonauts/lcd";
-import { QueryDenomTraceRequest, QueryDenomTraceResponseSDKType, QueryDenomTracesRequest, QueryDenomTracesResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType } from "./query";
+import { setPaginationParams } from '@osmonauts/helpers';
+import { LCDClient } from '@osmonauts/lcd';
+import { QueryDenomTraceRequest, QueryDenomTraceResponseSDKType, QueryDenomTracesRequest, QueryDenomTracesResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType } from './query';
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -31,7 +31,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 

@@ -1,6 +1,6 @@
-import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Coin, CoinSDKType } from '../../../cosmos/base/v1beta1/coin';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /**
  * MsgCreateDenom defines the message structure for the CreateDenom gRPC service
  * method. It allows an account to create a new denom. It requires a sender
@@ -128,18 +128,18 @@ export interface MsgChangeAdminResponseSDKType {}
 
 function createBaseMsgCreateDenom(): MsgCreateDenom {
   return {
-    sender: "",
-    subdenom: ""
+    sender: '',
+    subdenom: ''
   };
 }
 
 export const MsgCreateDenom = {
   encode(message: MsgCreateDenom, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
-    if (message.subdenom !== "") {
+    if (message.subdenom !== '') {
       writer.uint32(18).string(message.subdenom);
     }
 
@@ -148,7 +148,7 @@ export const MsgCreateDenom = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateDenom {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateDenom();
 
     while (reader.pos < end) {
@@ -174,8 +174,8 @@ export const MsgCreateDenom = {
 
   fromPartial(object: DeepPartial<MsgCreateDenom>): MsgCreateDenom {
     const message = createBaseMsgCreateDenom();
-    message.sender = object.sender ?? "";
-    message.subdenom = object.subdenom ?? "";
+    message.sender = object.sender ?? '';
+    message.subdenom = object.subdenom ?? '';
     return message;
   }
 
@@ -183,13 +183,13 @@ export const MsgCreateDenom = {
 
 function createBaseMsgCreateDenomResponse(): MsgCreateDenomResponse {
   return {
-    newTokenDenom: ""
+    newTokenDenom: ''
   };
 }
 
 export const MsgCreateDenomResponse = {
   encode(message: MsgCreateDenomResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.newTokenDenom !== "") {
+    if (message.newTokenDenom !== '') {
       writer.uint32(10).string(message.newTokenDenom);
     }
 
@@ -198,7 +198,7 @@ export const MsgCreateDenomResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateDenomResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateDenomResponse();
 
     while (reader.pos < end) {
@@ -220,7 +220,7 @@ export const MsgCreateDenomResponse = {
 
   fromPartial(object: DeepPartial<MsgCreateDenomResponse>): MsgCreateDenomResponse {
     const message = createBaseMsgCreateDenomResponse();
-    message.newTokenDenom = object.newTokenDenom ?? "";
+    message.newTokenDenom = object.newTokenDenom ?? '';
     return message;
   }
 
@@ -228,14 +228,14 @@ export const MsgCreateDenomResponse = {
 
 function createBaseMsgMint(): MsgMint {
   return {
-    sender: "",
+    sender: '',
     amount: undefined
   };
 }
 
 export const MsgMint = {
   encode(message: MsgMint, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
@@ -248,7 +248,7 @@ export const MsgMint = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMint {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgMint();
 
     while (reader.pos < end) {
@@ -274,7 +274,7 @@ export const MsgMint = {
 
   fromPartial(object: DeepPartial<MsgMint>): MsgMint {
     const message = createBaseMsgMint();
-    message.sender = object.sender ?? "";
+    message.sender = object.sender ?? '';
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     return message;
   }
@@ -292,7 +292,7 @@ export const MsgMintResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMintResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgMintResponse();
 
     while (reader.pos < end) {
@@ -317,14 +317,14 @@ export const MsgMintResponse = {
 
 function createBaseMsgBurn(): MsgBurn {
   return {
-    sender: "",
+    sender: '',
     amount: undefined
   };
 }
 
 export const MsgBurn = {
   encode(message: MsgBurn, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
@@ -337,7 +337,7 @@ export const MsgBurn = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgBurn {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgBurn();
 
     while (reader.pos < end) {
@@ -363,7 +363,7 @@ export const MsgBurn = {
 
   fromPartial(object: DeepPartial<MsgBurn>): MsgBurn {
     const message = createBaseMsgBurn();
-    message.sender = object.sender ?? "";
+    message.sender = object.sender ?? '';
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     return message;
   }
@@ -381,7 +381,7 @@ export const MsgBurnResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgBurnResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgBurnResponse();
 
     while (reader.pos < end) {
@@ -406,23 +406,23 @@ export const MsgBurnResponse = {
 
 function createBaseMsgChangeAdmin(): MsgChangeAdmin {
   return {
-    sender: "",
-    denom: "",
-    newAdmin: ""
+    sender: '',
+    denom: '',
+    newAdmin: ''
   };
 }
 
 export const MsgChangeAdmin = {
   encode(message: MsgChangeAdmin, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(18).string(message.denom);
     }
 
-    if (message.newAdmin !== "") {
+    if (message.newAdmin !== '') {
       writer.uint32(26).string(message.newAdmin);
     }
 
@@ -431,7 +431,7 @@ export const MsgChangeAdmin = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChangeAdmin {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChangeAdmin();
 
     while (reader.pos < end) {
@@ -461,9 +461,9 @@ export const MsgChangeAdmin = {
 
   fromPartial(object: DeepPartial<MsgChangeAdmin>): MsgChangeAdmin {
     const message = createBaseMsgChangeAdmin();
-    message.sender = object.sender ?? "";
-    message.denom = object.denom ?? "";
-    message.newAdmin = object.newAdmin ?? "";
+    message.sender = object.sender ?? '';
+    message.denom = object.denom ?? '';
+    message.newAdmin = object.newAdmin ?? '';
     return message;
   }
 
@@ -480,7 +480,7 @@ export const MsgChangeAdminResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChangeAdminResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChangeAdminResponse();
 
     while (reader.pos < end) {

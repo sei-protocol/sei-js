@@ -1,8 +1,8 @@
-import { Vote, VoteSDKType, LightBlock, LightBlockSDKType } from "./types";
-import { Timestamp } from "../../google/protobuf/timestamp";
-import { Validator, ValidatorSDKType } from "./validator";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, toTimestamp, Long, fromTimestamp } from "@osmonauts/helpers";
+import { Vote, VoteSDKType, LightBlock, LightBlockSDKType } from './types';
+import { Timestamp } from '../../google/protobuf/timestamp';
+import { Validator, ValidatorSDKType } from './validator';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, toTimestamp, Long, fromTimestamp } from '@osmonauts/helpers';
 export interface Evidence {
   duplicateVoteEvidence?: DuplicateVoteEvidence;
   lightClientAttackEvidence?: LightClientAttackEvidence;
@@ -76,7 +76,7 @@ export const Evidence = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Evidence {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEvidence();
 
     while (reader.pos < end) {
@@ -146,7 +146,7 @@ export const DuplicateVoteEvidence = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DuplicateVoteEvidence {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDuplicateVoteEvidence();
 
     while (reader.pos < end) {
@@ -231,7 +231,7 @@ export const LightClientAttackEvidence = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LightClientAttackEvidence {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLightClientAttackEvidence();
 
     while (reader.pos < end) {
@@ -296,7 +296,7 @@ export const EvidenceList = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): EvidenceList {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEvidenceList();
 
     while (reader.pos < end) {

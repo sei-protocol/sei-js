@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 export enum ScalarType {
   SCALAR_TYPE_UNSPECIFIED = 0,
   SCALAR_TYPE_STRING = 1,
@@ -15,19 +15,19 @@ export enum ScalarTypeSDKType {
 export function scalarTypeFromJSON(object: any): ScalarType {
   switch (object) {
     case 0:
-    case "SCALAR_TYPE_UNSPECIFIED":
+    case 'SCALAR_TYPE_UNSPECIFIED':
       return ScalarType.SCALAR_TYPE_UNSPECIFIED;
 
     case 1:
-    case "SCALAR_TYPE_STRING":
+    case 'SCALAR_TYPE_STRING':
       return ScalarType.SCALAR_TYPE_STRING;
 
     case 2:
-    case "SCALAR_TYPE_BYTES":
+    case 'SCALAR_TYPE_BYTES':
       return ScalarType.SCALAR_TYPE_BYTES;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return ScalarType.UNRECOGNIZED;
   }
@@ -35,16 +35,16 @@ export function scalarTypeFromJSON(object: any): ScalarType {
 export function scalarTypeToJSON(object: ScalarType): string {
   switch (object) {
     case ScalarType.SCALAR_TYPE_UNSPECIFIED:
-      return "SCALAR_TYPE_UNSPECIFIED";
+      return 'SCALAR_TYPE_UNSPECIFIED';
 
     case ScalarType.SCALAR_TYPE_STRING:
-      return "SCALAR_TYPE_STRING";
+      return 'SCALAR_TYPE_STRING';
 
     case ScalarType.SCALAR_TYPE_BYTES:
-      return "SCALAR_TYPE_BYTES";
+      return 'SCALAR_TYPE_BYTES';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /**
@@ -158,18 +158,18 @@ export interface ScalarDescriptorSDKType {
 
 function createBaseInterfaceDescriptor(): InterfaceDescriptor {
   return {
-    name: "",
-    description: ""
+    name: '',
+    description: ''
   };
 }
 
 export const InterfaceDescriptor = {
   encode(message: InterfaceDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -178,7 +178,7 @@ export const InterfaceDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): InterfaceDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseInterfaceDescriptor();
 
     while (reader.pos < end) {
@@ -204,8 +204,8 @@ export const InterfaceDescriptor = {
 
   fromPartial(object: DeepPartial<InterfaceDescriptor>): InterfaceDescriptor {
     const message = createBaseInterfaceDescriptor();
-    message.name = object.name ?? "";
-    message.description = object.description ?? "";
+    message.name = object.name ?? '';
+    message.description = object.description ?? '';
     return message;
   }
 
@@ -213,19 +213,19 @@ export const InterfaceDescriptor = {
 
 function createBaseScalarDescriptor(): ScalarDescriptor {
   return {
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     fieldType: []
   };
 }
 
 export const ScalarDescriptor = {
   encode(message: ScalarDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -241,7 +241,7 @@ export const ScalarDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ScalarDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseScalarDescriptor();
 
     while (reader.pos < end) {
@@ -280,8 +280,8 @@ export const ScalarDescriptor = {
 
   fromPartial(object: DeepPartial<ScalarDescriptor>): ScalarDescriptor {
     const message = createBaseScalarDescriptor();
-    message.name = object.name ?? "";
-    message.description = object.description ?? "";
+    message.name = object.name ?? '';
+    message.description = object.description ?? '';
     message.fieldType = object.fieldType?.map(e => e) || [];
     return message;
   }

@@ -1,7 +1,7 @@
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
-import { Plan, PlanSDKType } from "../../../../cosmos/upgrade/v1beta1/upgrade";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import { Any, AnySDKType } from '../../../../google/protobuf/any';
+import { Plan, PlanSDKType } from '../../../../cosmos/upgrade/v1beta1/upgrade';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /**
  * IdentifiedClientState defines a client state with an additional client
  * identifier field.
@@ -215,14 +215,14 @@ export interface ParamsSDKType {
 
 function createBaseIdentifiedClientState(): IdentifiedClientState {
   return {
-    clientId: "",
+    clientId: '',
     clientState: undefined
   };
 }
 
 export const IdentifiedClientState = {
   encode(message: IdentifiedClientState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -235,7 +235,7 @@ export const IdentifiedClientState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedClientState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseIdentifiedClientState();
 
     while (reader.pos < end) {
@@ -261,7 +261,7 @@ export const IdentifiedClientState = {
 
   fromPartial(object: DeepPartial<IdentifiedClientState>): IdentifiedClientState {
     const message = createBaseIdentifiedClientState();
-    message.clientId = object.clientId ?? "";
+    message.clientId = object.clientId ?? '';
     message.clientState = object.clientState !== undefined && object.clientState !== null ? Any.fromPartial(object.clientState) : undefined;
     return message;
   }
@@ -290,7 +290,7 @@ export const ConsensusStateWithHeight = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusStateWithHeight {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensusStateWithHeight();
 
     while (reader.pos < end) {
@@ -325,14 +325,14 @@ export const ConsensusStateWithHeight = {
 
 function createBaseClientConsensusStates(): ClientConsensusStates {
   return {
-    clientId: "",
+    clientId: '',
     consensusStates: []
   };
 }
 
 export const ClientConsensusStates = {
   encode(message: ClientConsensusStates, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -345,7 +345,7 @@ export const ClientConsensusStates = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientConsensusStates {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientConsensusStates();
 
     while (reader.pos < end) {
@@ -371,7 +371,7 @@ export const ClientConsensusStates = {
 
   fromPartial(object: DeepPartial<ClientConsensusStates>): ClientConsensusStates {
     const message = createBaseClientConsensusStates();
-    message.clientId = object.clientId ?? "";
+    message.clientId = object.clientId ?? '';
     message.consensusStates = object.consensusStates?.map(e => ConsensusStateWithHeight.fromPartial(e)) || [];
     return message;
   }
@@ -380,28 +380,28 @@ export const ClientConsensusStates = {
 
 function createBaseClientUpdateProposal(): ClientUpdateProposal {
   return {
-    title: "",
-    description: "",
-    subjectClientId: "",
-    substituteClientId: ""
+    title: '',
+    description: '',
+    subjectClientId: '',
+    substituteClientId: ''
   };
 }
 
 export const ClientUpdateProposal = {
   encode(message: ClientUpdateProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
-    if (message.subjectClientId !== "") {
+    if (message.subjectClientId !== '') {
       writer.uint32(26).string(message.subjectClientId);
     }
 
-    if (message.substituteClientId !== "") {
+    if (message.substituteClientId !== '') {
       writer.uint32(34).string(message.substituteClientId);
     }
 
@@ -410,7 +410,7 @@ export const ClientUpdateProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientUpdateProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientUpdateProposal();
 
     while (reader.pos < end) {
@@ -444,10 +444,10 @@ export const ClientUpdateProposal = {
 
   fromPartial(object: DeepPartial<ClientUpdateProposal>): ClientUpdateProposal {
     const message = createBaseClientUpdateProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.subjectClientId = object.subjectClientId ?? "";
-    message.substituteClientId = object.substituteClientId ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
+    message.subjectClientId = object.subjectClientId ?? '';
+    message.substituteClientId = object.substituteClientId ?? '';
     return message;
   }
 
@@ -455,8 +455,8 @@ export const ClientUpdateProposal = {
 
 function createBaseUpgradeProposal(): UpgradeProposal {
   return {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     plan: undefined,
     upgradedClientState: undefined
   };
@@ -464,11 +464,11 @@ function createBaseUpgradeProposal(): UpgradeProposal {
 
 export const UpgradeProposal = {
   encode(message: UpgradeProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -485,7 +485,7 @@ export const UpgradeProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): UpgradeProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpgradeProposal();
 
     while (reader.pos < end) {
@@ -519,8 +519,8 @@ export const UpgradeProposal = {
 
   fromPartial(object: DeepPartial<UpgradeProposal>): UpgradeProposal {
     const message = createBaseUpgradeProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
     message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     message.upgradedClientState = object.upgradedClientState !== undefined && object.upgradedClientState !== null ? Any.fromPartial(object.upgradedClientState) : undefined;
     return message;
@@ -550,7 +550,7 @@ export const Height = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Height {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeight();
 
     while (reader.pos < end) {
@@ -600,7 +600,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {

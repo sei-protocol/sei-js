@@ -1,6 +1,6 @@
-import { setPaginationParams } from "@osmonauts/helpers";
-import { LCDClient } from "@osmonauts/lcd";
-import { QueryGrantsRequest, QueryGrantsResponseSDKType, QueryGranterGrantsRequest, QueryGranterGrantsResponseSDKType, QueryGranteeGrantsRequest, QueryGranteeGrantsResponseSDKType } from "./query";
+import { setPaginationParams } from '@osmonauts/helpers';
+import { LCDClient } from '@osmonauts/lcd';
+import { QueryGrantsRequest, QueryGrantsResponseSDKType, QueryGranterGrantsRequest, QueryGranterGrantsResponseSDKType, QueryGranteeGrantsRequest, QueryGranteeGrantsResponseSDKType } from './query';
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -22,19 +22,19 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.granter !== "undefined") {
+    if (typeof params?.granter !== 'undefined') {
       options.params.granter = params.granter;
     }
 
-    if (typeof params?.grantee !== "undefined") {
+    if (typeof params?.grantee !== 'undefined') {
       options.params.grantee = params.grantee;
     }
 
-    if (typeof params?.msgTypeUrl !== "undefined") {
+    if (typeof params?.msgTypeUrl !== 'undefined') {
       options.params.msg_type_url = params.msgTypeUrl;
     }
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -51,7 +51,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 
@@ -68,7 +68,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== "undefined") {
+    if (typeof params?.pagination !== 'undefined') {
       setPaginationParams(options, params.pagination);
     }
 

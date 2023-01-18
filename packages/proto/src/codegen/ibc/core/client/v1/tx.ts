@@ -1,6 +1,6 @@
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Any, AnySDKType } from '../../../../google/protobuf/any';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** MsgCreateClient defines a message to create an IBC client */
 
 export interface MsgCreateClient {
@@ -180,7 +180,7 @@ function createBaseMsgCreateClient(): MsgCreateClient {
   return {
     clientState: undefined,
     consensusState: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
@@ -194,7 +194,7 @@ export const MsgCreateClient = {
       Any.encode(message.consensusState, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(26).string(message.signer);
     }
 
@@ -203,7 +203,7 @@ export const MsgCreateClient = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateClient {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateClient();
 
     while (reader.pos < end) {
@@ -235,7 +235,7 @@ export const MsgCreateClient = {
     const message = createBaseMsgCreateClient();
     message.clientState = object.clientState !== undefined && object.clientState !== null ? Any.fromPartial(object.clientState) : undefined;
     message.consensusState = object.consensusState !== undefined && object.consensusState !== null ? Any.fromPartial(object.consensusState) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -252,7 +252,7 @@ export const MsgCreateClientResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateClientResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateClientResponse();
 
     while (reader.pos < end) {
@@ -277,15 +277,15 @@ export const MsgCreateClientResponse = {
 
 function createBaseMsgUpdateClient(): MsgUpdateClient {
   return {
-    clientId: "",
+    clientId: '',
     header: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgUpdateClient = {
   encode(message: MsgUpdateClient, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -293,7 +293,7 @@ export const MsgUpdateClient = {
       Any.encode(message.header, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(26).string(message.signer);
     }
 
@@ -302,7 +302,7 @@ export const MsgUpdateClient = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateClient {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateClient();
 
     while (reader.pos < end) {
@@ -332,9 +332,9 @@ export const MsgUpdateClient = {
 
   fromPartial(object: DeepPartial<MsgUpdateClient>): MsgUpdateClient {
     const message = createBaseMsgUpdateClient();
-    message.clientId = object.clientId ?? "";
+    message.clientId = object.clientId ?? '';
     message.header = object.header !== undefined && object.header !== null ? Any.fromPartial(object.header) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -351,7 +351,7 @@ export const MsgUpdateClientResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateClientResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateClientResponse();
 
     while (reader.pos < end) {
@@ -376,18 +376,18 @@ export const MsgUpdateClientResponse = {
 
 function createBaseMsgUpgradeClient(): MsgUpgradeClient {
   return {
-    clientId: "",
+    clientId: '',
     clientState: undefined,
     consensusState: undefined,
     proofUpgradeClient: new Uint8Array(),
     proofUpgradeConsensusState: new Uint8Array(),
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgUpgradeClient = {
   encode(message: MsgUpgradeClient, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -407,7 +407,7 @@ export const MsgUpgradeClient = {
       writer.uint32(42).bytes(message.proofUpgradeConsensusState);
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(50).string(message.signer);
     }
 
@@ -416,7 +416,7 @@ export const MsgUpgradeClient = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpgradeClient {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpgradeClient();
 
     while (reader.pos < end) {
@@ -458,12 +458,12 @@ export const MsgUpgradeClient = {
 
   fromPartial(object: DeepPartial<MsgUpgradeClient>): MsgUpgradeClient {
     const message = createBaseMsgUpgradeClient();
-    message.clientId = object.clientId ?? "";
+    message.clientId = object.clientId ?? '';
     message.clientState = object.clientState !== undefined && object.clientState !== null ? Any.fromPartial(object.clientState) : undefined;
     message.consensusState = object.consensusState !== undefined && object.consensusState !== null ? Any.fromPartial(object.consensusState) : undefined;
     message.proofUpgradeClient = object.proofUpgradeClient ?? new Uint8Array();
     message.proofUpgradeConsensusState = object.proofUpgradeConsensusState ?? new Uint8Array();
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -480,7 +480,7 @@ export const MsgUpgradeClientResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpgradeClientResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpgradeClientResponse();
 
     while (reader.pos < end) {
@@ -505,15 +505,15 @@ export const MsgUpgradeClientResponse = {
 
 function createBaseMsgSubmitMisbehaviour(): MsgSubmitMisbehaviour {
   return {
-    clientId: "",
+    clientId: '',
     misbehaviour: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgSubmitMisbehaviour = {
   encode(message: MsgSubmitMisbehaviour, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -521,7 +521,7 @@ export const MsgSubmitMisbehaviour = {
       Any.encode(message.misbehaviour, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(26).string(message.signer);
     }
 
@@ -530,7 +530,7 @@ export const MsgSubmitMisbehaviour = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitMisbehaviour {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitMisbehaviour();
 
     while (reader.pos < end) {
@@ -560,9 +560,9 @@ export const MsgSubmitMisbehaviour = {
 
   fromPartial(object: DeepPartial<MsgSubmitMisbehaviour>): MsgSubmitMisbehaviour {
     const message = createBaseMsgSubmitMisbehaviour();
-    message.clientId = object.clientId ?? "";
+    message.clientId = object.clientId ?? '';
     message.misbehaviour = object.misbehaviour !== undefined && object.misbehaviour !== null ? Any.fromPartial(object.misbehaviour) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -579,7 +579,7 @@ export const MsgSubmitMisbehaviourResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitMisbehaviourResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitMisbehaviourResponse();
 
     while (reader.pos < end) {

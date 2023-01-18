@@ -1,7 +1,7 @@
-import { Rpc } from "@osmonauts/helpers";
-import * as _m0 from "protobufjs/minimal";
-import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryRecordedTransactionDataRequest, QueryRecordedTransactionDataResponse, QueryStateRootRequest, QueryStateRootResponse, QuerySenderRequest, QuerySenderResponse } from "./query";
+import { Rpc } from '@osmonauts/helpers';
+import * as _m0 from 'protobufjs/minimal';
+import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
+import { QueryParamsRequest, QueryParamsResponse, QueryRecordedTransactionDataRequest, QueryRecordedTransactionDataResponse, QueryStateRootRequest, QueryStateRootResponse, QuerySenderRequest, QuerySenderResponse } from './query';
 /** Query defines the RPC service */
 
 export interface Query {
@@ -31,25 +31,25 @@ export class QueryClientImpl implements Query {
 
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.nitro.Query", "Params", data);
+    const promise = this.rpc.request('seiprotocol.seichain.nitro.Query', 'Params', data);
     return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   recordedTransactionData(request: QueryRecordedTransactionDataRequest): Promise<QueryRecordedTransactionDataResponse> {
     const data = QueryRecordedTransactionDataRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.nitro.Query", "RecordedTransactionData", data);
+    const promise = this.rpc.request('seiprotocol.seichain.nitro.Query', 'RecordedTransactionData', data);
     return promise.then(data => QueryRecordedTransactionDataResponse.decode(new _m0.Reader(data)));
   }
 
   stateRoot(request: QueryStateRootRequest): Promise<QueryStateRootResponse> {
     const data = QueryStateRootRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.nitro.Query", "StateRoot", data);
+    const promise = this.rpc.request('seiprotocol.seichain.nitro.Query', 'StateRoot', data);
     return promise.then(data => QueryStateRootResponse.decode(new _m0.Reader(data)));
   }
 
   sender(request: QuerySenderRequest): Promise<QuerySenderResponse> {
     const data = QuerySenderRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.nitro.Query", "Sender", data);
+    const promise = this.rpc.request('seiprotocol.seichain.nitro.Query', 'Sender', data);
     return promise.then(data => QuerySenderResponse.decode(new _m0.Reader(data)));
   }
 

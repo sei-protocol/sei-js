@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 export interface AddCreatorsToDenomFeeWhitelistProposal {
   title: string;
   description: string;
@@ -13,19 +13,19 @@ export interface AddCreatorsToDenomFeeWhitelistProposalSDKType {
 
 function createBaseAddCreatorsToDenomFeeWhitelistProposal(): AddCreatorsToDenomFeeWhitelistProposal {
   return {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     creatorList: []
   };
 }
 
 export const AddCreatorsToDenomFeeWhitelistProposal = {
   encode(message: AddCreatorsToDenomFeeWhitelistProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -38,7 +38,7 @@ export const AddCreatorsToDenomFeeWhitelistProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AddCreatorsToDenomFeeWhitelistProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAddCreatorsToDenomFeeWhitelistProposal();
 
     while (reader.pos < end) {
@@ -68,8 +68,8 @@ export const AddCreatorsToDenomFeeWhitelistProposal = {
 
   fromPartial(object: DeepPartial<AddCreatorsToDenomFeeWhitelistProposal>): AddCreatorsToDenomFeeWhitelistProposal {
     const message = createBaseAddCreatorsToDenomFeeWhitelistProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
     message.creatorList = object.creatorList?.map(e => e) || [];
     return message;
   }

@@ -1,7 +1,7 @@
-import { AccessConfig, AccessConfigSDKType } from "./types";
-import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import { AccessConfig, AccessConfigSDKType } from './types';
+import { Coin, CoinSDKType } from '../../../cosmos/base/v1beta1/coin';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /** MsgStoreCode submit Wasm code to the system */
 
 export interface MsgStoreCode {
@@ -257,7 +257,7 @@ export interface MsgClearAdminResponseSDKType {}
 
 function createBaseMsgStoreCode(): MsgStoreCode {
   return {
-    sender: "",
+    sender: '',
     wasmByteCode: new Uint8Array(),
     instantiatePermission: undefined
   };
@@ -265,7 +265,7 @@ function createBaseMsgStoreCode(): MsgStoreCode {
 
 export const MsgStoreCode = {
   encode(message: MsgStoreCode, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
@@ -282,7 +282,7 @@ export const MsgStoreCode = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgStoreCode {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgStoreCode();
 
     while (reader.pos < end) {
@@ -312,7 +312,7 @@ export const MsgStoreCode = {
 
   fromPartial(object: DeepPartial<MsgStoreCode>): MsgStoreCode {
     const message = createBaseMsgStoreCode();
-    message.sender = object.sender ?? "";
+    message.sender = object.sender ?? '';
     message.wasmByteCode = object.wasmByteCode ?? new Uint8Array();
     message.instantiatePermission = object.instantiatePermission !== undefined && object.instantiatePermission !== null ? AccessConfig.fromPartial(object.instantiatePermission) : undefined;
     return message;
@@ -337,7 +337,7 @@ export const MsgStoreCodeResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgStoreCodeResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgStoreCodeResponse();
 
     while (reader.pos < end) {
@@ -367,10 +367,10 @@ export const MsgStoreCodeResponse = {
 
 function createBaseMsgInstantiateContract(): MsgInstantiateContract {
   return {
-    sender: "",
-    admin: "",
+    sender: '',
+    admin: '',
     codeId: Long.UZERO,
-    label: "",
+    label: '',
     msg: new Uint8Array(),
     funds: []
   };
@@ -378,11 +378,11 @@ function createBaseMsgInstantiateContract(): MsgInstantiateContract {
 
 export const MsgInstantiateContract = {
   encode(message: MsgInstantiateContract, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
-    if (message.admin !== "") {
+    if (message.admin !== '') {
       writer.uint32(18).string(message.admin);
     }
 
@@ -390,7 +390,7 @@ export const MsgInstantiateContract = {
       writer.uint32(24).uint64(message.codeId);
     }
 
-    if (message.label !== "") {
+    if (message.label !== '') {
       writer.uint32(34).string(message.label);
     }
 
@@ -407,7 +407,7 @@ export const MsgInstantiateContract = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgInstantiateContract {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgInstantiateContract();
 
     while (reader.pos < end) {
@@ -449,10 +449,10 @@ export const MsgInstantiateContract = {
 
   fromPartial(object: DeepPartial<MsgInstantiateContract>): MsgInstantiateContract {
     const message = createBaseMsgInstantiateContract();
-    message.sender = object.sender ?? "";
-    message.admin = object.admin ?? "";
+    message.sender = object.sender ?? '';
+    message.admin = object.admin ?? '';
     message.codeId = object.codeId !== undefined && object.codeId !== null ? Long.fromValue(object.codeId) : Long.UZERO;
-    message.label = object.label ?? "";
+    message.label = object.label ?? '';
     message.msg = object.msg ?? new Uint8Array();
     message.funds = object.funds?.map(e => Coin.fromPartial(e)) || [];
     return message;
@@ -462,14 +462,14 @@ export const MsgInstantiateContract = {
 
 function createBaseMsgInstantiateContractResponse(): MsgInstantiateContractResponse {
   return {
-    address: "",
+    address: '',
     data: new Uint8Array()
   };
 }
 
 export const MsgInstantiateContractResponse = {
   encode(message: MsgInstantiateContractResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== "") {
+    if (message.address !== '') {
       writer.uint32(10).string(message.address);
     }
 
@@ -482,7 +482,7 @@ export const MsgInstantiateContractResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgInstantiateContractResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgInstantiateContractResponse();
 
     while (reader.pos < end) {
@@ -508,7 +508,7 @@ export const MsgInstantiateContractResponse = {
 
   fromPartial(object: DeepPartial<MsgInstantiateContractResponse>): MsgInstantiateContractResponse {
     const message = createBaseMsgInstantiateContractResponse();
-    message.address = object.address ?? "";
+    message.address = object.address ?? '';
     message.data = object.data ?? new Uint8Array();
     return message;
   }
@@ -517,8 +517,8 @@ export const MsgInstantiateContractResponse = {
 
 function createBaseMsgExecuteContract(): MsgExecuteContract {
   return {
-    sender: "",
-    contract: "",
+    sender: '',
+    contract: '',
     msg: new Uint8Array(),
     funds: []
   };
@@ -526,11 +526,11 @@ function createBaseMsgExecuteContract(): MsgExecuteContract {
 
 export const MsgExecuteContract = {
   encode(message: MsgExecuteContract, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
-    if (message.contract !== "") {
+    if (message.contract !== '') {
       writer.uint32(18).string(message.contract);
     }
 
@@ -547,7 +547,7 @@ export const MsgExecuteContract = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgExecuteContract {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExecuteContract();
 
     while (reader.pos < end) {
@@ -581,8 +581,8 @@ export const MsgExecuteContract = {
 
   fromPartial(object: DeepPartial<MsgExecuteContract>): MsgExecuteContract {
     const message = createBaseMsgExecuteContract();
-    message.sender = object.sender ?? "";
-    message.contract = object.contract ?? "";
+    message.sender = object.sender ?? '';
+    message.contract = object.contract ?? '';
     message.msg = object.msg ?? new Uint8Array();
     message.funds = object.funds?.map(e => Coin.fromPartial(e)) || [];
     return message;
@@ -607,7 +607,7 @@ export const MsgExecuteContractResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgExecuteContractResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExecuteContractResponse();
 
     while (reader.pos < end) {
@@ -637,8 +637,8 @@ export const MsgExecuteContractResponse = {
 
 function createBaseMsgMigrateContract(): MsgMigrateContract {
   return {
-    sender: "",
-    contract: "",
+    sender: '',
+    contract: '',
     codeId: Long.UZERO,
     msg: new Uint8Array()
   };
@@ -646,11 +646,11 @@ function createBaseMsgMigrateContract(): MsgMigrateContract {
 
 export const MsgMigrateContract = {
   encode(message: MsgMigrateContract, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
-    if (message.contract !== "") {
+    if (message.contract !== '') {
       writer.uint32(18).string(message.contract);
     }
 
@@ -667,7 +667,7 @@ export const MsgMigrateContract = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMigrateContract {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgMigrateContract();
 
     while (reader.pos < end) {
@@ -701,8 +701,8 @@ export const MsgMigrateContract = {
 
   fromPartial(object: DeepPartial<MsgMigrateContract>): MsgMigrateContract {
     const message = createBaseMsgMigrateContract();
-    message.sender = object.sender ?? "";
-    message.contract = object.contract ?? "";
+    message.sender = object.sender ?? '';
+    message.contract = object.contract ?? '';
     message.codeId = object.codeId !== undefined && object.codeId !== null ? Long.fromValue(object.codeId) : Long.UZERO;
     message.msg = object.msg ?? new Uint8Array();
     return message;
@@ -727,7 +727,7 @@ export const MsgMigrateContractResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMigrateContractResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgMigrateContractResponse();
 
     while (reader.pos < end) {
@@ -757,23 +757,23 @@ export const MsgMigrateContractResponse = {
 
 function createBaseMsgUpdateAdmin(): MsgUpdateAdmin {
   return {
-    sender: "",
-    newAdmin: "",
-    contract: ""
+    sender: '',
+    newAdmin: '',
+    contract: ''
   };
 }
 
 export const MsgUpdateAdmin = {
   encode(message: MsgUpdateAdmin, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
-    if (message.newAdmin !== "") {
+    if (message.newAdmin !== '') {
       writer.uint32(18).string(message.newAdmin);
     }
 
-    if (message.contract !== "") {
+    if (message.contract !== '') {
       writer.uint32(26).string(message.contract);
     }
 
@@ -782,7 +782,7 @@ export const MsgUpdateAdmin = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateAdmin {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateAdmin();
 
     while (reader.pos < end) {
@@ -812,9 +812,9 @@ export const MsgUpdateAdmin = {
 
   fromPartial(object: DeepPartial<MsgUpdateAdmin>): MsgUpdateAdmin {
     const message = createBaseMsgUpdateAdmin();
-    message.sender = object.sender ?? "";
-    message.newAdmin = object.newAdmin ?? "";
-    message.contract = object.contract ?? "";
+    message.sender = object.sender ?? '';
+    message.newAdmin = object.newAdmin ?? '';
+    message.contract = object.contract ?? '';
     return message;
   }
 
@@ -831,7 +831,7 @@ export const MsgUpdateAdminResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateAdminResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateAdminResponse();
 
     while (reader.pos < end) {
@@ -856,18 +856,18 @@ export const MsgUpdateAdminResponse = {
 
 function createBaseMsgClearAdmin(): MsgClearAdmin {
   return {
-    sender: "",
-    contract: ""
+    sender: '',
+    contract: ''
   };
 }
 
 export const MsgClearAdmin = {
   encode(message: MsgClearAdmin, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== "") {
+    if (message.sender !== '') {
       writer.uint32(10).string(message.sender);
     }
 
-    if (message.contract !== "") {
+    if (message.contract !== '') {
       writer.uint32(26).string(message.contract);
     }
 
@@ -876,7 +876,7 @@ export const MsgClearAdmin = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgClearAdmin {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClearAdmin();
 
     while (reader.pos < end) {
@@ -902,8 +902,8 @@ export const MsgClearAdmin = {
 
   fromPartial(object: DeepPartial<MsgClearAdmin>): MsgClearAdmin {
     const message = createBaseMsgClearAdmin();
-    message.sender = object.sender ?? "";
-    message.contract = object.contract ?? "";
+    message.sender = object.sender ?? '';
+    message.contract = object.contract ?? '';
     return message;
   }
 
@@ -920,7 +920,7 @@ export const MsgClearAdminResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgClearAdminResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClearAdminResponse();
 
     while (reader.pos < end) {

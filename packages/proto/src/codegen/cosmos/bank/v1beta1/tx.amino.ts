@@ -1,7 +1,7 @@
-import { AminoMsg } from "@cosmjs/amino";
-import { MsgSend, MsgMultiSend } from "./tx";
+import { AminoMsg } from '@cosmjs/amino';
+import { MsgSend, MsgMultiSend } from './tx';
 export interface AminoMsgSend extends AminoMsg {
-  type: "cosmos-sdk/MsgSend";
+  type: 'cosmos-sdk/MsgSend';
   value: {
     from_address: string;
     to_address: string;
@@ -12,7 +12,7 @@ export interface AminoMsgSend extends AminoMsg {
   };
 }
 export interface AminoMsgMultiSend extends AminoMsg {
-  type: "cosmos-sdk/MsgMultiSend";
+  type: 'cosmos-sdk/MsgMultiSend';
   value: {
     inputs: {
       address: string;
@@ -31,13 +31,13 @@ export interface AminoMsgMultiSend extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  "/cosmos.bank.v1beta1.MsgSend": {
-    aminoType: "cosmos-sdk/MsgSend",
+  '/cosmos.bank.v1beta1.MsgSend': {
+    aminoType: 'cosmos-sdk/MsgSend',
     toAmino: ({
       fromAddress,
       toAddress,
       amount
-    }: MsgSend): AminoMsgSend["value"] => {
+    }: MsgSend): AminoMsgSend['value'] => {
       return {
         from_address: fromAddress,
         to_address: toAddress,
@@ -51,7 +51,7 @@ export const AminoConverter = {
       from_address,
       to_address,
       amount
-    }: AminoMsgSend["value"]): MsgSend => {
+    }: AminoMsgSend['value']): MsgSend => {
       return {
         fromAddress: from_address,
         toAddress: to_address,
@@ -62,12 +62,12 @@ export const AminoConverter = {
       };
     }
   },
-  "/cosmos.bank.v1beta1.MsgMultiSend": {
-    aminoType: "cosmos-sdk/MsgMultiSend",
+  '/cosmos.bank.v1beta1.MsgMultiSend': {
+    aminoType: 'cosmos-sdk/MsgMultiSend',
     toAmino: ({
       inputs,
       outputs
-    }: MsgMultiSend): AminoMsgMultiSend["value"] => {
+    }: MsgMultiSend): AminoMsgMultiSend['value'] => {
       return {
         inputs: inputs.map(el0 => ({
           address: el0.address,
@@ -88,7 +88,7 @@ export const AminoConverter = {
     fromAmino: ({
       inputs,
       outputs
-    }: AminoMsgMultiSend["value"]): MsgMultiSend => {
+    }: AminoMsgMultiSend['value']): MsgMultiSend => {
       return {
         inputs: inputs.map(el0 => ({
           address: el0.address,

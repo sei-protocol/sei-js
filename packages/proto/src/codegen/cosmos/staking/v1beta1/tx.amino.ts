@@ -1,9 +1,9 @@
-import { AminoMsg, decodeBech32Pubkey, encodeBech32Pubkey } from "@cosmjs/amino";
-import { fromBase64, toBase64 } from "@cosmjs/encoding";
-import { Long } from "@osmonauts/helpers";
-import { MsgCreateValidator, MsgEditValidator, MsgDelegate, MsgBeginRedelegate, MsgUndelegate } from "./tx";
+import { AminoMsg, decodeBech32Pubkey, encodeBech32Pubkey } from '@cosmjs/amino';
+import { fromBase64, toBase64 } from '@cosmjs/encoding';
+import { Long } from '@osmonauts/helpers';
+import { MsgCreateValidator, MsgEditValidator, MsgDelegate, MsgBeginRedelegate, MsgUndelegate } from './tx';
 export interface AminoMsgCreateValidator extends AminoMsg {
-  type: "cosmos-sdk/MsgCreateValidator";
+  type: 'cosmos-sdk/MsgCreateValidator';
   value: {
     description: {
       moniker: string;
@@ -31,7 +31,7 @@ export interface AminoMsgCreateValidator extends AminoMsg {
   };
 }
 export interface AminoMsgEditValidator extends AminoMsg {
-  type: "cosmos-sdk/MsgEditValidator";
+  type: 'cosmos-sdk/MsgEditValidator';
   value: {
     description: {
       moniker: string;
@@ -46,7 +46,7 @@ export interface AminoMsgEditValidator extends AminoMsg {
   };
 }
 export interface AminoMsgDelegate extends AminoMsg {
-  type: "cosmos-sdk/MsgDelegate";
+  type: 'cosmos-sdk/MsgDelegate';
   value: {
     delegator_address: string;
     validator_address: string;
@@ -57,7 +57,7 @@ export interface AminoMsgDelegate extends AminoMsg {
   };
 }
 export interface AminoMsgBeginRedelegate extends AminoMsg {
-  type: "cosmos-sdk/MsgBeginRedelegate";
+  type: 'cosmos-sdk/MsgBeginRedelegate';
   value: {
     delegator_address: string;
     validator_src_address: string;
@@ -69,7 +69,7 @@ export interface AminoMsgBeginRedelegate extends AminoMsg {
   };
 }
 export interface AminoMsgUndelegate extends AminoMsg {
-  type: "cosmos-sdk/MsgUndelegate";
+  type: 'cosmos-sdk/MsgUndelegate';
   value: {
     delegator_address: string;
     validator_address: string;
@@ -80,8 +80,8 @@ export interface AminoMsgUndelegate extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  "/cosmos.staking.v1beta1.MsgCreateValidator": {
-    aminoType: "cosmos-sdk/MsgCreateValidator",
+  '/cosmos.staking.v1beta1.MsgCreateValidator': {
+    aminoType: 'cosmos-sdk/MsgCreateValidator',
     toAmino: ({
       description,
       commission,
@@ -90,7 +90,7 @@ export const AminoConverter = {
       validatorAddress,
       pubkey,
       value
-    }: MsgCreateValidator): AminoMsgCreateValidator["value"] => {
+    }: MsgCreateValidator): AminoMsgCreateValidator['value'] => {
       return {
         description: {
           moniker: description.moniker,
@@ -108,7 +108,7 @@ export const AminoConverter = {
         delegator_address: delegatorAddress,
         validator_address: validatorAddress,
         pubkey: {
-          typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+          typeUrl: '/cosmos.crypto.secp256k1.PubKey',
           value: fromBase64(decodeBech32Pubkey(pubkey).value)
         },
         value: {
@@ -125,7 +125,7 @@ export const AminoConverter = {
       validator_address,
       pubkey,
       value
-    }: AminoMsgCreateValidator["value"]): MsgCreateValidator => {
+    }: AminoMsgCreateValidator['value']): MsgCreateValidator => {
       return {
         description: {
           moniker: description.moniker,
@@ -143,9 +143,9 @@ export const AminoConverter = {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
         pubkey: encodeBech32Pubkey({
-          type: "tendermint/PubKeySecp256k1",
+          type: 'tendermint/PubKeySecp256k1',
           value: toBase64(pubkey.value)
-        }, "cosmos"),
+        }, 'cosmos'),
         value: {
           denom: value.denom,
           amount: value.amount
@@ -153,14 +153,14 @@ export const AminoConverter = {
       };
     }
   },
-  "/cosmos.staking.v1beta1.MsgEditValidator": {
-    aminoType: "cosmos-sdk/MsgEditValidator",
+  '/cosmos.staking.v1beta1.MsgEditValidator': {
+    aminoType: 'cosmos-sdk/MsgEditValidator',
     toAmino: ({
       description,
       validatorAddress,
       commissionRate,
       minSelfDelegation
-    }: MsgEditValidator): AminoMsgEditValidator["value"] => {
+    }: MsgEditValidator): AminoMsgEditValidator['value'] => {
       return {
         description: {
           moniker: description.moniker,
@@ -179,7 +179,7 @@ export const AminoConverter = {
       validator_address,
       commission_rate,
       min_self_delegation
-    }: AminoMsgEditValidator["value"]): MsgEditValidator => {
+    }: AminoMsgEditValidator['value']): MsgEditValidator => {
       return {
         description: {
           moniker: description.moniker,
@@ -194,13 +194,13 @@ export const AminoConverter = {
       };
     }
   },
-  "/cosmos.staking.v1beta1.MsgDelegate": {
-    aminoType: "cosmos-sdk/MsgDelegate",
+  '/cosmos.staking.v1beta1.MsgDelegate': {
+    aminoType: 'cosmos-sdk/MsgDelegate',
     toAmino: ({
       delegatorAddress,
       validatorAddress,
       amount
-    }: MsgDelegate): AminoMsgDelegate["value"] => {
+    }: MsgDelegate): AminoMsgDelegate['value'] => {
       return {
         delegator_address: delegatorAddress,
         validator_address: validatorAddress,
@@ -214,7 +214,7 @@ export const AminoConverter = {
       delegator_address,
       validator_address,
       amount
-    }: AminoMsgDelegate["value"]): MsgDelegate => {
+    }: AminoMsgDelegate['value']): MsgDelegate => {
       return {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
@@ -225,14 +225,14 @@ export const AminoConverter = {
       };
     }
   },
-  "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
-    aminoType: "cosmos-sdk/MsgBeginRedelegate",
+  '/cosmos.staking.v1beta1.MsgBeginRedelegate': {
+    aminoType: 'cosmos-sdk/MsgBeginRedelegate',
     toAmino: ({
       delegatorAddress,
       validatorSrcAddress,
       validatorDstAddress,
       amount
-    }: MsgBeginRedelegate): AminoMsgBeginRedelegate["value"] => {
+    }: MsgBeginRedelegate): AminoMsgBeginRedelegate['value'] => {
       return {
         delegator_address: delegatorAddress,
         validator_src_address: validatorSrcAddress,
@@ -248,7 +248,7 @@ export const AminoConverter = {
       validator_src_address,
       validator_dst_address,
       amount
-    }: AminoMsgBeginRedelegate["value"]): MsgBeginRedelegate => {
+    }: AminoMsgBeginRedelegate['value']): MsgBeginRedelegate => {
       return {
         delegatorAddress: delegator_address,
         validatorSrcAddress: validator_src_address,
@@ -260,13 +260,13 @@ export const AminoConverter = {
       };
     }
   },
-  "/cosmos.staking.v1beta1.MsgUndelegate": {
-    aminoType: "cosmos-sdk/MsgUndelegate",
+  '/cosmos.staking.v1beta1.MsgUndelegate': {
+    aminoType: 'cosmos-sdk/MsgUndelegate',
     toAmino: ({
       delegatorAddress,
       validatorAddress,
       amount
-    }: MsgUndelegate): AminoMsgUndelegate["value"] => {
+    }: MsgUndelegate): AminoMsgUndelegate['value'] => {
       return {
         delegator_address: delegatorAddress,
         validator_address: validatorAddress,
@@ -280,7 +280,7 @@ export const AminoConverter = {
       delegator_address,
       validator_address,
       amount
-    }: AminoMsgUndelegate["value"]): MsgUndelegate => {
+    }: AminoMsgUndelegate['value']): MsgUndelegate => {
       return {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,

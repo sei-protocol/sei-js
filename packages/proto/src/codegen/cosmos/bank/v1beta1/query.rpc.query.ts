@@ -1,7 +1,7 @@
-import { Rpc } from "@osmonauts/helpers";
-import * as _m0 from "protobufjs/minimal";
-import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryBalanceRequest, QueryBalanceResponse, QueryAllBalancesRequest, QueryAllBalancesResponse, QuerySpendableBalancesRequest, QuerySpendableBalancesResponse, QueryTotalSupplyRequest, QueryTotalSupplyResponse, QuerySupplyOfRequest, QuerySupplyOfResponse, QueryParamsRequest, QueryParamsResponse, QueryDenomMetadataRequest, QueryDenomMetadataResponse, QueryDenomsMetadataRequest, QueryDenomsMetadataResponse, QueryDenomOwnersRequest, QueryDenomOwnersResponse } from "./query";
+import { Rpc } from '@osmonauts/helpers';
+import * as _m0 from 'protobufjs/minimal';
+import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
+import { QueryBalanceRequest, QueryBalanceResponse, QueryAllBalancesRequest, QueryAllBalancesResponse, QuerySpendableBalancesRequest, QuerySpendableBalancesResponse, QueryTotalSupplyRequest, QueryTotalSupplyResponse, QuerySupplyOfRequest, QuerySupplyOfResponse, QueryParamsRequest, QueryParamsResponse, QueryDenomMetadataRequest, QueryDenomMetadataResponse, QueryDenomsMetadataRequest, QueryDenomsMetadataResponse, QueryDenomOwnersRequest, QueryDenomOwnersResponse } from './query';
 /** Query defines the RPC service */
 
 export interface Query {
@@ -54,19 +54,19 @@ export class QueryClientImpl implements Query {
 
   balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse> {
     const data = QueryBalanceRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "Balance", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'Balance', data);
     return promise.then(data => QueryBalanceResponse.decode(new _m0.Reader(data)));
   }
 
   allBalances(request: QueryAllBalancesRequest): Promise<QueryAllBalancesResponse> {
     const data = QueryAllBalancesRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "AllBalances", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'AllBalances', data);
     return promise.then(data => QueryAllBalancesResponse.decode(new _m0.Reader(data)));
   }
 
   spendableBalances(request: QuerySpendableBalancesRequest): Promise<QuerySpendableBalancesResponse> {
     const data = QuerySpendableBalancesRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "SpendableBalances", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'SpendableBalances', data);
     return promise.then(data => QuerySpendableBalancesResponse.decode(new _m0.Reader(data)));
   }
 
@@ -74,25 +74,25 @@ export class QueryClientImpl implements Query {
     pagination: undefined
   }): Promise<QueryTotalSupplyResponse> {
     const data = QueryTotalSupplyRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "TotalSupply", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'TotalSupply', data);
     return promise.then(data => QueryTotalSupplyResponse.decode(new _m0.Reader(data)));
   }
 
   supplyOf(request: QuerySupplyOfRequest): Promise<QuerySupplyOfResponse> {
     const data = QuerySupplyOfRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "SupplyOf", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'SupplyOf', data);
     return promise.then(data => QuerySupplyOfResponse.decode(new _m0.Reader(data)));
   }
 
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "Params", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'Params', data);
     return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   denomMetadata(request: QueryDenomMetadataRequest): Promise<QueryDenomMetadataResponse> {
     const data = QueryDenomMetadataRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "DenomMetadata", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'DenomMetadata', data);
     return promise.then(data => QueryDenomMetadataResponse.decode(new _m0.Reader(data)));
   }
 
@@ -100,13 +100,13 @@ export class QueryClientImpl implements Query {
     pagination: undefined
   }): Promise<QueryDenomsMetadataResponse> {
     const data = QueryDenomsMetadataRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "DenomsMetadata", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'DenomsMetadata', data);
     return promise.then(data => QueryDenomsMetadataResponse.decode(new _m0.Reader(data)));
   }
 
   denomOwners(request: QueryDenomOwnersRequest): Promise<QueryDenomOwnersResponse> {
     const data = QueryDenomOwnersRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "DenomOwners", data);
+    const promise = this.rpc.request('cosmos.bank.v1beta1.Query', 'DenomOwners', data);
     return promise.then(data => QueryDenomOwnersResponse.decode(new _m0.Reader(data)));
   }
 

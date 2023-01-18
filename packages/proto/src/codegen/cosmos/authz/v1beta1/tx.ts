@@ -1,7 +1,7 @@
-import { Grant, GrantSDKType } from "./authz";
-import { Any, AnySDKType } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Grant, GrantSDKType } from './authz';
+import { Any, AnySDKType } from '../../../google/protobuf/any';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /**
  * MsgGrant is a request type for Grant method. It declares authorization to the grantee
  * on behalf of the granter with the provided expiration time.
@@ -99,19 +99,19 @@ export interface MsgRevokeResponseSDKType {}
 
 function createBaseMsgGrant(): MsgGrant {
   return {
-    granter: "",
-    grantee: "",
+    granter: '',
+    grantee: '',
     grant: undefined
   };
 }
 
 export const MsgGrant = {
   encode(message: MsgGrant, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.granter !== "") {
+    if (message.granter !== '') {
       writer.uint32(10).string(message.granter);
     }
 
-    if (message.grantee !== "") {
+    if (message.grantee !== '') {
       writer.uint32(18).string(message.grantee);
     }
 
@@ -124,7 +124,7 @@ export const MsgGrant = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgGrant {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgGrant();
 
     while (reader.pos < end) {
@@ -154,8 +154,8 @@ export const MsgGrant = {
 
   fromPartial(object: DeepPartial<MsgGrant>): MsgGrant {
     const message = createBaseMsgGrant();
-    message.granter = object.granter ?? "";
-    message.grantee = object.grantee ?? "";
+    message.granter = object.granter ?? '';
+    message.grantee = object.grantee ?? '';
     message.grant = object.grant !== undefined && object.grant !== null ? Grant.fromPartial(object.grant) : undefined;
     return message;
   }
@@ -179,7 +179,7 @@ export const MsgExecResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgExecResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExecResponse();
 
     while (reader.pos < end) {
@@ -209,14 +209,14 @@ export const MsgExecResponse = {
 
 function createBaseMsgExec(): MsgExec {
   return {
-    grantee: "",
+    grantee: '',
     msgs: []
   };
 }
 
 export const MsgExec = {
   encode(message: MsgExec, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.grantee !== "") {
+    if (message.grantee !== '') {
       writer.uint32(10).string(message.grantee);
     }
 
@@ -229,7 +229,7 @@ export const MsgExec = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgExec {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExec();
 
     while (reader.pos < end) {
@@ -255,7 +255,7 @@ export const MsgExec = {
 
   fromPartial(object: DeepPartial<MsgExec>): MsgExec {
     const message = createBaseMsgExec();
-    message.grantee = object.grantee ?? "";
+    message.grantee = object.grantee ?? '';
     message.msgs = object.msgs?.map(e => Any.fromPartial(e)) || [];
     return message;
   }
@@ -273,7 +273,7 @@ export const MsgGrantResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgGrantResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgGrantResponse();
 
     while (reader.pos < end) {
@@ -298,23 +298,23 @@ export const MsgGrantResponse = {
 
 function createBaseMsgRevoke(): MsgRevoke {
   return {
-    granter: "",
-    grantee: "",
-    msgTypeUrl: ""
+    granter: '',
+    grantee: '',
+    msgTypeUrl: ''
   };
 }
 
 export const MsgRevoke = {
   encode(message: MsgRevoke, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.granter !== "") {
+    if (message.granter !== '') {
       writer.uint32(10).string(message.granter);
     }
 
-    if (message.grantee !== "") {
+    if (message.grantee !== '') {
       writer.uint32(18).string(message.grantee);
     }
 
-    if (message.msgTypeUrl !== "") {
+    if (message.msgTypeUrl !== '') {
       writer.uint32(26).string(message.msgTypeUrl);
     }
 
@@ -323,7 +323,7 @@ export const MsgRevoke = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRevoke {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRevoke();
 
     while (reader.pos < end) {
@@ -353,9 +353,9 @@ export const MsgRevoke = {
 
   fromPartial(object: DeepPartial<MsgRevoke>): MsgRevoke {
     const message = createBaseMsgRevoke();
-    message.granter = object.granter ?? "";
-    message.grantee = object.grantee ?? "";
-    message.msgTypeUrl = object.msgTypeUrl ?? "";
+    message.granter = object.granter ?? '';
+    message.grantee = object.grantee ?? '';
+    message.msgTypeUrl = object.msgTypeUrl ?? '';
     return message;
   }
 
@@ -372,7 +372,7 @@ export const MsgRevokeResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRevokeResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRevokeResponse();
 
     while (reader.pos < end) {

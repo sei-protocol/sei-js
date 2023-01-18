@@ -1,9 +1,9 @@
-import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "@osmonauts/helpers";
-import { orderStatusFromJSON, orderTypeFromJSON, positionDirectionFromJSON, cancellationInitiatorFromJSON } from "./enums";
-import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract } from "./tx";
+import { AminoMsg } from '@cosmjs/amino';
+import { Long } from '@osmonauts/helpers';
+import { orderStatusFromJSON, orderTypeFromJSON, positionDirectionFromJSON, cancellationInitiatorFromJSON } from './enums';
+import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract } from './tx';
 export interface AminoMsgPlaceOrders extends AminoMsg {
-  type: "/seiprotocol.seichain.dex.MsgPlaceOrders";
+  type: '/seiprotocol.seichain.dex.MsgPlaceOrders';
   value: {
     creator: string;
     orders: {
@@ -28,7 +28,7 @@ export interface AminoMsgPlaceOrders extends AminoMsg {
   };
 }
 export interface AminoMsgCancelOrders extends AminoMsg {
-  type: "/seiprotocol.seichain.dex.MsgCancelOrders";
+  type: '/seiprotocol.seichain.dex.MsgCancelOrders';
   value: {
     creator: string;
     cancellations: {
@@ -45,7 +45,7 @@ export interface AminoMsgCancelOrders extends AminoMsg {
   };
 }
 export interface AminoMsgRegisterContract extends AminoMsg {
-  type: "/seiprotocol.seichain.dex.MsgRegisterContract";
+  type: '/seiprotocol.seichain.dex.MsgRegisterContract';
   value: {
     creator: string;
     contract: {
@@ -63,14 +63,14 @@ export interface AminoMsgRegisterContract extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  "/seiprotocol.seichain.dex.MsgPlaceOrders": {
-    aminoType: "/seiprotocol.seichain.dex.MsgPlaceOrders",
+  '/seiprotocol.seichain.dex.MsgPlaceOrders': {
+    aminoType: '/seiprotocol.seichain.dex.MsgPlaceOrders',
     toAmino: ({
       creator,
       orders,
       contractAddr,
       funds
-    }: MsgPlaceOrders): AminoMsgPlaceOrders["value"] => {
+    }: MsgPlaceOrders): AminoMsgPlaceOrders['value'] => {
       return {
         creator,
         orders: orders.map(el0 => ({
@@ -99,7 +99,7 @@ export const AminoConverter = {
       orders,
       contractAddr,
       funds
-    }: AminoMsgPlaceOrders["value"]): MsgPlaceOrders => {
+    }: AminoMsgPlaceOrders['value']): MsgPlaceOrders => {
       return {
         creator,
         orders: orders.map(el0 => ({
@@ -124,13 +124,13 @@ export const AminoConverter = {
       };
     }
   },
-  "/seiprotocol.seichain.dex.MsgCancelOrders": {
-    aminoType: "/seiprotocol.seichain.dex.MsgCancelOrders",
+  '/seiprotocol.seichain.dex.MsgCancelOrders': {
+    aminoType: '/seiprotocol.seichain.dex.MsgCancelOrders',
     toAmino: ({
       creator,
       cancellations,
       contractAddr
-    }: MsgCancelOrders): AminoMsgCancelOrders["value"] => {
+    }: MsgCancelOrders): AminoMsgCancelOrders['value'] => {
       return {
         creator,
         cancellations: cancellations.map(el0 => ({
@@ -150,7 +150,7 @@ export const AminoConverter = {
       creator,
       cancellations,
       contractAddr
-    }: AminoMsgCancelOrders["value"]): MsgCancelOrders => {
+    }: AminoMsgCancelOrders['value']): MsgCancelOrders => {
       return {
         creator,
         cancellations: cancellations.map(el0 => ({
@@ -167,12 +167,12 @@ export const AminoConverter = {
       };
     }
   },
-  "/seiprotocol.seichain.dex.MsgRegisterContract": {
-    aminoType: "/seiprotocol.seichain.dex.MsgRegisterContract",
+  '/seiprotocol.seichain.dex.MsgRegisterContract': {
+    aminoType: '/seiprotocol.seichain.dex.MsgRegisterContract',
     toAmino: ({
       creator,
       contract
-    }: MsgRegisterContract): AminoMsgRegisterContract["value"] => {
+    }: MsgRegisterContract): AminoMsgRegisterContract['value'] => {
       return {
         creator,
         contract: {
@@ -192,7 +192,7 @@ export const AminoConverter = {
     fromAmino: ({
       creator,
       contract
-    }: AminoMsgRegisterContract["value"]): MsgRegisterContract => {
+    }: AminoMsgRegisterContract['value']): MsgRegisterContract => {
       return {
         creator,
         contract: {

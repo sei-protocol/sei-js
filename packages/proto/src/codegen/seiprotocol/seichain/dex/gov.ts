@@ -1,8 +1,8 @@
-import { BatchContractPair, BatchContractPairSDKType } from "./pair";
-import { TickSize, TickSizeSDKType } from "./tick_size";
-import { AssetMetadata, AssetMetadataSDKType } from "./asset_list";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { BatchContractPair, BatchContractPairSDKType } from './pair';
+import { TickSize, TickSizeSDKType } from './tick_size';
+import { AssetMetadata, AssetMetadataSDKType } from './asset_list';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /**
  * RegisterPairsProposal is a gov Content type for adding a new whitelisted token
  * pair to the dex module. It must specify a list of contract addresses and their respective
@@ -58,19 +58,19 @@ export interface AddAssetMetadataProposalSDKType {
 
 function createBaseRegisterPairsProposal(): RegisterPairsProposal {
   return {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     batchcontractpair: []
   };
 }
 
 export const RegisterPairsProposal = {
   encode(message: RegisterPairsProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -83,7 +83,7 @@ export const RegisterPairsProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): RegisterPairsProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRegisterPairsProposal();
 
     while (reader.pos < end) {
@@ -113,8 +113,8 @@ export const RegisterPairsProposal = {
 
   fromPartial(object: DeepPartial<RegisterPairsProposal>): RegisterPairsProposal {
     const message = createBaseRegisterPairsProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
     message.batchcontractpair = object.batchcontractpair?.map(e => BatchContractPair.fromPartial(e)) || [];
     return message;
   }
@@ -123,19 +123,19 @@ export const RegisterPairsProposal = {
 
 function createBaseUpdateTickSizeProposal(): UpdateTickSizeProposal {
   return {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     tickSizeList: []
   };
 }
 
 export const UpdateTickSizeProposal = {
   encode(message: UpdateTickSizeProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -148,7 +148,7 @@ export const UpdateTickSizeProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): UpdateTickSizeProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateTickSizeProposal();
 
     while (reader.pos < end) {
@@ -178,8 +178,8 @@ export const UpdateTickSizeProposal = {
 
   fromPartial(object: DeepPartial<UpdateTickSizeProposal>): UpdateTickSizeProposal {
     const message = createBaseUpdateTickSizeProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
     message.tickSizeList = object.tickSizeList?.map(e => TickSize.fromPartial(e)) || [];
     return message;
   }
@@ -188,19 +188,19 @@ export const UpdateTickSizeProposal = {
 
 function createBaseAddAssetMetadataProposal(): AddAssetMetadataProposal {
   return {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     assetList: []
   };
 }
 
 export const AddAssetMetadataProposal = {
   encode(message: AddAssetMetadataProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== "") {
+    if (message.title !== '') {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== "") {
+    if (message.description !== '') {
       writer.uint32(18).string(message.description);
     }
 
@@ -213,7 +213,7 @@ export const AddAssetMetadataProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AddAssetMetadataProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAddAssetMetadataProposal();
 
     while (reader.pos < end) {
@@ -243,8 +243,8 @@ export const AddAssetMetadataProposal = {
 
   fromPartial(object: DeepPartial<AddAssetMetadataProposal>): AddAssetMetadataProposal {
     const message = createBaseAddAssetMetadataProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
+    message.title = object.title ?? '';
+    message.description = object.description ?? '';
     message.assetList = object.assetList?.map(e => AssetMetadata.fromPartial(e)) || [];
     return message;
   }

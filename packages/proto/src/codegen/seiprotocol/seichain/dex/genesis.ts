@@ -1,10 +1,10 @@
-import { Params, ParamsSDKType } from "./params";
-import { LongBook, LongBookSDKType } from "./long_book";
-import { ShortBook, ShortBookSDKType } from "./short_book";
-import { Twap, TwapSDKType } from "./twap";
-import { TickSize, TickSizeSDKType } from "./tick_size";
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import { Params, ParamsSDKType } from './params';
+import { LongBook, LongBookSDKType } from './long_book';
+import { ShortBook, ShortBookSDKType } from './short_book';
+import { Twap, TwapSDKType } from './twap';
+import { TickSize, TickSizeSDKType } from './tick_size';
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 /** GenesisState defines the dex module's genesis state. */
 
 export interface GenesisState {
@@ -72,7 +72,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {

@@ -1,7 +1,7 @@
-import { Rpc } from "@osmonauts/helpers";
-import * as _m0 from "protobufjs/minimal";
-import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryDenomAuthorityMetadataRequest, QueryDenomAuthorityMetadataResponse, QueryDenomsFromCreatorRequest, QueryDenomsFromCreatorResponse, QueryDenomCreationFeeWhitelistRequest, QueryDenomCreationFeeWhitelistResponse, QueryCreatorInDenomFeeWhitelistRequest, QueryCreatorInDenomFeeWhitelistResponse } from "./query";
+import { Rpc } from '@osmonauts/helpers';
+import * as _m0 from 'protobufjs/minimal';
+import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
+import { QueryParamsRequest, QueryParamsResponse, QueryDenomAuthorityMetadataRequest, QueryDenomAuthorityMetadataResponse, QueryDenomsFromCreatorRequest, QueryDenomsFromCreatorResponse, QueryDenomCreationFeeWhitelistRequest, QueryDenomCreationFeeWhitelistResponse, QueryCreatorInDenomFeeWhitelistRequest, QueryCreatorInDenomFeeWhitelistResponse } from './query';
 /** Query defines the RPC service */
 
 export interface Query {
@@ -40,31 +40,31 @@ export class QueryClientImpl implements Query {
 
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.tokenfactory.Query", "Params", data);
+    const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'Params', data);
     return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   denomAuthorityMetadata(request: QueryDenomAuthorityMetadataRequest): Promise<QueryDenomAuthorityMetadataResponse> {
     const data = QueryDenomAuthorityMetadataRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.tokenfactory.Query", "DenomAuthorityMetadata", data);
+    const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'DenomAuthorityMetadata', data);
     return promise.then(data => QueryDenomAuthorityMetadataResponse.decode(new _m0.Reader(data)));
   }
 
   denomsFromCreator(request: QueryDenomsFromCreatorRequest): Promise<QueryDenomsFromCreatorResponse> {
     const data = QueryDenomsFromCreatorRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.tokenfactory.Query", "DenomsFromCreator", data);
+    const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'DenomsFromCreator', data);
     return promise.then(data => QueryDenomsFromCreatorResponse.decode(new _m0.Reader(data)));
   }
 
   denomCreationFeeWhitelist(request: QueryDenomCreationFeeWhitelistRequest = {}): Promise<QueryDenomCreationFeeWhitelistResponse> {
     const data = QueryDenomCreationFeeWhitelistRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.tokenfactory.Query", "DenomCreationFeeWhitelist", data);
+    const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'DenomCreationFeeWhitelist', data);
     return promise.then(data => QueryDenomCreationFeeWhitelistResponse.decode(new _m0.Reader(data)));
   }
 
   creatorInDenomFeeWhitelist(request: QueryCreatorInDenomFeeWhitelistRequest): Promise<QueryCreatorInDenomFeeWhitelistResponse> {
     const data = QueryCreatorInDenomFeeWhitelistRequest.encode(request).finish();
-    const promise = this.rpc.request("seiprotocol.seichain.tokenfactory.Query", "CreatorInDenomFeeWhitelist", data);
+    const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'CreatorInDenomFeeWhitelist', data);
     return promise.then(data => QueryCreatorInDenomFeeWhitelistResponse.decode(new _m0.Reader(data)));
   }
 

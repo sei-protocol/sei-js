@@ -1,7 +1,7 @@
-import { Any, AnySDKType } from "../../../google/protobuf/any";
-import { Timestamp } from "../../../google/protobuf/timestamp";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, toTimestamp, fromTimestamp } from "@osmonauts/helpers";
+import { Any, AnySDKType } from '../../../google/protobuf/any';
+import { Timestamp } from '../../../google/protobuf/timestamp';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, toTimestamp, fromTimestamp } from '@osmonauts/helpers';
 /**
  * GenericAuthorization gives the grantee unrestricted permissions to execute
  * the provided method on behalf of the granter's account.
@@ -87,13 +87,13 @@ export interface GrantQueueItemSDKType {
 
 function createBaseGenericAuthorization(): GenericAuthorization {
   return {
-    msg: ""
+    msg: ''
   };
 }
 
 export const GenericAuthorization = {
   encode(message: GenericAuthorization, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.msg !== "") {
+    if (message.msg !== '') {
       writer.uint32(10).string(message.msg);
     }
 
@@ -102,7 +102,7 @@ export const GenericAuthorization = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenericAuthorization {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenericAuthorization();
 
     while (reader.pos < end) {
@@ -124,7 +124,7 @@ export const GenericAuthorization = {
 
   fromPartial(object: DeepPartial<GenericAuthorization>): GenericAuthorization {
     const message = createBaseGenericAuthorization();
-    message.msg = object.msg ?? "";
+    message.msg = object.msg ?? '';
     return message;
   }
 
@@ -152,7 +152,7 @@ export const Grant = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Grant {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGrant();
 
     while (reader.pos < end) {
@@ -187,8 +187,8 @@ export const Grant = {
 
 function createBaseGrantAuthorization(): GrantAuthorization {
   return {
-    granter: "",
-    grantee: "",
+    granter: '',
+    grantee: '',
     authorization: undefined,
     expiration: undefined
   };
@@ -196,11 +196,11 @@ function createBaseGrantAuthorization(): GrantAuthorization {
 
 export const GrantAuthorization = {
   encode(message: GrantAuthorization, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.granter !== "") {
+    if (message.granter !== '') {
       writer.uint32(10).string(message.granter);
     }
 
-    if (message.grantee !== "") {
+    if (message.grantee !== '') {
       writer.uint32(18).string(message.grantee);
     }
 
@@ -217,7 +217,7 @@ export const GrantAuthorization = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GrantAuthorization {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGrantAuthorization();
 
     while (reader.pos < end) {
@@ -251,8 +251,8 @@ export const GrantAuthorization = {
 
   fromPartial(object: DeepPartial<GrantAuthorization>): GrantAuthorization {
     const message = createBaseGrantAuthorization();
-    message.granter = object.granter ?? "";
-    message.grantee = object.grantee ?? "";
+    message.granter = object.granter ?? '';
+    message.grantee = object.grantee ?? '';
     message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
     message.expiration = object.expiration ?? undefined;
     return message;
@@ -277,7 +277,7 @@ export const GrantQueueItem = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GrantQueueItem {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGrantQueueItem();
 
     while (reader.pos < end) {

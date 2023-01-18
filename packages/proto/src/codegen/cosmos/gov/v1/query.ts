@@ -1,7 +1,7 @@
-import { ProposalStatus, ProposalStatusSDKType, Proposal, ProposalSDKType, Vote, VoteSDKType, VotingParams, VotingParamsSDKType, DepositParams, DepositParamsSDKType, TallyParams, TallyParamsSDKType, Deposit, DepositSDKType, TallyResult, TallyResultSDKType } from "./gov";
-import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../base/query/v1beta1/pagination";
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import { ProposalStatus, ProposalStatusSDKType, Proposal, ProposalSDKType, Vote, VoteSDKType, VotingParams, VotingParamsSDKType, DepositParams, DepositParamsSDKType, TallyParams, TallyParamsSDKType, Deposit, DepositSDKType, TallyResult, TallyResultSDKType } from './gov';
+import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from '../../base/query/v1beta1/pagination';
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 /** QueryProposalRequest is the request type for the Query/Proposal RPC method. */
 
 export interface QueryProposalRequest {
@@ -290,7 +290,7 @@ export const QueryProposalRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryProposalRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryProposalRequest();
 
     while (reader.pos < end) {
@@ -335,7 +335,7 @@ export const QueryProposalResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryProposalResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryProposalResponse();
 
     while (reader.pos < end) {
@@ -366,8 +366,8 @@ export const QueryProposalResponse = {
 function createBaseQueryProposalsRequest(): QueryProposalsRequest {
   return {
     proposalStatus: 0,
-    voter: "",
-    depositor: "",
+    voter: '',
+    depositor: '',
     pagination: undefined
   };
 }
@@ -378,11 +378,11 @@ export const QueryProposalsRequest = {
       writer.uint32(8).int32(message.proposalStatus);
     }
 
-    if (message.voter !== "") {
+    if (message.voter !== '') {
       writer.uint32(18).string(message.voter);
     }
 
-    if (message.depositor !== "") {
+    if (message.depositor !== '') {
       writer.uint32(26).string(message.depositor);
     }
 
@@ -395,7 +395,7 @@ export const QueryProposalsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryProposalsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryProposalsRequest();
 
     while (reader.pos < end) {
@@ -430,8 +430,8 @@ export const QueryProposalsRequest = {
   fromPartial(object: DeepPartial<QueryProposalsRequest>): QueryProposalsRequest {
     const message = createBaseQueryProposalsRequest();
     message.proposalStatus = object.proposalStatus ?? 0;
-    message.voter = object.voter ?? "";
-    message.depositor = object.depositor ?? "";
+    message.voter = object.voter ?? '';
+    message.depositor = object.depositor ?? '';
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   }
@@ -460,7 +460,7 @@ export const QueryProposalsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryProposalsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryProposalsResponse();
 
     while (reader.pos < end) {
@@ -496,7 +496,7 @@ export const QueryProposalsResponse = {
 function createBaseQueryVoteRequest(): QueryVoteRequest {
   return {
     proposalId: Long.UZERO,
-    voter: ""
+    voter: ''
   };
 }
 
@@ -506,7 +506,7 @@ export const QueryVoteRequest = {
       writer.uint32(8).uint64(message.proposalId);
     }
 
-    if (message.voter !== "") {
+    if (message.voter !== '') {
       writer.uint32(18).string(message.voter);
     }
 
@@ -515,7 +515,7 @@ export const QueryVoteRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryVoteRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryVoteRequest();
 
     while (reader.pos < end) {
@@ -542,7 +542,7 @@ export const QueryVoteRequest = {
   fromPartial(object: DeepPartial<QueryVoteRequest>): QueryVoteRequest {
     const message = createBaseQueryVoteRequest();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
-    message.voter = object.voter ?? "";
+    message.voter = object.voter ?? '';
     return message;
   }
 
@@ -565,7 +565,7 @@ export const QueryVoteResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryVoteResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryVoteResponse();
 
     while (reader.pos < end) {
@@ -615,7 +615,7 @@ export const QueryVotesRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryVotesRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryVotesRequest();
 
     while (reader.pos < end) {
@@ -670,7 +670,7 @@ export const QueryVotesResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryVotesResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryVotesResponse();
 
     while (reader.pos < end) {
@@ -705,13 +705,13 @@ export const QueryVotesResponse = {
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {
-    paramsType: ""
+    paramsType: ''
   };
 }
 
 export const QueryParamsRequest = {
   encode(message: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.paramsType !== "") {
+    if (message.paramsType !== '') {
       writer.uint32(10).string(message.paramsType);
     }
 
@@ -720,7 +720,7 @@ export const QueryParamsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
 
     while (reader.pos < end) {
@@ -742,7 +742,7 @@ export const QueryParamsRequest = {
 
   fromPartial(object: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
-    message.paramsType = object.paramsType ?? "";
+    message.paramsType = object.paramsType ?? '';
     return message;
   }
 
@@ -775,7 +775,7 @@ export const QueryParamsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
 
     while (reader.pos < end) {
@@ -816,7 +816,7 @@ export const QueryParamsResponse = {
 function createBaseQueryDepositRequest(): QueryDepositRequest {
   return {
     proposalId: Long.UZERO,
-    depositor: ""
+    depositor: ''
   };
 }
 
@@ -826,7 +826,7 @@ export const QueryDepositRequest = {
       writer.uint32(8).uint64(message.proposalId);
     }
 
-    if (message.depositor !== "") {
+    if (message.depositor !== '') {
       writer.uint32(18).string(message.depositor);
     }
 
@@ -835,7 +835,7 @@ export const QueryDepositRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDepositRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDepositRequest();
 
     while (reader.pos < end) {
@@ -862,7 +862,7 @@ export const QueryDepositRequest = {
   fromPartial(object: DeepPartial<QueryDepositRequest>): QueryDepositRequest {
     const message = createBaseQueryDepositRequest();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
-    message.depositor = object.depositor ?? "";
+    message.depositor = object.depositor ?? '';
     return message;
   }
 
@@ -885,7 +885,7 @@ export const QueryDepositResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDepositResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDepositResponse();
 
     while (reader.pos < end) {
@@ -935,7 +935,7 @@ export const QueryDepositsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDepositsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDepositsRequest();
 
     while (reader.pos < end) {
@@ -990,7 +990,7 @@ export const QueryDepositsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDepositsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDepositsResponse();
 
     while (reader.pos < end) {
@@ -1040,7 +1040,7 @@ export const QueryTallyResultRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTallyResultRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryTallyResultRequest();
 
     while (reader.pos < end) {
@@ -1085,7 +1085,7 @@ export const QueryTallyResultResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTallyResultResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryTallyResultResponse();
 
     while (reader.pos < end) {

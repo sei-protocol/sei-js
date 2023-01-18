@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 export interface Params {
   votePeriod: Long;
   voteThreshold: string;
@@ -88,12 +88,12 @@ export interface VotePenaltyCounterSDKType {
 function createBaseParams(): Params {
   return {
     votePeriod: Long.UZERO,
-    voteThreshold: "",
-    rewardBand: "",
+    voteThreshold: '',
+    rewardBand: '',
     whitelist: [],
-    slashFraction: "",
+    slashFraction: '',
     slashWindow: Long.UZERO,
-    minValidPerWindow: "",
+    minValidPerWindow: '',
     lookbackDuration: Long.ZERO
   };
 }
@@ -104,11 +104,11 @@ export const Params = {
       writer.uint32(8).uint64(message.votePeriod);
     }
 
-    if (message.voteThreshold !== "") {
+    if (message.voteThreshold !== '') {
       writer.uint32(18).string(message.voteThreshold);
     }
 
-    if (message.rewardBand !== "") {
+    if (message.rewardBand !== '') {
       writer.uint32(26).string(message.rewardBand);
     }
 
@@ -116,7 +116,7 @@ export const Params = {
       Denom.encode(v!, writer.uint32(34).fork()).ldelim();
     }
 
-    if (message.slashFraction !== "") {
+    if (message.slashFraction !== '') {
       writer.uint32(42).string(message.slashFraction);
     }
 
@@ -124,7 +124,7 @@ export const Params = {
       writer.uint32(48).uint64(message.slashWindow);
     }
 
-    if (message.minValidPerWindow !== "") {
+    if (message.minValidPerWindow !== '') {
       writer.uint32(58).string(message.minValidPerWindow);
     }
 
@@ -137,7 +137,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {
@@ -188,12 +188,12 @@ export const Params = {
   fromPartial(object: DeepPartial<Params>): Params {
     const message = createBaseParams();
     message.votePeriod = object.votePeriod !== undefined && object.votePeriod !== null ? Long.fromValue(object.votePeriod) : Long.UZERO;
-    message.voteThreshold = object.voteThreshold ?? "";
-    message.rewardBand = object.rewardBand ?? "";
+    message.voteThreshold = object.voteThreshold ?? '';
+    message.rewardBand = object.rewardBand ?? '';
     message.whitelist = object.whitelist?.map(e => Denom.fromPartial(e)) || [];
-    message.slashFraction = object.slashFraction ?? "";
+    message.slashFraction = object.slashFraction ?? '';
     message.slashWindow = object.slashWindow !== undefined && object.slashWindow !== null ? Long.fromValue(object.slashWindow) : Long.UZERO;
-    message.minValidPerWindow = object.minValidPerWindow ?? "";
+    message.minValidPerWindow = object.minValidPerWindow ?? '';
     message.lookbackDuration = object.lookbackDuration !== undefined && object.lookbackDuration !== null ? Long.fromValue(object.lookbackDuration) : Long.ZERO;
     return message;
   }
@@ -202,13 +202,13 @@ export const Params = {
 
 function createBaseDenom(): Denom {
   return {
-    name: ""
+    name: ''
   };
 }
 
 export const Denom = {
   encode(message: Denom, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
+    if (message.name !== '') {
       writer.uint32(10).string(message.name);
     }
 
@@ -217,7 +217,7 @@ export const Denom = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Denom {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDenom();
 
     while (reader.pos < end) {
@@ -239,7 +239,7 @@ export const Denom = {
 
   fromPartial(object: DeepPartial<Denom>): Denom {
     const message = createBaseDenom();
-    message.name = object.name ?? "";
+    message.name = object.name ?? '';
     return message;
   }
 
@@ -248,7 +248,7 @@ export const Denom = {
 function createBaseAggregateExchangeRateVote(): AggregateExchangeRateVote {
   return {
     exchangeRateTuples: [],
-    voter: ""
+    voter: ''
   };
 }
 
@@ -258,7 +258,7 @@ export const AggregateExchangeRateVote = {
       ExchangeRateTuple.encode(v!, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.voter !== "") {
+    if (message.voter !== '') {
       writer.uint32(18).string(message.voter);
     }
 
@@ -267,7 +267,7 @@ export const AggregateExchangeRateVote = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AggregateExchangeRateVote {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAggregateExchangeRateVote();
 
     while (reader.pos < end) {
@@ -294,7 +294,7 @@ export const AggregateExchangeRateVote = {
   fromPartial(object: DeepPartial<AggregateExchangeRateVote>): AggregateExchangeRateVote {
     const message = createBaseAggregateExchangeRateVote();
     message.exchangeRateTuples = object.exchangeRateTuples?.map(e => ExchangeRateTuple.fromPartial(e)) || [];
-    message.voter = object.voter ?? "";
+    message.voter = object.voter ?? '';
     return message;
   }
 
@@ -302,18 +302,18 @@ export const AggregateExchangeRateVote = {
 
 function createBaseExchangeRateTuple(): ExchangeRateTuple {
   return {
-    denom: "",
-    exchangeRate: ""
+    denom: '',
+    exchangeRate: ''
   };
 }
 
 export const ExchangeRateTuple = {
   encode(message: ExchangeRateTuple, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
-    if (message.exchangeRate !== "") {
+    if (message.exchangeRate !== '') {
       writer.uint32(18).string(message.exchangeRate);
     }
 
@@ -322,7 +322,7 @@ export const ExchangeRateTuple = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ExchangeRateTuple {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseExchangeRateTuple();
 
     while (reader.pos < end) {
@@ -348,8 +348,8 @@ export const ExchangeRateTuple = {
 
   fromPartial(object: DeepPartial<ExchangeRateTuple>): ExchangeRateTuple {
     const message = createBaseExchangeRateTuple();
-    message.denom = object.denom ?? "";
-    message.exchangeRate = object.exchangeRate ?? "";
+    message.denom = object.denom ?? '';
+    message.exchangeRate = object.exchangeRate ?? '';
     return message;
   }
 
@@ -357,18 +357,18 @@ export const ExchangeRateTuple = {
 
 function createBaseOracleExchangeRate(): OracleExchangeRate {
   return {
-    exchangeRate: "",
-    lastUpdate: ""
+    exchangeRate: '',
+    lastUpdate: ''
   };
 }
 
 export const OracleExchangeRate = {
   encode(message: OracleExchangeRate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.exchangeRate !== "") {
+    if (message.exchangeRate !== '') {
       writer.uint32(10).string(message.exchangeRate);
     }
 
-    if (message.lastUpdate !== "") {
+    if (message.lastUpdate !== '') {
       writer.uint32(18).string(message.lastUpdate);
     }
 
@@ -377,7 +377,7 @@ export const OracleExchangeRate = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): OracleExchangeRate {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOracleExchangeRate();
 
     while (reader.pos < end) {
@@ -403,8 +403,8 @@ export const OracleExchangeRate = {
 
   fromPartial(object: DeepPartial<OracleExchangeRate>): OracleExchangeRate {
     const message = createBaseOracleExchangeRate();
-    message.exchangeRate = object.exchangeRate ?? "";
-    message.lastUpdate = object.lastUpdate ?? "";
+    message.exchangeRate = object.exchangeRate ?? '';
+    message.lastUpdate = object.lastUpdate ?? '';
     return message;
   }
 
@@ -412,14 +412,14 @@ export const OracleExchangeRate = {
 
 function createBasePriceSnapshotItem(): PriceSnapshotItem {
   return {
-    denom: "",
+    denom: '',
     oracleExchangeRate: undefined
   };
 }
 
 export const PriceSnapshotItem = {
   encode(message: PriceSnapshotItem, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
@@ -432,7 +432,7 @@ export const PriceSnapshotItem = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PriceSnapshotItem {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePriceSnapshotItem();
 
     while (reader.pos < end) {
@@ -458,7 +458,7 @@ export const PriceSnapshotItem = {
 
   fromPartial(object: DeepPartial<PriceSnapshotItem>): PriceSnapshotItem {
     const message = createBasePriceSnapshotItem();
-    message.denom = object.denom ?? "";
+    message.denom = object.denom ?? '';
     message.oracleExchangeRate = object.oracleExchangeRate !== undefined && object.oracleExchangeRate !== null ? OracleExchangeRate.fromPartial(object.oracleExchangeRate) : undefined;
     return message;
   }
@@ -487,7 +487,7 @@ export const PriceSnapshot = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PriceSnapshot {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePriceSnapshot();
 
     while (reader.pos < end) {
@@ -522,19 +522,19 @@ export const PriceSnapshot = {
 
 function createBaseOracleTwap(): OracleTwap {
   return {
-    denom: "",
-    twap: "",
+    denom: '',
+    twap: '',
     lookbackSeconds: Long.ZERO
   };
 }
 
 export const OracleTwap = {
   encode(message: OracleTwap, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
-    if (message.twap !== "") {
+    if (message.twap !== '') {
       writer.uint32(18).string(message.twap);
     }
 
@@ -547,7 +547,7 @@ export const OracleTwap = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): OracleTwap {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOracleTwap();
 
     while (reader.pos < end) {
@@ -577,8 +577,8 @@ export const OracleTwap = {
 
   fromPartial(object: DeepPartial<OracleTwap>): OracleTwap {
     const message = createBaseOracleTwap();
-    message.denom = object.denom ?? "";
-    message.twap = object.twap ?? "";
+    message.denom = object.denom ?? '';
+    message.twap = object.twap ?? '';
     message.lookbackSeconds = object.lookbackSeconds !== undefined && object.lookbackSeconds !== null ? Long.fromValue(object.lookbackSeconds) : Long.ZERO;
     return message;
   }
@@ -607,7 +607,7 @@ export const VotePenaltyCounter = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): VotePenaltyCounter {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVotePenaltyCounter();
 
     while (reader.pos < end) {

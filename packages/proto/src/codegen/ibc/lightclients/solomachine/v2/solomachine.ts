@@ -1,8 +1,8 @@
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
-import { ConnectionEnd, ConnectionEndSDKType } from "../../../core/connection/v1/connection";
-import { Channel, ChannelSDKType } from "../../../core/channel/v1/channel";
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import { Any, AnySDKType } from '../../../../google/protobuf/any';
+import { ConnectionEnd, ConnectionEndSDKType } from '../../../core/connection/v1/connection';
+import { Channel, ChannelSDKType } from '../../../core/channel/v1/channel';
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 /**
  * DataType defines the type of solo machine proof being created. This is done
  * to preserve uniqueness of different data sign byte encodings.
@@ -80,47 +80,47 @@ export enum DataTypeSDKType {
 export function dataTypeFromJSON(object: any): DataType {
   switch (object) {
     case 0:
-    case "DATA_TYPE_UNINITIALIZED_UNSPECIFIED":
+    case 'DATA_TYPE_UNINITIALIZED_UNSPECIFIED':
       return DataType.DATA_TYPE_UNINITIALIZED_UNSPECIFIED;
 
     case 1:
-    case "DATA_TYPE_CLIENT_STATE":
+    case 'DATA_TYPE_CLIENT_STATE':
       return DataType.DATA_TYPE_CLIENT_STATE;
 
     case 2:
-    case "DATA_TYPE_CONSENSUS_STATE":
+    case 'DATA_TYPE_CONSENSUS_STATE':
       return DataType.DATA_TYPE_CONSENSUS_STATE;
 
     case 3:
-    case "DATA_TYPE_CONNECTION_STATE":
+    case 'DATA_TYPE_CONNECTION_STATE':
       return DataType.DATA_TYPE_CONNECTION_STATE;
 
     case 4:
-    case "DATA_TYPE_CHANNEL_STATE":
+    case 'DATA_TYPE_CHANNEL_STATE':
       return DataType.DATA_TYPE_CHANNEL_STATE;
 
     case 5:
-    case "DATA_TYPE_PACKET_COMMITMENT":
+    case 'DATA_TYPE_PACKET_COMMITMENT':
       return DataType.DATA_TYPE_PACKET_COMMITMENT;
 
     case 6:
-    case "DATA_TYPE_PACKET_ACKNOWLEDGEMENT":
+    case 'DATA_TYPE_PACKET_ACKNOWLEDGEMENT':
       return DataType.DATA_TYPE_PACKET_ACKNOWLEDGEMENT;
 
     case 7:
-    case "DATA_TYPE_PACKET_RECEIPT_ABSENCE":
+    case 'DATA_TYPE_PACKET_RECEIPT_ABSENCE':
       return DataType.DATA_TYPE_PACKET_RECEIPT_ABSENCE;
 
     case 8:
-    case "DATA_TYPE_NEXT_SEQUENCE_RECV":
+    case 'DATA_TYPE_NEXT_SEQUENCE_RECV':
       return DataType.DATA_TYPE_NEXT_SEQUENCE_RECV;
 
     case 9:
-    case "DATA_TYPE_HEADER":
+    case 'DATA_TYPE_HEADER':
       return DataType.DATA_TYPE_HEADER;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return DataType.UNRECOGNIZED;
   }
@@ -128,37 +128,37 @@ export function dataTypeFromJSON(object: any): DataType {
 export function dataTypeToJSON(object: DataType): string {
   switch (object) {
     case DataType.DATA_TYPE_UNINITIALIZED_UNSPECIFIED:
-      return "DATA_TYPE_UNINITIALIZED_UNSPECIFIED";
+      return 'DATA_TYPE_UNINITIALIZED_UNSPECIFIED';
 
     case DataType.DATA_TYPE_CLIENT_STATE:
-      return "DATA_TYPE_CLIENT_STATE";
+      return 'DATA_TYPE_CLIENT_STATE';
 
     case DataType.DATA_TYPE_CONSENSUS_STATE:
-      return "DATA_TYPE_CONSENSUS_STATE";
+      return 'DATA_TYPE_CONSENSUS_STATE';
 
     case DataType.DATA_TYPE_CONNECTION_STATE:
-      return "DATA_TYPE_CONNECTION_STATE";
+      return 'DATA_TYPE_CONNECTION_STATE';
 
     case DataType.DATA_TYPE_CHANNEL_STATE:
-      return "DATA_TYPE_CHANNEL_STATE";
+      return 'DATA_TYPE_CHANNEL_STATE';
 
     case DataType.DATA_TYPE_PACKET_COMMITMENT:
-      return "DATA_TYPE_PACKET_COMMITMENT";
+      return 'DATA_TYPE_PACKET_COMMITMENT';
 
     case DataType.DATA_TYPE_PACKET_ACKNOWLEDGEMENT:
-      return "DATA_TYPE_PACKET_ACKNOWLEDGEMENT";
+      return 'DATA_TYPE_PACKET_ACKNOWLEDGEMENT';
 
     case DataType.DATA_TYPE_PACKET_RECEIPT_ABSENCE:
-      return "DATA_TYPE_PACKET_RECEIPT_ABSENCE";
+      return 'DATA_TYPE_PACKET_RECEIPT_ABSENCE';
 
     case DataType.DATA_TYPE_NEXT_SEQUENCE_RECV:
-      return "DATA_TYPE_NEXT_SEQUENCE_RECV";
+      return 'DATA_TYPE_NEXT_SEQUENCE_RECV';
 
     case DataType.DATA_TYPE_HEADER:
-      return "DATA_TYPE_HEADER";
+      return 'DATA_TYPE_HEADER';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /**
@@ -530,7 +530,7 @@ export const ClientState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientState();
 
     while (reader.pos < end) {
@@ -576,7 +576,7 @@ export const ClientState = {
 function createBaseConsensusState(): ConsensusState {
   return {
     publicKey: undefined,
-    diversifier: "",
+    diversifier: '',
     timestamp: Long.UZERO
   };
 }
@@ -587,7 +587,7 @@ export const ConsensusState = {
       Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.diversifier !== "") {
+    if (message.diversifier !== '') {
       writer.uint32(18).string(message.diversifier);
     }
 
@@ -600,7 +600,7 @@ export const ConsensusState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensusState();
 
     while (reader.pos < end) {
@@ -631,7 +631,7 @@ export const ConsensusState = {
   fromPartial(object: DeepPartial<ConsensusState>): ConsensusState {
     const message = createBaseConsensusState();
     message.publicKey = object.publicKey !== undefined && object.publicKey !== null ? Any.fromPartial(object.publicKey) : undefined;
-    message.diversifier = object.diversifier ?? "";
+    message.diversifier = object.diversifier ?? '';
     message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
     return message;
   }
@@ -644,7 +644,7 @@ function createBaseHeader(): Header {
     timestamp: Long.UZERO,
     signature: new Uint8Array(),
     newPublicKey: undefined,
-    newDiversifier: ""
+    newDiversifier: ''
   };
 }
 
@@ -666,7 +666,7 @@ export const Header = {
       Any.encode(message.newPublicKey, writer.uint32(34).fork()).ldelim();
     }
 
-    if (message.newDiversifier !== "") {
+    if (message.newDiversifier !== '') {
       writer.uint32(42).string(message.newDiversifier);
     }
 
@@ -675,7 +675,7 @@ export const Header = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Header {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeader();
 
     while (reader.pos < end) {
@@ -717,7 +717,7 @@ export const Header = {
     message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
     message.signature = object.signature ?? new Uint8Array();
     message.newPublicKey = object.newPublicKey !== undefined && object.newPublicKey !== null ? Any.fromPartial(object.newPublicKey) : undefined;
-    message.newDiversifier = object.newDiversifier ?? "";
+    message.newDiversifier = object.newDiversifier ?? '';
     return message;
   }
 
@@ -725,7 +725,7 @@ export const Header = {
 
 function createBaseMisbehaviour(): Misbehaviour {
   return {
-    clientId: "",
+    clientId: '',
     sequence: Long.UZERO,
     signatureOne: undefined,
     signatureTwo: undefined
@@ -734,7 +734,7 @@ function createBaseMisbehaviour(): Misbehaviour {
 
 export const Misbehaviour = {
   encode(message: Misbehaviour, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== "") {
+    if (message.clientId !== '') {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -755,7 +755,7 @@ export const Misbehaviour = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Misbehaviour {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMisbehaviour();
 
     while (reader.pos < end) {
@@ -789,7 +789,7 @@ export const Misbehaviour = {
 
   fromPartial(object: DeepPartial<Misbehaviour>): Misbehaviour {
     const message = createBaseMisbehaviour();
-    message.clientId = object.clientId ?? "";
+    message.clientId = object.clientId ?? '';
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     message.signatureOne = object.signatureOne !== undefined && object.signatureOne !== null ? SignatureAndData.fromPartial(object.signatureOne) : undefined;
     message.signatureTwo = object.signatureTwo !== undefined && object.signatureTwo !== null ? SignatureAndData.fromPartial(object.signatureTwo) : undefined;
@@ -830,7 +830,7 @@ export const SignatureAndData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureAndData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignatureAndData();
 
     while (reader.pos < end) {
@@ -895,7 +895,7 @@ export const TimestampedSignatureData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TimestampedSignatureData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTimestampedSignatureData();
 
     while (reader.pos < end) {
@@ -932,7 +932,7 @@ function createBaseSignBytes(): SignBytes {
   return {
     sequence: Long.UZERO,
     timestamp: Long.UZERO,
-    diversifier: "",
+    diversifier: '',
     dataType: 0,
     data: new Uint8Array()
   };
@@ -948,7 +948,7 @@ export const SignBytes = {
       writer.uint32(16).uint64(message.timestamp);
     }
 
-    if (message.diversifier !== "") {
+    if (message.diversifier !== '') {
       writer.uint32(26).string(message.diversifier);
     }
 
@@ -965,7 +965,7 @@ export const SignBytes = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignBytes {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignBytes();
 
     while (reader.pos < end) {
@@ -1005,7 +1005,7 @@ export const SignBytes = {
     const message = createBaseSignBytes();
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
-    message.diversifier = object.diversifier ?? "";
+    message.diversifier = object.diversifier ?? '';
     message.dataType = object.dataType ?? 0;
     message.data = object.data ?? new Uint8Array();
     return message;
@@ -1016,7 +1016,7 @@ export const SignBytes = {
 function createBaseHeaderData(): HeaderData {
   return {
     newPubKey: undefined,
-    newDiversifier: ""
+    newDiversifier: ''
   };
 }
 
@@ -1026,7 +1026,7 @@ export const HeaderData = {
       Any.encode(message.newPubKey, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.newDiversifier !== "") {
+    if (message.newDiversifier !== '') {
       writer.uint32(18).string(message.newDiversifier);
     }
 
@@ -1035,7 +1035,7 @@ export const HeaderData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): HeaderData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeaderData();
 
     while (reader.pos < end) {
@@ -1062,7 +1062,7 @@ export const HeaderData = {
   fromPartial(object: DeepPartial<HeaderData>): HeaderData {
     const message = createBaseHeaderData();
     message.newPubKey = object.newPubKey !== undefined && object.newPubKey !== null ? Any.fromPartial(object.newPubKey) : undefined;
-    message.newDiversifier = object.newDiversifier ?? "";
+    message.newDiversifier = object.newDiversifier ?? '';
     return message;
   }
 
@@ -1090,7 +1090,7 @@ export const ClientStateData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientStateData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientStateData();
 
     while (reader.pos < end) {
@@ -1145,7 +1145,7 @@ export const ConsensusStateData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusStateData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensusStateData();
 
     while (reader.pos < end) {
@@ -1200,7 +1200,7 @@ export const ConnectionStateData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionStateData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConnectionStateData();
 
     while (reader.pos < end) {
@@ -1255,7 +1255,7 @@ export const ChannelStateData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ChannelStateData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChannelStateData();
 
     while (reader.pos < end) {
@@ -1310,7 +1310,7 @@ export const PacketCommitmentData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PacketCommitmentData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketCommitmentData();
 
     while (reader.pos < end) {
@@ -1365,7 +1365,7 @@ export const PacketAcknowledgementData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PacketAcknowledgementData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketAcknowledgementData();
 
     while (reader.pos < end) {
@@ -1415,7 +1415,7 @@ export const PacketReceiptAbsenceData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PacketReceiptAbsenceData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketReceiptAbsenceData();
 
     while (reader.pos < end) {
@@ -1465,7 +1465,7 @@ export const NextSequenceRecvData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): NextSequenceRecvData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseNextSequenceRecvData();
 
     while (reader.pos < end) {

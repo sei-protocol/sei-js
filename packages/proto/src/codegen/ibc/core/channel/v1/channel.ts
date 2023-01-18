@@ -1,6 +1,6 @@
-import { Height, HeightSDKType } from "../../client/v1/client";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import { Height, HeightSDKType } from '../../client/v1/client';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /**
  * State defines if a channel is in one of the following states:
  * CLOSED, INIT, TRYOPEN, OPEN or UNINITIALIZED.
@@ -60,27 +60,27 @@ export enum StateSDKType {
 export function stateFromJSON(object: any): State {
   switch (object) {
     case 0:
-    case "STATE_UNINITIALIZED_UNSPECIFIED":
+    case 'STATE_UNINITIALIZED_UNSPECIFIED':
       return State.STATE_UNINITIALIZED_UNSPECIFIED;
 
     case 1:
-    case "STATE_INIT":
+    case 'STATE_INIT':
       return State.STATE_INIT;
 
     case 2:
-    case "STATE_TRYOPEN":
+    case 'STATE_TRYOPEN':
       return State.STATE_TRYOPEN;
 
     case 3:
-    case "STATE_OPEN":
+    case 'STATE_OPEN':
       return State.STATE_OPEN;
 
     case 4:
-    case "STATE_CLOSED":
+    case 'STATE_CLOSED':
       return State.STATE_CLOSED;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return State.UNRECOGNIZED;
   }
@@ -88,22 +88,22 @@ export function stateFromJSON(object: any): State {
 export function stateToJSON(object: State): string {
   switch (object) {
     case State.STATE_UNINITIALIZED_UNSPECIFIED:
-      return "STATE_UNINITIALIZED_UNSPECIFIED";
+      return 'STATE_UNINITIALIZED_UNSPECIFIED';
 
     case State.STATE_INIT:
-      return "STATE_INIT";
+      return 'STATE_INIT';
 
     case State.STATE_TRYOPEN:
-      return "STATE_TRYOPEN";
+      return 'STATE_TRYOPEN';
 
     case State.STATE_OPEN:
-      return "STATE_OPEN";
+      return 'STATE_OPEN';
 
     case State.STATE_CLOSED:
-      return "STATE_CLOSED";
+      return 'STATE_CLOSED';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /** Order defines if a channel is ORDERED or UNORDERED */
@@ -141,19 +141,19 @@ export enum OrderSDKType {
 export function orderFromJSON(object: any): Order {
   switch (object) {
     case 0:
-    case "ORDER_NONE_UNSPECIFIED":
+    case 'ORDER_NONE_UNSPECIFIED':
       return Order.ORDER_NONE_UNSPECIFIED;
 
     case 1:
-    case "ORDER_UNORDERED":
+    case 'ORDER_UNORDERED':
       return Order.ORDER_UNORDERED;
 
     case 2:
-    case "ORDER_ORDERED":
+    case 'ORDER_ORDERED':
       return Order.ORDER_ORDERED;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return Order.UNRECOGNIZED;
   }
@@ -161,16 +161,16 @@ export function orderFromJSON(object: any): Order {
 export function orderToJSON(object: Order): string {
   switch (object) {
     case Order.ORDER_NONE_UNSPECIFIED:
-      return "ORDER_NONE_UNSPECIFIED";
+      return 'ORDER_NONE_UNSPECIFIED';
 
     case Order.ORDER_UNORDERED:
-      return "ORDER_UNORDERED";
+      return 'ORDER_UNORDERED';
 
     case Order.ORDER_ORDERED:
-      return "ORDER_ORDERED";
+      return 'ORDER_ORDERED';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /**
@@ -438,7 +438,7 @@ function createBaseChannel(): Channel {
     ordering: 0,
     counterparty: undefined,
     connectionHops: [],
-    version: ""
+    version: ''
   };
 }
 
@@ -460,7 +460,7 @@ export const Channel = {
       writer.uint32(34).string(v!);
     }
 
-    if (message.version !== "") {
+    if (message.version !== '') {
       writer.uint32(42).string(message.version);
     }
 
@@ -469,7 +469,7 @@ export const Channel = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Channel {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChannel();
 
     while (reader.pos < end) {
@@ -511,7 +511,7 @@ export const Channel = {
     message.ordering = object.ordering ?? 0;
     message.counterparty = object.counterparty !== undefined && object.counterparty !== null ? Counterparty.fromPartial(object.counterparty) : undefined;
     message.connectionHops = object.connectionHops?.map(e => e) || [];
-    message.version = object.version ?? "";
+    message.version = object.version ?? '';
     return message;
   }
 
@@ -523,9 +523,9 @@ function createBaseIdentifiedChannel(): IdentifiedChannel {
     ordering: 0,
     counterparty: undefined,
     connectionHops: [],
-    version: "",
-    portId: "",
-    channelId: ""
+    version: '',
+    portId: '',
+    channelId: ''
   };
 }
 
@@ -547,15 +547,15 @@ export const IdentifiedChannel = {
       writer.uint32(34).string(v!);
     }
 
-    if (message.version !== "") {
+    if (message.version !== '') {
       writer.uint32(42).string(message.version);
     }
 
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(50).string(message.portId);
     }
 
-    if (message.channelId !== "") {
+    if (message.channelId !== '') {
       writer.uint32(58).string(message.channelId);
     }
 
@@ -564,7 +564,7 @@ export const IdentifiedChannel = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedChannel {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseIdentifiedChannel();
 
     while (reader.pos < end) {
@@ -614,9 +614,9 @@ export const IdentifiedChannel = {
     message.ordering = object.ordering ?? 0;
     message.counterparty = object.counterparty !== undefined && object.counterparty !== null ? Counterparty.fromPartial(object.counterparty) : undefined;
     message.connectionHops = object.connectionHops?.map(e => e) || [];
-    message.version = object.version ?? "";
-    message.portId = object.portId ?? "";
-    message.channelId = object.channelId ?? "";
+    message.version = object.version ?? '';
+    message.portId = object.portId ?? '';
+    message.channelId = object.channelId ?? '';
     return message;
   }
 
@@ -624,18 +624,18 @@ export const IdentifiedChannel = {
 
 function createBaseCounterparty(): Counterparty {
   return {
-    portId: "",
-    channelId: ""
+    portId: '',
+    channelId: ''
   };
 }
 
 export const Counterparty = {
   encode(message: Counterparty, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.channelId !== "") {
+    if (message.channelId !== '') {
       writer.uint32(18).string(message.channelId);
     }
 
@@ -644,7 +644,7 @@ export const Counterparty = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Counterparty {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCounterparty();
 
     while (reader.pos < end) {
@@ -670,8 +670,8 @@ export const Counterparty = {
 
   fromPartial(object: DeepPartial<Counterparty>): Counterparty {
     const message = createBaseCounterparty();
-    message.portId = object.portId ?? "";
-    message.channelId = object.channelId ?? "";
+    message.portId = object.portId ?? '';
+    message.channelId = object.channelId ?? '';
     return message;
   }
 
@@ -680,10 +680,10 @@ export const Counterparty = {
 function createBasePacket(): Packet {
   return {
     sequence: Long.UZERO,
-    sourcePort: "",
-    sourceChannel: "",
-    destinationPort: "",
-    destinationChannel: "",
+    sourcePort: '',
+    sourceChannel: '',
+    destinationPort: '',
+    destinationChannel: '',
     data: new Uint8Array(),
     timeoutHeight: undefined,
     timeoutTimestamp: Long.UZERO
@@ -696,19 +696,19 @@ export const Packet = {
       writer.uint32(8).uint64(message.sequence);
     }
 
-    if (message.sourcePort !== "") {
+    if (message.sourcePort !== '') {
       writer.uint32(18).string(message.sourcePort);
     }
 
-    if (message.sourceChannel !== "") {
+    if (message.sourceChannel !== '') {
       writer.uint32(26).string(message.sourceChannel);
     }
 
-    if (message.destinationPort !== "") {
+    if (message.destinationPort !== '') {
       writer.uint32(34).string(message.destinationPort);
     }
 
-    if (message.destinationChannel !== "") {
+    if (message.destinationChannel !== '') {
       writer.uint32(42).string(message.destinationChannel);
     }
 
@@ -729,7 +729,7 @@ export const Packet = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Packet {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacket();
 
     while (reader.pos < end) {
@@ -780,10 +780,10 @@ export const Packet = {
   fromPartial(object: DeepPartial<Packet>): Packet {
     const message = createBasePacket();
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
-    message.sourcePort = object.sourcePort ?? "";
-    message.sourceChannel = object.sourceChannel ?? "";
-    message.destinationPort = object.destinationPort ?? "";
-    message.destinationChannel = object.destinationChannel ?? "";
+    message.sourcePort = object.sourcePort ?? '';
+    message.sourceChannel = object.sourceChannel ?? '';
+    message.destinationPort = object.destinationPort ?? '';
+    message.destinationChannel = object.destinationChannel ?? '';
     message.data = object.data ?? new Uint8Array();
     message.timeoutHeight = object.timeoutHeight !== undefined && object.timeoutHeight !== null ? Height.fromPartial(object.timeoutHeight) : undefined;
     message.timeoutTimestamp = object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null ? Long.fromValue(object.timeoutTimestamp) : Long.UZERO;
@@ -794,8 +794,8 @@ export const Packet = {
 
 function createBasePacketState(): PacketState {
   return {
-    portId: "",
-    channelId: "",
+    portId: '',
+    channelId: '',
     sequence: Long.UZERO,
     data: new Uint8Array()
   };
@@ -803,11 +803,11 @@ function createBasePacketState(): PacketState {
 
 export const PacketState = {
   encode(message: PacketState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.channelId !== "") {
+    if (message.channelId !== '') {
       writer.uint32(18).string(message.channelId);
     }
 
@@ -824,7 +824,7 @@ export const PacketState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PacketState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketState();
 
     while (reader.pos < end) {
@@ -858,8 +858,8 @@ export const PacketState = {
 
   fromPartial(object: DeepPartial<PacketState>): PacketState {
     const message = createBasePacketState();
-    message.portId = object.portId ?? "";
-    message.channelId = object.channelId ?? "";
+    message.portId = object.portId ?? '';
+    message.channelId = object.channelId ?? '';
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     message.data = object.data ?? new Uint8Array();
     return message;
@@ -889,7 +889,7 @@ export const Acknowledgement = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Acknowledgement {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAcknowledgement();
 
     while (reader.pos < end) {

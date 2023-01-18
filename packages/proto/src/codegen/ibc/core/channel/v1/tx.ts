@@ -1,7 +1,7 @@
-import { Channel, ChannelSDKType, Packet, PacketSDKType } from "./channel";
-import { Height, HeightSDKType } from "../../client/v1/client";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import { Channel, ChannelSDKType, Packet, PacketSDKType } from './channel';
+import { Height, HeightSDKType } from '../../client/v1/client';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /**
  * MsgChannelOpenInit defines an sdk.Msg to initialize a channel handshake. It
  * is called by a relayer on Chain A.
@@ -303,15 +303,15 @@ export interface MsgAcknowledgementResponseSDKType {}
 
 function createBaseMsgChannelOpenInit(): MsgChannelOpenInit {
   return {
-    portId: "",
+    portId: '',
     channel: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgChannelOpenInit = {
   encode(message: MsgChannelOpenInit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
@@ -319,7 +319,7 @@ export const MsgChannelOpenInit = {
       Channel.encode(message.channel, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(26).string(message.signer);
     }
 
@@ -328,7 +328,7 @@ export const MsgChannelOpenInit = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenInit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenInit();
 
     while (reader.pos < end) {
@@ -358,9 +358,9 @@ export const MsgChannelOpenInit = {
 
   fromPartial(object: DeepPartial<MsgChannelOpenInit>): MsgChannelOpenInit {
     const message = createBaseMsgChannelOpenInit();
-    message.portId = object.portId ?? "";
+    message.portId = object.portId ?? '';
     message.channel = object.channel !== undefined && object.channel !== null ? Channel.fromPartial(object.channel) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -377,7 +377,7 @@ export const MsgChannelOpenInitResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenInitResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenInitResponse();
 
     while (reader.pos < end) {
@@ -402,23 +402,23 @@ export const MsgChannelOpenInitResponse = {
 
 function createBaseMsgChannelOpenTry(): MsgChannelOpenTry {
   return {
-    portId: "",
-    previousChannelId: "",
+    portId: '',
+    previousChannelId: '',
     channel: undefined,
-    counterpartyVersion: "",
+    counterpartyVersion: '',
     proofInit: new Uint8Array(),
     proofHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgChannelOpenTry = {
   encode(message: MsgChannelOpenTry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.previousChannelId !== "") {
+    if (message.previousChannelId !== '') {
       writer.uint32(18).string(message.previousChannelId);
     }
 
@@ -426,7 +426,7 @@ export const MsgChannelOpenTry = {
       Channel.encode(message.channel, writer.uint32(26).fork()).ldelim();
     }
 
-    if (message.counterpartyVersion !== "") {
+    if (message.counterpartyVersion !== '') {
       writer.uint32(34).string(message.counterpartyVersion);
     }
 
@@ -438,7 +438,7 @@ export const MsgChannelOpenTry = {
       Height.encode(message.proofHeight, writer.uint32(50).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(58).string(message.signer);
     }
 
@@ -447,7 +447,7 @@ export const MsgChannelOpenTry = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenTry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenTry();
 
     while (reader.pos < end) {
@@ -493,13 +493,13 @@ export const MsgChannelOpenTry = {
 
   fromPartial(object: DeepPartial<MsgChannelOpenTry>): MsgChannelOpenTry {
     const message = createBaseMsgChannelOpenTry();
-    message.portId = object.portId ?? "";
-    message.previousChannelId = object.previousChannelId ?? "";
+    message.portId = object.portId ?? '';
+    message.previousChannelId = object.previousChannelId ?? '';
     message.channel = object.channel !== undefined && object.channel !== null ? Channel.fromPartial(object.channel) : undefined;
-    message.counterpartyVersion = object.counterpartyVersion ?? "";
+    message.counterpartyVersion = object.counterpartyVersion ?? '';
     message.proofInit = object.proofInit ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -516,7 +516,7 @@ export const MsgChannelOpenTryResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenTryResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenTryResponse();
 
     while (reader.pos < end) {
@@ -541,31 +541,31 @@ export const MsgChannelOpenTryResponse = {
 
 function createBaseMsgChannelOpenAck(): MsgChannelOpenAck {
   return {
-    portId: "",
-    channelId: "",
-    counterpartyChannelId: "",
-    counterpartyVersion: "",
+    portId: '',
+    channelId: '',
+    counterpartyChannelId: '',
+    counterpartyVersion: '',
     proofTry: new Uint8Array(),
     proofHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgChannelOpenAck = {
   encode(message: MsgChannelOpenAck, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.channelId !== "") {
+    if (message.channelId !== '') {
       writer.uint32(18).string(message.channelId);
     }
 
-    if (message.counterpartyChannelId !== "") {
+    if (message.counterpartyChannelId !== '') {
       writer.uint32(26).string(message.counterpartyChannelId);
     }
 
-    if (message.counterpartyVersion !== "") {
+    if (message.counterpartyVersion !== '') {
       writer.uint32(34).string(message.counterpartyVersion);
     }
 
@@ -577,7 +577,7 @@ export const MsgChannelOpenAck = {
       Height.encode(message.proofHeight, writer.uint32(50).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(58).string(message.signer);
     }
 
@@ -586,7 +586,7 @@ export const MsgChannelOpenAck = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenAck {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenAck();
 
     while (reader.pos < end) {
@@ -632,13 +632,13 @@ export const MsgChannelOpenAck = {
 
   fromPartial(object: DeepPartial<MsgChannelOpenAck>): MsgChannelOpenAck {
     const message = createBaseMsgChannelOpenAck();
-    message.portId = object.portId ?? "";
-    message.channelId = object.channelId ?? "";
-    message.counterpartyChannelId = object.counterpartyChannelId ?? "";
-    message.counterpartyVersion = object.counterpartyVersion ?? "";
+    message.portId = object.portId ?? '';
+    message.channelId = object.channelId ?? '';
+    message.counterpartyChannelId = object.counterpartyChannelId ?? '';
+    message.counterpartyVersion = object.counterpartyVersion ?? '';
     message.proofTry = object.proofTry ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -655,7 +655,7 @@ export const MsgChannelOpenAckResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenAckResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenAckResponse();
 
     while (reader.pos < end) {
@@ -680,21 +680,21 @@ export const MsgChannelOpenAckResponse = {
 
 function createBaseMsgChannelOpenConfirm(): MsgChannelOpenConfirm {
   return {
-    portId: "",
-    channelId: "",
+    portId: '',
+    channelId: '',
     proofAck: new Uint8Array(),
     proofHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgChannelOpenConfirm = {
   encode(message: MsgChannelOpenConfirm, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.channelId !== "") {
+    if (message.channelId !== '') {
       writer.uint32(18).string(message.channelId);
     }
 
@@ -706,7 +706,7 @@ export const MsgChannelOpenConfirm = {
       Height.encode(message.proofHeight, writer.uint32(34).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(42).string(message.signer);
     }
 
@@ -715,7 +715,7 @@ export const MsgChannelOpenConfirm = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenConfirm {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenConfirm();
 
     while (reader.pos < end) {
@@ -753,11 +753,11 @@ export const MsgChannelOpenConfirm = {
 
   fromPartial(object: DeepPartial<MsgChannelOpenConfirm>): MsgChannelOpenConfirm {
     const message = createBaseMsgChannelOpenConfirm();
-    message.portId = object.portId ?? "";
-    message.channelId = object.channelId ?? "";
+    message.portId = object.portId ?? '';
+    message.channelId = object.channelId ?? '';
     message.proofAck = object.proofAck ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -774,7 +774,7 @@ export const MsgChannelOpenConfirmResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelOpenConfirmResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelOpenConfirmResponse();
 
     while (reader.pos < end) {
@@ -799,23 +799,23 @@ export const MsgChannelOpenConfirmResponse = {
 
 function createBaseMsgChannelCloseInit(): MsgChannelCloseInit {
   return {
-    portId: "",
-    channelId: "",
-    signer: ""
+    portId: '',
+    channelId: '',
+    signer: ''
   };
 }
 
 export const MsgChannelCloseInit = {
   encode(message: MsgChannelCloseInit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.channelId !== "") {
+    if (message.channelId !== '') {
       writer.uint32(18).string(message.channelId);
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(26).string(message.signer);
     }
 
@@ -824,7 +824,7 @@ export const MsgChannelCloseInit = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelCloseInit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelCloseInit();
 
     while (reader.pos < end) {
@@ -854,9 +854,9 @@ export const MsgChannelCloseInit = {
 
   fromPartial(object: DeepPartial<MsgChannelCloseInit>): MsgChannelCloseInit {
     const message = createBaseMsgChannelCloseInit();
-    message.portId = object.portId ?? "";
-    message.channelId = object.channelId ?? "";
-    message.signer = object.signer ?? "";
+    message.portId = object.portId ?? '';
+    message.channelId = object.channelId ?? '';
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -873,7 +873,7 @@ export const MsgChannelCloseInitResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelCloseInitResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelCloseInitResponse();
 
     while (reader.pos < end) {
@@ -898,21 +898,21 @@ export const MsgChannelCloseInitResponse = {
 
 function createBaseMsgChannelCloseConfirm(): MsgChannelCloseConfirm {
   return {
-    portId: "",
-    channelId: "",
+    portId: '',
+    channelId: '',
     proofInit: new Uint8Array(),
     proofHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
 export const MsgChannelCloseConfirm = {
   encode(message: MsgChannelCloseConfirm, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== "") {
+    if (message.portId !== '') {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.channelId !== "") {
+    if (message.channelId !== '') {
       writer.uint32(18).string(message.channelId);
     }
 
@@ -924,7 +924,7 @@ export const MsgChannelCloseConfirm = {
       Height.encode(message.proofHeight, writer.uint32(34).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(42).string(message.signer);
     }
 
@@ -933,7 +933,7 @@ export const MsgChannelCloseConfirm = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelCloseConfirm {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelCloseConfirm();
 
     while (reader.pos < end) {
@@ -971,11 +971,11 @@ export const MsgChannelCloseConfirm = {
 
   fromPartial(object: DeepPartial<MsgChannelCloseConfirm>): MsgChannelCloseConfirm {
     const message = createBaseMsgChannelCloseConfirm();
-    message.portId = object.portId ?? "";
-    message.channelId = object.channelId ?? "";
+    message.portId = object.portId ?? '';
+    message.channelId = object.channelId ?? '';
     message.proofInit = object.proofInit ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -992,7 +992,7 @@ export const MsgChannelCloseConfirmResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgChannelCloseConfirmResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgChannelCloseConfirmResponse();
 
     while (reader.pos < end) {
@@ -1020,7 +1020,7 @@ function createBaseMsgRecvPacket(): MsgRecvPacket {
     packet: undefined,
     proofCommitment: new Uint8Array(),
     proofHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
@@ -1038,7 +1038,7 @@ export const MsgRecvPacket = {
       Height.encode(message.proofHeight, writer.uint32(26).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(34).string(message.signer);
     }
 
@@ -1047,7 +1047,7 @@ export const MsgRecvPacket = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRecvPacket {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRecvPacket();
 
     while (reader.pos < end) {
@@ -1084,7 +1084,7 @@ export const MsgRecvPacket = {
     message.packet = object.packet !== undefined && object.packet !== null ? Packet.fromPartial(object.packet) : undefined;
     message.proofCommitment = object.proofCommitment ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -1101,7 +1101,7 @@ export const MsgRecvPacketResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRecvPacketResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRecvPacketResponse();
 
     while (reader.pos < end) {
@@ -1130,7 +1130,7 @@ function createBaseMsgTimeout(): MsgTimeout {
     proofUnreceived: new Uint8Array(),
     proofHeight: undefined,
     nextSequenceRecv: Long.UZERO,
-    signer: ""
+    signer: ''
   };
 }
 
@@ -1152,7 +1152,7 @@ export const MsgTimeout = {
       writer.uint32(32).uint64(message.nextSequenceRecv);
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(42).string(message.signer);
     }
 
@@ -1161,7 +1161,7 @@ export const MsgTimeout = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTimeout {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgTimeout();
 
     while (reader.pos < end) {
@@ -1203,7 +1203,7 @@ export const MsgTimeout = {
     message.proofUnreceived = object.proofUnreceived ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.nextSequenceRecv = object.nextSequenceRecv !== undefined && object.nextSequenceRecv !== null ? Long.fromValue(object.nextSequenceRecv) : Long.UZERO;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -1220,7 +1220,7 @@ export const MsgTimeoutResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTimeoutResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgTimeoutResponse();
 
     while (reader.pos < end) {
@@ -1250,7 +1250,7 @@ function createBaseMsgTimeoutOnClose(): MsgTimeoutOnClose {
     proofClose: new Uint8Array(),
     proofHeight: undefined,
     nextSequenceRecv: Long.UZERO,
-    signer: ""
+    signer: ''
   };
 }
 
@@ -1276,7 +1276,7 @@ export const MsgTimeoutOnClose = {
       writer.uint32(40).uint64(message.nextSequenceRecv);
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(50).string(message.signer);
     }
 
@@ -1285,7 +1285,7 @@ export const MsgTimeoutOnClose = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTimeoutOnClose {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgTimeoutOnClose();
 
     while (reader.pos < end) {
@@ -1332,7 +1332,7 @@ export const MsgTimeoutOnClose = {
     message.proofClose = object.proofClose ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.nextSequenceRecv = object.nextSequenceRecv !== undefined && object.nextSequenceRecv !== null ? Long.fromValue(object.nextSequenceRecv) : Long.UZERO;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -1349,7 +1349,7 @@ export const MsgTimeoutOnCloseResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTimeoutOnCloseResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgTimeoutOnCloseResponse();
 
     while (reader.pos < end) {
@@ -1378,7 +1378,7 @@ function createBaseMsgAcknowledgement(): MsgAcknowledgement {
     acknowledgement: new Uint8Array(),
     proofAcked: new Uint8Array(),
     proofHeight: undefined,
-    signer: ""
+    signer: ''
   };
 }
 
@@ -1400,7 +1400,7 @@ export const MsgAcknowledgement = {
       Height.encode(message.proofHeight, writer.uint32(34).fork()).ldelim();
     }
 
-    if (message.signer !== "") {
+    if (message.signer !== '') {
       writer.uint32(42).string(message.signer);
     }
 
@@ -1409,7 +1409,7 @@ export const MsgAcknowledgement = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgAcknowledgement {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAcknowledgement();
 
     while (reader.pos < end) {
@@ -1451,7 +1451,7 @@ export const MsgAcknowledgement = {
     message.acknowledgement = object.acknowledgement ?? new Uint8Array();
     message.proofAcked = object.proofAcked ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
-    message.signer = object.signer ?? "";
+    message.signer = object.signer ?? '';
     return message;
   }
 
@@ -1468,7 +1468,7 @@ export const MsgAcknowledgementResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgAcknowledgementResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAcknowledgementResponse();
 
     while (reader.pos < end) {

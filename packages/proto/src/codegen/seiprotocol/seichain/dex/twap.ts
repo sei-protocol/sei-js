@@ -1,6 +1,6 @@
-import { Pair, PairSDKType } from "./pair";
-import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
+import { Pair, PairSDKType } from './pair';
+import * as _m0 from 'protobufjs/minimal';
+import { Long, DeepPartial } from '@osmonauts/helpers';
 export interface Twap {
   pair: Pair;
   twap: string;
@@ -15,7 +15,7 @@ export interface TwapSDKType {
 function createBaseTwap(): Twap {
   return {
     pair: undefined,
-    twap: "",
+    twap: '',
     lookbackSeconds: Long.UZERO
   };
 }
@@ -26,7 +26,7 @@ export const Twap = {
       Pair.encode(message.pair, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.twap !== "") {
+    if (message.twap !== '') {
       writer.uint32(18).string(message.twap);
     }
 
@@ -39,7 +39,7 @@ export const Twap = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Twap {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTwap();
 
     while (reader.pos < end) {
@@ -70,7 +70,7 @@ export const Twap = {
   fromPartial(object: DeepPartial<Twap>): Twap {
     const message = createBaseTwap();
     message.pair = object.pair !== undefined && object.pair !== null ? Pair.fromPartial(object.pair) : undefined;
-    message.twap = object.twap ?? "";
+    message.twap = object.twap ?? '';
     message.lookbackSeconds = object.lookbackSeconds !== undefined && object.lookbackSeconds !== null ? Long.fromValue(object.lookbackSeconds) : Long.UZERO;
     return message;
   }

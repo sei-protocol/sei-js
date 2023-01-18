@@ -1,6 +1,6 @@
-import { OrderEntry, OrderEntrySDKType } from "./order_entry";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { OrderEntry, OrderEntrySDKType } from './order_entry';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 export interface ShortBook {
   price: string;
   entry: OrderEntry;
@@ -12,14 +12,14 @@ export interface ShortBookSDKType {
 
 function createBaseShortBook(): ShortBook {
   return {
-    price: "",
+    price: '',
     entry: undefined
   };
 }
 
 export const ShortBook = {
   encode(message: ShortBook, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.price !== "") {
+    if (message.price !== '') {
       writer.uint32(10).string(message.price);
     }
 
@@ -32,7 +32,7 @@ export const ShortBook = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ShortBook {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseShortBook();
 
     while (reader.pos < end) {
@@ -58,7 +58,7 @@ export const ShortBook = {
 
   fromPartial(object: DeepPartial<ShortBook>): ShortBook {
     const message = createBaseShortBook();
-    message.price = object.price ?? "";
+    message.price = object.price ?? '';
     message.entry = object.entry !== undefined && object.entry !== null ? OrderEntry.fromPartial(object.entry) : undefined;
     return message;
   }

@@ -1,10 +1,10 @@
-import { Tx, TxSDKType } from "./tx";
-import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../base/query/v1beta1/pagination";
-import { TxResponse, TxResponseSDKType, GasInfo, GasInfoSDKType, Result, ResultSDKType } from "../../base/abci/v1beta1/abci";
-import { BlockID, BlockIDSDKType } from "../../../tendermint/types/types";
-import { Block, BlockSDKType } from "../../../tendermint/types/block";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import { Tx, TxSDKType } from './tx';
+import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from '../../base/query/v1beta1/pagination';
+import { TxResponse, TxResponseSDKType, GasInfo, GasInfoSDKType, Result, ResultSDKType } from '../../base/abci/v1beta1/abci';
+import { BlockID, BlockIDSDKType } from '../../../tendermint/types/types';
+import { Block, BlockSDKType } from '../../../tendermint/types/block';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /** OrderBy defines the sorting order */
 
 export enum OrderBy {
@@ -34,19 +34,19 @@ export enum OrderBySDKType {
 export function orderByFromJSON(object: any): OrderBy {
   switch (object) {
     case 0:
-    case "ORDER_BY_UNSPECIFIED":
+    case 'ORDER_BY_UNSPECIFIED':
       return OrderBy.ORDER_BY_UNSPECIFIED;
 
     case 1:
-    case "ORDER_BY_ASC":
+    case 'ORDER_BY_ASC':
       return OrderBy.ORDER_BY_ASC;
 
     case 2:
-    case "ORDER_BY_DESC":
+    case 'ORDER_BY_DESC':
       return OrderBy.ORDER_BY_DESC;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return OrderBy.UNRECOGNIZED;
   }
@@ -54,16 +54,16 @@ export function orderByFromJSON(object: any): OrderBy {
 export function orderByToJSON(object: OrderBy): string {
   switch (object) {
     case OrderBy.ORDER_BY_UNSPECIFIED:
-      return "ORDER_BY_UNSPECIFIED";
+      return 'ORDER_BY_UNSPECIFIED';
 
     case OrderBy.ORDER_BY_ASC:
-      return "ORDER_BY_ASC";
+      return 'ORDER_BY_ASC';
 
     case OrderBy.ORDER_BY_DESC:
-      return "ORDER_BY_DESC";
+      return 'ORDER_BY_DESC';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /** BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC method. */
@@ -119,23 +119,23 @@ export enum BroadcastModeSDKType {
 export function broadcastModeFromJSON(object: any): BroadcastMode {
   switch (object) {
     case 0:
-    case "BROADCAST_MODE_UNSPECIFIED":
+    case 'BROADCAST_MODE_UNSPECIFIED':
       return BroadcastMode.BROADCAST_MODE_UNSPECIFIED;
 
     case 1:
-    case "BROADCAST_MODE_BLOCK":
+    case 'BROADCAST_MODE_BLOCK':
       return BroadcastMode.BROADCAST_MODE_BLOCK;
 
     case 2:
-    case "BROADCAST_MODE_SYNC":
+    case 'BROADCAST_MODE_SYNC':
       return BroadcastMode.BROADCAST_MODE_SYNC;
 
     case 3:
-    case "BROADCAST_MODE_ASYNC":
+    case 'BROADCAST_MODE_ASYNC':
       return BroadcastMode.BROADCAST_MODE_ASYNC;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return BroadcastMode.UNRECOGNIZED;
   }
@@ -143,19 +143,19 @@ export function broadcastModeFromJSON(object: any): BroadcastMode {
 export function broadcastModeToJSON(object: BroadcastMode): string {
   switch (object) {
     case BroadcastMode.BROADCAST_MODE_UNSPECIFIED:
-      return "BROADCAST_MODE_UNSPECIFIED";
+      return 'BROADCAST_MODE_UNSPECIFIED';
 
     case BroadcastMode.BROADCAST_MODE_BLOCK:
-      return "BROADCAST_MODE_BLOCK";
+      return 'BROADCAST_MODE_BLOCK';
 
     case BroadcastMode.BROADCAST_MODE_SYNC:
-      return "BROADCAST_MODE_SYNC";
+      return 'BROADCAST_MODE_SYNC';
 
     case BroadcastMode.BROADCAST_MODE_ASYNC:
-      return "BROADCAST_MODE_ASYNC";
+      return 'BROADCAST_MODE_ASYNC';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /**
@@ -440,7 +440,7 @@ export const GetTxsEventRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetTxsEventRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxsEventRequest();
 
     while (reader.pos < end) {
@@ -505,7 +505,7 @@ export const GetTxsEventResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetTxsEventResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxsEventResponse();
 
     while (reader.pos < end) {
@@ -565,7 +565,7 @@ export const BroadcastTxRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BroadcastTxRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBroadcastTxRequest();
 
     while (reader.pos < end) {
@@ -615,7 +615,7 @@ export const BroadcastTxResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BroadcastTxResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBroadcastTxResponse();
 
     while (reader.pos < end) {
@@ -665,7 +665,7 @@ export const SimulateRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SimulateRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSimulateRequest();
 
     while (reader.pos < end) {
@@ -720,7 +720,7 @@ export const SimulateResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SimulateResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSimulateResponse();
 
     while (reader.pos < end) {
@@ -755,13 +755,13 @@ export const SimulateResponse = {
 
 function createBaseGetTxRequest(): GetTxRequest {
   return {
-    hash: ""
+    hash: ''
   };
 }
 
 export const GetTxRequest = {
   encode(message: GetTxRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.hash !== "") {
+    if (message.hash !== '') {
       writer.uint32(10).string(message.hash);
     }
 
@@ -770,7 +770,7 @@ export const GetTxRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetTxRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxRequest();
 
     while (reader.pos < end) {
@@ -792,7 +792,7 @@ export const GetTxRequest = {
 
   fromPartial(object: DeepPartial<GetTxRequest>): GetTxRequest {
     const message = createBaseGetTxRequest();
-    message.hash = object.hash ?? "";
+    message.hash = object.hash ?? '';
     return message;
   }
 
@@ -820,7 +820,7 @@ export const GetTxResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetTxResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetTxResponse();
 
     while (reader.pos < end) {
@@ -875,7 +875,7 @@ export const GetBlockWithTxsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetBlockWithTxsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetBlockWithTxsRequest();
 
     while (reader.pos < end) {
@@ -940,7 +940,7 @@ export const GetBlockWithTxsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GetBlockWithTxsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetBlockWithTxsResponse();
 
     while (reader.pos < end) {

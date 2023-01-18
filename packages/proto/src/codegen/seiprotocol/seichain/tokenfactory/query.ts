@@ -1,7 +1,7 @@
-import { Params, ParamsSDKType } from "./params";
-import { DenomAuthorityMetadata, DenomAuthorityMetadataSDKType } from "./authorityMetadata";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { Params, ParamsSDKType } from './params';
+import { DenomAuthorityMetadata, DenomAuthorityMetadataSDKType } from './authorityMetadata';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 
 export interface QueryParamsRequest {}
@@ -156,7 +156,7 @@ export const QueryParamsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
 
     while (reader.pos < end) {
@@ -196,7 +196,7 @@ export const QueryParamsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
 
     while (reader.pos < end) {
@@ -226,13 +226,13 @@ export const QueryParamsResponse = {
 
 function createBaseQueryDenomAuthorityMetadataRequest(): QueryDenomAuthorityMetadataRequest {
   return {
-    denom: ""
+    denom: ''
   };
 }
 
 export const QueryDenomAuthorityMetadataRequest = {
   encode(message: QueryDenomAuthorityMetadataRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== "") {
+    if (message.denom !== '') {
       writer.uint32(10).string(message.denom);
     }
 
@@ -241,7 +241,7 @@ export const QueryDenomAuthorityMetadataRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomAuthorityMetadataRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomAuthorityMetadataRequest();
 
     while (reader.pos < end) {
@@ -263,7 +263,7 @@ export const QueryDenomAuthorityMetadataRequest = {
 
   fromPartial(object: DeepPartial<QueryDenomAuthorityMetadataRequest>): QueryDenomAuthorityMetadataRequest {
     const message = createBaseQueryDenomAuthorityMetadataRequest();
-    message.denom = object.denom ?? "";
+    message.denom = object.denom ?? '';
     return message;
   }
 
@@ -286,7 +286,7 @@ export const QueryDenomAuthorityMetadataResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomAuthorityMetadataResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomAuthorityMetadataResponse();
 
     while (reader.pos < end) {
@@ -316,13 +316,13 @@ export const QueryDenomAuthorityMetadataResponse = {
 
 function createBaseQueryDenomsFromCreatorRequest(): QueryDenomsFromCreatorRequest {
   return {
-    creator: ""
+    creator: ''
   };
 }
 
 export const QueryDenomsFromCreatorRequest = {
   encode(message: QueryDenomsFromCreatorRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.creator !== "") {
+    if (message.creator !== '') {
       writer.uint32(10).string(message.creator);
     }
 
@@ -331,7 +331,7 @@ export const QueryDenomsFromCreatorRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsFromCreatorRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomsFromCreatorRequest();
 
     while (reader.pos < end) {
@@ -353,7 +353,7 @@ export const QueryDenomsFromCreatorRequest = {
 
   fromPartial(object: DeepPartial<QueryDenomsFromCreatorRequest>): QueryDenomsFromCreatorRequest {
     const message = createBaseQueryDenomsFromCreatorRequest();
-    message.creator = object.creator ?? "";
+    message.creator = object.creator ?? '';
     return message;
   }
 
@@ -376,7 +376,7 @@ export const QueryDenomsFromCreatorResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsFromCreatorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomsFromCreatorResponse();
 
     while (reader.pos < end) {
@@ -415,7 +415,7 @@ export const QueryDenomCreationFeeWhitelistRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomCreationFeeWhitelistRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomCreationFeeWhitelistRequest();
 
     while (reader.pos < end) {
@@ -455,7 +455,7 @@ export const QueryDenomCreationFeeWhitelistResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomCreationFeeWhitelistResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomCreationFeeWhitelistResponse();
 
     while (reader.pos < end) {
@@ -485,13 +485,13 @@ export const QueryDenomCreationFeeWhitelistResponse = {
 
 function createBaseQueryCreatorInDenomFeeWhitelistRequest(): QueryCreatorInDenomFeeWhitelistRequest {
   return {
-    creator: ""
+    creator: ''
   };
 }
 
 export const QueryCreatorInDenomFeeWhitelistRequest = {
   encode(message: QueryCreatorInDenomFeeWhitelistRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.creator !== "") {
+    if (message.creator !== '') {
       writer.uint32(10).string(message.creator);
     }
 
@@ -500,7 +500,7 @@ export const QueryCreatorInDenomFeeWhitelistRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCreatorInDenomFeeWhitelistRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryCreatorInDenomFeeWhitelistRequest();
 
     while (reader.pos < end) {
@@ -522,7 +522,7 @@ export const QueryCreatorInDenomFeeWhitelistRequest = {
 
   fromPartial(object: DeepPartial<QueryCreatorInDenomFeeWhitelistRequest>): QueryCreatorInDenomFeeWhitelistRequest {
     const message = createBaseQueryCreatorInDenomFeeWhitelistRequest();
-    message.creator = object.creator ?? "";
+    message.creator = object.creator ?? '';
     return message;
   }
 
@@ -545,7 +545,7 @@ export const QueryCreatorInDenomFeeWhitelistResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryCreatorInDenomFeeWhitelistResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryCreatorInDenomFeeWhitelistResponse();
 
     while (reader.pos < end) {

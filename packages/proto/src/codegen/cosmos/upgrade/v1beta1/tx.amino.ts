@@ -1,8 +1,8 @@
-import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "@osmonauts/helpers";
-import { MsgSoftwareUpgrade, MsgCancelUpgrade } from "./tx";
+import { AminoMsg } from '@cosmjs/amino';
+import { Long } from '@osmonauts/helpers';
+import { MsgSoftwareUpgrade, MsgCancelUpgrade } from './tx';
 export interface AminoMsgSoftwareUpgrade extends AminoMsg {
-  type: "cosmos-sdk/MsgSoftwareUpgrade";
+  type: 'cosmos-sdk/MsgSoftwareUpgrade';
   value: {
     authority: string;
     plan: {
@@ -21,18 +21,18 @@ export interface AminoMsgSoftwareUpgrade extends AminoMsg {
   };
 }
 export interface AminoMsgCancelUpgrade extends AminoMsg {
-  type: "cosmos-sdk/MsgCancelUpgrade";
+  type: 'cosmos-sdk/MsgCancelUpgrade';
   value: {
     authority: string;
   };
 }
 export const AminoConverter = {
-  "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade": {
-    aminoType: "cosmos-sdk/MsgSoftwareUpgrade",
+  '/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade': {
+    aminoType: 'cosmos-sdk/MsgSoftwareUpgrade',
     toAmino: ({
       authority,
       plan
-    }: MsgSoftwareUpgrade): AminoMsgSoftwareUpgrade["value"] => {
+    }: MsgSoftwareUpgrade): AminoMsgSoftwareUpgrade['value'] => {
       return {
         authority,
         plan: {
@@ -50,7 +50,7 @@ export const AminoConverter = {
     fromAmino: ({
       authority,
       plan
-    }: AminoMsgSoftwareUpgrade["value"]): MsgSoftwareUpgrade => {
+    }: AminoMsgSoftwareUpgrade['value']): MsgSoftwareUpgrade => {
       return {
         authority,
         plan: {
@@ -66,18 +66,18 @@ export const AminoConverter = {
       };
     }
   },
-  "/cosmos.upgrade.v1beta1.MsgCancelUpgrade": {
-    aminoType: "cosmos-sdk/MsgCancelUpgrade",
+  '/cosmos.upgrade.v1beta1.MsgCancelUpgrade': {
+    aminoType: 'cosmos-sdk/MsgCancelUpgrade',
     toAmino: ({
       authority
-    }: MsgCancelUpgrade): AminoMsgCancelUpgrade["value"] => {
+    }: MsgCancelUpgrade): AminoMsgCancelUpgrade['value'] => {
       return {
         authority
       };
     },
     fromAmino: ({
       authority
-    }: AminoMsgCancelUpgrade["value"]): MsgCancelUpgrade => {
+    }: AminoMsgCancelUpgrade['value']): MsgCancelUpgrade => {
       return {
         authority
       };

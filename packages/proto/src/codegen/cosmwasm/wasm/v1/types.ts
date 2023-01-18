@@ -1,6 +1,6 @@
-import { Any, AnySDKType } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
+import { Any, AnySDKType } from '../../../google/protobuf/any';
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial, Long } from '@osmonauts/helpers';
 /** AccessType permission types */
 
 export enum AccessType {
@@ -36,23 +36,23 @@ export enum AccessTypeSDKType {
 export function accessTypeFromJSON(object: any): AccessType {
   switch (object) {
     case 0:
-    case "ACCESS_TYPE_UNSPECIFIED":
+    case 'ACCESS_TYPE_UNSPECIFIED':
       return AccessType.ACCESS_TYPE_UNSPECIFIED;
 
     case 1:
-    case "ACCESS_TYPE_NOBODY":
+    case 'ACCESS_TYPE_NOBODY':
       return AccessType.ACCESS_TYPE_NOBODY;
 
     case 2:
-    case "ACCESS_TYPE_ONLY_ADDRESS":
+    case 'ACCESS_TYPE_ONLY_ADDRESS':
       return AccessType.ACCESS_TYPE_ONLY_ADDRESS;
 
     case 3:
-    case "ACCESS_TYPE_EVERYBODY":
+    case 'ACCESS_TYPE_EVERYBODY':
       return AccessType.ACCESS_TYPE_EVERYBODY;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return AccessType.UNRECOGNIZED;
   }
@@ -60,19 +60,19 @@ export function accessTypeFromJSON(object: any): AccessType {
 export function accessTypeToJSON(object: AccessType): string {
   switch (object) {
     case AccessType.ACCESS_TYPE_UNSPECIFIED:
-      return "ACCESS_TYPE_UNSPECIFIED";
+      return 'ACCESS_TYPE_UNSPECIFIED';
 
     case AccessType.ACCESS_TYPE_NOBODY:
-      return "ACCESS_TYPE_NOBODY";
+      return 'ACCESS_TYPE_NOBODY';
 
     case AccessType.ACCESS_TYPE_ONLY_ADDRESS:
-      return "ACCESS_TYPE_ONLY_ADDRESS";
+      return 'ACCESS_TYPE_ONLY_ADDRESS';
 
     case AccessType.ACCESS_TYPE_EVERYBODY:
-      return "ACCESS_TYPE_EVERYBODY";
+      return 'ACCESS_TYPE_EVERYBODY';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /** ContractCodeHistoryOperationType actions that caused a code change */
@@ -110,23 +110,23 @@ export enum ContractCodeHistoryOperationTypeSDKType {
 export function contractCodeHistoryOperationTypeFromJSON(object: any): ContractCodeHistoryOperationType {
   switch (object) {
     case 0:
-    case "CONTRACT_CODE_HISTORY_OPERATION_TYPE_UNSPECIFIED":
+    case 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_UNSPECIFIED':
       return ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_UNSPECIFIED;
 
     case 1:
-    case "CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT":
+    case 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT':
       return ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT;
 
     case 2:
-    case "CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE":
+    case 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE':
       return ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE;
 
     case 3:
-    case "CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS":
+    case 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS':
       return ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS;
 
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return ContractCodeHistoryOperationType.UNRECOGNIZED;
   }
@@ -134,19 +134,19 @@ export function contractCodeHistoryOperationTypeFromJSON(object: any): ContractC
 export function contractCodeHistoryOperationTypeToJSON(object: ContractCodeHistoryOperationType): string {
   switch (object) {
     case ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_UNSPECIFIED:
-      return "CONTRACT_CODE_HISTORY_OPERATION_TYPE_UNSPECIFIED";
+      return 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_UNSPECIFIED';
 
     case ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT:
-      return "CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT";
+      return 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT';
 
     case ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE:
-      return "CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE";
+      return 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE';
 
     case ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS:
-      return "CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS";
+      return 'CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS';
 
     default:
-      return "UNKNOWN";
+      return 'UNKNOWN';
   }
 }
 /** AccessTypeParam */
@@ -357,7 +357,7 @@ export const AccessTypeParam = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AccessTypeParam {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccessTypeParam();
 
     while (reader.pos < end) {
@@ -388,7 +388,7 @@ export const AccessTypeParam = {
 function createBaseAccessConfig(): AccessConfig {
   return {
     permission: 0,
-    address: ""
+    address: ''
   };
 }
 
@@ -398,7 +398,7 @@ export const AccessConfig = {
       writer.uint32(8).int32(message.permission);
     }
 
-    if (message.address !== "") {
+    if (message.address !== '') {
       writer.uint32(18).string(message.address);
     }
 
@@ -407,7 +407,7 @@ export const AccessConfig = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AccessConfig {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccessConfig();
 
     while (reader.pos < end) {
@@ -434,7 +434,7 @@ export const AccessConfig = {
   fromPartial(object: DeepPartial<AccessConfig>): AccessConfig {
     const message = createBaseAccessConfig();
     message.permission = object.permission ?? 0;
-    message.address = object.address ?? "";
+    message.address = object.address ?? '';
     return message;
   }
 
@@ -467,7 +467,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {
@@ -508,7 +508,7 @@ export const Params = {
 function createBaseCodeInfo(): CodeInfo {
   return {
     codeHash: new Uint8Array(),
-    creator: "",
+    creator: '',
     instantiateConfig: undefined
   };
 }
@@ -519,7 +519,7 @@ export const CodeInfo = {
       writer.uint32(10).bytes(message.codeHash);
     }
 
-    if (message.creator !== "") {
+    if (message.creator !== '') {
       writer.uint32(18).string(message.creator);
     }
 
@@ -532,7 +532,7 @@ export const CodeInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CodeInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCodeInfo();
 
     while (reader.pos < end) {
@@ -563,7 +563,7 @@ export const CodeInfo = {
   fromPartial(object: DeepPartial<CodeInfo>): CodeInfo {
     const message = createBaseCodeInfo();
     message.codeHash = object.codeHash ?? new Uint8Array();
-    message.creator = object.creator ?? "";
+    message.creator = object.creator ?? '';
     message.instantiateConfig = object.instantiateConfig !== undefined && object.instantiateConfig !== null ? AccessConfig.fromPartial(object.instantiateConfig) : undefined;
     return message;
   }
@@ -573,11 +573,11 @@ export const CodeInfo = {
 function createBaseContractInfo(): ContractInfo {
   return {
     codeId: Long.UZERO,
-    creator: "",
-    admin: "",
-    label: "",
+    creator: '',
+    admin: '',
+    label: '',
     created: undefined,
-    ibcPortId: "",
+    ibcPortId: '',
     extension: undefined
   };
 }
@@ -588,15 +588,15 @@ export const ContractInfo = {
       writer.uint32(8).uint64(message.codeId);
     }
 
-    if (message.creator !== "") {
+    if (message.creator !== '') {
       writer.uint32(18).string(message.creator);
     }
 
-    if (message.admin !== "") {
+    if (message.admin !== '') {
       writer.uint32(26).string(message.admin);
     }
 
-    if (message.label !== "") {
+    if (message.label !== '') {
       writer.uint32(34).string(message.label);
     }
 
@@ -604,7 +604,7 @@ export const ContractInfo = {
       AbsoluteTxPosition.encode(message.created, writer.uint32(42).fork()).ldelim();
     }
 
-    if (message.ibcPortId !== "") {
+    if (message.ibcPortId !== '') {
       writer.uint32(50).string(message.ibcPortId);
     }
 
@@ -617,7 +617,7 @@ export const ContractInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseContractInfo();
 
     while (reader.pos < end) {
@@ -664,11 +664,11 @@ export const ContractInfo = {
   fromPartial(object: DeepPartial<ContractInfo>): ContractInfo {
     const message = createBaseContractInfo();
     message.codeId = object.codeId !== undefined && object.codeId !== null ? Long.fromValue(object.codeId) : Long.UZERO;
-    message.creator = object.creator ?? "";
-    message.admin = object.admin ?? "";
-    message.label = object.label ?? "";
+    message.creator = object.creator ?? '';
+    message.admin = object.admin ?? '';
+    message.label = object.label ?? '';
     message.created = object.created !== undefined && object.created !== null ? AbsoluteTxPosition.fromPartial(object.created) : undefined;
-    message.ibcPortId = object.ibcPortId ?? "";
+    message.ibcPortId = object.ibcPortId ?? '';
     message.extension = object.extension !== undefined && object.extension !== null ? Any.fromPartial(object.extension) : undefined;
     return message;
   }
@@ -707,7 +707,7 @@ export const ContractCodeHistoryEntry = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractCodeHistoryEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseContractCodeHistoryEntry();
 
     while (reader.pos < end) {
@@ -772,7 +772,7 @@ export const AbsoluteTxPosition = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AbsoluteTxPosition {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAbsoluteTxPosition();
 
     while (reader.pos < end) {
@@ -827,7 +827,7 @@ export const Model = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Model {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModel();
 
     while (reader.pos < end) {

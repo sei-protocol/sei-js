@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import * as _m0 from 'protobufjs/minimal';
+import { DeepPartial } from '@osmonauts/helpers';
 /**
  * MsgAggregateExchangeRateVote represents a message to submit
  * aggregate exchange rate vote.
@@ -55,23 +55,23 @@ export interface MsgDelegateFeedConsentResponseSDKType {}
 
 function createBaseMsgAggregateExchangeRateVote(): MsgAggregateExchangeRateVote {
   return {
-    exchangeRates: "",
-    feeder: "",
-    validator: ""
+    exchangeRates: '',
+    feeder: '',
+    validator: ''
   };
 }
 
 export const MsgAggregateExchangeRateVote = {
   encode(message: MsgAggregateExchangeRateVote, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.exchangeRates !== "") {
+    if (message.exchangeRates !== '') {
       writer.uint32(18).string(message.exchangeRates);
     }
 
-    if (message.feeder !== "") {
+    if (message.feeder !== '') {
       writer.uint32(26).string(message.feeder);
     }
 
-    if (message.validator !== "") {
+    if (message.validator !== '') {
       writer.uint32(34).string(message.validator);
     }
 
@@ -80,7 +80,7 @@ export const MsgAggregateExchangeRateVote = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgAggregateExchangeRateVote {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAggregateExchangeRateVote();
 
     while (reader.pos < end) {
@@ -110,9 +110,9 @@ export const MsgAggregateExchangeRateVote = {
 
   fromPartial(object: DeepPartial<MsgAggregateExchangeRateVote>): MsgAggregateExchangeRateVote {
     const message = createBaseMsgAggregateExchangeRateVote();
-    message.exchangeRates = object.exchangeRates ?? "";
-    message.feeder = object.feeder ?? "";
-    message.validator = object.validator ?? "";
+    message.exchangeRates = object.exchangeRates ?? '';
+    message.feeder = object.feeder ?? '';
+    message.validator = object.validator ?? '';
     return message;
   }
 
@@ -129,7 +129,7 @@ export const MsgAggregateExchangeRateVoteResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgAggregateExchangeRateVoteResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAggregateExchangeRateVoteResponse();
 
     while (reader.pos < end) {
@@ -154,18 +154,18 @@ export const MsgAggregateExchangeRateVoteResponse = {
 
 function createBaseMsgDelegateFeedConsent(): MsgDelegateFeedConsent {
   return {
-    operator: "",
-    delegate: ""
+    operator: '',
+    delegate: ''
   };
 }
 
 export const MsgDelegateFeedConsent = {
   encode(message: MsgDelegateFeedConsent, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.operator !== "") {
+    if (message.operator !== '') {
       writer.uint32(10).string(message.operator);
     }
 
-    if (message.delegate !== "") {
+    if (message.delegate !== '') {
       writer.uint32(18).string(message.delegate);
     }
 
@@ -174,7 +174,7 @@ export const MsgDelegateFeedConsent = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgDelegateFeedConsent {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDelegateFeedConsent();
 
     while (reader.pos < end) {
@@ -200,8 +200,8 @@ export const MsgDelegateFeedConsent = {
 
   fromPartial(object: DeepPartial<MsgDelegateFeedConsent>): MsgDelegateFeedConsent {
     const message = createBaseMsgDelegateFeedConsent();
-    message.operator = object.operator ?? "";
-    message.delegate = object.delegate ?? "";
+    message.operator = object.operator ?? '';
+    message.delegate = object.delegate ?? '';
     return message;
   }
 
@@ -218,7 +218,7 @@ export const MsgDelegateFeedConsentResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgDelegateFeedConsentResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDelegateFeedConsentResponse();
 
     while (reader.pos < end) {

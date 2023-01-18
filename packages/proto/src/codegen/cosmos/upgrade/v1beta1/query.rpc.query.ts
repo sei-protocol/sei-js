@@ -1,7 +1,7 @@
-import { Rpc } from "@osmonauts/helpers";
-import * as _m0 from "protobufjs/minimal";
-import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryCurrentPlanRequest, QueryCurrentPlanResponse, QueryAppliedPlanRequest, QueryAppliedPlanResponse, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponse, QueryModuleVersionsRequest, QueryModuleVersionsResponse, QueryAuthorityRequest, QueryAuthorityResponse } from "./query";
+import { Rpc } from '@osmonauts/helpers';
+import * as _m0 from 'protobufjs/minimal';
+import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
+import { QueryCurrentPlanRequest, QueryCurrentPlanResponse, QueryAppliedPlanRequest, QueryAppliedPlanResponse, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponse, QueryModuleVersionsRequest, QueryModuleVersionsResponse, QueryAuthorityRequest, QueryAuthorityResponse } from './query';
 /** Query defines the RPC service */
 
 export interface Query {
@@ -42,31 +42,31 @@ export class QueryClientImpl implements Query {
 
   currentPlan(request: QueryCurrentPlanRequest = {}): Promise<QueryCurrentPlanResponse> {
     const data = QueryCurrentPlanRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.upgrade.v1beta1.Query", "CurrentPlan", data);
+    const promise = this.rpc.request('cosmos.upgrade.v1beta1.Query', 'CurrentPlan', data);
     return promise.then(data => QueryCurrentPlanResponse.decode(new _m0.Reader(data)));
   }
 
   appliedPlan(request: QueryAppliedPlanRequest): Promise<QueryAppliedPlanResponse> {
     const data = QueryAppliedPlanRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.upgrade.v1beta1.Query", "AppliedPlan", data);
+    const promise = this.rpc.request('cosmos.upgrade.v1beta1.Query', 'AppliedPlan', data);
     return promise.then(data => QueryAppliedPlanResponse.decode(new _m0.Reader(data)));
   }
 
   upgradedConsensusState(request: QueryUpgradedConsensusStateRequest): Promise<QueryUpgradedConsensusStateResponse> {
     const data = QueryUpgradedConsensusStateRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.upgrade.v1beta1.Query", "UpgradedConsensusState", data);
+    const promise = this.rpc.request('cosmos.upgrade.v1beta1.Query', 'UpgradedConsensusState', data);
     return promise.then(data => QueryUpgradedConsensusStateResponse.decode(new _m0.Reader(data)));
   }
 
   moduleVersions(request: QueryModuleVersionsRequest): Promise<QueryModuleVersionsResponse> {
     const data = QueryModuleVersionsRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.upgrade.v1beta1.Query", "ModuleVersions", data);
+    const promise = this.rpc.request('cosmos.upgrade.v1beta1.Query', 'ModuleVersions', data);
     return promise.then(data => QueryModuleVersionsResponse.decode(new _m0.Reader(data)));
   }
 
   authority(request: QueryAuthorityRequest = {}): Promise<QueryAuthorityResponse> {
     const data = QueryAuthorityRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.upgrade.v1beta1.Query", "Authority", data);
+    const promise = this.rpc.request('cosmos.upgrade.v1beta1.Query', 'Authority', data);
     return promise.then(data => QueryAuthorityResponse.decode(new _m0.Reader(data)));
   }
 

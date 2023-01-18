@@ -1,8 +1,8 @@
-import { AminoMsg } from "@cosmjs/amino";
-import { AminoHeight, Long, omitDefault } from "@osmonauts/helpers";
-import { MsgConnectionOpenInit, MsgConnectionOpenTry, MsgConnectionOpenAck, MsgConnectionOpenConfirm } from "./tx";
+import { AminoMsg } from '@cosmjs/amino';
+import { AminoHeight, Long, omitDefault } from '@osmonauts/helpers';
+import { MsgConnectionOpenInit, MsgConnectionOpenTry, MsgConnectionOpenAck, MsgConnectionOpenConfirm } from './tx';
 export interface AminoMsgConnectionOpenInit extends AminoMsg {
-  type: "cosmos-sdk/MsgConnectionOpenInit";
+  type: 'cosmos-sdk/MsgConnectionOpenInit';
   value: {
     client_id: string;
     counterparty: {
@@ -21,7 +21,7 @@ export interface AminoMsgConnectionOpenInit extends AminoMsg {
   };
 }
 export interface AminoMsgConnectionOpenTry extends AminoMsg {
-  type: "cosmos-sdk/MsgConnectionOpenTry";
+  type: 'cosmos-sdk/MsgConnectionOpenTry';
   value: {
     client_id: string;
     previous_connection_id: string;
@@ -50,7 +50,7 @@ export interface AminoMsgConnectionOpenTry extends AminoMsg {
   };
 }
 export interface AminoMsgConnectionOpenAck extends AminoMsg {
-  type: "cosmos-sdk/MsgConnectionOpenAck";
+  type: 'cosmos-sdk/MsgConnectionOpenAck';
   value: {
     connection_id: string;
     counterparty_connection_id: string;
@@ -71,7 +71,7 @@ export interface AminoMsgConnectionOpenAck extends AminoMsg {
   };
 }
 export interface AminoMsgConnectionOpenConfirm extends AminoMsg {
-  type: "cosmos-sdk/MsgConnectionOpenConfirm";
+  type: 'cosmos-sdk/MsgConnectionOpenConfirm';
   value: {
     connection_id: string;
     proof_ack: Uint8Array;
@@ -80,15 +80,15 @@ export interface AminoMsgConnectionOpenConfirm extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  "/ibc.core.connection.v1.MsgConnectionOpenInit": {
-    aminoType: "cosmos-sdk/MsgConnectionOpenInit",
+  '/ibc.core.connection.v1.MsgConnectionOpenInit': {
+    aminoType: 'cosmos-sdk/MsgConnectionOpenInit',
     toAmino: ({
       clientId,
       counterparty,
       version,
       delayPeriod,
       signer
-    }: MsgConnectionOpenInit): AminoMsgConnectionOpenInit["value"] => {
+    }: MsgConnectionOpenInit): AminoMsgConnectionOpenInit['value'] => {
       return {
         client_id: clientId,
         counterparty: {
@@ -112,7 +112,7 @@ export const AminoConverter = {
       version,
       delay_period,
       signer
-    }: AminoMsgConnectionOpenInit["value"]): MsgConnectionOpenInit => {
+    }: AminoMsgConnectionOpenInit['value']): MsgConnectionOpenInit => {
       return {
         clientId: client_id,
         counterparty: {
@@ -131,8 +131,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/ibc.core.connection.v1.MsgConnectionOpenTry": {
-    aminoType: "cosmos-sdk/MsgConnectionOpenTry",
+  '/ibc.core.connection.v1.MsgConnectionOpenTry': {
+    aminoType: 'cosmos-sdk/MsgConnectionOpenTry',
     toAmino: ({
       clientId,
       previousConnectionId,
@@ -146,7 +146,7 @@ export const AminoConverter = {
       proofConsensus,
       consensusHeight,
       signer
-    }: MsgConnectionOpenTry): AminoMsgConnectionOpenTry["value"] => {
+    }: MsgConnectionOpenTry): AminoMsgConnectionOpenTry['value'] => {
       return {
         client_id: clientId,
         previous_connection_id: previousConnectionId,
@@ -193,7 +193,7 @@ export const AminoConverter = {
       proof_consensus,
       consensus_height,
       signer
-    }: AminoMsgConnectionOpenTry["value"]): MsgConnectionOpenTry => {
+    }: AminoMsgConnectionOpenTry['value']): MsgConnectionOpenTry => {
       return {
         clientId: client_id,
         previousConnectionId: previous_connection_id,
@@ -214,22 +214,22 @@ export const AminoConverter = {
           features: el0.features
         })),
         proofHeight: proof_height ? {
-          revisionHeight: Long.fromString(proof_height.revision_height || "0", true),
-          revisionNumber: Long.fromString(proof_height.revision_number || "0", true)
+          revisionHeight: Long.fromString(proof_height.revision_height || '0', true),
+          revisionNumber: Long.fromString(proof_height.revision_number || '0', true)
         } : undefined,
         proofInit: proof_init,
         proofClient: proof_client,
         proofConsensus: proof_consensus,
         consensusHeight: consensus_height ? {
-          revisionHeight: Long.fromString(consensus_height.revision_height || "0", true),
-          revisionNumber: Long.fromString(consensus_height.revision_number || "0", true)
+          revisionHeight: Long.fromString(consensus_height.revision_height || '0', true),
+          revisionNumber: Long.fromString(consensus_height.revision_number || '0', true)
         } : undefined,
         signer
       };
     }
   },
-  "/ibc.core.connection.v1.MsgConnectionOpenAck": {
-    aminoType: "cosmos-sdk/MsgConnectionOpenAck",
+  '/ibc.core.connection.v1.MsgConnectionOpenAck': {
+    aminoType: 'cosmos-sdk/MsgConnectionOpenAck',
     toAmino: ({
       connectionId,
       counterpartyConnectionId,
@@ -241,7 +241,7 @@ export const AminoConverter = {
       proofConsensus,
       consensusHeight,
       signer
-    }: MsgConnectionOpenAck): AminoMsgConnectionOpenAck["value"] => {
+    }: MsgConnectionOpenAck): AminoMsgConnectionOpenAck['value'] => {
       return {
         connection_id: connectionId,
         counterparty_connection_id: counterpartyConnectionId,
@@ -278,7 +278,7 @@ export const AminoConverter = {
       proof_consensus,
       consensus_height,
       signer
-    }: AminoMsgConnectionOpenAck["value"]): MsgConnectionOpenAck => {
+    }: AminoMsgConnectionOpenAck['value']): MsgConnectionOpenAck => {
       return {
         connectionId: connection_id,
         counterpartyConnectionId: counterparty_connection_id,
@@ -291,28 +291,28 @@ export const AminoConverter = {
           value: client_state.value
         },
         proofHeight: proof_height ? {
-          revisionHeight: Long.fromString(proof_height.revision_height || "0", true),
-          revisionNumber: Long.fromString(proof_height.revision_number || "0", true)
+          revisionHeight: Long.fromString(proof_height.revision_height || '0', true),
+          revisionNumber: Long.fromString(proof_height.revision_number || '0', true)
         } : undefined,
         proofTry: proof_try,
         proofClient: proof_client,
         proofConsensus: proof_consensus,
         consensusHeight: consensus_height ? {
-          revisionHeight: Long.fromString(consensus_height.revision_height || "0", true),
-          revisionNumber: Long.fromString(consensus_height.revision_number || "0", true)
+          revisionHeight: Long.fromString(consensus_height.revision_height || '0', true),
+          revisionNumber: Long.fromString(consensus_height.revision_number || '0', true)
         } : undefined,
         signer
       };
     }
   },
-  "/ibc.core.connection.v1.MsgConnectionOpenConfirm": {
-    aminoType: "cosmos-sdk/MsgConnectionOpenConfirm",
+  '/ibc.core.connection.v1.MsgConnectionOpenConfirm': {
+    aminoType: 'cosmos-sdk/MsgConnectionOpenConfirm',
     toAmino: ({
       connectionId,
       proofAck,
       proofHeight,
       signer
-    }: MsgConnectionOpenConfirm): AminoMsgConnectionOpenConfirm["value"] => {
+    }: MsgConnectionOpenConfirm): AminoMsgConnectionOpenConfirm['value'] => {
       return {
         connection_id: connectionId,
         proof_ack: proofAck,
@@ -328,13 +328,13 @@ export const AminoConverter = {
       proof_ack,
       proof_height,
       signer
-    }: AminoMsgConnectionOpenConfirm["value"]): MsgConnectionOpenConfirm => {
+    }: AminoMsgConnectionOpenConfirm['value']): MsgConnectionOpenConfirm => {
       return {
         connectionId: connection_id,
         proofAck: proof_ack,
         proofHeight: proof_height ? {
-          revisionHeight: Long.fromString(proof_height.revision_height || "0", true),
-          revisionNumber: Long.fromString(proof_height.revision_number || "0", true)
+          revisionHeight: Long.fromString(proof_height.revision_height || '0', true),
+          revisionNumber: Long.fromString(proof_height.revision_number || '0', true)
         } : undefined,
         signer
       };
