@@ -5,6 +5,8 @@
   "scripts": {
     "build:all": "nx run-many --target=build",
     "build:since": "nx affected --target=build",
+    "lint:all": "nx run-many --target=lint",
+    "lint:since": "nx affected --target=lint",
     "test:all": "nx run-many --target=test",
     "test:since": "nx affected --target=test",
     "prepare": "husky install",
