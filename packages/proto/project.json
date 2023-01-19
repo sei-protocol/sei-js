@@ -27,11 +27,10 @@
       "dependsOn": ["codegen"]
     },
     "publish": {
-      "executor": "nx:run-commands",
+      "executor": "nx:run-script",
       "options": {
-        "command": "node tools/scripts/publish.mjs proto {args.ver} {args.tag}"
-      },
-      "dependsOn": ["build"]
+        "script": "publish"
+      }
     },
     "lint": {
       "executor": "nx:run-script",

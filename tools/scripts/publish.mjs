@@ -7,9 +7,8 @@
  * You might need to authenticate with NPM before running this script.
  */
 
-import { readCachedProjectGraph } from '@nrwl/devkit';
+import { readCachedProjectGraph, readJsonFile } from '@nrwl/devkit';
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
 import chalk from 'chalk';
 
 function invariant(condition, message) {
@@ -19,9 +18,12 @@ function invariant(condition, message) {
   }
 }
 
+const packageJson = readJsonFile(`package.json`);
+
 // Executing publish script: node path/to/publish.mjs {name} --version {version} --tag {tag}
+// Default "version" to version in package.json
 // Default "tag" to "next" so we won't publish the "latest" tag by accident.
-const [, , name, version, tag = 'next'] = process.argv;
+const [, , name, version = packageJson.version, tag = 'next'] = process.argv;
 
 // A simple SemVer validation to validate the version
 const validVersion = /^\d+\.\d+\.\d+(-\w+\.\d+)?/;
@@ -41,21 +43,10 @@ invariant(
 const outputPath = project.data?.targets?.build?.options?.outputPath;
 invariant(
   outputPath,
-  `Could not find "build.options.outputPath" of project "${name}". Is project.json configured  correctly?`
+  `Could not find "build.options.outputPath" of project "${name}". Is project.json configured correctly?`
 );
 
 process.chdir(outputPath);
-
-// Updating the version in "package.json" before publishing
-try {
-  const json = JSON.parse(readFileSync(`package.json`).toString());
-  json.version = version;
-  writeFileSync(`package.json`, JSON.stringify(json, null, 2));
-} catch (e) {
-  console.error(
-    chalk.bold.red(`Error reading package.json file from library build output.`)
-  );
-}
 
 // Execute "npm publish" to publish
 execSync(`npm publish --access public --tag ${tag}`);

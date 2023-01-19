@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "commonjs",
   "main": "main/index.js",
   "typings": "types/index.d.ts",
@@ -9,12 +9,12 @@
     "build:ts": "tsc --project ./tsconfig.json",
     "buidl": "npm run build && npm run build:ts",
     "codegen": "cross-env NODE_ENV=development babel-node scripts/codegen.js",
-    "prepare": "npm run build",
     "dev": "cross-env NODE_ENV=development babel-node src/index --extensions \".tsx,.ts,.js\"",
     "watch": "cross-env NODE_ENV=development babel-watch src/index --extensions \".tsx,.ts,.js\"",
     "lint": "eslint src --fix",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "publish": "npm publish --access public"
   }
 }
