@@ -23,12 +23,6 @@ jobs:
 
       - run: yarn build:all
 
-      - name: Version
-        run: yarn version:all --dry-run
+      - run: yarn version:all
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Tag last-release
-      #   run: |
-      #     git tag -f last-release
-      #     git push origin last-release --force
