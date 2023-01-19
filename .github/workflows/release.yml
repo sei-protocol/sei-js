@@ -2,24 +2,24 @@ name: Release
 
 on:
   - workflow_dispatch:
-    inputs:
-      release_as:
-        type: choice
-        description: 'The release type. It can be one of: major, minor, patch, premajor, preminor, prepatch, or prerelease. Defaults to "patch"'
-        required: true
-        default: patch
-        options:
-          - major
-          - minor
-          - patch
-          - premajor
-          - preminor
-          - prepatch
-          - prerelease
-      publish:
-        type: boolean
-        default: false
-        description: Whether or not to publish this version to NPM
+      inputs:
+        release_as:
+          type: choice
+          description: 'The release type. It can be one of: major, minor, patch, premajor, preminor, prepatch, or prerelease. Defaults to "patch"'
+          required: true
+          default: patch
+          options:
+            - major
+            - minor
+            - patch
+            - premajor
+            - preminor
+            - prepatch
+            - prerelease
+        publish:
+          type: boolean
+          default: false
+          description: Whether or not to publish this version to NPM
 
 jobs:
   release:
