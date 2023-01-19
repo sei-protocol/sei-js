@@ -15,7 +15,7 @@ A library for Sei written in Typescript.
 
 ### Wallet
 
-`import { connect, SUPPORTED_WALLETS } from '@sei-js/core/wallet`
+`import { connect, SUPPORTED_WALLETS } from '@sei-js/core`
 
 | Property          | Type                                                            | Description                                                                                                                                   |
 | ----------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -30,9 +30,9 @@ A library for Sei written in Typescript.
 The query client is used to query data from modules via REST endpoints.
 
 ```javascript
-import { QueryClient } from '@sei-js/core';
+import { getQueryClient } from '@sei-js/core';
 
-const queryClient = await QueryClient.getQueryClient(rpcEndpoint);
+const queryClient = await getQueryClient(restEndpoint);
 
 // Getting the market summary from the Sei dex module
 queryClient.seiprotocol.seichain.dex.getMarketSummary(params);
@@ -48,9 +48,9 @@ The signing client provides a way to sign and broadcast transactions on Sei.
 Use `getSigningClient` to get your `SigningStargateClient`, with the Sei proto/amino messages loaded in.
 
 ```javascript
-import { SigningClient } from '@sei-js/core';
+import { getSigningClient } from '@sei-js/core';
 
-const client = await SigningClient.getSigningClient({
+const client = await getSigningClient({
   rpcEndpoint,
   signer, // OfflineSigner
 });

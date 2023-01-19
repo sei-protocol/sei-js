@@ -4,7 +4,7 @@ A set of React hooks for [@sei-js/core](https://www.npmjs.com/package/@sei-js/co
 
 ## Tutorial
 
-For an in depth tutorial please see [our documentation.](https://app.gitbook.com/o/YiBih4jOIh8lif9Z44jw/s/vVOoEaSQGRIbgTgSvoEo/front-end-development/javascript-tutorial)
+For an in depth tutorial, please see [our documentation](https://docs.seinetwork.io/front-end-development/javascript-tutorial).
 
 ## Installation
 
@@ -62,7 +62,7 @@ const { offlineSigner } = useWallet(window, {
 ```javascript
 import { useQueryClient } from '@sei-js/react';
 
-const { queryClient, isLoading } = useQueryCleint('rest_url');
+const { queryClient, isLoading } = useQueryClient('rest_url');
 ```
 
 | Property    | Type                   | Description                                             |
