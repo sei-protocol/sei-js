@@ -1,7 +1,25 @@
 name: Release
 
 on:
-  - workflow_dispatch
+  - workflow_dispatch:
+    inputs:
+      release_as:
+        type: choice
+        description: 'The release type. It can be one of: major, minor, patch, premajor, preminor, prepatch, or prerelease. Defaults to "patch"'
+        required: true
+        default: patch
+        options:
+          - major
+          - minor
+          - patch
+          - premajor
+          - preminor
+          - prepatch
+          - prerelease
+      publish:
+        type: boolean
+        default: false
+        description: Whether or not to publish this version to NPM
 
 jobs:
   release:
@@ -19,6 +37,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: 'https://registry.npmjs.org'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@sei-js'
 
       - run: yarn
 
@@ -28,6 +49,16 @@ jobs:
 
       - run: yarn build:all
 
-      - run: yarn version:all
+      - name: Version
+        run: |
+          yarn version:all --releaseAs=${{ github.event.inputs.release_as }}
+          git push && git push --tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish
+        if: ${{ github.event.inputs.publish == 'true' }}
+        run: yarn publish:all
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
