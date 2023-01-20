@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /** PublicKey defines the keys available for use with Tendermint Validators */
 
 export interface PublicKey {
@@ -35,7 +35,7 @@ export const PublicKey = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PublicKey {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePublicKey();
 
     while (reader.pos < end) {

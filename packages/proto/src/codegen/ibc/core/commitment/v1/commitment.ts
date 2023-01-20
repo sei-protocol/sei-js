@@ -1,6 +1,6 @@
-import { CommitmentProof, CommitmentProofSDKType } from '../../../../confio/proofs';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { CommitmentProof, CommitmentProofSDKType } from "../../../../confio/proofs";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * MerkleRoot defines a merkle root hash.
  * In the Cosmos SDK, the AppHash of a block header becomes the root.
@@ -93,7 +93,7 @@ export const MerkleRoot = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerkleRoot {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMerkleRoot();
 
     while (reader.pos < end) {
@@ -138,7 +138,7 @@ export const MerklePrefix = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerklePrefix {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMerklePrefix();
 
     while (reader.pos < end) {
@@ -183,7 +183,7 @@ export const MerklePath = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerklePath {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMerklePath();
 
     while (reader.pos < end) {
@@ -228,7 +228,7 @@ export const MerkleProof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MerkleProof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMerkleProof();
 
     while (reader.pos < end) {

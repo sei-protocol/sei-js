@@ -1,6 +1,6 @@
-import { Rpc } from '@osmonauts/helpers';
-import * as _m0 from 'protobufjs/minimal';
-import { MsgAggregateExchangeRateVote, MsgAggregateExchangeRateVoteResponse, MsgDelegateFeedConsent, MsgDelegateFeedConsentResponse } from './tx';
+import { Rpc } from "@osmonauts/helpers";
+import * as _m0 from "protobufjs/minimal";
+import { MsgAggregateExchangeRateVote, MsgAggregateExchangeRateVoteResponse, MsgDelegateFeedConsent, MsgDelegateFeedConsentResponse } from "./tx";
 /** Msg defines the RPC service */
 
 export interface Msg {
@@ -23,13 +23,13 @@ export class MsgClientImpl implements Msg {
 
   aggregateExchangeRateVote(request: MsgAggregateExchangeRateVote): Promise<MsgAggregateExchangeRateVoteResponse> {
     const data = MsgAggregateExchangeRateVote.encode(request).finish();
-    const promise = this.rpc.request('seiprotocol.seichain.oracle.Msg', 'AggregateExchangeRateVote', data);
+    const promise = this.rpc.request("seiprotocol.seichain.oracle.Msg", "AggregateExchangeRateVote", data);
     return promise.then(data => MsgAggregateExchangeRateVoteResponse.decode(new _m0.Reader(data)));
   }
 
   delegateFeedConsent(request: MsgDelegateFeedConsent): Promise<MsgDelegateFeedConsentResponse> {
     const data = MsgDelegateFeedConsent.encode(request).finish();
-    const promise = this.rpc.request('seiprotocol.seichain.oracle.Msg', 'DelegateFeedConsent', data);
+    const promise = this.rpc.request("seiprotocol.seichain.oracle.Msg", "DelegateFeedConsent", data);
     return promise.then(data => MsgDelegateFeedConsentResponse.decode(new _m0.Reader(data)));
   }
 

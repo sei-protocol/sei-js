@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface MsgRecordTransactionData {
   sender: string;
   slot: Long;
@@ -17,16 +17,16 @@ export interface MsgRecordTransactionDataResponseSDKType {}
 
 function createBaseMsgRecordTransactionData(): MsgRecordTransactionData {
   return {
-    sender: '',
+    sender: "",
     slot: Long.UZERO,
-    stateRoot: '',
+    stateRoot: "",
     txs: []
   };
 }
 
 export const MsgRecordTransactionData = {
   encode(message: MsgRecordTransactionData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== '') {
+    if (message.sender !== "") {
       writer.uint32(10).string(message.sender);
     }
 
@@ -34,7 +34,7 @@ export const MsgRecordTransactionData = {
       writer.uint32(16).uint64(message.slot);
     }
 
-    if (message.stateRoot !== '') {
+    if (message.stateRoot !== "") {
       writer.uint32(26).string(message.stateRoot);
     }
 
@@ -47,7 +47,7 @@ export const MsgRecordTransactionData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRecordTransactionData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRecordTransactionData();
 
     while (reader.pos < end) {
@@ -81,9 +81,9 @@ export const MsgRecordTransactionData = {
 
   fromPartial(object: DeepPartial<MsgRecordTransactionData>): MsgRecordTransactionData {
     const message = createBaseMsgRecordTransactionData();
-    message.sender = object.sender ?? '';
+    message.sender = object.sender ?? "";
     message.slot = object.slot !== undefined && object.slot !== null ? Long.fromValue(object.slot) : Long.UZERO;
-    message.stateRoot = object.stateRoot ?? '';
+    message.stateRoot = object.stateRoot ?? "";
     message.txs = object.txs?.map(e => e) || [];
     return message;
   }
@@ -101,7 +101,7 @@ export const MsgRecordTransactionDataResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRecordTransactionDataResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRecordTransactionDataResponse();
 
     while (reader.pos < end) {

@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface ContractInfo {
   codeId: Long;
   contractAddr: string;
@@ -44,7 +44,7 @@ export interface LegacyContractInfoSDKType {
 function createBaseContractInfo(): ContractInfo {
   return {
     codeId: Long.UZERO,
-    contractAddr: '',
+    contractAddr: "",
     needHook: false,
     needOrderMatching: false,
     dependencies: [],
@@ -58,7 +58,7 @@ export const ContractInfo = {
       writer.uint32(8).uint64(message.codeId);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
@@ -83,7 +83,7 @@ export const ContractInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseContractInfo();
 
     while (reader.pos < end) {
@@ -126,7 +126,7 @@ export const ContractInfo = {
   fromPartial(object: DeepPartial<ContractInfo>): ContractInfo {
     const message = createBaseContractInfo();
     message.codeId = object.codeId !== undefined && object.codeId !== null ? Long.fromValue(object.codeId) : Long.UZERO;
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     message.needHook = object.needHook ?? false;
     message.needOrderMatching = object.needOrderMatching ?? false;
     message.dependencies = object.dependencies?.map(e => ContractDependencyInfo.fromPartial(e)) || [];
@@ -138,23 +138,23 @@ export const ContractInfo = {
 
 function createBaseContractDependencyInfo(): ContractDependencyInfo {
   return {
-    dependency: '',
-    immediateElderSibling: '',
-    immediateYoungerSibling: ''
+    dependency: "",
+    immediateElderSibling: "",
+    immediateYoungerSibling: ""
   };
 }
 
 export const ContractDependencyInfo = {
   encode(message: ContractDependencyInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.dependency !== '') {
+    if (message.dependency !== "") {
       writer.uint32(10).string(message.dependency);
     }
 
-    if (message.immediateElderSibling !== '') {
+    if (message.immediateElderSibling !== "") {
       writer.uint32(18).string(message.immediateElderSibling);
     }
 
-    if (message.immediateYoungerSibling !== '') {
+    if (message.immediateYoungerSibling !== "") {
       writer.uint32(26).string(message.immediateYoungerSibling);
     }
 
@@ -163,7 +163,7 @@ export const ContractDependencyInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractDependencyInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseContractDependencyInfo();
 
     while (reader.pos < end) {
@@ -193,9 +193,9 @@ export const ContractDependencyInfo = {
 
   fromPartial(object: DeepPartial<ContractDependencyInfo>): ContractDependencyInfo {
     const message = createBaseContractDependencyInfo();
-    message.dependency = object.dependency ?? '';
-    message.immediateElderSibling = object.immediateElderSibling ?? '';
-    message.immediateYoungerSibling = object.immediateYoungerSibling ?? '';
+    message.dependency = object.dependency ?? "";
+    message.immediateElderSibling = object.immediateElderSibling ?? "";
+    message.immediateYoungerSibling = object.immediateYoungerSibling ?? "";
     return message;
   }
 
@@ -204,7 +204,7 @@ export const ContractDependencyInfo = {
 function createBaseLegacyContractInfo(): LegacyContractInfo {
   return {
     codeId: Long.UZERO,
-    contractAddr: '',
+    contractAddr: "",
     needHook: false,
     needOrderMatching: false,
     dependentContractAddrs: []
@@ -217,7 +217,7 @@ export const LegacyContractInfo = {
       writer.uint32(8).uint64(message.codeId);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
@@ -238,7 +238,7 @@ export const LegacyContractInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LegacyContractInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLegacyContractInfo();
 
     while (reader.pos < end) {
@@ -277,7 +277,7 @@ export const LegacyContractInfo = {
   fromPartial(object: DeepPartial<LegacyContractInfo>): LegacyContractInfo {
     const message = createBaseLegacyContractInfo();
     message.codeId = object.codeId !== undefined && object.codeId !== null ? Long.fromValue(object.codeId) : Long.UZERO;
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     message.needHook = object.needHook ?? false;
     message.needOrderMatching = object.needOrderMatching ?? false;
     message.dependentContractAddrs = object.dependentContractAddrs?.map(e => e) || [];

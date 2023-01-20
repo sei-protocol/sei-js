@@ -1,6 +1,6 @@
-import { Pair, PairSDKType } from './pair';
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import { Pair, PairSDKType } from "./pair";
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface Price {
   snapshotTimestampInSeconds: Long;
   price: string;
@@ -33,7 +33,7 @@ export interface PriceCandlestickSDKType {
 function createBasePrice(): Price {
   return {
     snapshotTimestampInSeconds: Long.UZERO,
-    price: '',
+    price: "",
     pair: undefined
   };
 }
@@ -44,7 +44,7 @@ export const Price = {
       writer.uint32(8).uint64(message.snapshotTimestampInSeconds);
     }
 
-    if (message.price !== '') {
+    if (message.price !== "") {
       writer.uint32(18).string(message.price);
     }
 
@@ -57,7 +57,7 @@ export const Price = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Price {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePrice();
 
     while (reader.pos < end) {
@@ -88,7 +88,7 @@ export const Price = {
   fromPartial(object: DeepPartial<Price>): Price {
     const message = createBasePrice();
     message.snapshotTimestampInSeconds = object.snapshotTimestampInSeconds !== undefined && object.snapshotTimestampInSeconds !== null ? Long.fromValue(object.snapshotTimestampInSeconds) : Long.UZERO;
-    message.price = object.price ?? '';
+    message.price = object.price ?? "";
     message.pair = object.pair !== undefined && object.pair !== null ? Pair.fromPartial(object.pair) : undefined;
     return message;
   }
@@ -99,11 +99,11 @@ function createBasePriceCandlestick(): PriceCandlestick {
   return {
     beginTimestamp: Long.UZERO,
     endTimestamp: Long.UZERO,
-    open: '',
-    high: '',
-    low: '',
-    close: '',
-    volume: ''
+    open: "",
+    high: "",
+    low: "",
+    close: "",
+    volume: ""
   };
 }
 
@@ -117,23 +117,23 @@ export const PriceCandlestick = {
       writer.uint32(16).uint64(message.endTimestamp);
     }
 
-    if (message.open !== '') {
+    if (message.open !== "") {
       writer.uint32(26).string(message.open);
     }
 
-    if (message.high !== '') {
+    if (message.high !== "") {
       writer.uint32(34).string(message.high);
     }
 
-    if (message.low !== '') {
+    if (message.low !== "") {
       writer.uint32(42).string(message.low);
     }
 
-    if (message.close !== '') {
+    if (message.close !== "") {
       writer.uint32(50).string(message.close);
     }
 
-    if (message.volume !== '') {
+    if (message.volume !== "") {
       writer.uint32(58).string(message.volume);
     }
 
@@ -142,7 +142,7 @@ export const PriceCandlestick = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PriceCandlestick {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePriceCandlestick();
 
     while (reader.pos < end) {
@@ -190,11 +190,11 @@ export const PriceCandlestick = {
     const message = createBasePriceCandlestick();
     message.beginTimestamp = object.beginTimestamp !== undefined && object.beginTimestamp !== null ? Long.fromValue(object.beginTimestamp) : Long.UZERO;
     message.endTimestamp = object.endTimestamp !== undefined && object.endTimestamp !== null ? Long.fromValue(object.endTimestamp) : Long.UZERO;
-    message.open = object.open ?? '';
-    message.high = object.high ?? '';
-    message.low = object.low ?? '';
-    message.close = object.close ?? '';
-    message.volume = object.volume ?? '';
+    message.open = object.open ?? "";
+    message.high = object.high ?? "";
+    message.low = object.low ?? "";
+    message.close = object.close ?? "";
+    message.volume = object.volume ?? "";
     return message;
   }
 

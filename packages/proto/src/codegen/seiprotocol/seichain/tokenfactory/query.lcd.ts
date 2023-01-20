@@ -1,5 +1,5 @@
-import { LCDClient } from '@osmonauts/lcd';
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomAuthorityMetadataRequest, QueryDenomAuthorityMetadataResponseSDKType, QueryDenomsFromCreatorRequest, QueryDenomsFromCreatorResponseSDKType, QueryDenomCreationFeeWhitelistRequest, QueryDenomCreationFeeWhitelistResponseSDKType, QueryCreatorInDenomFeeWhitelistRequest, QueryCreatorInDenomFeeWhitelistResponseSDKType } from './query';
+import { LCDClient } from "@osmonauts/lcd";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomAuthorityMetadataRequest, QueryDenomAuthorityMetadataResponseSDKType, QueryDenomsFromCreatorRequest, QueryDenomsFromCreatorResponseSDKType, QueryDenomCreationFeeWhitelistRequest, QueryDenomCreationFeeWhitelistResponseSDKType, QueryCreatorInDenomFeeWhitelistRequest, QueryCreatorInDenomFeeWhitelistResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
 

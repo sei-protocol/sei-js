@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /** EventGrant is emitted on Msg/Grant */
 
 export interface EventGrant {
@@ -51,23 +51,23 @@ export interface EventRevokeSDKType {
 
 function createBaseEventGrant(): EventGrant {
   return {
-    msgTypeUrl: '',
-    granter: '',
-    grantee: ''
+    msgTypeUrl: "",
+    granter: "",
+    grantee: ""
   };
 }
 
 export const EventGrant = {
   encode(message: EventGrant, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.msgTypeUrl !== '') {
+    if (message.msgTypeUrl !== "") {
       writer.uint32(18).string(message.msgTypeUrl);
     }
 
-    if (message.granter !== '') {
+    if (message.granter !== "") {
       writer.uint32(26).string(message.granter);
     }
 
-    if (message.grantee !== '') {
+    if (message.grantee !== "") {
       writer.uint32(34).string(message.grantee);
     }
 
@@ -76,7 +76,7 @@ export const EventGrant = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): EventGrant {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEventGrant();
 
     while (reader.pos < end) {
@@ -106,9 +106,9 @@ export const EventGrant = {
 
   fromPartial(object: DeepPartial<EventGrant>): EventGrant {
     const message = createBaseEventGrant();
-    message.msgTypeUrl = object.msgTypeUrl ?? '';
-    message.granter = object.granter ?? '';
-    message.grantee = object.grantee ?? '';
+    message.msgTypeUrl = object.msgTypeUrl ?? "";
+    message.granter = object.granter ?? "";
+    message.grantee = object.grantee ?? "";
     return message;
   }
 
@@ -116,23 +116,23 @@ export const EventGrant = {
 
 function createBaseEventRevoke(): EventRevoke {
   return {
-    msgTypeUrl: '',
-    granter: '',
-    grantee: ''
+    msgTypeUrl: "",
+    granter: "",
+    grantee: ""
   };
 }
 
 export const EventRevoke = {
   encode(message: EventRevoke, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.msgTypeUrl !== '') {
+    if (message.msgTypeUrl !== "") {
       writer.uint32(18).string(message.msgTypeUrl);
     }
 
-    if (message.granter !== '') {
+    if (message.granter !== "") {
       writer.uint32(26).string(message.granter);
     }
 
-    if (message.grantee !== '') {
+    if (message.grantee !== "") {
       writer.uint32(34).string(message.grantee);
     }
 
@@ -141,7 +141,7 @@ export const EventRevoke = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): EventRevoke {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEventRevoke();
 
     while (reader.pos < end) {
@@ -171,9 +171,9 @@ export const EventRevoke = {
 
   fromPartial(object: DeepPartial<EventRevoke>): EventRevoke {
     const message = createBaseEventRevoke();
-    message.msgTypeUrl = object.msgTypeUrl ?? '';
-    message.granter = object.granter ?? '';
-    message.grantee = object.grantee ?? '';
+    message.msgTypeUrl = object.msgTypeUrl ?? "";
+    message.granter = object.granter ?? "";
+    message.grantee = object.grantee ?? "";
     return message;
   }
 

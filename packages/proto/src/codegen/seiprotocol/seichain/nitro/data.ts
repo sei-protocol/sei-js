@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface TransactionData {
   slot: Long;
   signature: string;
@@ -28,14 +28,14 @@ export interface TransactionDataSDKType {
 function createBaseTransactionData(): TransactionData {
   return {
     slot: Long.UZERO,
-    signature: '',
+    signature: "",
     isVote: false,
     messageType: Long.UZERO,
-    legacyMessage: '',
-    v0LoadedMessage: '',
+    legacyMessage: "",
+    v0LoadedMessage: "",
     signatures: [],
-    messageHash: '',
-    meta: '',
+    messageHash: "",
+    meta: "",
     writeVersion: Long.UZERO
   };
 }
@@ -46,7 +46,7 @@ export const TransactionData = {
       writer.uint32(8).uint64(message.slot);
     }
 
-    if (message.signature !== '') {
+    if (message.signature !== "") {
       writer.uint32(18).string(message.signature);
     }
 
@@ -58,11 +58,11 @@ export const TransactionData = {
       writer.uint32(32).uint64(message.messageType);
     }
 
-    if (message.legacyMessage !== '') {
+    if (message.legacyMessage !== "") {
       writer.uint32(42).string(message.legacyMessage);
     }
 
-    if (message.v0LoadedMessage !== '') {
+    if (message.v0LoadedMessage !== "") {
       writer.uint32(50).string(message.v0LoadedMessage);
     }
 
@@ -70,11 +70,11 @@ export const TransactionData = {
       writer.uint32(58).string(v!);
     }
 
-    if (message.messageHash !== '') {
+    if (message.messageHash !== "") {
       writer.uint32(66).string(message.messageHash);
     }
 
-    if (message.meta !== '') {
+    if (message.meta !== "") {
       writer.uint32(74).string(message.meta);
     }
 
@@ -87,7 +87,7 @@ export const TransactionData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TransactionData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTransactionData();
 
     while (reader.pos < end) {
@@ -146,14 +146,14 @@ export const TransactionData = {
   fromPartial(object: DeepPartial<TransactionData>): TransactionData {
     const message = createBaseTransactionData();
     message.slot = object.slot !== undefined && object.slot !== null ? Long.fromValue(object.slot) : Long.UZERO;
-    message.signature = object.signature ?? '';
+    message.signature = object.signature ?? "";
     message.isVote = object.isVote ?? false;
     message.messageType = object.messageType !== undefined && object.messageType !== null ? Long.fromValue(object.messageType) : Long.UZERO;
-    message.legacyMessage = object.legacyMessage ?? '';
-    message.v0LoadedMessage = object.v0LoadedMessage ?? '';
+    message.legacyMessage = object.legacyMessage ?? "";
+    message.v0LoadedMessage = object.v0LoadedMessage ?? "";
     message.signatures = object.signatures?.map(e => e) || [];
-    message.messageHash = object.messageHash ?? '';
-    message.meta = object.meta ?? '';
+    message.messageHash = object.messageHash ?? "";
+    message.meta = object.meta ?? "";
     message.writeVersion = object.writeVersion !== undefined && object.writeVersion !== null ? Long.fromValue(object.writeVersion) : Long.UZERO;
     return message;
   }

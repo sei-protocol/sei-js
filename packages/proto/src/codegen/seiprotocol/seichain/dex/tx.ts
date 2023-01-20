@@ -1,8 +1,8 @@
-import { Order, OrderSDKType, Cancellation, CancellationSDKType } from './order';
-import { Coin, CoinSDKType } from '../../../cosmos/base/v1beta1/coin';
-import { ContractInfo, ContractInfoSDKType } from './contract';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { Order, OrderSDKType, Cancellation, CancellationSDKType } from "./order";
+import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { ContractInfo, ContractInfoSDKType } from "./contract";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface MsgPlaceOrders {
   creator: string;
   orders: Order[];
@@ -46,16 +46,16 @@ export interface MsgRegisterContractResponseSDKType {}
 
 function createBaseMsgPlaceOrders(): MsgPlaceOrders {
   return {
-    creator: '',
+    creator: "",
     orders: [],
-    contractAddr: '',
+    contractAddr: "",
     funds: []
   };
 }
 
 export const MsgPlaceOrders = {
   encode(message: MsgPlaceOrders, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.creator !== '') {
+    if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
 
@@ -63,7 +63,7 @@ export const MsgPlaceOrders = {
       Order.encode(v!, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(26).string(message.contractAddr);
     }
 
@@ -76,7 +76,7 @@ export const MsgPlaceOrders = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgPlaceOrders {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgPlaceOrders();
 
     while (reader.pos < end) {
@@ -110,9 +110,9 @@ export const MsgPlaceOrders = {
 
   fromPartial(object: DeepPartial<MsgPlaceOrders>): MsgPlaceOrders {
     const message = createBaseMsgPlaceOrders();
-    message.creator = object.creator ?? '';
+    message.creator = object.creator ?? "";
     message.orders = object.orders?.map(e => Order.fromPartial(e)) || [];
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     message.funds = object.funds?.map(e => Coin.fromPartial(e)) || [];
     return message;
   }
@@ -139,7 +139,7 @@ export const MsgPlaceOrdersResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgPlaceOrdersResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgPlaceOrdersResponse();
 
     while (reader.pos < end) {
@@ -178,15 +178,15 @@ export const MsgPlaceOrdersResponse = {
 
 function createBaseMsgCancelOrders(): MsgCancelOrders {
   return {
-    creator: '',
+    creator: "",
     cancellations: [],
-    contractAddr: ''
+    contractAddr: ""
   };
 }
 
 export const MsgCancelOrders = {
   encode(message: MsgCancelOrders, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.creator !== '') {
+    if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
 
@@ -194,7 +194,7 @@ export const MsgCancelOrders = {
       Cancellation.encode(v!, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(26).string(message.contractAddr);
     }
 
@@ -203,7 +203,7 @@ export const MsgCancelOrders = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelOrders {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelOrders();
 
     while (reader.pos < end) {
@@ -233,9 +233,9 @@ export const MsgCancelOrders = {
 
   fromPartial(object: DeepPartial<MsgCancelOrders>): MsgCancelOrders {
     const message = createBaseMsgCancelOrders();
-    message.creator = object.creator ?? '';
+    message.creator = object.creator ?? "";
     message.cancellations = object.cancellations?.map(e => Cancellation.fromPartial(e)) || [];
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     return message;
   }
 
@@ -252,7 +252,7 @@ export const MsgCancelOrdersResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelOrdersResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelOrdersResponse();
 
     while (reader.pos < end) {
@@ -277,14 +277,14 @@ export const MsgCancelOrdersResponse = {
 
 function createBaseMsgRegisterContract(): MsgRegisterContract {
   return {
-    creator: '',
+    creator: "",
     contract: undefined
   };
 }
 
 export const MsgRegisterContract = {
   encode(message: MsgRegisterContract, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.creator !== '') {
+    if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
 
@@ -297,7 +297,7 @@ export const MsgRegisterContract = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterContract {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRegisterContract();
 
     while (reader.pos < end) {
@@ -323,7 +323,7 @@ export const MsgRegisterContract = {
 
   fromPartial(object: DeepPartial<MsgRegisterContract>): MsgRegisterContract {
     const message = createBaseMsgRegisterContract();
-    message.creator = object.creator ?? '';
+    message.creator = object.creator ?? "";
     message.contract = object.contract !== undefined && object.contract !== null ? ContractInfo.fromPartial(object.contract) : undefined;
     return message;
   }
@@ -341,7 +341,7 @@ export const MsgRegisterContractResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterContractResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRegisterContractResponse();
 
     while (reader.pos < end) {

@@ -1,8 +1,8 @@
-import { Any, AnySDKType } from '../../../google/protobuf/any';
-import { Coin, CoinSDKType } from '../../base/v1beta1/coin';
-import { VoteOption, VoteOptionSDKType, WeightedVoteOption, WeightedVoteOptionSDKType } from './gov';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { Any, AnySDKType } from "../../../google/protobuf/any";
+import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
+import { VoteOption, VoteOptionSDKType, WeightedVoteOption, WeightedVoteOptionSDKType } from "./gov";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /**
  * MsgSubmitProposal defines an sdk.Msg type that supports submitting arbitrary
  * proposal Content.
@@ -114,7 +114,7 @@ function createBaseMsgSubmitProposal(): MsgSubmitProposal {
   return {
     content: undefined,
     initialDeposit: [],
-    proposer: ''
+    proposer: ""
   };
 }
 
@@ -128,7 +128,7 @@ export const MsgSubmitProposal = {
       Coin.encode(v!, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.proposer !== '') {
+    if (message.proposer !== "") {
       writer.uint32(26).string(message.proposer);
     }
 
@@ -137,7 +137,7 @@ export const MsgSubmitProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitProposal();
 
     while (reader.pos < end) {
@@ -169,7 +169,7 @@ export const MsgSubmitProposal = {
     const message = createBaseMsgSubmitProposal();
     message.content = object.content !== undefined && object.content !== null ? Any.fromPartial(object.content) : undefined;
     message.initialDeposit = object.initialDeposit?.map(e => Coin.fromPartial(e)) || [];
-    message.proposer = object.proposer ?? '';
+    message.proposer = object.proposer ?? "";
     return message;
   }
 
@@ -192,7 +192,7 @@ export const MsgSubmitProposalResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitProposalResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSubmitProposalResponse();
 
     while (reader.pos < end) {
@@ -223,7 +223,7 @@ export const MsgSubmitProposalResponse = {
 function createBaseMsgVote(): MsgVote {
   return {
     proposalId: Long.UZERO,
-    voter: '',
+    voter: "",
     option: 0
   };
 }
@@ -234,7 +234,7 @@ export const MsgVote = {
       writer.uint32(8).uint64(message.proposalId);
     }
 
-    if (message.voter !== '') {
+    if (message.voter !== "") {
       writer.uint32(18).string(message.voter);
     }
 
@@ -247,7 +247,7 @@ export const MsgVote = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgVote {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVote();
 
     while (reader.pos < end) {
@@ -278,7 +278,7 @@ export const MsgVote = {
   fromPartial(object: DeepPartial<MsgVote>): MsgVote {
     const message = createBaseMsgVote();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
-    message.voter = object.voter ?? '';
+    message.voter = object.voter ?? "";
     message.option = object.option ?? 0;
     return message;
   }
@@ -296,7 +296,7 @@ export const MsgVoteResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgVoteResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVoteResponse();
 
     while (reader.pos < end) {
@@ -322,7 +322,7 @@ export const MsgVoteResponse = {
 function createBaseMsgVoteWeighted(): MsgVoteWeighted {
   return {
     proposalId: Long.UZERO,
-    voter: '',
+    voter: "",
     options: []
   };
 }
@@ -333,7 +333,7 @@ export const MsgVoteWeighted = {
       writer.uint32(8).uint64(message.proposalId);
     }
 
-    if (message.voter !== '') {
+    if (message.voter !== "") {
       writer.uint32(18).string(message.voter);
     }
 
@@ -346,7 +346,7 @@ export const MsgVoteWeighted = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgVoteWeighted {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVoteWeighted();
 
     while (reader.pos < end) {
@@ -377,7 +377,7 @@ export const MsgVoteWeighted = {
   fromPartial(object: DeepPartial<MsgVoteWeighted>): MsgVoteWeighted {
     const message = createBaseMsgVoteWeighted();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
-    message.voter = object.voter ?? '';
+    message.voter = object.voter ?? "";
     message.options = object.options?.map(e => WeightedVoteOption.fromPartial(e)) || [];
     return message;
   }
@@ -395,7 +395,7 @@ export const MsgVoteWeightedResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgVoteWeightedResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgVoteWeightedResponse();
 
     while (reader.pos < end) {
@@ -421,7 +421,7 @@ export const MsgVoteWeightedResponse = {
 function createBaseMsgDeposit(): MsgDeposit {
   return {
     proposalId: Long.UZERO,
-    depositor: '',
+    depositor: "",
     amount: []
   };
 }
@@ -432,7 +432,7 @@ export const MsgDeposit = {
       writer.uint32(8).uint64(message.proposalId);
     }
 
-    if (message.depositor !== '') {
+    if (message.depositor !== "") {
       writer.uint32(18).string(message.depositor);
     }
 
@@ -445,7 +445,7 @@ export const MsgDeposit = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgDeposit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDeposit();
 
     while (reader.pos < end) {
@@ -476,7 +476,7 @@ export const MsgDeposit = {
   fromPartial(object: DeepPartial<MsgDeposit>): MsgDeposit {
     const message = createBaseMsgDeposit();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
-    message.depositor = object.depositor ?? '';
+    message.depositor = object.depositor ?? "";
     message.amount = object.amount?.map(e => Coin.fromPartial(e)) || [];
     return message;
   }
@@ -494,7 +494,7 @@ export const MsgDepositResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositResponse();
 
     while (reader.pos < end) {

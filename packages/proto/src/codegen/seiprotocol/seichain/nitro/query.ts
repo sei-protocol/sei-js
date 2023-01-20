@@ -1,6 +1,6 @@
-import { Params, ParamsSDKType } from './params';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { Params, ParamsSDKType } from "./params";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface QueryParamsRequest {}
 export interface QueryParamsRequestSDKType {}
 export interface QueryParamsResponse {
@@ -57,7 +57,7 @@ export const QueryParamsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
 
     while (reader.pos < end) {
@@ -97,7 +97,7 @@ export const QueryParamsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
 
     while (reader.pos < end) {
@@ -142,7 +142,7 @@ export const QueryRecordedTransactionDataRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryRecordedTransactionDataRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryRecordedTransactionDataRequest();
 
     while (reader.pos < end) {
@@ -187,7 +187,7 @@ export const QueryRecordedTransactionDataResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryRecordedTransactionDataResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryRecordedTransactionDataResponse();
 
     while (reader.pos < end) {
@@ -232,7 +232,7 @@ export const QueryStateRootRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryStateRootRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryStateRootRequest();
 
     while (reader.pos < end) {
@@ -262,13 +262,13 @@ export const QueryStateRootRequest = {
 
 function createBaseQueryStateRootResponse(): QueryStateRootResponse {
   return {
-    root: ''
+    root: ""
   };
 }
 
 export const QueryStateRootResponse = {
   encode(message: QueryStateRootResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.root !== '') {
+    if (message.root !== "") {
       writer.uint32(10).string(message.root);
     }
 
@@ -277,7 +277,7 @@ export const QueryStateRootResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryStateRootResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryStateRootResponse();
 
     while (reader.pos < end) {
@@ -299,7 +299,7 @@ export const QueryStateRootResponse = {
 
   fromPartial(object: DeepPartial<QueryStateRootResponse>): QueryStateRootResponse {
     const message = createBaseQueryStateRootResponse();
-    message.root = object.root ?? '';
+    message.root = object.root ?? "";
     return message;
   }
 
@@ -322,7 +322,7 @@ export const QuerySenderRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QuerySenderRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQuerySenderRequest();
 
     while (reader.pos < end) {
@@ -352,13 +352,13 @@ export const QuerySenderRequest = {
 
 function createBaseQuerySenderResponse(): QuerySenderResponse {
   return {
-    sender: ''
+    sender: ""
   };
 }
 
 export const QuerySenderResponse = {
   encode(message: QuerySenderResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sender !== '') {
+    if (message.sender !== "") {
       writer.uint32(10).string(message.sender);
     }
 
@@ -367,7 +367,7 @@ export const QuerySenderResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QuerySenderResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQuerySenderResponse();
 
     while (reader.pos < end) {
@@ -389,7 +389,7 @@ export const QuerySenderResponse = {
 
   fromPartial(object: DeepPartial<QuerySenderResponse>): QuerySenderResponse {
     const message = createBaseQuerySenderResponse();
-    message.sender = object.sender ?? '';
+    message.sender = object.sender ?? "";
     return message;
   }
 

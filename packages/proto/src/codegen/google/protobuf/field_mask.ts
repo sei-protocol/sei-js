@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * `FieldMask` represents a set of symbolic field paths, for example:
  *
@@ -430,7 +430,7 @@ export const FieldMask = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): FieldMask {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFieldMask();
 
     while (reader.pos < end) {

@@ -21,7 +21,7 @@
     "build": {
       "executor": "nx:run-script",
       "options": {
-        "script": "buidl || true"
+        "script": "build"
       },
       "outputs": ["{projectRoot}/main", "{projectRoot}/types"],
       "dependsOn": ["codegen"]
@@ -29,7 +29,7 @@
     "publish": {
       "executor": "nx:run-script",
       "options": {
-        "script": "publish"
+        "script": "deploy"
       }
     },
     "lint": {

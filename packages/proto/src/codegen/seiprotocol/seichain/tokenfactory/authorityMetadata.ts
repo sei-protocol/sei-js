@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * DenomAuthorityMetadata specifies metadata for addresses that have specific
  * capabilities over a token factory denom. Right now there is only one Admin
@@ -23,13 +23,13 @@ export interface DenomAuthorityMetadataSDKType {
 
 function createBaseDenomAuthorityMetadata(): DenomAuthorityMetadata {
   return {
-    admin: ''
+    admin: ""
   };
 }
 
 export const DenomAuthorityMetadata = {
   encode(message: DenomAuthorityMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.admin !== '') {
+    if (message.admin !== "") {
       writer.uint32(10).string(message.admin);
     }
 
@@ -38,7 +38,7 @@ export const DenomAuthorityMetadata = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DenomAuthorityMetadata {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDenomAuthorityMetadata();
 
     while (reader.pos < end) {
@@ -60,7 +60,7 @@ export const DenomAuthorityMetadata = {
 
   fromPartial(object: DeepPartial<DenomAuthorityMetadata>): DenomAuthorityMetadata {
     const message = createBaseDenomAuthorityMetadata();
-    message.admin = object.admin ?? '';
+    message.admin = object.admin ?? "";
     return message;
   }
 

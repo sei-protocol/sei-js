@@ -1,6 +1,6 @@
-import { setPaginationParams } from '@osmonauts/helpers';
-import { LCDClient } from '@osmonauts/lcd';
-import { GetTxRequest, GetTxResponseSDKType, GetTxsEventRequest, GetTxsEventResponseSDKType, GetBlockWithTxsRequest, GetBlockWithTxsResponseSDKType } from './service';
+import { setPaginationParams } from "@osmonauts/helpers";
+import { LCDClient } from "@osmonauts/lcd";
+import { GetTxRequest, GetTxResponseSDKType, GetTxsEventRequest, GetTxsEventResponseSDKType, GetBlockWithTxsRequest, GetBlockWithTxsResponseSDKType } from "./service";
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -29,15 +29,15 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.events !== 'undefined') {
+    if (typeof params?.events !== "undefined") {
       options.params.events = params.events;
     }
 
-    if (typeof params?.pagination !== 'undefined') {
+    if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
 
-    if (typeof params?.orderBy !== 'undefined') {
+    if (typeof params?.orderBy !== "undefined") {
       options.params.order_by = params.orderBy;
     }
 
@@ -54,7 +54,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== 'undefined') {
+    if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
 

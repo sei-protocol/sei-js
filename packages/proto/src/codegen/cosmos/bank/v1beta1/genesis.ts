@@ -1,7 +1,7 @@
-import { Params, ParamsSDKType, Metadata, MetadataSDKType } from './bank';
-import { Coin, CoinSDKType } from '../../base/v1beta1/coin';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { Params, ParamsSDKType, Metadata, MetadataSDKType } from "./bank";
+import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /** GenesisState defines the bank module's genesis state. */
 
 export interface GenesisState {
@@ -95,7 +95,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -140,14 +140,14 @@ export const GenesisState = {
 
 function createBaseBalance(): Balance {
   return {
-    address: '',
+    address: "",
     coins: []
   };
 }
 
 export const Balance = {
   encode(message: Balance, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== '') {
+    if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
 
@@ -160,7 +160,7 @@ export const Balance = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Balance {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBalance();
 
     while (reader.pos < end) {
@@ -186,7 +186,7 @@ export const Balance = {
 
   fromPartial(object: DeepPartial<Balance>): Balance {
     const message = createBaseBalance();
-    message.address = object.address ?? '';
+    message.address = object.address ?? "";
     message.coins = object.coins?.map(e => Coin.fromPartial(e)) || [];
     return message;
   }

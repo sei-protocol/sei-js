@@ -1,6 +1,6 @@
 {
-  "name": "@sei-js/reac",
-  "version": "1.1.2",
+  "name": "@sei-js/react",
+  "version": "1.1.3",
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {

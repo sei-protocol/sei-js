@@ -1,8 +1,8 @@
-import { AminoMsg } from '@cosmjs/amino';
-import { Long } from '@osmonauts/helpers';
-import { MsgRecordTransactionData } from './tx';
+import { AminoMsg } from "@cosmjs/amino";
+import { Long } from "@osmonauts/helpers";
+import { MsgRecordTransactionData } from "./tx";
 export interface AminoMsgRecordTransactionData extends AminoMsg {
-  type: '/seiprotocol.seichain.nitro.MsgRecordTransactionData';
+  type: "/seiprotocol.seichain.nitro.MsgRecordTransactionData";
   value: {
     sender: string;
     slot: string;
@@ -11,14 +11,14 @@ export interface AminoMsgRecordTransactionData extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  '/seiprotocol.seichain.nitro.MsgRecordTransactionData': {
-    aminoType: '/seiprotocol.seichain.nitro.MsgRecordTransactionData',
+  "/seiprotocol.seichain.nitro.MsgRecordTransactionData": {
+    aminoType: "/seiprotocol.seichain.nitro.MsgRecordTransactionData",
     toAmino: ({
       sender,
       slot,
       stateRoot,
       txs
-    }: MsgRecordTransactionData): AminoMsgRecordTransactionData['value'] => {
+    }: MsgRecordTransactionData): AminoMsgRecordTransactionData["value"] => {
       return {
         sender,
         slot: slot.toString(),
@@ -31,7 +31,7 @@ export const AminoConverter = {
       slot,
       stateRoot,
       txs
-    }: AminoMsgRecordTransactionData['value']): MsgRecordTransactionData => {
+    }: AminoMsgRecordTransactionData["value"]): MsgRecordTransactionData => {
       return {
         sender,
         slot: Long.fromString(slot),

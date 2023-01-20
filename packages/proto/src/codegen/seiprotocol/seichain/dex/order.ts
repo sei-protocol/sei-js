@@ -1,6 +1,6 @@
-import { OrderStatus, OrderStatusSDKType, OrderType, OrderTypeSDKType, PositionDirection, PositionDirectionSDKType, CancellationInitiator, CancellationInitiatorSDKType } from './enums';
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import { OrderStatus, OrderStatusSDKType, OrderType, OrderTypeSDKType, PositionDirection, PositionDirectionSDKType, CancellationInitiator, CancellationInitiatorSDKType } from "./enums";
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface Order {
   id?: Long;
   status?: OrderStatus;
@@ -62,14 +62,14 @@ function createBaseOrder(): Order {
     status: undefined,
     account: undefined,
     contractAddr: undefined,
-    price: '',
-    quantity: '',
-    priceDenom: '',
-    assetDenom: '',
+    price: "",
+    quantity: "",
+    priceDenom: "",
+    assetDenom: "",
     orderType: 0,
     positionDirection: 0,
-    data: '',
-    statusDescription: ''
+    data: "",
+    statusDescription: ""
   };
 }
 
@@ -91,19 +91,19 @@ export const Order = {
       writer.uint32(34).string(message.contractAddr);
     }
 
-    if (message.price !== '') {
+    if (message.price !== "") {
       writer.uint32(42).string(message.price);
     }
 
-    if (message.quantity !== '') {
+    if (message.quantity !== "") {
       writer.uint32(50).string(message.quantity);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(58).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(66).string(message.assetDenom);
     }
 
@@ -115,11 +115,11 @@ export const Order = {
       writer.uint32(80).int32(message.positionDirection);
     }
 
-    if (message.data !== '') {
+    if (message.data !== "") {
       writer.uint32(90).string(message.data);
     }
 
-    if (message.statusDescription !== '') {
+    if (message.statusDescription !== "") {
       writer.uint32(98).string(message.statusDescription);
     }
 
@@ -128,7 +128,7 @@ export const Order = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Order {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOrder();
 
     while (reader.pos < end) {
@@ -198,14 +198,14 @@ export const Order = {
     message.status = object.status ?? undefined;
     message.account = object.account ?? undefined;
     message.contractAddr = object.contractAddr ?? undefined;
-    message.price = object.price ?? '';
-    message.quantity = object.quantity ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.price = object.price ?? "";
+    message.quantity = object.quantity ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     message.orderType = object.orderType ?? 0;
     message.positionDirection = object.positionDirection ?? 0;
-    message.data = object.data ?? '';
-    message.statusDescription = object.statusDescription ?? '';
+    message.data = object.data ?? "";
+    message.statusDescription = object.statusDescription ?? "";
     return message;
   }
 
@@ -216,11 +216,11 @@ function createBaseCancellation(): Cancellation {
     id: Long.UZERO,
     initiator: 0,
     creator: undefined,
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: '',
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: "",
     positionDirection: 0,
-    price: ''
+    price: ""
   };
 }
 
@@ -238,15 +238,15 @@ export const Cancellation = {
       writer.uint32(26).string(message.creator);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(34).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(42).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(50).string(message.assetDenom);
     }
 
@@ -254,7 +254,7 @@ export const Cancellation = {
       writer.uint32(56).int32(message.positionDirection);
     }
 
-    if (message.price !== '') {
+    if (message.price !== "") {
       writer.uint32(66).string(message.price);
     }
 
@@ -263,7 +263,7 @@ export const Cancellation = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Cancellation {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCancellation();
 
     while (reader.pos < end) {
@@ -316,11 +316,11 @@ export const Cancellation = {
     message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
     message.initiator = object.initiator ?? 0;
     message.creator = object.creator ?? undefined;
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     message.positionDirection = object.positionDirection ?? 0;
-    message.price = object.price ?? '';
+    message.price = object.price ?? "";
     return message;
   }
 
@@ -346,7 +346,7 @@ export const ActiveOrders = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ActiveOrders {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseActiveOrders();
 
     while (reader.pos < end) {

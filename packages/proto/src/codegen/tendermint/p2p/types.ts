@@ -1,6 +1,6 @@
-import { Timestamp } from '../../google/protobuf/timestamp';
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial, toTimestamp, fromTimestamp } from '@osmonauts/helpers';
+import { Timestamp } from "../../google/protobuf/timestamp";
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial, toTimestamp, fromTimestamp } from "@osmonauts/helpers";
 export interface ProtocolVersion {
   p2p: Long;
   block: Long;
@@ -89,7 +89,7 @@ export const ProtocolVersion = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ProtocolVersion {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProtocolVersion();
 
     while (reader.pos < end) {
@@ -130,12 +130,12 @@ export const ProtocolVersion = {
 function createBaseNodeInfo(): NodeInfo {
   return {
     protocolVersion: undefined,
-    nodeId: '',
-    listenAddr: '',
-    network: '',
-    version: '',
+    nodeId: "",
+    listenAddr: "",
+    network: "",
+    version: "",
     channels: new Uint8Array(),
-    moniker: '',
+    moniker: "",
     other: undefined
   };
 }
@@ -146,19 +146,19 @@ export const NodeInfo = {
       ProtocolVersion.encode(message.protocolVersion, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.nodeId !== '') {
+    if (message.nodeId !== "") {
       writer.uint32(18).string(message.nodeId);
     }
 
-    if (message.listenAddr !== '') {
+    if (message.listenAddr !== "") {
       writer.uint32(26).string(message.listenAddr);
     }
 
-    if (message.network !== '') {
+    if (message.network !== "") {
       writer.uint32(34).string(message.network);
     }
 
-    if (message.version !== '') {
+    if (message.version !== "") {
       writer.uint32(42).string(message.version);
     }
 
@@ -166,7 +166,7 @@ export const NodeInfo = {
       writer.uint32(50).bytes(message.channels);
     }
 
-    if (message.moniker !== '') {
+    if (message.moniker !== "") {
       writer.uint32(58).string(message.moniker);
     }
 
@@ -179,7 +179,7 @@ export const NodeInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): NodeInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseNodeInfo();
 
     while (reader.pos < end) {
@@ -230,12 +230,12 @@ export const NodeInfo = {
   fromPartial(object: DeepPartial<NodeInfo>): NodeInfo {
     const message = createBaseNodeInfo();
     message.protocolVersion = object.protocolVersion !== undefined && object.protocolVersion !== null ? ProtocolVersion.fromPartial(object.protocolVersion) : undefined;
-    message.nodeId = object.nodeId ?? '';
-    message.listenAddr = object.listenAddr ?? '';
-    message.network = object.network ?? '';
-    message.version = object.version ?? '';
+    message.nodeId = object.nodeId ?? "";
+    message.listenAddr = object.listenAddr ?? "";
+    message.network = object.network ?? "";
+    message.version = object.version ?? "";
     message.channels = object.channels ?? new Uint8Array();
-    message.moniker = object.moniker ?? '';
+    message.moniker = object.moniker ?? "";
     message.other = object.other !== undefined && object.other !== null ? NodeInfoOther.fromPartial(object.other) : undefined;
     return message;
   }
@@ -244,18 +244,18 @@ export const NodeInfo = {
 
 function createBaseNodeInfoOther(): NodeInfoOther {
   return {
-    txIndex: '',
-    rpcAddress: ''
+    txIndex: "",
+    rpcAddress: ""
   };
 }
 
 export const NodeInfoOther = {
   encode(message: NodeInfoOther, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.txIndex !== '') {
+    if (message.txIndex !== "") {
       writer.uint32(10).string(message.txIndex);
     }
 
-    if (message.rpcAddress !== '') {
+    if (message.rpcAddress !== "") {
       writer.uint32(18).string(message.rpcAddress);
     }
 
@@ -264,7 +264,7 @@ export const NodeInfoOther = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): NodeInfoOther {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseNodeInfoOther();
 
     while (reader.pos < end) {
@@ -290,8 +290,8 @@ export const NodeInfoOther = {
 
   fromPartial(object: DeepPartial<NodeInfoOther>): NodeInfoOther {
     const message = createBaseNodeInfoOther();
-    message.txIndex = object.txIndex ?? '';
-    message.rpcAddress = object.rpcAddress ?? '';
+    message.txIndex = object.txIndex ?? "";
+    message.rpcAddress = object.rpcAddress ?? "";
     return message;
   }
 
@@ -299,7 +299,7 @@ export const NodeInfoOther = {
 
 function createBasePeerInfo(): PeerInfo {
   return {
-    id: '',
+    id: "",
     addressInfo: [],
     lastConnected: undefined
   };
@@ -307,7 +307,7 @@ function createBasePeerInfo(): PeerInfo {
 
 export const PeerInfo = {
   encode(message: PeerInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.id !== '') {
+    if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
 
@@ -324,7 +324,7 @@ export const PeerInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PeerInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePeerInfo();
 
     while (reader.pos < end) {
@@ -354,7 +354,7 @@ export const PeerInfo = {
 
   fromPartial(object: DeepPartial<PeerInfo>): PeerInfo {
     const message = createBasePeerInfo();
-    message.id = object.id ?? '';
+    message.id = object.id ?? "";
     message.addressInfo = object.addressInfo?.map(e => PeerAddressInfo.fromPartial(e)) || [];
     message.lastConnected = object.lastConnected ?? undefined;
     return message;
@@ -364,7 +364,7 @@ export const PeerInfo = {
 
 function createBasePeerAddressInfo(): PeerAddressInfo {
   return {
-    address: '',
+    address: "",
     lastDialSuccess: undefined,
     lastDialFailure: undefined,
     dialFailures: 0
@@ -373,7 +373,7 @@ function createBasePeerAddressInfo(): PeerAddressInfo {
 
 export const PeerAddressInfo = {
   encode(message: PeerAddressInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== '') {
+    if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
 
@@ -394,7 +394,7 @@ export const PeerAddressInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PeerAddressInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePeerAddressInfo();
 
     while (reader.pos < end) {
@@ -428,7 +428,7 @@ export const PeerAddressInfo = {
 
   fromPartial(object: DeepPartial<PeerAddressInfo>): PeerAddressInfo {
     const message = createBasePeerAddressInfo();
-    message.address = object.address ?? '';
+    message.address = object.address ?? "";
     message.lastDialSuccess = object.lastDialSuccess ?? undefined;
     message.lastDialFailure = object.lastDialFailure ?? undefined;
     message.dialFailures = object.dialFailures ?? 0;

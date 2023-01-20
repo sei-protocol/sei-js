@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface SettlementEntry {
   account: string;
   priceDenom: string;
@@ -39,14 +39,14 @@ export interface SettlementsSDKType {
 
 function createBaseSettlementEntry(): SettlementEntry {
   return {
-    account: '',
-    priceDenom: '',
-    assetDenom: '',
-    quantity: '',
-    executionCostOrProceed: '',
-    expectedCostOrProceed: '',
-    positionDirection: '',
-    orderType: '',
+    account: "",
+    priceDenom: "",
+    assetDenom: "",
+    quantity: "",
+    executionCostOrProceed: "",
+    expectedCostOrProceed: "",
+    positionDirection: "",
+    orderType: "",
     orderId: Long.UZERO,
     timestamp: Long.UZERO,
     height: Long.UZERO,
@@ -56,35 +56,35 @@ function createBaseSettlementEntry(): SettlementEntry {
 
 export const SettlementEntry = {
   encode(message: SettlementEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.account !== '') {
+    if (message.account !== "") {
       writer.uint32(10).string(message.account);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(18).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(26).string(message.assetDenom);
     }
 
-    if (message.quantity !== '') {
+    if (message.quantity !== "") {
       writer.uint32(34).string(message.quantity);
     }
 
-    if (message.executionCostOrProceed !== '') {
+    if (message.executionCostOrProceed !== "") {
       writer.uint32(42).string(message.executionCostOrProceed);
     }
 
-    if (message.expectedCostOrProceed !== '') {
+    if (message.expectedCostOrProceed !== "") {
       writer.uint32(50).string(message.expectedCostOrProceed);
     }
 
-    if (message.positionDirection !== '') {
+    if (message.positionDirection !== "") {
       writer.uint32(58).string(message.positionDirection);
     }
 
-    if (message.orderType !== '') {
+    if (message.orderType !== "") {
       writer.uint32(66).string(message.orderType);
     }
 
@@ -109,7 +109,7 @@ export const SettlementEntry = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SettlementEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSettlementEntry();
 
     while (reader.pos < end) {
@@ -175,14 +175,14 @@ export const SettlementEntry = {
 
   fromPartial(object: DeepPartial<SettlementEntry>): SettlementEntry {
     const message = createBaseSettlementEntry();
-    message.account = object.account ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
-    message.quantity = object.quantity ?? '';
-    message.executionCostOrProceed = object.executionCostOrProceed ?? '';
-    message.expectedCostOrProceed = object.expectedCostOrProceed ?? '';
-    message.positionDirection = object.positionDirection ?? '';
-    message.orderType = object.orderType ?? '';
+    message.account = object.account ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
+    message.quantity = object.quantity ?? "";
+    message.executionCostOrProceed = object.executionCostOrProceed ?? "";
+    message.expectedCostOrProceed = object.expectedCostOrProceed ?? "";
+    message.positionDirection = object.positionDirection ?? "";
+    message.orderType = object.orderType ?? "";
     message.orderId = object.orderId !== undefined && object.orderId !== null ? Long.fromValue(object.orderId) : Long.UZERO;
     message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
     message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.UZERO;
@@ -214,7 +214,7 @@ export const Settlements = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Settlements {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSettlements();
 
     while (reader.pos < end) {

@@ -1,12 +1,12 @@
-import { Duration, DurationSDKType } from '../../../../google/protobuf/duration';
-import { Height, HeightSDKType } from '../../../core/client/v1/client';
-import { ProofSpec, ProofSpecSDKType } from '../../../../confio/proofs';
-import { Timestamp } from '../../../../google/protobuf/timestamp';
-import { MerkleRoot, MerkleRootSDKType } from '../../../core/commitment/v1/commitment';
-import { SignedHeader, SignedHeaderSDKType } from '../../../../tendermint/types/types';
-import { ValidatorSet, ValidatorSetSDKType } from '../../../../tendermint/types/validator';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, toTimestamp, fromTimestamp, Long } from '@osmonauts/helpers';
+import { Duration, DurationSDKType } from "../../../../google/protobuf/duration";
+import { Height, HeightSDKType } from "../../../core/client/v1/client";
+import { ProofSpec, ProofSpecSDKType } from "../../../../confio/proofs";
+import { Timestamp } from "../../../../google/protobuf/timestamp";
+import { MerkleRoot, MerkleRootSDKType } from "../../../core/commitment/v1/commitment";
+import { SignedHeader, SignedHeaderSDKType } from "../../../../tendermint/types/types";
+import { ValidatorSet, ValidatorSetSDKType } from "../../../../tendermint/types/validator";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, toTimestamp, fromTimestamp, Long } from "@osmonauts/helpers";
 /**
  * ClientState from Tendermint tracks the current validator set, latest height,
  * and a possible frozen height.
@@ -222,7 +222,7 @@ export interface FractionSDKType {
 
 function createBaseClientState(): ClientState {
   return {
-    chainId: '',
+    chainId: "",
     trustLevel: undefined,
     trustingPeriod: undefined,
     unbondingPeriod: undefined,
@@ -238,7 +238,7 @@ function createBaseClientState(): ClientState {
 
 export const ClientState = {
   encode(message: ClientState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.chainId !== '') {
+    if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
     }
 
@@ -287,7 +287,7 @@ export const ClientState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientState();
 
     while (reader.pos < end) {
@@ -349,7 +349,7 @@ export const ClientState = {
 
   fromPartial(object: DeepPartial<ClientState>): ClientState {
     const message = createBaseClientState();
-    message.chainId = object.chainId ?? '';
+    message.chainId = object.chainId ?? "";
     message.trustLevel = object.trustLevel !== undefined && object.trustLevel !== null ? Fraction.fromPartial(object.trustLevel) : undefined;
     message.trustingPeriod = object.trustingPeriod ?? undefined;
     message.unbondingPeriod = object.unbondingPeriod ?? undefined;
@@ -392,7 +392,7 @@ export const ConsensusState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensusState();
 
     while (reader.pos < end) {
@@ -432,7 +432,7 @@ export const ConsensusState = {
 
 function createBaseMisbehaviour(): Misbehaviour {
   return {
-    clientId: '',
+    clientId: "",
     header_1: undefined,
     header_2: undefined
   };
@@ -440,7 +440,7 @@ function createBaseMisbehaviour(): Misbehaviour {
 
 export const Misbehaviour = {
   encode(message: Misbehaviour, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.clientId !== '') {
+    if (message.clientId !== "") {
       writer.uint32(10).string(message.clientId);
     }
 
@@ -457,7 +457,7 @@ export const Misbehaviour = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Misbehaviour {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMisbehaviour();
 
     while (reader.pos < end) {
@@ -487,7 +487,7 @@ export const Misbehaviour = {
 
   fromPartial(object: DeepPartial<Misbehaviour>): Misbehaviour {
     const message = createBaseMisbehaviour();
-    message.clientId = object.clientId ?? '';
+    message.clientId = object.clientId ?? "";
     message.header_1 = object.header_1 !== undefined && object.header_1 !== null ? Header.fromPartial(object.header_1) : undefined;
     message.header_2 = object.header_2 !== undefined && object.header_2 !== null ? Header.fromPartial(object.header_2) : undefined;
     return message;
@@ -527,7 +527,7 @@ export const Header = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Header {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeader();
 
     while (reader.pos < end) {
@@ -592,7 +592,7 @@ export const Fraction = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Fraction {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFraction();
 
     while (reader.pos < end) {

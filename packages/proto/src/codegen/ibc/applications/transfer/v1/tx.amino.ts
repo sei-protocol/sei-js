@@ -1,8 +1,8 @@
-import { AminoMsg } from '@cosmjs/amino';
-import { AminoHeight, Long, omitDefault } from '@osmonauts/helpers';
-import { MsgTransfer } from './tx';
+import { AminoMsg } from "@cosmjs/amino";
+import { AminoHeight, Long, omitDefault } from "@osmonauts/helpers";
+import { MsgTransfer } from "./tx";
 export interface AminoMsgTransfer extends AminoMsg {
-  type: 'cosmos-sdk/MsgTransfer';
+  type: "cosmos-sdk/MsgTransfer";
   value: {
     source_port: string;
     source_channel: string;
@@ -17,8 +17,8 @@ export interface AminoMsgTransfer extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  '/ibc.applications.transfer.v1.MsgTransfer': {
-    aminoType: 'cosmos-sdk/MsgTransfer',
+  "/ibc.applications.transfer.v1.MsgTransfer": {
+    aminoType: "cosmos-sdk/MsgTransfer",
     toAmino: ({
       sourcePort,
       sourceChannel,
@@ -27,7 +27,7 @@ export const AminoConverter = {
       receiver,
       timeoutHeight,
       timeoutTimestamp
-    }: MsgTransfer): AminoMsgTransfer['value'] => {
+    }: MsgTransfer): AminoMsgTransfer["value"] => {
       return {
         source_port: sourcePort,
         source_channel: sourceChannel,
@@ -52,7 +52,7 @@ export const AminoConverter = {
       receiver,
       timeout_height,
       timeout_timestamp
-    }: AminoMsgTransfer['value']): MsgTransfer => {
+    }: AminoMsgTransfer["value"]): MsgTransfer => {
       return {
         sourcePort: source_port,
         sourceChannel: source_channel,
@@ -63,8 +63,8 @@ export const AminoConverter = {
         sender,
         receiver,
         timeoutHeight: timeout_height ? {
-          revisionHeight: Long.fromString(timeout_height.revision_height || '0', true),
-          revisionNumber: Long.fromString(timeout_height.revision_number || '0', true)
+          revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
+          revisionNumber: Long.fromString(timeout_height.revision_number || "0", true)
         } : undefined,
         timeoutTimestamp: Long.fromString(timeout_timestamp)
       };

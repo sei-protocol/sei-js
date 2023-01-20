@@ -1,6 +1,6 @@
-import { DecCoin, DecCoinSDKType, Coin, CoinSDKType } from '../../base/v1beta1/coin';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { DecCoin, DecCoinSDKType, Coin, CoinSDKType } from "../../base/v1beta1/coin";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /** Params defines the set of params for the distribution module. */
 
 export interface Params {
@@ -246,24 +246,24 @@ export interface CommunityPoolSpendProposalWithDepositSDKType {
 
 function createBaseParams(): Params {
   return {
-    communityTax: '',
-    baseProposerReward: '',
-    bonusProposerReward: '',
+    communityTax: "",
+    baseProposerReward: "",
+    bonusProposerReward: "",
     withdrawAddrEnabled: false
   };
 }
 
 export const Params = {
   encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.communityTax !== '') {
+    if (message.communityTax !== "") {
       writer.uint32(10).string(message.communityTax);
     }
 
-    if (message.baseProposerReward !== '') {
+    if (message.baseProposerReward !== "") {
       writer.uint32(18).string(message.baseProposerReward);
     }
 
-    if (message.bonusProposerReward !== '') {
+    if (message.bonusProposerReward !== "") {
       writer.uint32(26).string(message.bonusProposerReward);
     }
 
@@ -276,7 +276,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {
@@ -310,9 +310,9 @@ export const Params = {
 
   fromPartial(object: DeepPartial<Params>): Params {
     const message = createBaseParams();
-    message.communityTax = object.communityTax ?? '';
-    message.baseProposerReward = object.baseProposerReward ?? '';
-    message.bonusProposerReward = object.bonusProposerReward ?? '';
+    message.communityTax = object.communityTax ?? "";
+    message.baseProposerReward = object.baseProposerReward ?? "";
+    message.bonusProposerReward = object.bonusProposerReward ?? "";
     message.withdrawAddrEnabled = object.withdrawAddrEnabled ?? false;
     return message;
   }
@@ -341,7 +341,7 @@ export const ValidatorHistoricalRewards = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorHistoricalRewards {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorHistoricalRewards();
 
     while (reader.pos < end) {
@@ -396,7 +396,7 @@ export const ValidatorCurrentRewards = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorCurrentRewards {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorCurrentRewards();
 
     while (reader.pos < end) {
@@ -446,7 +446,7 @@ export const ValidatorAccumulatedCommission = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorAccumulatedCommission {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorAccumulatedCommission();
 
     while (reader.pos < end) {
@@ -491,7 +491,7 @@ export const ValidatorOutstandingRewards = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorOutstandingRewards {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorOutstandingRewards();
 
     while (reader.pos < end) {
@@ -522,7 +522,7 @@ export const ValidatorOutstandingRewards = {
 function createBaseValidatorSlashEvent(): ValidatorSlashEvent {
   return {
     validatorPeriod: Long.UZERO,
-    fraction: ''
+    fraction: ""
   };
 }
 
@@ -532,7 +532,7 @@ export const ValidatorSlashEvent = {
       writer.uint32(8).uint64(message.validatorPeriod);
     }
 
-    if (message.fraction !== '') {
+    if (message.fraction !== "") {
       writer.uint32(18).string(message.fraction);
     }
 
@@ -541,7 +541,7 @@ export const ValidatorSlashEvent = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSlashEvent {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorSlashEvent();
 
     while (reader.pos < end) {
@@ -568,7 +568,7 @@ export const ValidatorSlashEvent = {
   fromPartial(object: DeepPartial<ValidatorSlashEvent>): ValidatorSlashEvent {
     const message = createBaseValidatorSlashEvent();
     message.validatorPeriod = object.validatorPeriod !== undefined && object.validatorPeriod !== null ? Long.fromValue(object.validatorPeriod) : Long.UZERO;
-    message.fraction = object.fraction ?? '';
+    message.fraction = object.fraction ?? "";
     return message;
   }
 
@@ -591,7 +591,7 @@ export const ValidatorSlashEvents = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSlashEvents {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorSlashEvents();
 
     while (reader.pos < end) {
@@ -636,7 +636,7 @@ export const FeePool = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): FeePool {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFeePool();
 
     while (reader.pos < end) {
@@ -666,24 +666,24 @@ export const FeePool = {
 
 function createBaseCommunityPoolSpendProposal(): CommunityPoolSpendProposal {
   return {
-    title: '',
-    description: '',
-    recipient: '',
+    title: "",
+    description: "",
+    recipient: "",
     amount: []
   };
 }
 
 export const CommunityPoolSpendProposal = {
   encode(message: CommunityPoolSpendProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== '') {
+    if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== '') {
+    if (message.description !== "") {
       writer.uint32(18).string(message.description);
     }
 
-    if (message.recipient !== '') {
+    if (message.recipient !== "") {
       writer.uint32(26).string(message.recipient);
     }
 
@@ -696,7 +696,7 @@ export const CommunityPoolSpendProposal = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CommunityPoolSpendProposal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommunityPoolSpendProposal();
 
     while (reader.pos < end) {
@@ -730,9 +730,9 @@ export const CommunityPoolSpendProposal = {
 
   fromPartial(object: DeepPartial<CommunityPoolSpendProposal>): CommunityPoolSpendProposal {
     const message = createBaseCommunityPoolSpendProposal();
-    message.title = object.title ?? '';
-    message.description = object.description ?? '';
-    message.recipient = object.recipient ?? '';
+    message.title = object.title ?? "";
+    message.description = object.description ?? "";
+    message.recipient = object.recipient ?? "";
     message.amount = object.amount?.map(e => Coin.fromPartial(e)) || [];
     return message;
   }
@@ -742,7 +742,7 @@ export const CommunityPoolSpendProposal = {
 function createBaseDelegatorStartingInfo(): DelegatorStartingInfo {
   return {
     previousPeriod: Long.UZERO,
-    stake: '',
+    stake: "",
     height: Long.UZERO
   };
 }
@@ -753,7 +753,7 @@ export const DelegatorStartingInfo = {
       writer.uint32(8).uint64(message.previousPeriod);
     }
 
-    if (message.stake !== '') {
+    if (message.stake !== "") {
       writer.uint32(18).string(message.stake);
     }
 
@@ -766,7 +766,7 @@ export const DelegatorStartingInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DelegatorStartingInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDelegatorStartingInfo();
 
     while (reader.pos < end) {
@@ -797,7 +797,7 @@ export const DelegatorStartingInfo = {
   fromPartial(object: DeepPartial<DelegatorStartingInfo>): DelegatorStartingInfo {
     const message = createBaseDelegatorStartingInfo();
     message.previousPeriod = object.previousPeriod !== undefined && object.previousPeriod !== null ? Long.fromValue(object.previousPeriod) : Long.UZERO;
-    message.stake = object.stake ?? '';
+    message.stake = object.stake ?? "";
     message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.UZERO;
     return message;
   }
@@ -806,14 +806,14 @@ export const DelegatorStartingInfo = {
 
 function createBaseDelegationDelegatorReward(): DelegationDelegatorReward {
   return {
-    validatorAddress: '',
+    validatorAddress: "",
     reward: []
   };
 }
 
 export const DelegationDelegatorReward = {
   encode(message: DelegationDelegatorReward, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.validatorAddress !== '') {
+    if (message.validatorAddress !== "") {
       writer.uint32(10).string(message.validatorAddress);
     }
 
@@ -826,7 +826,7 @@ export const DelegationDelegatorReward = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DelegationDelegatorReward {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDelegationDelegatorReward();
 
     while (reader.pos < end) {
@@ -852,7 +852,7 @@ export const DelegationDelegatorReward = {
 
   fromPartial(object: DeepPartial<DelegationDelegatorReward>): DelegationDelegatorReward {
     const message = createBaseDelegationDelegatorReward();
-    message.validatorAddress = object.validatorAddress ?? '';
+    message.validatorAddress = object.validatorAddress ?? "";
     message.reward = object.reward?.map(e => DecCoin.fromPartial(e)) || [];
     return message;
   }
@@ -861,33 +861,33 @@ export const DelegationDelegatorReward = {
 
 function createBaseCommunityPoolSpendProposalWithDeposit(): CommunityPoolSpendProposalWithDeposit {
   return {
-    title: '',
-    description: '',
-    recipient: '',
-    amount: '',
-    deposit: ''
+    title: "",
+    description: "",
+    recipient: "",
+    amount: "",
+    deposit: ""
   };
 }
 
 export const CommunityPoolSpendProposalWithDeposit = {
   encode(message: CommunityPoolSpendProposalWithDeposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.title !== '') {
+    if (message.title !== "") {
       writer.uint32(10).string(message.title);
     }
 
-    if (message.description !== '') {
+    if (message.description !== "") {
       writer.uint32(18).string(message.description);
     }
 
-    if (message.recipient !== '') {
+    if (message.recipient !== "") {
       writer.uint32(26).string(message.recipient);
     }
 
-    if (message.amount !== '') {
+    if (message.amount !== "") {
       writer.uint32(34).string(message.amount);
     }
 
-    if (message.deposit !== '') {
+    if (message.deposit !== "") {
       writer.uint32(42).string(message.deposit);
     }
 
@@ -896,7 +896,7 @@ export const CommunityPoolSpendProposalWithDeposit = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): CommunityPoolSpendProposalWithDeposit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommunityPoolSpendProposalWithDeposit();
 
     while (reader.pos < end) {
@@ -934,11 +934,11 @@ export const CommunityPoolSpendProposalWithDeposit = {
 
   fromPartial(object: DeepPartial<CommunityPoolSpendProposalWithDeposit>): CommunityPoolSpendProposalWithDeposit {
     const message = createBaseCommunityPoolSpendProposalWithDeposit();
-    message.title = object.title ?? '';
-    message.description = object.description ?? '';
-    message.recipient = object.recipient ?? '';
-    message.amount = object.amount ?? '';
-    message.deposit = object.deposit ?? '';
+    message.title = object.title ?? "";
+    message.description = object.description ?? "";
+    message.recipient = object.recipient ?? "";
+    message.amount = object.amount ?? "";
+    message.deposit = object.deposit ?? "";
     return message;
   }
 

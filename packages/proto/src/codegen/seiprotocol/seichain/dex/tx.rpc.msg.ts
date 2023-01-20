@@ -1,6 +1,6 @@
-import { Rpc } from '@osmonauts/helpers';
-import * as _m0 from 'protobufjs/minimal';
-import { MsgPlaceOrders, MsgPlaceOrdersResponse, MsgCancelOrders, MsgCancelOrdersResponse, MsgRegisterContract, MsgRegisterContractResponse } from './tx';
+import { Rpc } from "@osmonauts/helpers";
+import * as _m0 from "protobufjs/minimal";
+import { MsgPlaceOrders, MsgPlaceOrdersResponse, MsgCancelOrders, MsgCancelOrdersResponse, MsgRegisterContract, MsgRegisterContractResponse } from "./tx";
 /** Msg defines the RPC service */
 
 export interface Msg {
@@ -26,19 +26,19 @@ export class MsgClientImpl implements Msg {
 
   placeOrders(request: MsgPlaceOrders): Promise<MsgPlaceOrdersResponse> {
     const data = MsgPlaceOrders.encode(request).finish();
-    const promise = this.rpc.request('seiprotocol.seichain.dex.Msg', 'PlaceOrders', data);
+    const promise = this.rpc.request("seiprotocol.seichain.dex.Msg", "PlaceOrders", data);
     return promise.then(data => MsgPlaceOrdersResponse.decode(new _m0.Reader(data)));
   }
 
   cancelOrders(request: MsgCancelOrders): Promise<MsgCancelOrdersResponse> {
     const data = MsgCancelOrders.encode(request).finish();
-    const promise = this.rpc.request('seiprotocol.seichain.dex.Msg', 'CancelOrders', data);
+    const promise = this.rpc.request("seiprotocol.seichain.dex.Msg", "CancelOrders", data);
     return promise.then(data => MsgCancelOrdersResponse.decode(new _m0.Reader(data)));
   }
 
   registerContract(request: MsgRegisterContract): Promise<MsgRegisterContractResponse> {
     const data = MsgRegisterContract.encode(request).finish();
-    const promise = this.rpc.request('seiprotocol.seichain.dex.Msg', 'RegisterContract', data);
+    const promise = this.rpc.request("seiprotocol.seichain.dex.Msg", "RegisterContract", data);
     return promise.then(data => MsgRegisterContractResponse.decode(new _m0.Reader(data)));
   }
 

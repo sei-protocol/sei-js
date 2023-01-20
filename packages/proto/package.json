@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "type": "commonjs",
   "main": "main/index.js",
   "typings": "types/index.d.ts",
@@ -15,6 +15,6 @@
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
-    "publish": "npm publish --access public"
+    "deploy": "npm publish --access public"
   }
 }

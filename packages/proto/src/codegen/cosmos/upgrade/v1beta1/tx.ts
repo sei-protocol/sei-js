@@ -1,6 +1,6 @@
-import { Plan, PlanSDKType } from './upgrade';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { Plan, PlanSDKType } from "./upgrade";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * MsgSoftwareUpgrade is the Msg/SoftwareUpgrade request type.
  *
@@ -78,14 +78,14 @@ export interface MsgCancelUpgradeResponseSDKType {}
 
 function createBaseMsgSoftwareUpgrade(): MsgSoftwareUpgrade {
   return {
-    authority: '',
+    authority: "",
     plan: undefined
   };
 }
 
 export const MsgSoftwareUpgrade = {
   encode(message: MsgSoftwareUpgrade, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.authority !== '') {
+    if (message.authority !== "") {
       writer.uint32(10).string(message.authority);
     }
 
@@ -98,7 +98,7 @@ export const MsgSoftwareUpgrade = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSoftwareUpgrade {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSoftwareUpgrade();
 
     while (reader.pos < end) {
@@ -124,7 +124,7 @@ export const MsgSoftwareUpgrade = {
 
   fromPartial(object: DeepPartial<MsgSoftwareUpgrade>): MsgSoftwareUpgrade {
     const message = createBaseMsgSoftwareUpgrade();
-    message.authority = object.authority ?? '';
+    message.authority = object.authority ?? "";
     message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     return message;
   }
@@ -142,7 +142,7 @@ export const MsgSoftwareUpgradeResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSoftwareUpgradeResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSoftwareUpgradeResponse();
 
     while (reader.pos < end) {
@@ -167,13 +167,13 @@ export const MsgSoftwareUpgradeResponse = {
 
 function createBaseMsgCancelUpgrade(): MsgCancelUpgrade {
   return {
-    authority: ''
+    authority: ""
   };
 }
 
 export const MsgCancelUpgrade = {
   encode(message: MsgCancelUpgrade, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.authority !== '') {
+    if (message.authority !== "") {
       writer.uint32(10).string(message.authority);
     }
 
@@ -182,7 +182,7 @@ export const MsgCancelUpgrade = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelUpgrade {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelUpgrade();
 
     while (reader.pos < end) {
@@ -204,7 +204,7 @@ export const MsgCancelUpgrade = {
 
   fromPartial(object: DeepPartial<MsgCancelUpgrade>): MsgCancelUpgrade {
     const message = createBaseMsgCancelUpgrade();
-    message.authority = object.authority ?? '';
+    message.authority = object.authority ?? "";
     return message;
   }
 
@@ -221,7 +221,7 @@ export const MsgCancelUpgradeResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelUpgradeResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelUpgradeResponse();
 
     while (reader.pos < end) {
