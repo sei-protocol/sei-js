@@ -15,6 +15,6 @@
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
-    "publish": "npm publish --access public"
+    "deploy": "npm publish --access public"
   }
 }
