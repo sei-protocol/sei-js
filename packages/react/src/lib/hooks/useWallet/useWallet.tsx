@@ -18,7 +18,7 @@ const useWallet: (window: Window, walletOptions: UseWalletOptions) => UseWallet 
     if (chainConfiguration === 'testnet') return 'atlantic-1';
     if (chainConfiguration === 'devnet') return 'sei-devnet-2';
     return chainConfiguration.chainId;
-  }, [walletOptions.chainConfiguration, walletOptions]);
+  }, [walletOptions]);
 
   const restUrl = useMemo(() => {
     const { chainConfiguration } = walletOptions;
@@ -27,7 +27,7 @@ const useWallet: (window: Window, walletOptions: UseWalletOptions) => UseWallet 
     if (chainConfiguration === 'devnet')
       return 'https://rest.sei-devnet-2.seinetwork.io';
     return chainConfiguration.restUrl;
-  }, [walletOptions.chainConfiguration, walletOptions]);
+  }, [walletOptions]);
 
   const rpcUrl = useMemo(() => {
     const { chainConfiguration } = walletOptions;
@@ -36,7 +36,7 @@ const useWallet: (window: Window, walletOptions: UseWalletOptions) => UseWallet 
     if (chainConfiguration === 'devnet')
       return 'https://rpc.sei-devnet-2.seinetwork.io';
     return chainConfiguration.restUrl;
-  }, [walletOptions.chainConfiguration, walletOptions]);
+  }, [walletOptions]);
 
   const [offlineSigner, setOfflineSigner] = useState<OfflineSigner>();
   const [accounts, setAccounts] = useState<readonly AccountData[]>([]);
@@ -86,7 +86,7 @@ const useWallet: (window: Window, walletOptions: UseWalletOptions) => UseWallet 
     if (autoConnect && inputWallet) {
       connect().then(() => setConnectedWallet(inputWallet));
     }
-  }, [autoConnect, inputWallet]);
+  }, [autoConnect, inputWallet, connect]);
 
   if (!inputWallet)
     return {
