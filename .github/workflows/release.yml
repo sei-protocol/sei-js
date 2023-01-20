@@ -49,12 +49,14 @@ jobs:
 
       - run: yarn build:all
 
-      - name: Version
-        run: |
-          yarn version:all --releaseAs=${{ github.event.inputs.release_as }}
-          git push && git push --tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Disabling this for now because we can't push to protected branches
+      # Version and changelog updates need to be done in a separate pr instead
+      # - name: Version
+      #   run: |
+      #     yarn version:all --releaseAs=${{ github.event.inputs.release_as }}
+      #     git push && git push --tags
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish
         if: ${{ github.event.inputs.publish == 'true' }}
