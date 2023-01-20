@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /** Params defines the parameters for the module. */
 
 export interface Params {}
@@ -18,7 +18,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {

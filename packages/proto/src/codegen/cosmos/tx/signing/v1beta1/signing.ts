@@ -1,7 +1,7 @@
-import { CompactBitArray, CompactBitArraySDKType } from '../../../crypto/multisig/v1beta1/multisig';
-import { Any, AnySDKType } from '../../../../google/protobuf/any';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { CompactBitArray, CompactBitArraySDKType } from "../../../crypto/multisig/v1beta1/multisig";
+import { Any, AnySDKType } from "../../../../google/protobuf/any";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /**
  * SignMode represents a signing mode with its own security guarantees.
  *
@@ -101,27 +101,27 @@ export enum SignModeSDKType {
 export function signModeFromJSON(object: any): SignMode {
   switch (object) {
     case 0:
-    case 'SIGN_MODE_UNSPECIFIED':
+    case "SIGN_MODE_UNSPECIFIED":
       return SignMode.SIGN_MODE_UNSPECIFIED;
 
     case 1:
-    case 'SIGN_MODE_DIRECT':
+    case "SIGN_MODE_DIRECT":
       return SignMode.SIGN_MODE_DIRECT;
 
     case 2:
-    case 'SIGN_MODE_TEXTUAL':
+    case "SIGN_MODE_TEXTUAL":
       return SignMode.SIGN_MODE_TEXTUAL;
 
     case 3:
-    case 'SIGN_MODE_DIRECT_AUX':
+    case "SIGN_MODE_DIRECT_AUX":
       return SignMode.SIGN_MODE_DIRECT_AUX;
 
     case 127:
-    case 'SIGN_MODE_LEGACY_AMINO_JSON':
+    case "SIGN_MODE_LEGACY_AMINO_JSON":
       return SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return SignMode.UNRECOGNIZED;
   }
@@ -129,22 +129,22 @@ export function signModeFromJSON(object: any): SignMode {
 export function signModeToJSON(object: SignMode): string {
   switch (object) {
     case SignMode.SIGN_MODE_UNSPECIFIED:
-      return 'SIGN_MODE_UNSPECIFIED';
+      return "SIGN_MODE_UNSPECIFIED";
 
     case SignMode.SIGN_MODE_DIRECT:
-      return 'SIGN_MODE_DIRECT';
+      return "SIGN_MODE_DIRECT";
 
     case SignMode.SIGN_MODE_TEXTUAL:
-      return 'SIGN_MODE_TEXTUAL';
+      return "SIGN_MODE_TEXTUAL";
 
     case SignMode.SIGN_MODE_DIRECT_AUX:
-      return 'SIGN_MODE_DIRECT_AUX';
+      return "SIGN_MODE_DIRECT_AUX";
 
     case SignMode.SIGN_MODE_LEGACY_AMINO_JSON:
-      return 'SIGN_MODE_LEGACY_AMINO_JSON';
+      return "SIGN_MODE_LEGACY_AMINO_JSON";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }
 /** SignatureDescriptors wraps multiple SignatureDescriptor's. */
@@ -269,7 +269,7 @@ export const SignatureDescriptors = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptors {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignatureDescriptors();
 
     while (reader.pos < end) {
@@ -324,7 +324,7 @@ export const SignatureDescriptor = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignatureDescriptor();
 
     while (reader.pos < end) {
@@ -384,7 +384,7 @@ export const SignatureDescriptor_Data = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignatureDescriptor_Data();
 
     while (reader.pos < end) {
@@ -439,7 +439,7 @@ export const SignatureDescriptor_Data_Single = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Single {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignatureDescriptor_Data_Single();
 
     while (reader.pos < end) {
@@ -494,7 +494,7 @@ export const SignatureDescriptor_Data_Multi = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Multi {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignatureDescriptor_Data_Multi();
 
     while (reader.pos < end) {

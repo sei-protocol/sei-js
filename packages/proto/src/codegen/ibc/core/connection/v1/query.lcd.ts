@@ -1,6 +1,6 @@
-import { setPaginationParams } from '@osmonauts/helpers';
-import { LCDClient } from '@osmonauts/lcd';
-import { QueryConnectionRequest, QueryConnectionResponseSDKType, QueryConnectionsRequest, QueryConnectionsResponseSDKType, QueryClientConnectionsRequest, QueryClientConnectionsResponseSDKType, QueryConnectionClientStateRequest, QueryConnectionClientStateResponseSDKType, QueryConnectionConsensusStateRequest, QueryConnectionConsensusStateResponseSDKType } from './query';
+import { setPaginationParams } from "@osmonauts/helpers";
+import { LCDClient } from "@osmonauts/lcd";
+import { QueryConnectionRequest, QueryConnectionResponseSDKType, QueryConnectionsRequest, QueryConnectionsResponseSDKType, QueryClientConnectionsRequest, QueryClientConnectionsResponseSDKType, QueryConnectionClientStateRequest, QueryConnectionClientStateResponseSDKType, QueryConnectionConsensusStateRequest, QueryConnectionConsensusStateResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -33,7 +33,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== 'undefined') {
+    if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
 

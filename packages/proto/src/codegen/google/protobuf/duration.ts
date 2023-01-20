@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 /**
  * A Duration represents a signed, fixed-length span of time represented
  * as a count of seconds and fractions of seconds at nanosecond
@@ -181,7 +181,7 @@ export const Duration = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Duration {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDuration();
 
     while (reader.pos < end) {

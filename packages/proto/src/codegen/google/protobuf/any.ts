@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * `Any` contains an arbitrary serialized protocol buffer message along with a
  * URL that describes the type of the serialized message.
@@ -237,14 +237,14 @@ export interface AnySDKType {
 
 function createBaseAny(): Any {
   return {
-    typeUrl: '',
+    typeUrl: "",
     value: new Uint8Array()
   };
 }
 
 export const Any = {
   encode(message: Any, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.typeUrl !== '') {
+    if (message.typeUrl !== "") {
       writer.uint32(10).string(message.typeUrl);
     }
 
@@ -257,7 +257,7 @@ export const Any = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Any {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAny();
 
     while (reader.pos < end) {
@@ -283,7 +283,7 @@ export const Any = {
 
   fromPartial(object: DeepPartial<Any>): Any {
     const message = createBaseAny();
-    message.typeUrl = object.typeUrl ?? '';
+    message.typeUrl = object.typeUrl ?? "";
     message.value = object.value ?? new Uint8Array();
     return message;
   }

@@ -1,9 +1,9 @@
-import { Any, AnySDKType } from '../../../google/protobuf/any';
-import { SignMode, SignModeSDKType } from '../signing/v1beta1/signing';
-import { CompactBitArray, CompactBitArraySDKType } from '../../crypto/multisig/v1beta1/multisig';
-import { Coin, CoinSDKType } from '../../base/v1beta1/coin';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { Any, AnySDKType } from "../../../google/protobuf/any";
+import { SignMode, SignModeSDKType } from "../signing/v1beta1/signing";
+import { CompactBitArray, CompactBitArraySDKType } from "../../crypto/multisig/v1beta1/multisig";
+import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /** Tx is the standard type used for broadcasting transactions. */
 
 export interface Tx {
@@ -648,7 +648,7 @@ export const Tx = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Tx {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTx();
 
     while (reader.pos < end) {
@@ -713,7 +713,7 @@ export const TxRaw = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TxRaw {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTxRaw();
 
     while (reader.pos < end) {
@@ -755,7 +755,7 @@ function createBaseSignDoc(): SignDoc {
   return {
     bodyBytes: new Uint8Array(),
     authInfoBytes: new Uint8Array(),
-    chainId: '',
+    chainId: "",
     accountNumber: Long.UZERO
   };
 }
@@ -770,7 +770,7 @@ export const SignDoc = {
       writer.uint32(18).bytes(message.authInfoBytes);
     }
 
-    if (message.chainId !== '') {
+    if (message.chainId !== "") {
       writer.uint32(26).string(message.chainId);
     }
 
@@ -783,7 +783,7 @@ export const SignDoc = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignDoc {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignDoc();
 
     while (reader.pos < end) {
@@ -819,7 +819,7 @@ export const SignDoc = {
     const message = createBaseSignDoc();
     message.bodyBytes = object.bodyBytes ?? new Uint8Array();
     message.authInfoBytes = object.authInfoBytes ?? new Uint8Array();
-    message.chainId = object.chainId ?? '';
+    message.chainId = object.chainId ?? "";
     message.accountNumber = object.accountNumber !== undefined && object.accountNumber !== null ? Long.fromValue(object.accountNumber) : Long.UZERO;
     return message;
   }
@@ -830,7 +830,7 @@ function createBaseSignDocDirectAux(): SignDocDirectAux {
   return {
     bodyBytes: new Uint8Array(),
     publicKey: undefined,
-    chainId: '',
+    chainId: "",
     accountNumber: Long.UZERO,
     sequence: Long.UZERO,
     tip: undefined
@@ -847,7 +847,7 @@ export const SignDocDirectAux = {
       Any.encode(message.publicKey, writer.uint32(18).fork()).ldelim();
     }
 
-    if (message.chainId !== '') {
+    if (message.chainId !== "") {
       writer.uint32(26).string(message.chainId);
     }
 
@@ -868,7 +868,7 @@ export const SignDocDirectAux = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignDocDirectAux {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignDocDirectAux();
 
     while (reader.pos < end) {
@@ -912,7 +912,7 @@ export const SignDocDirectAux = {
     const message = createBaseSignDocDirectAux();
     message.bodyBytes = object.bodyBytes ?? new Uint8Array();
     message.publicKey = object.publicKey !== undefined && object.publicKey !== null ? Any.fromPartial(object.publicKey) : undefined;
-    message.chainId = object.chainId ?? '';
+    message.chainId = object.chainId ?? "";
     message.accountNumber = object.accountNumber !== undefined && object.accountNumber !== null ? Long.fromValue(object.accountNumber) : Long.UZERO;
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     message.tip = object.tip !== undefined && object.tip !== null ? Tip.fromPartial(object.tip) : undefined;
@@ -924,7 +924,7 @@ export const SignDocDirectAux = {
 function createBaseTxBody(): TxBody {
   return {
     messages: [],
-    memo: '',
+    memo: "",
     timeoutHeight: Long.UZERO,
     extensionOptions: [],
     nonCriticalExtensionOptions: []
@@ -937,7 +937,7 @@ export const TxBody = {
       Any.encode(v!, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.memo !== '') {
+    if (message.memo !== "") {
       writer.uint32(18).string(message.memo);
     }
 
@@ -958,7 +958,7 @@ export const TxBody = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TxBody {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTxBody();
 
     while (reader.pos < end) {
@@ -997,7 +997,7 @@ export const TxBody = {
   fromPartial(object: DeepPartial<TxBody>): TxBody {
     const message = createBaseTxBody();
     message.messages = object.messages?.map(e => Any.fromPartial(e)) || [];
-    message.memo = object.memo ?? '';
+    message.memo = object.memo ?? "";
     message.timeoutHeight = object.timeoutHeight !== undefined && object.timeoutHeight !== null ? Long.fromValue(object.timeoutHeight) : Long.UZERO;
     message.extensionOptions = object.extensionOptions?.map(e => Any.fromPartial(e)) || [];
     message.nonCriticalExtensionOptions = object.nonCriticalExtensionOptions?.map(e => Any.fromPartial(e)) || [];
@@ -1033,7 +1033,7 @@ export const AuthInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AuthInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAuthInfo();
 
     while (reader.pos < end) {
@@ -1098,7 +1098,7 @@ export const SignerInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): SignerInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignerInfo();
 
     while (reader.pos < end) {
@@ -1158,7 +1158,7 @@ export const ModeInfo = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModeInfo();
 
     while (reader.pos < end) {
@@ -1208,7 +1208,7 @@ export const ModeInfo_Single = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Single {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModeInfo_Single();
 
     while (reader.pos < end) {
@@ -1258,7 +1258,7 @@ export const ModeInfo_Multi = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Multi {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModeInfo_Multi();
 
     while (reader.pos < end) {
@@ -1295,8 +1295,8 @@ function createBaseFee(): Fee {
   return {
     amount: [],
     gasLimit: Long.UZERO,
-    payer: '',
-    granter: ''
+    payer: "",
+    granter: ""
   };
 }
 
@@ -1310,11 +1310,11 @@ export const Fee = {
       writer.uint32(16).uint64(message.gasLimit);
     }
 
-    if (message.payer !== '') {
+    if (message.payer !== "") {
       writer.uint32(26).string(message.payer);
     }
 
-    if (message.granter !== '') {
+    if (message.granter !== "") {
       writer.uint32(34).string(message.granter);
     }
 
@@ -1323,7 +1323,7 @@ export const Fee = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Fee {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFee();
 
     while (reader.pos < end) {
@@ -1359,8 +1359,8 @@ export const Fee = {
     const message = createBaseFee();
     message.amount = object.amount?.map(e => Coin.fromPartial(e)) || [];
     message.gasLimit = object.gasLimit !== undefined && object.gasLimit !== null ? Long.fromValue(object.gasLimit) : Long.UZERO;
-    message.payer = object.payer ?? '';
-    message.granter = object.granter ?? '';
+    message.payer = object.payer ?? "";
+    message.granter = object.granter ?? "";
     return message;
   }
 
@@ -1369,7 +1369,7 @@ export const Fee = {
 function createBaseTip(): Tip {
   return {
     amount: [],
-    tipper: ''
+    tipper: ""
   };
 }
 
@@ -1379,7 +1379,7 @@ export const Tip = {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.tipper !== '') {
+    if (message.tipper !== "") {
       writer.uint32(18).string(message.tipper);
     }
 
@@ -1388,7 +1388,7 @@ export const Tip = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Tip {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTip();
 
     while (reader.pos < end) {
@@ -1415,7 +1415,7 @@ export const Tip = {
   fromPartial(object: DeepPartial<Tip>): Tip {
     const message = createBaseTip();
     message.amount = object.amount?.map(e => Coin.fromPartial(e)) || [];
-    message.tipper = object.tipper ?? '';
+    message.tipper = object.tipper ?? "";
     return message;
   }
 
@@ -1423,7 +1423,7 @@ export const Tip = {
 
 function createBaseAuxSignerData(): AuxSignerData {
   return {
-    address: '',
+    address: "",
     signDoc: undefined,
     mode: 0,
     sig: new Uint8Array()
@@ -1432,7 +1432,7 @@ function createBaseAuxSignerData(): AuxSignerData {
 
 export const AuxSignerData = {
   encode(message: AuxSignerData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== '') {
+    if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
 
@@ -1453,7 +1453,7 @@ export const AuxSignerData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): AuxSignerData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAuxSignerData();
 
     while (reader.pos < end) {
@@ -1487,7 +1487,7 @@ export const AuxSignerData = {
 
   fromPartial(object: DeepPartial<AuxSignerData>): AuxSignerData {
     const message = createBaseAuxSignerData();
-    message.address = object.address ?? '';
+    message.address = object.address ?? "";
     message.signDoc = object.signDoc !== undefined && object.signDoc !== null ? SignDocDirectAux.fromPartial(object.signDoc) : undefined;
     message.mode = object.mode ?? 0;
     message.sig = object.sig ?? new Uint8Array();

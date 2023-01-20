@@ -11,15 +11,15 @@ export enum PositionDirectionSDKType {
 export function positionDirectionFromJSON(object: any): PositionDirection {
   switch (object) {
     case 0:
-    case 'LONG':
+    case "LONG":
       return PositionDirection.LONG;
 
     case 1:
-    case 'SHORT':
+    case "SHORT":
       return PositionDirection.SHORT;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return PositionDirection.UNRECOGNIZED;
   }
@@ -27,13 +27,13 @@ export function positionDirectionFromJSON(object: any): PositionDirection {
 export function positionDirectionToJSON(object: PositionDirection): string {
   switch (object) {
     case PositionDirection.LONG:
-      return 'LONG';
+      return "LONG";
 
     case PositionDirection.SHORT:
-      return 'SHORT';
+      return "SHORT";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }
 export enum PositionEffect {
@@ -49,15 +49,15 @@ export enum PositionEffectSDKType {
 export function positionEffectFromJSON(object: any): PositionEffect {
   switch (object) {
     case 0:
-    case 'OPEN':
+    case "OPEN":
       return PositionEffect.OPEN;
 
     case 1:
-    case 'CLOSE':
+    case "CLOSE":
       return PositionEffect.CLOSE;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return PositionEffect.UNRECOGNIZED;
   }
@@ -65,13 +65,13 @@ export function positionEffectFromJSON(object: any): PositionEffect {
 export function positionEffectToJSON(object: PositionEffect): string {
   switch (object) {
     case PositionEffect.OPEN:
-      return 'OPEN';
+      return "OPEN";
 
     case PositionEffect.CLOSE:
-      return 'CLOSE';
+      return "CLOSE";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }
 export enum OrderType {
@@ -95,23 +95,23 @@ export enum OrderTypeSDKType {
 export function orderTypeFromJSON(object: any): OrderType {
   switch (object) {
     case 0:
-    case 'LIMIT':
+    case "LIMIT":
       return OrderType.LIMIT;
 
     case 1:
-    case 'MARKET':
+    case "MARKET":
       return OrderType.MARKET;
 
     case 2:
-    case 'LIQUIDATION':
+    case "LIQUIDATION":
       return OrderType.LIQUIDATION;
 
     case 3:
-    case 'FOKMARKET':
+    case "FOKMARKET":
       return OrderType.FOKMARKET;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return OrderType.UNRECOGNIZED;
   }
@@ -119,19 +119,19 @@ export function orderTypeFromJSON(object: any): OrderType {
 export function orderTypeToJSON(object: OrderType): string {
   switch (object) {
     case OrderType.LIMIT:
-      return 'LIMIT';
+      return "LIMIT";
 
     case OrderType.MARKET:
-      return 'MARKET';
+      return "MARKET";
 
     case OrderType.LIQUIDATION:
-      return 'LIQUIDATION';
+      return "LIQUIDATION";
 
     case OrderType.FOKMARKET:
-      return 'FOKMARKET';
+      return "FOKMARKET";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }
 export enum Unit {
@@ -151,23 +151,23 @@ export enum UnitSDKType {
 export function unitFromJSON(object: any): Unit {
   switch (object) {
     case 0:
-    case 'STANDARD':
+    case "STANDARD":
       return Unit.STANDARD;
 
     case 1:
-    case 'MILLI':
+    case "MILLI":
       return Unit.MILLI;
 
     case 2:
-    case 'MICRO':
+    case "MICRO":
       return Unit.MICRO;
 
     case 3:
-    case 'NANO':
+    case "NANO":
       return Unit.NANO;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return Unit.UNRECOGNIZED;
   }
@@ -175,19 +175,19 @@ export function unitFromJSON(object: any): Unit {
 export function unitToJSON(object: Unit): string {
   switch (object) {
     case Unit.STANDARD:
-      return 'STANDARD';
+      return "STANDARD";
 
     case Unit.MILLI:
-      return 'MILLI';
+      return "MILLI";
 
     case Unit.MICRO:
-      return 'MICRO';
+      return "MICRO";
 
     case Unit.NANO:
-      return 'NANO';
+      return "NANO";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }
 export enum OrderStatus {
@@ -207,23 +207,23 @@ export enum OrderStatusSDKType {
 export function orderStatusFromJSON(object: any): OrderStatus {
   switch (object) {
     case 0:
-    case 'PLACED':
+    case "PLACED":
       return OrderStatus.PLACED;
 
     case 1:
-    case 'FAILED_TO_PLACE':
+    case "FAILED_TO_PLACE":
       return OrderStatus.FAILED_TO_PLACE;
 
     case 2:
-    case 'CANCELLED':
+    case "CANCELLED":
       return OrderStatus.CANCELLED;
 
     case 3:
-    case 'FULFILLED':
+    case "FULFILLED":
       return OrderStatus.FULFILLED;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return OrderStatus.UNRECOGNIZED;
   }
@@ -231,19 +231,19 @@ export function orderStatusFromJSON(object: any): OrderStatus {
 export function orderStatusToJSON(object: OrderStatus): string {
   switch (object) {
     case OrderStatus.PLACED:
-      return 'PLACED';
+      return "PLACED";
 
     case OrderStatus.FAILED_TO_PLACE:
-      return 'FAILED_TO_PLACE';
+      return "FAILED_TO_PLACE";
 
     case OrderStatus.CANCELLED:
-      return 'CANCELLED';
+      return "CANCELLED";
 
     case OrderStatus.FULFILLED:
-      return 'FULFILLED';
+      return "FULFILLED";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }
 export enum CancellationInitiator {
@@ -259,15 +259,15 @@ export enum CancellationInitiatorSDKType {
 export function cancellationInitiatorFromJSON(object: any): CancellationInitiator {
   switch (object) {
     case 0:
-    case 'USER':
+    case "USER":
       return CancellationInitiator.USER;
 
     case 1:
-    case 'LIQUIDATED':
+    case "LIQUIDATED":
       return CancellationInitiator.LIQUIDATED;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return CancellationInitiator.UNRECOGNIZED;
   }
@@ -275,12 +275,12 @@ export function cancellationInitiatorFromJSON(object: any): CancellationInitiato
 export function cancellationInitiatorToJSON(object: CancellationInitiator): string {
   switch (object) {
     case CancellationInitiator.USER:
-      return 'USER';
+      return "USER";
 
     case CancellationInitiator.LIQUIDATED:
-      return 'LIQUIDATED';
+      return "LIQUIDATED";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }

@@ -1,7 +1,7 @@
-import { Rpc } from '@osmonauts/helpers';
-import * as _m0 from 'protobufjs/minimal';
-import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
-import { QueryContractInfoRequest, QueryContractInfoResponse, QueryContractHistoryRequest, QueryContractHistoryResponse, QueryContractsByCodeRequest, QueryContractsByCodeResponse, QueryAllContractStateRequest, QueryAllContractStateResponse, QueryRawContractStateRequest, QueryRawContractStateResponse, QuerySmartContractStateRequest, QuerySmartContractStateResponse, QueryCodeRequest, QueryCodeResponse, QueryCodesRequest, QueryCodesResponse, QueryPinnedCodesRequest, QueryPinnedCodesResponse } from './query';
+import { Rpc } from "@osmonauts/helpers";
+import * as _m0 from "protobufjs/minimal";
+import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
+import { QueryContractInfoRequest, QueryContractInfoResponse, QueryContractHistoryRequest, QueryContractHistoryResponse, QueryContractsByCodeRequest, QueryContractsByCodeResponse, QueryAllContractStateRequest, QueryAllContractStateResponse, QueryRawContractStateRequest, QueryRawContractStateResponse, QuerySmartContractStateRequest, QuerySmartContractStateResponse, QueryCodeRequest, QueryCodeResponse, QueryCodesRequest, QueryCodesResponse, QueryPinnedCodesRequest, QueryPinnedCodesResponse } from "./query";
 /** Query defines the RPC service */
 
 export interface Query {
@@ -51,43 +51,43 @@ export class QueryClientImpl implements Query {
 
   contractInfo(request: QueryContractInfoRequest): Promise<QueryContractInfoResponse> {
     const data = QueryContractInfoRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'ContractInfo', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "ContractInfo", data);
     return promise.then(data => QueryContractInfoResponse.decode(new _m0.Reader(data)));
   }
 
   contractHistory(request: QueryContractHistoryRequest): Promise<QueryContractHistoryResponse> {
     const data = QueryContractHistoryRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'ContractHistory', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "ContractHistory", data);
     return promise.then(data => QueryContractHistoryResponse.decode(new _m0.Reader(data)));
   }
 
   contractsByCode(request: QueryContractsByCodeRequest): Promise<QueryContractsByCodeResponse> {
     const data = QueryContractsByCodeRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'ContractsByCode', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "ContractsByCode", data);
     return promise.then(data => QueryContractsByCodeResponse.decode(new _m0.Reader(data)));
   }
 
   allContractState(request: QueryAllContractStateRequest): Promise<QueryAllContractStateResponse> {
     const data = QueryAllContractStateRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'AllContractState', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "AllContractState", data);
     return promise.then(data => QueryAllContractStateResponse.decode(new _m0.Reader(data)));
   }
 
   rawContractState(request: QueryRawContractStateRequest): Promise<QueryRawContractStateResponse> {
     const data = QueryRawContractStateRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'RawContractState', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "RawContractState", data);
     return promise.then(data => QueryRawContractStateResponse.decode(new _m0.Reader(data)));
   }
 
   smartContractState(request: QuerySmartContractStateRequest): Promise<QuerySmartContractStateResponse> {
     const data = QuerySmartContractStateRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'SmartContractState', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "SmartContractState", data);
     return promise.then(data => QuerySmartContractStateResponse.decode(new _m0.Reader(data)));
   }
 
   code(request: QueryCodeRequest): Promise<QueryCodeResponse> {
     const data = QueryCodeRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'Code', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "Code", data);
     return promise.then(data => QueryCodeResponse.decode(new _m0.Reader(data)));
   }
 
@@ -95,7 +95,7 @@ export class QueryClientImpl implements Query {
     pagination: undefined
   }): Promise<QueryCodesResponse> {
     const data = QueryCodesRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'Codes', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "Codes", data);
     return promise.then(data => QueryCodesResponse.decode(new _m0.Reader(data)));
   }
 
@@ -103,7 +103,7 @@ export class QueryClientImpl implements Query {
     pagination: undefined
   }): Promise<QueryPinnedCodesResponse> {
     const data = QueryPinnedCodesRequest.encode(request).finish();
-    const promise = this.rpc.request('cosmwasm.wasm.v1.Query', 'PinnedCodes', data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1.Query", "PinnedCodes", data);
     return promise.then(data => QueryPinnedCodesResponse.decode(new _m0.Reader(data)));
   }
 

@@ -1,6 +1,6 @@
-import { IdentifiedChannel, IdentifiedChannelSDKType, PacketState, PacketStateSDKType } from './channel';
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import { IdentifiedChannel, IdentifiedChannelSDKType, PacketState, PacketStateSDKType } from "./channel";
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 /** GenesisState defines the ibc channel submodule's genesis state. */
 
 export interface GenesisState {
@@ -102,7 +102,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -167,19 +167,19 @@ export const GenesisState = {
 
 function createBasePacketSequence(): PacketSequence {
   return {
-    portId: '',
-    channelId: '',
+    portId: "",
+    channelId: "",
     sequence: Long.UZERO
   };
 }
 
 export const PacketSequence = {
   encode(message: PacketSequence, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.portId !== '') {
+    if (message.portId !== "") {
       writer.uint32(10).string(message.portId);
     }
 
-    if (message.channelId !== '') {
+    if (message.channelId !== "") {
       writer.uint32(18).string(message.channelId);
     }
 
@@ -192,7 +192,7 @@ export const PacketSequence = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PacketSequence {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketSequence();
 
     while (reader.pos < end) {
@@ -222,8 +222,8 @@ export const PacketSequence = {
 
   fromPartial(object: DeepPartial<PacketSequence>): PacketSequence {
     const message = createBasePacketSequence();
-    message.portId = object.portId ?? '';
-    message.channelId = object.channelId ?? '';
+    message.portId = object.portId ?? "";
+    message.channelId = object.channelId ?? "";
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     return message;
   }

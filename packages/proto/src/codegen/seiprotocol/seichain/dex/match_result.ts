@@ -1,7 +1,7 @@
-import { Order, OrderSDKType, Cancellation, CancellationSDKType } from './order';
-import { SettlementEntry, SettlementEntrySDKType } from './settlement';
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import { Order, OrderSDKType, Cancellation, CancellationSDKType } from "./order";
+import { SettlementEntry, SettlementEntrySDKType } from "./settlement";
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface MatchResult {
   height: Long;
   contractAddr: string;
@@ -20,7 +20,7 @@ export interface MatchResultSDKType {
 function createBaseMatchResult(): MatchResult {
   return {
     height: Long.ZERO,
-    contractAddr: '',
+    contractAddr: "",
     orders: [],
     settlements: [],
     cancellations: []
@@ -33,7 +33,7 @@ export const MatchResult = {
       writer.uint32(8).int64(message.height);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
@@ -54,7 +54,7 @@ export const MatchResult = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MatchResult {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMatchResult();
 
     while (reader.pos < end) {
@@ -93,7 +93,7 @@ export const MatchResult = {
   fromPartial(object: DeepPartial<MatchResult>): MatchResult {
     const message = createBaseMatchResult();
     message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     message.orders = object.orders?.map(e => Order.fromPartial(e)) || [];
     message.settlements = object.settlements?.map(e => SettlementEntry.fromPartial(e)) || [];
     message.cancellations = object.cancellations?.map(e => Cancellation.fromPartial(e)) || [];

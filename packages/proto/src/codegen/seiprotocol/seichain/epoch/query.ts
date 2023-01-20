@@ -1,7 +1,7 @@
-import { Params, ParamsSDKType } from './params';
-import { Epoch, EpochSDKType } from './epoch';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { Params, ParamsSDKType } from "./params";
+import { Epoch, EpochSDKType } from "./epoch";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 export interface QueryParamsRequest {}
@@ -40,7 +40,7 @@ export const QueryParamsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
 
     while (reader.pos < end) {
@@ -80,7 +80,7 @@ export const QueryParamsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
 
     while (reader.pos < end) {
@@ -119,7 +119,7 @@ export const QueryEpochRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryEpochRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryEpochRequest();
 
     while (reader.pos < end) {
@@ -159,7 +159,7 @@ export const QueryEpochResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryEpochResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryEpochResponse();
 
     while (reader.pos < end) {

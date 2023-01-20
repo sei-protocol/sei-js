@@ -1,6 +1,6 @@
-import { Height, HeightSDKType } from '../../../core/client/v1/client';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { Height, HeightSDKType } from "../../../core/client/v1/client";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * ClientState defines a loopback (localhost) client. It requires (read-only)
  * access to keys outside the client prefix.
@@ -28,14 +28,14 @@ export interface ClientStateSDKType {
 
 function createBaseClientState(): ClientState {
   return {
-    chainId: '',
+    chainId: "",
     height: undefined
   };
 }
 
 export const ClientState = {
   encode(message: ClientState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.chainId !== '') {
+    if (message.chainId !== "") {
       writer.uint32(10).string(message.chainId);
     }
 
@@ -48,7 +48,7 @@ export const ClientState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientState();
 
     while (reader.pos < end) {
@@ -74,7 +74,7 @@ export const ClientState = {
 
   fromPartial(object: DeepPartial<ClientState>): ClientState {
     const message = createBaseClientState();
-    message.chainId = object.chainId ?? '';
+    message.chainId = object.chainId ?? "";
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     return message;
   }

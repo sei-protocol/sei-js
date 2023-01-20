@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface Proof {
   total: Long;
   index: Long;
@@ -101,7 +101,7 @@ export const Proof = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Proof {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProof();
 
     while (reader.pos < end) {
@@ -166,7 +166,7 @@ export const ValueOp = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ValueOp {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValueOp();
 
     while (reader.pos < end) {
@@ -201,23 +201,23 @@ export const ValueOp = {
 
 function createBaseDominoOp(): DominoOp {
   return {
-    key: '',
-    input: '',
-    output: ''
+    key: "",
+    input: "",
+    output: ""
   };
 }
 
 export const DominoOp = {
   encode(message: DominoOp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.key !== '') {
+    if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
 
-    if (message.input !== '') {
+    if (message.input !== "") {
       writer.uint32(18).string(message.input);
     }
 
-    if (message.output !== '') {
+    if (message.output !== "") {
       writer.uint32(26).string(message.output);
     }
 
@@ -226,7 +226,7 @@ export const DominoOp = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DominoOp {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDominoOp();
 
     while (reader.pos < end) {
@@ -256,9 +256,9 @@ export const DominoOp = {
 
   fromPartial(object: DeepPartial<DominoOp>): DominoOp {
     const message = createBaseDominoOp();
-    message.key = object.key ?? '';
-    message.input = object.input ?? '';
-    message.output = object.output ?? '';
+    message.key = object.key ?? "";
+    message.input = object.input ?? "";
+    message.output = object.output ?? "";
     return message;
   }
 
@@ -266,7 +266,7 @@ export const DominoOp = {
 
 function createBaseProofOp(): ProofOp {
   return {
-    type: '',
+    type: "",
     key: new Uint8Array(),
     data: new Uint8Array()
   };
@@ -274,7 +274,7 @@ function createBaseProofOp(): ProofOp {
 
 export const ProofOp = {
   encode(message: ProofOp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.type !== '') {
+    if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
 
@@ -291,7 +291,7 @@ export const ProofOp = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ProofOp {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofOp();
 
     while (reader.pos < end) {
@@ -321,7 +321,7 @@ export const ProofOp = {
 
   fromPartial(object: DeepPartial<ProofOp>): ProofOp {
     const message = createBaseProofOp();
-    message.type = object.type ?? '';
+    message.type = object.type ?? "";
     message.key = object.key ?? new Uint8Array();
     message.data = object.data ?? new Uint8Array();
     return message;
@@ -346,7 +346,7 @@ export const ProofOps = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ProofOps {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofOps();
 
     while (reader.pos < end) {

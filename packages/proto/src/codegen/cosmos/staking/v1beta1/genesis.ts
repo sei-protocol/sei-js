@@ -1,6 +1,6 @@
-import { Params, ParamsSDKType, Validator, ValidatorSDKType, Delegation, DelegationSDKType, UnbondingDelegation, UnbondingDelegationSDKType, Redelegation, RedelegationSDKType } from './staking';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { Params, ParamsSDKType, Validator, ValidatorSDKType, Delegation, DelegationSDKType, UnbondingDelegation, UnbondingDelegationSDKType, Redelegation, RedelegationSDKType } from "./staking";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /** GenesisState defines the staking module's genesis state. */
 
 export interface GenesisState {
@@ -134,7 +134,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -199,14 +199,14 @@ export const GenesisState = {
 
 function createBaseLastValidatorPower(): LastValidatorPower {
   return {
-    address: '',
+    address: "",
     power: Long.ZERO
   };
 }
 
 export const LastValidatorPower = {
   encode(message: LastValidatorPower, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.address !== '') {
+    if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
 
@@ -219,7 +219,7 @@ export const LastValidatorPower = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LastValidatorPower {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLastValidatorPower();
 
     while (reader.pos < end) {
@@ -245,7 +245,7 @@ export const LastValidatorPower = {
 
   fromPartial(object: DeepPartial<LastValidatorPower>): LastValidatorPower {
     const message = createBaseLastValidatorPower();
-    message.address = object.address ?? '';
+    message.address = object.address ?? "";
     message.power = object.power !== undefined && object.power !== null ? Long.fromValue(object.power) : Long.ZERO;
     return message;
   }

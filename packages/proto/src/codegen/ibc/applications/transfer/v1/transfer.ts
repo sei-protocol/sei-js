@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * DenomTrace contains the base denomination for ICS20 fungible tokens and the
  * source tracing information path.
@@ -73,18 +73,18 @@ export interface ParamsSDKType {
 
 function createBaseDenomTrace(): DenomTrace {
   return {
-    path: '',
-    baseDenom: ''
+    path: "",
+    baseDenom: ""
   };
 }
 
 export const DenomTrace = {
   encode(message: DenomTrace, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.path !== '') {
+    if (message.path !== "") {
       writer.uint32(10).string(message.path);
     }
 
-    if (message.baseDenom !== '') {
+    if (message.baseDenom !== "") {
       writer.uint32(18).string(message.baseDenom);
     }
 
@@ -93,7 +93,7 @@ export const DenomTrace = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): DenomTrace {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDenomTrace();
 
     while (reader.pos < end) {
@@ -119,8 +119,8 @@ export const DenomTrace = {
 
   fromPartial(object: DeepPartial<DenomTrace>): DenomTrace {
     const message = createBaseDenomTrace();
-    message.path = object.path ?? '';
-    message.baseDenom = object.baseDenom ?? '';
+    message.path = object.path ?? "";
+    message.baseDenom = object.baseDenom ?? "";
     return message;
   }
 
@@ -148,7 +148,7 @@ export const Params = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseParams();
 
     while (reader.pos < end) {

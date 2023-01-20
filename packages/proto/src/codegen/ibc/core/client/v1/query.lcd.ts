@@ -1,6 +1,6 @@
-import { setPaginationParams } from '@osmonauts/helpers';
-import { LCDClient } from '@osmonauts/lcd';
-import { QueryClientStateRequest, QueryClientStateResponseSDKType, QueryClientStatesRequest, QueryClientStatesResponseSDKType, QueryConsensusStateRequest, QueryConsensusStateResponseSDKType, QueryConsensusStatesRequest, QueryConsensusStatesResponseSDKType, QueryClientStatusRequest, QueryClientStatusResponseSDKType, QueryClientParamsRequest, QueryClientParamsResponseSDKType, QueryUpgradedClientStateRequest, QueryUpgradedClientStateResponseSDKType, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponseSDKType } from './query';
+import { setPaginationParams } from "@osmonauts/helpers";
+import { LCDClient } from "@osmonauts/lcd";
+import { QueryClientStateRequest, QueryClientStateResponseSDKType, QueryClientStatesRequest, QueryClientStatesResponseSDKType, QueryConsensusStateRequest, QueryConsensusStateResponseSDKType, QueryConsensusStatesRequest, QueryConsensusStatesResponseSDKType, QueryClientStatusRequest, QueryClientStatusResponseSDKType, QueryClientParamsRequest, QueryClientParamsResponseSDKType, QueryUpgradedClientStateRequest, QueryUpgradedClientStateResponseSDKType, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -36,7 +36,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== 'undefined') {
+    if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
 
@@ -52,7 +52,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.latestHeight !== 'undefined') {
+    if (typeof params?.latestHeight !== "undefined") {
       options.params.latest_height = params.latestHeight;
     }
 
@@ -68,7 +68,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.pagination !== 'undefined') {
+    if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
 

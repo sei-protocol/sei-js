@@ -1,7 +1,7 @@
-import { AminoMsg } from '@cosmjs/amino';
-import { MsgGrant, MsgExec, MsgRevoke } from './tx';
+import { AminoMsg } from "@cosmjs/amino";
+import { MsgGrant, MsgExec, MsgRevoke } from "./tx";
 export interface AminoMsgGrant extends AminoMsg {
-  type: 'cosmos-sdk/MsgGrant';
+  type: "cosmos-sdk/MsgGrant";
   value: {
     granter: string;
     grantee: string;
@@ -18,7 +18,7 @@ export interface AminoMsgGrant extends AminoMsg {
   };
 }
 export interface AminoMsgExec extends AminoMsg {
-  type: 'cosmos-sdk/MsgExec';
+  type: "cosmos-sdk/MsgExec";
   value: {
     grantee: string;
     msgs: {
@@ -28,7 +28,7 @@ export interface AminoMsgExec extends AminoMsg {
   };
 }
 export interface AminoMsgRevoke extends AminoMsg {
-  type: 'cosmos-sdk/MsgRevoke';
+  type: "cosmos-sdk/MsgRevoke";
   value: {
     granter: string;
     grantee: string;
@@ -36,13 +36,13 @@ export interface AminoMsgRevoke extends AminoMsg {
   };
 }
 export const AminoConverter = {
-  '/cosmos.authz.v1beta1.MsgGrant': {
-    aminoType: 'cosmos-sdk/MsgGrant',
+  "/cosmos.authz.v1beta1.MsgGrant": {
+    aminoType: "cosmos-sdk/MsgGrant",
     toAmino: ({
       granter,
       grantee,
       grant
-    }: MsgGrant): AminoMsgGrant['value'] => {
+    }: MsgGrant): AminoMsgGrant["value"] => {
       return {
         granter,
         grantee,
@@ -59,7 +59,7 @@ export const AminoConverter = {
       granter,
       grantee,
       grant
-    }: AminoMsgGrant['value']): MsgGrant => {
+    }: AminoMsgGrant["value"]): MsgGrant => {
       return {
         granter,
         grantee,
@@ -73,12 +73,12 @@ export const AminoConverter = {
       };
     }
   },
-  '/cosmos.authz.v1beta1.MsgExec': {
-    aminoType: 'cosmos-sdk/MsgExec',
+  "/cosmos.authz.v1beta1.MsgExec": {
+    aminoType: "cosmos-sdk/MsgExec",
     toAmino: ({
       grantee,
       msgs
-    }: MsgExec): AminoMsgExec['value'] => {
+    }: MsgExec): AminoMsgExec["value"] => {
       return {
         grantee,
         msgs: msgs.map(el0 => ({
@@ -90,7 +90,7 @@ export const AminoConverter = {
     fromAmino: ({
       grantee,
       msgs
-    }: AminoMsgExec['value']): MsgExec => {
+    }: AminoMsgExec["value"]): MsgExec => {
       return {
         grantee,
         msgs: msgs.map(el0 => ({
@@ -100,13 +100,13 @@ export const AminoConverter = {
       };
     }
   },
-  '/cosmos.authz.v1beta1.MsgRevoke': {
-    aminoType: 'cosmos-sdk/MsgRevoke',
+  "/cosmos.authz.v1beta1.MsgRevoke": {
+    aminoType: "cosmos-sdk/MsgRevoke",
     toAmino: ({
       granter,
       grantee,
       msgTypeUrl
-    }: MsgRevoke): AminoMsgRevoke['value'] => {
+    }: MsgRevoke): AminoMsgRevoke["value"] => {
       return {
         granter,
         grantee,
@@ -117,7 +117,7 @@ export const AminoConverter = {
       granter,
       grantee,
       msg_type_url
-    }: AminoMsgRevoke['value']): MsgRevoke => {
+    }: AminoMsgRevoke["value"]): MsgRevoke => {
       return {
         granter,
         grantee,

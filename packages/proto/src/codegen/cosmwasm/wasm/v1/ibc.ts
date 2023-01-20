@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 /** MsgIBCSend */
 
 export interface MsgIBCSend {
@@ -61,7 +61,7 @@ export interface MsgIBCCloseChannelSDKType {
 
 function createBaseMsgIBCSend(): MsgIBCSend {
   return {
-    channel: '',
+    channel: "",
     timeoutHeight: Long.UZERO,
     timeoutTimestamp: Long.UZERO,
     data: new Uint8Array()
@@ -70,7 +70,7 @@ function createBaseMsgIBCSend(): MsgIBCSend {
 
 export const MsgIBCSend = {
   encode(message: MsgIBCSend, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.channel !== '') {
+    if (message.channel !== "") {
       writer.uint32(18).string(message.channel);
     }
 
@@ -91,7 +91,7 @@ export const MsgIBCSend = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgIBCSend {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgIBCSend();
 
     while (reader.pos < end) {
@@ -125,7 +125,7 @@ export const MsgIBCSend = {
 
   fromPartial(object: DeepPartial<MsgIBCSend>): MsgIBCSend {
     const message = createBaseMsgIBCSend();
-    message.channel = object.channel ?? '';
+    message.channel = object.channel ?? "";
     message.timeoutHeight = object.timeoutHeight !== undefined && object.timeoutHeight !== null ? Long.fromValue(object.timeoutHeight) : Long.UZERO;
     message.timeoutTimestamp = object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null ? Long.fromValue(object.timeoutTimestamp) : Long.UZERO;
     message.data = object.data ?? new Uint8Array();
@@ -136,13 +136,13 @@ export const MsgIBCSend = {
 
 function createBaseMsgIBCCloseChannel(): MsgIBCCloseChannel {
   return {
-    channel: ''
+    channel: ""
   };
 }
 
 export const MsgIBCCloseChannel = {
   encode(message: MsgIBCCloseChannel, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.channel !== '') {
+    if (message.channel !== "") {
       writer.uint32(18).string(message.channel);
     }
 
@@ -151,7 +151,7 @@ export const MsgIBCCloseChannel = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgIBCCloseChannel {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgIBCCloseChannel();
 
     while (reader.pos < end) {
@@ -173,7 +173,7 @@ export const MsgIBCCloseChannel = {
 
   fromPartial(object: DeepPartial<MsgIBCCloseChannel>): MsgIBCCloseChannel {
     const message = createBaseMsgIBCCloseChannel();
-    message.channel = object.channel ?? '';
+    message.channel = object.channel ?? "";
     return message;
   }
 

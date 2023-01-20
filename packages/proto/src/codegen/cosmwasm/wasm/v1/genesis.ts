@@ -1,7 +1,7 @@
-import { MsgStoreCode, MsgStoreCodeSDKType, MsgInstantiateContract, MsgInstantiateContractSDKType, MsgExecuteContract, MsgExecuteContractSDKType } from './tx';
-import { Params, ParamsSDKType, CodeInfo, CodeInfoSDKType, ContractInfo, ContractInfoSDKType, Model, ModelSDKType } from './types';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { MsgStoreCode, MsgStoreCodeSDKType, MsgInstantiateContract, MsgInstantiateContractSDKType, MsgExecuteContract, MsgExecuteContractSDKType } from "./tx";
+import { Params, ParamsSDKType, CodeInfo, CodeInfoSDKType, ContractInfo, ContractInfoSDKType, Model, ModelSDKType } from "./types";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /** GenesisState - genesis state of x/wasm */
 
 export interface GenesisState {
@@ -124,7 +124,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -199,7 +199,7 @@ export const GenesisState_GenMsgs = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState_GenMsgs {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState_GenMsgs();
 
     while (reader.pos < end) {
@@ -269,7 +269,7 @@ export const Code = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Code {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCode();
 
     while (reader.pos < end) {
@@ -314,7 +314,7 @@ export const Code = {
 
 function createBaseContract(): Contract {
   return {
-    contractAddress: '',
+    contractAddress: "",
     contractInfo: undefined,
     contractState: []
   };
@@ -322,7 +322,7 @@ function createBaseContract(): Contract {
 
 export const Contract = {
   encode(message: Contract, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddress !== '') {
+    if (message.contractAddress !== "") {
       writer.uint32(10).string(message.contractAddress);
     }
 
@@ -339,7 +339,7 @@ export const Contract = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Contract {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseContract();
 
     while (reader.pos < end) {
@@ -369,7 +369,7 @@ export const Contract = {
 
   fromPartial(object: DeepPartial<Contract>): Contract {
     const message = createBaseContract();
-    message.contractAddress = object.contractAddress ?? '';
+    message.contractAddress = object.contractAddress ?? "";
     message.contractInfo = object.contractInfo !== undefined && object.contractInfo !== null ? ContractInfo.fromPartial(object.contractInfo) : undefined;
     message.contractState = object.contractState?.map(e => Model.fromPartial(e)) || [];
     return message;
@@ -399,7 +399,7 @@ export const Sequence = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Sequence {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSequence();
 
     while (reader.pos < end) {

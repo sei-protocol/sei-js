@@ -1,6 +1,6 @@
-import { Params, ParamsSDKType, ExchangeRateTuple, ExchangeRateTupleSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType } from './oracle';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { Params, ParamsSDKType, ExchangeRateTuple, ExchangeRateTupleSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType } from "./oracle";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 export interface GenesisState {
   params: Params;
   feederDelegations: FeederDelegation[];
@@ -69,7 +69,7 @@ export const GenesisState = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
 
     while (reader.pos < end) {
@@ -119,18 +119,18 @@ export const GenesisState = {
 
 function createBaseFeederDelegation(): FeederDelegation {
   return {
-    feederAddress: '',
-    validatorAddress: ''
+    feederAddress: "",
+    validatorAddress: ""
   };
 }
 
 export const FeederDelegation = {
   encode(message: FeederDelegation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.feederAddress !== '') {
+    if (message.feederAddress !== "") {
       writer.uint32(10).string(message.feederAddress);
     }
 
-    if (message.validatorAddress !== '') {
+    if (message.validatorAddress !== "") {
       writer.uint32(18).string(message.validatorAddress);
     }
 
@@ -139,7 +139,7 @@ export const FeederDelegation = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): FeederDelegation {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFeederDelegation();
 
     while (reader.pos < end) {
@@ -165,8 +165,8 @@ export const FeederDelegation = {
 
   fromPartial(object: DeepPartial<FeederDelegation>): FeederDelegation {
     const message = createBaseFeederDelegation();
-    message.feederAddress = object.feederAddress ?? '';
-    message.validatorAddress = object.validatorAddress ?? '';
+    message.feederAddress = object.feederAddress ?? "";
+    message.validatorAddress = object.validatorAddress ?? "";
     return message;
   }
 
@@ -174,14 +174,14 @@ export const FeederDelegation = {
 
 function createBasePenaltyCounter(): PenaltyCounter {
   return {
-    validatorAddress: '',
+    validatorAddress: "",
     votePenaltyCounter: undefined
   };
 }
 
 export const PenaltyCounter = {
   encode(message: PenaltyCounter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.validatorAddress !== '') {
+    if (message.validatorAddress !== "") {
       writer.uint32(10).string(message.validatorAddress);
     }
 
@@ -194,7 +194,7 @@ export const PenaltyCounter = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): PenaltyCounter {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePenaltyCounter();
 
     while (reader.pos < end) {
@@ -220,7 +220,7 @@ export const PenaltyCounter = {
 
   fromPartial(object: DeepPartial<PenaltyCounter>): PenaltyCounter {
     const message = createBasePenaltyCounter();
-    message.validatorAddress = object.validatorAddress ?? '';
+    message.validatorAddress = object.validatorAddress ?? "";
     message.votePenaltyCounter = object.votePenaltyCounter !== undefined && object.votePenaltyCounter !== null ? VotePenaltyCounter.fromPartial(object.votePenaltyCounter) : undefined;
     return message;
   }

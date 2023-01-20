@@ -1,6 +1,6 @@
-import { Any, AnySDKType } from '../../../google/protobuf/any';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { Any, AnySDKType } from "../../../google/protobuf/any";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * LegacyAminoPubKey specifies a public key type
  * which nests multiple public keys and a threshold,
@@ -44,7 +44,7 @@ export const LegacyAminoPubKey = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LegacyAminoPubKey {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLegacyAminoPubKey();
 
     while (reader.pos < end) {

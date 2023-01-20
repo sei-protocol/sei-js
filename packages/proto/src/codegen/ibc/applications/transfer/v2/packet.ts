@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * FungibleTokenPacketData defines a struct for the packet payload
  * See FungibleTokenPacketData spec:
@@ -41,28 +41,28 @@ export interface FungibleTokenPacketDataSDKType {
 
 function createBaseFungibleTokenPacketData(): FungibleTokenPacketData {
   return {
-    denom: '',
-    amount: '',
-    sender: '',
-    receiver: ''
+    denom: "",
+    amount: "",
+    sender: "",
+    receiver: ""
   };
 }
 
 export const FungibleTokenPacketData = {
   encode(message: FungibleTokenPacketData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== '') {
+    if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
 
-    if (message.amount !== '') {
+    if (message.amount !== "") {
       writer.uint32(18).string(message.amount);
     }
 
-    if (message.sender !== '') {
+    if (message.sender !== "") {
       writer.uint32(26).string(message.sender);
     }
 
-    if (message.receiver !== '') {
+    if (message.receiver !== "") {
       writer.uint32(34).string(message.receiver);
     }
 
@@ -71,7 +71,7 @@ export const FungibleTokenPacketData = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): FungibleTokenPacketData {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFungibleTokenPacketData();
 
     while (reader.pos < end) {
@@ -105,10 +105,10 @@ export const FungibleTokenPacketData = {
 
   fromPartial(object: DeepPartial<FungibleTokenPacketData>): FungibleTokenPacketData {
     const message = createBaseFungibleTokenPacketData();
-    message.denom = object.denom ?? '';
-    message.amount = object.amount ?? '';
-    message.sender = object.sender ?? '';
-    message.receiver = object.receiver ?? '';
+    message.denom = object.denom ?? "";
+    message.amount = object.amount ?? "";
+    message.sender = object.sender ?? "";
+    message.receiver = object.receiver ?? "";
     return message;
   }
 

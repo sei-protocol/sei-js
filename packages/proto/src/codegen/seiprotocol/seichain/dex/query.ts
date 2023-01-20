@@ -1,15 +1,15 @@
-import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from '../../../cosmos/base/query/v1beta1/pagination';
-import { Order, OrderSDKType } from './order';
-import { Params, ParamsSDKType } from './params';
-import { LongBook, LongBookSDKType } from './long_book';
-import { ShortBook, ShortBookSDKType } from './short_book';
-import { Price, PriceSDKType, PriceCandlestick, PriceCandlestickSDKType } from './price';
-import { Twap, TwapSDKType } from './twap';
-import { AssetMetadata, AssetMetadataSDKType } from './asset_list';
-import { Pair, PairSDKType } from './pair';
-import { MatchResult, MatchResultSDKType } from './match_result';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial, Long } from '@osmonauts/helpers';
+import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
+import { Order, OrderSDKType } from "./order";
+import { Params, ParamsSDKType } from "./params";
+import { LongBook, LongBookSDKType } from "./long_book";
+import { ShortBook, ShortBookSDKType } from "./short_book";
+import { Price, PriceSDKType, PriceCandlestick, PriceCandlestickSDKType } from "./price";
+import { Twap, TwapSDKType } from "./twap";
+import { AssetMetadata, AssetMetadataSDKType } from "./asset_list";
+import { Pair, PairSDKType } from "./pair";
+import { MatchResult, MatchResultSDKType } from "./match_result";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 export interface QueryParamsRequest {}
@@ -304,7 +304,7 @@ export const QueryParamsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
 
     while (reader.pos < end) {
@@ -344,7 +344,7 @@ export const QueryParamsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
 
     while (reader.pos < end) {
@@ -374,28 +374,28 @@ export const QueryParamsResponse = {
 
 function createBaseQueryGetLongBookRequest(): QueryGetLongBookRequest {
   return {
-    price: '',
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: ''
+    price: "",
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: ""
   };
 }
 
 export const QueryGetLongBookRequest = {
   encode(message: QueryGetLongBookRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.price !== '') {
+    if (message.price !== "") {
       writer.uint32(10).string(message.price);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(26).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(34).string(message.assetDenom);
     }
 
@@ -404,7 +404,7 @@ export const QueryGetLongBookRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetLongBookRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetLongBookRequest();
 
     while (reader.pos < end) {
@@ -438,10 +438,10 @@ export const QueryGetLongBookRequest = {
 
   fromPartial(object: DeepPartial<QueryGetLongBookRequest>): QueryGetLongBookRequest {
     const message = createBaseQueryGetLongBookRequest();
-    message.price = object.price ?? '';
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.price = object.price ?? "";
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     return message;
   }
 
@@ -464,7 +464,7 @@ export const QueryGetLongBookResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetLongBookResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetLongBookResponse();
 
     while (reader.pos < end) {
@@ -495,9 +495,9 @@ export const QueryGetLongBookResponse = {
 function createBaseQueryAllLongBookRequest(): QueryAllLongBookRequest {
   return {
     pagination: undefined,
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: ''
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: ""
   };
 }
 
@@ -507,15 +507,15 @@ export const QueryAllLongBookRequest = {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(26).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(34).string(message.assetDenom);
     }
 
@@ -524,7 +524,7 @@ export const QueryAllLongBookRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllLongBookRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllLongBookRequest();
 
     while (reader.pos < end) {
@@ -559,9 +559,9 @@ export const QueryAllLongBookRequest = {
   fromPartial(object: DeepPartial<QueryAllLongBookRequest>): QueryAllLongBookRequest {
     const message = createBaseQueryAllLongBookRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     return message;
   }
 
@@ -589,7 +589,7 @@ export const QueryAllLongBookResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllLongBookResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllLongBookResponse();
 
     while (reader.pos < end) {
@@ -624,28 +624,28 @@ export const QueryAllLongBookResponse = {
 
 function createBaseQueryGetShortBookRequest(): QueryGetShortBookRequest {
   return {
-    price: '',
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: ''
+    price: "",
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: ""
   };
 }
 
 export const QueryGetShortBookRequest = {
   encode(message: QueryGetShortBookRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.price !== '') {
+    if (message.price !== "") {
       writer.uint32(10).string(message.price);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(26).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(34).string(message.assetDenom);
     }
 
@@ -654,7 +654,7 @@ export const QueryGetShortBookRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetShortBookRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetShortBookRequest();
 
     while (reader.pos < end) {
@@ -688,10 +688,10 @@ export const QueryGetShortBookRequest = {
 
   fromPartial(object: DeepPartial<QueryGetShortBookRequest>): QueryGetShortBookRequest {
     const message = createBaseQueryGetShortBookRequest();
-    message.price = object.price ?? '';
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.price = object.price ?? "";
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     return message;
   }
 
@@ -714,7 +714,7 @@ export const QueryGetShortBookResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetShortBookResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetShortBookResponse();
 
     while (reader.pos < end) {
@@ -745,9 +745,9 @@ export const QueryGetShortBookResponse = {
 function createBaseQueryAllShortBookRequest(): QueryAllShortBookRequest {
   return {
     pagination: undefined,
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: ''
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: ""
   };
 }
 
@@ -757,15 +757,15 @@ export const QueryAllShortBookRequest = {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(26).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(34).string(message.assetDenom);
     }
 
@@ -774,7 +774,7 @@ export const QueryAllShortBookRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllShortBookRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllShortBookRequest();
 
     while (reader.pos < end) {
@@ -809,9 +809,9 @@ export const QueryAllShortBookRequest = {
   fromPartial(object: DeepPartial<QueryAllShortBookRequest>): QueryAllShortBookRequest {
     const message = createBaseQueryAllShortBookRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     return message;
   }
 
@@ -839,7 +839,7 @@ export const QueryAllShortBookResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllShortBookResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllShortBookResponse();
 
     while (reader.pos < end) {
@@ -874,23 +874,23 @@ export const QueryAllShortBookResponse = {
 
 function createBaseQueryGetPricesRequest(): QueryGetPricesRequest {
   return {
-    priceDenom: '',
-    assetDenom: '',
-    contractAddr: ''
+    priceDenom: "",
+    assetDenom: "",
+    contractAddr: ""
   };
 }
 
 export const QueryGetPricesRequest = {
   encode(message: QueryGetPricesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(10).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(18).string(message.assetDenom);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(26).string(message.contractAddr);
     }
 
@@ -899,7 +899,7 @@ export const QueryGetPricesRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPricesRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPricesRequest();
 
     while (reader.pos < end) {
@@ -929,9 +929,9 @@ export const QueryGetPricesRequest = {
 
   fromPartial(object: DeepPartial<QueryGetPricesRequest>): QueryGetPricesRequest {
     const message = createBaseQueryGetPricesRequest();
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
-    message.contractAddr = object.contractAddr ?? '';
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
+    message.contractAddr = object.contractAddr ?? "";
     return message;
   }
 
@@ -954,7 +954,7 @@ export const QueryGetPricesResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPricesResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPricesResponse();
 
     while (reader.pos < end) {
@@ -984,24 +984,24 @@ export const QueryGetPricesResponse = {
 
 function createBaseQueryGetPriceRequest(): QueryGetPriceRequest {
   return {
-    priceDenom: '',
-    assetDenom: '',
-    contractAddr: '',
+    priceDenom: "",
+    assetDenom: "",
+    contractAddr: "",
     timestamp: Long.UZERO
   };
 }
 
 export const QueryGetPriceRequest = {
   encode(message: QueryGetPriceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(10).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(18).string(message.assetDenom);
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(26).string(message.contractAddr);
     }
 
@@ -1014,7 +1014,7 @@ export const QueryGetPriceRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPriceRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPriceRequest();
 
     while (reader.pos < end) {
@@ -1048,9 +1048,9 @@ export const QueryGetPriceRequest = {
 
   fromPartial(object: DeepPartial<QueryGetPriceRequest>): QueryGetPriceRequest {
     const message = createBaseQueryGetPriceRequest();
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
-    message.contractAddr = object.contractAddr ?? '';
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
+    message.contractAddr = object.contractAddr ?? "";
     message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
     return message;
   }
@@ -1079,7 +1079,7 @@ export const QueryGetPriceResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPriceResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPriceResponse();
 
     while (reader.pos < end) {
@@ -1114,14 +1114,14 @@ export const QueryGetPriceResponse = {
 
 function createBaseQueryGetTwapsRequest(): QueryGetTwapsRequest {
   return {
-    contractAddr: '',
+    contractAddr: "",
     lookbackSeconds: Long.UZERO
   };
 }
 
 export const QueryGetTwapsRequest = {
   encode(message: QueryGetTwapsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(10).string(message.contractAddr);
     }
 
@@ -1134,7 +1134,7 @@ export const QueryGetTwapsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetTwapsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetTwapsRequest();
 
     while (reader.pos < end) {
@@ -1160,7 +1160,7 @@ export const QueryGetTwapsRequest = {
 
   fromPartial(object: DeepPartial<QueryGetTwapsRequest>): QueryGetTwapsRequest {
     const message = createBaseQueryGetTwapsRequest();
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     message.lookbackSeconds = object.lookbackSeconds !== undefined && object.lookbackSeconds !== null ? Long.fromValue(object.lookbackSeconds) : Long.UZERO;
     return message;
   }
@@ -1184,7 +1184,7 @@ export const QueryGetTwapsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetTwapsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetTwapsResponse();
 
     while (reader.pos < end) {
@@ -1223,7 +1223,7 @@ export const QueryAssetListRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAssetListRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAssetListRequest();
 
     while (reader.pos < end) {
@@ -1263,7 +1263,7 @@ export const QueryAssetListResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAssetListResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAssetListResponse();
 
     while (reader.pos < end) {
@@ -1293,13 +1293,13 @@ export const QueryAssetListResponse = {
 
 function createBaseQueryAssetMetadataRequest(): QueryAssetMetadataRequest {
   return {
-    denom: ''
+    denom: ""
   };
 }
 
 export const QueryAssetMetadataRequest = {
   encode(message: QueryAssetMetadataRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.denom !== '') {
+    if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
 
@@ -1308,7 +1308,7 @@ export const QueryAssetMetadataRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAssetMetadataRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAssetMetadataRequest();
 
     while (reader.pos < end) {
@@ -1330,7 +1330,7 @@ export const QueryAssetMetadataRequest = {
 
   fromPartial(object: DeepPartial<QueryAssetMetadataRequest>): QueryAssetMetadataRequest {
     const message = createBaseQueryAssetMetadataRequest();
-    message.denom = object.denom ?? '';
+    message.denom = object.denom ?? "";
     return message;
   }
 
@@ -1353,7 +1353,7 @@ export const QueryAssetMetadataResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAssetMetadataResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAssetMetadataResponse();
 
     while (reader.pos < end) {
@@ -1383,13 +1383,13 @@ export const QueryAssetMetadataResponse = {
 
 function createBaseQueryRegisteredPairsRequest(): QueryRegisteredPairsRequest {
   return {
-    contractAddr: ''
+    contractAddr: ""
   };
 }
 
 export const QueryRegisteredPairsRequest = {
   encode(message: QueryRegisteredPairsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(10).string(message.contractAddr);
     }
 
@@ -1398,7 +1398,7 @@ export const QueryRegisteredPairsRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredPairsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryRegisteredPairsRequest();
 
     while (reader.pos < end) {
@@ -1420,7 +1420,7 @@ export const QueryRegisteredPairsRequest = {
 
   fromPartial(object: DeepPartial<QueryRegisteredPairsRequest>): QueryRegisteredPairsRequest {
     const message = createBaseQueryRegisteredPairsRequest();
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     return message;
   }
 
@@ -1443,7 +1443,7 @@ export const QueryRegisteredPairsResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredPairsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryRegisteredPairsResponse();
 
     while (reader.pos < end) {
@@ -1473,18 +1473,18 @@ export const QueryRegisteredPairsResponse = {
 
 function createBaseQueryGetOrdersRequest(): QueryGetOrdersRequest {
   return {
-    contractAddr: '',
-    account: ''
+    contractAddr: "",
+    account: ""
   };
 }
 
 export const QueryGetOrdersRequest = {
   encode(message: QueryGetOrdersRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(10).string(message.contractAddr);
     }
 
-    if (message.account !== '') {
+    if (message.account !== "") {
       writer.uint32(18).string(message.account);
     }
 
@@ -1493,7 +1493,7 @@ export const QueryGetOrdersRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrdersRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetOrdersRequest();
 
     while (reader.pos < end) {
@@ -1519,8 +1519,8 @@ export const QueryGetOrdersRequest = {
 
   fromPartial(object: DeepPartial<QueryGetOrdersRequest>): QueryGetOrdersRequest {
     const message = createBaseQueryGetOrdersRequest();
-    message.contractAddr = object.contractAddr ?? '';
-    message.account = object.account ?? '';
+    message.contractAddr = object.contractAddr ?? "";
+    message.account = object.account ?? "";
     return message;
   }
 
@@ -1543,7 +1543,7 @@ export const QueryGetOrdersResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrdersResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetOrdersResponse();
 
     while (reader.pos < end) {
@@ -1573,24 +1573,24 @@ export const QueryGetOrdersResponse = {
 
 function createBaseQueryGetOrderByIDRequest(): QueryGetOrderByIDRequest {
   return {
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: '',
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: "",
     id: Long.UZERO
   };
 }
 
 export const QueryGetOrderByIDRequest = {
   encode(message: QueryGetOrderByIDRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(10).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(18).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(26).string(message.assetDenom);
     }
 
@@ -1603,7 +1603,7 @@ export const QueryGetOrderByIDRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderByIDRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetOrderByIDRequest();
 
     while (reader.pos < end) {
@@ -1637,9 +1637,9 @@ export const QueryGetOrderByIDRequest = {
 
   fromPartial(object: DeepPartial<QueryGetOrderByIDRequest>): QueryGetOrderByIDRequest {
     const message = createBaseQueryGetOrderByIDRequest();
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
     return message;
   }
@@ -1663,7 +1663,7 @@ export const QueryGetOrderByIDResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderByIDResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetOrderByIDResponse();
 
     while (reader.pos < end) {
@@ -1693,9 +1693,9 @@ export const QueryGetOrderByIDResponse = {
 
 function createBaseQueryGetHistoricalPricesRequest(): QueryGetHistoricalPricesRequest {
   return {
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: '',
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: "",
     periodLengthInSeconds: Long.UZERO,
     numOfPeriods: Long.UZERO
   };
@@ -1703,15 +1703,15 @@ function createBaseQueryGetHistoricalPricesRequest(): QueryGetHistoricalPricesRe
 
 export const QueryGetHistoricalPricesRequest = {
   encode(message: QueryGetHistoricalPricesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(10).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(18).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(26).string(message.assetDenom);
     }
 
@@ -1728,7 +1728,7 @@ export const QueryGetHistoricalPricesRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetHistoricalPricesRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetHistoricalPricesRequest();
 
     while (reader.pos < end) {
@@ -1766,9 +1766,9 @@ export const QueryGetHistoricalPricesRequest = {
 
   fromPartial(object: DeepPartial<QueryGetHistoricalPricesRequest>): QueryGetHistoricalPricesRequest {
     const message = createBaseQueryGetHistoricalPricesRequest();
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     message.periodLengthInSeconds = object.periodLengthInSeconds !== undefined && object.periodLengthInSeconds !== null ? Long.fromValue(object.periodLengthInSeconds) : Long.UZERO;
     message.numOfPeriods = object.numOfPeriods !== undefined && object.numOfPeriods !== null ? Long.fromValue(object.numOfPeriods) : Long.UZERO;
     return message;
@@ -1793,7 +1793,7 @@ export const QueryGetHistoricalPricesResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetHistoricalPricesResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetHistoricalPricesResponse();
 
     while (reader.pos < end) {
@@ -1823,24 +1823,24 @@ export const QueryGetHistoricalPricesResponse = {
 
 function createBaseQueryGetMarketSummaryRequest(): QueryGetMarketSummaryRequest {
   return {
-    contractAddr: '',
-    priceDenom: '',
-    assetDenom: '',
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: "",
     lookbackInSeconds: Long.UZERO
   };
 }
 
 export const QueryGetMarketSummaryRequest = {
   encode(message: QueryGetMarketSummaryRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(10).string(message.contractAddr);
     }
 
-    if (message.priceDenom !== '') {
+    if (message.priceDenom !== "") {
       writer.uint32(18).string(message.priceDenom);
     }
 
-    if (message.assetDenom !== '') {
+    if (message.assetDenom !== "") {
       writer.uint32(26).string(message.assetDenom);
     }
 
@@ -1853,7 +1853,7 @@ export const QueryGetMarketSummaryRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetMarketSummaryRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetMarketSummaryRequest();
 
     while (reader.pos < end) {
@@ -1887,9 +1887,9 @@ export const QueryGetMarketSummaryRequest = {
 
   fromPartial(object: DeepPartial<QueryGetMarketSummaryRequest>): QueryGetMarketSummaryRequest {
     const message = createBaseQueryGetMarketSummaryRequest();
-    message.contractAddr = object.contractAddr ?? '';
-    message.priceDenom = object.priceDenom ?? '';
-    message.assetDenom = object.assetDenom ?? '';
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
     message.lookbackInSeconds = object.lookbackInSeconds !== undefined && object.lookbackInSeconds !== null ? Long.fromValue(object.lookbackInSeconds) : Long.UZERO;
     return message;
   }
@@ -1898,33 +1898,33 @@ export const QueryGetMarketSummaryRequest = {
 
 function createBaseQueryGetMarketSummaryResponse(): QueryGetMarketSummaryResponse {
   return {
-    totalVolume: '',
-    totalVolumeNotional: '',
-    highPrice: '',
-    lowPrice: '',
-    lastPrice: ''
+    totalVolume: "",
+    totalVolumeNotional: "",
+    highPrice: "",
+    lowPrice: "",
+    lastPrice: ""
   };
 }
 
 export const QueryGetMarketSummaryResponse = {
   encode(message: QueryGetMarketSummaryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.totalVolume !== '') {
+    if (message.totalVolume !== "") {
       writer.uint32(10).string(message.totalVolume);
     }
 
-    if (message.totalVolumeNotional !== '') {
+    if (message.totalVolumeNotional !== "") {
       writer.uint32(18).string(message.totalVolumeNotional);
     }
 
-    if (message.highPrice !== '') {
+    if (message.highPrice !== "") {
       writer.uint32(26).string(message.highPrice);
     }
 
-    if (message.lowPrice !== '') {
+    if (message.lowPrice !== "") {
       writer.uint32(34).string(message.lowPrice);
     }
 
-    if (message.lastPrice !== '') {
+    if (message.lastPrice !== "") {
       writer.uint32(42).string(message.lastPrice);
     }
 
@@ -1933,7 +1933,7 @@ export const QueryGetMarketSummaryResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetMarketSummaryResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetMarketSummaryResponse();
 
     while (reader.pos < end) {
@@ -1971,11 +1971,11 @@ export const QueryGetMarketSummaryResponse = {
 
   fromPartial(object: DeepPartial<QueryGetMarketSummaryResponse>): QueryGetMarketSummaryResponse {
     const message = createBaseQueryGetMarketSummaryResponse();
-    message.totalVolume = object.totalVolume ?? '';
-    message.totalVolumeNotional = object.totalVolumeNotional ?? '';
-    message.highPrice = object.highPrice ?? '';
-    message.lowPrice = object.lowPrice ?? '';
-    message.lastPrice = object.lastPrice ?? '';
+    message.totalVolume = object.totalVolume ?? "";
+    message.totalVolumeNotional = object.totalVolumeNotional ?? "";
+    message.highPrice = object.highPrice ?? "";
+    message.lowPrice = object.lowPrice ?? "";
+    message.lastPrice = object.lastPrice ?? "";
     return message;
   }
 
@@ -1984,7 +1984,7 @@ export const QueryGetMarketSummaryResponse = {
 function createBaseQueryOrderSimulationRequest(): QueryOrderSimulationRequest {
   return {
     order: undefined,
-    contractAddr: ''
+    contractAddr: ""
   };
 }
 
@@ -1994,7 +1994,7 @@ export const QueryOrderSimulationRequest = {
       Order.encode(message.order, writer.uint32(10).fork()).ldelim();
     }
 
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(18).string(message.contractAddr);
     }
 
@@ -2003,7 +2003,7 @@ export const QueryOrderSimulationRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryOrderSimulationRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryOrderSimulationRequest();
 
     while (reader.pos < end) {
@@ -2030,7 +2030,7 @@ export const QueryOrderSimulationRequest = {
   fromPartial(object: DeepPartial<QueryOrderSimulationRequest>): QueryOrderSimulationRequest {
     const message = createBaseQueryOrderSimulationRequest();
     message.order = object.order !== undefined && object.order !== null ? Order.fromPartial(object.order) : undefined;
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     return message;
   }
 
@@ -2038,13 +2038,13 @@ export const QueryOrderSimulationRequest = {
 
 function createBaseQueryOrderSimulationResponse(): QueryOrderSimulationResponse {
   return {
-    ExecutedQuantity: ''
+    ExecutedQuantity: ""
   };
 }
 
 export const QueryOrderSimulationResponse = {
   encode(message: QueryOrderSimulationResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ExecutedQuantity !== '') {
+    if (message.ExecutedQuantity !== "") {
       writer.uint32(10).string(message.ExecutedQuantity);
     }
 
@@ -2053,7 +2053,7 @@ export const QueryOrderSimulationResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryOrderSimulationResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryOrderSimulationResponse();
 
     while (reader.pos < end) {
@@ -2075,7 +2075,7 @@ export const QueryOrderSimulationResponse = {
 
   fromPartial(object: DeepPartial<QueryOrderSimulationResponse>): QueryOrderSimulationResponse {
     const message = createBaseQueryOrderSimulationResponse();
-    message.ExecutedQuantity = object.ExecutedQuantity ?? '';
+    message.ExecutedQuantity = object.ExecutedQuantity ?? "";
     return message;
   }
 
@@ -2083,14 +2083,14 @@ export const QueryOrderSimulationResponse = {
 
 function createBaseQueryGetMatchResultRequest(): QueryGetMatchResultRequest {
   return {
-    contractAddr: '',
+    contractAddr: "",
     height: Long.ZERO
   };
 }
 
 export const QueryGetMatchResultRequest = {
   encode(message: QueryGetMatchResultRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.contractAddr !== '') {
+    if (message.contractAddr !== "") {
       writer.uint32(10).string(message.contractAddr);
     }
 
@@ -2103,7 +2103,7 @@ export const QueryGetMatchResultRequest = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetMatchResultRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetMatchResultRequest();
 
     while (reader.pos < end) {
@@ -2129,7 +2129,7 @@ export const QueryGetMatchResultRequest = {
 
   fromPartial(object: DeepPartial<QueryGetMatchResultRequest>): QueryGetMatchResultRequest {
     const message = createBaseQueryGetMatchResultRequest();
-    message.contractAddr = object.contractAddr ?? '';
+    message.contractAddr = object.contractAddr ?? "";
     message.height = object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
     return message;
   }
@@ -2153,7 +2153,7 @@ export const QueryGetMatchResultResponse = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetMatchResultResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetMatchResultResponse();
 
     while (reader.pos < end) {

@@ -1,5 +1,5 @@
-import * as _m0 from 'protobufjs/minimal';
-import { Long, DeepPartial } from '@osmonauts/helpers';
+import * as _m0 from "protobufjs/minimal";
+import { Long, DeepPartial } from "@osmonauts/helpers";
 /**
  * App includes the protocol and software version for the application.
  * This information is included in ResponseInfo. The App.Protocol can be
@@ -44,7 +44,7 @@ export interface ConsensusSDKType {
 function createBaseApp(): App {
   return {
     protocol: Long.UZERO,
-    software: ''
+    software: ""
   };
 }
 
@@ -54,7 +54,7 @@ export const App = {
       writer.uint32(8).uint64(message.protocol);
     }
 
-    if (message.software !== '') {
+    if (message.software !== "") {
       writer.uint32(18).string(message.software);
     }
 
@@ -63,7 +63,7 @@ export const App = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): App {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseApp();
 
     while (reader.pos < end) {
@@ -90,7 +90,7 @@ export const App = {
   fromPartial(object: DeepPartial<App>): App {
     const message = createBaseApp();
     message.protocol = object.protocol !== undefined && object.protocol !== null ? Long.fromValue(object.protocol) : Long.UZERO;
-    message.software = object.software ?? '';
+    message.software = object.software ?? "";
     return message;
   }
 
@@ -118,7 +118,7 @@ export const Consensus = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Consensus {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensus();
 
     while (reader.pos < end) {

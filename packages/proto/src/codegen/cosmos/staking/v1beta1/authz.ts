@@ -1,6 +1,6 @@
-import { Coin, CoinSDKType } from '../../base/v1beta1/coin';
-import * as _m0 from 'protobufjs/minimal';
-import { DeepPartial } from '@osmonauts/helpers';
+import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
+import * as _m0 from "protobufjs/minimal";
+import { DeepPartial } from "@osmonauts/helpers";
 /**
  * AuthorizationType defines the type of staking module authorization type
  *
@@ -44,23 +44,23 @@ export enum AuthorizationTypeSDKType {
 export function authorizationTypeFromJSON(object: any): AuthorizationType {
   switch (object) {
     case 0:
-    case 'AUTHORIZATION_TYPE_UNSPECIFIED':
+    case "AUTHORIZATION_TYPE_UNSPECIFIED":
       return AuthorizationType.AUTHORIZATION_TYPE_UNSPECIFIED;
 
     case 1:
-    case 'AUTHORIZATION_TYPE_DELEGATE':
+    case "AUTHORIZATION_TYPE_DELEGATE":
       return AuthorizationType.AUTHORIZATION_TYPE_DELEGATE;
 
     case 2:
-    case 'AUTHORIZATION_TYPE_UNDELEGATE':
+    case "AUTHORIZATION_TYPE_UNDELEGATE":
       return AuthorizationType.AUTHORIZATION_TYPE_UNDELEGATE;
 
     case 3:
-    case 'AUTHORIZATION_TYPE_REDELEGATE':
+    case "AUTHORIZATION_TYPE_REDELEGATE":
       return AuthorizationType.AUTHORIZATION_TYPE_REDELEGATE;
 
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return AuthorizationType.UNRECOGNIZED;
   }
@@ -68,19 +68,19 @@ export function authorizationTypeFromJSON(object: any): AuthorizationType {
 export function authorizationTypeToJSON(object: AuthorizationType): string {
   switch (object) {
     case AuthorizationType.AUTHORIZATION_TYPE_UNSPECIFIED:
-      return 'AUTHORIZATION_TYPE_UNSPECIFIED';
+      return "AUTHORIZATION_TYPE_UNSPECIFIED";
 
     case AuthorizationType.AUTHORIZATION_TYPE_DELEGATE:
-      return 'AUTHORIZATION_TYPE_DELEGATE';
+      return "AUTHORIZATION_TYPE_DELEGATE";
 
     case AuthorizationType.AUTHORIZATION_TYPE_UNDELEGATE:
-      return 'AUTHORIZATION_TYPE_UNDELEGATE';
+      return "AUTHORIZATION_TYPE_UNDELEGATE";
 
     case AuthorizationType.AUTHORIZATION_TYPE_REDELEGATE:
-      return 'AUTHORIZATION_TYPE_REDELEGATE';
+      return "AUTHORIZATION_TYPE_REDELEGATE";
 
     default:
-      return 'UNKNOWN';
+      return "UNKNOWN";
   }
 }
 /**
@@ -176,7 +176,7 @@ export const StakeAuthorization = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): StakeAuthorization {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStakeAuthorization();
 
     while (reader.pos < end) {
@@ -236,7 +236,7 @@ export const StakeAuthorization_Validators = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): StakeAuthorization_Validators {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStakeAuthorization_Validators();
 
     while (reader.pos < end) {

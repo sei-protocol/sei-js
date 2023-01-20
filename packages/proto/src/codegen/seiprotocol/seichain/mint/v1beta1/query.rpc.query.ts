@@ -1,7 +1,7 @@
-import { Rpc } from '@osmonauts/helpers';
-import * as _m0 from 'protobufjs/minimal';
-import { QueryClient, createProtobufRpcClient } from '@cosmjs/stargate';
-import { QueryParamsRequest, QueryParamsResponse, QueryEpochProvisionsRequest, QueryEpochProvisionsResponse } from './query';
+import { Rpc } from "@osmonauts/helpers";
+import * as _m0 from "protobufjs/minimal";
+import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
+import { QueryParamsRequest, QueryParamsResponse, QueryEpochProvisionsRequest, QueryEpochProvisionsResponse } from "./query";
 /** Query defines the RPC service */
 
 export interface Query {
@@ -23,13 +23,13 @@ export class QueryClientImpl implements Query {
 
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request('seiprotocol.seichain.mint.Query', 'Params', data);
+    const promise = this.rpc.request("seiprotocol.seichain.mint.Query", "Params", data);
     return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   epochProvisions(request: QueryEpochProvisionsRequest = {}): Promise<QueryEpochProvisionsResponse> {
     const data = QueryEpochProvisionsRequest.encode(request).finish();
-    const promise = this.rpc.request('seiprotocol.seichain.mint.Query', 'EpochProvisions', data);
+    const promise = this.rpc.request("seiprotocol.seichain.mint.Query", "EpochProvisions", data);
     return promise.then(data => QueryEpochProvisionsResponse.decode(new _m0.Reader(data)));
   }
 

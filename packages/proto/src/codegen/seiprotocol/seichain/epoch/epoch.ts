@@ -1,7 +1,7 @@
-import { Timestamp } from '../../../google/protobuf/timestamp';
-import { Duration, DurationSDKType } from '../../../google/protobuf/duration';
-import * as _m0 from 'protobufjs/minimal';
-import { toTimestamp, fromTimestamp, Long, DeepPartial } from '@osmonauts/helpers';
+import { Timestamp } from "../../../google/protobuf/timestamp";
+import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
+import * as _m0 from "protobufjs/minimal";
+import { toTimestamp, fromTimestamp, Long, DeepPartial } from "@osmonauts/helpers";
 export interface Epoch {
   genesisTime: Date;
   epochDuration: Duration;
@@ -54,7 +54,7 @@ export const Epoch = {
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Epoch {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
+    let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEpoch();
 
     while (reader.pos < end) {

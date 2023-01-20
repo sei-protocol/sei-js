@@ -1,5 +1,5 @@
-import { LCDClient } from '@osmonauts/lcd';
-import { QueryCurrentPlanRequest, QueryCurrentPlanResponseSDKType, QueryAppliedPlanRequest, QueryAppliedPlanResponseSDKType, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponseSDKType, QueryModuleVersionsRequest, QueryModuleVersionsResponseSDKType, QueryAuthorityRequest, QueryAuthorityResponseSDKType } from './query';
+import { LCDClient } from "@osmonauts/lcd";
+import { QueryCurrentPlanRequest, QueryCurrentPlanResponseSDKType, QueryAppliedPlanRequest, QueryAppliedPlanResponseSDKType, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponseSDKType, QueryModuleVersionsRequest, QueryModuleVersionsResponseSDKType, QueryAuthorityRequest, QueryAuthorityResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -51,7 +51,7 @@ export class LCDQueryClient {
       params: {}
     };
 
-    if (typeof params?.moduleName !== 'undefined') {
+    if (typeof params?.moduleName !== "undefined") {
       options.params.module_name = params.moduleName;
     }
 
