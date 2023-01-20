@@ -40,8 +40,7 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs react {args.tag}"
-      },
-      "dependsOn": ["build"]
+      }
     }
   }
 }

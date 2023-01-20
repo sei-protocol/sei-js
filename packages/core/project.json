@@ -18,8 +18,7 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs core {args.tag}"
-      },
-      "dependsOn": ["build"]
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

@@ -21,7 +21,7 @@
     "build": {
       "executor": "nx:run-script",
       "options": {
-        "script": "buidl || true"
+        "script": "build"
       },
       "outputs": ["{projectRoot}/main", "{projectRoot}/types"],
       "dependsOn": ["codegen"]
