@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { AccountData } from '@cosmjs/proto-signing';
+import {AccountData, OfflineSigner} from '@cosmjs/proto-signing';
 import { UseWallet, UseWalletOptions } from './types';
 import {
   SUPPORTED_WALLETS,
@@ -7,7 +7,7 @@ import {
   WalletWindowKey,
 } from '@sei-js/core';
 
-const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
+const useWallet: (window: Window, walletOptions: UseWalletOptions) => UseWallet = (
   window,
   walletOptions
 ) => {
@@ -18,7 +18,7 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
     if (chainConfiguration === 'testnet') return 'atlantic-1';
     if (chainConfiguration === 'devnet') return 'sei-devnet-2';
     return chainConfiguration.chainId;
-  }, [walletOptions.chainConfiguration]);
+  }, [walletOptions]);
 
   const restUrl = useMemo(() => {
     const { chainConfiguration } = walletOptions;
@@ -27,7 +27,7 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
     if (chainConfiguration === 'devnet')
       return 'https://rest.sei-devnet-2.seinetwork.io';
     return chainConfiguration.restUrl;
-  }, [walletOptions.chainConfiguration]);
+  }, [walletOptions]);
 
   const rpcUrl = useMemo(() => {
     const { chainConfiguration } = walletOptions;
@@ -36,9 +36,9 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
     if (chainConfiguration === 'devnet')
       return 'https://rpc.sei-devnet-2.seinetwork.io';
     return chainConfiguration.restUrl;
-  }, [walletOptions.chainConfiguration]);
+  }, [walletOptions]);
 
-  const [offlineSigner, setOfflineSigner] = useState<any | undefined>();
+  const [offlineSigner, setOfflineSigner] = useState<OfflineSigner>();
   const [accounts, setAccounts] = useState<readonly AccountData[]>([]);
   const [connectedWallet, setConnectedWallet] = useState<
     WalletWindowKey | undefined
@@ -74,7 +74,7 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
     } catch {
       console.log('error!');
     }
-  }, [inputWallet]);
+  }, [inputWallet, chainId, restUrl, rpcUrl]);
 
   const disconnect = useCallback(() => {
     setConnectedWallet(undefined);
@@ -86,7 +86,7 @@ const useWallet: (window: any, walletOptions: UseWalletOptions) => UseWallet = (
     if (autoConnect && inputWallet) {
       connect().then(() => setConnectedWallet(inputWallet));
     }
-  }, [autoConnect, inputWallet]);
+  }, [autoConnect, inputWallet, connect]);
 
   if (!inputWallet)
     return {
