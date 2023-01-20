@@ -62,7 +62,6 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish
-        if: ${{ github.event.inputs.publish == 'true' }}
         run: yarn publish:all --tag=${{ github.event.inputs.npm_tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
