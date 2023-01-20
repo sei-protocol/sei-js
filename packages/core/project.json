@@ -17,7 +17,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs core"
+        "command": "node tools/scripts/publish.mjs core {args.tag}"
       },
       "dependsOn": ["build"]
     },

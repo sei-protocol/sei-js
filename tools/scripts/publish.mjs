@@ -19,11 +19,12 @@ function invariant(condition, message) {
 }
 
 const packageJson = readJsonFile(`package.json`);
-
-// Executing publish script: node path/to/publish.mjs {name} --version {version} --tag {tag}
 // Default "version" to version in package.json
+const version = packageJson.version;
+
+// Executing publish script: node path/to/publish.mjs {name} --tag {tag}
 // Default "tag" to "next" so we won't publish the "latest" tag by accident.
-const [, , name, version = packageJson.version, tag = 'next'] = process.argv;
+const [, , name, tag = 'next'] = process.argv;
 
 // A simple SemVer validation to validate the version
 const validVersion = /^\d+\.\d+\.\d+(-\w+\.\d+)?/;
