@@ -1,5 +1,5 @@
 import { WalletWindowKey } from '@sei-js/core';
-import { AccountData } from '@cosmjs/proto-signing';
+import {AccountData, OfflineSigner} from '@cosmjs/proto-signing';
 import { ChainConfiguration } from '../../types';
 
 export type UseWalletOptions = {
@@ -10,7 +10,7 @@ export type UseWalletOptions = {
 
 export type UseWallet = {
   connectedWallet?: WalletWindowKey;
-  connect: () => Promise<any>;
+  connect: () => Promise<void>;
   disconnect: () => void;
   chainId: string;
   restUrl: string;
@@ -18,6 +18,6 @@ export type UseWallet = {
   supportedWallets: WalletWindowKey[];
   installedWallets: WalletWindowKey[];
   error?: string;
-  offlineSigner?: any;
+  offlineSigner?: OfflineSigner;
   accounts?: readonly AccountData[];
 };
