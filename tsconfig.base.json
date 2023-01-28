@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@sei-js/core": ["packages/core/src/index.ts"],
-      "@sei-js/proto": ["packages/proto/src/index.ts"]
+      "@sei-js/proto": ["packages/proto/src/index.ts"],
+      "@sei-js/react": ["packages/react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
