@@ -1,6 +1,6 @@
 {
   "name": "sei-js",
-  "version": "1.1.3",
+  "version": "1.1.5",
   "license": "MIT",
   "scripts": {
     "build:all": "nx run-many --target=build",

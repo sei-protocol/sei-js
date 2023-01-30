@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import {AccountData, OfflineSigner} from '@cosmjs/proto-signing';
+import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { UseWallet, UseWalletOptions } from './types';
 import {
   SUPPORTED_WALLETS,
@@ -7,10 +7,10 @@ import {
   WalletWindowKey,
 } from '@sei-js/core';
 
-const useWallet: (window: Window, walletOptions: UseWalletOptions) => UseWallet = (
-  window,
-  walletOptions
-) => {
+const useWallet: (
+  window: Window,
+  walletOptions: UseWalletOptions
+) => UseWallet = (window, walletOptions) => {
   const { inputWallet, autoConnect } = walletOptions;
 
   const chainId = useMemo(() => {

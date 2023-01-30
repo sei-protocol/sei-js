@@ -1,5 +1,5 @@
 import { WalletWindowKey } from '@sei-js/core';
-import {AccountData, OfflineSigner} from '@cosmjs/proto-signing';
+import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { ChainConfiguration } from '../../types';
 
 export type UseWalletOptions = {

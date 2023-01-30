@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { getSigningClient } from '@sei-js/core';
-import {OfflineSigner} from "@cosmjs/proto-signing";
-import {SigningStargateClient} from "@cosmjs/stargate";
+import { OfflineSigner } from '@cosmjs/proto-signing';
+import { SigningStargateClient } from '@cosmjs/stargate';
 
-const useSigningClient = (rpcAddress: string, offlineSigner?: OfflineSigner) => {
+const useSigningClient = (
+  rpcAddress: string,
+  offlineSigner?: OfflineSigner
+) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [signingClient, setSigningClient] = useState<SigningStargateClient>();
 

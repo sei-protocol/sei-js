@@ -1,1 +1,1 @@
-export { default as useSigningClient } from './UseSigningClient';
+export { default as useSigningClient } from './useSigningClient';
