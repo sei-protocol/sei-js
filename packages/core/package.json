@@ -5,13 +5,10 @@
   "main": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "deploy": "cd lib && npm publish --access public",
-    "predeploy": "yarn build && cp package.json lib && cp README.md lib",
     "build": "yarn clean && tsc",
-    "clean": "rimraf lib",
-    "release": "standard-version",
-    "postrelease": "git push --follow-tags origin main",
-    "test": "jest"
+    "clean": "rimraf dist",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "homepage": "https://github.com/sei-protocol/js-core#readme",
   "keywords": [
