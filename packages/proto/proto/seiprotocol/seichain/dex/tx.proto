@@ -1,0 +1,68 @@
+syntax = "proto3";
+package seiprotocol.seichain.dex;
+
+import "cosmos/base/v1beta1/coin.proto";
+import "gogoproto/gogo.proto";
+import "seiprotocol/seichain/dex/contract.proto";
+import "seiprotocol/seichain/dex/order.proto";
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/sei-protocol/sei-chain/x/dex/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc PlaceOrders(MsgPlaceOrders) returns (MsgPlaceOrdersResponse);
+  rpc CancelOrders(MsgCancelOrders) returns (MsgCancelOrdersResponse);
+  rpc RegisterContract(MsgRegisterContract) returns(MsgRegisterContractResponse);
+  // privileged endpoints below
+
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgPlaceOrders {
+  string creator = 1 [
+      (gogoproto.jsontag) = "creator"
+  ];
+  repeated Order orders = 2 [
+      (gogoproto.jsontag) = "orders"
+  ];
+  string contractAddr = 3 [
+      (gogoproto.jsontag) = "contract_address"
+  ];
+  repeated cosmos.base.v1beta1.Coin funds = 4 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.jsontag) = "funds"
+  ];
+}
+
+message MsgPlaceOrdersResponse {
+  repeated uint64 orderIds = 1 [
+    (gogoproto.moretags) = "yaml:\"order_ids\"",
+    (gogoproto.jsontag) = "order_ids"
+  ];
+}
+
+message MsgCancelOrders {
+  string creator = 1 [
+      (gogoproto.jsontag) = "creator"
+  ];
+  repeated Cancellation cancellations = 2 [
+      (gogoproto.jsontag) = "cancellations"
+  ];
+  string contractAddr = 3 [
+      (gogoproto.jsontag) = "contract_address"
+  ];
+}
+
+message MsgCancelOrdersResponse {}
+
+message MsgRegisterContract {
+  string creator = 1;
+  ContractInfo contract = 2;
+}
+
+message MsgRegisterContractResponse {}
+
+// this line is used by starport scaffolding # proto/tx/message
