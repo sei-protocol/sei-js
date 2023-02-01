@@ -27,6 +27,8 @@
     "@nrwl/eslint-plugin-nx": "15.5.1",
     "@nrwl/nx-cloud": "latest",
     "@nrwl/workspace": "15.5.1",
+    "@swc/cli": "^0.1.60",
+    "@swc/core": "^1.3.32",
     "@types/jest": "^29.4.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
