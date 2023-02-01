@@ -2,31 +2,27 @@
   "name": "@sei-js/core",
   "version": "1.1.5",
   "description": "A javascript library for Sei.",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && swc",
+    "build": "yarn clean && tsc",
     "clean": "rimraf dist",
     "format": "eslint --fix . && prettier 'src/**/*.ts' --write --ignore-path .gitignore",
     "lint": "eslint --ignore-path .eslintignore .",
     "test": "jest"
   },
-  "homepage": "https://github.com/sei-protocol/js-core#readme",
+  "homepage": "https://github.com/sei-protocol/sei-js#readme",
   "keywords": [
     "sei",
     "javascript",
     "typescript",
     "cosmos"
   ],
-  "repository": "git@github.com:sei-protocol/js-core.git",
-  "author": "Carson Aberle",
+  "repository": "git@github.com:sei-protocol/sei-js.git",
   "license": "MIT",
   "private": false,
   "dependencies": {
     "@sei-js/proto": "*"
   },
-  "devDependencies": {
-    "rimraf": "^3.0.2",
-    "standard-version": "^9.5.0"
-  }
+  "devDependencies": {}
 }
