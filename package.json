@@ -14,7 +14,12 @@
     "publish:all": "nx run-many --target=publish"
   },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@cosmjs/amino": "0.29.3",
+    "@cosmjs/proto-signing": "0.29.3",
+    "@cosmjs/stargate": "0.29.3",
+    "@cosmjs/tendermint-rpc": "0.29.3"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
