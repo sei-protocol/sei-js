@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgAggregateExchangeRateVote, MsgDelegateFeedConsent } from "./tx";
 export interface AminoMsgAggregateExchangeRateVote extends AminoMsg {

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "@osmonauts/helpers";
 import { MsgCreateDenom, MsgMint, MsgBurn, MsgChangeAdmin } from "./tx";

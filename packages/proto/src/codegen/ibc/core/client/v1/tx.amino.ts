@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgCreateClient, MsgUpdateClient, MsgUpgradeClient, MsgSubmitMisbehaviour } from "./tx";
 export interface AminoMsgCreateClient extends AminoMsg {

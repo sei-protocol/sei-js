@@ -1,5 +1,30 @@
 {
   "name": "@sei-js/react",
   "version": "1.1.5",
-  "type": "commonjs"
+  "description": "React library for front end integrations with Sei",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && tsc",
+    "clean": "rimraf dist",
+    "format": "eslint --fix . && prettier 'src/**/*.ts' --write --ignore-path .gitignore",
+    "lint": "eslint --ignore-path .eslintignore .",
+    "test": "jest --passWithNoTests"
+  },
+  "homepage": "https://github.com/sei-protocol/sei-js#readme",
+  "keywords": [
+    "sei",
+    "javascript",
+    "typescript",
+    "react"
+  ],
+  "repository": "git@github.com:sei-protocol/sei-js.git",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@sei-js/core": "*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {}
 }

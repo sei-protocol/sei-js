@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { stateFromJSON, orderFromJSON } from "./channel";
 import { AminoMsg } from "@cosmjs/amino";
 import { AminoHeight, omitDefault, Long } from "@osmonauts/helpers";
