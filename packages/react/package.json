@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/react",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "React library for front end integrations with Sei",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

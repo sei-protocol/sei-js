@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.6
+
+### Patch Changes
+
+- cd00554: Refactored monorepo to be package-based
+- Updated dependencies [cd00554]
+  - @sei-js/core@1.1.6
+
 ## [1.1.5](https://github.com/sei-protocol/sei-js/compare/v1.1.4...v1.1.5) (2023-01-29)
 
 ### Bug Fixes
