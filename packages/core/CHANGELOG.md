@@ -1,7 +1,5 @@
 # Changelog
 
-This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
-
 ## [1.1.5](https://github.com/sei-protocol/sei-js/compare/v1.1.4...v1.1.5) (2023-01-29)
 
 ## [1.1.3](https://github.com/sei-protocol/sei-js/compare/v1.1.2...v1.1.3) (2023-01-20)
