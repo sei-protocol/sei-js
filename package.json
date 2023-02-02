@@ -8,7 +8,8 @@
     "lint:all": "nx run-many --target=lint",
     "lint:since": "nx affected --target=lint",
     "test:all": "nx run-many --target=test",
-    "test:since": "nx affected --target=test"
+    "test:since": "nx affected --target=test",
+    "release": "yarn build:all && changeset publish"
   },
   "private": true,
   "dependencies": {
