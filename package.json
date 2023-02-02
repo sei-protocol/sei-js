@@ -8,22 +8,17 @@
     "lint:all": "nx run-many --target=lint",
     "lint:since": "nx affected --target=lint",
     "test:all": "nx run-many --target=test",
-    "test:since": "nx affected --target=test",
-    "prepare": "husky install",
-    "version:all": "nx run workspace:version",
-    "publish:all": "nx run-many --target=publish"
+    "test:since": "nx affected --target=test"
   },
   "private": true,
   "dependencies": {
+    "@changesets/cli": "^2.26.0",
     "@cosmjs/amino": "0.29.3",
     "@cosmjs/proto-signing": "0.29.3",
     "@cosmjs/stargate": "0.29.3",
     "@cosmjs/tendermint-rpc": "0.29.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.0",
-    "@commitlint/config-conventional": "^17.0.0",
-    "@jscutlery/semver": "^2.29.3",
     "@nrwl/eslint-plugin-nx": "15.5.1",
     "@nrwl/nx-cloud": "latest",
     "@nrwl/workspace": "15.5.1",
@@ -37,7 +32,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "7.31.11",
     "eslint-plugin-react-hooks": "4.6.0",
-    "husky": "^8.0.0",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "nx": "15.5.1",
