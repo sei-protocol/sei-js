@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { toBase64, toHex } from "@cosmjs/encoding";
-import { JsonRpcRequest } from "@cosmjs/json-rpc";
+import { toBase64, toHex } from '@cosmjs/encoding';
+import { JsonRpcRequest } from '@cosmjs/json-rpc';
 
-import { smallIntToApi } from "../../inthelpers";
-import { createJsonRpcRequest } from "../../jsonrpc";
-import { assertNotEmpty, may } from "../encodings";
-import * as requests from "../requests";
+import { smallIntToApi } from '@cosmjs/tendermint-rpc/build/inthelpers';
+import { createJsonRpcRequest } from '@cosmjs/tendermint-rpc/build/jsonrpc';
+import { assertNotEmpty, may } from '../encodings';
+import * as requests from '../requests';
 
 interface HeightParam {
   readonly height?: number;
@@ -24,7 +24,9 @@ interface RpcBlockchainRequestParams {
   readonly maxHeight?: string;
 }
 
-function encodeBlockchainRequestParams(param: requests.BlockchainRequestParams): RpcBlockchainRequestParams {
+function encodeBlockchainRequestParams(
+  param: requests.BlockchainRequestParams
+): RpcBlockchainRequestParams {
   return {
     minHeight: may(smallIntToApi, param.minHeight),
     maxHeight: may(smallIntToApi, param.maxHeight),
@@ -37,7 +39,9 @@ interface RpcBlockSearchParams {
   readonly per_page?: string;
   readonly order_by?: string;
 }
-function encodeBlockSearchParams(params: requests.BlockSearchParams): RpcBlockSearchParams {
+function encodeBlockSearchParams(
+  params: requests.BlockSearchParams
+): RpcBlockSearchParams {
   return {
     query: params.query,
     page: may(smallIntToApi, params.page),
@@ -54,7 +58,9 @@ interface RpcAbciQueryParams {
   readonly prove?: boolean;
 }
 
-function encodeAbciQueryParams(params: requests.AbciQueryParams): RpcAbciQueryParams {
+function encodeAbciQueryParams(
+  params: requests.AbciQueryParams
+): RpcAbciQueryParams {
   return {
     path: assertNotEmpty(params.path),
     data: toHex(params.data),
@@ -67,7 +73,9 @@ interface RpcBroadcastTxParams {
   /** base64 encoded */
   readonly tx: string;
 }
-function encodeBroadcastTxParams(params: requests.BroadcastTxParams): RpcBroadcastTxParams {
+function encodeBroadcastTxParams(
+  params: requests.BroadcastTxParams
+): RpcBroadcastTxParams {
   return {
     tx: toBase64(assertNotEmpty(params.tx)),
   };
@@ -92,7 +100,9 @@ interface RpcTxSearchParams {
   readonly per_page?: string;
   readonly order_by?: string;
 }
-function encodeTxSearchParams(params: requests.TxSearchParams): RpcTxSearchParams {
+function encodeTxSearchParams(
+  params: requests.TxSearchParams
+): RpcTxSearchParams {
   return {
     query: params.query,
     prove: params.prove,
@@ -107,7 +117,9 @@ interface RpcValidatorsParams {
   readonly page?: string;
   readonly per_page?: string;
 }
-function encodeValidatorsParams(params: requests.ValidatorsParams): RpcValidatorsParams {
+function encodeValidatorsParams(
+  params: requests.ValidatorsParams
+): RpcValidatorsParams {
   return {
     height: may(smallIntToApi, params.height),
     page: may(smallIntToApi, params.page),
@@ -120,7 +132,9 @@ export class Params {
     return createJsonRpcRequest(req.method);
   }
 
-  public static encodeAbciQuery(req: requests.AbciQueryRequest): JsonRpcRequest {
+  public static encodeAbciQuery(
+    req: requests.AbciQueryRequest
+  ): JsonRpcRequest {
     return createJsonRpcRequest(req.method, encodeAbciQueryParams(req.params));
   }
 
@@ -128,20 +142,37 @@ export class Params {
     return createJsonRpcRequest(req.method, encodeHeightParam(req.params));
   }
 
-  public static encodeBlockchain(req: requests.BlockchainRequest): JsonRpcRequest {
-    return createJsonRpcRequest(req.method, encodeBlockchainRequestParams(req.params));
+  public static encodeBlockchain(
+    req: requests.BlockchainRequest
+  ): JsonRpcRequest {
+    return createJsonRpcRequest(
+      req.method,
+      encodeBlockchainRequestParams(req.params)
+    );
   }
 
-  public static encodeBlockResults(req: requests.BlockResultsRequest): JsonRpcRequest {
+  public static encodeBlockResults(
+    req: requests.BlockResultsRequest
+  ): JsonRpcRequest {
     return createJsonRpcRequest(req.method, encodeHeightParam(req.params));
   }
 
-  public static encodeBlockSearch(req: requests.BlockSearchRequest): JsonRpcRequest {
-    return createJsonRpcRequest(req.method, encodeBlockSearchParams(req.params));
+  public static encodeBlockSearch(
+    req: requests.BlockSearchRequest
+  ): JsonRpcRequest {
+    return createJsonRpcRequest(
+      req.method,
+      encodeBlockSearchParams(req.params)
+    );
   }
 
-  public static encodeBroadcastTx(req: requests.BroadcastTxRequest): JsonRpcRequest {
-    return createJsonRpcRequest(req.method, encodeBroadcastTxParams(req.params));
+  public static encodeBroadcastTx(
+    req: requests.BroadcastTxRequest
+  ): JsonRpcRequest {
+    return createJsonRpcRequest(
+      req.method,
+      encodeBroadcastTxParams(req.params)
+    );
   }
 
   public static encodeCommit(req: requests.CommitRequest): JsonRpcRequest {
@@ -156,7 +187,9 @@ export class Params {
     return createJsonRpcRequest(req.method);
   }
 
-  public static encodeNumUnconfirmedTxs(req: requests.NumUnconfirmedTxsRequest): JsonRpcRequest {
+  public static encodeNumUnconfirmedTxs(
+    req: requests.NumUnconfirmedTxsRequest
+  ): JsonRpcRequest {
     return createJsonRpcRequest(req.method);
   }
 
@@ -164,10 +197,12 @@ export class Params {
     return createJsonRpcRequest(req.method);
   }
 
-  public static encodeSubscribe(req: requests.SubscribeRequest): JsonRpcRequest {
-    const eventTag = { key: "tm.event", value: req.query.type };
+  public static encodeSubscribe(
+    req: requests.SubscribeRequest
+  ): JsonRpcRequest {
+    const eventTag = { key: 'tm.event', value: req.query.type };
     const query = requests.buildQuery({ tags: [eventTag], raw: req.query.raw });
-    return createJsonRpcRequest("subscribe", { query: query });
+    return createJsonRpcRequest('subscribe', { query: query });
   }
 
   public static encodeTx(req: requests.TxRequest): JsonRpcRequest {
@@ -179,7 +214,9 @@ export class Params {
     return createJsonRpcRequest(req.method, encodeTxSearchParams(req.params));
   }
 
-  public static encodeValidators(req: requests.ValidatorsRequest): JsonRpcRequest {
+  public static encodeValidators(
+    req: requests.ValidatorsRequest
+  ): JsonRpcRequest {
     return createJsonRpcRequest(req.method, encodeValidatorsParams(req.params));
   }
 }

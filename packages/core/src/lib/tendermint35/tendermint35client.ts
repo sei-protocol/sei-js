@@ -1,45 +1,61 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { Stream } from "xstream";
-
-import { createJsonRpcRequest } from "../jsonrpc";
+import { Stream } from 'xstream';
 import {
   HttpClient,
   HttpEndpoint,
+  WebsocketClient,
+} from '@cosmjs/tendermint-rpc';
+import { createJsonRpcRequest } from '@cosmjs/tendermint-rpc/build/jsonrpc';
+import {
   instanceOfRpcStreamingClient,
   RpcClient,
   SubscriptionEvent,
-  WebsocketClient,
-} from "../rpcclients";
-import { adaptor34, Decoder, Encoder, Params, Responses } from "./adaptor";
-import * as requests from "./requests";
-import * as responses from "./responses";
+} from '@cosmjs/tendermint-rpc/build/rpcclients';
 
-export class Tendermint34Client {
+import { adaptor35, Decoder, Encoder, Params, Responses } from './adaptor';
+import * as requests from './requests';
+import * as responses from './responses';
+
+/**
+ * This Tendermint 0.35 client is taken from @cosmjs/tendermint-rpc.
+ * Currently, cosmjs does not support Tendermint 0.35 and it's implementation,
+ * is not exported, so we have to implement it ourselves and do some workarounds
+ * to create a `SeiStargateClient`.
+ *
+ * @see https://github.com/cosmos/cosmjs/issues/1225
+ */
+export class Tendermint35Client {
   /**
    * Creates a new Tendermint client for the given endpoint.
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
    */
-  public static async connect(endpoint: string | HttpEndpoint): Promise<Tendermint34Client> {
-    if (typeof endpoint === "object") {
-      return Tendermint34Client.create(new HttpClient(endpoint));
+  public static async connect(
+    endpoint: string | HttpEndpoint
+  ): Promise<Tendermint35Client> {
+    if (typeof endpoint === 'object') {
+      return Tendermint35Client.create(new HttpClient(endpoint));
     } else {
-      const useHttp = endpoint.startsWith("http://") || endpoint.startsWith("https://");
-      const rpcClient = useHttp ? new HttpClient(endpoint) : new WebsocketClient(endpoint);
-      return Tendermint34Client.create(rpcClient);
+      const useHttp =
+        endpoint.startsWith('http://') || endpoint.startsWith('https://');
+      const rpcClient = useHttp
+        ? new HttpClient(endpoint)
+        : new WebsocketClient(endpoint);
+      return Tendermint35Client.create(rpcClient);
     }
   }
 
   /**
    * Creates a new Tendermint client given an RPC client.
    */
-  public static async create(rpcClient: RpcClient): Promise<Tendermint34Client> {
+  public static async create(
+    rpcClient: RpcClient
+  ): Promise<Tendermint35Client> {
     // For some very strange reason I don't understand, tests start to fail on some systems
     // (our CI) when skipping the status call before doing other queries. Sleeping a little
     // while did not help. Thus we query the version as a way to say "hi" to the backend,
     // even in cases where we don't use the result.
     const _version = await this.detectVersion(rpcClient);
-    return new Tendermint34Client(rpcClient);
+    return new Tendermint35Client(rpcClient);
   }
 
   private static async detectVersion(client: RpcClient): Promise<string> {
@@ -48,12 +64,12 @@ export class Tendermint34Client {
     const result = response.result;
 
     if (!result || !result.node_info) {
-      throw new Error("Unrecognized format for status response");
+      throw new Error('Unrecognized format for status response');
     }
 
     const version = result.node_info.version;
-    if (typeof version !== "string") {
-      throw new Error("Unrecognized version format: must be string");
+    if (typeof version !== 'string') {
+      throw new Error('Unrecognized version format: must be string');
     }
     return version;
   }
@@ -67,8 +83,8 @@ export class Tendermint34Client {
    */
   private constructor(client: RpcClient) {
     this.client = client;
-    this.p = adaptor34.params;
-    this.r = adaptor34.responses;
+    this.p = adaptor35.params;
+    this.r = adaptor35.responses;
   }
 
   public disconnect(): void {
@@ -76,26 +92,42 @@ export class Tendermint34Client {
   }
 
   public async abciInfo(): Promise<responses.AbciInfoResponse> {
-    const query: requests.AbciInfoRequest = { method: requests.Method.AbciInfo };
+    const query: requests.AbciInfoRequest = {
+      method: requests.Method.AbciInfo,
+    };
     return this.doCall(query, this.p.encodeAbciInfo, this.r.decodeAbciInfo);
   }
 
-  public async abciQuery(params: requests.AbciQueryParams): Promise<responses.AbciQueryResponse> {
-    const query: requests.AbciQueryRequest = { params: params, method: requests.Method.AbciQuery };
+  public async abciQuery(
+    params: requests.AbciQueryParams
+  ): Promise<responses.AbciQueryResponse> {
+    const query: requests.AbciQueryRequest = {
+      params: params,
+      method: requests.Method.AbciQuery,
+    };
     return this.doCall(query, this.p.encodeAbciQuery, this.r.decodeAbciQuery);
   }
 
   public async block(height?: number): Promise<responses.BlockResponse> {
-    const query: requests.BlockRequest = { method: requests.Method.Block, params: { height: height } };
+    const query: requests.BlockRequest = {
+      method: requests.Method.Block,
+      params: { height: height },
+    };
     return this.doCall(query, this.p.encodeBlock, this.r.decodeBlock);
   }
 
-  public async blockResults(height?: number): Promise<responses.BlockResultsResponse> {
+  public async blockResults(
+    height?: number
+  ): Promise<responses.BlockResultsResponse> {
     const query: requests.BlockResultsRequest = {
       method: requests.Method.BlockResults,
       params: { height: height },
     };
-    return this.doCall(query, this.p.encodeBlockResults, this.r.decodeBlockResults);
+    return this.doCall(
+      query,
+      this.p.encodeBlockResults,
+      this.r.decodeBlockResults
+    );
   }
 
   /**
@@ -106,13 +138,24 @@ export class Tendermint34Client {
    *
    * @see https://docs.tendermint.com/master/rpc/#/Info/block_search
    */
-  public async blockSearch(params: requests.BlockSearchParams): Promise<responses.BlockSearchResponse> {
-    const query: requests.BlockSearchRequest = { params: params, method: requests.Method.BlockSearch };
-    const resp = await this.doCall(query, this.p.encodeBlockSearch, this.r.decodeBlockSearch);
+  public async blockSearch(
+    params: requests.BlockSearchParams
+  ): Promise<responses.BlockSearchResponse> {
+    const query: requests.BlockSearchRequest = {
+      params: params,
+      method: requests.Method.BlockSearch,
+    };
+    const resp = await this.doCall(
+      query,
+      this.p.encodeBlockSearch,
+      this.r.decodeBlockSearch
+    );
     return {
       ...resp,
       // make sure we sort by height, as tendermint may be sorting by string value of the height
-      blocks: [...resp.blocks].sort((a, b) => a.block.header.height - b.block.header.height),
+      blocks: [...resp.blocks].sort(
+        (a, b) => a.block.header.height - b.block.header.height
+      ),
     };
   }
 
@@ -121,7 +164,9 @@ export class Tendermint34Client {
   //
   // NOTE
   // This method will error on any node that is running a Tendermint version lower than 0.34.9.
-  public async blockSearchAll(params: requests.BlockSearchParams): Promise<responses.BlockSearchResponse> {
+  public async blockSearchAll(
+    params: requests.BlockSearchParams
+  ): Promise<responses.BlockSearchResponse> {
     let page = params.page || 1;
     const blocks: responses.BlockResponse[] = [];
     let done = false;
@@ -151,7 +196,10 @@ export class Tendermint34Client {
    * @param minHeight The minimum height to be included in the result. Defaults to 0.
    * @param maxHeight The maximum height to be included in the result. Defaults to infinity.
    */
-  public async blockchain(minHeight?: number, maxHeight?: number): Promise<responses.BlockchainResponse> {
+  public async blockchain(
+    minHeight?: number,
+    maxHeight?: number
+  ): Promise<responses.BlockchainResponse> {
     const query: requests.BlockchainRequest = {
       method: requests.Method.Blockchain,
       params: {
@@ -168,10 +216,17 @@ export class Tendermint34Client {
    * @see https://docs.tendermint.com/master/rpc/#/Tx/broadcast_tx_sync
    */
   public async broadcastTxSync(
-    params: requests.BroadcastTxParams,
+    params: requests.BroadcastTxParams
   ): Promise<responses.BroadcastTxSyncResponse> {
-    const query: requests.BroadcastTxRequest = { params: params, method: requests.Method.BroadcastTxSync };
-    return this.doCall(query, this.p.encodeBroadcastTx, this.r.decodeBroadcastTxSync);
+    const query: requests.BroadcastTxRequest = {
+      params: params,
+      method: requests.Method.BroadcastTxSync,
+    };
+    return this.doCall(
+      query,
+      this.p.encodeBroadcastTx,
+      this.r.decodeBroadcastTxSync
+    );
   }
 
   /**
@@ -180,10 +235,17 @@ export class Tendermint34Client {
    * @see https://docs.tendermint.com/master/rpc/#/Tx/broadcast_tx_async
    */
   public async broadcastTxAsync(
-    params: requests.BroadcastTxParams,
+    params: requests.BroadcastTxParams
   ): Promise<responses.BroadcastTxAsyncResponse> {
-    const query: requests.BroadcastTxRequest = { params: params, method: requests.Method.BroadcastTxAsync };
-    return this.doCall(query, this.p.encodeBroadcastTx, this.r.decodeBroadcastTxAsync);
+    const query: requests.BroadcastTxRequest = {
+      params: params,
+      method: requests.Method.BroadcastTxAsync,
+    };
+    return this.doCall(
+      query,
+      this.p.encodeBroadcastTx,
+      this.r.decodeBroadcastTxAsync
+    );
   }
 
   /**
@@ -192,14 +254,24 @@ export class Tendermint34Client {
    * @see https://docs.tendermint.com/master/rpc/#/Tx/broadcast_tx_commit
    */
   public async broadcastTxCommit(
-    params: requests.BroadcastTxParams,
+    params: requests.BroadcastTxParams
   ): Promise<responses.BroadcastTxCommitResponse> {
-    const query: requests.BroadcastTxRequest = { params: params, method: requests.Method.BroadcastTxCommit };
-    return this.doCall(query, this.p.encodeBroadcastTx, this.r.decodeBroadcastTxCommit);
+    const query: requests.BroadcastTxRequest = {
+      params: params,
+      method: requests.Method.BroadcastTxCommit,
+    };
+    return this.doCall(
+      query,
+      this.p.encodeBroadcastTx,
+      this.r.decodeBroadcastTxCommit
+    );
   }
 
   public async commit(height?: number): Promise<responses.CommitResponse> {
-    const query: requests.CommitRequest = { method: requests.Method.Commit, params: { height: height } };
+    const query: requests.CommitRequest = {
+      method: requests.Method.Commit,
+      params: { height: height },
+    };
     return this.doCall(query, this.p.encodeCommit, this.r.decodeCommit);
   }
 
@@ -214,8 +286,14 @@ export class Tendermint34Client {
   }
 
   public async numUnconfirmedTxs(): Promise<responses.NumUnconfirmedTxsResponse> {
-    const query: requests.NumUnconfirmedTxsRequest = { method: requests.Method.NumUnconfirmedTxs };
-    return this.doCall(query, this.p.encodeNumUnconfirmedTxs, this.r.decodeNumUnconfirmedTxs);
+    const query: requests.NumUnconfirmedTxsRequest = {
+      method: requests.Method.NumUnconfirmedTxs,
+    };
+    return this.doCall(
+      query,
+      this.p.encodeNumUnconfirmedTxs,
+      this.r.decodeNumUnconfirmedTxs
+    );
   }
 
   public async status(): Promise<responses.StatusResponse> {
@@ -256,7 +334,10 @@ export class Tendermint34Client {
    * @see https://docs.tendermint.com/master/rpc/#/Info/tx
    */
   public async tx(params: requests.TxParams): Promise<responses.TxResponse> {
-    const query: requests.TxRequest = { params: params, method: requests.Method.Tx };
+    const query: requests.TxRequest = {
+      params: params,
+      method: requests.Method.Tx,
+    };
     return this.doCall(query, this.p.encodeTx, this.r.decodeTx);
   }
 
@@ -265,14 +346,21 @@ export class Tendermint34Client {
    *
    * @see https://docs.tendermint.com/master/rpc/#/Info/tx_search
    */
-  public async txSearch(params: requests.TxSearchParams): Promise<responses.TxSearchResponse> {
-    const query: requests.TxSearchRequest = { params: params, method: requests.Method.TxSearch };
+  public async txSearch(
+    params: requests.TxSearchParams
+  ): Promise<responses.TxSearchResponse> {
+    const query: requests.TxSearchRequest = {
+      params: params,
+      method: requests.Method.TxSearch,
+    };
     return this.doCall(query, this.p.encodeTxSearch, this.r.decodeTxSearch);
   }
 
   // this should paginate through all txSearch options to ensure it returns all results.
   // starts with page 1 or whatever was provided (eg. to start on page 7)
-  public async txSearchAll(params: requests.TxSearchParams): Promise<responses.TxSearchResponse> {
+  public async txSearchAll(
+    params: requests.TxSearchParams
+  ): Promise<responses.TxSearchResponse> {
     let page = params.page || 1;
     const txs: responses.TxResponse[] = [];
     let done = false;
@@ -293,7 +381,9 @@ export class Tendermint34Client {
     };
   }
 
-  public async validators(params: requests.ValidatorsParams): Promise<responses.ValidatorsResponse> {
+  public async validators(
+    params: requests.ValidatorsParams
+  ): Promise<responses.ValidatorsResponse> {
     const query: requests.ValidatorsRequest = {
       method: requests.Method.Validators,
       params: params,
@@ -301,7 +391,9 @@ export class Tendermint34Client {
     return this.doCall(query, this.p.encodeValidators, this.r.decodeValidators);
   }
 
-  public async validatorsAll(height?: number): Promise<responses.ValidatorsResponse> {
+  public async validatorsAll(
+    height?: number
+  ): Promise<responses.ValidatorsResponse> {
     const validators: responses.Validator[] = [];
     let page = 1;
     let done = false;
@@ -332,19 +424,21 @@ export class Tendermint34Client {
   }
 
   // doCall is a helper to handle the encode/call/decode logic
-  private async doCall<T extends requests.Request, U extends responses.Response>(
-    request: T,
-    encode: Encoder<T>,
-    decode: Decoder<U>,
-  ): Promise<U> {
+  private async doCall<
+    T extends requests.Request,
+    U extends responses.Response
+  >(request: T, encode: Encoder<T>, decode: Decoder<U>): Promise<U> {
     const req = encode(request);
     const result = await this.client.execute(req);
     return decode(result);
   }
 
-  private subscribe<T>(request: requests.SubscribeRequest, decode: (e: SubscriptionEvent) => T): Stream<T> {
+  private subscribe<T>(
+    request: requests.SubscribeRequest,
+    decode: (e: SubscriptionEvent) => T
+  ): Stream<T> {
     if (!instanceOfRpcStreamingClient(this.client)) {
-      throw new Error("This RPC client type cannot subscribe to events");
+      throw new Error('This RPC client type cannot subscribe to events');
     }
 
     const req = this.p.encodeSubscribe(request);

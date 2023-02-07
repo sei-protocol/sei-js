@@ -1,7 +1,10 @@
 import { ReadonlyDate } from 'readonly-date';
 
-import { ReadonlyDateWithNanoseconds } from '../dates';
-import { CommitSignature, ValidatorPubkey } from '../types';
+import { ReadonlyDateWithNanoseconds } from '@cosmjs/tendermint-rpc/build/dates';
+import {
+  CommitSignature,
+  ValidatorPubkey,
+} from '@cosmjs/tendermint-rpc/build/types';
 
 export type Response =
   | AbciInfoResponse

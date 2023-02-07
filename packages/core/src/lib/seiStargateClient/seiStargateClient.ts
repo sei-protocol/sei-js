@@ -6,11 +6,7 @@ import {
   StargateClientOptions,
 } from '@cosmjs/stargate';
 import { toHex } from '@cosmjs/encoding';
-import {
-  Tendermint35Client,
-  TxSearchResponse,
-  tendermint35,
-} from '../tendermintRpc';
+import { Tendermint35Client, TxSearchResponse } from '../tendermint35';
 import { fromTendermint35Event } from './events';
 
 export class SeiStargateClient extends StargateClient {

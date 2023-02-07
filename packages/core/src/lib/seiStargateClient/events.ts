@@ -1,10 +1,10 @@
 import { Event } from '@cosmjs/stargate';
-import { tendermint35 } from '../tendermintRpc';
+import { Event as Tendermint35Event } from '../tendermint35';
 
 /**
  * Takes a Tendemrint 0.35 event and converts it into a Stargate `Event`
  */
-export function fromTendermint35Event(event: tendermint35.Event): Event {
+export function fromTendermint35Event(event: Tendermint35Event): Event {
   return {
     type: event.type,
     attributes: event.attributes,

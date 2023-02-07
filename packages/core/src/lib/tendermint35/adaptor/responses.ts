@@ -2,11 +2,19 @@
 import { fromBase64, fromHex } from '@cosmjs/encoding';
 import { JsonRpcSuccessResponse } from '@cosmjs/json-rpc';
 import { assert } from '@cosmjs/utils';
+import {
+  BlockIdFlag,
+  CommitSignature,
+  fromRfc3339WithNanoseconds,
+  ValidatorPubkey,
+} from '@cosmjs/tendermint-rpc';
+import { DateWithNanoseconds } from '@cosmjs/tendermint-rpc/build/dates';
+import {
+  apiToBigInt,
+  apiToSmallInt,
+} from '@cosmjs/tendermint-rpc/build/inthelpers';
+import { SubscriptionEvent } from '@cosmjs/tendermint-rpc/build/rpcclients';
 
-import { DateWithNanoseconds, fromRfc3339WithNanoseconds } from '../../dates';
-import { apiToBigInt, apiToSmallInt } from '../../inthelpers';
-import { SubscriptionEvent } from '../../rpcclients';
-import { BlockIdFlag, CommitSignature, ValidatorPubkey } from '../../types';
 import {
   assertArray,
   assertBoolean,
