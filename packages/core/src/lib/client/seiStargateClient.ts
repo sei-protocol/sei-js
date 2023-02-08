@@ -85,11 +85,9 @@ export class SeiStargateClient extends StargateClient {
   }
 
   private async txsQueryTm35(query: string): Promise<readonly IndexedTx[]> {
-    const results: TxSearchResponse = await this.forceGetTmClient().txSearchAll(
-      {
-        query: query,
-      }
-    );
+    const results = (await this.forceGetTmClient().txSearchAll({
+      query: query,
+    })) as unknown as TxSearchResponse;
     return results.txs.map((tx) => {
       return {
         height: tx.height,

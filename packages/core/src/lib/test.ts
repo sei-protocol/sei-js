@@ -1,4 +1,4 @@
-import { SeiStargateClient } from './seiStargateClient';
+import { SeiStargateClient } from './client';
 import { StargateClient } from '@cosmjs/stargate';
 
 const RPC_URL = 'https://rpc.sei-devnet-2.seinetwork.io/';
