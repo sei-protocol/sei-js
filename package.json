@@ -20,8 +20,7 @@
     "@cosmjs/proto-signing": "0.29.3",
     "@cosmjs/stargate": "0.29.3",
     "@cosmjs/tendermint-rpc": "0.29.3",
-    "@cosmjs/utils": "0.29.3",
-    "cosmjs-types": "^0.6.1"
+    "@cosmjs/utils": "0.29.3"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "15.5.1",

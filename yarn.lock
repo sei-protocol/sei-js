@@ -3619,14 +3619,6 @@ cosmjs-types@^0.5.2:
     long "^4.0.0"
     protobufjs "~6.11.2"
 
-cosmjs-types@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/cosmjs-types/-/cosmjs-types-0.6.1.tgz#4944e83d0fa87880243a11813bdff0e313d39a68"
-  integrity sha512-fRz6yzElHHBULDyLArF/G1UkkTWW4r3RondBUGnmSsZWYI5NpfDn32MVa5aRmpaaf4tJI2cbnXHs9fykwU7Ttg==
-  dependencies:
-    long "^4.0.0"
-    protobufjs "~6.11.2"
-
 create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
