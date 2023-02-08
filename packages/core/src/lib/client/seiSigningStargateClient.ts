@@ -20,6 +20,8 @@ export class SeiSigningStargateClient extends SigningStargateClient {
     signer: OfflineSigner,
     options: SigningStargateClientOptions
   ) {
+    // Temporary workaround to pass a Tendermint35Client into a StargateClient
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     super(tmClient as any, signer, options);
   }
 

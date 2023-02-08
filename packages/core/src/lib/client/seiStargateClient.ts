@@ -18,6 +18,8 @@ export class SeiStargateClient extends StargateClient {
     tmClient: Tendermint35Client | undefined,
     options: StargateClientOptions
   ) {
+    // Temporary workaround to pass a Tendermint35Client into a StargateClient
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     super(tmClient as any, options);
   }
 
