@@ -9,10 +9,9 @@ import {
   StargateClient,
   StargateClientOptions,
 } from '@cosmjs/stargate';
-import { toHex } from '@cosmjs/encoding';
 
-import { Tendermint35Client, TxSearchResponse } from '../tendermint35';
-import { fromTendermint35Event } from './events';
+import { Tendermint35Client } from '../tendermint35';
+import { txsQuery } from './common';
 
 export class SeiStargateClient extends StargateClient {
   protected constructor(
@@ -85,20 +84,7 @@ export class SeiStargateClient extends StargateClient {
   }
 
   private async txsQueryTm35(query: string): Promise<readonly IndexedTx[]> {
-    const results = (await this.forceGetTmClient().txSearchAll({
-      query: query,
-    })) as unknown as TxSearchResponse;
-    return results.txs.map((tx) => {
-      return {
-        height: tx.height,
-        hash: toHex(tx.hash).toUpperCase(),
-        code: tx.result.code,
-        events: tx.result.events.map(fromTendermint35Event),
-        rawLog: tx.result.log || '',
-        tx: tx.tx,
-        gasUsed: tx.result.gasUsed,
-        gasWanted: tx.result.gasWanted,
-      };
-    });
+    const tmClient = this.forceGetTmClient() as unknown as Tendermint35Client;
+    return txsQuery(tmClient, query);
   }
 }
