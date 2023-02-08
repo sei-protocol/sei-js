@@ -1,12 +1,5 @@
 import { toHex } from '@cosmjs/encoding';
-import {
-  IndexedTx,
-  isSearchByHeightQuery,
-  isSearchBySentFromOrToQuery,
-  isSearchByTagsQuery,
-  SearchTxFilter,
-  SearchTxQuery,
-} from '@cosmjs/stargate';
+import { IndexedTx } from '@cosmjs/stargate';
 import { Tendermint35Client } from '../tendermint35';
 import { fromTendermint35Event } from './events';
 

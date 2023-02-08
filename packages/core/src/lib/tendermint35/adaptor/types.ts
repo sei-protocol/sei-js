@@ -1,6 +1,6 @@
 import { JsonRpcRequest, JsonRpcSuccessResponse } from '@cosmjs/json-rpc';
-import { SubscriptionEvent } from '@cosmjs/tendermint-rpc/build/rpcclients';
 
+import { SubscriptionEvent } from '../rpcclients';
 import * as requests from '../requests';
 import * as responses from '../responses';
 

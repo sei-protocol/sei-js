@@ -3,14 +3,11 @@ import {
   HttpClient,
   HttpEndpoint,
   WebsocketClient,
-} from '@cosmjs/tendermint-rpc';
-import { createJsonRpcRequest } from '@cosmjs/tendermint-rpc/build/jsonrpc';
-import {
-  instanceOfRpcStreamingClient,
   RpcClient,
-  SubscriptionEvent,
-} from '@cosmjs/tendermint-rpc/build/rpcclients';
+} from '@cosmjs/tendermint-rpc';
 
+import { createJsonRpcRequest } from './jsonrpc';
+import { instanceOfRpcStreamingClient, SubscriptionEvent } from './rpcclients';
 import { adaptor35, Decoder, Encoder, Params, Responses } from './adaptor';
 import * as requests from './requests';
 import * as responses from './responses';

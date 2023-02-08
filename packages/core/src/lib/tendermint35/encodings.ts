@@ -1,6 +1,6 @@
 import { toUtf8 } from '@cosmjs/encoding';
 
-import { ReadonlyDateWithNanoseconds } from '@cosmjs/tendermint-rpc/build/dates';
+import { ReadonlyDateWithNanoseconds } from './dates';
 import { BlockId, Version } from './responses';
 
 /**

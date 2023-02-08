@@ -2,8 +2,8 @@
 import { toBase64, toHex } from '@cosmjs/encoding';
 import { JsonRpcRequest } from '@cosmjs/json-rpc';
 
-import { smallIntToApi } from '@cosmjs/tendermint-rpc/build/inthelpers';
-import { createJsonRpcRequest } from '@cosmjs/tendermint-rpc/build/jsonrpc';
+import { smallIntToApi } from '../inthelpers';
+import { createJsonRpcRequest } from '../jsonrpc';
 import { assertNotEmpty, may } from '../encodings';
 import * as requests from '../requests';
 

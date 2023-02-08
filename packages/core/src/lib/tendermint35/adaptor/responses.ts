@@ -8,13 +8,10 @@ import {
   fromRfc3339WithNanoseconds,
   ValidatorPubkey,
 } from '@cosmjs/tendermint-rpc';
-import { DateWithNanoseconds } from '@cosmjs/tendermint-rpc/build/dates';
-import {
-  apiToBigInt,
-  apiToSmallInt,
-} from '@cosmjs/tendermint-rpc/build/inthelpers';
-import { SubscriptionEvent } from '@cosmjs/tendermint-rpc/build/rpcclients';
 
+import { DateWithNanoseconds } from '../dates';
+import { apiToBigInt, apiToSmallInt } from '../inthelpers';
+import { SubscriptionEvent } from '../rpcclients';
 import {
   assertArray,
   assertBoolean,

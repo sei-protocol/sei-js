@@ -22,7 +22,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@sei-js/proto": "*"
+    "@sei-js/proto": "*",
+    "xstream": "^11.14.0"
   },
   "devDependencies": {}
 }
