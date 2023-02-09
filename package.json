@@ -15,10 +15,15 @@
   "private": true,
   "dependencies": {
     "@changesets/cli": "^2.26.0",
-    "@cosmjs/amino": "0.29.3",
-    "@cosmjs/proto-signing": "0.29.3",
-    "@cosmjs/stargate": "0.29.3",
-    "@cosmjs/tendermint-rpc": "0.29.3"
+    "@cosmjs/amino": "0.29.5",
+    "@cosmjs/encoding": "0.29.5",
+    "@cosmjs/json-rpc": "0.29.5",
+    "@cosmjs/math": "0.29.5",
+    "@cosmjs/proto-signing": "0.29.5",
+    "@cosmjs/stargate": "0.29.5",
+    "@cosmjs/tendermint-rpc": "0.29.5",
+    "@cosmjs/utils": "0.29.5",
+    "readonly-date": "^1.0.0"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "15.5.1",
