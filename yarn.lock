@@ -1394,6 +1394,23 @@
     "@cosmjs/math" "^0.29.5"
     "@cosmjs/utils" "^0.29.5"
 
+"@cosmjs/cosmwasm-stargate@0.29.5":
+  version "0.29.5"
+  resolved "https://registry.yarnpkg.com/@cosmjs/cosmwasm-stargate/-/cosmwasm-stargate-0.29.5.tgz#3f257da682658833e0f4eb9e8ff758e4d927663a"
+  integrity sha512-TNdSvm2tEE3XMCuxHxquzls56t40hC8qnLeYJWHsY2ECZmRK3KrnpRReEr7N7bLtODToK7X/riYrV0JaYxjrYA==
+  dependencies:
+    "@cosmjs/amino" "^0.29.5"
+    "@cosmjs/crypto" "^0.29.5"
+    "@cosmjs/encoding" "^0.29.5"
+    "@cosmjs/math" "^0.29.5"
+    "@cosmjs/proto-signing" "^0.29.5"
+    "@cosmjs/stargate" "^0.29.5"
+    "@cosmjs/tendermint-rpc" "^0.29.5"
+    "@cosmjs/utils" "^0.29.5"
+    cosmjs-types "^0.5.2"
+    long "^4.0.0"
+    pako "^2.0.2"
+
 "@cosmjs/crypto@0.28.13":
   version "0.28.13"
   resolved "https://registry.yarnpkg.com/@cosmjs/crypto/-/crypto-0.28.13.tgz#541b6a36f616b2da5a568ead46d4e83841ceb412"
@@ -1532,7 +1549,7 @@
     protobufjs "~6.11.3"
     xstream "^11.14.0"
 
-"@cosmjs/stargate@0.29.5":
+"@cosmjs/stargate@0.29.5", "@cosmjs/stargate@^0.29.5":
   version "0.29.5"
   resolved "https://registry.yarnpkg.com/@cosmjs/stargate/-/stargate-0.29.5.tgz#d597af1c85a3c2af7b5bdbec34d5d40692cc09e4"
   integrity sha512-hjEv8UUlJruLrYGJcUZXM/CziaINOKwfVm2BoSdUnNTMxGvY/jC1ABHKeZUYt9oXHxEJ1n9+pDqzbKc8pT0nBw==
@@ -6518,6 +6535,11 @@ p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
+
+pako@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-2.1.0.tgz#266cc37f98c7d883545d11335c00fbd4062c9a86"
+  integrity sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==
 
 parent-module@^1.0.0:
   version "1.0.1"
