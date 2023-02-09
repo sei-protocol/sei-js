@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.0
+
+### Minor Changes
+
+- bb52df2: Extend CosmJS clients to support Sei Tendermint
+
+### Patch Changes
+
+- 4256836: Add SeiCosmWasmClient with tendermint 0.35 implementation
+
 ## 1.1.6
 
 ### Patch Changes
