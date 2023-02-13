@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.7
+
+### Patch Changes
+
+- bb52df2: Extend CosmJS clients to support Sei Tendermint
+- Updated dependencies [bb52df2]
+- Updated dependencies [4256836]
+  - @sei-js/core@1.2.0
+
 ## 1.1.6
 
 ### Patch Changes
