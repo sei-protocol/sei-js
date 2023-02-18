@@ -22,6 +22,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@keplr-wallet/types": "^0.11.41",
     "@sei-js/proto": "*",
     "xstream": "^11.14.0"
   },
