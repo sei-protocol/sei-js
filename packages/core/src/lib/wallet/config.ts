@@ -23,17 +23,17 @@ export const SUPPORTED_WALLETS: SupportedWallet[] = [
   FALCON_WALLET,
 ];
 
-const defaultChainInfo: ChainInfo = {
+const DEFAULT_CHAIN_INFO = {
   chainName: 'Sei Testnet',
   chainId: 'atlantic-1',
   restUrl: 'https://sei-chain-incentivized.com/sei-chain-app/',
   rpcUrl: 'https://sei-chain-incentivized.com/sei-chain-tm/',
 };
 
-export const getChainSuggest = (chainInfo?: ChainInfo) => {
+export const getChainSuggest = (chainInfo: ChainInfo = {}) => {
   const prefix = 'sei';
   const { chainId, chainName, rpcUrl, restUrl } = {
-    ...defaultChainInfo,
+    ...DEFAULT_CHAIN_INFO,
     ...chainInfo,
   };
 

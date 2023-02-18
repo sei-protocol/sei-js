@@ -2,10 +2,10 @@ import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
 import { TextEncoder } from 'util';
 import { connect } from './connect';
 
-describe('connect', () => {
-  // Needed to generate an offline signer
-  global.TextEncoder = TextEncoder;
+// Needed to generate an offline signer
+global.TextEncoder = TextEncoder;
 
+describe('connect', () => {
   let windowSpy: jest.SpyInstance;
 
   beforeEach(() => {
