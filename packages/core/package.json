@@ -23,7 +23,7 @@
   "private": false,
   "dependencies": {
     "@keplr-wallet/types": "^0.11.41",
-    "@sei-js/proto": "*",
+    "@sei-js/proto": "1.1.6",
     "xstream": "^11.14.0"
   },
   "devDependencies": {}
