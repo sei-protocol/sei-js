@@ -1,11 +1,15 @@
+import { TextEncoder } from 'util';
 import { getChainSuggest, suggestChain } from './config';
+
+// Needed to generate an offline signer
+global.TextEncoder = TextEncoder;
 
 describe('getChainSuggest', () => {
   it('should return a chain config', async () => {
     const chainId = 'atlantic-1';
     const restUrl = 'https://rest-url';
     const rpcUrl = 'https://rpc-url';
-    expect(getChainSuggest(chainId, restUrl, rpcUrl)).toEqual({
+    expect(getChainSuggest({ chainId, restUrl, rpcUrl })).toEqual({
       chainId: 'atlantic-1',
       chainName: 'Sei Testnet',
       rpc: rpcUrl,

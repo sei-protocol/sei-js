@@ -22,7 +22,17 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@sei-js/proto": "*",
+    "@cosmjs/cosmwasm-stargate": "^0.29.5",
+    "@cosmjs/encoding": "0.29.5",
+    "@cosmjs/json-rpc": "0.29.5",
+    "@cosmjs/math": "0.29.5",
+    "@cosmjs/proto-signing": "0.29.5",
+    "@cosmjs/stargate": "0.29.5",
+    "@cosmjs/tendermint-rpc": "0.29.5",
+    "@cosmjs/utils": "0.29.5",
+    "@keplr-wallet/types": "^0.11.41",
+    "@sei-js/proto": "1.1.6",
+    "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
   "devDependencies": {}

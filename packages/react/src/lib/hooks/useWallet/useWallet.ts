@@ -57,12 +57,7 @@ const useWallet: (
   const connect = useCallback(async () => {
     try {
       const initConnection = async () => {
-        const ConnectWallet = await connectWallet(
-          inputWallet,
-          chainId,
-          restUrl,
-          rpcUrl
-        );
+        const ConnectWallet = await connectWallet(inputWallet, chainId);
         if (!ConnectWallet) return;
         const { offlineSigner, accounts } = ConnectWallet;
         setOfflineSigner(offlineSigner);

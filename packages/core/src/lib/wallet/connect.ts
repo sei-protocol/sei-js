@@ -1,53 +1,33 @@
-import { OfflineSigner } from '@cosmjs/proto-signing';
-import { getChainSuggest } from './config';
-import { WalletConnect, WalletWindowKey } from './types';
+import { Keplr as KeplrWindow } from '@keplr-wallet/types';
+import { WalletConnect, WalletWindowInterface, WalletWindowKey } from './types';
 
 declare global {
   interface Window {
-    keplr?: {
-      getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
-      experimentalSuggestChain: (config: object) => Promise<void>;
-      enable: (chainId: string) => Promise<void>;
+    coin98?: {
+      keplr: KeplrWindow;
     };
-    leap?: {
-      getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
-      experimentalSuggestChain: (config: object) => Promise<void>;
-      enable: (chainId: string) => Promise<void>;
-    };
-    coin98?: { cosmos: (chainId: string) => Promise<unknown> };
-    falcon?: {
-      getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
-      experimentalSuggestChain: (config: object) => Promise<void>;
-      enable: (chainId: string) => Promise<void>;
-    };
+    falcon?: WalletWindowInterface;
+    keplr?: KeplrWindow;
+    leap?: WalletWindowInterface;
   }
 }
 
 export const connect = async (
   inputWallet: WalletWindowKey,
-  chainId: string,
-  restUrl?: string,
-  rpcUrl?: string
+  chainId: string
 ): Promise<WalletConnect> => {
-  const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
-
   if (typeof window === 'undefined' || !window) {
     throw new Error('Window is undefined.');
   }
 
-  const walletProvider = window[windowKey];
+  const walletProvider =
+    inputWallet === 'coin98' ? window[inputWallet]?.keplr : window[inputWallet];
   if (!walletProvider) {
     throw new Error(`Wallet ${inputWallet} is not installed.`);
   }
 
   // Enable wallet before attempting to call any methods
   await walletProvider.enable(chainId);
-
-  if (inputWallet === 'keplr') {
-    await walletProvider.experimentalSuggestChain(
-      getChainSuggest(chainId, restUrl, rpcUrl)
-    );
-  }
 
   const offlineSigner = await walletProvider.getOfflineSigner(chainId);
   const accounts = await offlineSigner.getAccounts();

@@ -1,4 +1,4 @@
-import { SupportedWallet, WalletWindowKey } from './types';
+import { ChainInfo, SupportedWallet, WalletWindowKey } from './types';
 
 const KEPLR_WALLET: SupportedWallet = {
   windowKey: 'keplr',
@@ -23,17 +23,23 @@ export const SUPPORTED_WALLETS: SupportedWallet[] = [
   FALCON_WALLET,
 ];
 
-const baseDenomTokenId = `factory/sei1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqpeheyc/uust2`;
-const prefix = 'sei';
+const DEFAULT_CHAIN_INFO = {
+  chainName: 'Sei Testnet',
+  chainId: 'atlantic-1',
+  restUrl: 'https://sei-chain-incentivized.com/sei-chain-app/',
+  rpcUrl: 'https://sei-chain-incentivized.com/sei-chain-tm/',
+};
 
-export const getChainSuggest = (
-  chainId = 'atlantic-1',
-  restUrl = 'https://sei-chain-incentivized.com/sei-chain-app',
-  rpcUrl = 'https://sei-chain-incentivized.com/sei-chain-tm/'
-) => {
+export const getChainSuggest = (chainInfo: ChainInfo = {}) => {
+  const prefix = 'sei';
+  const { chainId, chainName, rpcUrl, restUrl } = {
+    ...DEFAULT_CHAIN_INFO,
+    ...chainInfo,
+  };
+
   return {
     chainId: chainId,
-    chainName: 'Sei Testnet',
+    chainName: chainName,
     rpc: rpcUrl,
     rest: restUrl,
     bip44: {
@@ -88,7 +94,8 @@ export const getChainSuggest = (
       },
       {
         coinDenom: 'UST2',
-        coinMinimalDenom: baseDenomTokenId,
+        coinMinimalDenom:
+          'factory/sei1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqpeheyc/uust2',
         coinDecimals: 6,
       },
       {
@@ -117,10 +124,8 @@ export const getChainSuggest = (
 
 export const suggestChain = async (
   inputWallet: WalletWindowKey,
-  chainId?: string,
-  restUrl?: string,
-  rpcUrl?: string
-): Promise<void> => {
+  chainInfo?: ChainInfo
+) => {
   if (typeof window === 'undefined' || !window) {
     throw new Error('Window is undefined.');
   }
@@ -131,6 +136,6 @@ export const suggestChain = async (
     throw new Error(`Wallet ${inputWallet} is not installed.`);
   }
 
-  const config = getChainSuggest(chainId, restUrl, rpcUrl);
+  const config = getChainSuggest(chainInfo);
   await walletProvider.experimentalSuggestChain(config);
 };
