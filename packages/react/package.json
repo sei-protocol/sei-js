@@ -22,6 +22,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@cosmjs/proto-signing": "0.29.5",
+    "@cosmjs/stargate": "0.29.5",
     "@sei-js/core": "1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
