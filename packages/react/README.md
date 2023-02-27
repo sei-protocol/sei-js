@@ -1,6 +1,6 @@
 # @sei-js/react
 
-A set of React hooks for [@sei-js/core](https://www.npmjs.com/package/@sei-js/core) written in Typescript.
+A React helper library for [@sei-js/core](https://www.npmjs.com/package/@sei-js/core) written in Typescript.
 
 ## Tutorial
 
@@ -12,81 +12,86 @@ For an in depth tutorial, please see [our documentation](https://docs.seinetwork
 yarn add @sei-js/react
 ```
 
+# WalletProvider
+The first step is to wrap your entire application in a Sei wallet provider and pass in a chainId, rest url, and rpc url.
+```javascript
+<SeiWalletProvider
+  chainConfiguration={{
+    chainId: 'sei-devnet-3',
+    restUrl: 'https://rest.sei-devnet-3.seinetwork.io/',
+    rpcUrl: 'https://rpc.sei-devnet-3.seinetwork.io'
+  }}>
+      <YourApp />
+</SeiWalletProvider>
+```
+
 # Hooks
 
-| Hook                                  | Params                                   |
-| ------------------------------------- | ---------------------------------------- |
-| [useWallet](#usewallet)               | (window: any, config: object)            |
-| [useQueryClient](#useQueryClient)     | (rpcAddress: string)                     |
-| [useSigningClient](#useSigningClient) | (rpcAddress: string, offlineSigner: any) |
+| Hook                                          | Params                |
+|-----------------------------------------------|-----------------------|
+| [useWallet](#useWallet)                       | ---                   |
+| [useQueryClient](#useQueryClient)             | (rpcAddress?: string) |
+| [useSigningClient](#useSigningClient)         | (rpcAddress?: string) |
+| [useSeiCosmWasmClient](#useSeiCosmWasmClient) | ---                   |
 
 ## useWallet
 
 A hook to connect one of our supported wallets to your application.
 
-### Input Props
-
-| Hook          | Params                                                                                              |
-| ------------- | --------------------------------------------------------------------------------------------------- |
-| window        | The client side `window` object which has access to wallet providers injected code.                 |
-| walletOptions | [UseWalletOptions](https://github.com/sei-protocol/js-react/blob/main/src/hooks/useWallet/types.ts) |
 
 ```javascript
 import { useWallet } from '@sei-js/react';
 
-const { offlineSigner } = useWallet(window, {
-  inputWallet: 'leap',
-  autoconnect: true,
-  chainConfiguration: 'testnet',
-});
+const { offlineSigner, accounts, connectedWallet } = useWallet();
 ```
 
 ### Return Values
 
-| Property         | Type               | Description                                             |
-| ---------------- | ------------------ | ------------------------------------------------------- |
-| connectedWallet  | string?            | The currently connected wallet                          |
-| connect          | () => Promise<any> | Async function to connect to input wallet               |
-| disconnect       | () => void         | Function to disconnect from input wallet                |
-| supportedWallets | string[]           | List of supported wallets                               |
-| installedWallets | string[]           | List of wallets installed                               |
-| error            | string?            | Error message                                           |
-| chainId          | string             | Sei chain id                                            |
-| restUrl          | string             | The rest url associated with the connected wallet       |
-| rpcUrl           | string             | The rpc url associated with the connected wallet        |
-| offlineSigner    | object?            | The offline signer associated with the connected wallet |
-| accounts         | object[]?          | The accounts associated with the connected wallet       |
+| Property         | Type      | Description                                             |
+|------------------|-----------|---------------------------------------------------------|
+| connectedWallet  | string?   | The currently connected wallet                          |
+| supportedWallets | string[]  | List of supported wallets                               |
+| installedWallets | string[]  | List of wallets installed                               |
+| chainId          | string    | Sei chain id                                            |
+| restUrl          | string    | The rest url associated with the connected wallet       |
+| rpcUrl           | string    | The rpc url associated with the connected wallet        |
+| offlineSigner    | object?   | The offline signer associated with the connected wallet |
+| accounts         | object[]? | The accounts associated with the connected wallet       |
 
 ## useQueryClient
 
 ```javascript
 import { useQueryClient } from '@sei-js/react';
 
-const { queryClient, isLoading } = useQueryClient('rest_url');
+const { queryClient, isLoading } = useQueryClient();
 ```
 
 | Property    | Type                   | Description                                             |
-| ----------- | ---------------------- | ------------------------------------------------------- |
+|-------------|------------------------|---------------------------------------------------------|
 | queryClient | StargateSigningClient? | A stargate signing client.                              |
 | isLoading   | boolean                | Boolean value for when the initial loading is happening |
 
 ## useSigningClient
 
 ```javascript
-import { useWallet, useSigningClient } from '@sei-js/react';
+import { useSigningClient } from '@sei-js/react';
 
-const { offlineSigner } = useWallet(window, {
-  inputWallet: 'keplr',
-  autoconnect: true,
-  chainConfiguration: 'testnet',
-});
-const { signingClient, isLoading } = useSigningClient(
-  'rpc_address',
-  offlineSigner
-);
+const { signingClient, isLoading } = useSigningClient();
 ```
 
 | Property      | Type                   | Description                                             |
-| ------------- | ---------------------- | ------------------------------------------------------- |
+|---------------|------------------------|---------------------------------------------------------|
 | signingClient | StargateSigningClient? | A stargate signing client.                              |
 | isLoading     | boolean                | Boolean value for when the initial loading is happening |
+
+## useSeiCosmWasmClient
+
+```javascript
+import { useSeiCosmWasmClient } from '@sei-js/react';
+
+const { cosmWasmClient } = useSeiCosmWasmClient();
+```
+
+| Property       | Type            | Description                             |
+|----------------|-----------------|-----------------------------------------|
+| cosmWasmClient | CosmWasmClient? | A cosm wasm client for smart contracts. |

@@ -15,7 +15,8 @@
       "DOM.Iterable",
       "ScriptHost",
       "ES2016.Array.Include"
-    ]
+    ],
+    "jsx": "react",
   },
   "include": ["src"],
   "exclude": ["node_modules"]
