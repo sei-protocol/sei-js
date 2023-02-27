@@ -23,7 +23,7 @@ export type WalletProvider = {
   offlineSigner?: OfflineSigner;
   connectedWallet: WalletWindowKey | undefined;
   installedWallets: WalletWindowKey[];
-  setInputWallet: (inputWallet: WalletWindowKey | undefined) => void;
+  setInputWallet?: (inputWallet: WalletWindowKey | undefined) => void;
 };
 
 const supportedWallets = SUPPORTED_WALLETS.map((wallet) => wallet.windowKey);
@@ -37,7 +37,6 @@ export const SeiWalletContext = createContext<WalletProvider>({
   offlineSigner: undefined,
   connectedWallet: undefined,
   installedWallets: [],
-  setInputWallet: () => {},
 });
 
 const SeiWalletProvider = ({
@@ -79,7 +78,7 @@ const SeiWalletProvider = ({
       };
 
       initConnection().then();
-    } catch (e: any) {
+    } catch {
       console.error('error!');
     }
   }, [

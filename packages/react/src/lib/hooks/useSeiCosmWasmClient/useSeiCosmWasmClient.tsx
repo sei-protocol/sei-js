@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SeiWalletContext } from '../../provider';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { SeiCosmWasmClient } from '@sei-js/core/src';
@@ -15,8 +15,8 @@ const useSeiCosmWasmClient = (rpcUrl?: string) => {
           rpcUrl ? rpcUrl : (seiWallet.rpcUrl as string)
         );
         setClient(client);
-      } catch (e: any) {
-        console.error('Error creating SeiCosmWasmClient.', e?.messsage);
+      } catch {
+        console.error('Error creating SeiCosmWasmClient.');
       }
     };
     connect().then();

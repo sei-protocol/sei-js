@@ -3,6 +3,7 @@ import { WalletSelectModalProps } from './types';
 import styles from './WalletSelectModal.module.sass';
 import { SeiWalletContext } from '../../provider';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { WalletWindowKey } from '@sei-js/core/src';
 
 const WalletSelectModal = ({
   setShowConnectModal,
@@ -17,7 +18,7 @@ const WalletSelectModal = ({
 
   const wallets = inputWallets || supportedWallets;
 
-  const renderWallet = (wallet: any) => {
+  const renderWallet = (wallet: WalletWindowKey) => {
     const renderConnection = () => {
       if (connectedWallet === wallet) return <p>connected</p>;
       if (installedWallets.includes(wallet)) return <p>detected</p>;
