@@ -11,6 +11,7 @@ import {
   connect as connectWallet,
   SUPPORTED_WALLETS,
   getChainSuggest,
+  ChainInfo,
 } from '@sei-js/core';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 
@@ -56,19 +57,18 @@ const SeiWalletProvider = ({
       const initConnection = async () => {
         if (!inputWallet) return;
         if (inputWallet === 'keplr') {
-          const chainSuggest = getChainSuggest(
-            'sei-devnet-3',
-            chainConfiguration.restUrl,
-            chainConfiguration.rpcUrl
-          );
-          chainSuggest.chainName = 'Sei Devnet 3';
+          const chainSuggest = getChainSuggest({
+            chainName: `Sei ${chainConfiguration.chainId}`,
+            chainId: chainConfiguration.chainId,
+            rpc: chainConfiguration.rpcUrl,
+            rest: chainConfiguration.restUrl,
+          } as ChainInfo);
+          // @ts-ignore
           await window.keplr?.experimentalSuggestChain(chainSuggest);
         }
         const ConnectWallet = await connectWallet(
           inputWallet,
-          chainConfiguration.chainId,
-          chainConfiguration.restUrl,
-          chainConfiguration.rpcUrl
+          chainConfiguration.chainId
         );
         if (!ConnectWallet) return;
         const { offlineSigner, accounts } = ConnectWallet;

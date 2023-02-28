@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.0-internal-20230228191111
+
+### Patch Changes
+
+- 7fc4ff2: Fix dependencies for all packages
+- 7fc4ff2: Update dependencies for packages in monorepo
+- Updated dependencies [7fc4ff2]
+- Updated dependencies [7fc4ff2]
+  - @sei-js/proto@0.0.0-internal-20230228191111
+
 ## 1.2.0
 
 ### Minor Changes

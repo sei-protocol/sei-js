@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.0.0-internal-20230228191111
+
+### Major Changes
+
+- Switche react package to use context and a wallet provider. Hooks no longer need inputs each time.
+
+### Minor Changes
+
+- 7fc4ff2: Update dependencies for packages in monorepo
+
+### Patch Changes
+
+- 7fc4ff2: Fix dependencies for all packages
+- Updated dependencies [7fc4ff2]
+- Updated dependencies [7fc4ff2]
+  - @sei-js/core@0.0.0-internal-20230228191111
+
 ## 1.1.7
 
 ### Patch Changes
