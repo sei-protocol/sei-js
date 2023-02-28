@@ -1,28 +1,27 @@
 import { useContext, useEffect, useState } from 'react';
 import { SeiWalletContext } from '../../provider';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { SeiCosmWasmClient } from '@sei-js/core/src';
+import { SeiCosmWasmClient } from '@sei-js/core';
 
-const useSeiCosmWasmClient = (rpcUrl?: string) => {
-  const seiWallet = useContext(SeiWalletContext);
+const useSeiCosmWasmClient = () => {
+	const seiWallet = useContext(SeiWalletContext);
 
-  const [client, setClient] = useState<CosmWasmClient | undefined>(undefined);
+	const [cosmWasmClient, setCosmWasmClient] = useState<CosmWasmClient | undefined>(undefined);
 
-  useEffect(() => {
-    const connect = async () => {
-      try {
-        const client = await SeiCosmWasmClient.connect(
-          rpcUrl ? rpcUrl : (seiWallet.rpcUrl as string)
-        );
-        setClient(client);
-      } catch {
-        console.error('Error creating SeiCosmWasmClient.');
-      }
-    };
-    connect().then();
-  }, [seiWallet, rpcUrl]);
+	useEffect(() => {
+		const connect = async () => {
+			try {
+				if (!seiWallet?.rpcUrl) return;
+				const client = await SeiCosmWasmClient.connect(seiWallet.rpcUrl);
+				setCosmWasmClient(client);
+			} catch {
+				console.error('Error creating SeiCosmWasmClient.');
+			}
+		};
+		connect().then();
+	}, [seiWallet, seiWallet?.rpcUrl]);
 
-  return { client };
+	return { cosmWasmClient };
 };
 
 export default useSeiCosmWasmClient;
