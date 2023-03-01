@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.0.0-internal-20230301164124
+
+### Major Changes
+
+- Improved UI
+
+## 0.0.0-internal-20230228224702
+
+### Major Changes
+
+- Wallet Provider
+
+## 0.0.0-internal-20230228210051
+
+### Major Changes
+
+- Added Wallet Provider
+
+## 0.0.0-internal-20230228204938
+
+### Minor Changes
+
+- Added wallet provider
+
+## 0.0.0-internal-20230228204723
+
+### Major Changes
+
+- Added wallet provider
+
+## 0.0.0-internal-20230228203339
+
+### Major Changes
+
+- Fixed typescript issues
+
 ## 0.0.0-internal-20230228191111
 
 ### Major Changes

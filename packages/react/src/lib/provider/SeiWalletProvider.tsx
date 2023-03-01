@@ -12,6 +12,7 @@ import {
   SUPPORTED_WALLETS,
   getChainSuggest,
   ChainInfo,
+  suggestChain,
 } from '@sei-js/core';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 
@@ -57,14 +58,12 @@ const SeiWalletProvider = ({
       const initConnection = async () => {
         if (!inputWallet) return;
         if (inputWallet === 'keplr') {
-          const chainSuggest = getChainSuggest({
+          await suggestChain('keplr', {
             chainName: `Sei ${chainConfiguration.chainId}`,
             chainId: chainConfiguration.chainId,
             rpc: chainConfiguration.rpcUrl,
             rest: chainConfiguration.restUrl,
           } as ChainInfo);
-          // @ts-ignore
-          await window.keplr?.experimentalSuggestChain(chainSuggest);
         }
         const ConnectWallet = await connectWallet(
           inputWallet,

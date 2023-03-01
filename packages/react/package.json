@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/react",
-  "version": "0.0.0-internal-20230228191111",
+  "version": "0.0.0-internal-20230301164124",
   "description": "React library for front end integrations with Sei",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,14 +22,12 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@sei-js/core": "0.0.0-internal-20230228191111",
+    "@sei-js/core": "*",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-outside-click-handler": "^1.3.0"
   },
   "devDependencies": {
-    "sass": "^1.58.1",
-    "@types/react-outside-click-handler": "^1.3.1",
-    "@types/react-copy-to-clipboard": "^5.0.4"
+    "@types/react-outside-click-handler": "^1.3.1"
   }
 }
