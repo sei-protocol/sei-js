@@ -7,5 +7,6 @@ export const getSigningClient = async (
   signer: OfflineSigner,
   useTM34?: boolean
 ): Promise<SigningStargateClient> => {
+  //@ts-ignore
   return await getSigningSeiprotocolClient({ rpcEndpoint, signer, useTM34 });
 };
