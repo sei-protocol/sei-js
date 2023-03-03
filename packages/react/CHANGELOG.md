@@ -1,5 +1,91 @@
 # Changelog
 
+## 0.0.0-internal-20230301235358
+
+### Major Changes
+
+- fixed auto connect when changing inputs
+
+## 0.0.0-internal-20230301234440
+
+### Major Changes
+
+- Auto reconnect when chain config changes
+
+## 0.0.0-internal-20230301223319
+
+### Major Changes
+
+- Updated proto repo to accept TM34 logic
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/proto@0.0.0-internal-20230301223319
+  - @sei-js/core@0.0.0-internal-20230301223319
+
+## 0.0.0-internal-20230301221537
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/core@0.0.0-internal-20230301221537
+
+## 0.0.0-internal-20230301221300
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/core@0.0.0-internal-20230301221300
+
+## 0.0.0-internal-20230301205748
+
+### Major Changes
+
+- Adjusted useSigningClient to use TM34 client if chainId is atlantic 1
+
+## 0.0.0-internal-20230301204958
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/core@0.0.0-internal-20230301204958
+
+## 0.0.0-internal-20230301195218
+
+### Major Changes
+
+- Wallet provider with correct dependencies
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/core@0.0.0-internal-20230301195218
+
+## 0.0.0-internal-20230301193918
+
+### Major Changes
+
+- Wallet Provider
+
+## 0.0.0-internal-20230301193738
+
+### Major Changes
+
+- Wallet provider with custom styles
+
+## 0.0.0-internal-20230301164640
+
+### Major Changes
+
+- Wallet provider
+
+## 0.0.0-internal-20230301164419
+
+### Major Changes
+
+- Added wallet provider
+
 ## 0.0.0-internal-20230301164124
 
 ### Major Changes

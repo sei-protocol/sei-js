@@ -95,7 +95,12 @@ const SeiWalletProvider = ({
       setAccounts([]);
       setOfflineSigner(undefined);
     }
-  }, [inputWallet]);
+  }, [
+    inputWallet,
+    chainConfiguration.chainId,
+    chainConfiguration.restUrl,
+    chainConfiguration.rpcUrl,
+  ]);
 
   const installedWallets = useMemo(
     () =>

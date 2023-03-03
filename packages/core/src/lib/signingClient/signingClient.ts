@@ -4,7 +4,8 @@ import { getSigningSeiprotocolClient } from '@sei-js/proto';
 
 export const getSigningClient = async (
   rpcEndpoint: string,
-  signer: OfflineSigner
+  signer: OfflineSigner,
+  useTM34?: boolean
 ): Promise<SigningStargateClient> => {
-  return await getSigningSeiprotocolClient({ rpcEndpoint, signer });
+  return await getSigningSeiprotocolClient({ rpcEndpoint, signer, useTM34 });
 };

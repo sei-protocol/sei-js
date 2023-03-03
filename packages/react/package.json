@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/react",
-  "version": "0.0.0-internal-20230301164124",
+  "version": "0.0.0-internal-20230301235358",
   "description": "React library for front end integrations with Sei",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,7 +22,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@sei-js/core": "*",
+    "@sei-js/core": "0.0.0-internal-20230301223319",
+    "@sei-js/proto": "0.0.0-internal-20230301223319",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-outside-click-handler": "^1.3.0"
