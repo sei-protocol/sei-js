@@ -1,14 +1,18 @@
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
-/** Minter represents the minting state. */
+import { Long, DeepPartial } from "@osmonauts/helpers";
+/** Minter represents the most recent */
 export interface Minter {
-    /** current epoch provisions */
-    epochProvisions: string;
+    lastMintAmount: string;
+    lastMintDate: string;
+    lastMintHeight: Long;
+    denom: string;
 }
-/** Minter represents the minting state. */
+/** Minter represents the most recent */
 export interface MinterSDKType {
-    /** current epoch provisions */
-    epoch_provisions: string;
+    last_mint_amount: string;
+    last_mint_date: string;
+    last_mint_height: Long;
+    denom: string;
 }
 export interface ScheduledTokenRelease {
     /** yyyy-mm-dd */
@@ -24,8 +28,6 @@ export interface ScheduledTokenReleaseSDKType {
 export interface Params {
     /** type of coin to mint */
     mintDenom: string;
-    /** epoch provisions from the first epoch */
-    genesisEpochProvisions: string;
     /** List of token release schedules */
     tokenReleaseSchedule: ScheduledTokenRelease[];
 }
@@ -33,8 +35,6 @@ export interface Params {
 export interface ParamsSDKType {
     /** type of coin to mint */
     mint_denom: string;
-    /** epoch provisions from the first epoch */
-    genesis_epoch_provisions: string;
     /** List of token release schedules */
     token_release_schedule: ScheduledTokenReleaseSDKType[];
 }

@@ -1,4 +1,4 @@
-import { Params, ParamsSDKType, ExchangeRateTuple, ExchangeRateTupleSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType } from "./oracle";
+import { Params, ParamsSDKType, ExchangeRateTuple, ExchangeRateTupleSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, PriceSnapshot, PriceSnapshotSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType } from "./oracle";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "@osmonauts/helpers";
 export interface GenesisState {
@@ -7,6 +7,7 @@ export interface GenesisState {
     exchangeRates: ExchangeRateTuple[];
     penaltyCounters: PenaltyCounter[];
     aggregateExchangeRateVotes: AggregateExchangeRateVote[];
+    priceSnapshots: PriceSnapshot[];
 }
 export interface GenesisStateSDKType {
     params: ParamsSDKType;
@@ -14,6 +15,7 @@ export interface GenesisStateSDKType {
     exchange_rates: ExchangeRateTupleSDKType[];
     penalty_counters: PenaltyCounterSDKType[];
     aggregate_exchange_rate_votes: AggregateExchangeRateVoteSDKType[];
+    price_snapshots: PriceSnapshotSDKType[];
 }
 export interface FeederDelegation {
     feederAddress: string;

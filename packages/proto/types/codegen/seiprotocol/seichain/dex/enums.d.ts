@@ -28,6 +28,10 @@ export declare enum OrderType {
     LIQUIDATION = 2,
     /** FOKMARKET - fill-or-kill market order */
     FOKMARKET = 3,
+    /** FOKMARKETBYVALUE - fill-or-kill market by value order */
+    FOKMARKETBYVALUE = 4,
+    STOPLOSS = 5,
+    STOPLIMIT = 6,
     UNRECOGNIZED = -1
 }
 export declare enum OrderTypeSDKType {
@@ -36,6 +40,10 @@ export declare enum OrderTypeSDKType {
     LIQUIDATION = 2,
     /** FOKMARKET - fill-or-kill market order */
     FOKMARKET = 3,
+    /** FOKMARKETBYVALUE - fill-or-kill market by value order */
+    FOKMARKETBYVALUE = 4,
+    STOPLOSS = 5,
+    STOPLIMIT = 6,
     UNRECOGNIZED = -1
 }
 export declare function orderTypeFromJSON(object: any): OrderType;

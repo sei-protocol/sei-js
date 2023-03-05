@@ -74,60 +74,6 @@ export interface QueryDenomsFromCreatorResponse {
 export interface QueryDenomsFromCreatorResponseSDKType {
     denoms: string[];
 }
-/**
- * QueryDenomCreationFeeWhitelistRequest defines the request structure for the
- * DenomCreationFeeWhitelist gRPC query.
- */
-export interface QueryDenomCreationFeeWhitelistRequest {
-}
-/**
- * QueryDenomCreationFeeWhitelistRequest defines the request structure for the
- * DenomCreationFeeWhitelist gRPC query.
- */
-export interface QueryDenomCreationFeeWhitelistRequestSDKType {
-}
-/**
- * QueryDenomCreationFeeWhitelistResponse defines the response structure for the
- * DenomsFromCreator gRPC query.
- */
-export interface QueryDenomCreationFeeWhitelistResponse {
-    creators: string[];
-}
-/**
- * QueryDenomCreationFeeWhitelistResponse defines the response structure for the
- * DenomsFromCreator gRPC query.
- */
-export interface QueryDenomCreationFeeWhitelistResponseSDKType {
-    creators: string[];
-}
-/**
- * QueryCreatorInDenomFeeWhitelistRequest defines the request structure for the
- * CreatorInDenomFeeWhitelist gRPC query.
- */
-export interface QueryCreatorInDenomFeeWhitelistRequest {
-    creator: string;
-}
-/**
- * QueryCreatorInDenomFeeWhitelistRequest defines the request structure for the
- * CreatorInDenomFeeWhitelist gRPC query.
- */
-export interface QueryCreatorInDenomFeeWhitelistRequestSDKType {
-    creator: string;
-}
-/**
- * QueryCreatorInDenomFeeWhitelistResponse defines the response structure for the
- * CreatorInDenomFeeWhitelist gRPC query.
- */
-export interface QueryCreatorInDenomFeeWhitelistResponse {
-    whitelisted: boolean;
-}
-/**
- * QueryCreatorInDenomFeeWhitelistResponse defines the response structure for the
- * CreatorInDenomFeeWhitelist gRPC query.
- */
-export interface QueryCreatorInDenomFeeWhitelistResponseSDKType {
-    whitelisted: boolean;
-}
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest;
@@ -157,24 +103,4 @@ export declare const QueryDenomsFromCreatorResponse: {
     encode(message: QueryDenomsFromCreatorResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsFromCreatorResponse;
     fromPartial(object: DeepPartial<QueryDenomsFromCreatorResponse>): QueryDenomsFromCreatorResponse;
-};
-export declare const QueryDenomCreationFeeWhitelistRequest: {
-    encode(_: QueryDenomCreationFeeWhitelistRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomCreationFeeWhitelistRequest;
-    fromPartial(_: DeepPartial<QueryDenomCreationFeeWhitelistRequest>): QueryDenomCreationFeeWhitelistRequest;
-};
-export declare const QueryDenomCreationFeeWhitelistResponse: {
-    encode(message: QueryDenomCreationFeeWhitelistResponse, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomCreationFeeWhitelistResponse;
-    fromPartial(object: DeepPartial<QueryDenomCreationFeeWhitelistResponse>): QueryDenomCreationFeeWhitelistResponse;
-};
-export declare const QueryCreatorInDenomFeeWhitelistRequest: {
-    encode(message: QueryCreatorInDenomFeeWhitelistRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryCreatorInDenomFeeWhitelistRequest;
-    fromPartial(object: DeepPartial<QueryCreatorInDenomFeeWhitelistRequest>): QueryCreatorInDenomFeeWhitelistRequest;
-};
-export declare const QueryCreatorInDenomFeeWhitelistResponse: {
-    encode(message: QueryCreatorInDenomFeeWhitelistResponse, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryCreatorInDenomFeeWhitelistResponse;
-    fromPartial(object: DeepPartial<QueryCreatorInDenomFeeWhitelistResponse>): QueryCreatorInDenomFeeWhitelistResponse;
 };

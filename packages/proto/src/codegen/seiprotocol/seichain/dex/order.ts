@@ -14,6 +14,9 @@ export interface Order {
   positionDirection: PositionDirection;
   data: string;
   statusDescription: string;
+  nominal: string;
+  triggerPrice: string;
+  triggerStatus: boolean;
 }
 export interface OrderSDKType {
   id?: Long;
@@ -28,6 +31,9 @@ export interface OrderSDKType {
   positionDirection: PositionDirectionSDKType;
   data: string;
   statusDescription: string;
+  nominal: string;
+  triggerPrice: string;
+  triggerStatus: boolean;
 }
 export interface Cancellation {
   id: Long;
@@ -69,7 +75,10 @@ function createBaseOrder(): Order {
     orderType: 0,
     positionDirection: 0,
     data: "",
-    statusDescription: ""
+    statusDescription: "",
+    nominal: "",
+    triggerPrice: "",
+    triggerStatus: false
   };
 }
 
@@ -121,6 +130,18 @@ export const Order = {
 
     if (message.statusDescription !== "") {
       writer.uint32(98).string(message.statusDescription);
+    }
+
+    if (message.nominal !== "") {
+      writer.uint32(106).string(message.nominal);
+    }
+
+    if (message.triggerPrice !== "") {
+      writer.uint32(114).string(message.triggerPrice);
+    }
+
+    if (message.triggerStatus === true) {
+      writer.uint32(120).bool(message.triggerStatus);
     }
 
     return writer;
@@ -183,6 +204,18 @@ export const Order = {
           message.statusDescription = reader.string();
           break;
 
+        case 13:
+          message.nominal = reader.string();
+          break;
+
+        case 14:
+          message.triggerPrice = reader.string();
+          break;
+
+        case 15:
+          message.triggerStatus = reader.bool();
+          break;
+
         default:
           reader.skipType(tag & 7);
           break;
@@ -206,6 +239,9 @@ export const Order = {
     message.positionDirection = object.positionDirection ?? 0;
     message.data = object.data ?? "";
     message.statusDescription = object.statusDescription ?? "";
+    message.nominal = object.nominal ?? "";
+    message.triggerPrice = object.triggerPrice ?? "";
+    message.triggerStatus = object.triggerStatus ?? false;
     return message;
   }
 
