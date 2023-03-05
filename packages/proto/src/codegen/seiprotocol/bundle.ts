@@ -39,33 +39,21 @@ import * as _172 from "./seichain/tokenfactory/gov";
 import * as _173 from "./seichain/tokenfactory/params";
 import * as _174 from "./seichain/tokenfactory/query";
 import * as _175 from "./seichain/tokenfactory/tx";
-import * as _290 from "./seichain/dex/tx.amino";
-import * as _291 from "./seichain/nitro/tx.amino";
-import * as _292 from "./seichain/oracle/tx.amino";
-import * as _293 from "./seichain/tokenfactory/tx.amino";
-import * as _294 from "./seichain/dex/tx.registry";
-import * as _295 from "./seichain/nitro/tx.registry";
-import * as _296 from "./seichain/oracle/tx.registry";
-import * as _297 from "./seichain/tokenfactory/tx.registry";
-import * as _298 from "./seichain/dex/query.lcd";
-import * as _299 from "./seichain/epoch/query.lcd";
-import * as _300 from "./seichain/mint/v1beta1/query.lcd";
-import * as _301 from "./seichain/nitro/query.lcd";
-import * as _302 from "./seichain/oracle/query.lcd";
-import * as _303 from "./seichain/tokenfactory/query.lcd";
-import * as _304 from "./seichain/dex/query.rpc.query";
-import * as _305 from "./seichain/epoch/query.rpc.query";
-import * as _306 from "./seichain/mint/v1beta1/query.rpc.query";
-import * as _307 from "./seichain/nitro/query.rpc.query";
-import * as _308 from "./seichain/oracle/query.rpc.query";
-import * as _309 from "./seichain/tokenfactory/query.rpc.query";
-import * as _310 from "./seichain/dex/tx.rpc.msg";
-import * as _311 from "./seichain/nitro/tx.rpc.msg";
-import * as _312 from "./seichain/oracle/tx.rpc.msg";
-import * as _313 from "./seichain/tokenfactory/tx.rpc.msg";
-import * as _323 from "./lcd";
-import * as _324 from "./rpc.query";
-import * as _325 from "./rpc.tx";
+import * as _247 from "./seichain/dex/tx.amino";
+import * as _248 from "./seichain/nitro/tx.amino";
+import * as _249 from "./seichain/oracle/tx.amino";
+import * as _250 from "./seichain/tokenfactory/tx.amino";
+import * as _251 from "./seichain/dex/tx.registry";
+import * as _252 from "./seichain/nitro/tx.registry";
+import * as _253 from "./seichain/oracle/tx.registry";
+import * as _254 from "./seichain/tokenfactory/tx.registry";
+import * as _255 from "./seichain/dex/query.lcd";
+import * as _256 from "./seichain/epoch/query.lcd";
+import * as _257 from "./seichain/mint/v1beta1/query.lcd";
+import * as _258 from "./seichain/nitro/query.lcd";
+import * as _259 from "./seichain/oracle/query.lcd";
+import * as _260 from "./seichain/tokenfactory/query.lcd";
+import * as _264 from "./lcd";
 export namespace seiprotocol {
   export namespace seichain {
     export const dex = { ..._135,
@@ -86,46 +74,38 @@ export namespace seiprotocol {
       ..._150,
       ..._151,
       ..._152,
-      ..._290,
-      ..._294,
-      ..._298,
-      ..._304,
-      ..._310
+      ..._247,
+      ..._251,
+      ..._255
     };
     export const epoch = { ..._153,
       ..._154,
       ..._155,
       ..._156,
       ..._157,
-      ..._299,
-      ..._305
+      ..._256
     };
     export const mint = { ..._158,
       ..._159,
       ..._160,
-      ..._300,
-      ..._306
+      ..._257
     };
     export const nitro = { ..._161,
       ..._162,
       ..._163,
       ..._164,
       ..._165,
-      ..._291,
-      ..._295,
-      ..._301,
-      ..._307,
-      ..._311
+      ..._248,
+      ..._252,
+      ..._258
     };
     export const oracle = { ..._166,
       ..._167,
       ..._168,
       ..._169,
-      ..._292,
-      ..._296,
-      ..._302,
-      ..._308,
-      ..._312
+      ..._249,
+      ..._253,
+      ..._259
     };
     export const tokenfactory = { ..._170,
       ..._171,
@@ -133,15 +113,11 @@ export namespace seiprotocol {
       ..._173,
       ..._174,
       ..._175,
-      ..._293,
-      ..._297,
-      ..._303,
-      ..._309,
-      ..._313
+      ..._250,
+      ..._254,
+      ..._260
     };
   }
-  export const ClientFactory = { ..._323,
-    ..._324,
-    ..._325
+  export const ClientFactory = { ..._264
   };
 }

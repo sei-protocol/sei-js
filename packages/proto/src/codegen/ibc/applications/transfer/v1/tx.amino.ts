@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { AminoHeight, Long, omitDefault } from "@osmonauts/helpers";
 import { MsgTransfer } from "./tx";
