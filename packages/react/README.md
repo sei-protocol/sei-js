@@ -4,89 +4,65 @@ A set of React hooks for [@sei-js/core](https://www.npmjs.com/package/@sei-js/co
 
 ## Tutorial
 
-For an in depth tutorial, please see [our documentation](https://docs.seinetwork.io/front-end-development/javascript-tutorial).
+For an in depth tutorial, please see [our documentation](https://docs.seinetwork.io/front-end-development/getting-started).
 
 ## Installation
 
 ```shell
 yarn add @sei-js/react
+
+# or
+
+npm install @sei-js/react
 ```
 
-# Hooks
+## Getting Started
 
-| Hook                                  | Params                                   |
-| ------------------------------------- | ---------------------------------------- |
-| [useWallet](#usewallet)               | (window: any, config: object)            |
-| [useQueryClient](#useQueryClient)     | (rpcAddress: string)                     |
-| [useSigningClient](#useSigningClient) | (rpcAddress: string, offlineSigner: any) |
+### Wrap your app in the wallet provider
 
-## useWallet
+```tsx
+import { SeiWalletProvider } from '@sei-js/react';
 
-A hook to connect one of our supported wallets to your application.
-
-### Input Props
-
-| Hook          | Params                                                                                              |
-| ------------- | --------------------------------------------------------------------------------------------------- |
-| window        | The client side `window` object which has access to wallet providers injected code.                 |
-| walletOptions | [UseWalletOptions](https://github.com/sei-protocol/js-react/blob/main/src/hooks/useWallet/types.ts) |
-
-```javascript
-import { useWallet } from '@sei-js/react';
-
-const { offlineSigner } = useWallet(window, {
-  inputWallet: 'leap',
-  autoconnect: true,
-  chainConfiguration: 'testnet',
-});
+<SeiWalletProvider
+  chainConfiguration={{
+    chainId: 'sei-devnet-3',
+    restUrl: 'https://rest.sei-devnet-3.seinetwork.io/',
+    rpcUrl: 'https://rpc.sei-devnet-3.seinetwork.io',
+  }}
+>
+  <App />
+</SeiWalletProvider>;
 ```
 
-### Return Values
+### Add the `WalletSelectButton` component
 
-| Property         | Type               | Description                                             |
-| ---------------- | ------------------ | ------------------------------------------------------- |
-| connectedWallet  | string?            | The currently connected wallet                          |
-| connect          | () => Promise<any> | Async function to connect to input wallet               |
-| disconnect       | () => void         | Function to disconnect from input wallet                |
-| supportedWallets | string[]           | List of supported wallets                               |
-| installedWallets | string[]           | List of wallets installed                               |
-| error            | string?            | Error message                                           |
-| chainId          | string             | Sei chain id                                            |
-| restUrl          | string             | The rest url associated with the connected wallet       |
-| rpcUrl           | string             | The rpc url associated with the connected wallet        |
-| offlineSigner    | object?            | The offline signer associated with the connected wallet |
-| accounts         | object[]?          | The accounts associated with the connected wallet       |
+Once you've wrapped your app in the `SeiWalletProvider`, you'll be able to render the `WalletSelectButton` component in your app to add a button that allows users to connect their wallet.
 
-## useQueryClient
+```tsx
+import { WalletSelectButton } from '@sei-js/react';
 
-```javascript
-import { useQueryClient } from '@sei-js/react';
-
-const { queryClient, isLoading } = useQueryClient('rest_url');
+const MyComponent = () => {
+  return (
+    <div>
+      <WalletSelectButton />
+    </div>
+  );
+};
 ```
 
-| Property    | Type                   | Description                                             |
-| ----------- | ---------------------- | ------------------------------------------------------- |
-| queryClient | StargateSigningClient? | A stargate signing client.                              |
-| isLoading   | boolean                | Boolean value for when the initial loading is happening |
+### Use hooks
 
-## useSigningClient
+You can use the provided hooks to get details about the connected wallet, get a query client, or request signatures from wallets using the signing client.
 
-```javascript
-import { useWallet, useSigningClient } from '@sei-js/react';
-
-const { offlineSigner } = useWallet(window, {
-  inputWallet: 'keplr',
-  autoconnect: true,
-  chainConfiguration: 'testnet',
-});
-const { signingClient, isLoading } = useSigningClient(
-  'rpc_address',
-  offlineSigner
-);
+```tsx
+const { accounts, offlineSigner, connectedWallet } = useWallet();
+const { cosmWasmClient } = useSeiCosmWasmClient();
+const { signingClient } = useSigningClient();
+const { queryClient } = useQueryClient();
 ```
 
-| Property      | Type                   | Description                                             |
-| ------------- | ---------------------- | ------------------------------------------------------- |
-| signingClient | StargateSigningClient? | A stargate signing client.                              |
-| isLoading     | boolean                | Boolean value for when the initial loading is happening |
+## Related packages
+
+[@sei-js/core](https://www.npmjs.com/package/@sei-js/core) - TypeScript library containing helper functions for wallet connection, transaction signing, and RPC querying.
+
+[@sei-js/proto](https://www.npmjs.com/package/@sei-js/proto) - TypeScript library for Sei protobufs generated using Telescope
