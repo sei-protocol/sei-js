@@ -1,6 +1,7 @@
 import { SigningStargateClient } from '@cosmjs/stargate';
 import { OfflineSigner } from '@cosmjs/proto-signing';
-import { SeiSigningStargateClient } from '@sei-js/core';
+
+import { SeiSigningStargateClient } from '../client';
 
 export const getSigningClient = async (
   rpcEndpoint: string,
