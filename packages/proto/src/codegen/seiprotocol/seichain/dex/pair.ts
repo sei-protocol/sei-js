@@ -3,12 +3,14 @@ import { DeepPartial } from "@osmonauts/helpers";
 export interface Pair {
   priceDenom: string;
   assetDenom: string;
-  ticksize?: string;
+  priceTicksize?: string;
+  quantityTicksize?: string;
 }
 export interface PairSDKType {
   priceDenom: string;
   assetDenom: string;
-  ticksize?: string;
+  priceTicksize?: string;
+  quantityTicksize?: string;
 }
 export interface BatchContractPair {
   contractAddr: string;
@@ -23,7 +25,8 @@ function createBasePair(): Pair {
   return {
     priceDenom: "",
     assetDenom: "",
-    ticksize: undefined
+    priceTicksize: undefined,
+    quantityTicksize: undefined
   };
 }
 
@@ -37,8 +40,12 @@ export const Pair = {
       writer.uint32(18).string(message.assetDenom);
     }
 
-    if (message.ticksize !== undefined) {
-      writer.uint32(26).string(message.ticksize);
+    if (message.priceTicksize !== undefined) {
+      writer.uint32(26).string(message.priceTicksize);
+    }
+
+    if (message.quantityTicksize !== undefined) {
+      writer.uint32(34).string(message.quantityTicksize);
     }
 
     return writer;
@@ -62,7 +69,11 @@ export const Pair = {
           break;
 
         case 3:
-          message.ticksize = reader.string();
+          message.priceTicksize = reader.string();
+          break;
+
+        case 4:
+          message.quantityTicksize = reader.string();
           break;
 
         default:
@@ -78,7 +89,8 @@ export const Pair = {
     const message = createBasePair();
     message.priceDenom = object.priceDenom ?? "";
     message.assetDenom = object.assetDenom ?? "";
-    message.ticksize = object.ticksize ?? undefined;
+    message.priceTicksize = object.priceTicksize ?? undefined;
+    message.quantityTicksize = object.quantityTicksize ?? undefined;
     return message;
   }
 

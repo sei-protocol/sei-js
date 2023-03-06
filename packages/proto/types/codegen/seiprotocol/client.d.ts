@@ -98,6 +98,85 @@ export declare const seiprotocolAminoConverters: {
             txs: string[];
         }) => import("./seichain/nitro/tx").MsgRecordTransactionData;
     };
+    "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge": {
+        aminoType: string;
+        toAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: import("./seichain/nitro/tx").MsgSubmitFraudChallenge) => {
+            sender: string;
+            startSlot: string;
+            endSlot: string;
+            fraudStatePubKey: string;
+            merkleProof: {
+                commitment: string;
+                hash: string[];
+                direction: Long[];
+            };
+            accountStates: {
+                pubkey: string;
+                owner: string;
+                lamports: string;
+                slot: string;
+                executable: boolean;
+                rent_epoch: string;
+                data: string;
+            }[];
+            programs: {
+                pubkey: string;
+                owner: string;
+                lamports: string;
+                slot: string;
+                executable: boolean;
+                rent_epoch: string;
+                data: string;
+            }[];
+            sysvarAccounts: {
+                pubkey: string;
+                owner: string;
+                lamports: string;
+                slot: string;
+                executable: boolean;
+                rent_epoch: string;
+                data: string;
+            }[];
+        };
+        fromAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: {
+            sender: string;
+            startSlot: string;
+            endSlot: string;
+            fraudStatePubKey: string;
+            merkleProof: {
+                commitment: string;
+                hash: string[];
+                direction: Long[];
+            };
+            accountStates: {
+                pubkey: string;
+                owner: string;
+                lamports: string;
+                slot: string;
+                executable: boolean;
+                rent_epoch: string;
+                data: string;
+            }[];
+            programs: {
+                pubkey: string;
+                owner: string;
+                lamports: string;
+                slot: string;
+                executable: boolean;
+                rent_epoch: string;
+                data: string;
+            }[];
+            sysvarAccounts: {
+                pubkey: string;
+                owner: string;
+                lamports: string;
+                slot: string;
+                executable: boolean;
+                rent_epoch: string;
+                data: string;
+            }[];
+        }) => import("./seichain/nitro/tx").MsgSubmitFraudChallenge;
+    };
     "/seiprotocol.seichain.dex.MsgPlaceOrders": {
         aminoType: string;
         toAmino: ({ creator, orders, contractAddr, funds }: import("./seichain/dex/tx").MsgPlaceOrders) => {
@@ -115,6 +194,9 @@ export declare const seiprotocolAminoConverters: {
                 positionDirection: number;
                 data: string;
                 statusDescription: string;
+                nominal: string;
+                triggerPrice: string;
+                triggerStatus: boolean;
             }[];
             contractAddr: string;
             funds: {
@@ -137,6 +219,9 @@ export declare const seiprotocolAminoConverters: {
                 positionDirection: number;
                 data: string;
                 statusDescription: string;
+                nominal: string;
+                triggerPrice: string;
+                triggerStatus: boolean;
             }[];
             contractAddr: string;
             funds: {
@@ -191,6 +276,8 @@ export declare const seiprotocolAminoConverters: {
                     immediateYoungerSibling: string;
                 }[];
                 numIncomingDependencies: string;
+                creator: string;
+                rentBalance: string;
             };
         };
         fromAmino: ({ creator, contract }: {
@@ -206,8 +293,119 @@ export declare const seiprotocolAminoConverters: {
                     immediateYoungerSibling: string;
                 }[];
                 numIncomingDependencies: string;
+                creator: string;
+                rentBalance: string;
             };
         }) => import("./seichain/dex/tx").MsgRegisterContract;
+    };
+    "/seiprotocol.seichain.dex.MsgContractDepositRent": {
+        aminoType: string;
+        toAmino: ({ contractAddr, amount, sender }: import("./seichain/dex/tx").MsgContractDepositRent) => {
+            contractAddr: string;
+            amount: string;
+            sender: string;
+        };
+        fromAmino: ({ contractAddr, amount, sender }: {
+            contractAddr: string;
+            amount: string;
+            sender: string;
+        }) => import("./seichain/dex/tx").MsgContractDepositRent;
+    };
+    "/seiprotocol.seichain.dex.MsgUnregisterContract": {
+        aminoType: string;
+        toAmino: ({ creator, contractAddr }: import("./seichain/dex/tx").MsgUnregisterContract) => {
+            creator: string;
+            contractAddr: string;
+        };
+        fromAmino: ({ creator, contractAddr }: {
+            creator: string;
+            contractAddr: string;
+        }) => import("./seichain/dex/tx").MsgUnregisterContract;
+    };
+    "/seiprotocol.seichain.dex.MsgRegisterPairs": {
+        aminoType: string;
+        toAmino: ({ creator, batchcontractpair }: import("./seichain/dex/tx").MsgRegisterPairs) => {
+            creator: string;
+            batchcontractpair: {
+                contractAddr: string;
+                pairs: {
+                    priceDenom: string;
+                    assetDenom: string;
+                    priceTicksize: string;
+                    quantityTicksize: string;
+                }[];
+            }[];
+        };
+        fromAmino: ({ creator, batchcontractpair }: {
+            creator: string;
+            batchcontractpair: {
+                contractAddr: string;
+                pairs: {
+                    priceDenom: string;
+                    assetDenom: string;
+                    priceTicksize: string;
+                    quantityTicksize: string;
+                }[];
+            }[];
+        }) => import("./seichain/dex/tx").MsgRegisterPairs;
+    };
+    "/seiprotocol.seichain.dex.MsgUpdatePriceTickSize": {
+        aminoType: string;
+        toAmino: ({ creator, tickSizeList }: import("./seichain/dex/tx").MsgUpdatePriceTickSize) => {
+            creator: string;
+            tickSizeList: {
+                pair: {
+                    priceDenom: string;
+                    assetDenom: string;
+                    priceTicksize: string;
+                    quantityTicksize: string;
+                };
+                ticksize: string;
+                contractAddr: string;
+            }[];
+        };
+        fromAmino: ({ creator, tickSizeList }: {
+            creator: string;
+            tickSizeList: {
+                pair: {
+                    priceDenom: string;
+                    assetDenom: string;
+                    priceTicksize: string;
+                    quantityTicksize: string;
+                };
+                ticksize: string;
+                contractAddr: string;
+            }[];
+        }) => import("./seichain/dex/tx").MsgUpdatePriceTickSize;
+    };
+    "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize": {
+        aminoType: string;
+        toAmino: ({ creator, tickSizeList }: import("./seichain/dex/tx").MsgUpdateQuantityTickSize) => {
+            creator: string;
+            tickSizeList: {
+                pair: {
+                    priceDenom: string;
+                    assetDenom: string;
+                    priceTicksize: string;
+                    quantityTicksize: string;
+                };
+                ticksize: string;
+                contractAddr: string;
+            }[];
+        };
+        fromAmino: ({ creator, tickSizeList }: {
+            creator: string;
+            tickSizeList: {
+                pair: {
+                    priceDenom: string;
+                    assetDenom: string;
+                    priceTicksize: string;
+                    quantityTicksize: string;
+                };
+                ticksize: string;
+                contractAddr: string;
+            }[];
+        }) => import("./seichain/dex/tx").MsgUpdateQuantityTickSize;
     };
 };
 export declare const seiprotocolProtoRegistry: ReadonlyArray<[string, GeneratedType]>;

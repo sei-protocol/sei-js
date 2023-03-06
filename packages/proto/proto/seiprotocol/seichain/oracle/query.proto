@@ -76,7 +76,7 @@ message QueryExchangeRateRequest {
 // QueryExchangeRateResponse is response type for the
 // Query/ExchangeRate RPC method.
 message QueryExchangeRateResponse {
-  // exchange_rate defines the exchange rate of Luna denominated in various Terra
+  // exchange_rate defines the exchange rate of Sei denominated in various Sei
   OracleExchangeRate oracle_exchange_rate = 1 [(gogoproto.nullable) = false];
 }
 
@@ -129,7 +129,7 @@ message QueryPriceSnapshotHistoryResponse {
 
 // request type for twap RPC method
 message QueryTwapsRequest {
-  int64 lookback_seconds = 1;
+  uint64 lookback_seconds = 1;
 }
 
 message QueryTwapsResponse {

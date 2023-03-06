@@ -94,7 +94,7 @@ function createBaseParams(): Params {
     slashFraction: "",
     slashWindow: Long.UZERO,
     minValidPerWindow: "",
-    lookbackDuration: Long.ZERO
+    lookbackDuration: Long.UZERO
   };
 }
 
@@ -129,7 +129,7 @@ export const Params = {
     }
 
     if (!message.lookbackDuration.isZero()) {
-      writer.uint32(72).int64(message.lookbackDuration);
+      writer.uint32(72).uint64(message.lookbackDuration);
     }
 
     return writer;
@@ -173,7 +173,7 @@ export const Params = {
           break;
 
         case 9:
-          message.lookbackDuration = (reader.int64() as Long);
+          message.lookbackDuration = (reader.uint64() as Long);
           break;
 
         default:
@@ -194,7 +194,7 @@ export const Params = {
     message.slashFraction = object.slashFraction ?? "";
     message.slashWindow = object.slashWindow !== undefined && object.slashWindow !== null ? Long.fromValue(object.slashWindow) : Long.UZERO;
     message.minValidPerWindow = object.minValidPerWindow ?? "";
-    message.lookbackDuration = object.lookbackDuration !== undefined && object.lookbackDuration !== null ? Long.fromValue(object.lookbackDuration) : Long.ZERO;
+    message.lookbackDuration = object.lookbackDuration !== undefined && object.lookbackDuration !== null ? Long.fromValue(object.lookbackDuration) : Long.UZERO;
     return message;
   }
 

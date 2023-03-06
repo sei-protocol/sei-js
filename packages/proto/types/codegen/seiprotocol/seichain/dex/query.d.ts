@@ -138,6 +138,22 @@ export interface QueryGetPriceResponseSDKType {
     price: PriceSDKType;
     found: boolean;
 }
+export interface QueryGetLatestPriceRequest {
+    priceDenom: string;
+    assetDenom: string;
+    contractAddr: string;
+}
+export interface QueryGetLatestPriceRequestSDKType {
+    priceDenom: string;
+    assetDenom: string;
+    contractAddr: string;
+}
+export interface QueryGetLatestPriceResponse {
+    price: Price;
+}
+export interface QueryGetLatestPriceResponseSDKType {
+    price: PriceSDKType;
+}
 export interface QueryGetTwapsRequest {
     contractAddr: string;
     lookbackSeconds: Long;
@@ -280,11 +296,9 @@ export interface QueryOrderSimulationResponseSDKType {
 }
 export interface QueryGetMatchResultRequest {
     contractAddr: string;
-    height: Long;
 }
 export interface QueryGetMatchResultRequestSDKType {
     contractAddr: string;
-    height: Long;
 }
 export interface QueryGetMatchResultResponse {
     result: MatchResult;
@@ -361,6 +375,16 @@ export declare const QueryGetPriceResponse: {
     encode(message: QueryGetPriceResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPriceResponse;
     fromPartial(object: DeepPartial<QueryGetPriceResponse>): QueryGetPriceResponse;
+};
+export declare const QueryGetLatestPriceRequest: {
+    encode(message: QueryGetLatestPriceRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetLatestPriceRequest;
+    fromPartial(object: DeepPartial<QueryGetLatestPriceRequest>): QueryGetLatestPriceRequest;
+};
+export declare const QueryGetLatestPriceResponse: {
+    encode(message: QueryGetLatestPriceResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetLatestPriceResponse;
+    fromPartial(object: DeepPartial<QueryGetLatestPriceResponse>): QueryGetLatestPriceResponse;
 };
 export declare const QueryGetTwapsRequest: {
     encode(message: QueryGetTwapsRequest, writer?: _m0.Writer): _m0.Writer;

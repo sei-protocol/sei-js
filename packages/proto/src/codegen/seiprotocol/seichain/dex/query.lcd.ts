@@ -1,6 +1,6 @@
 import { setPaginationParams } from "@osmonauts/helpers";
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetLongBookRequest, QueryGetLongBookResponseSDKType, QueryAllLongBookRequest, QueryAllLongBookResponseSDKType, QueryGetShortBookRequest, QueryGetShortBookResponseSDKType, QueryAllShortBookRequest, QueryAllShortBookResponseSDKType, QueryGetPriceRequest, QueryGetPriceResponseSDKType, QueryGetPricesRequest, QueryGetPricesResponseSDKType, QueryGetTwapsRequest, QueryGetTwapsResponseSDKType, QueryAssetMetadataRequest, QueryAssetMetadataResponseSDKType, QueryAssetListRequest, QueryAssetListResponseSDKType, QueryRegisteredPairsRequest, QueryRegisteredPairsResponseSDKType, QueryGetOrdersRequest, QueryGetOrdersResponseSDKType, QueryGetOrderByIDRequest, QueryGetOrderByIDResponseSDKType, QueryGetHistoricalPricesRequest, QueryGetHistoricalPricesResponseSDKType, QueryGetMarketSummaryRequest, QueryGetMarketSummaryResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetLongBookRequest, QueryGetLongBookResponseSDKType, QueryAllLongBookRequest, QueryAllLongBookResponseSDKType, QueryGetShortBookRequest, QueryGetShortBookResponseSDKType, QueryAllShortBookRequest, QueryAllShortBookResponseSDKType, QueryGetPriceRequest, QueryGetPriceResponseSDKType, QueryGetLatestPriceRequest, QueryGetLatestPriceResponseSDKType, QueryGetPricesRequest, QueryGetPricesResponseSDKType, QueryGetTwapsRequest, QueryGetTwapsResponseSDKType, QueryAssetMetadataRequest, QueryAssetMetadataResponseSDKType, QueryAssetListRequest, QueryAssetListResponseSDKType, QueryRegisteredPairsRequest, QueryRegisteredPairsResponseSDKType, QueryGetOrdersRequest, QueryGetOrdersResponseSDKType, QueryGetOrderByIDRequest, QueryGetOrderByIDResponseSDKType, QueryGetHistoricalPricesRequest, QueryGetHistoricalPricesResponseSDKType, QueryGetMarketSummaryRequest, QueryGetMarketSummaryResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -16,6 +16,7 @@ export class LCDQueryClient {
     this.shortBook = this.shortBook.bind(this);
     this.shortBookAll = this.shortBookAll.bind(this);
     this.getPrice = this.getPrice.bind(this);
+    this.getLatestPrice = this.getLatestPrice.bind(this);
     this.getPrices = this.getPrices.bind(this);
     this.getTwaps = this.getTwaps.bind(this);
     this.assetMetadata = this.assetMetadata.bind(this);
@@ -83,6 +84,13 @@ export class LCDQueryClient {
   async getPrice(params: QueryGetPriceRequest): Promise<QueryGetPriceResponseSDKType> {
     const endpoint = `sei-protocol/seichain/dex/get_price/${params.contractAddr}/${params.priceDenom}/${params.assetDenom}/${params.timestamp}`;
     return await this.req.get<QueryGetPriceResponseSDKType>(endpoint);
+  }
+  /* GetLatestPrice */
+
+
+  async getLatestPrice(params: QueryGetLatestPriceRequest): Promise<QueryGetLatestPriceResponseSDKType> {
+    const endpoint = `sei-protocol/seichain/dex/get_latest_price/${params.contractAddr}/${params.priceDenom}/${params.assetDenom}`;
+    return await this.req.get<QueryGetLatestPriceResponseSDKType>(endpoint);
   }
   /* GetPrices */
 

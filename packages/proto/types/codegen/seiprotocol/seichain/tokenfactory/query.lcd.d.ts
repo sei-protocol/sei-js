@@ -1,5 +1,5 @@
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomAuthorityMetadataRequest, QueryDenomAuthorityMetadataResponseSDKType, QueryDenomsFromCreatorRequest, QueryDenomsFromCreatorResponseSDKType, QueryDenomCreationFeeWhitelistRequest, QueryDenomCreationFeeWhitelistResponseSDKType, QueryCreatorInDenomFeeWhitelistRequest, QueryCreatorInDenomFeeWhitelistResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomAuthorityMetadataRequest, QueryDenomAuthorityMetadataResponseSDKType, QueryDenomsFromCreatorRequest, QueryDenomsFromCreatorResponseSDKType } from "./query";
 export declare class LCDQueryClient {
     req: LCDClient;
     constructor({ requestClient }: {
@@ -8,6 +8,4 @@ export declare class LCDQueryClient {
     params(_params?: QueryParamsRequest): Promise<QueryParamsResponseSDKType>;
     denomAuthorityMetadata(params: QueryDenomAuthorityMetadataRequest): Promise<QueryDenomAuthorityMetadataResponseSDKType>;
     denomsFromCreator(params: QueryDenomsFromCreatorRequest): Promise<QueryDenomsFromCreatorResponseSDKType>;
-    denomCreationFeeWhitelist(_params?: QueryDenomCreationFeeWhitelistRequest): Promise<QueryDenomCreationFeeWhitelistResponseSDKType>;
-    creatorInDenomFeeWhitelist(params: QueryCreatorInDenomFeeWhitelistRequest): Promise<QueryCreatorInDenomFeeWhitelistResponseSDKType>;
 }

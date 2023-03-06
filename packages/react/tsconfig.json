@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
+    "esModuleInterop": true,
     "lib": [
       "ES5",
       "DOM",
@@ -15,7 +16,8 @@
       "DOM.Iterable",
       "ScriptHost",
       "ES2016.Array.Include"
-    ]
+    ],
+    "jsx": "react",
   },
   "include": ["src"],
   "exclude": ["node_modules"]

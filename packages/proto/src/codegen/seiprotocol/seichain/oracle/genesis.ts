@@ -1,4 +1,4 @@
-import { Params, ParamsSDKType, ExchangeRateTuple, ExchangeRateTupleSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType } from "./oracle";
+import { Params, ParamsSDKType, ExchangeRateTuple, ExchangeRateTupleSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, PriceSnapshot, PriceSnapshotSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType } from "./oracle";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "@osmonauts/helpers";
 export interface GenesisState {
@@ -7,6 +7,7 @@ export interface GenesisState {
   exchangeRates: ExchangeRateTuple[];
   penaltyCounters: PenaltyCounter[];
   aggregateExchangeRateVotes: AggregateExchangeRateVote[];
+  priceSnapshots: PriceSnapshot[];
 }
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
@@ -14,6 +15,7 @@ export interface GenesisStateSDKType {
   exchange_rates: ExchangeRateTupleSDKType[];
   penalty_counters: PenaltyCounterSDKType[];
   aggregate_exchange_rate_votes: AggregateExchangeRateVoteSDKType[];
+  price_snapshots: PriceSnapshotSDKType[];
 }
 export interface FeederDelegation {
   feederAddress: string;
@@ -38,7 +40,8 @@ function createBaseGenesisState(): GenesisState {
     feederDelegations: [],
     exchangeRates: [],
     penaltyCounters: [],
-    aggregateExchangeRateVotes: []
+    aggregateExchangeRateVotes: [],
+    priceSnapshots: []
   };
 }
 
@@ -62,6 +65,10 @@ export const GenesisState = {
 
     for (const v of message.aggregateExchangeRateVotes) {
       AggregateExchangeRateVote.encode(v!, writer.uint32(50).fork()).ldelim();
+    }
+
+    for (const v of message.priceSnapshots) {
+      PriceSnapshot.encode(v!, writer.uint32(58).fork()).ldelim();
     }
 
     return writer;
@@ -96,6 +103,10 @@ export const GenesisState = {
           message.aggregateExchangeRateVotes.push(AggregateExchangeRateVote.decode(reader, reader.uint32()));
           break;
 
+        case 7:
+          message.priceSnapshots.push(PriceSnapshot.decode(reader, reader.uint32()));
+          break;
+
         default:
           reader.skipType(tag & 7);
           break;
@@ -112,6 +123,7 @@ export const GenesisState = {
     message.exchangeRates = object.exchangeRates?.map(e => ExchangeRateTuple.fromPartial(e)) || [];
     message.penaltyCounters = object.penaltyCounters?.map(e => PenaltyCounter.fromPartial(e)) || [];
     message.aggregateExchangeRateVotes = object.aggregateExchangeRateVotes?.map(e => AggregateExchangeRateVote.fromPartial(e)) || [];
+    message.priceSnapshots = object.priceSnapshots?.map(e => PriceSnapshot.fromPartial(e)) || [];
     return message;
   }
 

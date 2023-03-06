@@ -1,16 +1,20 @@
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
-/** Minter represents the minting state. */
+import { Long, DeepPartial } from "@osmonauts/helpers";
+/** Minter represents the most recent */
 
 export interface Minter {
-  /** current epoch provisions */
-  epochProvisions: string;
+  lastMintAmount: string;
+  lastMintDate: string;
+  lastMintHeight: Long;
+  denom: string;
 }
-/** Minter represents the minting state. */
+/** Minter represents the most recent */
 
 export interface MinterSDKType {
-  /** current epoch provisions */
-  epoch_provisions: string;
+  last_mint_amount: string;
+  last_mint_date: string;
+  last_mint_height: Long;
+  denom: string;
 }
 export interface ScheduledTokenRelease {
   /** yyyy-mm-dd */
@@ -27,9 +31,6 @@ export interface ScheduledTokenReleaseSDKType {
 export interface Params {
   /** type of coin to mint */
   mintDenom: string;
-  /** epoch provisions from the first epoch */
-
-  genesisEpochProvisions: string;
   /** List of token release schedules */
 
   tokenReleaseSchedule: ScheduledTokenRelease[];
@@ -39,9 +40,6 @@ export interface Params {
 export interface ParamsSDKType {
   /** type of coin to mint */
   mint_denom: string;
-  /** epoch provisions from the first epoch */
-
-  genesis_epoch_provisions: string;
   /** List of token release schedules */
 
   token_release_schedule: ScheduledTokenReleaseSDKType[];
@@ -49,14 +47,29 @@ export interface ParamsSDKType {
 
 function createBaseMinter(): Minter {
   return {
-    epochProvisions: ""
+    lastMintAmount: "",
+    lastMintDate: "",
+    lastMintHeight: Long.ZERO,
+    denom: ""
   };
 }
 
 export const Minter = {
   encode(message: Minter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.epochProvisions !== "") {
-      writer.uint32(10).string(message.epochProvisions);
+    if (message.lastMintAmount !== "") {
+      writer.uint32(10).string(message.lastMintAmount);
+    }
+
+    if (message.lastMintDate !== "") {
+      writer.uint32(18).string(message.lastMintDate);
+    }
+
+    if (!message.lastMintHeight.isZero()) {
+      writer.uint32(24).int64(message.lastMintHeight);
+    }
+
+    if (message.denom !== "") {
+      writer.uint32(34).string(message.denom);
     }
 
     return writer;
@@ -72,7 +85,19 @@ export const Minter = {
 
       switch (tag >>> 3) {
         case 1:
-          message.epochProvisions = reader.string();
+          message.lastMintAmount = reader.string();
+          break;
+
+        case 2:
+          message.lastMintDate = reader.string();
+          break;
+
+        case 3:
+          message.lastMintHeight = (reader.int64() as Long);
+          break;
+
+        case 4:
+          message.denom = reader.string();
           break;
 
         default:
@@ -86,7 +111,10 @@ export const Minter = {
 
   fromPartial(object: DeepPartial<Minter>): Minter {
     const message = createBaseMinter();
-    message.epochProvisions = object.epochProvisions ?? "";
+    message.lastMintAmount = object.lastMintAmount ?? "";
+    message.lastMintDate = object.lastMintDate ?? "";
+    message.lastMintHeight = object.lastMintHeight !== undefined && object.lastMintHeight !== null ? Long.fromValue(object.lastMintHeight) : Long.ZERO;
+    message.denom = object.denom ?? "";
     return message;
   }
 
@@ -150,7 +178,6 @@ export const ScheduledTokenRelease = {
 function createBaseParams(): Params {
   return {
     mintDenom: "",
-    genesisEpochProvisions: "",
     tokenReleaseSchedule: []
   };
 }
@@ -161,12 +188,8 @@ export const Params = {
       writer.uint32(10).string(message.mintDenom);
     }
 
-    if (message.genesisEpochProvisions !== "") {
-      writer.uint32(18).string(message.genesisEpochProvisions);
-    }
-
     for (const v of message.tokenReleaseSchedule) {
-      ScheduledTokenRelease.encode(v!, writer.uint32(26).fork()).ldelim();
+      ScheduledTokenRelease.encode(v!, writer.uint32(18).fork()).ldelim();
     }
 
     return writer;
@@ -186,10 +209,6 @@ export const Params = {
           break;
 
         case 2:
-          message.genesisEpochProvisions = reader.string();
-          break;
-
-        case 3:
           message.tokenReleaseSchedule.push(ScheduledTokenRelease.decode(reader, reader.uint32()));
           break;
 
@@ -205,7 +224,6 @@ export const Params = {
   fromPartial(object: DeepPartial<Params>): Params {
     const message = createBaseParams();
     message.mintDenom = object.mintDenom ?? "";
-    message.genesisEpochProvisions = object.genesisEpochProvisions ?? "";
     message.tokenReleaseSchedule = object.tokenReleaseSchedule?.map(e => ScheduledTokenRelease.fromPartial(e)) || [];
     return message;
   }

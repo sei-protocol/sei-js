@@ -14,6 +14,9 @@ export interface Order {
     positionDirection: PositionDirection;
     data: string;
     statusDescription: string;
+    nominal: string;
+    triggerPrice: string;
+    triggerStatus: boolean;
 }
 export interface OrderSDKType {
     id?: Long;
@@ -28,6 +31,9 @@ export interface OrderSDKType {
     positionDirection: PositionDirectionSDKType;
     data: string;
     statusDescription: string;
+    nominal: string;
+    triggerPrice: string;
+    triggerStatus: boolean;
 }
 export interface Cancellation {
     id: Long;

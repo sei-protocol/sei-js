@@ -16,6 +16,26 @@ export interface ContractInfoSDKType {
   dependencies: ContractDependencyInfoSDKType[];
   numIncomingDependencies: Long;
 }
+export interface ContractInfoV2 {
+  codeId: Long;
+  contractAddr: string;
+  needHook: boolean;
+  needOrderMatching: boolean;
+  dependencies: ContractDependencyInfo[];
+  numIncomingDependencies: Long;
+  creator: string;
+  rentBalance: Long;
+}
+export interface ContractInfoV2SDKType {
+  codeId: Long;
+  contractAddr: string;
+  needHook: boolean;
+  needOrderMatching: boolean;
+  dependencies: ContractDependencyInfoSDKType[];
+  numIncomingDependencies: Long;
+  creator: string;
+  rentBalance: Long;
+}
 export interface ContractDependencyInfo {
   dependency: string;
   immediateElderSibling: string;
@@ -131,6 +151,121 @@ export const ContractInfo = {
     message.needOrderMatching = object.needOrderMatching ?? false;
     message.dependencies = object.dependencies?.map(e => ContractDependencyInfo.fromPartial(e)) || [];
     message.numIncomingDependencies = object.numIncomingDependencies !== undefined && object.numIncomingDependencies !== null ? Long.fromValue(object.numIncomingDependencies) : Long.ZERO;
+    return message;
+  }
+
+};
+
+function createBaseContractInfoV2(): ContractInfoV2 {
+  return {
+    codeId: Long.UZERO,
+    contractAddr: "",
+    needHook: false,
+    needOrderMatching: false,
+    dependencies: [],
+    numIncomingDependencies: Long.ZERO,
+    creator: "",
+    rentBalance: Long.UZERO
+  };
+}
+
+export const ContractInfoV2 = {
+  encode(message: ContractInfoV2, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (!message.codeId.isZero()) {
+      writer.uint32(8).uint64(message.codeId);
+    }
+
+    if (message.contractAddr !== "") {
+      writer.uint32(18).string(message.contractAddr);
+    }
+
+    if (message.needHook === true) {
+      writer.uint32(24).bool(message.needHook);
+    }
+
+    if (message.needOrderMatching === true) {
+      writer.uint32(32).bool(message.needOrderMatching);
+    }
+
+    for (const v of message.dependencies) {
+      ContractDependencyInfo.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+
+    if (!message.numIncomingDependencies.isZero()) {
+      writer.uint32(48).int64(message.numIncomingDependencies);
+    }
+
+    if (message.creator !== "") {
+      writer.uint32(58).string(message.creator);
+    }
+
+    if (!message.rentBalance.isZero()) {
+      writer.uint32(64).uint64(message.rentBalance);
+    }
+
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ContractInfoV2 {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseContractInfoV2();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        case 1:
+          message.codeId = (reader.uint64() as Long);
+          break;
+
+        case 2:
+          message.contractAddr = reader.string();
+          break;
+
+        case 3:
+          message.needHook = reader.bool();
+          break;
+
+        case 4:
+          message.needOrderMatching = reader.bool();
+          break;
+
+        case 5:
+          message.dependencies.push(ContractDependencyInfo.decode(reader, reader.uint32()));
+          break;
+
+        case 6:
+          message.numIncomingDependencies = (reader.int64() as Long);
+          break;
+
+        case 7:
+          message.creator = reader.string();
+          break;
+
+        case 8:
+          message.rentBalance = (reader.uint64() as Long);
+          break;
+
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(object: DeepPartial<ContractInfoV2>): ContractInfoV2 {
+    const message = createBaseContractInfoV2();
+    message.codeId = object.codeId !== undefined && object.codeId !== null ? Long.fromValue(object.codeId) : Long.UZERO;
+    message.contractAddr = object.contractAddr ?? "";
+    message.needHook = object.needHook ?? false;
+    message.needOrderMatching = object.needOrderMatching ?? false;
+    message.dependencies = object.dependencies?.map(e => ContractDependencyInfo.fromPartial(e)) || [];
+    message.numIncomingDependencies = object.numIncomingDependencies !== undefined && object.numIncomingDependencies !== null ? Long.fromValue(object.numIncomingDependencies) : Long.ZERO;
+    message.creator = object.creator ?? "";
+    message.rentBalance = object.rentBalance !== undefined && object.rentBalance !== null ? Long.fromValue(object.rentBalance) : Long.UZERO;
     return message;
   }
 

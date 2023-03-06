@@ -1,6 +1,8 @@
 import { Order, OrderSDKType, Cancellation, CancellationSDKType } from "./order";
 import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { ContractInfo, ContractInfoSDKType } from "./contract";
+import { ContractInfoV2, ContractInfoV2SDKType } from "./contract";
+import { BatchContractPair, BatchContractPairSDKType } from "./pair";
+import { TickSize, TickSizeSDKType } from "./tick_size";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface MsgPlaceOrders {
@@ -35,14 +37,64 @@ export interface MsgCancelOrdersResponse {}
 export interface MsgCancelOrdersResponseSDKType {}
 export interface MsgRegisterContract {
   creator: string;
-  contract: ContractInfo;
+  contract: ContractInfoV2;
 }
 export interface MsgRegisterContractSDKType {
   creator: string;
-  contract: ContractInfoSDKType;
+  contract: ContractInfoV2SDKType;
 }
 export interface MsgRegisterContractResponse {}
 export interface MsgRegisterContractResponseSDKType {}
+export interface MsgContractDepositRent {
+  contractAddr: string;
+  amount: Long;
+  sender: string;
+}
+export interface MsgContractDepositRentSDKType {
+  contractAddr: string;
+  amount: Long;
+  sender: string;
+}
+export interface MsgContractDepositRentResponse {}
+export interface MsgContractDepositRentResponseSDKType {}
+export interface MsgUnregisterContract {
+  creator: string;
+  contractAddr: string;
+}
+export interface MsgUnregisterContractSDKType {
+  creator: string;
+  contractAddr: string;
+}
+export interface MsgUnregisterContractResponse {}
+export interface MsgUnregisterContractResponseSDKType {}
+export interface MsgRegisterPairs {
+  creator: string;
+  batchcontractpair: BatchContractPair[];
+}
+export interface MsgRegisterPairsSDKType {
+  creator: string;
+  batchcontractpair: BatchContractPairSDKType[];
+}
+export interface MsgRegisterPairsResponse {}
+export interface MsgRegisterPairsResponseSDKType {}
+export interface MsgUpdatePriceTickSize {
+  creator: string;
+  tickSizeList: TickSize[];
+}
+export interface MsgUpdatePriceTickSizeSDKType {
+  creator: string;
+  tickSizeList: TickSizeSDKType[];
+}
+export interface MsgUpdateQuantityTickSize {
+  creator: string;
+  tickSizeList: TickSize[];
+}
+export interface MsgUpdateQuantityTickSizeSDKType {
+  creator: string;
+  tickSizeList: TickSizeSDKType[];
+}
+export interface MsgUpdateTickSizeResponse {}
+export interface MsgUpdateTickSizeResponseSDKType {}
 
 function createBaseMsgPlaceOrders(): MsgPlaceOrders {
   return {
@@ -289,7 +341,7 @@ export const MsgRegisterContract = {
     }
 
     if (message.contract !== undefined) {
-      ContractInfo.encode(message.contract, writer.uint32(18).fork()).ldelim();
+      ContractInfoV2.encode(message.contract, writer.uint32(18).fork()).ldelim();
     }
 
     return writer;
@@ -309,7 +361,7 @@ export const MsgRegisterContract = {
           break;
 
         case 2:
-          message.contract = ContractInfo.decode(reader, reader.uint32());
+          message.contract = ContractInfoV2.decode(reader, reader.uint32());
           break;
 
         default:
@@ -324,7 +376,7 @@ export const MsgRegisterContract = {
   fromPartial(object: DeepPartial<MsgRegisterContract>): MsgRegisterContract {
     const message = createBaseMsgRegisterContract();
     message.creator = object.creator ?? "";
-    message.contract = object.contract !== undefined && object.contract !== null ? ContractInfo.fromPartial(object.contract) : undefined;
+    message.contract = object.contract !== undefined && object.contract !== null ? ContractInfoV2.fromPartial(object.contract) : undefined;
     return message;
   }
 
@@ -359,6 +411,427 @@ export const MsgRegisterContractResponse = {
 
   fromPartial(_: DeepPartial<MsgRegisterContractResponse>): MsgRegisterContractResponse {
     const message = createBaseMsgRegisterContractResponse();
+    return message;
+  }
+
+};
+
+function createBaseMsgContractDepositRent(): MsgContractDepositRent {
+  return {
+    contractAddr: "",
+    amount: Long.UZERO,
+    sender: ""
+  };
+}
+
+export const MsgContractDepositRent = {
+  encode(message: MsgContractDepositRent, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.contractAddr !== "") {
+      writer.uint32(10).string(message.contractAddr);
+    }
+
+    if (!message.amount.isZero()) {
+      writer.uint32(16).uint64(message.amount);
+    }
+
+    if (message.sender !== "") {
+      writer.uint32(26).string(message.sender);
+    }
+
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgContractDepositRent {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgContractDepositRent();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        case 1:
+          message.contractAddr = reader.string();
+          break;
+
+        case 2:
+          message.amount = (reader.uint64() as Long);
+          break;
+
+        case 3:
+          message.sender = reader.string();
+          break;
+
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(object: DeepPartial<MsgContractDepositRent>): MsgContractDepositRent {
+    const message = createBaseMsgContractDepositRent();
+    message.contractAddr = object.contractAddr ?? "";
+    message.amount = object.amount !== undefined && object.amount !== null ? Long.fromValue(object.amount) : Long.UZERO;
+    message.sender = object.sender ?? "";
+    return message;
+  }
+
+};
+
+function createBaseMsgContractDepositRentResponse(): MsgContractDepositRentResponse {
+  return {};
+}
+
+export const MsgContractDepositRentResponse = {
+  encode(_: MsgContractDepositRentResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgContractDepositRentResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgContractDepositRentResponse();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(_: DeepPartial<MsgContractDepositRentResponse>): MsgContractDepositRentResponse {
+    const message = createBaseMsgContractDepositRentResponse();
+    return message;
+  }
+
+};
+
+function createBaseMsgUnregisterContract(): MsgUnregisterContract {
+  return {
+    creator: "",
+    contractAddr: ""
+  };
+}
+
+export const MsgUnregisterContract = {
+  encode(message: MsgUnregisterContract, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+
+    if (message.contractAddr !== "") {
+      writer.uint32(18).string(message.contractAddr);
+    }
+
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnregisterContract {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUnregisterContract();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+
+        case 2:
+          message.contractAddr = reader.string();
+          break;
+
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(object: DeepPartial<MsgUnregisterContract>): MsgUnregisterContract {
+    const message = createBaseMsgUnregisterContract();
+    message.creator = object.creator ?? "";
+    message.contractAddr = object.contractAddr ?? "";
+    return message;
+  }
+
+};
+
+function createBaseMsgUnregisterContractResponse(): MsgUnregisterContractResponse {
+  return {};
+}
+
+export const MsgUnregisterContractResponse = {
+  encode(_: MsgUnregisterContractResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnregisterContractResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUnregisterContractResponse();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(_: DeepPartial<MsgUnregisterContractResponse>): MsgUnregisterContractResponse {
+    const message = createBaseMsgUnregisterContractResponse();
+    return message;
+  }
+
+};
+
+function createBaseMsgRegisterPairs(): MsgRegisterPairs {
+  return {
+    creator: "",
+    batchcontractpair: []
+  };
+}
+
+export const MsgRegisterPairs = {
+  encode(message: MsgRegisterPairs, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+
+    for (const v of message.batchcontractpair) {
+      BatchContractPair.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterPairs {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgRegisterPairs();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+
+        case 3:
+          message.batchcontractpair.push(BatchContractPair.decode(reader, reader.uint32()));
+          break;
+
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(object: DeepPartial<MsgRegisterPairs>): MsgRegisterPairs {
+    const message = createBaseMsgRegisterPairs();
+    message.creator = object.creator ?? "";
+    message.batchcontractpair = object.batchcontractpair?.map(e => BatchContractPair.fromPartial(e)) || [];
+    return message;
+  }
+
+};
+
+function createBaseMsgRegisterPairsResponse(): MsgRegisterPairsResponse {
+  return {};
+}
+
+export const MsgRegisterPairsResponse = {
+  encode(_: MsgRegisterPairsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterPairsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgRegisterPairsResponse();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(_: DeepPartial<MsgRegisterPairsResponse>): MsgRegisterPairsResponse {
+    const message = createBaseMsgRegisterPairsResponse();
+    return message;
+  }
+
+};
+
+function createBaseMsgUpdatePriceTickSize(): MsgUpdatePriceTickSize {
+  return {
+    creator: "",
+    tickSizeList: []
+  };
+}
+
+export const MsgUpdatePriceTickSize = {
+  encode(message: MsgUpdatePriceTickSize, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+
+    for (const v of message.tickSizeList) {
+      TickSize.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdatePriceTickSize {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdatePriceTickSize();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+
+        case 2:
+          message.tickSizeList.push(TickSize.decode(reader, reader.uint32()));
+          break;
+
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdatePriceTickSize>): MsgUpdatePriceTickSize {
+    const message = createBaseMsgUpdatePriceTickSize();
+    message.creator = object.creator ?? "";
+    message.tickSizeList = object.tickSizeList?.map(e => TickSize.fromPartial(e)) || [];
+    return message;
+  }
+
+};
+
+function createBaseMsgUpdateQuantityTickSize(): MsgUpdateQuantityTickSize {
+  return {
+    creator: "",
+    tickSizeList: []
+  };
+}
+
+export const MsgUpdateQuantityTickSize = {
+  encode(message: MsgUpdateQuantityTickSize, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+
+    for (const v of message.tickSizeList) {
+      TickSize.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateQuantityTickSize {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdateQuantityTickSize();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+
+        case 2:
+          message.tickSizeList.push(TickSize.decode(reader, reader.uint32()));
+          break;
+
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdateQuantityTickSize>): MsgUpdateQuantityTickSize {
+    const message = createBaseMsgUpdateQuantityTickSize();
+    message.creator = object.creator ?? "";
+    message.tickSizeList = object.tickSizeList?.map(e => TickSize.fromPartial(e)) || [];
+    return message;
+  }
+
+};
+
+function createBaseMsgUpdateTickSizeResponse(): MsgUpdateTickSizeResponse {
+  return {};
+}
+
+export const MsgUpdateTickSizeResponse = {
+  encode(_: MsgUpdateTickSizeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateTickSizeResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdateTickSizeResponse();
+
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+
+    return message;
+  },
+
+  fromPartial(_: DeepPartial<MsgUpdateTickSizeResponse>): MsgUpdateTickSizeResponse {
+    const message = createBaseMsgUpdateTickSizeResponse();
     return message;
   }
 
