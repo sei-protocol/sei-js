@@ -1,12 +1,16 @@
 import { SigningStargateClient } from '@cosmjs/stargate';
 import { OfflineSigner } from '@cosmjs/proto-signing';
-import { getSigningSeiprotocolClient } from '@sei-js/proto';
+import { SeiSigningStargateClient } from '@sei-js/core';
 
 export const getSigningClient = async (
   rpcEndpoint: string,
   signer: OfflineSigner,
   useTM34?: boolean
 ): Promise<SigningStargateClient> => {
-  //@ts-ignore
-  return await getSigningSeiprotocolClient({ rpcEndpoint, signer, useTM34 });
+  // TODO: Add ability to pass in options if needed
+  if (useTM34) {
+    return SigningStargateClient.connectWithSigner(rpcEndpoint, signer);
+  }
+
+  return SeiSigningStargateClient.connectWithSigner(rpcEndpoint, signer);
 };
