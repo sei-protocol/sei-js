@@ -12,11 +12,9 @@ const useSigningClient = (rpc?: string) => {
   useEffect(() => {
     const getClient = async () => {
       if (!rpcUrl || !offlineSigner) return;
-      return await getSigningClient(
-        rpc ? rpc : rpcUrl,
-        offlineSigner,
-        chainId === 'atlantic-1'
-      );
+      return await getSigningClient(rpc ? rpc : rpcUrl, offlineSigner, {
+        useTM34: chainId === 'atlantic-1',
+      });
     };
 
     setIsLoading(true);
