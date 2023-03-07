@@ -1,7 +1,6 @@
-export * from './queryClient';
-export * as QueryClient from './queryClient';
-export * from './signingClient';
-export * as SigningClient from './signingClient';
-export * from './wallet';
-export * as Wallet from './wallet';
 export * from './client';
+export * from './cosmWasmClient';
+export * from './queryClient';
+export * from './stargateClient';
+export * from './tendermint35';
+export * from './wallet';
