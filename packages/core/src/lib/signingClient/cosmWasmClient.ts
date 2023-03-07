@@ -5,12 +5,13 @@ import {
 import { OfflineSigner } from '@cosmjs/proto-signing';
 
 import { SeiCosmWasmClient, SeiSigningCosmWasmClient } from '../client';
+import { SeiClientOptions, SeiSigningCosmWasmClientOptions } from './types';
 
 export const getCosmWasmClient = async (
   rpcEndpoint: string,
-  useTM34?: boolean
+  options: SeiClientOptions = {}
 ): Promise<CosmWasmClient> => {
-  if (useTM34) {
+  if (options.useTM34) {
     return CosmWasmClient.connect(rpcEndpoint);
   }
 
@@ -20,12 +21,19 @@ export const getCosmWasmClient = async (
 export const getSigningCosmWasmClient = async (
   rpcEndpoint: string,
   signer: OfflineSigner,
-  useTM34?: boolean
+  options: SeiSigningCosmWasmClientOptions = {}
 ): Promise<SigningCosmWasmClient> => {
-  // TODO: Add ability to pass in options if needed
-  if (useTM34) {
-    return SigningCosmWasmClient.connectWithSigner(rpcEndpoint, signer);
+  if (options.useTM34) {
+    return SigningCosmWasmClient.connectWithSigner(
+      rpcEndpoint,
+      signer,
+      options
+    );
   }
 
-  return SeiSigningCosmWasmClient.connectWithSigner(rpcEndpoint, signer);
+  return SeiSigningCosmWasmClient.connectWithSigner(
+    rpcEndpoint,
+    signer,
+    options
+  );
 };

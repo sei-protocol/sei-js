@@ -1,20 +1,11 @@
-import {
-  SigningStargateClient,
-  SigningStargateClientOptions,
-  StargateClient,
-  StargateClientOptions,
-} from '@cosmjs/stargate';
+import { SigningStargateClient, StargateClient } from '@cosmjs/stargate';
 import { OfflineSigner } from '@cosmjs/proto-signing';
 
 import { SeiSigningStargateClient, SeiStargateClient } from '../client';
-
-export type SeiStagateClientOptions = StargateClientOptions & {
-  useTM34?: boolean;
-};
-
-export type SeiSigningStagateClientOptions = SigningStargateClientOptions & {
-  useTM34?: boolean;
-};
+import {
+  SeiSigningStagateClientOptions,
+  SeiStagateClientOptions,
+} from './types';
 
 export const getStargateClient = async (
   rpcEndpoint: string,
