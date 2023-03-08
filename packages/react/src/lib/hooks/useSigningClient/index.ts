@@ -1,2 +1,4 @@
-export { default as useSigningClient } from './useSigningClient';
-export * from './types';
+export {
+  default as useSigningClient,
+  UseSigningClient,
+} from './useSigningClient';

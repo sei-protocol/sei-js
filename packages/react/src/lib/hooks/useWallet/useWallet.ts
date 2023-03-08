@@ -1,7 +1,6 @@
 import { useContext } from 'react';
-import { SeiWalletContext } from '../../provider';
-import { WalletProvider } from '../../provider/SeiWalletProvider';
+import { SeiWalletContext, WalletProvider } from '../../provider';
 
-const useWallet: () => WalletProvider = () => useContext(SeiWalletContext);
+const useWallet = (): WalletProvider => useContext(SeiWalletContext);
 
 export default useWallet;

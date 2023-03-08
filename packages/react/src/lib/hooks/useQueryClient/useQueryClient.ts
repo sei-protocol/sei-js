@@ -1,7 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { getQueryClient } from '@sei-js/core';
 import { SeiWalletContext } from '../../provider';
-import { QueryClient, UseQueryClient } from './types';
+
+export type QueryClient = Awaited<ReturnType<typeof getQueryClient>>;
+
+export type UseQueryClient = {
+  isLoading: boolean;
+  queryClient?: QueryClient;
+};
 
 const useQueryClient = (): UseQueryClient => {
   const seiWallet = useContext(SeiWalletContext);

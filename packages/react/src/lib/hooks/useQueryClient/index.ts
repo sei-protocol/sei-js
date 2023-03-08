@@ -1,2 +1,5 @@
-export { default as useQueryClient } from './useQueryClient';
-export * from './types';
+export {
+  default as useQueryClient,
+  QueryClient,
+  UseQueryClient,
+} from './useQueryClient';
