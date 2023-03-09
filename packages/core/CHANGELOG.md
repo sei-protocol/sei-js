@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.3.0
+
+### Minor Changes
+
+- f03475b: Update protos and add wallet provider
+
+### Patch Changes
+
+- 7fc4ff2: Fix dependencies for all packages
+- 7fc4ff2: Update dependencies for packages in monorepo
+- 267916d: Refactor clients
+- Updated dependencies [7fc4ff2]
+- Updated dependencies [7fc4ff2]
+- Updated dependencies [f03475b]
+  - @sei-js/proto@1.2.0
+
 ## 1.2.0
 
 ### Minor Changes
