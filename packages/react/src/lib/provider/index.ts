@@ -1,2 +1,5 @@
-export {default as SeiWalletProvider} from './SeiWalletProvider'
-export { SeiWalletContext } from './SeiWalletProvider'
+export {
+  default as SeiWalletProvider,
+  SeiWalletContext,
+} from './SeiWalletProvider';
+export * from './types';
