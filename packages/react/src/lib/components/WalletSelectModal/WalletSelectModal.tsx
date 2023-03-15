@@ -5,27 +5,6 @@ import { WalletSelectModalProps } from './types';
 import { styles } from './styles';
 import { SeiWalletContext } from '../../provider';
 
-// Wallet logos
-import coin98Logo from '../../assets/coin98.png';
-import falconLogo from '../../assets/falcon.png';
-import keplrLogo from '../../assets/keplr.png';
-import leapLogo from '../../assets/leap.png';
-import defaultIcon from '../../assets/default.svg';
-
-const getWalletIcon = (wallet: WalletWindowKey) => {
-  if (wallet === 'coin98') {
-    return coin98Logo;
-  } else if (wallet === 'falcon') {
-    return falconLogo;
-  } else if (wallet === 'keplr') {
-    return keplrLogo;
-  } else if (wallet === 'leap') {
-    return leapLogo;
-  } else {
-    return defaultIcon;
-  }
-};
-
 const WalletSelectModal = ({
   setShowConnectModal,
   inputWallets,
@@ -60,7 +39,7 @@ const WalletSelectModal = ({
             alt={wallet}
             width={18}
             height={18}
-            src={getWalletIcon(wallet)}
+            src={require(`../../assets/${wallet}.png`)}
           />
           <p style={{ ...styles.name, ...walletSelectStyles?.name }}>
             {wallet}
