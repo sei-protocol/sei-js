@@ -10,7 +10,6 @@ import {
   WalletWindowKey,
   connect as connectWallet,
   SUPPORTED_WALLETS,
-  ChainInfo,
   suggestChain,
 } from '@sei-js/core';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
@@ -21,6 +20,8 @@ export const SeiWalletContext = createContext<WalletProvider>({
   supportedWallets,
   accounts: [],
   installedWallets: [],
+  connect: () => undefined,
+  disconnect: () => undefined,
 });
 
 const SeiWalletProvider = ({
@@ -34,15 +35,15 @@ const SeiWalletProvider = ({
     WalletWindowKey | undefined
   >();
 
-  const connect = useCallback(async () => {
+  const suggestAndConnect = useCallback(async () => {
     if (!inputWallet) return;
     if (inputWallet === 'keplr') {
       await suggestChain('keplr', {
         chainName: `Sei ${chainConfiguration.chainId}`,
         chainId: chainConfiguration.chainId,
-        rpc: chainConfiguration.rpcUrl,
-        rest: chainConfiguration.restUrl,
-      } as ChainInfo);
+        rpcUrl: chainConfiguration.rpcUrl,
+        restUrl: chainConfiguration.restUrl,
+      });
     }
 
     const connectedWallet = await connectWallet(
@@ -64,7 +65,7 @@ const SeiWalletProvider = ({
 
   useEffect(() => {
     if (inputWallet) {
-      connect().then(() => setConnectedWallet(inputWallet));
+      suggestAndConnect().then(() => setConnectedWallet(inputWallet));
     } else {
       setConnectedWallet(undefined);
       setAccounts([]);
@@ -87,6 +88,14 @@ const SeiWalletProvider = ({
     [window]
   );
 
+  const connect = (walletKey: WalletWindowKey) => {
+    setInputWallet(walletKey);
+  };
+
+  const disconnect = () => {
+    setInputWallet(undefined);
+  };
+
   const contextValue: WalletProvider = {
     chainId: chainConfiguration.chainId,
     restUrl: chainConfiguration.restUrl,
@@ -97,6 +106,8 @@ const SeiWalletProvider = ({
     connectedWallet,
     installedWallets,
     setInputWallet,
+    connect,
+    disconnect,
   };
 
   return (

@@ -13,6 +13,8 @@ export type WalletProvider = {
   connectedWallet?: WalletWindowKey;
   installedWallets: WalletWindowKey[];
   setInputWallet?: (inputWallet: WalletWindowKey | undefined) => void;
+  connect: (walletKey: WalletWindowKey) => void;
+  disconnect: () => void;
 };
 
 export type SeiWalletProviderProps = {
