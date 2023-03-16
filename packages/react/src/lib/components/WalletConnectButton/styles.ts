@@ -4,22 +4,6 @@ export const styles: { [key: string]: CSSProperties } = {
   wrapper: {
     position: 'relative',
   },
-  button: {
-    width: 180,
-    minWidth: 180,
-    maxWidth: 180,
-    height: 40,
-    borderRadius: 12,
-    outline: 'none',
-    cursor: 'pointer',
-    padding: '0 12px',
-    borderWidth: 2,
-    borderColor: '#f1f1f1',
-    backgroundColor: 'black',
-    color: '#f1f1f1',
-    fontSize: 18,
-    fontWeight: '800',
-  },
   menu: {
     position: 'absolute',
     display: 'flex',
