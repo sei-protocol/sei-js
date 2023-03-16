@@ -37,8 +37,8 @@ const SeiWalletProvider = ({
 
   const suggestAndConnect = useCallback(async () => {
     if (!inputWallet) return;
-    if (inputWallet === 'keplr') {
-      await suggestChain('keplr', {
+    if (inputWallet === 'keplr' || inputWallet === 'leap') {
+      await suggestChain(inputWallet, {
         chainName: `Sei ${chainConfiguration.chainId}`,
         chainId: chainConfiguration.chainId,
         rpcUrl: chainConfiguration.rpcUrl,
