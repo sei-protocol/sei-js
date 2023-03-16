@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1
+
+### Patch Changes
+
+- a4ccd41: Suggest chain for leap before connecting
+- 6a201ac: Fix wallet select modal and add wallet logos
+
 ## 1.2.0
 
 ### Minor Changes
