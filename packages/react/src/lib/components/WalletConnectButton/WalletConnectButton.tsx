@@ -8,7 +8,10 @@ import { WalletConnectButtonProps } from './types';
 export const truncateAddress = (address: string) =>
   `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
 
-const WalletConnectButton = ({ buttonStyles }: WalletConnectButtonProps) => {
+const WalletConnectButton = ({
+  buttonStyles,
+  buttonClassName,
+}: WalletConnectButtonProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [recentlyCopied, setRecentlyCopied] = useState<boolean>(false);
   const [showConnectModal, setShowConnectModal] = useState<boolean>(false);
@@ -38,7 +41,8 @@ const WalletConnectButton = ({ buttonStyles }: WalletConnectButtonProps) => {
     if (!connectedWallet) {
       return (
         <button
-          style={{ ...styles.button, ...buttonStyles?.button }}
+          className={buttonClassName}
+          style={buttonStyles?.button}
           onClick={() => setShowConnectModal(true)}
         >
           connect wallet
@@ -54,7 +58,8 @@ const WalletConnectButton = ({ buttonStyles }: WalletConnectButtonProps) => {
     return (
       <div style={styles.wrapper}>
         <button
-          style={{ ...styles.button, ...buttonStyles?.button }}
+          className={buttonClassName}
+          style={buttonStyles?.button}
           onClick={() => setShowMenu(true)}
         >
           {accountLabel}
