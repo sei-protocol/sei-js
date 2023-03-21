@@ -57,7 +57,7 @@ const client = await getSigningClient({
 
 #### Cosm Wasm and Signing Cosm Wasm Client
 
-The `SeiSigningCosmWasmClient` and `SeiCosmWasmClient` can be used to interact with CosmWasm smart contracts. Typically, you need the `signingCosmWasmClient` to execute contract messages and the `cosmWasmClient` to query contract state.
+The `SeiSigningCosmWasmClient` and `SeiCosmWasmClient` can be used to interact with CosmWasm smart contracts. Typically, you need the `SeiSigningCosmWasmClient` to execute contract messages and the `SeiCosmWasmClient` to query contract state, though contract states can also be queried using the signing client.
 
 ```typescript
 import { SeiCosmWasmClient, SeiSigningCosmWasmClient, connect } from '@sei-js/core';
