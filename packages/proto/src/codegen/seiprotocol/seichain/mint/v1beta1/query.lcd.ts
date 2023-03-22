@@ -1,5 +1,5 @@
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryEpochProvisionsRequest, QueryEpochProvisionsResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryMinterRequest, QueryMinterResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -10,7 +10,7 @@ export class LCDQueryClient {
   }) {
     this.req = requestClient;
     this.params = this.params.bind(this);
-    this.epochProvisions = this.epochProvisions.bind(this);
+    this.minter = this.minter.bind(this);
   }
   /* Params returns the total set of minting parameters. */
 
@@ -22,9 +22,9 @@ export class LCDQueryClient {
   /* EpochProvisions current minting epoch provisions value. */
 
 
-  async epochProvisions(_params: QueryEpochProvisionsRequest = {}): Promise<QueryEpochProvisionsResponseSDKType> {
-    const endpoint = `seichain/mint/v1beta1/epoch_provisions`;
-    return await this.req.get<QueryEpochProvisionsResponseSDKType>(endpoint);
+  async minter(_params: QueryMinterRequest = {}): Promise<QueryMinterResponseSDKType> {
+    const endpoint = `seichain/mint/v1beta1/minter`;
+    return await this.req.get<QueryMinterResponseSDKType>(endpoint);
   }
 
 }

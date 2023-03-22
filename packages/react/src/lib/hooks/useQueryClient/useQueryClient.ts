@@ -1,23 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getQueryClient } from '@sei-js/core';
+import { SeiWalletContext } from '../../provider';
 
-const useQueryClient = (restUrl: string) => {
+export type QueryClient = Awaited<ReturnType<typeof getQueryClient>>;
+
+export type UseQueryClient = {
+  isLoading: boolean;
+  queryClient?: QueryClient;
+};
+
+const useQueryClient = (): UseQueryClient => {
+  const seiWallet = useContext(SeiWalletContext);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [queryClient, setQueryClient] =
-    useState<Awaited<ReturnType<typeof getQueryClient>>>();
+  const [queryClient, setQueryClient] = useState<QueryClient>();
 
   useEffect(() => {
     const getClient = async () => {
-      return await getQueryClient(restUrl);
+      try {
+        if (!seiWallet?.restUrl) return;
+        setIsLoading(true);
+        const client = await getQueryClient(seiWallet.restUrl);
+        setQueryClient(client);
+        setIsLoading(false);
+      } catch {
+        console.error('Error creating query client');
+      }
     };
 
-    setIsLoading(true);
-
-    getClient().then((client) => {
-      setQueryClient(client);
-      setIsLoading(false);
-    });
-  }, [restUrl]);
+    getClient();
+  }, [seiWallet?.restUrl]);
 
   return { queryClient, isLoading };
 };

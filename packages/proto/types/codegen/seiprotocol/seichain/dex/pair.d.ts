@@ -3,12 +3,14 @@ import { DeepPartial } from "@osmonauts/helpers";
 export interface Pair {
     priceDenom: string;
     assetDenom: string;
-    ticksize?: string;
+    priceTicksize?: string;
+    quantityTicksize?: string;
 }
 export interface PairSDKType {
     priceDenom: string;
     assetDenom: string;
-    ticksize?: string;
+    priceTicksize?: string;
+    quantityTicksize?: string;
 }
 export interface BatchContractPair {
     contractAddr: string;

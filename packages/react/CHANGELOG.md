@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.2.1
+
+### Patch Changes
+
+- a4ccd41: Suggest chain for leap before connecting
+- 6a201ac: Fix wallet select modal and add wallet logos
+
+## 1.2.0
+
+### Minor Changes
+
+- 7fc4ff2: Update dependencies for packages in monorepo
+- f03475b: Update protos and add wallet provider
+
+### Patch Changes
+
+- 7fc4ff2: Fix dependencies for all packages
+- 902715d: Add stargate and cosmwasm client hooks
+- Updated dependencies [7fc4ff2]
+- Updated dependencies [7fc4ff2]
+- Updated dependencies [f03475b]
+- Updated dependencies [267916d]
+  - @sei-js/core@1.3.0
+
 ## 1.1.7
 
 ### Patch Changes

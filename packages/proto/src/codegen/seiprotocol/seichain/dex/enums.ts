@@ -81,6 +81,11 @@ export enum OrderType {
 
   /** FOKMARKET - fill-or-kill market order */
   FOKMARKET = 3,
+
+  /** FOKMARKETBYVALUE - fill-or-kill market by value order */
+  FOKMARKETBYVALUE = 4,
+  STOPLOSS = 5,
+  STOPLIMIT = 6,
   UNRECOGNIZED = -1,
 }
 export enum OrderTypeSDKType {
@@ -90,6 +95,11 @@ export enum OrderTypeSDKType {
 
   /** FOKMARKET - fill-or-kill market order */
   FOKMARKET = 3,
+
+  /** FOKMARKETBYVALUE - fill-or-kill market by value order */
+  FOKMARKETBYVALUE = 4,
+  STOPLOSS = 5,
+  STOPLIMIT = 6,
   UNRECOGNIZED = -1,
 }
 export function orderTypeFromJSON(object: any): OrderType {
@@ -110,6 +120,18 @@ export function orderTypeFromJSON(object: any): OrderType {
     case "FOKMARKET":
       return OrderType.FOKMARKET;
 
+    case 4:
+    case "FOKMARKETBYVALUE":
+      return OrderType.FOKMARKETBYVALUE;
+
+    case 5:
+    case "STOPLOSS":
+      return OrderType.STOPLOSS;
+
+    case 6:
+    case "STOPLIMIT":
+      return OrderType.STOPLIMIT;
+
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -129,6 +151,15 @@ export function orderTypeToJSON(object: OrderType): string {
 
     case OrderType.FOKMARKET:
       return "FOKMARKET";
+
+    case OrderType.FOKMARKETBYVALUE:
+      return "FOKMARKETBYVALUE";
+
+    case OrderType.STOPLOSS:
+      return "STOPLOSS";
+
+    case OrderType.STOPLIMIT:
+      return "STOPLIMIT";
 
     default:
       return "UNKNOWN";

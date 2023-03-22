@@ -1,28 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getSigningClient } from '@sei-js/core';
-import { OfflineSigner } from '@cosmjs/proto-signing';
 import { SigningStargateClient } from '@cosmjs/stargate';
 
-const useSigningClient = (
-  rpcAddress: string,
-  offlineSigner?: OfflineSigner
-) => {
+import { SeiWalletContext } from '../../provider';
+import { shouldUseTm34Client } from '../../utils';
+
+export type UseSigningClient = {
+  isLoading: boolean;
+  signingClient?: SigningStargateClient;
+};
+
+const useSigningClient = (customRpcUrl?: string): UseSigningClient => {
+  const { offlineSigner, rpcUrl, chainId } = useContext(SeiWalletContext);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [signingClient, setSigningClient] = useState<SigningStargateClient>();
 
   useEffect(() => {
     const getClient = async () => {
-      if (!offlineSigner) return;
-      return await getSigningClient(rpcAddress, offlineSigner);
+      try {
+        if (!rpcUrl || !offlineSigner || !chainId) return;
+        setIsLoading(true);
+        const client = await getSigningClient(
+          customRpcUrl || rpcUrl,
+          offlineSigner,
+          {
+            useTM34: shouldUseTm34Client(chainId),
+          }
+        );
+        setSigningClient(client);
+        setIsLoading(false);
+      } catch {
+        console.error('Error creating signing client');
+      }
     };
 
-    setIsLoading(true);
-
-    getClient().then((client) => {
-      setSigningClient(client);
-      setIsLoading(false);
-    });
-  }, [rpcAddress, offlineSigner]);
+    getClient();
+  }, [customRpcUrl, rpcUrl, chainId, offlineSigner]);
 
   return { signingClient, isLoading };
 };

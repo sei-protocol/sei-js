@@ -1,6 +1,6 @@
 import { Params, ParamsSDKType } from "./mint";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial, Long } from "@osmonauts/helpers";
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 
 export interface QueryParamsRequest {}
@@ -20,34 +20,38 @@ export interface QueryParamsResponseSDKType {
   params: ParamsSDKType;
 }
 /**
- * QueryEpochProvisionsRequest is the request type for the
- * Query/EpochProvisions RPC method.
+ * QueryMinterRequest is the request type for the
+ * Query/Minter RPC method.
  */
 
-export interface QueryEpochProvisionsRequest {}
+export interface QueryMinterRequest {}
 /**
- * QueryEpochProvisionsRequest is the request type for the
- * Query/EpochProvisions RPC method.
+ * QueryMinterRequest is the request type for the
+ * Query/Minter RPC method.
  */
 
-export interface QueryEpochProvisionsRequestSDKType {}
+export interface QueryMinterRequestSDKType {}
 /**
- * QueryEpochProvisionsResponse is the response type for the
- * Query/EpochProvisions RPC method.
+ * QueryMinterResponse is the response type for the
+ * Query/Minter RPC method.
  */
 
-export interface QueryEpochProvisionsResponse {
-  /** epoch_provisions is the current minting per epoch provisions value. */
-  epochProvisions: Uint8Array;
+export interface QueryMinterResponse {
+  lastMintAmount: string;
+  lastMintDate: string;
+  lastMintHeight: Long;
+  denom: string;
 }
 /**
- * QueryEpochProvisionsResponse is the response type for the
- * Query/EpochProvisions RPC method.
+ * QueryMinterResponse is the response type for the
+ * Query/Minter RPC method.
  */
 
-export interface QueryEpochProvisionsResponseSDKType {
-  /** epoch_provisions is the current minting per epoch provisions value. */
-  epoch_provisions: Uint8Array;
+export interface QueryMinterResponseSDKType {
+  last_mint_amount: string;
+  last_mint_date: string;
+  last_mint_height: Long;
+  denom: string;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -129,19 +133,19 @@ export const QueryParamsResponse = {
 
 };
 
-function createBaseQueryEpochProvisionsRequest(): QueryEpochProvisionsRequest {
+function createBaseQueryMinterRequest(): QueryMinterRequest {
   return {};
 }
 
-export const QueryEpochProvisionsRequest = {
-  encode(_: QueryEpochProvisionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const QueryMinterRequest = {
+  encode(_: QueryMinterRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEpochProvisionsRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryMinterRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryEpochProvisionsRequest();
+    const message = createBaseQueryMinterRequest();
 
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -156,39 +160,66 @@ export const QueryEpochProvisionsRequest = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<QueryEpochProvisionsRequest>): QueryEpochProvisionsRequest {
-    const message = createBaseQueryEpochProvisionsRequest();
+  fromPartial(_: DeepPartial<QueryMinterRequest>): QueryMinterRequest {
+    const message = createBaseQueryMinterRequest();
     return message;
   }
 
 };
 
-function createBaseQueryEpochProvisionsResponse(): QueryEpochProvisionsResponse {
+function createBaseQueryMinterResponse(): QueryMinterResponse {
   return {
-    epochProvisions: new Uint8Array()
+    lastMintAmount: "",
+    lastMintDate: "",
+    lastMintHeight: Long.ZERO,
+    denom: ""
   };
 }
 
-export const QueryEpochProvisionsResponse = {
-  encode(message: QueryEpochProvisionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.epochProvisions.length !== 0) {
-      writer.uint32(10).bytes(message.epochProvisions);
+export const QueryMinterResponse = {
+  encode(message: QueryMinterResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.lastMintAmount !== "") {
+      writer.uint32(10).string(message.lastMintAmount);
+    }
+
+    if (message.lastMintDate !== "") {
+      writer.uint32(18).string(message.lastMintDate);
+    }
+
+    if (!message.lastMintHeight.isZero()) {
+      writer.uint32(24).int64(message.lastMintHeight);
+    }
+
+    if (message.denom !== "") {
+      writer.uint32(34).string(message.denom);
     }
 
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEpochProvisionsResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryMinterResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryEpochProvisionsResponse();
+    const message = createBaseQueryMinterResponse();
 
     while (reader.pos < end) {
       const tag = reader.uint32();
 
       switch (tag >>> 3) {
         case 1:
-          message.epochProvisions = reader.bytes();
+          message.lastMintAmount = reader.string();
+          break;
+
+        case 2:
+          message.lastMintDate = reader.string();
+          break;
+
+        case 3:
+          message.lastMintHeight = (reader.int64() as Long);
+          break;
+
+        case 4:
+          message.denom = reader.string();
           break;
 
         default:
@@ -200,9 +231,12 @@ export const QueryEpochProvisionsResponse = {
     return message;
   },
 
-  fromPartial(object: DeepPartial<QueryEpochProvisionsResponse>): QueryEpochProvisionsResponse {
-    const message = createBaseQueryEpochProvisionsResponse();
-    message.epochProvisions = object.epochProvisions ?? new Uint8Array();
+  fromPartial(object: DeepPartial<QueryMinterResponse>): QueryMinterResponse {
+    const message = createBaseQueryMinterResponse();
+    message.lastMintAmount = object.lastMintAmount ?? "";
+    message.lastMintDate = object.lastMintDate ?? "";
+    message.lastMintHeight = object.lastMintHeight !== undefined && object.lastMintHeight !== null ? Long.fromValue(object.lastMintHeight) : Long.ZERO;
+    message.denom = object.denom ?? "";
     return message;
   }
 

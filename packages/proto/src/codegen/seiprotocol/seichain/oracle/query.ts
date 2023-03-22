@@ -19,7 +19,7 @@ export interface QueryExchangeRateRequestSDKType {
  */
 
 export interface QueryExchangeRateResponse {
-  /** exchange_rate defines the exchange rate of Luna denominated in various Terra */
+  /** exchange_rate defines the exchange rate of Sei denominated in various Sei */
   oracleExchangeRate: OracleExchangeRate;
 }
 /**
@@ -28,7 +28,7 @@ export interface QueryExchangeRateResponse {
  */
 
 export interface QueryExchangeRateResponseSDKType {
-  /** exchange_rate defines the exchange rate of Luna denominated in various Terra */
+  /** exchange_rate defines the exchange rate of Sei denominated in various Sei */
   oracle_exchange_rate: OracleExchangeRateSDKType;
 }
 /** QueryExchangeRatesRequest is the request type for the Query/ExchangeRates RPC method. */
@@ -739,14 +739,14 @@ export const QueryPriceSnapshotHistoryResponse = {
 
 function createBaseQueryTwapsRequest(): QueryTwapsRequest {
   return {
-    lookbackSeconds: Long.ZERO
+    lookbackSeconds: Long.UZERO
   };
 }
 
 export const QueryTwapsRequest = {
   encode(message: QueryTwapsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (!message.lookbackSeconds.isZero()) {
-      writer.uint32(8).int64(message.lookbackSeconds);
+      writer.uint32(8).uint64(message.lookbackSeconds);
     }
 
     return writer;
@@ -762,7 +762,7 @@ export const QueryTwapsRequest = {
 
       switch (tag >>> 3) {
         case 1:
-          message.lookbackSeconds = (reader.int64() as Long);
+          message.lookbackSeconds = (reader.uint64() as Long);
           break;
 
         default:
@@ -776,7 +776,7 @@ export const QueryTwapsRequest = {
 
   fromPartial(object: DeepPartial<QueryTwapsRequest>): QueryTwapsRequest {
     const message = createBaseQueryTwapsRequest();
-    message.lookbackSeconds = object.lookbackSeconds !== undefined && object.lookbackSeconds !== null ? Long.fromValue(object.lookbackSeconds) : Long.ZERO;
+    message.lookbackSeconds = object.lookbackSeconds !== undefined && object.lookbackSeconds !== null ? Long.fromValue(object.lookbackSeconds) : Long.UZERO;
     return message;
   }
 

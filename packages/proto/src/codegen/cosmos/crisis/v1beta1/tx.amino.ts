@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgVerifyInvariant } from "./tx";
 export interface AminoMsgVerifyInvariant extends AminoMsg {

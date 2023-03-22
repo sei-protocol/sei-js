@@ -1,5 +1,5 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract } from "./tx";
+import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize } from "./tx";
 export declare const registry: ReadonlyArray<[string, GeneratedType]>;
 export declare const load: (protoRegistry: Registry) => void;
 export declare const MessageComposer: {
@@ -13,6 +13,26 @@ export declare const MessageComposer: {
             value: Uint8Array;
         };
         registerContract(value: MsgRegisterContract): {
+            typeUrl: string;
+            value: Uint8Array;
+        };
+        contractDepositRent(value: MsgContractDepositRent): {
+            typeUrl: string;
+            value: Uint8Array;
+        };
+        unregisterContract(value: MsgUnregisterContract): {
+            typeUrl: string;
+            value: Uint8Array;
+        };
+        registerPairs(value: MsgRegisterPairs): {
+            typeUrl: string;
+            value: Uint8Array;
+        };
+        updatePriceTickSize(value: MsgUpdatePriceTickSize): {
+            typeUrl: string;
+            value: Uint8Array;
+        };
+        updateQuantityTickSize(value: MsgUpdateQuantityTickSize): {
             typeUrl: string;
             value: Uint8Array;
         };
@@ -30,6 +50,26 @@ export declare const MessageComposer: {
             typeUrl: string;
             value: MsgRegisterContract;
         };
+        contractDepositRent(value: MsgContractDepositRent): {
+            typeUrl: string;
+            value: MsgContractDepositRent;
+        };
+        unregisterContract(value: MsgUnregisterContract): {
+            typeUrl: string;
+            value: MsgUnregisterContract;
+        };
+        registerPairs(value: MsgRegisterPairs): {
+            typeUrl: string;
+            value: MsgRegisterPairs;
+        };
+        updatePriceTickSize(value: MsgUpdatePriceTickSize): {
+            typeUrl: string;
+            value: MsgUpdatePriceTickSize;
+        };
+        updateQuantityTickSize(value: MsgUpdateQuantityTickSize): {
+            typeUrl: string;
+            value: MsgUpdateQuantityTickSize;
+        };
     };
     fromPartial: {
         placeOrders(value: MsgPlaceOrders): {
@@ -43,6 +83,26 @@ export declare const MessageComposer: {
         registerContract(value: MsgRegisterContract): {
             typeUrl: string;
             value: MsgRegisterContract;
+        };
+        contractDepositRent(value: MsgContractDepositRent): {
+            typeUrl: string;
+            value: MsgContractDepositRent;
+        };
+        unregisterContract(value: MsgUnregisterContract): {
+            typeUrl: string;
+            value: MsgUnregisterContract;
+        };
+        registerPairs(value: MsgRegisterPairs): {
+            typeUrl: string;
+            value: MsgRegisterPairs;
+        };
+        updatePriceTickSize(value: MsgUpdatePriceTickSize): {
+            typeUrl: string;
+            value: MsgUpdatePriceTickSize;
+        };
+        updateQuantityTickSize(value: MsgUpdateQuantityTickSize): {
+            typeUrl: string;
+            value: MsgUpdateQuantityTickSize;
         };
     };
 };

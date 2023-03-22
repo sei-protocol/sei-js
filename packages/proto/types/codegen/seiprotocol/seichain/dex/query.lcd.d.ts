@@ -1,5 +1,5 @@
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetLongBookRequest, QueryGetLongBookResponseSDKType, QueryAllLongBookRequest, QueryAllLongBookResponseSDKType, QueryGetShortBookRequest, QueryGetShortBookResponseSDKType, QueryAllShortBookRequest, QueryAllShortBookResponseSDKType, QueryGetPriceRequest, QueryGetPriceResponseSDKType, QueryGetPricesRequest, QueryGetPricesResponseSDKType, QueryGetTwapsRequest, QueryGetTwapsResponseSDKType, QueryAssetMetadataRequest, QueryAssetMetadataResponseSDKType, QueryAssetListRequest, QueryAssetListResponseSDKType, QueryRegisteredPairsRequest, QueryRegisteredPairsResponseSDKType, QueryGetOrdersRequest, QueryGetOrdersResponseSDKType, QueryGetOrderByIDRequest, QueryGetOrderByIDResponseSDKType, QueryGetHistoricalPricesRequest, QueryGetHistoricalPricesResponseSDKType, QueryGetMarketSummaryRequest, QueryGetMarketSummaryResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetLongBookRequest, QueryGetLongBookResponseSDKType, QueryAllLongBookRequest, QueryAllLongBookResponseSDKType, QueryGetShortBookRequest, QueryGetShortBookResponseSDKType, QueryAllShortBookRequest, QueryAllShortBookResponseSDKType, QueryGetPriceRequest, QueryGetPriceResponseSDKType, QueryGetLatestPriceRequest, QueryGetLatestPriceResponseSDKType, QueryGetPricesRequest, QueryGetPricesResponseSDKType, QueryGetTwapsRequest, QueryGetTwapsResponseSDKType, QueryAssetMetadataRequest, QueryAssetMetadataResponseSDKType, QueryAssetListRequest, QueryAssetListResponseSDKType, QueryRegisteredPairsRequest, QueryRegisteredPairsResponseSDKType, QueryGetOrdersRequest, QueryGetOrdersResponseSDKType, QueryGetOrderByIDRequest, QueryGetOrderByIDResponseSDKType, QueryGetHistoricalPricesRequest, QueryGetHistoricalPricesResponseSDKType, QueryGetMarketSummaryRequest, QueryGetMarketSummaryResponseSDKType } from "./query";
 export declare class LCDQueryClient {
     req: LCDClient;
     constructor({ requestClient }: {
@@ -11,6 +11,7 @@ export declare class LCDQueryClient {
     shortBook(params: QueryGetShortBookRequest): Promise<QueryGetShortBookResponseSDKType>;
     shortBookAll(params: QueryAllShortBookRequest): Promise<QueryAllShortBookResponseSDKType>;
     getPrice(params: QueryGetPriceRequest): Promise<QueryGetPriceResponseSDKType>;
+    getLatestPrice(params: QueryGetLatestPriceRequest): Promise<QueryGetLatestPriceResponseSDKType>;
     getPrices(params: QueryGetPricesRequest): Promise<QueryGetPricesResponseSDKType>;
     getTwaps(params: QueryGetTwapsRequest): Promise<QueryGetTwapsResponseSDKType>;
     assetMetadata(params: QueryAssetMetadataRequest): Promise<QueryAssetMetadataResponseSDKType>;

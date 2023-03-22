@@ -1,6 +1,8 @@
 import { Order, OrderSDKType, Cancellation, CancellationSDKType } from "./order";
 import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { ContractInfo, ContractInfoSDKType } from "./contract";
+import { ContractInfoV2, ContractInfoV2SDKType } from "./contract";
+import { BatchContractPair, BatchContractPairSDKType } from "./pair";
+import { TickSize, TickSizeSDKType } from "./tick_size";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface MsgPlaceOrders {
@@ -37,15 +39,73 @@ export interface MsgCancelOrdersResponseSDKType {
 }
 export interface MsgRegisterContract {
     creator: string;
-    contract: ContractInfo;
+    contract: ContractInfoV2;
 }
 export interface MsgRegisterContractSDKType {
     creator: string;
-    contract: ContractInfoSDKType;
+    contract: ContractInfoV2SDKType;
 }
 export interface MsgRegisterContractResponse {
 }
 export interface MsgRegisterContractResponseSDKType {
+}
+export interface MsgContractDepositRent {
+    contractAddr: string;
+    amount: Long;
+    sender: string;
+}
+export interface MsgContractDepositRentSDKType {
+    contractAddr: string;
+    amount: Long;
+    sender: string;
+}
+export interface MsgContractDepositRentResponse {
+}
+export interface MsgContractDepositRentResponseSDKType {
+}
+export interface MsgUnregisterContract {
+    creator: string;
+    contractAddr: string;
+}
+export interface MsgUnregisterContractSDKType {
+    creator: string;
+    contractAddr: string;
+}
+export interface MsgUnregisterContractResponse {
+}
+export interface MsgUnregisterContractResponseSDKType {
+}
+export interface MsgRegisterPairs {
+    creator: string;
+    batchcontractpair: BatchContractPair[];
+}
+export interface MsgRegisterPairsSDKType {
+    creator: string;
+    batchcontractpair: BatchContractPairSDKType[];
+}
+export interface MsgRegisterPairsResponse {
+}
+export interface MsgRegisterPairsResponseSDKType {
+}
+export interface MsgUpdatePriceTickSize {
+    creator: string;
+    tickSizeList: TickSize[];
+}
+export interface MsgUpdatePriceTickSizeSDKType {
+    creator: string;
+    tickSizeList: TickSizeSDKType[];
+}
+export interface MsgUpdateQuantityTickSize {
+    creator: string;
+    tickSizeList: TickSize[];
+}
+export interface MsgUpdateQuantityTickSizeSDKType {
+    creator: string;
+    tickSizeList: TickSizeSDKType[];
+}
+export interface MsgUpdateTickSizeResponse {
+}
+export interface MsgUpdateTickSizeResponseSDKType {
 }
 export declare const MsgPlaceOrders: {
     encode(message: MsgPlaceOrders, writer?: _m0.Writer): _m0.Writer;
@@ -76,4 +136,49 @@ export declare const MsgRegisterContractResponse: {
     encode(_: MsgRegisterContractResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterContractResponse;
     fromPartial(_: DeepPartial<MsgRegisterContractResponse>): MsgRegisterContractResponse;
+};
+export declare const MsgContractDepositRent: {
+    encode(message: MsgContractDepositRent, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgContractDepositRent;
+    fromPartial(object: DeepPartial<MsgContractDepositRent>): MsgContractDepositRent;
+};
+export declare const MsgContractDepositRentResponse: {
+    encode(_: MsgContractDepositRentResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgContractDepositRentResponse;
+    fromPartial(_: DeepPartial<MsgContractDepositRentResponse>): MsgContractDepositRentResponse;
+};
+export declare const MsgUnregisterContract: {
+    encode(message: MsgUnregisterContract, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnregisterContract;
+    fromPartial(object: DeepPartial<MsgUnregisterContract>): MsgUnregisterContract;
+};
+export declare const MsgUnregisterContractResponse: {
+    encode(_: MsgUnregisterContractResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnregisterContractResponse;
+    fromPartial(_: DeepPartial<MsgUnregisterContractResponse>): MsgUnregisterContractResponse;
+};
+export declare const MsgRegisterPairs: {
+    encode(message: MsgRegisterPairs, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterPairs;
+    fromPartial(object: DeepPartial<MsgRegisterPairs>): MsgRegisterPairs;
+};
+export declare const MsgRegisterPairsResponse: {
+    encode(_: MsgRegisterPairsResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgRegisterPairsResponse;
+    fromPartial(_: DeepPartial<MsgRegisterPairsResponse>): MsgRegisterPairsResponse;
+};
+export declare const MsgUpdatePriceTickSize: {
+    encode(message: MsgUpdatePriceTickSize, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdatePriceTickSize;
+    fromPartial(object: DeepPartial<MsgUpdatePriceTickSize>): MsgUpdatePriceTickSize;
+};
+export declare const MsgUpdateQuantityTickSize: {
+    encode(message: MsgUpdateQuantityTickSize, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateQuantityTickSize;
+    fromPartial(object: DeepPartial<MsgUpdateQuantityTickSize>): MsgUpdateQuantityTickSize;
+};
+export declare const MsgUpdateTickSizeResponse: {
+    encode(_: MsgUpdateTickSizeResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateTickSizeResponse;
+    fromPartial(_: DeepPartial<MsgUpdateTickSizeResponse>): MsgUpdateTickSizeResponse;
 };

@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgUnjail } from "./tx";
 export interface AminoMsgUnjail extends AminoMsg {
