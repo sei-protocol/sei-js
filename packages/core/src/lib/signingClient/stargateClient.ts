@@ -1,11 +1,37 @@
-import { SigningStargateClient, StargateClient } from '@cosmjs/stargate';
-import { OfflineSigner } from '@cosmjs/proto-signing';
+import {
+  AminoTypes,
+  SigningStargateClient,
+  StargateClient,
+  defaultRegistryTypes,
+} from '@cosmjs/stargate';
+import { OfflineSigner, Registry } from '@cosmjs/proto-signing';
+import {
+  cosmosAminoConverters,
+  cosmwasmAminoConverters,
+  ibcAminoConverters,
+  seiprotocolProtoRegistry,
+  seiprotocolAminoConverters,
+} from '@sei-js/proto';
 
 import { SeiSigningStargateClient, SeiStargateClient } from '../client';
 import {
   SeiSigningStagateClientOptions,
   SeiStagateClientOptions,
 } from './types';
+
+export const createSeiRegistry = (): Registry => {
+  return new Registry([...defaultRegistryTypes, ...seiprotocolProtoRegistry]);
+};
+
+export const createSeiAminoTypes = (): AminoTypes => {
+  const types = {
+    ...cosmosAminoConverters,
+    ...cosmwasmAminoConverters,
+    ...ibcAminoConverters,
+    ...seiprotocolAminoConverters,
+  };
+  return new AminoTypes(types);
+};
 
 export const getStargateClient = async (
   rpcEndpoint: string,
@@ -23,17 +49,20 @@ export const getSigningClient = async (
   signer: OfflineSigner,
   options: SeiSigningStagateClientOptions = {}
 ): Promise<SigningStargateClient> => {
+  const registry = createSeiRegistry();
+  const aminoTypes = createSeiAminoTypes();
+
   if (options.useTM34) {
-    return SigningStargateClient.connectWithSigner(
-      rpcEndpoint,
-      signer,
-      options
-    );
+    return SigningStargateClient.connectWithSigner(rpcEndpoint, signer, {
+      registry,
+      aminoTypes,
+      ...options,
+    });
   }
 
-  return SeiSigningStargateClient.connectWithSigner(
-    rpcEndpoint,
-    signer,
-    options
-  );
+  return SeiSigningStargateClient.connectWithSigner(rpcEndpoint, signer, {
+    registry,
+    aminoTypes,
+    ...options,
+  });
 };
