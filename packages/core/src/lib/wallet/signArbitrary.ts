@@ -1,14 +1,19 @@
 import { StdSignature } from '@cosmjs/amino';
 import { WalletWindowKey } from './types';
+import { toAscii } from '@cosmjs/encoding';
 
 export const signArbitrary = async (
   inputWallet: WalletWindowKey,
   chainId: string,
   signingAddress: string,
-  data: Uint8Array
+  data: string | Uint8Array
 ) => {
   if (typeof window === 'undefined' || !window) {
     throw new Error('Window is undefined.');
+  }
+
+  if (typeof data === 'string') {
+    data = toAscii(data);
   }
 
   const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
@@ -23,11 +28,15 @@ export const verifyArbitrary = async (
   inputWallet: WalletWindowKey,
   chainId: string,
   signingAddress: string,
-  data: Uint8Array,
+  data: string | Uint8Array,
   signature: StdSignature
 ) => {
   if (typeof window === 'undefined' || !window) {
     throw new Error('Window is undefined.');
+  }
+
+  if (typeof data === 'string') {
+    data = toAscii(data);
   }
 
   const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
