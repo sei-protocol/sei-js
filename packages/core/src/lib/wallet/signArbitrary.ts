@@ -2,7 +2,7 @@ import { StdSignature } from '@cosmjs/amino';
 import { WalletWindowKey } from './types';
 import { toAscii } from '@cosmjs/encoding';
 
-export const signArbitrary = async (
+export const walletSignArbitrary = async (
   inputWallet: WalletWindowKey,
   chainId: string,
   signingAddress: string,
@@ -24,7 +24,7 @@ export const signArbitrary = async (
   return walletProvider.signArbitrary(chainId, signingAddress, data);
 };
 
-export const verifyArbitrary = async (
+export const walletVerifyArbitrary = async (
   inputWallet: WalletWindowKey,
   chainId: string,
   signingAddress: string,
