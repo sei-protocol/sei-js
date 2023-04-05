@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1
+
+### Patch Changes
+
+- 84265e0: Use sei registry and amino types by default
+- 21958cc: Add helper function for signing arbitrary strings
+
 ## 1.3.0
 
 ### Minor Changes

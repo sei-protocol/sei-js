@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [84265e0]
+- Updated dependencies [21958cc]
+  - @sei-js/core@1.3.1
+
 ## 1.2.1
 
 ### Patch Changes
