@@ -4,7 +4,7 @@ A React helper library for [@sei-js/core](https://www.npmjs.com/package/@sei-js/
 
 ## Tutorial
 
-For an in depth tutorial, please see [our documentation](https://docs.seinetwork.io/front-end-development/javascript-tutorial).
+For an in depth tutorial, please see [our documentation](https://docs.seinetwork.io/front-end-development/react-tutorial).
 
 ## Installation
 
@@ -17,9 +17,9 @@ The first step is to wrap your entire application in a Sei wallet provider and p
 ```javascript
 <SeiWalletProvider
   chainConfiguration={{
-    chainId: 'sei-devnet-3',
-    restUrl: 'https://rest.sei-devnet-3.seinetwork.io/',
-    rpcUrl: 'https://rpc.sei-devnet-3.seinetwork.io'
+    chainId: 'atlantic-2',
+    restUrl: 'https://rest.atlantic-2.seinetwork.io/',
+    rpcUrl: 'https://rpc.atlantic-2.seinetwork.io'
   }}>
       <YourApp />
 </SeiWalletProvider>
@@ -95,3 +95,11 @@ const { cosmWasmClient } = useSeiCosmWasmClient();
 | Property       | Type            | Description                             |
 |----------------|-----------------|-----------------------------------------|
 | cosmWasmClient | CosmWasmClient? | A cosm wasm client for smart contracts. |
+
+
+
+### Other helpful packages
+
+- [@sei-js/core](https://www.npmjs.com/package/@sei-js/core) - TypeScript library containing helper functions for wallet connection, transaction sig
+ning, and RPC querying.
+- [@sei-js/proto](https://www.npmjs.com/package/@sei-js/proto) - TypeScript library for Sei protobufs generated using Telescope

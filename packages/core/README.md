@@ -1,56 +1,75 @@
 # @sei-js/core
+
 A library for Sei written in Typescript.
 
 ## Installation
-```yarn add @sei-js/core``` or ```npm install @sei-js/core```
 
-## Modules
-| Module | Link                  |
-|--------|-----------------------|
-| Wallet | [learn more](#wallet) |
-| Client | [learn more](#client) |
+```shell
+yarn add @sei-js/core
 
-### Wallet
-```import { connect, SUPPORTED_WALLETS } from '@sei-js/core/wallet```
+# or
 
-| Property          | Type                                                            | Description                                                                                                                                   |
-|-------------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| connect()         | (walletKey: string) => { accounts, offlineSigner}               | Async function to connect to input wallet                                                                                                     |
-| SUPPORTED_WALLETS | string[]                                                        | A list of currently supported wallets which can be passed to connect()                                                                        |
-| getChainSuggest   | (chainId?: string, restUrl?: string, rpcUrl?: string) -> object | A pre defined object to be passed to a wallets experimentalChainSuggest function. Takes optional parameters for chainId, restUrl, and rpcUrl. |
+npm install @sei-js/core
+```
 
-### Client
-#### Query Client
-The query client is used to query data from modules via REST endpoints.
+## Getting Started
+
+### Connecting to a wallet
+
+In order to interact with a Sei node, you'll need a wallet to sign transactions. The wallet extensions that are currently supported can be found in `SUPPORTED_WALLETS`.
 
 ```javascript
-import { QueryClient } from '@sei-js/core';
+import { connect, SUPPORTED_WALLETS } from '@sei-js/core';
 
-const queryClient = await QueryClient.getQueryClient(rpcEndpoint);
+// Connecting to a Keplr wallet
+const { connectedWallet, offlineSigner } = await connect('keplr', 'atlantic-2');
+```
 
+### Client
+
+#### LCD Query Client
+
+The LCD query client can be used to query data via REST endpoints.
+
+```javascript
+import { getQueryClient } from '@sei-js/core';
+
+const queryClient = await getQueryClient(REST_URL);
 // Getting the market summary from the Sei dex module
-queryClient.seiprotocol.seichain.dex.getMarketSummary(params)
-
+queryClient.seiprotocol.seichain.dex.getMarketSummary(params);
 // Getting user balances from the Cosmos bank module
-queryClient.cosmos.bank.v1beta1.allBalances({ address})
+queryClient.cosmos.bank.v1beta1.allBalances({ address });
 ```
 
 #### Signing Client
-The signing client provides a way to sign and broadcast transactions on Sei.
 
-Use `getSigningClient` to get your `SigningStargateClient`, with the Sei proto/amino messages loaded in.
+The signing client can be used to create, sign, and broadcast transactions.
 
 ```javascript
-import { SigningClient } from '@sei-js/core';
+import { getSigningClient } from '@sei-js/core';
 
-const client = await SigningClient.getSigningClient({
+const client = await getSigningClient({
   rpcEndpoint,
-  signer // OfflineSigner
+  signer, // OfflineSigner
 });
 ```
 
 
+#### CosmWasmClient and SigningCosmWasmClient
+
+The `SeiSigningCosmWasmClient` and `SeiCosmWasmClient` can be used to interact with CosmWasm smart contracts. Typically, you need the `SeiSigningCosmWasmClient` to execute contract messages and the `SeiCosmWasmClient` to query contract state, though contract states can also be queried using the signing client.
+
+```typescript
+import { getSigningCosmWasmClient, getCosmWasmClient, connect } from '@sei-js/core';
+
+const cosmWasmClient = await getCosmWasmClient(RPC_URL);
+
+const { offlineSigner } = await connect('keplr', 'atlantic-2');
+const signingCosmWasmClient = await getSigningCosmWasmClient(RPC_URL, offlineSigner);
+```
+
 ## Related packages
+
 [@sei-js/react](https://www.npmjs.com/package/@sei-js/react) - A react helper library for common @sei-js/core functions
 
 [@sei-js/proto](https://www.npmjs.com/package/@sei-js/proto) - TypeScript library for Sei protobufs generated using Telescope
