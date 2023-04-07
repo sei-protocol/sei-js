@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2
+
+### Patch Changes
+
+- aaa3d7c: Fix registry types for signing cosmwasm clients
+
 ## 1.3.1
 
 ### Patch Changes
