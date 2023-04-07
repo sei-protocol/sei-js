@@ -8,6 +8,7 @@ import { OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import {
   cosmosAminoConverters,
   cosmwasmAminoConverters,
+  cosmwasmProtoRegistry,
   ibcAminoConverters,
   seiprotocolProtoRegistry,
   seiprotocolAminoConverters,
@@ -20,7 +21,11 @@ import {
 } from './types';
 
 export const createSeiRegistry = (): Registry => {
-  return new Registry([...defaultRegistryTypes, ...seiprotocolProtoRegistry]);
+  return new Registry([
+    ...defaultRegistryTypes,
+    ...cosmwasmProtoRegistry,
+    ...seiprotocolProtoRegistry,
+  ]);
 };
 
 export const createSeiAminoTypes = (): AminoTypes => {
