@@ -1430,7 +1430,7 @@
     elliptic "^6.5.3"
     libsodium-wrappers "^0.7.6"
 
-"@cosmjs/crypto@^0.29.5":
+"@cosmjs/crypto@0.29.5", "@cosmjs/crypto@^0.29.5":
   version "0.29.5"
   resolved "https://registry.npmjs.org/@cosmjs/crypto/-/crypto-0.29.5.tgz#ab99fc382b93d8a8db075780cf07487a0f9519fd"
   integrity sha512-2bKkaLGictaNL0UipQCL6C1afaisv6k8Wr/GCLx9FqiyFkh9ZgRHDyetD64ZsjnWV/N/D44s/esI+k6oPREaiQ==
