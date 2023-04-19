@@ -24,6 +24,7 @@
   "dependencies": {
     "@cosmjs/amino": "0.29.5",
     "@cosmjs/cosmwasm-stargate": "0.29.5",
+    "@cosmjs/crypto": "0.29.5",
     "@cosmjs/encoding": "0.29.5",
     "@cosmjs/json-rpc": "0.29.5",
     "@cosmjs/math": "0.29.5",
