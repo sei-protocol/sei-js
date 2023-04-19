@@ -11,6 +11,7 @@ export const truncateAddress = (address: string) =>
 const WalletConnectButton = ({
   buttonStyles,
   buttonClassName,
+  wallets,
 }: WalletConnectButtonProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [recentlyCopied, setRecentlyCopied] = useState<boolean>(false);
@@ -100,6 +101,7 @@ const WalletConnectButton = ({
       {renderButton()}
       {showConnectModal && (
         <WalletSelectModal
+          inputWallets={wallets}
           walletSelectStyles={buttonStyles?.walletSelectStyles}
           setShowConnectModal={setShowConnectModal}
         />
