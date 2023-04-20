@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.3
+
+### Patch Changes
+
+- e5308db: Fix @cosmjs/crypto dependency
+
 ## 1.3.2
 
 ### Patch Changes

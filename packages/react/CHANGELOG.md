@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0
+
+### Minor Changes
+
+- 8c20cef: Added the ability to set the input wallets that show up when using the WalletConnectButton component
+
+### Patch Changes
+
+- e5308db: Fix react dependencies
+- Updated dependencies [e5308db]
+  - @sei-js/core@1.3.3
+
 ## 1.2.3
 
 ### Patch Changes
