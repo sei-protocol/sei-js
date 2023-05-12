@@ -7,6 +7,7 @@ import { SeiWalletContext } from '../../provider';
 
 // TODO: Refactor this to a separate assets repo
 // Wallet logos
+import finLogo from '../../assets/fin.png';
 import coin98Logo from '../../assets/coin98.png';
 import falconLogo from '../../assets/falcon.png';
 import keplrLogo from '../../assets/keplr.png';
@@ -15,6 +16,8 @@ import defaultIcon from '../../assets/default.svg';
 const getWalletIcon = (wallet: WalletWindowKey) => {
   if (wallet === 'coin98') {
     return coin98Logo;
+  } else if(wallet === "fin") {
+    return finLogo
   } else if (wallet === 'falcon') {
     return falconLogo;
   } else if (wallet === 'keplr') {

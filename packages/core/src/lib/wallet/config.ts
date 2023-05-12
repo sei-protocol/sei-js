@@ -16,11 +16,16 @@ const COIN_98_WALLET: SupportedWallet = {
   windowKey: 'coin98',
 };
 
+const FIN_WALLET: SupportedWallet = {
+  windowKey: 'fin',
+};
+
 export const SUPPORTED_WALLETS: SupportedWallet[] = [
   KEPLR_WALLET,
   LEAP_WALLET,
   COIN_98_WALLET,
   FALCON_WALLET,
+  FIN_WALLET
 ];
 
 const DEFAULT_CHAIN_INFO = {
