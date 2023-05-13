@@ -29,7 +29,7 @@ export const connect = async (
   // Enable wallet before attempting to call any methods
   await walletProvider.enable(chainId);
 
-  const offlineSigner = await walletProvider.getOfflineSigner(chainId);
+  const offlineSigner = await walletProvider.getOfflineSignerAuto(chainId);
   const accounts = await offlineSigner.getAccounts();
 
   return { offlineSigner, accounts };

@@ -39,7 +39,7 @@ describe('connect', () => {
     const accounts = await offlineSigner.getAccounts();
     windowSpy.mockImplementation(() => ({
       keplr: {
-        getOfflineSigner: () => offlineSigner,
+        getOfflineSignerAuto: () => offlineSigner,
         experimentalSuggestChain: () => undefined,
         enable: () => undefined,
       },
