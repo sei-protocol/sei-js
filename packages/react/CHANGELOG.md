@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.0
+
+### Minor Changes
+
+- Add Fin Wallet
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/core@1.4.0
+
 ## 1.3.0
 
 ### Minor Changes
