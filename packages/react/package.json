@@ -5,9 +5,8 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && tsc && yarn copy-assets",
+    "build": "yarn clean && tsc",
     "clean": "rimraf dist",
-    "copy-assets": "cp -r src/lib/assets dist/lib",
     "format": "eslint --fix . && prettier 'src/**/*.ts' --write --ignore-path .gitignore",
     "lint": "eslint --ignore-path .eslintignore .",
     "test": "jest --passWithNoTests"
