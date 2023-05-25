@@ -21,11 +21,11 @@ const FIN_WALLET: SupportedWallet = {
 };
 
 export const SUPPORTED_WALLETS: SupportedWallet[] = [
-  KEPLR_WALLET,
-  LEAP_WALLET,
-  COIN_98_WALLET,
-  FALCON_WALLET,
-  FIN_WALLET
+  // KEPLR_WALLET,
+  // LEAP_WALLET,
+  // COIN_98_WALLET,
+  // FALCON_WALLET,
+  FIN_WALLET,
 ];
 
 const DEFAULT_CHAIN_INFO = {
