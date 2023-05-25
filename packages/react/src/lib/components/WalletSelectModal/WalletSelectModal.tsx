@@ -12,18 +12,21 @@ import coin98Logo from '../../assets/coin98.png';
 import falconLogo from '../../assets/falcon.png';
 import keplrLogo from '../../assets/keplr.png';
 import leapLogo from '../../assets/leap.png';
+import compassLogo from '../../assets/compass.png';
 import defaultIcon from '../../assets/default.svg';
 const getWalletIcon = (wallet: WalletWindowKey) => {
   if (wallet === 'coin98') {
     return coin98Logo;
-  } else if(wallet === "fin") {
-    return finLogo
+  } else if (wallet === 'fin') {
+    return finLogo;
   } else if (wallet === 'falcon') {
     return falconLogo;
   } else if (wallet === 'keplr') {
     return keplrLogo;
   } else if (wallet === 'leap') {
     return leapLogo;
+  } else if (wallet === 'compass') {
+    return compassLogo;
   } else {
     return defaultIcon;
   }

@@ -27,7 +27,13 @@ export type WalletConnect = {
   offlineSigner: OfflineSigner;
 };
 
-export type WalletWindowKey = 'keplr' | 'leap' | 'coin98' | 'falcon' | 'fin';
+export type WalletWindowKey =
+  | 'keplr'
+  | 'leap'
+  | 'coin98'
+  | 'falcon'
+  | 'fin'
+  | 'compass';
 
 export type SupportedWallet = {
   windowKey: WalletWindowKey;
