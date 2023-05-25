@@ -6,6 +6,7 @@ declare global {
     coin98?: {
       keplr: KeplrWindow;
     };
+    fin?: WalletWindowInterface
     falcon?: WalletWindowInterface;
     keplr?: KeplrWindow;
     leap?: WalletWindowInterface;

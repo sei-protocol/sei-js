@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.5
+
+### Minor Changes
+
+- Add Fin Wallet
+
 ## 1.3.4
 
 ### Patch Changes
