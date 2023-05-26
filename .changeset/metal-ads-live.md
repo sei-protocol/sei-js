@@ -1,6 +1,6 @@
 ---
-'@sei-js/react': major
-'@sei-js/core': major
+'@sei-js/react': patch
+'@sei-js/core': patch
 ---
 
 Add Compass Wallet
