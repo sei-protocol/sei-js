@@ -20,12 +20,17 @@ const FIN_WALLET: SupportedWallet = {
   windowKey: 'fin',
 };
 
+const COMPASS_WALLET: SupportedWallet = {
+  windowKey: 'compass',
+};
+
 export const SUPPORTED_WALLETS: SupportedWallet[] = [
   KEPLR_WALLET,
   LEAP_WALLET,
   COIN_98_WALLET,
   FALCON_WALLET,
-  FIN_WALLET
+  FIN_WALLET,
+  COMPASS_WALLET,
 ];
 
 const DEFAULT_CHAIN_INFO = {
