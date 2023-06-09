@@ -45,7 +45,7 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 				key={wallet.walletInfo.name}
 				onClick={selectWallet}
 				className={`wallet__item ${isConnectedWallet ? 'wallet__item-connected' : ''} ${
-					targetWallet?.walletInfo?.windowKey === wallet.walletInfo.windowKey ? 'wallet__item-targetd' : ''
+					targetWallet?.walletInfo?.windowKey === wallet.walletInfo.windowKey ? 'wallet__item-targeted' : ''
 				}`}>
 				<div className='wallet__item--info'>
 					<img alt={wallet.walletInfo.name} src={wallet.walletInfo.icon} className='wallet__item--info-icon' />
@@ -119,7 +119,6 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		);
 	};
 
-	console.log('showConnectModal', showConnectModal);
 	if (!showConnectModal) return null;
 
 	return (

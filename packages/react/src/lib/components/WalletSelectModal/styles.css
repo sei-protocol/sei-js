@@ -1,4 +1,4 @@
-@keyframes fadeIn {
+@keyframes walletFadeIn {
     0% {
         opacity: 0;
     }
@@ -61,7 +61,6 @@
     box-shadow: rgba(14, 15, 16, 0.1) 3px 9px 24px;
     overflow-x: hidden;
     gap: 48px;
-    animation: fadeIn 150ms linear;
 }
 
 .card__header {
@@ -135,7 +134,7 @@
     width: 100%;
     padding: 0 36px 0 24px;
     opacity: 0;
-    animation: fadeIn 0.15s 0.3s forwards;
+    animation: walletFadeIn 0.15s 0.3s forwards;
 }
 
 .card__right--item {

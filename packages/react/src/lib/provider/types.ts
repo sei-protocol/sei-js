@@ -4,9 +4,9 @@ import { ChainConfiguration } from '../types';
 import { StdSignature } from '@cosmjs/amino';
 
 export type WalletProvider = {
-	chainId?: string;
-	restUrl?: string;
-	rpcUrl?: string;
+	chainId: string;
+	restUrl: string;
+	rpcUrl: string;
 	connectionError?: string;
 	setConnectionError: Dispatch<SetStateAction<string | undefined>>;
 	accounts: readonly AccountData[];

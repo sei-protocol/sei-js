@@ -5,6 +5,9 @@ import { findWalletByWindowKey } from '../config/supportedWallets';
 import { WalletSelectModal } from '../components';
 
 export const SeiWalletContext = createContext<WalletProvider>({
+	chainId: '',
+	restUrl: '',
+	rpcUrl: '',
 	accounts: [],
 	connect: () => undefined,
 	disconnect: () => undefined,
@@ -90,7 +93,7 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 	return (
 		<SeiWalletContext.Provider value={contextValue}>
 			{children}
-			<WalletSelectModal />
+			<WalletSelectModal wallets={filteredWallets} />
 		</SeiWalletContext.Provider>
 	);
 };

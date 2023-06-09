@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { IconContext } from 'react-icons';
+import { IoCopyOutline, IoLogOutOutline, IoWalletOutline } from 'react-icons/io5';
 import { SeiWalletContext } from '../../provider';
-import { WalletSelectModal } from '../WalletSelectModal';
 import { WalletConnectButtonProps } from './types';
 import './styles.css';
 import { isValidCSSColor } from '../../utils';
-import { IoCopyOutline, IoLogOutOutline, IoWalletOutline } from 'react-icons/io5';
 
 export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
 
-const WalletConnectButton = ({ buttonClassName, wallets: inputWallets, primaryColor, secondaryColor, backgroundColor }: WalletConnectButtonProps) => {
+const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, backgroundColor }: WalletConnectButtonProps) => {
 	const [showMenu, setShowMenu] = useState<boolean>(false);
 	const [recentlyCopied, setRecentlyCopied] = useState<boolean>(false);
 
-	const { connectedWallet, accounts, setTargetWallet, wallets, setShowConnectModal } = useContext(SeiWalletContext);
+	const { connectedWallet, accounts, setTargetWallet, setShowConnectModal } = useContext(SeiWalletContext);
 
 	useEffect(() => {
 		const color = primaryColor && isValidCSSColor(primaryColor) ? primaryColor : '#121212';

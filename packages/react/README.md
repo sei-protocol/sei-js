@@ -50,8 +50,6 @@ const { offlineSigner, accounts, connectedWallet } = useWallet();
 | Property         | Type      | Description                                             |
 |------------------|-----------|---------------------------------------------------------|
 | connectedWallet  | string?   | The currently connected wallet                          |
-| supportedWallets | string[]  | List of supported wallets                               |
-| installedWallets | string[]  | List of wallets installed                               |
 | chainId          | string    | Sei chain id                                            |
 | restUrl          | string    | The rest url associated with the connected wallet       |
 | rpcUrl           | string    | The rpc url associated with the connected wallet        |
@@ -107,12 +105,14 @@ import React from "react";
 import {useWallet, WalletConnectButton} from "../lib";
 
 const Component = () => {
-  const { connectedWallet } = useWallet()
+  const { connectedWallet } = useWallet();
 
-  return <div>
-    <WalletConnectButton/>
-    <p>Connected wallet: {connectedWallet?.walletInfo?.name || "---"}</p>
-  </div>
+  return (
+     <div>
+         <WalletConnectButton />
+         <p>Connected wallet: {connectedWallet?.walletInfo?.name || "---"}</p>
+     </div>
+  );
 };
 
 export default Component;
