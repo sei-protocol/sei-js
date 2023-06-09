@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { WalletSelectModalProps } from './types';
 import { SeiWallet, SeiWalletContext } from '../../provider';
 import './styles.css';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import {BiError, BiErrorAlt} from 'react-icons/bi';
-import { Link } from 'react-router-dom';
-import {FaCheckCircle} from "react-icons/fa";
+import { BiError, BiErrorAlt } from 'react-icons/bi';
+import { FaCheckCircle } from 'react-icons/fa';
 
 const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) => {
-	const { connectedWallet, setTargetWallet, wallets, connectionError, targetWallet, setConnectionError, showConnectModal, setShowConnectModal } = useContext(SeiWalletContext);
+	const { connectedWallet, setTargetWallet, wallets, connectionError, targetWallet, setConnectionError, showConnectModal, setShowConnectModal } =
+		useContext(SeiWalletContext);
 
 	const visibleWallets = inputWallets || wallets || [];
 
@@ -74,9 +74,9 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 					<BiErrorAlt className='card__right--icon' />
 					<p className='card__right--title'>{targetWallet?.walletInfo?.name || 'Wallet'} not installed</p>
 					{targetWallet?.walletInfo.website && (
-						<Link target='_blank' to={targetWallet.walletInfo.website} className='card__right--download'>
+						<a target='_blank' href={targetWallet.walletInfo.website} className='card__right--download'>
 							Download {targetWallet?.walletInfo.name}
-						</Link>
+						</a>
 					)}
 				</div>
 			);
@@ -120,7 +120,7 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 	};
 
 	console.log('showConnectModal', showConnectModal);
-	if(!showConnectModal) return null;
+	if (!showConnectModal) return null;
 
 	return (
 		<div onClick={closeModal} className='modal__background'>

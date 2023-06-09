@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { IconContext } from 'react-icons';
 import { SeiWalletContext } from '../../provider';
@@ -6,7 +6,7 @@ import { WalletSelectModal } from '../WalletSelectModal';
 import { WalletConnectButtonProps } from './types';
 import './styles.css';
 import { isValidCSSColor } from '../../utils';
-import {IoCopyOutline, IoLogOutOutline, IoWalletOutline} from "react-icons/io5";
+import { IoCopyOutline, IoLogOutOutline, IoWalletOutline } from 'react-icons/io5';
 
 export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
 
@@ -94,10 +94,7 @@ const WalletConnectButton = ({ buttonClassName, wallets: inputWallets, primaryCo
 
 	return (
 		<>
-			<IconContext.Provider value={{ color: 'var(--wallet-primary-color)', size: '50px' }}>
-				{renderButton()}
-				<WalletSelectModal wallets={inputWallets || wallets} />
-			</IconContext.Provider>
+			<IconContext.Provider value={{ color: 'var(--wallet-primary-color)', size: '50px' }}>{renderButton()}</IconContext.Provider>
 		</>
 	);
 };

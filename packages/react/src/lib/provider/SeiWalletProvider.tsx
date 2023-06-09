@@ -1,7 +1,8 @@
-import { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { SeiWallet, SeiWalletProviderProps, WalletProvider } from './types';
 import { findWalletByWindowKey } from '../config/supportedWallets';
+import { WalletSelectModal } from '../components';
 
 export const SeiWalletContext = createContext<WalletProvider>({
 	accounts: [],
@@ -86,7 +87,12 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 		setConnectionError
 	};
 
-	return <SeiWalletContext.Provider value={contextValue}>{children}</SeiWalletContext.Provider>;
+	return (
+		<SeiWalletContext.Provider value={contextValue}>
+			{children}
+			<WalletSelectModal />
+		</SeiWalletContext.Provider>
+	);
 };
 
 export default SeiWalletProvider;
