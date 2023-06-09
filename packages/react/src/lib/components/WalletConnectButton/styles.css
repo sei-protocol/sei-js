@@ -1,0 +1,38 @@
+.connect_wrapper {
+    position: relative;
+}
+
+.wallet__menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 46px;
+    right: 0;
+    padding: 12px;
+    gap: 12px;
+    background-color: var(--wallet-background-color);
+    border-radius: 4px;
+}
+
+.wallet__menu--item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 1.15rem;
+    white-space: nowrap;
+    color: var(--wallet-primary-color);
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 9px;
+}
+
+.wallet__menu--item:hover {
+    background-color: var(--wallet-primary-color-44);
+}
+
+.wallet__menu--item-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--wallet-primary-color);
+}

@@ -1,4 +1,2 @@
-export {
-  default as useStargateClient,
-  UseStargateClient,
-} from './useStargateClient';
+export { default as useStargateClient } from './useStargateClient';
+export type { UseStargateClient } from './useStargateClient';

@@ -33,9 +33,16 @@ export type SupportedWallet = {
   windowKey: WalletWindowKey;
 };
 
+type GasPriceStep = {
+  low: number;
+  average: number;
+  high: number;
+};
+
 export type ChainInfo = {
   chainName?: string;
   chainId?: string;
   restUrl?: string;
   rpcUrl?: string;
+  gasPriceStep?: GasPriceStep;
 };
