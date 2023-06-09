@@ -1,16 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { WalletSelectModalProps } from './types';
 import { SeiWallet, SeiWalletContext } from '../../provider';
 import './styles.css';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { BiErrorAlt, FaCheckCircle } from 'react-icons/all';
-import { BiError } from 'react-icons/bi';
+import {BiError, BiErrorAlt} from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import {FaCheckCircle} from "react-icons/fa";
 
-const WalletSelectModal = ({ setShowConnectModal, wallets }: WalletSelectModalProps) => {
-	const { connectedWallet, setTargetWallet, connectionError, targetWallet, setConnectionError } = useContext(SeiWalletContext);
+const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) => {
+	const { connectedWallet, setTargetWallet, wallets, connectionError, targetWallet, setConnectionError, showConnectModal, setShowConnectModal } = useContext(SeiWalletContext);
+
+	const visibleWallets = inputWallets || wallets || [];
 
 	const [isConnecting, setIsConnecting] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (connectedWallet || connectionError) {
+			setIsConnecting(false);
+		}
+	}, [connectedWallet, connectionError]);
 
 	const closeModal = () => {
 		setConnectionError(undefined);
@@ -19,7 +27,7 @@ const WalletSelectModal = ({ setShowConnectModal, wallets }: WalletSelectModalPr
 
 	const renderWallet = (wallet: SeiWallet) => {
 		const isConnectedWallet = connectedWallet?.walletInfo.name === wallet.walletInfo.name;
-		
+
 		const renderConnection = () => {
 			if (isConnectedWallet) return <FaCheckCircle className='wallet__item--info-icon' />;
 			return null;
@@ -31,12 +39,6 @@ const WalletSelectModal = ({ setShowConnectModal, wallets }: WalletSelectModalPr
 			setIsConnecting(true);
 			setConnectionError(undefined);
 		};
-
-		useEffect(() => {
-			if (connectedWallet || connectionError) {
-				setIsConnecting(false);
-			}
-		}, [connectedWallet, connectionError]);
 
 		return (
 			<div
@@ -64,7 +66,7 @@ const WalletSelectModal = ({ setShowConnectModal, wallets }: WalletSelectModalPr
 			);
 		}
 
-		const isWalletNotInstalled = targetWallet && !window[targetWallet.walletInfo.windowKey];
+		const isWalletNotInstalled = targetWallet && !window[targetWallet.walletInfo.windowKey as never];
 
 		if (isWalletNotInstalled) {
 			return (
@@ -117,6 +119,9 @@ const WalletSelectModal = ({ setShowConnectModal, wallets }: WalletSelectModalPr
 		);
 	};
 
+	console.log('showConnectModal', showConnectModal);
+	if(!showConnectModal) return null;
+
 	return (
 		<div onClick={closeModal} className='modal__background'>
 			<div onClick={(e) => e.stopPropagation()} className='modal__card'>
@@ -125,7 +130,7 @@ const WalletSelectModal = ({ setShowConnectModal, wallets }: WalletSelectModalPr
 					<AiFillCloseCircle className='card__header--close' onClick={closeModal} />
 				</div>
 				<div className='card__content'>
-					<div className='card__content--wallets'>{wallets?.map(renderWallet)}</div>
+					<div className='card__content--wallets'>{visibleWallets.map(renderWallet)}</div>
 					<div className='card__content--separator' />
 					{renderRightSide()}
 				</div>

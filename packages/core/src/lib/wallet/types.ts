@@ -3,6 +3,7 @@ import { OfflineSigner, AccountData } from '@cosmjs/proto-signing';
 
 export type WalletWindowInterface = {
   enable: (chainId: string) => Promise<void>;
+  disable: (chainId: string) => Promise<void>;
   getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
   // Will return a signer that only supports Amino if the account is a Ledger-based account,
   // and returns a signer that is compatible for both Amino and Protobuf otherwise

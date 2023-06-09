@@ -33,6 +33,20 @@
     padding: 24px;
 }
 
+.modal__background  * {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    font-family: Roboto, Helvetica, sans-serif;
+    box-sizing: border-box;
+    line-height: 1.5;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
 .modal__card {
     display: flex;
     flex-direction: column;

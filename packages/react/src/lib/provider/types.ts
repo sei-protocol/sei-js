@@ -30,17 +30,17 @@ export interface SeiWallet {
 		icon: string;
 		website: string;
 	};
-	getOfflineSigner: (chainId: string) => Promise<OfflineSigner>;
-	getAccounts: (chainId: string) => Promise<AccountData[]>;
+	getOfflineSigner: (chainId: string) => Promise<OfflineSigner | undefined>;
+	getAccounts: (chainId: string) => Promise<readonly AccountData[]>;
 	connect: (chainId: string) => Promise<void>;
 	disconnect: (chainId: string) => Promise<void>;
 	suggestChain?: (chainId: string) => void;
-	signArbitrary: (chainId: string, signer: string, message: string) => Promise<StdSignature>;
+	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature>;
 }
 
 export type SeiWalletProviderProps = {
 	children: ReactNode;
 	chainConfiguration: ChainConfiguration;
 	wallets: SupportedWalletInput[];
-	autoConnect: SupportedWalletInput;
+	autoConnect?: SupportedWalletInput;
 };

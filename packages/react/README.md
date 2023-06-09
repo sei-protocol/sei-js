@@ -96,6 +96,73 @@ const { cosmWasmClient } = useSeiCosmWasmClient();
 |----------------|-----------------|-----------------------------------------|
 | cosmWasmClient | CosmWasmClient? | A cosm wasm client for smart contracts. |
 
+# UI Components
+This package contains two helpful UI components for connecting to a wallet provider.
+
+## WalletConnectButton
+This component renders a button that will open a modal to connect to a wallet provider.
+
+```javascript
+import React from "react";
+import {useWallet, WalletConnectButton} from "../lib";
+
+const Component = () => {
+  const { connectedWallet } = useWallet()
+
+  return <div>
+    <WalletConnectButton/>
+    <p>Connected wallet: {connectedWallet?.walletInfo?.name || "---"}</p>
+  </div>
+};
+
+export default Component;
+
+```
+
+
+| Property        | Type         | Description                                                                 |
+|-----------------|--------------|-----------------------------------------------------------------------------|
+| wallets         | SeiWallet[]? | A stargate signing client.                                                  |
+| buttonClassName | string       | A css class name for styling the button                                     |
+| primaryColor    | string       | A hex value of the color you want to tint the text and icons with           |
+| secondaryColor  | string       | A secondary hex value of the color you want to tint the text and icons with |
+| backgroundColor | string       | A hex value of the color you want to use as a background                    |
+
+*If your page has a <WalletConnectButton/> on the page it can be opened programmatically by calling the hook "useSelectWallet"*
+
+
+## WalletSelectModal
+This component renders a modal that will allow you to select a wallet provider and has a hook "useSelectWallet" that will allow you to open and close the modal programmatically.
+```javascript
+import React from "react";
+import {useWallet, WalletSelectModal} from "../lib";
+
+const Component = () => {
+  const { connectedWallet } = useWallet()
+  const { openModal } = useSelectWallet()
+
+  return <div>
+    <button onClick={openModal}>Open Modal</button>
+    <p>Connected wallet: {connectedWallet?.walletInfo?.name || "---"}</p>
+
+    { /** You must include the <WalletSelectModal/> with the 'useSelectWallet' hook, unless you already have a <WalletConnectButton/> rendered somewhere else in your app **/ }
+    <WalletSelectModal/>
+  </div>
+};
+
+export default Component;
+
+```
+
+
+| Property        | Type         | Description                                                                 |
+|-----------------|--------------|-----------------------------------------------------------------------------|
+| wallets         | SeiWallet[]? | A stargate signing client.                                                  |
+| buttonClassName | string       | A css class name for styling the button                                     |
+| primaryColor    | string       | A hex value of the color you want to tint the text and icons with           |
+| secondaryColor  | string       | A secondary hex value of the color you want to tint the text and icons with |
+| backgroundColor | string       | A hex value of the color you want to use as a background                    |
+
 
 
 ### Other helpful packages

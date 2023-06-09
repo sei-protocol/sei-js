@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { SeiWallet, SeiWalletProviderProps, WalletProvider } from './types';
 import { findWalletByWindowKey } from '../config/supportedWallets';
@@ -24,7 +24,7 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 	const [connectedWallet, setConnectedWallet] = useState<SeiWallet | undefined>();
 
 	const filteredWallets = wallets.reduce((acc: SeiWallet[], wallet) => {
-		let seiWallet = typeof wallet === 'string' ? findWalletByWindowKey(wallet) : wallet;
+		const seiWallet = typeof wallet === 'string' ? findWalletByWindowKey(wallet) : wallet;
 		if (seiWallet !== undefined) acc.push(seiWallet);
 		return acc;
 	}, []);
@@ -33,7 +33,7 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 		if (!targetWallet) return;
 
 		try {
-			if (!window[targetWallet.walletInfo.windowKey]) {
+			if (!window[targetWallet.walletInfo.windowKey as never]) {
 				setConnectionError(targetWallet.walletInfo.windowKey);
 				return;
 			}

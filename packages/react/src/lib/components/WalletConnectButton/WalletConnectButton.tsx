@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { IconContext } from 'react-icons';
-import { IoCopyOutline, IoLogOutOutline, IoWalletOutline } from 'react-icons/all';
 import { SeiWalletContext } from '../../provider';
 import { WalletSelectModal } from '../WalletSelectModal';
 import { WalletConnectButtonProps } from './types';
 import './styles.css';
 import { isValidCSSColor } from '../../utils';
+import {IoCopyOutline, IoLogOutOutline, IoWalletOutline} from "react-icons/io5";
 
 export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
 
@@ -14,7 +14,7 @@ const WalletConnectButton = ({ buttonClassName, wallets: inputWallets, primaryCo
 	const [showMenu, setShowMenu] = useState<boolean>(false);
 	const [recentlyCopied, setRecentlyCopied] = useState<boolean>(false);
 
-	const { connectedWallet, accounts, setTargetWallet, wallets, showConnectModal, setShowConnectModal } = useContext(SeiWalletContext);
+	const { connectedWallet, accounts, setTargetWallet, wallets, setShowConnectModal } = useContext(SeiWalletContext);
 
 	useEffect(() => {
 		const color = primaryColor && isValidCSSColor(primaryColor) ? primaryColor : '#121212';
@@ -96,7 +96,7 @@ const WalletConnectButton = ({ buttonClassName, wallets: inputWallets, primaryCo
 		<>
 			<IconContext.Provider value={{ color: 'var(--wallet-primary-color)', size: '50px' }}>
 				{renderButton()}
-				{showConnectModal && <WalletSelectModal wallets={inputWallets || wallets} setShowConnectModal={setShowConnectModal} />}
+				<WalletSelectModal wallets={inputWallets || wallets} />
 			</IconContext.Provider>
 		</>
 	);

@@ -3,10 +3,8 @@ import { WalletConnect, WalletWindowInterface, WalletWindowKey } from './types';
 
 declare global {
   interface Window {
-    coin98?: {
-      keplr: KeplrWindow;
-    };
-    falcon?: WalletWindowInterface;
+    compass?: WalletWindowInterface;
+    fin?: WalletWindowInterface;
     keplr?: KeplrWindow;
     leap?: WalletWindowInterface;
   }
