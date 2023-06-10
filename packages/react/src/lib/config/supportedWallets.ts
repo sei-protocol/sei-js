@@ -3,7 +3,7 @@ import { SeiWallet } from '../provider';
 export const FIN_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['fin']?.getOfflineSigner(chainId);
-		return offlineSigner?.getAccounts() || []
+		return offlineSigner?.getAccounts() || [];
 	},
 	connect: async (chainId) => await window?.['fin']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['fin']?.disable(chainId),
@@ -20,8 +20,9 @@ export const FIN_WALLET: SeiWallet = {
 export const COMPASS_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['compass']?.getOfflineSigner(chainId);
-		return offlineSigner?.getAccounts() || []
-	},	connect: async (chainId) => await window?.['compass']?.enable(chainId),
+		return offlineSigner?.getAccounts() || [];
+	},
+	connect: async (chainId) => await window?.['compass']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['compass']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['compass']?.getOfflineSigner(chainId),
 	signArbitrary: window?.['compass']?.signArbitrary,
@@ -36,8 +37,9 @@ export const COMPASS_WALLET: SeiWallet = {
 export const KEPLR_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['keplr']?.getOfflineSigner(chainId);
-		return offlineSigner?.getAccounts() || []
-	},	connect: async (chainId) => await window?.['keplr']?.enable(chainId),
+		return offlineSigner?.getAccounts() || [];
+	},
+	connect: async (chainId) => await window?.['keplr']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['keplr']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['keplr']?.getOfflineSigner(chainId),
 	signArbitrary: window?.['keplr']?.signArbitrary,
@@ -52,8 +54,10 @@ export const KEPLR_WALLET: SeiWallet = {
 export const LEAP_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['leap']?.getOfflineSigner(chainId);
-		return offlineSigner?.getAccounts() || []
-	},	connect: async (chainId) => await window?.['leap']?.enable(chainId),
+		return offlineSigner?.getAccounts() || [];
+	},
+	connect: async (chainId) => await window?.['leap']?.enable(chainId),
+	// @ts-ignore
 	disconnect: async (chainId) => await window?.['leap']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['leap']?.getOfflineSigner(chainId),
 	signArbitrary: window?.['leap']?.signArbitrary,
