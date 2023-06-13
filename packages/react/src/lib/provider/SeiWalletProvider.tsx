@@ -3,7 +3,6 @@ import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { SeiWallet, SeiWalletProviderProps, WalletProvider } from './types';
 import { findWalletByWindowKey } from '../config/supportedWallets';
 import { WalletSelectModal } from '../components';
-import { checkKeplrForChain, getVerifiedSuggestChain } from './keplrVerification';
 
 export const SeiWalletContext = createContext<WalletProvider>({
 	chainId: '',
@@ -43,13 +42,7 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 				return;
 			}
 
-			if (targetWallet.walletInfo.windowKey === 'keplr') {
-				const isChainRegistered = await checkKeplrForChain(chainConfiguration.chainId);
-				if (!isChainRegistered) {
-					await window.keplr?.experimentalSuggestChain(getVerifiedSuggestChain(chainConfiguration.chainId));
-				}
-			}
-
+			await targetWallet.connect(chainConfiguration.chainId);
 			const fetchedOfflineSigner = await targetWallet.getOfflineSigner(chainConfiguration.chainId);
 			const fetchedAccounts = await targetWallet.getAccounts(chainConfiguration.chainId);
 
