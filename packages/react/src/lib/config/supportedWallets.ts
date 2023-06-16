@@ -57,7 +57,6 @@ export const LEAP_WALLET: SeiWallet = {
 		return offlineSigner?.getAccounts() || [];
 	},
 	connect: async (chainId) => await window?.['leap']?.enable(chainId),
-	// @ts-ignore
 	disconnect: async (chainId) => await window?.['leap']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['leap']?.getOfflineSignerAuto(chainId),
 	signArbitrary: window?.['leap']?.signArbitrary,
