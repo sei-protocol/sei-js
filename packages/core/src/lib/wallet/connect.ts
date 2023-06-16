@@ -7,6 +7,7 @@ declare global {
     fin?: WalletWindowInterface;
     keplr?: KeplrWindow;
     leap?: WalletWindowInterface;
+    compass?: WalletWindowInterface;
   }
 }
 

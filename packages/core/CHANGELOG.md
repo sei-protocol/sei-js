@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.6
+
+### Patch Changes
+
+- d67e9f0: Add Compass Wallet
+
+## 1.3.5
+
+### Minor Changes
+
+- Add Fin Wallet
+
 ## 1.3.4
 
 ### Patch Changes

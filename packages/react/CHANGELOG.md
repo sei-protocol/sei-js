@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.3.3
+
+### Patch Changes
+
+- d67e9f0: Add Compass Wallet
+- Updated dependencies [d67e9f0]
+  - @sei-js/core@1.3.6
+
+## 1.3.2
+
+### Minor Changes
+
+- Add Fin Wallet
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/core@1.3.5
+
 ## 1.3.1
 
 ### Patch Changes
