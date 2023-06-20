@@ -1,120 +1,102 @@
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { SeiWalletProviderProps, WalletProvider } from './types';
-import {
-  WalletWindowKey,
-  connect as connectWallet,
-  SUPPORTED_WALLETS,
-  suggestChain,
-} from '@sei-js/core';
+import React, { createContext, useEffect, useState } from 'react';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
-
-const supportedWallets = SUPPORTED_WALLETS.map((wallet) => wallet.windowKey);
+import { SeiWallet, SeiWalletProviderProps, WalletProvider } from './types';
+import { findWalletByWindowKey } from '../config/supportedWallets';
+import { WalletSelectModal } from '../components';
 
 export const SeiWalletContext = createContext<WalletProvider>({
-  supportedWallets,
-  accounts: [],
-  installedWallets: [],
-  connect: () => undefined,
-  disconnect: () => undefined,
+	chainId: '',
+	restUrl: '',
+	rpcUrl: '',
+	accounts: [],
+	connect: () => undefined,
+	disconnect: () => undefined,
+	setConnectionError: () => undefined,
+	setTargetWallet: () => undefined,
+	setShowConnectModal: () => undefined,
+	wallets: []
 });
 
-const SeiWalletProvider = ({
-  children,
-  chainConfiguration,
-}: SeiWalletProviderProps) => {
-  const [inputWallet, setInputWallet] = useState<WalletWindowKey>();
-  const [offlineSigner, setOfflineSigner] = useState<OfflineSigner>();
-  const [accounts, setAccounts] = useState<readonly AccountData[]>([]);
-  const [connectedWallet, setConnectedWallet] = useState<
-    WalletWindowKey | undefined
-  >();
+const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect }: SeiWalletProviderProps) => {
+	const autoConnectSeiWallet = typeof autoConnect === 'string' ? findWalletByWindowKey(autoConnect) : autoConnect;
 
-  const suggestAndConnect = useCallback(async () => {
-    if (!inputWallet) return;
-    if (inputWallet === 'keplr' || inputWallet === 'leap') {
-      await suggestChain(inputWallet, {
-        chainName: `Sei ${chainConfiguration.chainId}`,
-        chainId: chainConfiguration.chainId,
-        rpcUrl: chainConfiguration.rpcUrl,
-        restUrl: chainConfiguration.restUrl,
-      });
-    }
+	const [targetWallet, setTargetWallet] = useState<SeiWallet | undefined>(autoConnectSeiWallet);
+	const [offlineSigner, setOfflineSigner] = useState<OfflineSigner>();
+	const [connectionError, setConnectionError] = useState<string>();
+	const [accounts, setAccounts] = useState<readonly AccountData[]>([]);
+	const [showConnectModal, setShowConnectModal] = useState<boolean>(false);
+	const [connectedWallet, setConnectedWallet] = useState<SeiWallet | undefined>();
 
-    const connectedWallet = await connectWallet(
-      inputWallet,
-      chainConfiguration.chainId
-    );
-    if (!connectedWallet) return;
-    setOfflineSigner(connectedWallet.offlineSigner);
-    setAccounts(connectedWallet.accounts);
-    if (connectedWallet.accounts.length > 0) {
-      setConnectedWallet(inputWallet);
-    }
-  }, [
-    inputWallet,
-    chainConfiguration.chainId,
-    chainConfiguration.restUrl,
-    chainConfiguration.rpcUrl,
-  ]);
+	const filteredWallets = wallets.reduce((acc: SeiWallet[], wallet) => {
+		const seiWallet = typeof wallet === 'string' ? findWalletByWindowKey(wallet) : wallet;
+		if (seiWallet !== undefined) acc.push(seiWallet);
+		return acc;
+	}, []);
 
-  useEffect(() => {
-    if (inputWallet) {
-      suggestAndConnect().then(() => setConnectedWallet(inputWallet));
-    } else {
-      setConnectedWallet(undefined);
-      setAccounts([]);
-      setOfflineSigner(undefined);
-    }
-  }, [
-    inputWallet,
-    chainConfiguration.chainId,
-    chainConfiguration.restUrl,
-    chainConfiguration.rpcUrl,
-  ]);
+	const connectToChain = async () => {
+		if (!targetWallet) return;
 
-  const installedWallets = useMemo(
-    () =>
-      window
-        ? SUPPORTED_WALLETS.filter((wallet) => window?.[wallet.windowKey]).map(
-            (wallet) => wallet.windowKey
-          )
-        : [],
-    [window]
-  );
+		try {
+			if (!window[targetWallet.walletInfo.windowKey as never]) {
+				setConnectionError(targetWallet.walletInfo.windowKey);
+				return;
+			}
 
-  const connect = (walletKey: WalletWindowKey) => {
-    setInputWallet(walletKey);
-  };
+			await targetWallet.connect(chainConfiguration.chainId);
+			const fetchedOfflineSigner = await targetWallet.getOfflineSigner(chainConfiguration.chainId);
+			const fetchedAccounts = await targetWallet.getAccounts(chainConfiguration.chainId);
 
-  const disconnect = () => {
-    setInputWallet(undefined);
-  };
+			if (fetchedAccounts.length > 0 && fetchedOfflineSigner) {
+				setShowConnectModal(false);
+				setOfflineSigner(fetchedOfflineSigner);
+				setAccounts(fetchedAccounts);
+				setConnectedWallet(targetWallet);
+			}
+		} catch (e) {
+			console.log('Error connecting to wallet', e);
+			setConnectionError(targetWallet.walletInfo.windowKey);
+			return;
+		}
+	};
 
-  const contextValue: WalletProvider = {
-    chainId: chainConfiguration.chainId,
-    restUrl: chainConfiguration.restUrl,
-    rpcUrl: chainConfiguration.rpcUrl,
-    supportedWallets,
-    accounts,
-    offlineSigner,
-    connectedWallet,
-    installedWallets,
-    setInputWallet,
-    connect,
-    disconnect,
-  };
+	useEffect(() => {
+		if (targetWallet) {
+			connectToChain().then();
+		} else {
+			setOfflineSigner(undefined);
+			setAccounts([]);
+			setConnectedWallet(undefined);
+		}
+	}, [targetWallet, chainConfiguration.chainId]);
 
-  return (
-    <SeiWalletContext.Provider value={contextValue}>
-      {children}
-    </SeiWalletContext.Provider>
-  );
+	const disconnect = () => {
+		setTargetWallet(undefined);
+	};
+
+	const contextValue: WalletProvider = {
+		chainId: chainConfiguration.chainId,
+		restUrl: chainConfiguration.restUrl,
+		rpcUrl: chainConfiguration.rpcUrl,
+		wallets: filteredWallets,
+		connect: setTargetWallet,
+		disconnect,
+		accounts,
+		offlineSigner,
+		connectedWallet,
+		targetWallet,
+		setTargetWallet,
+		showConnectModal,
+		setShowConnectModal,
+		connectionError,
+		setConnectionError
+	};
+
+	return (
+		<SeiWalletContext.Provider value={contextValue}>
+			{children}
+			<WalletSelectModal wallets={filteredWallets} />
+		</SeiWalletContext.Provider>
+	);
 };
 
 export default SeiWalletProvider;

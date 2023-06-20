@@ -50,8 +50,6 @@ const { offlineSigner, accounts, connectedWallet } = useWallet();
 | Property         | Type      | Description                                             |
 |------------------|-----------|---------------------------------------------------------|
 | connectedWallet  | string?   | The currently connected wallet                          |
-| supportedWallets | string[]  | List of supported wallets                               |
-| installedWallets | string[]  | List of wallets installed                               |
 | chainId          | string    | Sei chain id                                            |
 | restUrl          | string    | The rest url associated with the connected wallet       |
 | rpcUrl           | string    | The rpc url associated with the connected wallet        |
@@ -96,7 +94,65 @@ const { cosmWasmClient } = useSeiCosmWasmClient();
 |----------------|-----------------|-----------------------------------------|
 | cosmWasmClient | CosmWasmClient? | A cosm wasm client for smart contracts. |
 
+# UI Components
+This package contains two helpful UI components for connecting to a wallet provider.
 
+## \<WalletConnectButton />
+This component renders a button that will open a modal to connect to a wallet provider.
+
+```javascript
+import React from "react";
+import {useWallet, WalletConnectButton} from "../lib";
+
+const Component = () => {
+  const { connectedWallet } = useWallet();
+
+  return (
+     <div>
+         <WalletConnectButton />
+         <p>Connected wallet: {connectedWallet?.walletInfo?.name || "---"}</p>
+     </div>
+  );
+};
+
+export default Component;
+
+```
+
+
+| Property        | Type         | Description                                                                 |
+|-----------------|--------------|-----------------------------------------------------------------------------|
+| wallets         | SeiWallet[]? | A stargate signing client.                                                  |
+| buttonClassName | string       | A css class name for styling the button                                     |
+| primaryColor    | string       | A hex value of the color you want to tint the text and icons with           |
+| secondaryColor  | string       | A secondary hex value of the color you want to tint the text and icons with |
+| backgroundColor | string       | A hex value of the color you want to use as a background                    |
+
+*If your page has a <WalletConnectButton/> on the page it can be opened programmatically by calling the hook "useSelectWallet"*
+
+
+## useSelectWallet()
+This hook allows you to programmatically open and close the wallet modal.
+
+```javascript
+import React from "react";
+import { useWallet, useSelectWallet } from "../lib";
+
+const Component = () => {
+  const { connectedWallet } = useWallet();
+  const { openModal, closeModal } = useSelectWallet();
+
+  return (
+     <div>
+         <button onClick={openModal}>Open Modal</button>
+         <p>Connected wallet: {connectedWallet?.walletInfo?.name || "---"}</p>
+      </div>
+  );
+};
+
+export default Component;
+
+```
 
 ### Other helpful packages
 

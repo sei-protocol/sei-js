@@ -1,14 +1,5 @@
-import { WalletWindowKey } from '@sei-js/core';
-import { CSSProperties } from 'react';
-
-export type WalletSelectStyles = {
-	background?: CSSProperties;
-	card?: CSSProperties;
-	name?: CSSProperties;
-};
+import { SeiWallet } from '../../provider';
 
 export type WalletSelectModalProps = {
-	setShowConnectModal: (show: boolean) => void;
-	inputWallets?: WalletWindowKey[];
-	walletSelectStyles?: WalletSelectStyles;
+	wallets?: SeiWallet[];
 };

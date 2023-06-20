@@ -1,4 +1,2 @@
-export {
-  default as useCosmWasmClient,
-  UseCosmWasmClient,
-} from './useCosmWasmClient';
+export { default as useCosmWasmClient } from './useCosmWasmClient';
+export type { UseCosmWasmClient } from './useCosmWasmClient';
