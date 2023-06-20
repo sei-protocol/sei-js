@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+### Minor Changes
+
+- 372506f: Refactored wallet provider and UI components, added hook to programatically open wallet connect modal, implemented a new wallet interface, replaced custom styles with tint colors
+
 ## 1.3.6
 
 ### Patch Changes
