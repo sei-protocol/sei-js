@@ -1,5 +1,5 @@
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /** MsgIBCSend */
 export interface MsgIBCSend {
     /** the channel by which the packet will be sent */
@@ -22,22 +22,9 @@ export interface MsgIBCSend {
 }
 /** MsgIBCSend */
 export interface MsgIBCSendSDKType {
-    /** the channel by which the packet will be sent */
     channel: string;
-    /**
-     * Timeout height relative to the current block height.
-     * The timeout is disabled when set to 0.
-     */
     timeout_height: Long;
-    /**
-     * Timeout timestamp (in nanoseconds) relative to the current block timestamp.
-     * The timeout is disabled when set to 0.
-     */
     timeout_timestamp: Long;
-    /**
-     * Data is the payload to transfer. We must not make assumption what format or
-     * content is in here.
-     */
     data: Uint8Array;
 }
 /** MsgIBCCloseChannel port and channel need to be owned by the contract */

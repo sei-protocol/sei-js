@@ -1,6 +1,6 @@
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /**
  * GenericAuthorization gives the grantee unrestricted permissions to execute
  * the provided method on behalf of the granter's account.
@@ -14,7 +14,6 @@ export interface GenericAuthorization {
  * the provided method on behalf of the granter's account.
  */
 export interface GenericAuthorizationSDKType {
-    /** Msg, identified by it's type URL, to grant unrestricted permissions to execute */
     msg: string;
 }
 /**
@@ -36,11 +35,6 @@ export interface Grant {
  */
 export interface GrantSDKType {
     authorization: AnySDKType;
-    /**
-     * time when the grant will expire and will be pruned. If null, then the grant
-     * doesn't have a time expiration (other conditions  in `authorization`
-     * may apply to invalidate the grant)
-     */
     expiration?: Date;
 }
 /**
@@ -70,7 +64,6 @@ export interface GrantQueueItem {
 }
 /** GrantQueueItem contains the list of TypeURL of a sdk.Msg. */
 export interface GrantQueueItemSDKType {
-    /** msg_type_urls contains the list of TypeURL of a sdk.Msg. */
     msg_type_urls: string[];
 }
 export declare const GenericAuthorization: {

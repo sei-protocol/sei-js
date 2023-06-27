@@ -1,7 +1,7 @@
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { Plan, PlanSDKType } from "../../../../cosmos/upgrade/v1beta1/upgrade";
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /**
  * IdentifiedClientState defines a client state with an additional client
  * identifier field.
@@ -17,9 +17,7 @@ export interface IdentifiedClientState {
  * identifier field.
  */
 export interface IdentifiedClientStateSDKType {
-    /** client identifier */
     client_id: string;
-    /** client state */
     client_state: AnySDKType;
 }
 /**
@@ -37,9 +35,7 @@ export interface ConsensusStateWithHeight {
  * field.
  */
 export interface ConsensusStateWithHeightSDKType {
-    /** consensus state height */
     height: HeightSDKType;
-    /** consensus state */
     consensus_state: AnySDKType;
 }
 /**
@@ -57,9 +53,7 @@ export interface ClientConsensusStates {
  * client.
  */
 export interface ClientConsensusStatesSDKType {
-    /** client identifier */
     client_id: string;
-    /** consensus states and their heights associated with the client */
     consensus_states: ConsensusStateWithHeightSDKType[];
 }
 /**
@@ -88,16 +82,9 @@ export interface ClientUpdateProposal {
  * chain parameters (with exception to latest height, frozen height, and chain-id).
  */
 export interface ClientUpdateProposalSDKType {
-    /** the title of the update proposal */
     title: string;
-    /** the description of the proposal */
     description: string;
-    /** the client identifier for the client to be updated if the proposal passes */
     subject_client_id: string;
-    /**
-     * the substitute client identifier for the client standing in for the subject
-     * client
-     */
     substitute_client_id: string;
 }
 /**
@@ -126,14 +113,6 @@ export interface UpgradeProposalSDKType {
     title: string;
     description: string;
     plan: PlanSDKType;
-    /**
-     * An UpgradedClientState must be provided to perform an IBC breaking upgrade.
-     * This will make the chain commit to the correct upgraded (self) client state
-     * before the upgrade occurs, so that connecting chains can verify that the
-     * new upgraded client is valid by verifying a proof on the previous version
-     * of the chain. This will allow IBC connections to persist smoothly across
-     * planned chain upgrades
-     */
     upgraded_client_state: AnySDKType;
 }
 /**
@@ -167,9 +146,7 @@ export interface Height {
  * gets reset
  */
 export interface HeightSDKType {
-    /** the revision that the client is currently on */
     revision_number: Long;
-    /** the height within the given revision */
     revision_height: Long;
 }
 /** Params defines the set of IBC light client parameters. */
@@ -179,7 +156,6 @@ export interface Params {
 }
 /** Params defines the set of IBC light client parameters. */
 export interface ParamsSDKType {
-    /** allowed_clients defines the list of allowed client state types. */
     allowed_clients: string[];
 }
 export declare const IdentifiedClientState: {

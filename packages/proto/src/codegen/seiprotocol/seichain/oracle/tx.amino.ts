@@ -1,6 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgAggregateExchangeRateVote, MsgDelegateFeedConsent } from "./tx";
-export interface AminoMsgAggregateExchangeRateVote extends AminoMsg {
+export interface MsgAggregateExchangeRateVoteAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote";
   value: {
     exchange_rates: string;
@@ -8,7 +8,7 @@ export interface AminoMsgAggregateExchangeRateVote extends AminoMsg {
     validator: string;
   };
 }
-export interface AminoMsgDelegateFeedConsent extends AminoMsg {
+export interface MsgDelegateFeedConsentAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent";
   value: {
     operator: string;
@@ -22,7 +22,7 @@ export const AminoConverter = {
       exchangeRates,
       feeder,
       validator
-    }: MsgAggregateExchangeRateVote): AminoMsgAggregateExchangeRateVote["value"] => {
+    }: MsgAggregateExchangeRateVote): MsgAggregateExchangeRateVoteAminoType["value"] => {
       return {
         exchange_rates: exchangeRates,
         feeder,
@@ -33,7 +33,7 @@ export const AminoConverter = {
       exchange_rates,
       feeder,
       validator
-    }: AminoMsgAggregateExchangeRateVote["value"]): MsgAggregateExchangeRateVote => {
+    }: MsgAggregateExchangeRateVoteAminoType["value"]): MsgAggregateExchangeRateVote => {
       return {
         exchangeRates: exchange_rates,
         feeder,
@@ -46,7 +46,7 @@ export const AminoConverter = {
     toAmino: ({
       operator,
       delegate
-    }: MsgDelegateFeedConsent): AminoMsgDelegateFeedConsent["value"] => {
+    }: MsgDelegateFeedConsent): MsgDelegateFeedConsentAminoType["value"] => {
       return {
         operator,
         delegate
@@ -55,7 +55,7 @@ export const AminoConverter = {
     fromAmino: ({
       operator,
       delegate
-    }: AminoMsgDelegateFeedConsent["value"]): MsgDelegateFeedConsent => {
+    }: MsgDelegateFeedConsentAminoType["value"]): MsgDelegateFeedConsent => {
       return {
         operator,
         delegate

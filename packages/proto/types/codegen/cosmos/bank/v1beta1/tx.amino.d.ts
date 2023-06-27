@@ -1,6 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgSend, MsgMultiSend } from "./tx";
-export interface AminoMsgSend extends AminoMsg {
+export interface MsgSendAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgSend";
     value: {
         from_address: string;
@@ -11,7 +11,7 @@ export interface AminoMsgSend extends AminoMsg {
         }[];
     };
 }
-export interface AminoMsgMultiSend extends AminoMsg {
+export interface MsgMultiSendAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgMultiSend";
     value: {
         inputs: {
@@ -33,12 +33,12 @@ export interface AminoMsgMultiSend extends AminoMsg {
 export declare const AminoConverter: {
     "/cosmos.bank.v1beta1.MsgSend": {
         aminoType: string;
-        toAmino: ({ fromAddress, toAddress, amount }: MsgSend) => AminoMsgSend["value"];
-        fromAmino: ({ from_address, to_address, amount }: AminoMsgSend["value"]) => MsgSend;
+        toAmino: ({ fromAddress, toAddress, amount }: MsgSend) => MsgSendAminoType["value"];
+        fromAmino: ({ from_address, to_address, amount }: MsgSendAminoType["value"]) => MsgSend;
     };
     "/cosmos.bank.v1beta1.MsgMultiSend": {
         aminoType: string;
-        toAmino: ({ inputs, outputs }: MsgMultiSend) => AminoMsgMultiSend["value"];
-        fromAmino: ({ inputs, outputs }: AminoMsgMultiSend["value"]) => MsgMultiSend;
+        toAmino: ({ inputs, outputs }: MsgMultiSend) => MsgMultiSendAminoType["value"];
+        fromAmino: ({ inputs, outputs }: MsgMultiSendAminoType["value"]) => MsgMultiSend;
     };
 };

@@ -1,6 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgAggregateExchangeRateVote, MsgDelegateFeedConsent } from "./tx";
-export interface AminoMsgAggregateExchangeRateVote extends AminoMsg {
+export interface MsgAggregateExchangeRateVoteAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote";
     value: {
         exchange_rates: string;
@@ -8,7 +8,7 @@ export interface AminoMsgAggregateExchangeRateVote extends AminoMsg {
         validator: string;
     };
 }
-export interface AminoMsgDelegateFeedConsent extends AminoMsg {
+export interface MsgDelegateFeedConsentAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent";
     value: {
         operator: string;
@@ -18,12 +18,12 @@ export interface AminoMsgDelegateFeedConsent extends AminoMsg {
 export declare const AminoConverter: {
     "/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote": {
         aminoType: string;
-        toAmino: ({ exchangeRates, feeder, validator }: MsgAggregateExchangeRateVote) => AminoMsgAggregateExchangeRateVote["value"];
-        fromAmino: ({ exchange_rates, feeder, validator }: AminoMsgAggregateExchangeRateVote["value"]) => MsgAggregateExchangeRateVote;
+        toAmino: ({ exchangeRates, feeder, validator }: MsgAggregateExchangeRateVote) => MsgAggregateExchangeRateVoteAminoType["value"];
+        fromAmino: ({ exchange_rates, feeder, validator }: MsgAggregateExchangeRateVoteAminoType["value"]) => MsgAggregateExchangeRateVote;
     };
     "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent": {
         aminoType: string;
-        toAmino: ({ operator, delegate }: MsgDelegateFeedConsent) => AminoMsgDelegateFeedConsent["value"];
-        fromAmino: ({ operator, delegate }: AminoMsgDelegateFeedConsent["value"]) => MsgDelegateFeedConsent;
+        toAmino: ({ operator, delegate }: MsgDelegateFeedConsent) => MsgDelegateFeedConsentAminoType["value"];
+        fromAmino: ({ operator, delegate }: MsgDelegateFeedConsentAminoType["value"]) => MsgDelegateFeedConsent;
     };
 };

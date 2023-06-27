@@ -14,28 +14,24 @@ export const MessageComposer = {
         value: MsgCreateDenom.encode(value).finish()
       };
     },
-
     mint(value: MsgMint) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgMint",
         value: MsgMint.encode(value).finish()
       };
     },
-
     burn(value: MsgBurn) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgBurn",
         value: MsgBurn.encode(value).finish()
       };
     },
-
     changeAdmin(value: MsgChangeAdmin) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin",
         value: MsgChangeAdmin.encode(value).finish()
       };
     }
-
   },
   withTypeUrl: {
     createDenom(value: MsgCreateDenom) {
@@ -44,28 +40,24 @@ export const MessageComposer = {
         value
       };
     },
-
     mint(value: MsgMint) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgMint",
         value
       };
     },
-
     burn(value: MsgBurn) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgBurn",
         value
       };
     },
-
     changeAdmin(value: MsgChangeAdmin) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin",
         value
       };
     }
-
   },
   fromPartial: {
     createDenom(value: MsgCreateDenom) {
@@ -74,27 +66,23 @@ export const MessageComposer = {
         value: MsgCreateDenom.fromPartial(value)
       };
     },
-
     mint(value: MsgMint) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgMint",
         value: MsgMint.fromPartial(value)
       };
     },
-
     burn(value: MsgBurn) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgBurn",
         value: MsgBurn.fromPartial(value)
       };
     },
-
     changeAdmin(value: MsgChangeAdmin) {
       return {
         typeUrl: "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin",
         value: MsgChangeAdmin.fromPartial(value)
       };
     }
-
   }
 };

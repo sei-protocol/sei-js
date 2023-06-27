@@ -2,7 +2,7 @@ import { Description, DescriptionSDKType, CommissionRates, CommissionRatesSDKTyp
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /** MsgCreateValidator defines a SDK message for creating a new validator. */
 export interface MsgCreateValidator {
     description: Description;
@@ -46,12 +46,6 @@ export interface MsgEditValidator {
 export interface MsgEditValidatorSDKType {
     description: DescriptionSDKType;
     validator_address: string;
-    /**
-     * We pass a reference to the new commission rate and min self delegation as
-     * it's not mandatory to update. If not updated, the deserialized rate will be
-     * zero with no way to distinguish if an update was intended.
-     * REF: #2373
-     */
     commission_rate: string;
     min_self_delegation: string;
 }

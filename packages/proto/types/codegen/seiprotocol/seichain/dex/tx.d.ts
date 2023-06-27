@@ -3,8 +3,8 @@ import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { ContractInfoV2, ContractInfoV2SDKType } from "./contract";
 import { BatchContractPair, BatchContractPairSDKType } from "./pair";
 import { TickSize, TickSizeSDKType } from "./tick_size";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface MsgPlaceOrders {
     creator: string;
     orders: Order[];

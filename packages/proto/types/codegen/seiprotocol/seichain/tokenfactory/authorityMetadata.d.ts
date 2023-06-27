@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /**
  * DenomAuthorityMetadata specifies metadata for addresses that have specific
  * capabilities over a token factory denom. Right now there is only one Admin
@@ -15,7 +15,6 @@ export interface DenomAuthorityMetadata {
  * permission, but is planned to be extended to the future.
  */
 export interface DenomAuthorityMetadataSDKType {
-    /** Can be empty for no admin, or a valid sei address */
     admin: string;
 }
 export declare const DenomAuthorityMetadata: {

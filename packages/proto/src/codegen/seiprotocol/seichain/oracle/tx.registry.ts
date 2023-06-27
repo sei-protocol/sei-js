@@ -14,14 +14,12 @@ export const MessageComposer = {
         value: MsgAggregateExchangeRateVote.encode(value).finish()
       };
     },
-
     delegateFeedConsent(value: MsgDelegateFeedConsent) {
       return {
         typeUrl: "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent",
         value: MsgDelegateFeedConsent.encode(value).finish()
       };
     }
-
   },
   withTypeUrl: {
     aggregateExchangeRateVote(value: MsgAggregateExchangeRateVote) {
@@ -30,14 +28,12 @@ export const MessageComposer = {
         value
       };
     },
-
     delegateFeedConsent(value: MsgDelegateFeedConsent) {
       return {
         typeUrl: "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent",
         value
       };
     }
-
   },
   fromPartial: {
     aggregateExchangeRateVote(value: MsgAggregateExchangeRateVote) {
@@ -46,13 +42,11 @@ export const MessageComposer = {
         value: MsgAggregateExchangeRateVote.fromPartial(value)
       };
     },
-
     delegateFeedConsent(value: MsgDelegateFeedConsent) {
       return {
         typeUrl: "/seiprotocol.seichain.oracle.MsgDelegateFeedConsent",
         value: MsgDelegateFeedConsent.fromPartial(value)
       };
     }
-
   }
 };

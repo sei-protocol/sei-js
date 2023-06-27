@@ -5,8 +5,8 @@ import { ShortBook, ShortBookSDKType } from "./short_book";
 import { Order, OrderSDKType } from "./order";
 import { Pair, PairSDKType } from "./pair";
 import { Price, PriceSDKType } from "./price";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /** GenesisState defines the dex module's genesis state. */
 export interface GenesisState {
     params: Params;

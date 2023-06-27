@@ -1,6 +1,6 @@
-import { OrderStatus, OrderStatusSDKType, OrderType, OrderTypeSDKType, PositionDirection, PositionDirectionSDKType, CancellationInitiator, CancellationInitiatorSDKType } from "./enums";
+import { OrderStatus, OrderType, PositionDirection, CancellationInitiator } from "./enums";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface Order {
     id?: Long;
     status?: OrderStatus;
@@ -20,15 +20,15 @@ export interface Order {
 }
 export interface OrderSDKType {
     id?: Long;
-    status?: OrderStatusSDKType;
+    status?: OrderStatus;
     account?: string;
     contractAddr?: string;
     price: string;
     quantity: string;
     priceDenom: string;
     assetDenom: string;
-    orderType: OrderTypeSDKType;
-    positionDirection: PositionDirectionSDKType;
+    orderType: OrderType;
+    positionDirection: PositionDirection;
     data: string;
     statusDescription: string;
     nominal: string;
@@ -47,12 +47,12 @@ export interface Cancellation {
 }
 export interface CancellationSDKType {
     id: Long;
-    initiator: CancellationInitiatorSDKType;
+    initiator: CancellationInitiator;
     creator?: string;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
-    positionDirection: PositionDirectionSDKType;
+    positionDirection: PositionDirection;
     price: string;
 }
 export interface ActiveOrders {

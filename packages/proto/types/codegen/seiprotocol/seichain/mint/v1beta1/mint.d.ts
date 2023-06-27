@@ -1,5 +1,5 @@
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /** Minter represents the most recent */
 export interface Minter {
     lastMintAmount: string;
@@ -20,7 +20,6 @@ export interface ScheduledTokenRelease {
     tokenReleaseAmount: Long;
 }
 export interface ScheduledTokenReleaseSDKType {
-    /** yyyy-mm-dd */
     date: string;
     token_release_amount: Long;
 }
@@ -33,9 +32,7 @@ export interface Params {
 }
 /** Params holds parameters for the mint module. */
 export interface ParamsSDKType {
-    /** type of coin to mint */
     mint_denom: string;
-    /** List of token release schedules */
     token_release_schedule: ScheduledTokenReleaseSDKType[];
 }
 export declare const Minter: {

@@ -1,6 +1,6 @@
 import { Params, ParamsSDKType } from "./params";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface GenesisState {
     params: Params;
     slot: Long;

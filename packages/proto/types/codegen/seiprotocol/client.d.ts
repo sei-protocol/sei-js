@@ -1,5 +1,6 @@
-import { OfflineSigner, GeneratedType, Registry } from "@cosmjs/proto-signing";
+import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
 import { AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
+import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
 export declare const seiprotocolAminoConverters: {
     "/seiprotocol.seichain.tokenfactory.MsgCreateDenom": {
         aminoType: string;
@@ -108,7 +109,7 @@ export declare const seiprotocolAminoConverters: {
             merkleProof: {
                 commitment: string;
                 hash: string[];
-                direction: Long[];
+                direction: string[];
             };
             accountStates: {
                 pubkey: string;
@@ -146,7 +147,7 @@ export declare const seiprotocolAminoConverters: {
             merkleProof: {
                 commitment: string;
                 hash: string[];
-                direction: Long[];
+                direction: string[];
             };
             accountStates: {
                 pubkey: string;
@@ -416,7 +417,7 @@ export declare const getSigningSeiprotocolClientOptions: ({ defaultTypes }?: {
     aminoTypes: AminoTypes;
 };
 export declare const getSigningSeiprotocolClient: ({ rpcEndpoint, signer, defaultTypes }: {
-    rpcEndpoint: string;
+    rpcEndpoint: string | HttpEndpoint;
     signer: OfflineSigner;
     defaultTypes?: ReadonlyArray<[string, GeneratedType]>;
 }) => Promise<SigningStargateClient>;

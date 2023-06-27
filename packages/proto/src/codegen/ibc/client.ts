@@ -1,5 +1,6 @@
-import { OfflineSigner, GeneratedType, Registry } from "@cosmjs/proto-signing";
+import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
 import { defaultRegistryTypes, AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
+import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import * as ibcApplicationsTransferV1TxRegistry from "./applications/transfer/v1/tx.registry";
 import * as ibcCoreChannelV1TxRegistry from "./core/channel/v1/tx.registry";
 import * as ibcCoreClientV1TxRegistry from "./core/client/v1/tx.registry";
@@ -8,7 +9,8 @@ import * as ibcApplicationsTransferV1TxAmino from "./applications/transfer/v1/tx
 import * as ibcCoreChannelV1TxAmino from "./core/channel/v1/tx.amino";
 import * as ibcCoreClientV1TxAmino from "./core/client/v1/tx.amino";
 import * as ibcCoreConnectionV1TxAmino from "./core/connection/v1/tx.amino";
-export const ibcAminoConverters = { ...ibcApplicationsTransferV1TxAmino.AminoConverter,
+export const ibcAminoConverters = {
+  ...ibcApplicationsTransferV1TxAmino.AminoConverter,
   ...ibcCoreChannelV1TxAmino.AminoConverter,
   ...ibcCoreClientV1TxAmino.AminoConverter,
   ...ibcCoreConnectionV1TxAmino.AminoConverter
@@ -23,7 +25,8 @@ export const getSigningIbcClientOptions = ({
   aminoTypes: AminoTypes;
 } => {
   const registry = new Registry([...defaultTypes, ...ibcProtoRegistry]);
-  const aminoTypes = new AminoTypes({ ...ibcAminoConverters
+  const aminoTypes = new AminoTypes({
+    ...ibcAminoConverters
   });
   return {
     registry,
@@ -35,7 +38,7 @@ export const getSigningIbcClient = async ({
   signer,
   defaultTypes = defaultRegistryTypes
 }: {
-  rpcEndpoint: string;
+  rpcEndpoint: string | HttpEndpoint;
   signer: OfflineSigner;
   defaultTypes?: ReadonlyArray<[string, GeneratedType]>;
 }) => {

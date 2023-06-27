@@ -2,7 +2,7 @@ import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } fr
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Params, ParamsSDKType } from "./auth";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /**
  * QueryAccountsRequest is the request type for the Query/Accounts RPC method.
  *
@@ -10,7 +10,7 @@ import { DeepPartial } from "@osmonauts/helpers";
  */
 export interface QueryAccountsRequest {
     /** pagination defines an optional pagination for the request. */
-    pagination?: PageRequest;
+    pagination: PageRequest;
 }
 /**
  * QueryAccountsRequest is the request type for the Query/Accounts RPC method.
@@ -18,8 +18,7 @@ export interface QueryAccountsRequest {
  * Since: cosmos-sdk 0.43
  */
 export interface QueryAccountsRequestSDKType {
-    /** pagination defines an optional pagination for the request. */
-    pagination?: PageRequestSDKType;
+    pagination: PageRequestSDKType;
 }
 /**
  * QueryAccountsResponse is the response type for the Query/Accounts RPC method.
@@ -30,7 +29,7 @@ export interface QueryAccountsResponse {
     /** accounts are the existing accounts */
     accounts: Any[];
     /** pagination defines the pagination in the response. */
-    pagination?: PageResponse;
+    pagination: PageResponse;
 }
 /**
  * QueryAccountsResponse is the response type for the Query/Accounts RPC method.
@@ -38,10 +37,8 @@ export interface QueryAccountsResponse {
  * Since: cosmos-sdk 0.43
  */
 export interface QueryAccountsResponseSDKType {
-    /** accounts are the existing accounts */
     accounts: AnySDKType[];
-    /** pagination defines the pagination in the response. */
-    pagination?: PageResponseSDKType;
+    pagination: PageResponseSDKType;
 }
 /** QueryAccountRequest is the request type for the Query/Account RPC method. */
 export interface QueryAccountRequest {
@@ -50,7 +47,6 @@ export interface QueryAccountRequest {
 }
 /** QueryAccountRequest is the request type for the Query/Account RPC method. */
 export interface QueryAccountRequestSDKType {
-    /** address defines the address to query for. */
     address: string;
 }
 /** QueryModuleAccountsRequest is the request type for the Query/ModuleAccounts RPC method. */
@@ -66,7 +62,6 @@ export interface QueryParamsResponse {
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-    /** params defines the parameters of the module. */
     params: ParamsSDKType;
 }
 /** QueryAccountResponse is the response type for the Query/Account RPC method. */
@@ -76,7 +71,6 @@ export interface QueryAccountResponse {
 }
 /** QueryAccountResponse is the response type for the Query/Account RPC method. */
 export interface QueryAccountResponseSDKType {
-    /** account defines the account of the corresponding address. */
     account: AnySDKType;
 }
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */

@@ -1,8 +1,8 @@
 import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "@osmonauts/helpers";
+import { Long } from "../../../helpers";
 import { orderStatusFromJSON, orderTypeFromJSON, positionDirectionFromJSON, cancellationInitiatorFromJSON } from "./enums";
 import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize } from "./tx";
-export interface AminoMsgPlaceOrders extends AminoMsg {
+export interface MsgPlaceOrdersAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgPlaceOrders";
   value: {
     creator: string;
@@ -30,7 +30,7 @@ export interface AminoMsgPlaceOrders extends AminoMsg {
     }[];
   };
 }
-export interface AminoMsgCancelOrders extends AminoMsg {
+export interface MsgCancelOrdersAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgCancelOrders";
   value: {
     creator: string;
@@ -47,7 +47,7 @@ export interface AminoMsgCancelOrders extends AminoMsg {
     contractAddr: string;
   };
 }
-export interface AminoMsgRegisterContract extends AminoMsg {
+export interface MsgRegisterContractAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgRegisterContract";
   value: {
     creator: string;
@@ -67,7 +67,7 @@ export interface AminoMsgRegisterContract extends AminoMsg {
     };
   };
 }
-export interface AminoMsgContractDepositRent extends AminoMsg {
+export interface MsgContractDepositRentAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgContractDepositRent";
   value: {
     contractAddr: string;
@@ -75,14 +75,14 @@ export interface AminoMsgContractDepositRent extends AminoMsg {
     sender: string;
   };
 }
-export interface AminoMsgUnregisterContract extends AminoMsg {
+export interface MsgUnregisterContractAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgUnregisterContract";
   value: {
     creator: string;
     contractAddr: string;
   };
 }
-export interface AminoMsgRegisterPairs extends AminoMsg {
+export interface MsgRegisterPairsAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgRegisterPairs";
   value: {
     creator: string;
@@ -97,7 +97,7 @@ export interface AminoMsgRegisterPairs extends AminoMsg {
     }[];
   };
 }
-export interface AminoMsgUpdatePriceTickSize extends AminoMsg {
+export interface MsgUpdatePriceTickSizeAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgUpdatePriceTickSize";
   value: {
     creator: string;
@@ -113,7 +113,7 @@ export interface AminoMsgUpdatePriceTickSize extends AminoMsg {
     }[];
   };
 }
-export interface AminoMsgUpdateQuantityTickSize extends AminoMsg {
+export interface MsgUpdateQuantityTickSizeAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize";
   value: {
     creator: string;
@@ -137,7 +137,7 @@ export const AminoConverter = {
       orders,
       contractAddr,
       funds
-    }: MsgPlaceOrders): AminoMsgPlaceOrders["value"] => {
+    }: MsgPlaceOrders): MsgPlaceOrdersAminoType["value"] => {
       return {
         creator,
         orders: orders.map(el0 => ({
@@ -169,7 +169,7 @@ export const AminoConverter = {
       orders,
       contractAddr,
       funds
-    }: AminoMsgPlaceOrders["value"]): MsgPlaceOrders => {
+    }: MsgPlaceOrdersAminoType["value"]): MsgPlaceOrders => {
       return {
         creator,
         orders: orders.map(el0 => ({
@@ -203,7 +203,7 @@ export const AminoConverter = {
       creator,
       cancellations,
       contractAddr
-    }: MsgCancelOrders): AminoMsgCancelOrders["value"] => {
+    }: MsgCancelOrders): MsgCancelOrdersAminoType["value"] => {
       return {
         creator,
         cancellations: cancellations.map(el0 => ({
@@ -223,7 +223,7 @@ export const AminoConverter = {
       creator,
       cancellations,
       contractAddr
-    }: AminoMsgCancelOrders["value"]): MsgCancelOrders => {
+    }: MsgCancelOrdersAminoType["value"]): MsgCancelOrders => {
       return {
         creator,
         cancellations: cancellations.map(el0 => ({
@@ -245,7 +245,7 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       contract
-    }: MsgRegisterContract): AminoMsgRegisterContract["value"] => {
+    }: MsgRegisterContract): MsgRegisterContractAminoType["value"] => {
       return {
         creator,
         contract: {
@@ -267,7 +267,7 @@ export const AminoConverter = {
     fromAmino: ({
       creator,
       contract
-    }: AminoMsgRegisterContract["value"]): MsgRegisterContract => {
+    }: MsgRegisterContractAminoType["value"]): MsgRegisterContract => {
       return {
         creator,
         contract: {
@@ -293,7 +293,7 @@ export const AminoConverter = {
       contractAddr,
       amount,
       sender
-    }: MsgContractDepositRent): AminoMsgContractDepositRent["value"] => {
+    }: MsgContractDepositRent): MsgContractDepositRentAminoType["value"] => {
       return {
         contractAddr,
         amount: amount.toString(),
@@ -304,7 +304,7 @@ export const AminoConverter = {
       contractAddr,
       amount,
       sender
-    }: AminoMsgContractDepositRent["value"]): MsgContractDepositRent => {
+    }: MsgContractDepositRentAminoType["value"]): MsgContractDepositRent => {
       return {
         contractAddr,
         amount: Long.fromString(amount),
@@ -317,7 +317,7 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       contractAddr
-    }: MsgUnregisterContract): AminoMsgUnregisterContract["value"] => {
+    }: MsgUnregisterContract): MsgUnregisterContractAminoType["value"] => {
       return {
         creator,
         contractAddr
@@ -326,7 +326,7 @@ export const AminoConverter = {
     fromAmino: ({
       creator,
       contractAddr
-    }: AminoMsgUnregisterContract["value"]): MsgUnregisterContract => {
+    }: MsgUnregisterContractAminoType["value"]): MsgUnregisterContract => {
       return {
         creator,
         contractAddr
@@ -338,7 +338,7 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       batchcontractpair
-    }: MsgRegisterPairs): AminoMsgRegisterPairs["value"] => {
+    }: MsgRegisterPairs): MsgRegisterPairsAminoType["value"] => {
       return {
         creator,
         batchcontractpair: batchcontractpair.map(el0 => ({
@@ -355,7 +355,7 @@ export const AminoConverter = {
     fromAmino: ({
       creator,
       batchcontractpair
-    }: AminoMsgRegisterPairs["value"]): MsgRegisterPairs => {
+    }: MsgRegisterPairsAminoType["value"]): MsgRegisterPairs => {
       return {
         creator,
         batchcontractpair: batchcontractpair.map(el0 => ({
@@ -375,7 +375,7 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       tickSizeList
-    }: MsgUpdatePriceTickSize): AminoMsgUpdatePriceTickSize["value"] => {
+    }: MsgUpdatePriceTickSize): MsgUpdatePriceTickSizeAminoType["value"] => {
       return {
         creator,
         tickSizeList: tickSizeList.map(el0 => ({
@@ -393,7 +393,7 @@ export const AminoConverter = {
     fromAmino: ({
       creator,
       tickSizeList
-    }: AminoMsgUpdatePriceTickSize["value"]): MsgUpdatePriceTickSize => {
+    }: MsgUpdatePriceTickSizeAminoType["value"]): MsgUpdatePriceTickSize => {
       return {
         creator,
         tickSizeList: tickSizeList.map(el0 => ({
@@ -414,7 +414,7 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       tickSizeList
-    }: MsgUpdateQuantityTickSize): AminoMsgUpdateQuantityTickSize["value"] => {
+    }: MsgUpdateQuantityTickSize): MsgUpdateQuantityTickSizeAminoType["value"] => {
       return {
         creator,
         tickSizeList: tickSizeList.map(el0 => ({
@@ -432,7 +432,7 @@ export const AminoConverter = {
     fromAmino: ({
       creator,
       tickSizeList
-    }: AminoMsgUpdateQuantityTickSize["value"]): MsgUpdateQuantityTickSize => {
+    }: MsgUpdateQuantityTickSizeAminoType["value"]): MsgUpdateQuantityTickSize => {
       return {
         creator,
         tickSizeList: tickSizeList.map(el0 => ({

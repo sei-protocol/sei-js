@@ -8,8 +8,8 @@ import { Twap, TwapSDKType } from "./twap";
 import { AssetMetadata, AssetMetadataSDKType } from "./asset_list";
 import { Pair, PairSDKType } from "./pair";
 import { MatchResult, MatchResultSDKType } from "./match_result";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
 }
@@ -23,7 +23,6 @@ export interface QueryParamsResponse {
 }
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-    /** params holds all the parameters of this module. */
     params: ParamsSDKType;
 }
 export interface QueryGetLongBookRequest {
@@ -45,24 +44,24 @@ export interface QueryGetLongBookResponseSDKType {
     LongBook: LongBookSDKType;
 }
 export interface QueryAllLongBookRequest {
-    pagination?: PageRequest;
+    pagination: PageRequest;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllLongBookRequestSDKType {
-    pagination?: PageRequestSDKType;
+    pagination: PageRequestSDKType;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllLongBookResponse {
     LongBook: LongBook[];
-    pagination?: PageResponse;
+    pagination: PageResponse;
 }
 export interface QueryAllLongBookResponseSDKType {
     LongBook: LongBookSDKType[];
-    pagination?: PageResponseSDKType;
+    pagination: PageResponseSDKType;
 }
 export interface QueryGetShortBookRequest {
     price: string;
@@ -83,24 +82,24 @@ export interface QueryGetShortBookResponseSDKType {
     ShortBook: ShortBookSDKType;
 }
 export interface QueryAllShortBookRequest {
-    pagination?: PageRequest;
+    pagination: PageRequest;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllShortBookRequestSDKType {
-    pagination?: PageRequestSDKType;
+    pagination: PageRequestSDKType;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllShortBookResponse {
     ShortBook: ShortBook[];
-    pagination?: PageResponse;
+    pagination: PageResponse;
 }
 export interface QueryAllShortBookResponseSDKType {
     ShortBook: ShortBookSDKType[];
-    pagination?: PageResponseSDKType;
+    pagination: PageResponseSDKType;
 }
 export interface QueryGetPricesRequest {
     priceDenom: string;
@@ -191,10 +190,10 @@ export interface QueryAssetMetadataResponseSDKType {
     metadata: AssetMetadataSDKType;
 }
 export interface QueryRegisteredPairsRequest {
-    contractAddr?: string;
+    contractAddr: string;
 }
 export interface QueryRegisteredPairsRequestSDKType {
-    contractAddr?: string;
+    contractAddr: string;
 }
 export interface QueryRegisteredPairsResponse {
     pairs: Pair[];

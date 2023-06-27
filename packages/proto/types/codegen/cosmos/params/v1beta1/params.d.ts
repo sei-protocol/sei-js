@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /** ParameterChangeProposal defines a proposal to change one or more parameters. */
 export interface ParameterChangeProposal {
     title: string;

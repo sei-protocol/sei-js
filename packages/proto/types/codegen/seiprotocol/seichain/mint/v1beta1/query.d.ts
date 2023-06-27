@@ -1,6 +1,6 @@
 import { Params, ParamsSDKType } from "./mint";
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
 }
@@ -14,7 +14,6 @@ export interface QueryParamsResponse {
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-    /** params defines the parameters of the module. */
     params: ParamsSDKType;
 }
 /**

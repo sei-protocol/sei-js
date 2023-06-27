@@ -1,5 +1,5 @@
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface OrderEntry {
     price: string;
     quantity: string;

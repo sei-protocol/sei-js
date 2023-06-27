@@ -1,13 +1,13 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgCreateDenom, MsgMint, MsgBurn, MsgChangeAdmin } from "./tx";
-export interface AminoMsgCreateDenom extends AminoMsg {
+export interface MsgCreateDenomAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.tokenfactory.MsgCreateDenom";
     value: {
         sender: string;
         subdenom: string;
     };
 }
-export interface AminoMsgMint extends AminoMsg {
+export interface MsgMintAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.tokenfactory.MsgMint";
     value: {
         sender: string;
@@ -17,7 +17,7 @@ export interface AminoMsgMint extends AminoMsg {
         };
     };
 }
-export interface AminoMsgBurn extends AminoMsg {
+export interface MsgBurnAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.tokenfactory.MsgBurn";
     value: {
         sender: string;
@@ -27,7 +27,7 @@ export interface AminoMsgBurn extends AminoMsg {
         };
     };
 }
-export interface AminoMsgChangeAdmin extends AminoMsg {
+export interface MsgChangeAdminAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin";
     value: {
         sender: string;
@@ -38,22 +38,22 @@ export interface AminoMsgChangeAdmin extends AminoMsg {
 export declare const AminoConverter: {
     "/seiprotocol.seichain.tokenfactory.MsgCreateDenom": {
         aminoType: string;
-        toAmino: ({ sender, subdenom }: MsgCreateDenom) => AminoMsgCreateDenom["value"];
-        fromAmino: ({ sender, subdenom }: AminoMsgCreateDenom["value"]) => MsgCreateDenom;
+        toAmino: ({ sender, subdenom }: MsgCreateDenom) => MsgCreateDenomAminoType["value"];
+        fromAmino: ({ sender, subdenom }: MsgCreateDenomAminoType["value"]) => MsgCreateDenom;
     };
     "/seiprotocol.seichain.tokenfactory.MsgMint": {
         aminoType: string;
-        toAmino: ({ sender, amount }: MsgMint) => AminoMsgMint["value"];
-        fromAmino: ({ sender, amount }: AminoMsgMint["value"]) => MsgMint;
+        toAmino: ({ sender, amount }: MsgMint) => MsgMintAminoType["value"];
+        fromAmino: ({ sender, amount }: MsgMintAminoType["value"]) => MsgMint;
     };
     "/seiprotocol.seichain.tokenfactory.MsgBurn": {
         aminoType: string;
-        toAmino: ({ sender, amount }: MsgBurn) => AminoMsgBurn["value"];
-        fromAmino: ({ sender, amount }: AminoMsgBurn["value"]) => MsgBurn;
+        toAmino: ({ sender, amount }: MsgBurn) => MsgBurnAminoType["value"];
+        fromAmino: ({ sender, amount }: MsgBurnAminoType["value"]) => MsgBurn;
     };
     "/seiprotocol.seichain.tokenfactory.MsgChangeAdmin": {
         aminoType: string;
-        toAmino: ({ sender, denom, newAdmin }: MsgChangeAdmin) => AminoMsgChangeAdmin["value"];
-        fromAmino: ({ sender, denom, new_admin }: AminoMsgChangeAdmin["value"]) => MsgChangeAdmin;
+        toAmino: ({ sender, denom, newAdmin }: MsgChangeAdmin) => MsgChangeAdminAminoType["value"];
+        fromAmino: ({ sender, denom, new_admin }: MsgChangeAdminAminoType["value"]) => MsgChangeAdmin;
     };
 };

@@ -1,6 +1,6 @@
 import { Grant, GrantSDKType } from "./feegrant";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /** GenesisState contains a set of fee allowances, persisted from the store */
 export interface GenesisState {
     allowances: Grant[];

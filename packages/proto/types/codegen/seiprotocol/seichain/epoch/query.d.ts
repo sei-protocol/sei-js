@@ -1,7 +1,7 @@
 import { Params, ParamsSDKType } from "./params";
 import { Epoch, EpochSDKType } from "./epoch";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
 }
@@ -15,7 +15,6 @@ export interface QueryParamsResponse {
 }
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-    /** params holds all the parameters of this module. */
     params: ParamsSDKType;
 }
 export interface QueryEpochRequest {

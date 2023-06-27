@@ -1,5 +1,5 @@
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /**
  * Equivocation implements the Evidence interface and defines evidence of double
  * signing misbehavior.

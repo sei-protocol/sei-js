@@ -1,7 +1,7 @@
 import { Channel, ChannelSDKType, Packet, PacketSDKType } from "./channel";
 import { Height, HeightSDKType } from "../../client/v1/client";
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /**
  * MsgChannelOpenInit defines an sdk.Msg to initialize a channel handshake. It
  * is called by a relayer on Chain A.
@@ -49,10 +49,6 @@ export interface MsgChannelOpenTry {
  */
 export interface MsgChannelOpenTrySDKType {
     port_id: string;
-    /**
-     * in the case of crossing hello's, when both chains call OpenInit, we need
-     * the channel identifier of the previous channel in state INIT
-     */
     previous_channel_id: string;
     channel: ChannelSDKType;
     counterparty_version: string;

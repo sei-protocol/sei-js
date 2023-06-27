@@ -1,5 +1,5 @@
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /** Snapshot contains Tendermint state sync snapshot info. */
 export interface Snapshot {
     height: Long;
@@ -23,7 +23,6 @@ export interface Metadata {
 }
 /** Metadata contains SDK-specific snapshot metadata. */
 export interface MetadataSDKType {
-    /** SHA-256 chunk hashes */
     chunk_hashes: Uint8Array[];
 }
 /** SnapshotItem is an item contained in a rootmulti.Store snapshot. */
@@ -65,9 +64,7 @@ export interface SnapshotIAVLItem {
 export interface SnapshotIAVLItemSDKType {
     key: Uint8Array;
     value: Uint8Array;
-    /** version is block height */
     version: Long;
-    /** height is depth of the tree. */
     height: number;
 }
 /** SnapshotExtensionMeta contains metadata about an external snapshotter. */

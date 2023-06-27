@@ -1,6 +1,6 @@
 import { Pair, PairSDKType } from "./pair";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 export interface TickSize {
     pair: Pair;
     ticksize: string;

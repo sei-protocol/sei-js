@@ -14,14 +14,12 @@ export const MessageComposer = {
         value: MsgRecordTransactionData.encode(value).finish()
       };
     },
-
     submitFraudChallenge(value: MsgSubmitFraudChallenge) {
       return {
         typeUrl: "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge",
         value: MsgSubmitFraudChallenge.encode(value).finish()
       };
     }
-
   },
   withTypeUrl: {
     recordTransactionData(value: MsgRecordTransactionData) {
@@ -30,14 +28,12 @@ export const MessageComposer = {
         value
       };
     },
-
     submitFraudChallenge(value: MsgSubmitFraudChallenge) {
       return {
         typeUrl: "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge",
         value
       };
     }
-
   },
   fromPartial: {
     recordTransactionData(value: MsgRecordTransactionData) {
@@ -46,13 +42,11 @@ export const MessageComposer = {
         value: MsgRecordTransactionData.fromPartial(value)
       };
     },
-
     submitFraudChallenge(value: MsgSubmitFraudChallenge) {
       return {
         typeUrl: "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge",
         value: MsgSubmitFraudChallenge.fromPartial(value)
       };
     }
-
   }
 };

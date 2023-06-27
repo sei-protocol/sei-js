@@ -1,8 +1,8 @@
 import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /** VoteOption enumerates the valid vote options for a given governance proposal. */
 export declare enum VoteOption {
     /** VOTE_OPTION_UNSPECIFIED - VOTE_OPTION_UNSPECIFIED defines a no-op vote option. */
@@ -17,20 +17,7 @@ export declare enum VoteOption {
     VOTE_OPTION_NO_WITH_VETO = 4,
     UNRECOGNIZED = -1
 }
-/** VoteOption enumerates the valid vote options for a given governance proposal. */
-export declare enum VoteOptionSDKType {
-    /** VOTE_OPTION_UNSPECIFIED - VOTE_OPTION_UNSPECIFIED defines a no-op vote option. */
-    VOTE_OPTION_UNSPECIFIED = 0,
-    /** VOTE_OPTION_YES - VOTE_OPTION_YES defines a yes vote option. */
-    VOTE_OPTION_YES = 1,
-    /** VOTE_OPTION_ABSTAIN - VOTE_OPTION_ABSTAIN defines an abstain vote option. */
-    VOTE_OPTION_ABSTAIN = 2,
-    /** VOTE_OPTION_NO - VOTE_OPTION_NO defines a no vote option. */
-    VOTE_OPTION_NO = 3,
-    /** VOTE_OPTION_NO_WITH_VETO - VOTE_OPTION_NO_WITH_VETO defines a no with veto vote option. */
-    VOTE_OPTION_NO_WITH_VETO = 4,
-    UNRECOGNIZED = -1
-}
+export declare const VoteOptionSDKType: typeof VoteOption;
 export declare function voteOptionFromJSON(object: any): VoteOption;
 export declare function voteOptionToJSON(object: VoteOption): string;
 /** ProposalStatus enumerates the valid statuses of a proposal. */
@@ -39,62 +26,32 @@ export declare enum ProposalStatus {
     PROPOSAL_STATUS_UNSPECIFIED = 0,
     /**
      * PROPOSAL_STATUS_DEPOSIT_PERIOD - PROPOSAL_STATUS_DEPOSIT_PERIOD defines a proposal status during the deposit
-     *  period.
+     * period.
      */
     PROPOSAL_STATUS_DEPOSIT_PERIOD = 1,
     /**
      * PROPOSAL_STATUS_VOTING_PERIOD - PROPOSAL_STATUS_VOTING_PERIOD defines a proposal status during the voting
-     *  period.
+     * period.
      */
     PROPOSAL_STATUS_VOTING_PERIOD = 2,
     /**
      * PROPOSAL_STATUS_PASSED - PROPOSAL_STATUS_PASSED defines a proposal status of a proposal that has
-     *  passed.
+     * passed.
      */
     PROPOSAL_STATUS_PASSED = 3,
     /**
      * PROPOSAL_STATUS_REJECTED - PROPOSAL_STATUS_REJECTED defines a proposal status of a proposal that has
-     *  been rejected.
+     * been rejected.
      */
     PROPOSAL_STATUS_REJECTED = 4,
     /**
      * PROPOSAL_STATUS_FAILED - PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
-     *  failed.
+     * failed.
      */
     PROPOSAL_STATUS_FAILED = 5,
     UNRECOGNIZED = -1
 }
-/** ProposalStatus enumerates the valid statuses of a proposal. */
-export declare enum ProposalStatusSDKType {
-    /** PROPOSAL_STATUS_UNSPECIFIED - PROPOSAL_STATUS_UNSPECIFIED defines the default propopsal status. */
-    PROPOSAL_STATUS_UNSPECIFIED = 0,
-    /**
-     * PROPOSAL_STATUS_DEPOSIT_PERIOD - PROPOSAL_STATUS_DEPOSIT_PERIOD defines a proposal status during the deposit
-     *  period.
-     */
-    PROPOSAL_STATUS_DEPOSIT_PERIOD = 1,
-    /**
-     * PROPOSAL_STATUS_VOTING_PERIOD - PROPOSAL_STATUS_VOTING_PERIOD defines a proposal status during the voting
-     *  period.
-     */
-    PROPOSAL_STATUS_VOTING_PERIOD = 2,
-    /**
-     * PROPOSAL_STATUS_PASSED - PROPOSAL_STATUS_PASSED defines a proposal status of a proposal that has
-     *  passed.
-     */
-    PROPOSAL_STATUS_PASSED = 3,
-    /**
-     * PROPOSAL_STATUS_REJECTED - PROPOSAL_STATUS_REJECTED defines a proposal status of a proposal that has
-     *  been rejected.
-     */
-    PROPOSAL_STATUS_REJECTED = 4,
-    /**
-     * PROPOSAL_STATUS_FAILED - PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
-     *  failed.
-     */
-    PROPOSAL_STATUS_FAILED = 5,
-    UNRECOGNIZED = -1
-}
+export declare const ProposalStatusSDKType: typeof ProposalStatus;
 export declare function proposalStatusFromJSON(object: any): ProposalStatus;
 export declare function proposalStatusToJSON(object: ProposalStatus): string;
 /**
@@ -112,7 +69,7 @@ export interface WeightedVoteOption {
  * Since: cosmos-sdk 0.43
  */
 export interface WeightedVoteOptionSDKType {
-    option: VoteOptionSDKType;
+    option: VoteOption;
     weight: string;
 }
 /**
@@ -170,12 +127,7 @@ export interface Proposal {
 export interface ProposalSDKType {
     proposal_id: Long;
     content: AnySDKType;
-    status: ProposalStatusSDKType;
-    /**
-     * final_tally_result is the final tally result of the proposal. When
-     * querying a proposal via gRPC, this field is not populated until the
-     * proposal's voting period has ended.
-     */
+    status: ProposalStatus;
     final_tally_result: TallyResultSDKType;
     submit_time: Date;
     deposit_end_time: Date;
@@ -221,14 +173,8 @@ export interface Vote {
 export interface VoteSDKType {
     proposal_id: Long;
     voter: string;
-    /**
-     * Deprecated: Prefer to use `options` instead. This field is set in queries
-     * if and only if `len(options) == 1` and that option has weight 1. In all
-     * other cases, this field will default to VOTE_OPTION_UNSPECIFIED.
-     */
     /** @deprecated */
-    option: VoteOptionSDKType;
-    /** Since: cosmos-sdk 0.43 */
+    option: VoteOption;
     options: WeightedVoteOptionSDKType[];
 }
 /** DepositParams defines the params for deposits on governance proposals. */
@@ -243,12 +189,7 @@ export interface DepositParams {
 }
 /** DepositParams defines the params for deposits on governance proposals. */
 export interface DepositParamsSDKType {
-    /** Minimum deposit for a proposal to enter voting period. */
     min_deposit: CoinSDKType[];
-    /**
-     * Maximum period for Atom holders to deposit on a proposal. Initial value: 2
-     *  months.
-     */
     max_deposit_period: DurationSDKType;
 }
 /** VotingParams defines the params for voting on governance proposals. */
@@ -258,7 +199,6 @@ export interface VotingParams {
 }
 /** VotingParams defines the params for voting on governance proposals. */
 export interface VotingParamsSDKType {
-    /** Length of the voting period. */
     voting_period: DurationSDKType;
 }
 /** TallyParams defines the params for tallying votes on governance proposals. */
@@ -278,17 +218,8 @@ export interface TallyParams {
 }
 /** TallyParams defines the params for tallying votes on governance proposals. */
 export interface TallyParamsSDKType {
-    /**
-     * Minimum percentage of total stake needed to vote for a result to be
-     *  considered valid.
-     */
     quorum: Uint8Array;
-    /** Minimum proportion of Yes votes for proposal to pass. Default value: 0.5. */
     threshold: Uint8Array;
-    /**
-     * Minimum value of Veto votes to Total votes ratio for proposal to be
-     *  vetoed. Default value: 1/3.
-     */
     veto_threshold: Uint8Array;
 }
 export declare const WeightedVoteOption: {

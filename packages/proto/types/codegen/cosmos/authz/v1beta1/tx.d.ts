@@ -1,7 +1,7 @@
 import { Grant, GrantSDKType } from "./authz";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /**
  * MsgGrant is a request type for Grant method. It declares authorization to the grantee
  * on behalf of the granter with the provided expiration time.
@@ -49,11 +49,6 @@ export interface MsgExec {
  */
 export interface MsgExecSDKType {
     grantee: string;
-    /**
-     * Authorization Msg requests to execute. Each msg must implement Authorization interface
-     * The x/authz will try to find a grant matching (msg.signers[0], grantee, MsgTypeURL(msg))
-     * triple and validate it.
-     */
     msgs: AnySDKType[];
 }
 /** MsgGrantResponse defines the Msg/MsgGrant response type. */

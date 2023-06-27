@@ -14,56 +14,48 @@ export const MessageComposer = {
         value: MsgPlaceOrders.encode(value).finish()
       };
     },
-
     cancelOrders(value: MsgCancelOrders) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgCancelOrders",
         value: MsgCancelOrders.encode(value).finish()
       };
     },
-
     registerContract(value: MsgRegisterContract) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgRegisterContract",
         value: MsgRegisterContract.encode(value).finish()
       };
     },
-
     contractDepositRent(value: MsgContractDepositRent) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgContractDepositRent",
         value: MsgContractDepositRent.encode(value).finish()
       };
     },
-
     unregisterContract(value: MsgUnregisterContract) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUnregisterContract",
         value: MsgUnregisterContract.encode(value).finish()
       };
     },
-
     registerPairs(value: MsgRegisterPairs) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgRegisterPairs",
         value: MsgRegisterPairs.encode(value).finish()
       };
     },
-
     updatePriceTickSize(value: MsgUpdatePriceTickSize) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdatePriceTickSize",
         value: MsgUpdatePriceTickSize.encode(value).finish()
       };
     },
-
     updateQuantityTickSize(value: MsgUpdateQuantityTickSize) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize",
         value: MsgUpdateQuantityTickSize.encode(value).finish()
       };
     }
-
   },
   withTypeUrl: {
     placeOrders(value: MsgPlaceOrders) {
@@ -72,56 +64,48 @@ export const MessageComposer = {
         value
       };
     },
-
     cancelOrders(value: MsgCancelOrders) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgCancelOrders",
         value
       };
     },
-
     registerContract(value: MsgRegisterContract) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgRegisterContract",
         value
       };
     },
-
     contractDepositRent(value: MsgContractDepositRent) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgContractDepositRent",
         value
       };
     },
-
     unregisterContract(value: MsgUnregisterContract) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUnregisterContract",
         value
       };
     },
-
     registerPairs(value: MsgRegisterPairs) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgRegisterPairs",
         value
       };
     },
-
     updatePriceTickSize(value: MsgUpdatePriceTickSize) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdatePriceTickSize",
         value
       };
     },
-
     updateQuantityTickSize(value: MsgUpdateQuantityTickSize) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize",
         value
       };
     }
-
   },
   fromPartial: {
     placeOrders(value: MsgPlaceOrders) {
@@ -130,55 +114,47 @@ export const MessageComposer = {
         value: MsgPlaceOrders.fromPartial(value)
       };
     },
-
     cancelOrders(value: MsgCancelOrders) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgCancelOrders",
         value: MsgCancelOrders.fromPartial(value)
       };
     },
-
     registerContract(value: MsgRegisterContract) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgRegisterContract",
         value: MsgRegisterContract.fromPartial(value)
       };
     },
-
     contractDepositRent(value: MsgContractDepositRent) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgContractDepositRent",
         value: MsgContractDepositRent.fromPartial(value)
       };
     },
-
     unregisterContract(value: MsgUnregisterContract) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUnregisterContract",
         value: MsgUnregisterContract.fromPartial(value)
       };
     },
-
     registerPairs(value: MsgRegisterPairs) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgRegisterPairs",
         value: MsgRegisterPairs.fromPartial(value)
       };
     },
-
     updatePriceTickSize(value: MsgUpdatePriceTickSize) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdatePriceTickSize",
         value: MsgUpdatePriceTickSize.fromPartial(value)
       };
     },
-
     updateQuantityTickSize(value: MsgUpdateQuantityTickSize) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize",
         value: MsgUpdateQuantityTickSize.fromPartial(value)
       };
     }
-
   }
 };

@@ -1,6 +1,6 @@
 import { AssetMetadata, AssetMetadataSDKType } from "./asset_list";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /**
  * AddAssetMetadataProposal is a gov Content type for adding a new asset
  * to the dex module's asset list.

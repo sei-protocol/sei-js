@@ -1,7 +1,7 @@
 import { MsgStoreCode, MsgStoreCodeSDKType, MsgInstantiateContract, MsgInstantiateContractSDKType, MsgExecuteContract, MsgExecuteContractSDKType } from "./tx";
 import { Params, ParamsSDKType, CodeInfo, CodeInfoSDKType, ContractInfo, ContractInfoSDKType, Model, ModelSDKType } from "./types";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /** GenesisState - genesis state of x/wasm */
 export interface GenesisState {
     params: Params;
@@ -49,7 +49,6 @@ export interface CodeSDKType {
     code_id: Long;
     code_info: CodeInfoSDKType;
     code_bytes: Uint8Array;
-    /** Pinned to wasmvm cache */
     pinned: boolean;
 }
 /** Contract struct encompasses ContractAddress, ContractInfo, and ContractState */

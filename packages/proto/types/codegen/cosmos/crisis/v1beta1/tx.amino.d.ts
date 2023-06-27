@@ -1,6 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgVerifyInvariant } from "./tx";
-export interface AminoMsgVerifyInvariant extends AminoMsg {
+export interface MsgVerifyInvariantAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgVerifyInvariant";
     value: {
         sender: string;
@@ -11,7 +11,7 @@ export interface AminoMsgVerifyInvariant extends AminoMsg {
 export declare const AminoConverter: {
     "/cosmos.crisis.v1beta1.MsgVerifyInvariant": {
         aminoType: string;
-        toAmino: ({ sender, invariantModuleName, invariantRoute }: MsgVerifyInvariant) => AminoMsgVerifyInvariant["value"];
-        fromAmino: ({ sender, invariant_module_name, invariant_route }: AminoMsgVerifyInvariant["value"]) => MsgVerifyInvariant;
+        toAmino: ({ sender, invariantModuleName, invariantRoute }: MsgVerifyInvariant) => MsgVerifyInvariantAminoType["value"];
+        fromAmino: ({ sender, invariant_module_name, invariant_route }: MsgVerifyInvariantAminoType["value"]) => MsgVerifyInvariant;
     };
 };

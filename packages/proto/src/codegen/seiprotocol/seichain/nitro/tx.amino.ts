@@ -1,7 +1,7 @@
 import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "@osmonauts/helpers";
+import { Long } from "../../../helpers";
 import { MsgRecordTransactionData, MsgSubmitFraudChallenge } from "./tx";
-export interface AminoMsgRecordTransactionData extends AminoMsg {
+export interface MsgRecordTransactionDataAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.nitro.MsgRecordTransactionData";
   value: {
     sender: string;
@@ -10,7 +10,7 @@ export interface AminoMsgRecordTransactionData extends AminoMsg {
     txs: string[];
   };
 }
-export interface AminoMsgSubmitFraudChallenge extends AminoMsg {
+export interface MsgSubmitFraudChallengeAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge";
   value: {
     sender: string;
@@ -20,7 +20,7 @@ export interface AminoMsgSubmitFraudChallenge extends AminoMsg {
     merkleProof: {
       commitment: string;
       hash: string[];
-      direction: Long[];
+      direction: string[];
     };
     accountStates: {
       pubkey: string;
@@ -59,7 +59,7 @@ export const AminoConverter = {
       slot,
       stateRoot,
       txs
-    }: MsgRecordTransactionData): AminoMsgRecordTransactionData["value"] => {
+    }: MsgRecordTransactionData): MsgRecordTransactionDataAminoType["value"] => {
       return {
         sender,
         slot: slot.toString(),
@@ -72,7 +72,7 @@ export const AminoConverter = {
       slot,
       stateRoot,
       txs
-    }: AminoMsgRecordTransactionData["value"]): MsgRecordTransactionData => {
+    }: MsgRecordTransactionDataAminoType["value"]): MsgRecordTransactionData => {
       return {
         sender,
         slot: Long.fromString(slot),
@@ -92,7 +92,7 @@ export const AminoConverter = {
       accountStates,
       programs,
       sysvarAccounts
-    }: MsgSubmitFraudChallenge): AminoMsgSubmitFraudChallenge["value"] => {
+    }: MsgSubmitFraudChallenge): MsgSubmitFraudChallengeAminoType["value"] => {
       return {
         sender,
         startSlot: startSlot.toString(),
@@ -141,7 +141,7 @@ export const AminoConverter = {
       accountStates,
       programs,
       sysvarAccounts
-    }: AminoMsgSubmitFraudChallenge["value"]): MsgSubmitFraudChallenge => {
+    }: MsgSubmitFraudChallengeAminoType["value"]): MsgSubmitFraudChallenge => {
       return {
         sender,
         startSlot: Long.fromString(startSlot),

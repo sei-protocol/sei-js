@@ -1,7 +1,7 @@
 import { Params, ParamsSDKType } from "./params";
 import { Epoch, EpochSDKType } from "./epoch";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /** GenesisState defines the epoch module's genesis state. */
 export interface GenesisState {
     params: Params;

@@ -1,6 +1,6 @@
 import { CommitmentProof, CommitmentProofSDKType } from "../../../../confio/proofs";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../../helpers";
 /**
  * MerkleRoot defines a merkle root hash.
  * In the Cosmos SDK, the AppHash of a block header becomes the root.

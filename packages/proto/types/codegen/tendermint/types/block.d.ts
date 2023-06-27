@@ -1,7 +1,7 @@
 import { Header, HeaderSDKType, Data, DataSDKType, Commit, CommitSDKType } from "./types";
 import { EvidenceList, EvidenceListSDKType } from "./evidence";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../helpers";
 export interface Block {
     header: Header;
     data: Data;

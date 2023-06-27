@@ -1,6 +1,6 @@
 import { Metadata, MetadataSDKType } from "../../../cosmos/bank/v1beta1/bank";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 export interface AssetIBCInfo {
     sourceChannel: string;
     dstChannel: string;
@@ -21,7 +21,6 @@ export interface AssetMetadata {
 }
 export interface AssetMetadataSDKType {
     ibcInfo: AssetIBCInfoSDKType;
-    /** Ex: cw20, ics20, erc20 */
     type_asset: string;
     metadata: MetadataSDKType;
 }
