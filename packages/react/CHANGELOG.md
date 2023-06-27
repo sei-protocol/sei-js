@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+### Patch Changes
+
+- d410c48: Fixed css export issue during build so that css styles get included in the React components
+
 ## 2.0.0
 
 ### Major Changes
