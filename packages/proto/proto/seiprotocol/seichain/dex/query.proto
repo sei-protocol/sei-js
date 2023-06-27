@@ -7,14 +7,14 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "seiprotocol/seichain/dex/params.proto";
 import "seiprotocol/seichain/dex/long_book.proto";
 import "seiprotocol/seichain/dex/short_book.proto";
-import "seiprotocol/seichain/dex/settlement.proto";
-import "seiprotocol/seichain/dex/enums.proto";
 import "seiprotocol/seichain/dex/price.proto";
+import "seiprotocol/seichain/dex/contract.proto";
 import "seiprotocol/seichain/dex/twap.proto";
 import "seiprotocol/seichain/dex/asset_list.proto";
 import "seiprotocol/seichain/dex/pair.proto";
 import "seiprotocol/seichain/dex/order.proto";
 import "seiprotocol/seichain/dex/match_result.proto";
+import "seiprotocol/seichain/dex/enums.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/sei-protocol/sei-chain/x/dex/types";
@@ -76,6 +76,11 @@ service Query {
 		option (google.api.http).get = "/sei-protocol/seichain/dex/registered_pairs";
 	}
 
+	// Returns registered contract information
+	rpc GetRegisteredContract(QueryRegisteredContractRequest) returns (QueryRegisteredContractResponse) {
+		option (google.api.http).get = "/sei-protocol/seichain/dex/registered_contract/{contractAddr}";
+	}
+
 	rpc GetOrders(QueryGetOrdersRequest) returns (QueryGetOrdersResponse) {
 		option (google.api.http).get = "/sei-protocol/seichain/dex/get_orders/{contractAddr}/{account}";
 	}
@@ -91,10 +96,12 @@ service Query {
 	rpc GetMarketSummary(QueryGetMarketSummaryRequest) returns (QueryGetMarketSummaryResponse) {
 		option (google.api.http).get = "/sei-protocol/seichain/dex/get_market_summary/{contractAddr}/{priceDenom}/{assetDenom}/{lookbackInSeconds}";
 	}
-	
+
 	rpc GetOrderSimulation(QueryOrderSimulationRequest) returns (QueryOrderSimulationResponse) {}
 
 	rpc GetMatchResult(QueryGetMatchResultRequest) returns (QueryGetMatchResultResponse) {}
+
+	rpc GetOrderCount(QueryGetOrderCountRequest) returns (QueryGetOrderCountResponse) {}
 
 // this line is used by starport scaffolding # 2
 }
@@ -231,6 +238,16 @@ message QueryRegisteredPairsResponse {
 	repeated Pair pairs = 1 [(gogoproto.nullable) = false];
 }
 
+message QueryRegisteredContractRequest {
+	string contractAddr = 1 [
+		(gogoproto.jsontag) = "contract_address"
+	];
+}
+
+message QueryRegisteredContractResponse {
+	ContractInfoV2 contract_info = 1;
+}
+
 message QueryGetOrdersRequest{
 	string contractAddr = 1 [
 		(gogoproto.jsontag) = "contract_address"
@@ -354,6 +371,31 @@ message QueryGetMatchResultRequest {
 message QueryGetMatchResultResponse {
 	MatchResult result = 1 [
 		(gogoproto.jsontag) = "result"
+	];
+}
+
+message QueryGetOrderCountRequest {
+	string contractAddr = 1 [
+		(gogoproto.jsontag) = "contract_address"
+	];
+	string priceDenom = 2 [
+		(gogoproto.jsontag) = "price_denom"
+	];
+	string assetDenom = 3 [
+		(gogoproto.jsontag) = "asset_denom"
+	];
+	string price = 4 [
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+        (gogoproto.jsontag)    = "price"
+    ];
+	PositionDirection positionDirection = 5 [
+        (gogoproto.jsontag) = "position_direction"
+    ];
+}
+
+message QueryGetOrderCountResponse {
+	uint64 count = 1 [
+		(gogoproto.jsontag) = "count"
 	];
 }
 // this line is used by starport scaffolding # 3

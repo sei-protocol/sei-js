@@ -63,7 +63,6 @@ export function positionEffectToJSON(object: PositionEffect): string {
 export enum OrderType {
   LIMIT = 0,
   MARKET = 1,
-  LIQUIDATION = 2,
   /** FOKMARKET - fill-or-kill market order */
   FOKMARKET = 3,
   /** FOKMARKETBYVALUE - fill-or-kill market by value order */
@@ -81,9 +80,6 @@ export function orderTypeFromJSON(object: any): OrderType {
     case 1:
     case "MARKET":
       return OrderType.MARKET;
-    case 2:
-    case "LIQUIDATION":
-      return OrderType.LIQUIDATION;
     case 3:
     case "FOKMARKET":
       return OrderType.FOKMARKET;
@@ -108,8 +104,6 @@ export function orderTypeToJSON(object: OrderType): string {
       return "LIMIT";
     case OrderType.MARKET:
       return "MARKET";
-    case OrderType.LIQUIDATION:
-      return "LIQUIDATION";
     case OrderType.FOKMARKET:
       return "FOKMARKET";
     case OrderType.FOKMARKETBYVALUE:

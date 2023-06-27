@@ -2,7 +2,7 @@ syntax = "proto3";
 package seiprotocol.seichain.dex;
 
 option go_package = "github.com/sei-protocol/sei-chain/x/dex/types";
-import "seiprotocol/seichain/dex/pair.proto"; 
+import "seiprotocol/seichain/dex/pair.proto";
 import "gogoproto/gogo.proto";
 
 message TickSize {

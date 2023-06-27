@@ -29,20 +29,28 @@ export interface QueryMinterRequestSDKType {}
  * Query/Minter RPC method.
  */
 export interface QueryMinterResponse {
-  lastMintAmount: string;
+  startDate: string;
+  endDate: string;
+  denom: string;
+  totalMintAmount: Long;
+  remainingMintAmount: Long;
+  lastMintAmount: Long;
   lastMintDate: string;
   lastMintHeight: Long;
-  denom: string;
 }
 /**
  * QueryMinterResponse is the response type for the
  * Query/Minter RPC method.
  */
 export interface QueryMinterResponseSDKType {
-  last_mint_amount: string;
+  start_date: string;
+  end_date: string;
+  denom: string;
+  total_mint_amount: Long;
+  remaining_mint_amount: Long;
+  last_mint_amount: Long;
   last_mint_date: string;
   last_mint_height: Long;
-  denom: string;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -133,25 +141,41 @@ export const QueryMinterRequest = {
 };
 function createBaseQueryMinterResponse(): QueryMinterResponse {
   return {
-    lastMintAmount: "",
+    startDate: "",
+    endDate: "",
+    denom: "",
+    totalMintAmount: Long.UZERO,
+    remainingMintAmount: Long.UZERO,
+    lastMintAmount: Long.UZERO,
     lastMintDate: "",
-    lastMintHeight: Long.ZERO,
-    denom: ""
+    lastMintHeight: Long.UZERO
   };
 }
 export const QueryMinterResponse = {
   encode(message: QueryMinterResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.lastMintAmount !== "") {
-      writer.uint32(10).string(message.lastMintAmount);
+    if (message.startDate !== "") {
+      writer.uint32(10).string(message.startDate);
     }
-    if (message.lastMintDate !== "") {
-      writer.uint32(18).string(message.lastMintDate);
-    }
-    if (!message.lastMintHeight.isZero()) {
-      writer.uint32(24).int64(message.lastMintHeight);
+    if (message.endDate !== "") {
+      writer.uint32(18).string(message.endDate);
     }
     if (message.denom !== "") {
-      writer.uint32(34).string(message.denom);
+      writer.uint32(26).string(message.denom);
+    }
+    if (!message.totalMintAmount.isZero()) {
+      writer.uint32(32).uint64(message.totalMintAmount);
+    }
+    if (!message.remainingMintAmount.isZero()) {
+      writer.uint32(40).uint64(message.remainingMintAmount);
+    }
+    if (!message.lastMintAmount.isZero()) {
+      writer.uint32(48).uint64(message.lastMintAmount);
+    }
+    if (message.lastMintDate !== "") {
+      writer.uint32(58).string(message.lastMintDate);
+    }
+    if (!message.lastMintHeight.isZero()) {
+      writer.uint32(64).uint64(message.lastMintHeight);
     }
     return writer;
   },
@@ -163,16 +187,28 @@ export const QueryMinterResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.lastMintAmount = reader.string();
+          message.startDate = reader.string();
           break;
         case 2:
-          message.lastMintDate = reader.string();
+          message.endDate = reader.string();
           break;
         case 3:
-          message.lastMintHeight = (reader.int64() as Long);
+          message.denom = reader.string();
           break;
         case 4:
-          message.denom = reader.string();
+          message.totalMintAmount = (reader.uint64() as Long);
+          break;
+        case 5:
+          message.remainingMintAmount = (reader.uint64() as Long);
+          break;
+        case 6:
+          message.lastMintAmount = (reader.uint64() as Long);
+          break;
+        case 7:
+          message.lastMintDate = reader.string();
+          break;
+        case 8:
+          message.lastMintHeight = (reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -183,10 +219,14 @@ export const QueryMinterResponse = {
   },
   fromPartial(object: DeepPartial<QueryMinterResponse>): QueryMinterResponse {
     const message = createBaseQueryMinterResponse();
-    message.lastMintAmount = object.lastMintAmount ?? "";
-    message.lastMintDate = object.lastMintDate ?? "";
-    message.lastMintHeight = object.lastMintHeight !== undefined && object.lastMintHeight !== null ? Long.fromValue(object.lastMintHeight) : Long.ZERO;
+    message.startDate = object.startDate ?? "";
+    message.endDate = object.endDate ?? "";
     message.denom = object.denom ?? "";
+    message.totalMintAmount = object.totalMintAmount !== undefined && object.totalMintAmount !== null ? Long.fromValue(object.totalMintAmount) : Long.UZERO;
+    message.remainingMintAmount = object.remainingMintAmount !== undefined && object.remainingMintAmount !== null ? Long.fromValue(object.remainingMintAmount) : Long.UZERO;
+    message.lastMintAmount = object.lastMintAmount !== undefined && object.lastMintAmount !== null ? Long.fromValue(object.lastMintAmount) : Long.UZERO;
+    message.lastMintDate = object.lastMintDate ?? "";
+    message.lastMintHeight = object.lastMintHeight !== undefined && object.lastMintHeight !== null ? Long.fromValue(object.lastMintHeight) : Long.UZERO;
     return message;
   }
 };

@@ -26,6 +26,7 @@ export interface ContractState {
     triggeredOrdersList: Order[];
     pairList: Pair[];
     priceList: ContractPairPrices[];
+    nextOrderId: Long;
 }
 export interface ContractStateSDKType {
     contractInfo: ContractInfoV2SDKType;
@@ -34,6 +35,7 @@ export interface ContractStateSDKType {
     triggeredOrdersList: OrderSDKType[];
     pairList: PairSDKType[];
     priceList: ContractPairPricesSDKType[];
+    nextOrderId: Long;
 }
 export interface ContractPairPrices {
     pricePair: Pair;

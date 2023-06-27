@@ -1,5 +1,6 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
 import { Order, OrderSDKType } from "./order";
+import { PositionDirection } from "./enums";
 import { Params, ParamsSDKType } from "./params";
 import { LongBook, LongBookSDKType } from "./long_book";
 import { ShortBook, ShortBookSDKType } from "./short_book";
@@ -7,6 +8,7 @@ import { Price, PriceSDKType, PriceCandlestick, PriceCandlestickSDKType } from "
 import { Twap, TwapSDKType } from "./twap";
 import { AssetMetadata, AssetMetadataSDKType } from "./asset_list";
 import { Pair, PairSDKType } from "./pair";
+import { ContractInfoV2, ContractInfoV2SDKType } from "./contract";
 import { MatchResult, MatchResultSDKType } from "./match_result";
 import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
@@ -201,6 +203,18 @@ export interface QueryRegisteredPairsResponse {
 export interface QueryRegisteredPairsResponseSDKType {
     pairs: PairSDKType[];
 }
+export interface QueryRegisteredContractRequest {
+    contractAddr: string;
+}
+export interface QueryRegisteredContractRequestSDKType {
+    contractAddr: string;
+}
+export interface QueryRegisteredContractResponse {
+    contractInfo: ContractInfoV2;
+}
+export interface QueryRegisteredContractResponseSDKType {
+    contract_info: ContractInfoV2SDKType;
+}
 export interface QueryGetOrdersRequest {
     contractAddr: string;
     account: string;
@@ -304,6 +318,26 @@ export interface QueryGetMatchResultResponse {
 }
 export interface QueryGetMatchResultResponseSDKType {
     result: MatchResultSDKType;
+}
+export interface QueryGetOrderCountRequest {
+    contractAddr: string;
+    priceDenom: string;
+    assetDenom: string;
+    price: string;
+    positionDirection: PositionDirection;
+}
+export interface QueryGetOrderCountRequestSDKType {
+    contractAddr: string;
+    priceDenom: string;
+    assetDenom: string;
+    price: string;
+    positionDirection: PositionDirection;
+}
+export interface QueryGetOrderCountResponse {
+    count: Long;
+}
+export interface QueryGetOrderCountResponseSDKType {
+    count: Long;
 }
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: _m0.Writer): _m0.Writer;
@@ -425,6 +459,16 @@ export declare const QueryRegisteredPairsResponse: {
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredPairsResponse;
     fromPartial(object: DeepPartial<QueryRegisteredPairsResponse>): QueryRegisteredPairsResponse;
 };
+export declare const QueryRegisteredContractRequest: {
+    encode(message: QueryRegisteredContractRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredContractRequest;
+    fromPartial(object: DeepPartial<QueryRegisteredContractRequest>): QueryRegisteredContractRequest;
+};
+export declare const QueryRegisteredContractResponse: {
+    encode(message: QueryRegisteredContractResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredContractResponse;
+    fromPartial(object: DeepPartial<QueryRegisteredContractResponse>): QueryRegisteredContractResponse;
+};
 export declare const QueryGetOrdersRequest: {
     encode(message: QueryGetOrdersRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrdersRequest;
@@ -484,4 +528,14 @@ export declare const QueryGetMatchResultResponse: {
     encode(message: QueryGetMatchResultResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetMatchResultResponse;
     fromPartial(object: DeepPartial<QueryGetMatchResultResponse>): QueryGetMatchResultResponse;
+};
+export declare const QueryGetOrderCountRequest: {
+    encode(message: QueryGetOrderCountRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderCountRequest;
+    fromPartial(object: DeepPartial<QueryGetOrderCountRequest>): QueryGetOrderCountRequest;
+};
+export declare const QueryGetOrderCountResponse: {
+    encode(message: QueryGetOrderCountResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderCountResponse;
+    fromPartial(object: DeepPartial<QueryGetOrderCountResponse>): QueryGetOrderCountResponse;
 };

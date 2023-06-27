@@ -1,5 +1,6 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
 import { Order, OrderSDKType } from "./order";
+import { PositionDirection } from "./enums";
 import { Params, ParamsSDKType } from "./params";
 import { LongBook, LongBookSDKType } from "./long_book";
 import { ShortBook, ShortBookSDKType } from "./short_book";
@@ -7,6 +8,7 @@ import { Price, PriceSDKType, PriceCandlestick, PriceCandlestickSDKType } from "
 import { Twap, TwapSDKType } from "./twap";
 import { AssetMetadata, AssetMetadataSDKType } from "./asset_list";
 import { Pair, PairSDKType } from "./pair";
+import { ContractInfoV2, ContractInfoV2SDKType } from "./contract";
 import { MatchResult, MatchResultSDKType } from "./match_result";
 import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
@@ -197,6 +199,18 @@ export interface QueryRegisteredPairsResponse {
 export interface QueryRegisteredPairsResponseSDKType {
   pairs: PairSDKType[];
 }
+export interface QueryRegisteredContractRequest {
+  contractAddr: string;
+}
+export interface QueryRegisteredContractRequestSDKType {
+  contractAddr: string;
+}
+export interface QueryRegisteredContractResponse {
+  contractInfo: ContractInfoV2;
+}
+export interface QueryRegisteredContractResponseSDKType {
+  contract_info: ContractInfoV2SDKType;
+}
 export interface QueryGetOrdersRequest {
   contractAddr: string;
   account: string;
@@ -300,6 +314,26 @@ export interface QueryGetMatchResultResponse {
 }
 export interface QueryGetMatchResultResponseSDKType {
   result: MatchResultSDKType;
+}
+export interface QueryGetOrderCountRequest {
+  contractAddr: string;
+  priceDenom: string;
+  assetDenom: string;
+  price: string;
+  positionDirection: PositionDirection;
+}
+export interface QueryGetOrderCountRequestSDKType {
+  contractAddr: string;
+  priceDenom: string;
+  assetDenom: string;
+  price: string;
+  positionDirection: PositionDirection;
+}
+export interface QueryGetOrderCountResponse {
+  count: Long;
+}
+export interface QueryGetOrderCountResponseSDKType {
+  count: Long;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -1307,6 +1341,76 @@ export const QueryRegisteredPairsResponse = {
     return message;
   }
 };
+function createBaseQueryRegisteredContractRequest(): QueryRegisteredContractRequest {
+  return {
+    contractAddr: ""
+  };
+}
+export const QueryRegisteredContractRequest = {
+  encode(message: QueryRegisteredContractRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.contractAddr !== "") {
+      writer.uint32(10).string(message.contractAddr);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredContractRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryRegisteredContractRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.contractAddr = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: DeepPartial<QueryRegisteredContractRequest>): QueryRegisteredContractRequest {
+    const message = createBaseQueryRegisteredContractRequest();
+    message.contractAddr = object.contractAddr ?? "";
+    return message;
+  }
+};
+function createBaseQueryRegisteredContractResponse(): QueryRegisteredContractResponse {
+  return {
+    contractInfo: ContractInfoV2.fromPartial({})
+  };
+}
+export const QueryRegisteredContractResponse = {
+  encode(message: QueryRegisteredContractResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.contractInfo !== undefined) {
+      ContractInfoV2.encode(message.contractInfo, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredContractResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryRegisteredContractResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.contractInfo = ContractInfoV2.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: DeepPartial<QueryRegisteredContractResponse>): QueryRegisteredContractResponse {
+    const message = createBaseQueryRegisteredContractResponse();
+    message.contractInfo = object.contractInfo !== undefined && object.contractInfo !== null ? ContractInfoV2.fromPartial(object.contractInfo) : undefined;
+    return message;
+  }
+};
 function createBaseQueryGetOrdersRequest(): QueryGetOrdersRequest {
   return {
     contractAddr: "",
@@ -1852,6 +1956,108 @@ export const QueryGetMatchResultResponse = {
   fromPartial(object: DeepPartial<QueryGetMatchResultResponse>): QueryGetMatchResultResponse {
     const message = createBaseQueryGetMatchResultResponse();
     message.result = object.result !== undefined && object.result !== null ? MatchResult.fromPartial(object.result) : undefined;
+    return message;
+  }
+};
+function createBaseQueryGetOrderCountRequest(): QueryGetOrderCountRequest {
+  return {
+    contractAddr: "",
+    priceDenom: "",
+    assetDenom: "",
+    price: "",
+    positionDirection: 0
+  };
+}
+export const QueryGetOrderCountRequest = {
+  encode(message: QueryGetOrderCountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.contractAddr !== "") {
+      writer.uint32(10).string(message.contractAddr);
+    }
+    if (message.priceDenom !== "") {
+      writer.uint32(18).string(message.priceDenom);
+    }
+    if (message.assetDenom !== "") {
+      writer.uint32(26).string(message.assetDenom);
+    }
+    if (message.price !== "") {
+      writer.uint32(34).string(message.price);
+    }
+    if (message.positionDirection !== 0) {
+      writer.uint32(40).int32(message.positionDirection);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderCountRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetOrderCountRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.contractAddr = reader.string();
+          break;
+        case 2:
+          message.priceDenom = reader.string();
+          break;
+        case 3:
+          message.assetDenom = reader.string();
+          break;
+        case 4:
+          message.price = reader.string();
+          break;
+        case 5:
+          message.positionDirection = (reader.int32() as any);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: DeepPartial<QueryGetOrderCountRequest>): QueryGetOrderCountRequest {
+    const message = createBaseQueryGetOrderCountRequest();
+    message.contractAddr = object.contractAddr ?? "";
+    message.priceDenom = object.priceDenom ?? "";
+    message.assetDenom = object.assetDenom ?? "";
+    message.price = object.price ?? "";
+    message.positionDirection = object.positionDirection ?? 0;
+    return message;
+  }
+};
+function createBaseQueryGetOrderCountResponse(): QueryGetOrderCountResponse {
+  return {
+    count: Long.UZERO
+  };
+}
+export const QueryGetOrderCountResponse = {
+  encode(message: QueryGetOrderCountResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (!message.count.isZero()) {
+      writer.uint32(8).uint64(message.count);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderCountResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetOrderCountResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.count = (reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: DeepPartial<QueryGetOrderCountResponse>): QueryGetOrderCountResponse {
+    const message = createBaseQueryGetOrderCountResponse();
+    message.count = object.count !== undefined && object.count !== null ? Long.fromValue(object.count) : Long.UZERO;
     return message;
   }
 };

@@ -1,7 +1,7 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../../../helpers";
 import { orderStatusFromJSON, orderTypeFromJSON, positionDirectionFromJSON, cancellationInitiatorFromJSON } from "./enums";
-import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize } from "./tx";
+import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize, MsgUnsuspendContract } from "./tx";
 export interface MsgPlaceOrdersAminoType extends AminoMsg {
   type: "/seiprotocol.seichain.dex.MsgPlaceOrders";
   value: {
@@ -64,6 +64,8 @@ export interface MsgRegisterContractAminoType extends AminoMsg {
       numIncomingDependencies: string;
       creator: string;
       rentBalance: string;
+      suspended: boolean;
+      suspensionReason: string;
     };
   };
 }
@@ -127,6 +129,13 @@ export interface MsgUpdateQuantityTickSizeAminoType extends AminoMsg {
       ticksize: string;
       contractAddr: string;
     }[];
+  };
+}
+export interface MsgUnsuspendContractAminoType extends AminoMsg {
+  type: "/seiprotocol.seichain.dex.MsgUnsuspendContract";
+  value: {
+    creator: string;
+    contractAddr: string;
   };
 }
 export const AminoConverter = {
@@ -260,7 +269,9 @@ export const AminoConverter = {
           })),
           numIncomingDependencies: contract.numIncomingDependencies.toString(),
           creator: contract.creator,
-          rentBalance: contract.rentBalance.toString()
+          rentBalance: contract.rentBalance.toString(),
+          suspended: contract.suspended,
+          suspensionReason: contract.suspensionReason
         }
       };
     },
@@ -282,7 +293,9 @@ export const AminoConverter = {
           })),
           numIncomingDependencies: Long.fromString(contract.numIncomingDependencies),
           creator: contract.creator,
-          rentBalance: Long.fromString(contract.rentBalance)
+          rentBalance: Long.fromString(contract.rentBalance),
+          suspended: contract.suspended,
+          suspensionReason: contract.suspensionReason
         }
       };
     }
@@ -445,6 +458,27 @@ export const AminoConverter = {
           ticksize: el0.ticksize,
           contractAddr: el0.contractAddr
         }))
+      };
+    }
+  },
+  "/seiprotocol.seichain.dex.MsgUnsuspendContract": {
+    aminoType: "/seiprotocol.seichain.dex.MsgUnsuspendContract",
+    toAmino: ({
+      creator,
+      contractAddr
+    }: MsgUnsuspendContract): MsgUnsuspendContractAminoType["value"] => {
+      return {
+        creator,
+        contractAddr
+      };
+    },
+    fromAmino: ({
+      creator,
+      contractAddr
+    }: MsgUnsuspendContractAminoType["value"]): MsgUnsuspendContract => {
+      return {
+        creator,
+        contractAddr
       };
     }
   }

@@ -5,11 +5,9 @@ import "gogoproto/gogo.proto";
 import "seiprotocol/seichain/dex/params.proto";
 import "seiprotocol/seichain/dex/long_book.proto";
 import "seiprotocol/seichain/dex/short_book.proto";
-import "seiprotocol/seichain/dex/tick_size.proto";
 import "seiprotocol/seichain/dex/order.proto";
 import "seiprotocol/seichain/dex/contract.proto";
 import "seiprotocol/seichain/dex/pair.proto";
-import "seiprotocol/seichain/dex/match_result.proto";
 import "seiprotocol/seichain/dex/price.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
@@ -30,6 +28,7 @@ message ContractState {
   repeated Order triggeredOrdersList = 4 [(gogoproto.nullable) = false];
   repeated Pair pairList = 5 [(gogoproto.nullable) = false];
   repeated ContractPairPrices priceList = 6 [(gogoproto.nullable) = false];
+  uint64 nextOrderId = 7;
 }
 
 message ContractPairPrices {

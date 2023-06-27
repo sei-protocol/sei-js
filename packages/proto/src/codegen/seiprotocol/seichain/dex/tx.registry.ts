@@ -1,6 +1,6 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/seiprotocol.seichain.dex.MsgPlaceOrders", MsgPlaceOrders], ["/seiprotocol.seichain.dex.MsgCancelOrders", MsgCancelOrders], ["/seiprotocol.seichain.dex.MsgRegisterContract", MsgRegisterContract], ["/seiprotocol.seichain.dex.MsgContractDepositRent", MsgContractDepositRent], ["/seiprotocol.seichain.dex.MsgUnregisterContract", MsgUnregisterContract], ["/seiprotocol.seichain.dex.MsgRegisterPairs", MsgRegisterPairs], ["/seiprotocol.seichain.dex.MsgUpdatePriceTickSize", MsgUpdatePriceTickSize], ["/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize", MsgUpdateQuantityTickSize]];
+import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize, MsgUnsuspendContract } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/seiprotocol.seichain.dex.MsgPlaceOrders", MsgPlaceOrders], ["/seiprotocol.seichain.dex.MsgCancelOrders", MsgCancelOrders], ["/seiprotocol.seichain.dex.MsgRegisterContract", MsgRegisterContract], ["/seiprotocol.seichain.dex.MsgContractDepositRent", MsgContractDepositRent], ["/seiprotocol.seichain.dex.MsgUnregisterContract", MsgUnregisterContract], ["/seiprotocol.seichain.dex.MsgRegisterPairs", MsgRegisterPairs], ["/seiprotocol.seichain.dex.MsgUpdatePriceTickSize", MsgUpdatePriceTickSize], ["/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize", MsgUpdateQuantityTickSize], ["/seiprotocol.seichain.dex.MsgUnsuspendContract", MsgUnsuspendContract]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -55,6 +55,12 @@ export const MessageComposer = {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize",
         value: MsgUpdateQuantityTickSize.encode(value).finish()
       };
+    },
+    unsuspendContract(value: MsgUnsuspendContract) {
+      return {
+        typeUrl: "/seiprotocol.seichain.dex.MsgUnsuspendContract",
+        value: MsgUnsuspendContract.encode(value).finish()
+      };
     }
   },
   withTypeUrl: {
@@ -103,6 +109,12 @@ export const MessageComposer = {
     updateQuantityTickSize(value: MsgUpdateQuantityTickSize) {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize",
+        value
+      };
+    },
+    unsuspendContract(value: MsgUnsuspendContract) {
+      return {
+        typeUrl: "/seiprotocol.seichain.dex.MsgUnsuspendContract",
         value
       };
     }
@@ -154,6 +166,12 @@ export const MessageComposer = {
       return {
         typeUrl: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize",
         value: MsgUpdateQuantityTickSize.fromPartial(value)
+      };
+    },
+    unsuspendContract(value: MsgUnsuspendContract) {
+      return {
+        typeUrl: "/seiprotocol.seichain.dex.MsgUnsuspendContract",
+        value: MsgUnsuspendContract.fromPartial(value)
       };
     }
   }

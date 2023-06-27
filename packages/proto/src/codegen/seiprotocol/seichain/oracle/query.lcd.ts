@@ -1,5 +1,5 @@
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryExchangeRateRequest, QueryExchangeRateResponseSDKType, QueryExchangeRatesRequest, QueryExchangeRatesResponseSDKType, QueryActivesRequest, QueryActivesResponseSDKType, QueryVoteTargetsRequest, QueryVoteTargetsResponseSDKType, QueryPriceSnapshotHistoryRequest, QueryPriceSnapshotHistoryResponseSDKType, QueryTwapsRequest, QueryTwapsResponseSDKType, QueryFeederDelegationRequest, QueryFeederDelegationResponseSDKType, QueryVotePenaltyCounterRequest, QueryVotePenaltyCounterResponseSDKType, QueryAggregateVoteRequest, QueryAggregateVoteResponseSDKType, QueryAggregateVotesRequest, QueryAggregateVotesResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType } from "./query";
+import { QueryExchangeRateRequest, QueryExchangeRateResponseSDKType, QueryExchangeRatesRequest, QueryExchangeRatesResponseSDKType, QueryActivesRequest, QueryActivesResponseSDKType, QueryVoteTargetsRequest, QueryVoteTargetsResponseSDKType, QueryPriceSnapshotHistoryRequest, QueryPriceSnapshotHistoryResponseSDKType, QueryTwapsRequest, QueryTwapsResponseSDKType, QueryFeederDelegationRequest, QueryFeederDelegationResponseSDKType, QueryVotePenaltyCounterRequest, QueryVotePenaltyCounterResponseSDKType, QuerySlashWindowRequest, QuerySlashWindowResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -16,8 +16,7 @@ export class LCDQueryClient {
     this.twaps = this.twaps.bind(this);
     this.feederDelegation = this.feederDelegation.bind(this);
     this.votePenaltyCounter = this.votePenaltyCounter.bind(this);
-    this.aggregateVote = this.aggregateVote.bind(this);
-    this.aggregateVotes = this.aggregateVotes.bind(this);
+    this.slashWindow = this.slashWindow.bind(this);
     this.params = this.params.bind(this);
   }
   /* ExchangeRate returns exchange rate of a denom */
@@ -47,14 +46,8 @@ export class LCDQueryClient {
   }
   /* Twaps */
   async twaps(params: QueryTwapsRequest): Promise<QueryTwapsResponseSDKType> {
-    const options: any = {
-      params: {}
-    };
-    if (typeof params?.lookbackSeconds !== "undefined") {
-      options.params.lookback_seconds = params.lookbackSeconds;
-    }
-    const endpoint = `sei-protocol/sei-chain/oracle/denoms/twaps`;
-    return await this.req.get<QueryTwapsResponseSDKType>(endpoint, options);
+    const endpoint = `sei-protocol/sei-chain/oracle/denoms/twaps/${params.lookbackSeconds}`;
+    return await this.req.get<QueryTwapsResponseSDKType>(endpoint);
   }
   /* FeederDelegation returns feeder delegation of a validator */
   async feederDelegation(params: QueryFeederDelegationRequest): Promise<QueryFeederDelegationResponseSDKType> {
@@ -66,15 +59,10 @@ export class LCDQueryClient {
     const endpoint = `sei-protocol/sei-chain/oracle/validators/${params.validatorAddr}/vote_penalty_counter`;
     return await this.req.get<QueryVotePenaltyCounterResponseSDKType>(endpoint);
   }
-  /* AggregateVote returns an aggregate vote of a validator */
-  async aggregateVote(params: QueryAggregateVoteRequest): Promise<QueryAggregateVoteResponseSDKType> {
-    const endpoint = `sei-protocol/sei-chain/oracle/validators/${params.validatorAddr}/aggregate_vote`;
-    return await this.req.get<QueryAggregateVoteResponseSDKType>(endpoint);
-  }
-  /* AggregateVotes returns aggregate votes of all validators */
-  async aggregateVotes(_params: QueryAggregateVotesRequest = {}): Promise<QueryAggregateVotesResponseSDKType> {
-    const endpoint = `sei-protocol/sei-chain/oracle/validators/aggregate_votes`;
-    return await this.req.get<QueryAggregateVotesResponseSDKType>(endpoint);
+  /* SlashWindow returns slash window information */
+  async slashWindow(_params: QuerySlashWindowRequest = {}): Promise<QuerySlashWindowResponseSDKType> {
+    const endpoint = `sei-protocol/sei-chain/oracle/slash_window`;
+    return await this.req.get<QuerySlashWindowResponseSDKType>(endpoint);
   }
   /* Params queries all parameters. */
   async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {

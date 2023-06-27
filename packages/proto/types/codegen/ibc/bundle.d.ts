@@ -22,15 +22,15 @@ import * as _128 from "./lightclients/localhost/v1/localhost";
 import * as _129 from "./lightclients/solomachine/v1/solomachine";
 import * as _130 from "./lightclients/solomachine/v2/solomachine";
 import * as _131 from "./lightclients/tendermint/v1/tendermint";
-import * as _241 from "./applications/transfer/v1/query.lcd";
-import * as _242 from "./core/channel/v1/query.lcd";
-import * as _243 from "./core/client/v1/query.lcd";
-import * as _244 from "./core/connection/v1/query.lcd";
+import * as _236 from "./applications/transfer/v1/query.lcd";
+import * as _237 from "./core/channel/v1/query.lcd";
+import * as _238 from "./core/client/v1/query.lcd";
+import * as _239 from "./core/connection/v1/query.lcd";
 export declare namespace ibc {
     namespace applications {
         namespace transfer {
             const v1: {
-                LCDQueryClient: typeof _241.LCDQueryClient;
+                LCDQueryClient: typeof _236.LCDQueryClient;
                 registry: readonly [string, import("@cosmjs/proto-signing").GeneratedType][];
                 load: (protoRegistry: import("@cosmjs/proto-signing").Registry) => void;
                 MessageComposer: {
@@ -150,7 +150,7 @@ export declare namespace ibc {
     namespace core {
         namespace channel {
             const v1: {
-                LCDQueryClient: typeof _242.LCDQueryClient;
+                LCDQueryClient: typeof _237.LCDQueryClient;
                 registry: readonly [string, import("@cosmjs/proto-signing").GeneratedType][];
                 load: (protoRegistry: import("@cosmjs/proto-signing").Registry) => void;
                 MessageComposer: {
@@ -843,7 +843,7 @@ export declare namespace ibc {
         }
         namespace client {
             const v1: {
-                LCDQueryClient: typeof _243.LCDQueryClient;
+                LCDQueryClient: typeof _238.LCDQueryClient;
                 registry: readonly [string, import("@cosmjs/proto-signing").GeneratedType][];
                 load: (protoRegistry: import("@cosmjs/proto-signing").Registry) => void;
                 MessageComposer: {
@@ -1196,7 +1196,7 @@ export declare namespace ibc {
         }
         namespace connection {
             const v1: {
-                LCDQueryClient: typeof _244.LCDQueryClient;
+                LCDQueryClient: typeof _239.LCDQueryClient;
                 registry: readonly [string, import("@cosmjs/proto-signing").GeneratedType][];
                 load: (protoRegistry: import("@cosmjs/proto-signing").Registry) => void;
                 MessageComposer: {
@@ -1835,18 +1835,18 @@ export declare namespace ibc {
             ibc: {
                 applications: {
                     transfer: {
-                        v1: _241.LCDQueryClient;
+                        v1: _236.LCDQueryClient;
                     };
                 };
                 core: {
                     channel: {
-                        v1: _242.LCDQueryClient;
+                        v1: _237.LCDQueryClient;
                     };
                     client: {
-                        v1: _243.LCDQueryClient;
+                        v1: _238.LCDQueryClient;
                     };
                     connection: {
-                        v1: _244.LCDQueryClient;
+                        v1: _239.LCDQueryClient;
                     };
                 };
             };

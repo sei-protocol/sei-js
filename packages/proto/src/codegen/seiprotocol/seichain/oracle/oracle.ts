@@ -1,12 +1,15 @@
 import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 export interface Params {
+  /** The number of blocks per voting window, at the end of the vote period, the oracle votes are assessed and exchange rates are calculated. If the vote period is 1 this is equivalent to having oracle votes assessed and exchange rates calculated in each block. */
   votePeriod: Long;
   voteThreshold: string;
   rewardBand: string;
   whitelist: Denom[];
   slashFraction: string;
+  /** The interval in blocks at which the oracle module will assess validator penalty counters, and penalize validators with too poor performance. */
   slashWindow: Long;
+  /** The minimum percentage of voting windows for which a validator must have `success`es in order to not be penalized at the end of the slash window. */
   minValidPerWindow: string;
   lookbackDuration: Long;
 }
@@ -79,10 +82,12 @@ export interface OracleTwapSDKType {
 export interface VotePenaltyCounter {
   missCount: Long;
   abstainCount: Long;
+  successCount: Long;
 }
 export interface VotePenaltyCounterSDKType {
   miss_count: Long;
   abstain_count: Long;
+  success_count: Long;
 }
 function createBaseParams(): Params {
   return {
@@ -479,7 +484,8 @@ export const OracleTwap = {
 function createBaseVotePenaltyCounter(): VotePenaltyCounter {
   return {
     missCount: Long.UZERO,
-    abstainCount: Long.UZERO
+    abstainCount: Long.UZERO,
+    successCount: Long.UZERO
   };
 }
 export const VotePenaltyCounter = {
@@ -489,6 +495,9 @@ export const VotePenaltyCounter = {
     }
     if (!message.abstainCount.isZero()) {
       writer.uint32(16).uint64(message.abstainCount);
+    }
+    if (!message.successCount.isZero()) {
+      writer.uint32(24).uint64(message.successCount);
     }
     return writer;
   },
@@ -505,6 +514,9 @@ export const VotePenaltyCounter = {
         case 2:
           message.abstainCount = (reader.uint64() as Long);
           break;
+        case 3:
+          message.successCount = (reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -516,6 +528,7 @@ export const VotePenaltyCounter = {
     const message = createBaseVotePenaltyCounter();
     message.missCount = object.missCount !== undefined && object.missCount !== null ? Long.fromValue(object.missCount) : Long.UZERO;
     message.abstainCount = object.abstainCount !== undefined && object.abstainCount !== null ? Long.fromValue(object.abstainCount) : Long.UZERO;
+    message.successCount = object.successCount !== undefined && object.successCount !== null ? Long.fromValue(object.successCount) : Long.UZERO;
     return message;
   }
 };

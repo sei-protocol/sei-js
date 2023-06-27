@@ -8,6 +8,14 @@ export interface Params {
   endBlockGasLimit: Long;
   defaultGasPerOrder: Long;
   defaultGasPerCancel: Long;
+  minRentDeposit: Long;
+  gasAllowancePerSettlement: Long;
+  minProcessableRent: Long;
+  orderBookEntriesPerLoad: Long;
+  contractUnsuspendCost: Long;
+  maxOrderPerPrice: Long;
+  maxPairsPerContract: Long;
+  defaultGasPerOrderDataByte: Long;
 }
 /** Params defines the parameters for the module. */
 export interface ParamsSDKType {
@@ -17,6 +25,14 @@ export interface ParamsSDKType {
   end_block_gas_limit: Long;
   default_gas_per_order: Long;
   default_gas_per_cancel: Long;
+  min_rent_deposit: Long;
+  gas_allowance_per_settlement: Long;
+  min_processable_rent: Long;
+  order_book_entries_per_load: Long;
+  contract_unsuspend_cost: Long;
+  max_order_per_price: Long;
+  max_pairs_per_contract: Long;
+  default_gas_per_order_data_byte: Long;
 }
 function createBaseParams(): Params {
   return {
@@ -25,7 +41,15 @@ function createBaseParams(): Params {
     beginBlockGasLimit: Long.UZERO,
     endBlockGasLimit: Long.UZERO,
     defaultGasPerOrder: Long.UZERO,
-    defaultGasPerCancel: Long.UZERO
+    defaultGasPerCancel: Long.UZERO,
+    minRentDeposit: Long.UZERO,
+    gasAllowancePerSettlement: Long.UZERO,
+    minProcessableRent: Long.UZERO,
+    orderBookEntriesPerLoad: Long.UZERO,
+    contractUnsuspendCost: Long.UZERO,
+    maxOrderPerPrice: Long.UZERO,
+    maxPairsPerContract: Long.UZERO,
+    defaultGasPerOrderDataByte: Long.UZERO
   };
 }
 export const Params = {
@@ -47,6 +71,30 @@ export const Params = {
     }
     if (!message.defaultGasPerCancel.isZero()) {
       writer.uint32(48).uint64(message.defaultGasPerCancel);
+    }
+    if (!message.minRentDeposit.isZero()) {
+      writer.uint32(56).uint64(message.minRentDeposit);
+    }
+    if (!message.gasAllowancePerSettlement.isZero()) {
+      writer.uint32(64).uint64(message.gasAllowancePerSettlement);
+    }
+    if (!message.minProcessableRent.isZero()) {
+      writer.uint32(72).uint64(message.minProcessableRent);
+    }
+    if (!message.orderBookEntriesPerLoad.isZero()) {
+      writer.uint32(80).uint64(message.orderBookEntriesPerLoad);
+    }
+    if (!message.contractUnsuspendCost.isZero()) {
+      writer.uint32(88).uint64(message.contractUnsuspendCost);
+    }
+    if (!message.maxOrderPerPrice.isZero()) {
+      writer.uint32(96).uint64(message.maxOrderPerPrice);
+    }
+    if (!message.maxPairsPerContract.isZero()) {
+      writer.uint32(104).uint64(message.maxPairsPerContract);
+    }
+    if (!message.defaultGasPerOrderDataByte.isZero()) {
+      writer.uint32(112).uint64(message.defaultGasPerOrderDataByte);
     }
     return writer;
   },
@@ -75,6 +123,30 @@ export const Params = {
         case 6:
           message.defaultGasPerCancel = (reader.uint64() as Long);
           break;
+        case 7:
+          message.minRentDeposit = (reader.uint64() as Long);
+          break;
+        case 8:
+          message.gasAllowancePerSettlement = (reader.uint64() as Long);
+          break;
+        case 9:
+          message.minProcessableRent = (reader.uint64() as Long);
+          break;
+        case 10:
+          message.orderBookEntriesPerLoad = (reader.uint64() as Long);
+          break;
+        case 11:
+          message.contractUnsuspendCost = (reader.uint64() as Long);
+          break;
+        case 12:
+          message.maxOrderPerPrice = (reader.uint64() as Long);
+          break;
+        case 13:
+          message.maxPairsPerContract = (reader.uint64() as Long);
+          break;
+        case 14:
+          message.defaultGasPerOrderDataByte = (reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -90,6 +162,14 @@ export const Params = {
     message.endBlockGasLimit = object.endBlockGasLimit !== undefined && object.endBlockGasLimit !== null ? Long.fromValue(object.endBlockGasLimit) : Long.UZERO;
     message.defaultGasPerOrder = object.defaultGasPerOrder !== undefined && object.defaultGasPerOrder !== null ? Long.fromValue(object.defaultGasPerOrder) : Long.UZERO;
     message.defaultGasPerCancel = object.defaultGasPerCancel !== undefined && object.defaultGasPerCancel !== null ? Long.fromValue(object.defaultGasPerCancel) : Long.UZERO;
+    message.minRentDeposit = object.minRentDeposit !== undefined && object.minRentDeposit !== null ? Long.fromValue(object.minRentDeposit) : Long.UZERO;
+    message.gasAllowancePerSettlement = object.gasAllowancePerSettlement !== undefined && object.gasAllowancePerSettlement !== null ? Long.fromValue(object.gasAllowancePerSettlement) : Long.UZERO;
+    message.minProcessableRent = object.minProcessableRent !== undefined && object.minProcessableRent !== null ? Long.fromValue(object.minProcessableRent) : Long.UZERO;
+    message.orderBookEntriesPerLoad = object.orderBookEntriesPerLoad !== undefined && object.orderBookEntriesPerLoad !== null ? Long.fromValue(object.orderBookEntriesPerLoad) : Long.UZERO;
+    message.contractUnsuspendCost = object.contractUnsuspendCost !== undefined && object.contractUnsuspendCost !== null ? Long.fromValue(object.contractUnsuspendCost) : Long.UZERO;
+    message.maxOrderPerPrice = object.maxOrderPerPrice !== undefined && object.maxOrderPerPrice !== null ? Long.fromValue(object.maxOrderPerPrice) : Long.UZERO;
+    message.maxPairsPerContract = object.maxPairsPerContract !== undefined && object.maxPairsPerContract !== null ? Long.fromValue(object.maxPairsPerContract) : Long.UZERO;
+    message.defaultGasPerOrderDataByte = object.defaultGasPerOrderDataByte !== undefined && object.defaultGasPerOrderDataByte !== null ? Long.fromValue(object.defaultGasPerOrderDataByte) : Long.UZERO;
     return message;
   }
 };

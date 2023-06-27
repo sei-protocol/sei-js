@@ -1,5 +1,5 @@
 import { AminoMsg } from "@cosmjs/amino";
-import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize } from "./tx";
+import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize, MsgUnsuspendContract } from "./tx";
 export interface MsgPlaceOrdersAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgPlaceOrders";
     value: {
@@ -62,6 +62,8 @@ export interface MsgRegisterContractAminoType extends AminoMsg {
             numIncomingDependencies: string;
             creator: string;
             rentBalance: string;
+            suspended: boolean;
+            suspensionReason: string;
         };
     };
 }
@@ -127,6 +129,13 @@ export interface MsgUpdateQuantityTickSizeAminoType extends AminoMsg {
         }[];
     };
 }
+export interface MsgUnsuspendContractAminoType extends AminoMsg {
+    type: "/seiprotocol.seichain.dex.MsgUnsuspendContract";
+    value: {
+        creator: string;
+        contractAddr: string;
+    };
+}
 export declare const AminoConverter: {
     "/seiprotocol.seichain.dex.MsgPlaceOrders": {
         aminoType: string;
@@ -167,5 +176,10 @@ export declare const AminoConverter: {
         aminoType: string;
         toAmino: ({ creator, tickSizeList }: MsgUpdateQuantityTickSize) => MsgUpdateQuantityTickSizeAminoType["value"];
         fromAmino: ({ creator, tickSizeList }: MsgUpdateQuantityTickSizeAminoType["value"]) => MsgUpdateQuantityTickSize;
+    };
+    "/seiprotocol.seichain.dex.MsgUnsuspendContract": {
+        aminoType: string;
+        toAmino: ({ creator, contractAddr }: MsgUnsuspendContract) => MsgUnsuspendContractAminoType["value"];
+        fromAmino: ({ creator, contractAddr }: MsgUnsuspendContractAminoType["value"]) => MsgUnsuspendContract;
     };
 };

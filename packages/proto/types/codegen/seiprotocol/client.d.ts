@@ -84,100 +84,6 @@ export declare const seiprotocolAminoConverters: {
             delegate: string;
         }) => import("./seichain/oracle/tx").MsgDelegateFeedConsent;
     };
-    "/seiprotocol.seichain.nitro.MsgRecordTransactionData": {
-        aminoType: string;
-        toAmino: ({ sender, slot, stateRoot, txs }: import("./seichain/nitro/tx").MsgRecordTransactionData) => {
-            sender: string;
-            slot: string;
-            stateRoot: string;
-            txs: string[];
-        };
-        fromAmino: ({ sender, slot, stateRoot, txs }: {
-            sender: string;
-            slot: string;
-            stateRoot: string;
-            txs: string[];
-        }) => import("./seichain/nitro/tx").MsgRecordTransactionData;
-    };
-    "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge": {
-        aminoType: string;
-        toAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: import("./seichain/nitro/tx").MsgSubmitFraudChallenge) => {
-            sender: string;
-            startSlot: string;
-            endSlot: string;
-            fraudStatePubKey: string;
-            merkleProof: {
-                commitment: string;
-                hash: string[];
-                direction: string[];
-            };
-            accountStates: {
-                pubkey: string;
-                owner: string;
-                lamports: string;
-                slot: string;
-                executable: boolean;
-                rent_epoch: string;
-                data: string;
-            }[];
-            programs: {
-                pubkey: string;
-                owner: string;
-                lamports: string;
-                slot: string;
-                executable: boolean;
-                rent_epoch: string;
-                data: string;
-            }[];
-            sysvarAccounts: {
-                pubkey: string;
-                owner: string;
-                lamports: string;
-                slot: string;
-                executable: boolean;
-                rent_epoch: string;
-                data: string;
-            }[];
-        };
-        fromAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: {
-            sender: string;
-            startSlot: string;
-            endSlot: string;
-            fraudStatePubKey: string;
-            merkleProof: {
-                commitment: string;
-                hash: string[];
-                direction: string[];
-            };
-            accountStates: {
-                pubkey: string;
-                owner: string;
-                lamports: string;
-                slot: string;
-                executable: boolean;
-                rent_epoch: string;
-                data: string;
-            }[];
-            programs: {
-                pubkey: string;
-                owner: string;
-                lamports: string;
-                slot: string;
-                executable: boolean;
-                rent_epoch: string;
-                data: string;
-            }[];
-            sysvarAccounts: {
-                pubkey: string;
-                owner: string;
-                lamports: string;
-                slot: string;
-                executable: boolean;
-                rent_epoch: string;
-                data: string;
-            }[];
-        }) => import("./seichain/nitro/tx").MsgSubmitFraudChallenge;
-    };
     "/seiprotocol.seichain.dex.MsgPlaceOrders": {
         aminoType: string;
         toAmino: ({ creator, orders, contractAddr, funds }: import("./seichain/dex/tx").MsgPlaceOrders) => {
@@ -279,6 +185,8 @@ export declare const seiprotocolAminoConverters: {
                 numIncomingDependencies: string;
                 creator: string;
                 rentBalance: string;
+                suspended: boolean;
+                suspensionReason: string;
             };
         };
         fromAmino: ({ creator, contract }: {
@@ -296,6 +204,8 @@ export declare const seiprotocolAminoConverters: {
                 numIncomingDependencies: string;
                 creator: string;
                 rentBalance: string;
+                suspended: boolean;
+                suspensionReason: string;
             };
         }) => import("./seichain/dex/tx").MsgRegisterContract;
     };
@@ -407,6 +317,17 @@ export declare const seiprotocolAminoConverters: {
                 contractAddr: string;
             }[];
         }) => import("./seichain/dex/tx").MsgUpdateQuantityTickSize;
+    };
+    "/seiprotocol.seichain.dex.MsgUnsuspendContract": {
+        aminoType: string;
+        toAmino: ({ creator, contractAddr }: import("./seichain/dex/tx").MsgUnsuspendContract) => {
+            creator: string;
+            contractAddr: string;
+        };
+        fromAmino: ({ creator, contractAddr }: {
+            creator: string;
+            contractAddr: string;
+        }) => import("./seichain/dex/tx").MsgUnsuspendContract;
     };
 };
 export declare const seiprotocolProtoRegistry: ReadonlyArray<[string, GeneratedType]>;

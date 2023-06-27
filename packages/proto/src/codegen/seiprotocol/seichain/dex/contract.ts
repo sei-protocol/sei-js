@@ -25,6 +25,8 @@ export interface ContractInfoV2 {
   numIncomingDependencies: Long;
   creator: string;
   rentBalance: Long;
+  suspended: boolean;
+  suspensionReason: string;
 }
 export interface ContractInfoV2SDKType {
   codeId: Long;
@@ -35,12 +37,24 @@ export interface ContractInfoV2SDKType {
   numIncomingDependencies: Long;
   creator: string;
   rentBalance: Long;
+  suspended: boolean;
+  suspensionReason: string;
 }
+/**
+ * suppose A is first registered and depends on X, then B is added and depends on X,
+ * and then C is added and depends on X, then A is the elder sibling to B and B is
+ * the younger sibling to A, and B is the elder sibling to C and C is the younger to B
+ */
 export interface ContractDependencyInfo {
   dependency: string;
   immediateElderSibling: string;
   immediateYoungerSibling: string;
 }
+/**
+ * suppose A is first registered and depends on X, then B is added and depends on X,
+ * and then C is added and depends on X, then A is the elder sibling to B and B is
+ * the younger sibling to A, and B is the elder sibling to C and C is the younger to B
+ */
 export interface ContractDependencyInfoSDKType {
   dependency: string;
   immediateElderSibling: string;
@@ -144,7 +158,9 @@ function createBaseContractInfoV2(): ContractInfoV2 {
     dependencies: [],
     numIncomingDependencies: Long.ZERO,
     creator: "",
-    rentBalance: Long.UZERO
+    rentBalance: Long.UZERO,
+    suspended: false,
+    suspensionReason: ""
   };
 }
 export const ContractInfoV2 = {
@@ -172,6 +188,12 @@ export const ContractInfoV2 = {
     }
     if (!message.rentBalance.isZero()) {
       writer.uint32(64).uint64(message.rentBalance);
+    }
+    if (message.suspended === true) {
+      writer.uint32(72).bool(message.suspended);
+    }
+    if (message.suspensionReason !== "") {
+      writer.uint32(82).string(message.suspensionReason);
     }
     return writer;
   },
@@ -206,6 +228,12 @@ export const ContractInfoV2 = {
         case 8:
           message.rentBalance = (reader.uint64() as Long);
           break;
+        case 9:
+          message.suspended = reader.bool();
+          break;
+        case 10:
+          message.suspensionReason = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -223,6 +251,8 @@ export const ContractInfoV2 = {
     message.numIncomingDependencies = object.numIncomingDependencies !== undefined && object.numIncomingDependencies !== null ? Long.fromValue(object.numIncomingDependencies) : Long.ZERO;
     message.creator = object.creator ?? "";
     message.rentBalance = object.rentBalance !== undefined && object.rentBalance !== null ? Long.fromValue(object.rentBalance) : Long.UZERO;
+    message.suspended = object.suspended ?? false;
+    message.suspensionReason = object.suspensionReason ?? "";
     return message;
   }
 };

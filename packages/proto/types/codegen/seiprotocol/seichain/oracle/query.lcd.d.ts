@@ -1,5 +1,5 @@
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryExchangeRateRequest, QueryExchangeRateResponseSDKType, QueryExchangeRatesRequest, QueryExchangeRatesResponseSDKType, QueryActivesRequest, QueryActivesResponseSDKType, QueryVoteTargetsRequest, QueryVoteTargetsResponseSDKType, QueryPriceSnapshotHistoryRequest, QueryPriceSnapshotHistoryResponseSDKType, QueryTwapsRequest, QueryTwapsResponseSDKType, QueryFeederDelegationRequest, QueryFeederDelegationResponseSDKType, QueryVotePenaltyCounterRequest, QueryVotePenaltyCounterResponseSDKType, QueryAggregateVoteRequest, QueryAggregateVoteResponseSDKType, QueryAggregateVotesRequest, QueryAggregateVotesResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType } from "./query";
+import { QueryExchangeRateRequest, QueryExchangeRateResponseSDKType, QueryExchangeRatesRequest, QueryExchangeRatesResponseSDKType, QueryActivesRequest, QueryActivesResponseSDKType, QueryVoteTargetsRequest, QueryVoteTargetsResponseSDKType, QueryPriceSnapshotHistoryRequest, QueryPriceSnapshotHistoryResponseSDKType, QueryTwapsRequest, QueryTwapsResponseSDKType, QueryFeederDelegationRequest, QueryFeederDelegationResponseSDKType, QueryVotePenaltyCounterRequest, QueryVotePenaltyCounterResponseSDKType, QuerySlashWindowRequest, QuerySlashWindowResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType } from "./query";
 export declare class LCDQueryClient {
     req: LCDClient;
     constructor({ requestClient }: {
@@ -13,7 +13,6 @@ export declare class LCDQueryClient {
     twaps(params: QueryTwapsRequest): Promise<QueryTwapsResponseSDKType>;
     feederDelegation(params: QueryFeederDelegationRequest): Promise<QueryFeederDelegationResponseSDKType>;
     votePenaltyCounter(params: QueryVotePenaltyCounterRequest): Promise<QueryVotePenaltyCounterResponseSDKType>;
-    aggregateVote(params: QueryAggregateVoteRequest): Promise<QueryAggregateVoteResponseSDKType>;
-    aggregateVotes(_params?: QueryAggregateVotesRequest): Promise<QueryAggregateVotesResponseSDKType>;
+    slashWindow(_params?: QuerySlashWindowRequest): Promise<QuerySlashWindowResponseSDKType>;
     params(_params?: QueryParamsRequest): Promise<QueryParamsResponseSDKType>;
 }

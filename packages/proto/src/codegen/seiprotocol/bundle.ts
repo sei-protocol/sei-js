@@ -23,38 +23,30 @@ import * as _153 from "./seichain/epoch/params";
 import * as _154 from "./seichain/epoch/query";
 import * as _155 from "./seichain/epoch/tx";
 import * as _156 from "./seichain/mint/v1beta1/genesis";
-import * as _157 from "./seichain/mint/v1beta1/mint";
-import * as _158 from "./seichain/mint/v1beta1/query";
-import * as _159 from "./seichain/nitro/account";
-import * as _160 from "./seichain/nitro/data";
-import * as _161 from "./seichain/nitro/genesis";
-import * as _162 from "./seichain/nitro/params";
-import * as _163 from "./seichain/nitro/query";
-import * as _164 from "./seichain/nitro/tx";
-import * as _165 from "./seichain/oracle/genesis";
-import * as _166 from "./seichain/oracle/oracle";
-import * as _167 from "./seichain/oracle/query";
-import * as _168 from "./seichain/oracle/tx";
-import * as _169 from "./seichain/tokenfactory/authorityMetadata";
-import * as _170 from "./seichain/tokenfactory/genesis";
-import * as _171 from "./seichain/tokenfactory/params";
-import * as _172 from "./seichain/tokenfactory/query";
-import * as _173 from "./seichain/tokenfactory/tx";
-import * as _245 from "./seichain/dex/tx.amino";
-import * as _246 from "./seichain/nitro/tx.amino";
-import * as _247 from "./seichain/oracle/tx.amino";
-import * as _248 from "./seichain/tokenfactory/tx.amino";
-import * as _249 from "./seichain/dex/tx.registry";
-import * as _250 from "./seichain/nitro/tx.registry";
-import * as _251 from "./seichain/oracle/tx.registry";
-import * as _252 from "./seichain/tokenfactory/tx.registry";
-import * as _253 from "./seichain/dex/query.lcd";
-import * as _254 from "./seichain/epoch/query.lcd";
-import * as _255 from "./seichain/mint/v1beta1/query.lcd";
-import * as _256 from "./seichain/nitro/query.lcd";
-import * as _257 from "./seichain/oracle/query.lcd";
-import * as _258 from "./seichain/tokenfactory/query.lcd";
-import * as _262 from "./lcd";
+import * as _157 from "./seichain/mint/v1beta1/gov";
+import * as _158 from "./seichain/mint/v1beta1/mint";
+import * as _159 from "./seichain/mint/v1beta1/query";
+import * as _160 from "./seichain/oracle/genesis";
+import * as _161 from "./seichain/oracle/oracle";
+import * as _162 from "./seichain/oracle/query";
+import * as _163 from "./seichain/oracle/tx";
+import * as _164 from "./seichain/tokenfactory/authorityMetadata";
+import * as _165 from "./seichain/tokenfactory/genesis";
+import * as _166 from "./seichain/tokenfactory/params";
+import * as _167 from "./seichain/tokenfactory/query";
+import * as _168 from "./seichain/tokenfactory/tx";
+import * as _240 from "./seichain/dex/tx.amino";
+import * as _241 from "./seichain/oracle/tx.amino";
+import * as _242 from "./seichain/tokenfactory/tx.amino";
+import * as _243 from "./seichain/dex/tx.registry";
+import * as _244 from "./seichain/oracle/tx.registry";
+import * as _245 from "./seichain/tokenfactory/tx.registry";
+import * as _246 from "./seichain/dex/query.lcd";
+import * as _247 from "./seichain/epoch/query.lcd";
+import * as _248 from "./seichain/mint/v1beta1/query.lcd";
+import * as _249 from "./seichain/oracle/query.lcd";
+import * as _250 from "./seichain/tokenfactory/query.lcd";
+import * as _254 from "./lcd";
 export namespace seiprotocol {
   export namespace seichain {
     export const dex = {
@@ -77,9 +69,9 @@ export namespace seiprotocol {
       ..._148,
       ..._149,
       ..._150,
-      ..._245,
-      ..._249,
-      ..._253
+      ..._240,
+      ..._243,
+      ..._246
     };
     export const epoch = {
       ..._151,
@@ -87,46 +79,36 @@ export namespace seiprotocol {
       ..._153,
       ..._154,
       ..._155,
-      ..._254
+      ..._247
     };
     export const mint = {
       ..._156,
       ..._157,
       ..._158,
-      ..._255
-    };
-    export const nitro = {
       ..._159,
+      ..._248
+    };
+    export const oracle = {
       ..._160,
       ..._161,
       ..._162,
       ..._163,
-      ..._164,
-      ..._246,
-      ..._250,
-      ..._256
+      ..._241,
+      ..._244,
+      ..._249
     };
-    export const oracle = {
+    export const tokenfactory = {
+      ..._164,
       ..._165,
       ..._166,
       ..._167,
       ..._168,
-      ..._247,
-      ..._251,
-      ..._257
-    };
-    export const tokenfactory = {
-      ..._169,
-      ..._170,
-      ..._171,
-      ..._172,
-      ..._173,
-      ..._248,
-      ..._252,
-      ..._258
+      ..._242,
+      ..._245,
+      ..._250
     };
   }
   export const ClientFactory = {
-    ..._262
+    ..._254
   };
 }

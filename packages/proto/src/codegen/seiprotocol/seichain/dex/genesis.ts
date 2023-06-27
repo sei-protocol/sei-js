@@ -26,6 +26,7 @@ export interface ContractState {
   triggeredOrdersList: Order[];
   pairList: Pair[];
   priceList: ContractPairPrices[];
+  nextOrderId: Long;
 }
 export interface ContractStateSDKType {
   contractInfo: ContractInfoV2SDKType;
@@ -34,6 +35,7 @@ export interface ContractStateSDKType {
   triggeredOrdersList: OrderSDKType[];
   pairList: PairSDKType[];
   priceList: ContractPairPricesSDKType[];
+  nextOrderId: Long;
 }
 export interface ContractPairPrices {
   pricePair: Pair;
@@ -101,7 +103,8 @@ function createBaseContractState(): ContractState {
     shortBookList: [],
     triggeredOrdersList: [],
     pairList: [],
-    priceList: []
+    priceList: [],
+    nextOrderId: Long.UZERO
   };
 }
 export const ContractState = {
@@ -123,6 +126,9 @@ export const ContractState = {
     }
     for (const v of message.priceList) {
       ContractPairPrices.encode(v!, writer.uint32(50).fork()).ldelim();
+    }
+    if (!message.nextOrderId.isZero()) {
+      writer.uint32(56).uint64(message.nextOrderId);
     }
     return writer;
   },
@@ -151,6 +157,9 @@ export const ContractState = {
         case 6:
           message.priceList.push(ContractPairPrices.decode(reader, reader.uint32()));
           break;
+        case 7:
+          message.nextOrderId = (reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -166,6 +175,7 @@ export const ContractState = {
     message.triggeredOrdersList = object.triggeredOrdersList?.map(e => Order.fromPartial(e)) || [];
     message.pairList = object.pairList?.map(e => Pair.fromPartial(e)) || [];
     message.priceList = object.priceList?.map(e => ContractPairPrices.fromPartial(e)) || [];
+    message.nextOrderId = object.nextOrderId !== undefined && object.nextOrderId !== null ? Long.fromValue(object.nextOrderId) : Long.UZERO;
     return message;
   }
 };

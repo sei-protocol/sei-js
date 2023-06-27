@@ -25,6 +25,8 @@ export interface ContractInfoV2 {
     numIncomingDependencies: Long;
     creator: string;
     rentBalance: Long;
+    suspended: boolean;
+    suspensionReason: string;
 }
 export interface ContractInfoV2SDKType {
     codeId: Long;
@@ -35,12 +37,24 @@ export interface ContractInfoV2SDKType {
     numIncomingDependencies: Long;
     creator: string;
     rentBalance: Long;
+    suspended: boolean;
+    suspensionReason: string;
 }
+/**
+ * suppose A is first registered and depends on X, then B is added and depends on X,
+ * and then C is added and depends on X, then A is the elder sibling to B and B is
+ * the younger sibling to A, and B is the elder sibling to C and C is the younger to B
+ */
 export interface ContractDependencyInfo {
     dependency: string;
     immediateElderSibling: string;
     immediateYoungerSibling: string;
 }
+/**
+ * suppose A is first registered and depends on X, then B is added and depends on X,
+ * and then C is added and depends on X, then A is the elder sibling to B and B is
+ * the younger sibling to A, and B is the elder sibling to C and C is the younger to B
+ */
 export interface ContractDependencyInfoSDKType {
     dependency: string;
     immediateElderSibling: string;

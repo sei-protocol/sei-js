@@ -1,12 +1,15 @@
 import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 export interface Params {
+    /** The number of blocks per voting window, at the end of the vote period, the oracle votes are assessed and exchange rates are calculated. If the vote period is 1 this is equivalent to having oracle votes assessed and exchange rates calculated in each block. */
     votePeriod: Long;
     voteThreshold: string;
     rewardBand: string;
     whitelist: Denom[];
     slashFraction: string;
+    /** The interval in blocks at which the oracle module will assess validator penalty counters, and penalize validators with too poor performance. */
     slashWindow: Long;
+    /** The minimum percentage of voting windows for which a validator must have `success`es in order to not be penalized at the end of the slash window. */
     minValidPerWindow: string;
     lookbackDuration: Long;
 }
@@ -79,10 +82,12 @@ export interface OracleTwapSDKType {
 export interface VotePenaltyCounter {
     missCount: Long;
     abstainCount: Long;
+    successCount: Long;
 }
 export interface VotePenaltyCounterSDKType {
     miss_count: Long;
     abstain_count: Long;
+    success_count: Long;
 }
 export declare const Params: {
     encode(message: Params, writer?: _m0.Writer): _m0.Writer;

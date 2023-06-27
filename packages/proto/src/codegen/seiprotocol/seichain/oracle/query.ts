@@ -1,4 +1,4 @@
-import { OracleExchangeRate, OracleExchangeRateSDKType, PriceSnapshot, PriceSnapshotSDKType, OracleTwap, OracleTwapSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, Params, ParamsSDKType } from "./oracle";
+import { OracleExchangeRate, OracleExchangeRateSDKType, PriceSnapshot, PriceSnapshotSDKType, OracleTwap, OracleTwapSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType, Params, ParamsSDKType } from "./oracle";
 import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** QueryExchangeRateRequest is the request type for the Query/ExchangeRate RPC method. */
@@ -164,48 +164,33 @@ export interface QueryVotePenaltyCounterResponse {
 export interface QueryVotePenaltyCounterResponseSDKType {
   vote_penalty_counter: VotePenaltyCounterSDKType;
 }
-/** QueryAggregateVoteRequest is the request type for the Query/AggregateVote RPC method. */
-export interface QueryAggregateVoteRequest {
-  /** validator defines the validator address to query for. */
-  validatorAddr: string;
-}
-/** QueryAggregateVoteRequest is the request type for the Query/AggregateVote RPC method. */
-export interface QueryAggregateVoteRequestSDKType {
-  validator_addr: string;
+/**
+ * QuerySlashWindow is the request type for the
+ * Query/SlashWindow RPC method.
+ */
+export interface QuerySlashWindowRequest {}
+/**
+ * QuerySlashWindow is the request type for the
+ * Query/SlashWindow RPC method.
+ */
+export interface QuerySlashWindowRequestSDKType {}
+/**
+ * QuerySlashWindowResponse is response type for the
+ * Query/SlashWindow RPC method.
+ */
+export interface QuerySlashWindowResponse {
+  /**
+   * window_progress defines the number of voting periods
+   * since the last slashing event would have taken place.
+   */
+  windowProgress: Long;
 }
 /**
- * QueryAggregateVoteResponse is response type for the
- * Query/AggregateVote RPC method.
+ * QuerySlashWindowResponse is response type for the
+ * Query/SlashWindow RPC method.
  */
-export interface QueryAggregateVoteResponse {
-  /** aggregate_vote defines oracle aggregate vote submitted by a validator in the current vote period */
-  aggregateVote: AggregateExchangeRateVote;
-}
-/**
- * QueryAggregateVoteResponse is response type for the
- * Query/AggregateVote RPC method.
- */
-export interface QueryAggregateVoteResponseSDKType {
-  aggregate_vote: AggregateExchangeRateVoteSDKType;
-}
-/** QueryAggregateVotesRequest is the request type for the Query/AggregateVotes RPC method. */
-export interface QueryAggregateVotesRequest {}
-/** QueryAggregateVotesRequest is the request type for the Query/AggregateVotes RPC method. */
-export interface QueryAggregateVotesRequestSDKType {}
-/**
- * QueryAggregateVotesResponse is response type for the
- * Query/AggregateVotes RPC method.
- */
-export interface QueryAggregateVotesResponse {
-  /** aggregate_votes defines all oracle aggregate votes submitted in the current vote period */
-  aggregateVotes: AggregateExchangeRateVote[];
-}
-/**
- * QueryAggregateVotesResponse is response type for the
- * Query/AggregateVotes RPC method.
- */
-export interface QueryAggregateVotesResponseSDKType {
-  aggregate_votes: AggregateExchangeRateVoteSDKType[];
+export interface QuerySlashWindowResponseSDKType {
+  window_progress: Long;
 }
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
@@ -787,87 +772,17 @@ export const QueryVotePenaltyCounterResponse = {
     return message;
   }
 };
-function createBaseQueryAggregateVoteRequest(): QueryAggregateVoteRequest {
-  return {
-    validatorAddr: ""
-  };
-}
-export const QueryAggregateVoteRequest = {
-  encode(message: QueryAggregateVoteRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.validatorAddr !== "") {
-      writer.uint32(10).string(message.validatorAddr);
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVoteRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAggregateVoteRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.validatorAddr = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromPartial(object: DeepPartial<QueryAggregateVoteRequest>): QueryAggregateVoteRequest {
-    const message = createBaseQueryAggregateVoteRequest();
-    message.validatorAddr = object.validatorAddr ?? "";
-    return message;
-  }
-};
-function createBaseQueryAggregateVoteResponse(): QueryAggregateVoteResponse {
-  return {
-    aggregateVote: AggregateExchangeRateVote.fromPartial({})
-  };
-}
-export const QueryAggregateVoteResponse = {
-  encode(message: QueryAggregateVoteResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.aggregateVote !== undefined) {
-      AggregateExchangeRateVote.encode(message.aggregateVote, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVoteResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAggregateVoteResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.aggregateVote = AggregateExchangeRateVote.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromPartial(object: DeepPartial<QueryAggregateVoteResponse>): QueryAggregateVoteResponse {
-    const message = createBaseQueryAggregateVoteResponse();
-    message.aggregateVote = object.aggregateVote !== undefined && object.aggregateVote !== null ? AggregateExchangeRateVote.fromPartial(object.aggregateVote) : undefined;
-    return message;
-  }
-};
-function createBaseQueryAggregateVotesRequest(): QueryAggregateVotesRequest {
+function createBaseQuerySlashWindowRequest(): QuerySlashWindowRequest {
   return {};
 }
-export const QueryAggregateVotesRequest = {
-  encode(_: QueryAggregateVotesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const QuerySlashWindowRequest = {
+  encode(_: QuerySlashWindowRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVotesRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): QuerySlashWindowRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAggregateVotesRequest();
+    const message = createBaseQuerySlashWindowRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -878,32 +793,32 @@ export const QueryAggregateVotesRequest = {
     }
     return message;
   },
-  fromPartial(_: DeepPartial<QueryAggregateVotesRequest>): QueryAggregateVotesRequest {
-    const message = createBaseQueryAggregateVotesRequest();
+  fromPartial(_: DeepPartial<QuerySlashWindowRequest>): QuerySlashWindowRequest {
+    const message = createBaseQuerySlashWindowRequest();
     return message;
   }
 };
-function createBaseQueryAggregateVotesResponse(): QueryAggregateVotesResponse {
+function createBaseQuerySlashWindowResponse(): QuerySlashWindowResponse {
   return {
-    aggregateVotes: []
+    windowProgress: Long.UZERO
   };
 }
-export const QueryAggregateVotesResponse = {
-  encode(message: QueryAggregateVotesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.aggregateVotes) {
-      AggregateExchangeRateVote.encode(v!, writer.uint32(10).fork()).ldelim();
+export const QuerySlashWindowResponse = {
+  encode(message: QuerySlashWindowResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (!message.windowProgress.isZero()) {
+      writer.uint32(8).uint64(message.windowProgress);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVotesResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): QuerySlashWindowResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAggregateVotesResponse();
+    const message = createBaseQuerySlashWindowResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.aggregateVotes.push(AggregateExchangeRateVote.decode(reader, reader.uint32()));
+          message.windowProgress = (reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -912,9 +827,9 @@ export const QueryAggregateVotesResponse = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<QueryAggregateVotesResponse>): QueryAggregateVotesResponse {
-    const message = createBaseQueryAggregateVotesResponse();
-    message.aggregateVotes = object.aggregateVotes?.map(e => AggregateExchangeRateVote.fromPartial(e)) || [];
+  fromPartial(object: DeepPartial<QuerySlashWindowResponse>): QuerySlashWindowResponse {
+    const message = createBaseQuerySlashWindowResponse();
+    message.windowProgress = object.windowProgress !== undefined && object.windowProgress !== null ? Long.fromValue(object.windowProgress) : Long.UZERO;
     return message;
   }
 };

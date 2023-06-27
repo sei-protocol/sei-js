@@ -95,6 +95,16 @@ export interface MsgUpdateQuantityTickSizeSDKType {
 }
 export interface MsgUpdateTickSizeResponse {}
 export interface MsgUpdateTickSizeResponseSDKType {}
+export interface MsgUnsuspendContract {
+  creator: string;
+  contractAddr: string;
+}
+export interface MsgUnsuspendContractSDKType {
+  creator: string;
+  contractAddr: string;
+}
+export interface MsgUnsuspendContractResponse {}
+export interface MsgUnsuspendContractResponseSDKType {}
 function createBaseMsgPlaceOrders(): MsgPlaceOrders {
   return {
     creator: "",
@@ -668,6 +678,75 @@ export const MsgUpdateTickSizeResponse = {
   },
   fromPartial(_: DeepPartial<MsgUpdateTickSizeResponse>): MsgUpdateTickSizeResponse {
     const message = createBaseMsgUpdateTickSizeResponse();
+    return message;
+  }
+};
+function createBaseMsgUnsuspendContract(): MsgUnsuspendContract {
+  return {
+    creator: "",
+    contractAddr: ""
+  };
+}
+export const MsgUnsuspendContract = {
+  encode(message: MsgUnsuspendContract, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.contractAddr !== "") {
+      writer.uint32(18).string(message.contractAddr);
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnsuspendContract {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUnsuspendContract();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.contractAddr = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: DeepPartial<MsgUnsuspendContract>): MsgUnsuspendContract {
+    const message = createBaseMsgUnsuspendContract();
+    message.creator = object.creator ?? "";
+    message.contractAddr = object.contractAddr ?? "";
+    return message;
+  }
+};
+function createBaseMsgUnsuspendContractResponse(): MsgUnsuspendContractResponse {
+  return {};
+}
+export const MsgUnsuspendContractResponse = {
+  encode(_: MsgUnsuspendContractResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnsuspendContractResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUnsuspendContractResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(_: DeepPartial<MsgUnsuspendContractResponse>): MsgUnsuspendContractResponse {
+    const message = createBaseMsgUnsuspendContractResponse();
     return message;
   }
 };

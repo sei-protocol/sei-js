@@ -1,5 +1,5 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize } from "./tx";
+import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize, MsgUnsuspendContract } from "./tx";
 export declare const registry: ReadonlyArray<[string, GeneratedType]>;
 export declare const load: (protoRegistry: Registry) => void;
 export declare const MessageComposer: {
@@ -33,6 +33,10 @@ export declare const MessageComposer: {
             value: Uint8Array;
         };
         updateQuantityTickSize(value: MsgUpdateQuantityTickSize): {
+            typeUrl: string;
+            value: Uint8Array;
+        };
+        unsuspendContract(value: MsgUnsuspendContract): {
             typeUrl: string;
             value: Uint8Array;
         };
@@ -70,6 +74,10 @@ export declare const MessageComposer: {
             typeUrl: string;
             value: MsgUpdateQuantityTickSize;
         };
+        unsuspendContract(value: MsgUnsuspendContract): {
+            typeUrl: string;
+            value: MsgUnsuspendContract;
+        };
     };
     fromPartial: {
         placeOrders(value: MsgPlaceOrders): {
@@ -103,6 +111,10 @@ export declare const MessageComposer: {
         updateQuantityTickSize(value: MsgUpdateQuantityTickSize): {
             typeUrl: string;
             value: MsgUpdateQuantityTickSize;
+        };
+        unsuspendContract(value: MsgUnsuspendContract): {
+            typeUrl: string;
+            value: MsgUnsuspendContract;
         };
     };
 };

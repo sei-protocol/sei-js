@@ -4,11 +4,11 @@ import * as _96 from "./wasm/v1/proposal";
 import * as _97 from "./wasm/v1/query";
 import * as _98 from "./wasm/v1/tx";
 import * as _99 from "./wasm/v1/types";
-import * as _232 from "./wasm/v1/query.lcd";
+import * as _227 from "./wasm/v1/query.lcd";
 export declare namespace cosmwasm {
     namespace wasm {
         const v1: {
-            LCDQueryClient: typeof _232.LCDQueryClient;
+            LCDQueryClient: typeof _227.LCDQueryClient;
             registry: readonly [string, import("@cosmjs/proto-signing").GeneratedType][];
             load: (protoRegistry: import("@cosmjs/proto-signing").Registry) => void;
             MessageComposer: {
@@ -541,7 +541,7 @@ export declare namespace cosmwasm {
             };
             cosmwasm: {
                 wasm: {
-                    v1: _232.LCDQueryClient;
+                    v1: _227.LCDQueryClient;
                 };
             };
         }>;

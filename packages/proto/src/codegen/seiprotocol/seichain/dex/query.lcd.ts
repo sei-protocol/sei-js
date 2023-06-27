@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../../helpers";
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetLongBookRequest, QueryGetLongBookResponseSDKType, QueryAllLongBookRequest, QueryAllLongBookResponseSDKType, QueryGetShortBookRequest, QueryGetShortBookResponseSDKType, QueryAllShortBookRequest, QueryAllShortBookResponseSDKType, QueryGetPriceRequest, QueryGetPriceResponseSDKType, QueryGetLatestPriceRequest, QueryGetLatestPriceResponseSDKType, QueryGetPricesRequest, QueryGetPricesResponseSDKType, QueryGetTwapsRequest, QueryGetTwapsResponseSDKType, QueryAssetMetadataRequest, QueryAssetMetadataResponseSDKType, QueryAssetListRequest, QueryAssetListResponseSDKType, QueryRegisteredPairsRequest, QueryRegisteredPairsResponseSDKType, QueryGetOrdersRequest, QueryGetOrdersResponseSDKType, QueryGetOrderByIDRequest, QueryGetOrderByIDResponseSDKType, QueryGetHistoricalPricesRequest, QueryGetHistoricalPricesResponseSDKType, QueryGetMarketSummaryRequest, QueryGetMarketSummaryResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetLongBookRequest, QueryGetLongBookResponseSDKType, QueryAllLongBookRequest, QueryAllLongBookResponseSDKType, QueryGetShortBookRequest, QueryGetShortBookResponseSDKType, QueryAllShortBookRequest, QueryAllShortBookResponseSDKType, QueryGetPriceRequest, QueryGetPriceResponseSDKType, QueryGetLatestPriceRequest, QueryGetLatestPriceResponseSDKType, QueryGetPricesRequest, QueryGetPricesResponseSDKType, QueryGetTwapsRequest, QueryGetTwapsResponseSDKType, QueryAssetMetadataRequest, QueryAssetMetadataResponseSDKType, QueryAssetListRequest, QueryAssetListResponseSDKType, QueryRegisteredPairsRequest, QueryRegisteredPairsResponseSDKType, QueryRegisteredContractRequest, QueryRegisteredContractResponseSDKType, QueryGetOrdersRequest, QueryGetOrdersResponseSDKType, QueryGetOrderByIDRequest, QueryGetOrderByIDResponseSDKType, QueryGetHistoricalPricesRequest, QueryGetHistoricalPricesResponseSDKType, QueryGetMarketSummaryRequest, QueryGetMarketSummaryResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -21,6 +21,7 @@ export class LCDQueryClient {
     this.assetMetadata = this.assetMetadata.bind(this);
     this.assetList = this.assetList.bind(this);
     this.getRegisteredPairs = this.getRegisteredPairs.bind(this);
+    this.getRegisteredContract = this.getRegisteredContract.bind(this);
     this.getOrders = this.getOrders.bind(this);
     this.getOrder = this.getOrder.bind(this);
     this.getHistoricalPrices = this.getHistoricalPrices.bind(this);
@@ -103,6 +104,11 @@ export class LCDQueryClient {
     }
     const endpoint = `sei-protocol/seichain/dex/registered_pairs`;
     return await this.req.get<QueryRegisteredPairsResponseSDKType>(endpoint, options);
+  }
+  /* Returns registered contract information */
+  async getRegisteredContract(params: QueryRegisteredContractRequest): Promise<QueryRegisteredContractResponseSDKType> {
+    const endpoint = `sei-protocol/seichain/dex/registered_contract/${params.contractAddr}`;
+    return await this.req.get<QueryRegisteredContractResponseSDKType>(endpoint);
   }
   /* GetOrders */
   async getOrders(params: QueryGetOrdersRequest): Promise<QueryGetOrdersResponseSDKType> {
