@@ -21,7 +21,7 @@ export type WalletProvider = {
 	disconnect: () => void;
 };
 
-export type SupportedWalletInput = 'compass' | 'leap' | 'fin' | 'keplr' | SeiWallet;
+export type SupportedWalletInput = 'compass' | 'leap' | 'fin' | 'keplr' | 'shellwallet' | SeiWallet;
 
 export interface SeiWallet {
 	walletInfo: {

@@ -51,6 +51,23 @@ export const KEPLR_WALLET: SeiWallet = {
 	}
 };
 
+export const SHELL_WALLET: SeiWallet = {
+	getAccounts: async (chainId) => {
+		const offlineSigner = await window?.['shellwallet']?.getOfflineSignerAutoShell(chainId);
+		return offlineSigner?.getAccounts() || [];
+	},
+	connect: async (chainId) => await window?.['shellwallet']?.enable(chainId),
+	disconnect: async (chainId) => await window?.['shellwallet']?.disable(chainId),
+	getOfflineSigner: async (chainId) => window?.['shellwallet']?.getOfflineSignerAutoShell(chainId),
+	signArbitrary: window?.['shellwallet']?.signArbitrary,
+	walletInfo: {
+		windowKey: 'shellwallet',
+		name: 'Shell Wallet',
+		website: 'https://chrome.google.com/webstore/detail/shell-wallet/kbdcddcmgoplfockflacnnefaehaiocb',
+		icon: 'https://shellwallet.io/logo/shell-icon.png'
+	}
+};
+
 export const LEAP_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['leap']?.getOfflineSignerAuto(chainId);
@@ -78,6 +95,8 @@ export const findWalletByWindowKey = (windowKey: string): SeiWallet | undefined 
 			return KEPLR_WALLET;
 		case 'fin':
 			return FIN_WALLET;
+		case 'shellwallet':
+			return SHELL_WALLET;
 		default:
 			return undefined;
 	}
