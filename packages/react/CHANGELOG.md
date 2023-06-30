@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.2
+
+### Patch Changes
+
+- 05a1f56: Fixed an issue when wallets don't connect and the UI hangs, fixed an issue where the WalletConnectButton menu shows after selecting a wallet
+
 ## 2.0.1
 
 ### Patch Changes
