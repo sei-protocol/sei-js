@@ -20,7 +20,8 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		}
 	}, [connectedWallet, connectionError]);
 
-	const closeModal = () => {
+	const closeModal = (e) => {
+		e.stopPropagation();
 		setConnectionError(undefined);
 		setShowConnectModal(false);
 	};

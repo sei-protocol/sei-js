@@ -42,18 +42,25 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 				return;
 			}
 
-			await targetWallet.connect(chainConfiguration.chainId);
 			const fetchedOfflineSigner = await targetWallet.getOfflineSigner(chainConfiguration.chainId);
+
+			if (!fetchedOfflineSigner) {
+				setConnectionError(targetWallet.walletInfo.windowKey);
+				return;
+			}
 			const fetchedAccounts = await targetWallet.getAccounts(chainConfiguration.chainId);
 
-			if (fetchedAccounts.length > 0 && fetchedOfflineSigner) {
+			if (fetchedAccounts.length === 0) {
+				setConnectionError(targetWallet.walletInfo.windowKey);
+				return;
+			} else {
 				setShowConnectModal(false);
 				setOfflineSigner(fetchedOfflineSigner);
 				setAccounts(fetchedAccounts);
 				setConnectedWallet(targetWallet);
 			}
 		} catch (e) {
-			console.log('Error connecting to wallet', e);
+			console.error('Error connecting to wallet', e);
 			setConnectionError(targetWallet.walletInfo.windowKey);
 			return;
 		}
