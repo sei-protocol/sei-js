@@ -53,12 +53,12 @@ export const KEPLR_WALLET: SeiWallet = {
 
 export const SHELL_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
-		const offlineSigner = await window?.['shellwallet']?.getOfflineSignerAutoShell(chainId);
+		const offlineSigner = await window?.['shellwallet']?.getOfflineSignerAuto(chainId);
 		return offlineSigner?.getAccounts() || [];
 	},
 	connect: async (chainId) => await window?.['shellwallet']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['shellwallet']?.disable(chainId),
-	getOfflineSigner: async (chainId) => window?.['shellwallet']?.getOfflineSignerAutoShell(chainId),
+	getOfflineSigner: async (chainId) => window?.['shellwallet']?.getOfflineSignerAuto(chainId),
 	signArbitrary: window?.['shellwallet']?.signArbitrary,
 	walletInfo: {
 		windowKey: 'shellwallet',
