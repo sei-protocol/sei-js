@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.1
+
+### Patch Changes
+
+- Updated dependencies [16ac1ab]
+  - @sei-js/proto@1.3.0
+
 ## 1.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+### Minor Changes
+
+- 16ac1ab: Update proto to match 3.0.4
+
 ## 1.2.0
 
 ### Minor Changes
