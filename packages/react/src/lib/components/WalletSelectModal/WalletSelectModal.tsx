@@ -35,7 +35,6 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		};
 
 		const selectWallet = async () => {
-			if (wallet.walletInfo.name === targetWallet?.walletInfo.name) return;
 			if (setTargetWallet) setTargetWallet(wallet);
 			setIsConnecting(true);
 			setConnectionError(undefined);

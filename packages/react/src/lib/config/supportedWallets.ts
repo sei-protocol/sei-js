@@ -8,7 +8,7 @@ export const FIN_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['fin']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['fin']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['fin']?.getOfflineSignerAuto(chainId),
-	signArbitrary: window?.['fin']?.signArbitrary,
+	signArbitrary: async (chainId, signer, message) => window?.['fin']?.signArbitrary(chainId, signer, message),
 	walletInfo: {
 		windowKey: 'fin',
 		name: 'Fin',
@@ -25,7 +25,7 @@ export const COMPASS_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['compass']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['compass']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['compass']?.getOfflineSignerAuto(chainId),
-	signArbitrary: window?.['compass']?.signArbitrary,
+	signArbitrary: async (chainId, signer, message) => window?.['compass']?.signArbitrary(chainId, signer, message),
 	walletInfo: {
 		windowKey: 'compass',
 		name: 'Compass',
@@ -42,7 +42,7 @@ export const KEPLR_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['keplr']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['keplr']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['keplr']?.getOfflineSignerAuto(chainId),
-	signArbitrary: window?.['keplr']?.signArbitrary,
+	signArbitrary: async (chainId, signer, message) => window?.['keplr']?.signArbitrary(chainId, signer, message),
 	walletInfo: {
 		windowKey: 'keplr',
 		name: 'Keplr',
@@ -59,7 +59,7 @@ export const LEAP_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['leap']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['leap']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['leap']?.getOfflineSignerAuto(chainId),
-	signArbitrary: window?.['leap']?.signArbitrary,
+	signArbitrary: async (chainId, signer, message) => window?.['leap']?.signArbitrary(chainId, signer, message),
 	walletInfo: {
 		windowKey: 'leap',
 		name: 'Leap',

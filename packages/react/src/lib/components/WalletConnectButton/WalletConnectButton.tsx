@@ -35,8 +35,8 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 	}, [backgroundColor]);
 
 	const changeWallet = () => {
-		setShowConnectModal(true);
 		setShowMenu(false);
+		setShowConnectModal(true);
 	};
 
 	const copyAddress = async () => {
