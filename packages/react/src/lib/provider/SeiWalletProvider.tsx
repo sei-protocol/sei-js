@@ -79,6 +79,9 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 
 	const disconnect = () => {
 		setTargetWallet(undefined);
+		setOfflineSigner(undefined);
+		setAccounts([]);
+		setConnectedWallet(undefined);
 	};
 
 	const contextValue: WalletProvider = {
