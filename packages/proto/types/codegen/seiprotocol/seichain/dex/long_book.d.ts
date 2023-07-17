@@ -1,6 +1,6 @@
 import { OrderEntry, OrderEntrySDKType } from "./order_entry";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 export interface LongBook {
     price: string;
     entry: OrderEntry;

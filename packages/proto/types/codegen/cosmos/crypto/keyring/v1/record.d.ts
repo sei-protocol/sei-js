@@ -1,7 +1,7 @@
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { BIP44Params, BIP44ParamsSDKType } from "../../hd/v1/hd";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../../helpers";
 /** Record is used for representing a key in the keyring. */
 export interface Record {
     /** name represents a name of Record */
@@ -19,17 +19,11 @@ export interface Record {
 }
 /** Record is used for representing a key in the keyring. */
 export interface RecordSDKType {
-    /** name represents a name of Record */
     name: string;
-    /** pub_key represents a public key in any format */
     pub_key: AnySDKType;
-    /** local stores the public information about a locally stored key */
     local?: Record_LocalSDKType;
-    /** ledger stores the public information about a Ledger key */
     ledger?: Record_LedgerSDKType;
-    /** Multi does not store any information. */
     multi?: Record_MultiSDKType;
-    /** Offline does not store any information. */
     offline?: Record_OfflineSDKType;
 }
 /**

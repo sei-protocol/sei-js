@@ -1,6 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
-import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize } from "./tx";
-export interface AminoMsgPlaceOrders extends AminoMsg {
+import { MsgPlaceOrders, MsgCancelOrders, MsgRegisterContract, MsgContractDepositRent, MsgUnregisterContract, MsgRegisterPairs, MsgUpdatePriceTickSize, MsgUpdateQuantityTickSize, MsgUnsuspendContract } from "./tx";
+export interface MsgPlaceOrdersAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgPlaceOrders";
     value: {
         creator: string;
@@ -28,7 +28,7 @@ export interface AminoMsgPlaceOrders extends AminoMsg {
         }[];
     };
 }
-export interface AminoMsgCancelOrders extends AminoMsg {
+export interface MsgCancelOrdersAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgCancelOrders";
     value: {
         creator: string;
@@ -45,7 +45,7 @@ export interface AminoMsgCancelOrders extends AminoMsg {
         contractAddr: string;
     };
 }
-export interface AminoMsgRegisterContract extends AminoMsg {
+export interface MsgRegisterContractAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgRegisterContract";
     value: {
         creator: string;
@@ -62,10 +62,12 @@ export interface AminoMsgRegisterContract extends AminoMsg {
             numIncomingDependencies: string;
             creator: string;
             rentBalance: string;
+            suspended: boolean;
+            suspensionReason: string;
         };
     };
 }
-export interface AminoMsgContractDepositRent extends AminoMsg {
+export interface MsgContractDepositRentAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgContractDepositRent";
     value: {
         contractAddr: string;
@@ -73,14 +75,14 @@ export interface AminoMsgContractDepositRent extends AminoMsg {
         sender: string;
     };
 }
-export interface AminoMsgUnregisterContract extends AminoMsg {
+export interface MsgUnregisterContractAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgUnregisterContract";
     value: {
         creator: string;
         contractAddr: string;
     };
 }
-export interface AminoMsgRegisterPairs extends AminoMsg {
+export interface MsgRegisterPairsAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgRegisterPairs";
     value: {
         creator: string;
@@ -95,7 +97,7 @@ export interface AminoMsgRegisterPairs extends AminoMsg {
         }[];
     };
 }
-export interface AminoMsgUpdatePriceTickSize extends AminoMsg {
+export interface MsgUpdatePriceTickSizeAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgUpdatePriceTickSize";
     value: {
         creator: string;
@@ -111,7 +113,7 @@ export interface AminoMsgUpdatePriceTickSize extends AminoMsg {
         }[];
     };
 }
-export interface AminoMsgUpdateQuantityTickSize extends AminoMsg {
+export interface MsgUpdateQuantityTickSizeAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize";
     value: {
         creator: string;
@@ -127,45 +129,57 @@ export interface AminoMsgUpdateQuantityTickSize extends AminoMsg {
         }[];
     };
 }
+export interface MsgUnsuspendContractAminoType extends AminoMsg {
+    type: "/seiprotocol.seichain.dex.MsgUnsuspendContract";
+    value: {
+        creator: string;
+        contractAddr: string;
+    };
+}
 export declare const AminoConverter: {
     "/seiprotocol.seichain.dex.MsgPlaceOrders": {
         aminoType: string;
-        toAmino: ({ creator, orders, contractAddr, funds }: MsgPlaceOrders) => AminoMsgPlaceOrders["value"];
-        fromAmino: ({ creator, orders, contractAddr, funds }: AminoMsgPlaceOrders["value"]) => MsgPlaceOrders;
+        toAmino: ({ creator, orders, contractAddr, funds }: MsgPlaceOrders) => MsgPlaceOrdersAminoType["value"];
+        fromAmino: ({ creator, orders, contractAddr, funds }: MsgPlaceOrdersAminoType["value"]) => MsgPlaceOrders;
     };
     "/seiprotocol.seichain.dex.MsgCancelOrders": {
         aminoType: string;
-        toAmino: ({ creator, cancellations, contractAddr }: MsgCancelOrders) => AminoMsgCancelOrders["value"];
-        fromAmino: ({ creator, cancellations, contractAddr }: AminoMsgCancelOrders["value"]) => MsgCancelOrders;
+        toAmino: ({ creator, cancellations, contractAddr }: MsgCancelOrders) => MsgCancelOrdersAminoType["value"];
+        fromAmino: ({ creator, cancellations, contractAddr }: MsgCancelOrdersAminoType["value"]) => MsgCancelOrders;
     };
     "/seiprotocol.seichain.dex.MsgRegisterContract": {
         aminoType: string;
-        toAmino: ({ creator, contract }: MsgRegisterContract) => AminoMsgRegisterContract["value"];
-        fromAmino: ({ creator, contract }: AminoMsgRegisterContract["value"]) => MsgRegisterContract;
+        toAmino: ({ creator, contract }: MsgRegisterContract) => MsgRegisterContractAminoType["value"];
+        fromAmino: ({ creator, contract }: MsgRegisterContractAminoType["value"]) => MsgRegisterContract;
     };
     "/seiprotocol.seichain.dex.MsgContractDepositRent": {
         aminoType: string;
-        toAmino: ({ contractAddr, amount, sender }: MsgContractDepositRent) => AminoMsgContractDepositRent["value"];
-        fromAmino: ({ contractAddr, amount, sender }: AminoMsgContractDepositRent["value"]) => MsgContractDepositRent;
+        toAmino: ({ contractAddr, amount, sender }: MsgContractDepositRent) => MsgContractDepositRentAminoType["value"];
+        fromAmino: ({ contractAddr, amount, sender }: MsgContractDepositRentAminoType["value"]) => MsgContractDepositRent;
     };
     "/seiprotocol.seichain.dex.MsgUnregisterContract": {
         aminoType: string;
-        toAmino: ({ creator, contractAddr }: MsgUnregisterContract) => AminoMsgUnregisterContract["value"];
-        fromAmino: ({ creator, contractAddr }: AminoMsgUnregisterContract["value"]) => MsgUnregisterContract;
+        toAmino: ({ creator, contractAddr }: MsgUnregisterContract) => MsgUnregisterContractAminoType["value"];
+        fromAmino: ({ creator, contractAddr }: MsgUnregisterContractAminoType["value"]) => MsgUnregisterContract;
     };
     "/seiprotocol.seichain.dex.MsgRegisterPairs": {
         aminoType: string;
-        toAmino: ({ creator, batchcontractpair }: MsgRegisterPairs) => AminoMsgRegisterPairs["value"];
-        fromAmino: ({ creator, batchcontractpair }: AminoMsgRegisterPairs["value"]) => MsgRegisterPairs;
+        toAmino: ({ creator, batchcontractpair }: MsgRegisterPairs) => MsgRegisterPairsAminoType["value"];
+        fromAmino: ({ creator, batchcontractpair }: MsgRegisterPairsAminoType["value"]) => MsgRegisterPairs;
     };
     "/seiprotocol.seichain.dex.MsgUpdatePriceTickSize": {
         aminoType: string;
-        toAmino: ({ creator, tickSizeList }: MsgUpdatePriceTickSize) => AminoMsgUpdatePriceTickSize["value"];
-        fromAmino: ({ creator, tickSizeList }: AminoMsgUpdatePriceTickSize["value"]) => MsgUpdatePriceTickSize;
+        toAmino: ({ creator, tickSizeList }: MsgUpdatePriceTickSize) => MsgUpdatePriceTickSizeAminoType["value"];
+        fromAmino: ({ creator, tickSizeList }: MsgUpdatePriceTickSizeAminoType["value"]) => MsgUpdatePriceTickSize;
     };
     "/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize": {
         aminoType: string;
-        toAmino: ({ creator, tickSizeList }: MsgUpdateQuantityTickSize) => AminoMsgUpdateQuantityTickSize["value"];
-        fromAmino: ({ creator, tickSizeList }: AminoMsgUpdateQuantityTickSize["value"]) => MsgUpdateQuantityTickSize;
+        toAmino: ({ creator, tickSizeList }: MsgUpdateQuantityTickSize) => MsgUpdateQuantityTickSizeAminoType["value"];
+        fromAmino: ({ creator, tickSizeList }: MsgUpdateQuantityTickSizeAminoType["value"]) => MsgUpdateQuantityTickSize;
+    };
+    "/seiprotocol.seichain.dex.MsgUnsuspendContract": {
+        aminoType: string;
+        toAmino: ({ creator, contractAddr }: MsgUnsuspendContract) => MsgUnsuspendContractAminoType["value"];
+        fromAmino: ({ creator, contractAddr }: MsgUnsuspendContractAminoType["value"]) => MsgUnsuspendContract;
     };
 };

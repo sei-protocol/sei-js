@@ -1,7 +1,7 @@
 import { MerkleProof, MerkleProofSDKType } from "./data";
 import { Account, AccountSDKType } from "./account";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface MsgRecordTransactionData {
     sender: string;
     slot: Long;

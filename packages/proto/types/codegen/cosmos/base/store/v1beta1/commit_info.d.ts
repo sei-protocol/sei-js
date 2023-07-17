@@ -1,5 +1,5 @@
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /**
  * CommitInfo defines commit information used by the multi-store when committing
  * a version/height.

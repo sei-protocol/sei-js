@@ -1,6 +1,6 @@
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /** GenesisState defines the evidence module's genesis state. */
 export interface GenesisState {
     /** evidence defines all the evidence at genesis. */
@@ -8,7 +8,6 @@ export interface GenesisState {
 }
 /** GenesisState defines the evidence module's genesis state. */
 export interface GenesisStateSDKType {
-    /** evidence defines all the evidence at genesis. */
     evidence: AnySDKType[];
 }
 export declare const GenesisState: {

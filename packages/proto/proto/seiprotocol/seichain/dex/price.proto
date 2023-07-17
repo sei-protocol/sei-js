@@ -7,7 +7,7 @@ import "seiprotocol/seichain/dex/pair.proto";
 option go_package = "github.com/sei-protocol/sei-chain/x/dex/types";
 
 message Price {
-  
+
   uint64 snapshotTimestampInSeconds = 1 [
     (gogoproto.jsontag) = "snapshot_timestamp_in_seconds"
   ];

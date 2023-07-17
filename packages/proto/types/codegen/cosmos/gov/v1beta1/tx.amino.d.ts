@@ -1,6 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgSubmitProposal, MsgVote, MsgVoteWeighted, MsgDeposit } from "./tx";
-export interface AminoMsgSubmitProposal extends AminoMsg {
+export interface MsgSubmitProposalAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgSubmitProposal";
     value: {
         content: {
@@ -14,7 +14,7 @@ export interface AminoMsgSubmitProposal extends AminoMsg {
         proposer: string;
     };
 }
-export interface AminoMsgVote extends AminoMsg {
+export interface MsgVoteAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgVote";
     value: {
         proposal_id: string;
@@ -22,7 +22,7 @@ export interface AminoMsgVote extends AminoMsg {
         option: number;
     };
 }
-export interface AminoMsgVoteWeighted extends AminoMsg {
+export interface MsgVoteWeightedAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgVoteWeighted";
     value: {
         proposal_id: string;
@@ -33,7 +33,7 @@ export interface AminoMsgVoteWeighted extends AminoMsg {
         }[];
     };
 }
-export interface AminoMsgDeposit extends AminoMsg {
+export interface MsgDepositAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgDeposit";
     value: {
         proposal_id: string;
@@ -47,22 +47,22 @@ export interface AminoMsgDeposit extends AminoMsg {
 export declare const AminoConverter: {
     "/cosmos.gov.v1beta1.MsgSubmitProposal": {
         aminoType: string;
-        toAmino: ({ content, initialDeposit, proposer }: MsgSubmitProposal) => AminoMsgSubmitProposal["value"];
-        fromAmino: ({ content, initial_deposit, proposer }: AminoMsgSubmitProposal["value"]) => MsgSubmitProposal;
+        toAmino: ({ content, initialDeposit, proposer }: MsgSubmitProposal) => MsgSubmitProposalAminoType["value"];
+        fromAmino: ({ content, initial_deposit, proposer }: MsgSubmitProposalAminoType["value"]) => MsgSubmitProposal;
     };
     "/cosmos.gov.v1beta1.MsgVote": {
         aminoType: string;
-        toAmino: ({ proposalId, voter, option }: MsgVote) => AminoMsgVote["value"];
-        fromAmino: ({ proposal_id, voter, option }: AminoMsgVote["value"]) => MsgVote;
+        toAmino: ({ proposalId, voter, option }: MsgVote) => MsgVoteAminoType["value"];
+        fromAmino: ({ proposal_id, voter, option }: MsgVoteAminoType["value"]) => MsgVote;
     };
     "/cosmos.gov.v1beta1.MsgVoteWeighted": {
         aminoType: string;
-        toAmino: ({ proposalId, voter, options }: MsgVoteWeighted) => AminoMsgVoteWeighted["value"];
-        fromAmino: ({ proposal_id, voter, options }: AminoMsgVoteWeighted["value"]) => MsgVoteWeighted;
+        toAmino: ({ proposalId, voter, options }: MsgVoteWeighted) => MsgVoteWeightedAminoType["value"];
+        fromAmino: ({ proposal_id, voter, options }: MsgVoteWeightedAminoType["value"]) => MsgVoteWeighted;
     };
     "/cosmos.gov.v1beta1.MsgDeposit": {
         aminoType: string;
-        toAmino: ({ proposalId, depositor, amount }: MsgDeposit) => AminoMsgDeposit["value"];
-        fromAmino: ({ proposal_id, depositor, amount }: AminoMsgDeposit["value"]) => MsgDeposit;
+        toAmino: ({ proposalId, depositor, amount }: MsgDeposit) => MsgDepositAminoType["value"];
+        fromAmino: ({ proposal_id, depositor, amount }: MsgDepositAminoType["value"]) => MsgDeposit;
     };
 };

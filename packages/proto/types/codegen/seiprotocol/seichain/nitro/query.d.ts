@@ -1,6 +1,6 @@
 import { Params, ParamsSDKType } from "./params";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface QueryParamsRequest {
 }
 export interface QueryParamsRequestSDKType {

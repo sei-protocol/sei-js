@@ -1,6 +1,6 @@
-import { OracleExchangeRate, OracleExchangeRateSDKType, PriceSnapshot, PriceSnapshotSDKType, OracleTwap, OracleTwapSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, Params, ParamsSDKType } from "./oracle";
+import { OracleExchangeRate, OracleExchangeRateSDKType, PriceSnapshot, PriceSnapshotSDKType, OracleTwap, OracleTwapSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType, Params, ParamsSDKType } from "./oracle";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /** QueryExchangeRateRequest is the request type for the Query/ExchangeRate RPC method. */
 export interface QueryExchangeRateRequest {
     /** denom defines the denomination to query for. */
@@ -8,7 +8,6 @@ export interface QueryExchangeRateRequest {
 }
 /** QueryExchangeRateRequest is the request type for the Query/ExchangeRate RPC method. */
 export interface QueryExchangeRateRequestSDKType {
-    /** denom defines the denomination to query for. */
     denom: string;
 }
 /**
@@ -24,7 +23,6 @@ export interface QueryExchangeRateResponse {
  * Query/ExchangeRate RPC method.
  */
 export interface QueryExchangeRateResponseSDKType {
-    /** exchange_rate defines the exchange rate of Sei denominated in various Sei */
     oracle_exchange_rate: OracleExchangeRateSDKType;
 }
 /** QueryExchangeRatesRequest is the request type for the Query/ExchangeRates RPC method. */
@@ -54,7 +52,6 @@ export interface QueryExchangeRatesResponse {
  * Query/ExchangeRates RPC method.
  */
 export interface QueryExchangeRatesResponseSDKType {
-    /** exchange_rates defines a list of the exchange rate for all whitelisted denoms. */
     denom_oracle_exchange_rate_pairs: DenomOracleExchangeRatePairSDKType[];
 }
 /** QueryActivesRequest is the request type for the Query/Actives RPC method. */
@@ -76,7 +73,6 @@ export interface QueryActivesResponse {
  * Query/Actives RPC method.
  */
 export interface QueryActivesResponseSDKType {
-    /** actives defines a list of the denomination which oracle prices aggreed upon. */
     actives: string[];
 }
 /** QueryVoteTargetsRequest is the request type for the Query/VoteTargets RPC method. */
@@ -101,10 +97,6 @@ export interface QueryVoteTargetsResponse {
  * Query/VoteTargets RPC method.
  */
 export interface QueryVoteTargetsResponseSDKType {
-    /**
-     * vote_targets defines a list of the denomination in which everyone
-     * should vote in the current vote period.
-     */
     vote_targets: string[];
 }
 /** request type for price snapshot history RPC method */
@@ -121,11 +113,11 @@ export interface QueryPriceSnapshotHistoryResponseSDKType {
 }
 /** request type for twap RPC method */
 export interface QueryTwapsRequest {
-    lookbackSeconds?: Long;
+    lookbackSeconds: Long;
 }
 /** request type for twap RPC method */
 export interface QueryTwapsRequestSDKType {
-    lookback_seconds?: Long;
+    lookback_seconds: Long;
 }
 export interface QueryTwapsResponse {
     oracleTwaps: OracleTwap[];
@@ -140,7 +132,6 @@ export interface QueryFeederDelegationRequest {
 }
 /** QueryFeederDelegationRequest is the request type for the Query/FeederDelegation RPC method. */
 export interface QueryFeederDelegationRequestSDKType {
-    /** validator defines the validator address to query for. */
     validator_addr: string;
 }
 /**
@@ -156,7 +147,6 @@ export interface QueryFeederDelegationResponse {
  * Query/FeederDelegation RPC method.
  */
 export interface QueryFeederDelegationResponseSDKType {
-    /** feeder_addr defines the feeder delegation of a validator */
     feeder_addr: string;
 }
 /** QueryVotePenaltyCounterRequest is the request type for the Query/MissCounter RPC method. */
@@ -166,7 +156,6 @@ export interface QueryVotePenaltyCounterRequest {
 }
 /** QueryVotePenaltyCounterRequest is the request type for the Query/MissCounter RPC method. */
 export interface QueryVotePenaltyCounterRequestSDKType {
-    /** validator defines the validator address to query for. */
     validator_addr: string;
 }
 /**
@@ -183,53 +172,35 @@ export interface QueryVotePenaltyCounterResponse {
 export interface QueryVotePenaltyCounterResponseSDKType {
     vote_penalty_counter: VotePenaltyCounterSDKType;
 }
-/** QueryAggregateVoteRequest is the request type for the Query/AggregateVote RPC method. */
-export interface QueryAggregateVoteRequest {
-    /** validator defines the validator address to query for. */
-    validatorAddr: string;
-}
-/** QueryAggregateVoteRequest is the request type for the Query/AggregateVote RPC method. */
-export interface QueryAggregateVoteRequestSDKType {
-    /** validator defines the validator address to query for. */
-    validator_addr: string;
+/**
+ * QuerySlashWindow is the request type for the
+ * Query/SlashWindow RPC method.
+ */
+export interface QuerySlashWindowRequest {
 }
 /**
- * QueryAggregateVoteResponse is response type for the
- * Query/AggregateVote RPC method.
+ * QuerySlashWindow is the request type for the
+ * Query/SlashWindow RPC method.
  */
-export interface QueryAggregateVoteResponse {
-    /** aggregate_vote defines oracle aggregate vote submitted by a validator in the current vote period */
-    aggregateVote: AggregateExchangeRateVote;
+export interface QuerySlashWindowRequestSDKType {
 }
 /**
- * QueryAggregateVoteResponse is response type for the
- * Query/AggregateVote RPC method.
+ * QuerySlashWindowResponse is response type for the
+ * Query/SlashWindow RPC method.
  */
-export interface QueryAggregateVoteResponseSDKType {
-    /** aggregate_vote defines oracle aggregate vote submitted by a validator in the current vote period */
-    aggregate_vote: AggregateExchangeRateVoteSDKType;
-}
-/** QueryAggregateVotesRequest is the request type for the Query/AggregateVotes RPC method. */
-export interface QueryAggregateVotesRequest {
-}
-/** QueryAggregateVotesRequest is the request type for the Query/AggregateVotes RPC method. */
-export interface QueryAggregateVotesRequestSDKType {
+export interface QuerySlashWindowResponse {
+    /**
+     * window_progress defines the number of voting periods
+     * since the last slashing event would have taken place.
+     */
+    windowProgress: Long;
 }
 /**
- * QueryAggregateVotesResponse is response type for the
- * Query/AggregateVotes RPC method.
+ * QuerySlashWindowResponse is response type for the
+ * Query/SlashWindow RPC method.
  */
-export interface QueryAggregateVotesResponse {
-    /** aggregate_votes defines all oracle aggregate votes submitted in the current vote period */
-    aggregateVotes: AggregateExchangeRateVote[];
-}
-/**
- * QueryAggregateVotesResponse is response type for the
- * Query/AggregateVotes RPC method.
- */
-export interface QueryAggregateVotesResponseSDKType {
-    /** aggregate_votes defines all oracle aggregate votes submitted in the current vote period */
-    aggregate_votes: AggregateExchangeRateVoteSDKType[];
+export interface QuerySlashWindowResponseSDKType {
+    window_progress: Long;
 }
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
@@ -244,7 +215,6 @@ export interface QueryParamsResponse {
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-    /** params defines the parameters of the module. */
     params: ParamsSDKType;
 }
 export declare const QueryExchangeRateRequest: {
@@ -332,25 +302,15 @@ export declare const QueryVotePenaltyCounterResponse: {
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryVotePenaltyCounterResponse;
     fromPartial(object: DeepPartial<QueryVotePenaltyCounterResponse>): QueryVotePenaltyCounterResponse;
 };
-export declare const QueryAggregateVoteRequest: {
-    encode(message: QueryAggregateVoteRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVoteRequest;
-    fromPartial(object: DeepPartial<QueryAggregateVoteRequest>): QueryAggregateVoteRequest;
+export declare const QuerySlashWindowRequest: {
+    encode(_: QuerySlashWindowRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QuerySlashWindowRequest;
+    fromPartial(_: DeepPartial<QuerySlashWindowRequest>): QuerySlashWindowRequest;
 };
-export declare const QueryAggregateVoteResponse: {
-    encode(message: QueryAggregateVoteResponse, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVoteResponse;
-    fromPartial(object: DeepPartial<QueryAggregateVoteResponse>): QueryAggregateVoteResponse;
-};
-export declare const QueryAggregateVotesRequest: {
-    encode(_: QueryAggregateVotesRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVotesRequest;
-    fromPartial(_: DeepPartial<QueryAggregateVotesRequest>): QueryAggregateVotesRequest;
-};
-export declare const QueryAggregateVotesResponse: {
-    encode(message: QueryAggregateVotesResponse, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): QueryAggregateVotesResponse;
-    fromPartial(object: DeepPartial<QueryAggregateVotesResponse>): QueryAggregateVotesResponse;
+export declare const QuerySlashWindowResponse: {
+    encode(message: QuerySlashWindowResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QuerySlashWindowResponse;
+    fromPartial(object: DeepPartial<QuerySlashWindowResponse>): QuerySlashWindowResponse;
 };
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: _m0.Writer): _m0.Writer;

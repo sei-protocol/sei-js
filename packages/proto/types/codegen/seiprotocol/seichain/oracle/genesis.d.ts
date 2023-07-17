@@ -1,6 +1,6 @@
 import { Params, ParamsSDKType, ExchangeRateTuple, ExchangeRateTupleSDKType, AggregateExchangeRateVote, AggregateExchangeRateVoteSDKType, PriceSnapshot, PriceSnapshotSDKType, VotePenaltyCounter, VotePenaltyCounterSDKType } from "./oracle";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 export interface GenesisState {
     params: Params;
     feederDelegations: FeederDelegation[];

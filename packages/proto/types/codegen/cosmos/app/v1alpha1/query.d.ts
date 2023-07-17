@@ -1,6 +1,6 @@
 import { Config, ConfigSDKType } from "./config";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /** QueryConfigRequest is the Query/Config request type. */
 export interface QueryConfigRequest {
 }
@@ -14,7 +14,6 @@ export interface QueryConfigResponse {
 }
 /** QueryConfigRequest is the Query/Config response type. */
 export interface QueryConfigResponseSDKType {
-    /** config is the current app config. */
     config: ConfigSDKType;
 }
 export declare const QueryConfigRequest: {

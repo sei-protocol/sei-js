@@ -2,7 +2,7 @@ syntax = "proto3";
 package seiprotocol.seichain.tokenfactory;
 
 import "gogoproto/gogo.proto";
-import "seiprotocol/seichain/tokenfactory/authorityMetadata.proto"; 
+import "seiprotocol/seichain/tokenfactory/authorityMetadata.proto";
 import "seiprotocol/seichain/tokenfactory/params.proto";
 
 option go_package = "github.com/sei-protocol/sei-chain/x/tokenfactory/types";

@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /**
  * MsgAggregateExchangeRateVote represents a message to submit
  * aggregate exchange rate vote.
@@ -15,7 +15,6 @@ export interface MsgAggregateExchangeRateVote {
  * aggregate exchange rate vote.
  */
 export interface MsgAggregateExchangeRateVoteSDKType {
-    /** 1 reserved from old field `salt` */
     exchange_rates: string;
     feeder: string;
     validator: string;

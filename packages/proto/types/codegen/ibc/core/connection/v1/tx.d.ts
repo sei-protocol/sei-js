@@ -1,8 +1,8 @@
 import { Counterparty, CounterpartySDKType, Version, VersionSDKType } from "./connection";
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { Height, HeightSDKType } from "../../client/v1/client";
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /**
  * MsgConnectionOpenInit defines the msg sent by an account on Chain A to
  * initialize a connection with Chain B.
@@ -71,24 +71,14 @@ export interface MsgConnectionOpenTry {
  */
 export interface MsgConnectionOpenTrySDKType {
     client_id: string;
-    /**
-     * in the case of crossing hello's, when both chains call OpenInit, we need
-     * the connection identifier of the previous connection in state INIT
-     */
     previous_connection_id: string;
     client_state: AnySDKType;
     counterparty: CounterpartySDKType;
     delay_period: Long;
     counterparty_versions: VersionSDKType[];
     proof_height: HeightSDKType;
-    /**
-     * proof of the initialization the connection on Chain A: `UNITIALIZED ->
-     * INIT`
-     */
     proof_init: Uint8Array;
-    /** proof of client state included in message */
     proof_client: Uint8Array;
-    /** proof of client consensus state */
     proof_consensus: Uint8Array;
     consensus_height: HeightSDKType;
     signer: string;
@@ -131,14 +121,8 @@ export interface MsgConnectionOpenAckSDKType {
     version: VersionSDKType;
     client_state: AnySDKType;
     proof_height: HeightSDKType;
-    /**
-     * proof of the initialization the connection on Chain B: `UNITIALIZED ->
-     * TRYOPEN`
-     */
     proof_try: Uint8Array;
-    /** proof of client state included in message */
     proof_client: Uint8Array;
-    /** proof of client consensus state */
     proof_consensus: Uint8Array;
     consensus_height: HeightSDKType;
     signer: string;
@@ -166,7 +150,6 @@ export interface MsgConnectionOpenConfirm {
  */
 export interface MsgConnectionOpenConfirmSDKType {
     connection_id: string;
-    /** proof for the change of the connection state on Chain A: `INIT -> OPEN` */
     proof_ack: Uint8Array;
     proof_height: HeightSDKType;
     signer: string;

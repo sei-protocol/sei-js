@@ -106,9 +106,6 @@ export const createLCDClient = async ({
         mint: new (await import("./seichain/mint/v1beta1/query.lcd")).LCDQueryClient({
           requestClient
         }),
-        nitro: new (await import("./seichain/nitro/query.lcd")).LCDQueryClient({
-          requestClient
-        }),
         oracle: new (await import("./seichain/oracle/query.lcd")).LCDQueryClient({
           requestClient
         }),

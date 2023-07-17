@@ -1,6 +1,6 @@
 import { Params, ParamsSDKType } from "./mint";
+import { Long, DeepPartial } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
 }
@@ -14,7 +14,6 @@ export interface QueryParamsResponse {
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-    /** params defines the parameters of the module. */
     params: ParamsSDKType;
 }
 /**
@@ -34,20 +33,28 @@ export interface QueryMinterRequestSDKType {
  * Query/Minter RPC method.
  */
 export interface QueryMinterResponse {
-    lastMintAmount: string;
+    startDate: string;
+    endDate: string;
+    denom: string;
+    totalMintAmount: Long;
+    remainingMintAmount: Long;
+    lastMintAmount: Long;
     lastMintDate: string;
     lastMintHeight: Long;
-    denom: string;
 }
 /**
  * QueryMinterResponse is the response type for the
  * Query/Minter RPC method.
  */
 export interface QueryMinterResponseSDKType {
-    last_mint_amount: string;
+    start_date: string;
+    end_date: string;
+    denom: string;
+    total_mint_amount: Long;
+    remaining_mint_amount: Long;
+    last_mint_amount: Long;
     last_mint_date: string;
     last_mint_height: Long;
-    denom: string;
 }
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: _m0.Writer): _m0.Writer;

@@ -3,8 +3,8 @@ import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { ContractInfoV2, ContractInfoV2SDKType } from "./contract";
 import { BatchContractPair, BatchContractPairSDKType } from "./pair";
 import { TickSize, TickSizeSDKType } from "./tick_size";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 export interface MsgPlaceOrders {
     creator: string;
     orders: Order[];
@@ -107,6 +107,18 @@ export interface MsgUpdateTickSizeResponse {
 }
 export interface MsgUpdateTickSizeResponseSDKType {
 }
+export interface MsgUnsuspendContract {
+    creator: string;
+    contractAddr: string;
+}
+export interface MsgUnsuspendContractSDKType {
+    creator: string;
+    contractAddr: string;
+}
+export interface MsgUnsuspendContractResponse {
+}
+export interface MsgUnsuspendContractResponseSDKType {
+}
 export declare const MsgPlaceOrders: {
     encode(message: MsgPlaceOrders, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): MsgPlaceOrders;
@@ -181,4 +193,14 @@ export declare const MsgUpdateTickSizeResponse: {
     encode(_: MsgUpdateTickSizeResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateTickSizeResponse;
     fromPartial(_: DeepPartial<MsgUpdateTickSizeResponse>): MsgUpdateTickSizeResponse;
+};
+export declare const MsgUnsuspendContract: {
+    encode(message: MsgUnsuspendContract, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnsuspendContract;
+    fromPartial(object: DeepPartial<MsgUnsuspendContract>): MsgUnsuspendContract;
+};
+export declare const MsgUnsuspendContractResponse: {
+    encode(_: MsgUnsuspendContractResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MsgUnsuspendContractResponse;
+    fromPartial(_: DeepPartial<MsgUnsuspendContractResponse>): MsgUnsuspendContractResponse;
 };

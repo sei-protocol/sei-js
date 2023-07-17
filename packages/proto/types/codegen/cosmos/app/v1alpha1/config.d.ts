@@ -1,6 +1,6 @@
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../helpers";
 /**
  * Config represents the configuration for a Cosmos SDK ABCI app.
  * It is intended that all state machine logic including the version of
@@ -24,7 +24,6 @@ export interface Config {
  * their state machine with a config object alone.
  */
 export interface ConfigSDKType {
-    /** modules are the module configurations for the app. */
     modules: ModuleConfigSDKType[];
 }
 /** ModuleConfig is a module configuration for an app. */
@@ -50,23 +49,7 @@ export interface ModuleConfig {
 }
 /** ModuleConfig is a module configuration for an app. */
 export interface ModuleConfigSDKType {
-    /**
-     * name is the unique name of the module within the app. It should be a name
-     * that persists between different versions of a module so that modules
-     * can be smoothly upgraded to new versions.
-     *
-     * For example, for the module cosmos.bank.module.v1.Module, we may chose
-     * to simply name the module "bank" in the app. When we upgrade to
-     * cosmos.bank.module.v2.Module, the app-specific name "bank" stays the same
-     * and the framework knows that the v2 module should receive all the same state
-     * that the v1 module had. Note: modules should provide info on which versions
-     * they can migrate from in the ModuleDescriptor.can_migration_from field.
-     */
     name: string;
-    /**
-     * config is the config object for the module. Module config messages should
-     * define a ModuleDescriptor using the cosmos.app.v1alpha1.is_module extension.
-     */
     config: AnySDKType;
 }
 export declare const Config: {

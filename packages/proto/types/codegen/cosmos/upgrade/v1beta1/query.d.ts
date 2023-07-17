@@ -1,6 +1,6 @@
 import { Plan, PlanSDKType, ModuleVersion, ModuleVersionSDKType } from "./upgrade";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /**
  * QueryCurrentPlanRequest is the request type for the Query/CurrentPlan RPC
  * method.
@@ -26,7 +26,6 @@ export interface QueryCurrentPlanResponse {
  * method.
  */
 export interface QueryCurrentPlanResponseSDKType {
-    /** plan is the current upgrade plan. */
     plan: PlanSDKType;
 }
 /**
@@ -42,7 +41,6 @@ export interface QueryAppliedPlanRequest {
  * method.
  */
 export interface QueryAppliedPlanRequestSDKType {
-    /** name is the name of the applied plan to query for. */
     name: string;
 }
 /**
@@ -58,7 +56,6 @@ export interface QueryAppliedPlanResponse {
  * method.
  */
 export interface QueryAppliedPlanResponseSDKType {
-    /** height is the block height at which the plan was applied. */
     height: Long;
 }
 /**
@@ -79,10 +76,6 @@ export interface QueryUpgradedConsensusStateRequest {
  */
 /** @deprecated */
 export interface QueryUpgradedConsensusStateRequestSDKType {
-    /**
-     * last height of the current chain must be sent in request
-     * as this is the height under which next consensus state is stored
-     */
     last_height: Long;
 }
 /**
@@ -100,7 +93,6 @@ export interface QueryUpgradedConsensusStateResponse {
  */
 /** @deprecated */
 export interface QueryUpgradedConsensusStateResponseSDKType {
-    /** Since: cosmos-sdk 0.43 */
     upgraded_consensus_state: Uint8Array;
 }
 /**
@@ -115,7 +107,7 @@ export interface QueryModuleVersionsRequest {
      * consensus version from state. Leaving this empty will
      * fetch the full list of module versions from state
      */
-    moduleName?: string;
+    moduleName: string;
 }
 /**
  * QueryModuleVersionsRequest is the request type for the Query/ModuleVersions
@@ -124,12 +116,7 @@ export interface QueryModuleVersionsRequest {
  * Since: cosmos-sdk 0.43
  */
 export interface QueryModuleVersionsRequestSDKType {
-    /**
-     * module_name is a field to query a specific module
-     * consensus version from state. Leaving this empty will
-     * fetch the full list of module versions from state
-     */
-    module_name?: string;
+    module_name: string;
 }
 /**
  * QueryModuleVersionsResponse is the response type for the Query/ModuleVersions
@@ -148,7 +135,6 @@ export interface QueryModuleVersionsResponse {
  * Since: cosmos-sdk 0.43
  */
 export interface QueryModuleVersionsResponseSDKType {
-    /** module_versions is a list of module names with their consensus versions. */
     module_versions: ModuleVersionSDKType[];
 }
 /**

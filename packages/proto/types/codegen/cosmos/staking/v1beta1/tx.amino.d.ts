@@ -1,6 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgCreateValidator, MsgEditValidator, MsgDelegate, MsgBeginRedelegate, MsgUndelegate } from "./tx";
-export interface AminoMsgCreateValidator extends AminoMsg {
+export interface MsgCreateValidatorAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgCreateValidator";
     value: {
         description: {
@@ -28,7 +28,7 @@ export interface AminoMsgCreateValidator extends AminoMsg {
         };
     };
 }
-export interface AminoMsgEditValidator extends AminoMsg {
+export interface MsgEditValidatorAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgEditValidator";
     value: {
         description: {
@@ -43,7 +43,7 @@ export interface AminoMsgEditValidator extends AminoMsg {
         min_self_delegation: string;
     };
 }
-export interface AminoMsgDelegate extends AminoMsg {
+export interface MsgDelegateAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgDelegate";
     value: {
         delegator_address: string;
@@ -54,7 +54,7 @@ export interface AminoMsgDelegate extends AminoMsg {
         };
     };
 }
-export interface AminoMsgBeginRedelegate extends AminoMsg {
+export interface MsgBeginRedelegateAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgBeginRedelegate";
     value: {
         delegator_address: string;
@@ -66,7 +66,7 @@ export interface AminoMsgBeginRedelegate extends AminoMsg {
         };
     };
 }
-export interface AminoMsgUndelegate extends AminoMsg {
+export interface MsgUndelegateAminoType extends AminoMsg {
     type: "cosmos-sdk/MsgUndelegate";
     value: {
         delegator_address: string;
@@ -80,27 +80,27 @@ export interface AminoMsgUndelegate extends AminoMsg {
 export declare const AminoConverter: {
     "/cosmos.staking.v1beta1.MsgCreateValidator": {
         aminoType: string;
-        toAmino: ({ description, commission, minSelfDelegation, delegatorAddress, validatorAddress, pubkey, value }: MsgCreateValidator) => AminoMsgCreateValidator["value"];
-        fromAmino: ({ description, commission, min_self_delegation, delegator_address, validator_address, pubkey, value }: AminoMsgCreateValidator["value"]) => MsgCreateValidator;
+        toAmino: ({ description, commission, minSelfDelegation, delegatorAddress, validatorAddress, pubkey, value }: MsgCreateValidator) => MsgCreateValidatorAminoType["value"];
+        fromAmino: ({ description, commission, min_self_delegation, delegator_address, validator_address, pubkey, value }: MsgCreateValidatorAminoType["value"]) => MsgCreateValidator;
     };
     "/cosmos.staking.v1beta1.MsgEditValidator": {
         aminoType: string;
-        toAmino: ({ description, validatorAddress, commissionRate, minSelfDelegation }: MsgEditValidator) => AminoMsgEditValidator["value"];
-        fromAmino: ({ description, validator_address, commission_rate, min_self_delegation }: AminoMsgEditValidator["value"]) => MsgEditValidator;
+        toAmino: ({ description, validatorAddress, commissionRate, minSelfDelegation }: MsgEditValidator) => MsgEditValidatorAminoType["value"];
+        fromAmino: ({ description, validator_address, commission_rate, min_self_delegation }: MsgEditValidatorAminoType["value"]) => MsgEditValidator;
     };
     "/cosmos.staking.v1beta1.MsgDelegate": {
         aminoType: string;
-        toAmino: ({ delegatorAddress, validatorAddress, amount }: MsgDelegate) => AminoMsgDelegate["value"];
-        fromAmino: ({ delegator_address, validator_address, amount }: AminoMsgDelegate["value"]) => MsgDelegate;
+        toAmino: ({ delegatorAddress, validatorAddress, amount }: MsgDelegate) => MsgDelegateAminoType["value"];
+        fromAmino: ({ delegator_address, validator_address, amount }: MsgDelegateAminoType["value"]) => MsgDelegate;
     };
     "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
         aminoType: string;
-        toAmino: ({ delegatorAddress, validatorSrcAddress, validatorDstAddress, amount }: MsgBeginRedelegate) => AminoMsgBeginRedelegate["value"];
-        fromAmino: ({ delegator_address, validator_src_address, validator_dst_address, amount }: AminoMsgBeginRedelegate["value"]) => MsgBeginRedelegate;
+        toAmino: ({ delegatorAddress, validatorSrcAddress, validatorDstAddress, amount }: MsgBeginRedelegate) => MsgBeginRedelegateAminoType["value"];
+        fromAmino: ({ delegator_address, validator_src_address, validator_dst_address, amount }: MsgBeginRedelegateAminoType["value"]) => MsgBeginRedelegate;
     };
     "/cosmos.staking.v1beta1.MsgUndelegate": {
         aminoType: string;
-        toAmino: ({ delegatorAddress, validatorAddress, amount }: MsgUndelegate) => AminoMsgUndelegate["value"];
-        fromAmino: ({ delegator_address, validator_address, amount }: AminoMsgUndelegate["value"]) => MsgUndelegate;
+        toAmino: ({ delegatorAddress, validatorAddress, amount }: MsgUndelegate) => MsgUndelegateAminoType["value"];
+        fromAmino: ({ delegator_address, validator_address, amount }: MsgUndelegateAminoType["value"]) => MsgUndelegate;
     };
 };

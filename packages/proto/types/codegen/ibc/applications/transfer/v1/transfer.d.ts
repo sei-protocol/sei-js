@@ -1,5 +1,5 @@
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial } from "@osmonauts/helpers";
+import { DeepPartial } from "../../../../helpers";
 /**
  * DenomTrace contains the base denomination for ICS20 fungible tokens and the
  * source tracing information path.
@@ -18,12 +18,7 @@ export interface DenomTrace {
  * source tracing information path.
  */
 export interface DenomTraceSDKType {
-    /**
-     * path defines the chain of port/channel identifiers used for tracing the
-     * source of the fungible token.
-     */
     path: string;
-    /** base denomination of the relayed fungible token. */
     base_denom: string;
 }
 /**
@@ -51,15 +46,7 @@ export interface Params {
  * parameter for the denomination to false.
  */
 export interface ParamsSDKType {
-    /**
-     * send_enabled enables or disables all cross-chain token transfers from this
-     * chain.
-     */
     send_enabled: boolean;
-    /**
-     * receive_enabled enables or disables all cross-chain token transfers to this
-     * chain.
-     */
     receive_enabled: boolean;
 }
 export declare const DenomTrace: {

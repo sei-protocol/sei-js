@@ -1,5 +1,6 @@
-import { OfflineSigner, GeneratedType, Registry } from "@cosmjs/proto-signing";
+import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
 import { AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
+import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
 export declare const ibcAminoConverters: {
     "/ibc.core.connection.v1.MsgConnectionOpenInit": {
         aminoType: string;
@@ -57,11 +58,11 @@ export declare const ibcAminoConverters: {
                 identifier: string;
                 features: string[];
             }[];
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             proof_init: Uint8Array;
             proof_client: Uint8Array;
             proof_consensus: Uint8Array;
-            consensus_height: import("@osmonauts/helpers").AminoHeight;
+            consensus_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ client_id, previous_connection_id, client_state, counterparty, delay_period, counterparty_versions, proof_height, proof_init, proof_client, proof_consensus, consensus_height, signer }: {
@@ -83,11 +84,11 @@ export declare const ibcAminoConverters: {
                 identifier: string;
                 features: string[];
             }[];
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             proof_init: Uint8Array;
             proof_client: Uint8Array;
             proof_consensus: Uint8Array;
-            consensus_height: import("@osmonauts/helpers").AminoHeight;
+            consensus_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/connection/v1/tx").MsgConnectionOpenTry;
     };
@@ -104,11 +105,11 @@ export declare const ibcAminoConverters: {
                 type_url: string;
                 value: Uint8Array;
             };
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             proof_try: Uint8Array;
             proof_client: Uint8Array;
             proof_consensus: Uint8Array;
-            consensus_height: import("@osmonauts/helpers").AminoHeight;
+            consensus_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ connection_id, counterparty_connection_id, version, client_state, proof_height, proof_try, proof_client, proof_consensus, consensus_height, signer }: {
@@ -122,11 +123,11 @@ export declare const ibcAminoConverters: {
                 type_url: string;
                 value: Uint8Array;
             };
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             proof_try: Uint8Array;
             proof_client: Uint8Array;
             proof_consensus: Uint8Array;
-            consensus_height: import("@osmonauts/helpers").AminoHeight;
+            consensus_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/connection/v1/tx").MsgConnectionOpenAck;
     };
@@ -135,13 +136,13 @@ export declare const ibcAminoConverters: {
         toAmino: ({ connectionId, proofAck, proofHeight, signer }: import("./core/connection/v1/tx").MsgConnectionOpenConfirm) => {
             connection_id: string;
             proof_ack: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ connection_id, proof_ack, proof_height, signer }: {
             connection_id: string;
             proof_ack: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/connection/v1/tx").MsgConnectionOpenConfirm;
     };
@@ -287,7 +288,7 @@ export declare const ibcAminoConverters: {
             };
             counterparty_version: string;
             proof_init: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ port_id, previous_channel_id, channel, counterparty_version, proof_init, proof_height, signer }: {
@@ -305,7 +306,7 @@ export declare const ibcAminoConverters: {
             };
             counterparty_version: string;
             proof_init: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgChannelOpenTry;
     };
@@ -317,7 +318,7 @@ export declare const ibcAminoConverters: {
             counterparty_channel_id: string;
             counterparty_version: string;
             proof_try: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ port_id, channel_id, counterparty_channel_id, counterparty_version, proof_try, proof_height, signer }: {
@@ -326,7 +327,7 @@ export declare const ibcAminoConverters: {
             counterparty_channel_id: string;
             counterparty_version: string;
             proof_try: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgChannelOpenAck;
     };
@@ -336,14 +337,14 @@ export declare const ibcAminoConverters: {
             port_id: string;
             channel_id: string;
             proof_ack: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ port_id, channel_id, proof_ack, proof_height, signer }: {
             port_id: string;
             channel_id: string;
             proof_ack: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgChannelOpenConfirm;
     };
@@ -366,14 +367,14 @@ export declare const ibcAminoConverters: {
             port_id: string;
             channel_id: string;
             proof_init: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ port_id, channel_id, proof_init, proof_height, signer }: {
             port_id: string;
             channel_id: string;
             proof_init: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgChannelCloseConfirm;
     };
@@ -387,11 +388,11 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             proof_commitment: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ packet, proof_commitment, proof_height, signer }: {
@@ -402,11 +403,11 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             proof_commitment: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgRecvPacket;
     };
@@ -420,11 +421,11 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             proof_unreceived: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             next_sequence_recv: string;
             signer: string;
         };
@@ -436,11 +437,11 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             proof_unreceived: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             next_sequence_recv: string;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgTimeout;
@@ -455,12 +456,12 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             proof_unreceived: Uint8Array;
             proof_close: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             next_sequence_recv: string;
             signer: string;
         };
@@ -472,12 +473,12 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             proof_unreceived: Uint8Array;
             proof_close: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             next_sequence_recv: string;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgTimeoutOnClose;
@@ -492,12 +493,12 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             acknowledgement: Uint8Array;
             proof_acked: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         };
         fromAmino: ({ packet, acknowledgement, proof_acked, proof_height, signer }: {
@@ -508,12 +509,12 @@ export declare const ibcAminoConverters: {
                 destination_port: string;
                 destination_channel: string;
                 data: Uint8Array;
-                timeout_height: import("@osmonauts/helpers").AminoHeight;
+                timeout_height: import("../helpers").AminoHeight;
                 timeout_timestamp: string;
             };
             acknowledgement: Uint8Array;
             proof_acked: Uint8Array;
-            proof_height: import("@osmonauts/helpers").AminoHeight;
+            proof_height: import("../helpers").AminoHeight;
             signer: string;
         }) => import("./core/channel/v1/tx").MsgAcknowledgement;
     };
@@ -528,7 +529,7 @@ export declare const ibcAminoConverters: {
             };
             sender: string;
             receiver: string;
-            timeout_height: import("@osmonauts/helpers").AminoHeight;
+            timeout_height: import("../helpers").AminoHeight;
             timeout_timestamp: string;
         };
         fromAmino: ({ source_port, source_channel, token, sender, receiver, timeout_height, timeout_timestamp }: {
@@ -540,7 +541,7 @@ export declare const ibcAminoConverters: {
             };
             sender: string;
             receiver: string;
-            timeout_height: import("@osmonauts/helpers").AminoHeight;
+            timeout_height: import("../helpers").AminoHeight;
             timeout_timestamp: string;
         }) => import("./applications/transfer/v1/tx").MsgTransfer;
     };
@@ -553,7 +554,7 @@ export declare const getSigningIbcClientOptions: ({ defaultTypes }?: {
     aminoTypes: AminoTypes;
 };
 export declare const getSigningIbcClient: ({ rpcEndpoint, signer, defaultTypes }: {
-    rpcEndpoint: string;
+    rpcEndpoint: string | HttpEndpoint;
     signer: OfflineSigner;
     defaultTypes?: ReadonlyArray<[string, GeneratedType]>;
 }) => Promise<SigningStargateClient>;

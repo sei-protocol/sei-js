@@ -1,7 +1,6 @@
 import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "@osmonauts/helpers";
 import { MsgRecordTransactionData, MsgSubmitFraudChallenge } from "./tx";
-export interface AminoMsgRecordTransactionData extends AminoMsg {
+export interface MsgRecordTransactionDataAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.nitro.MsgRecordTransactionData";
     value: {
         sender: string;
@@ -10,7 +9,7 @@ export interface AminoMsgRecordTransactionData extends AminoMsg {
         txs: string[];
     };
 }
-export interface AminoMsgSubmitFraudChallenge extends AminoMsg {
+export interface MsgSubmitFraudChallengeAminoType extends AminoMsg {
     type: "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge";
     value: {
         sender: string;
@@ -20,7 +19,7 @@ export interface AminoMsgSubmitFraudChallenge extends AminoMsg {
         merkleProof: {
             commitment: string;
             hash: string[];
-            direction: Long[];
+            direction: string[];
         };
         accountStates: {
             pubkey: string;
@@ -54,12 +53,12 @@ export interface AminoMsgSubmitFraudChallenge extends AminoMsg {
 export declare const AminoConverter: {
     "/seiprotocol.seichain.nitro.MsgRecordTransactionData": {
         aminoType: string;
-        toAmino: ({ sender, slot, stateRoot, txs }: MsgRecordTransactionData) => AminoMsgRecordTransactionData["value"];
-        fromAmino: ({ sender, slot, stateRoot, txs }: AminoMsgRecordTransactionData["value"]) => MsgRecordTransactionData;
+        toAmino: ({ sender, slot, stateRoot, txs }: MsgRecordTransactionData) => MsgRecordTransactionDataAminoType["value"];
+        fromAmino: ({ sender, slot, stateRoot, txs }: MsgRecordTransactionDataAminoType["value"]) => MsgRecordTransactionData;
     };
     "/seiprotocol.seichain.nitro.MsgSubmitFraudChallenge": {
         aminoType: string;
-        toAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: MsgSubmitFraudChallenge) => AminoMsgSubmitFraudChallenge["value"];
-        fromAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: AminoMsgSubmitFraudChallenge["value"]) => MsgSubmitFraudChallenge;
+        toAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: MsgSubmitFraudChallenge) => MsgSubmitFraudChallengeAminoType["value"];
+        fromAmino: ({ sender, startSlot, endSlot, fraudStatePubKey, merkleProof, accountStates, programs, sysvarAccounts }: MsgSubmitFraudChallengeAminoType["value"]) => MsgSubmitFraudChallenge;
     };
 };

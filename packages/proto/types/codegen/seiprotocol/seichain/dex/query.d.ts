@@ -1,5 +1,6 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
 import { Order, OrderSDKType } from "./order";
+import { PositionDirection } from "./enums";
 import { Params, ParamsSDKType } from "./params";
 import { LongBook, LongBookSDKType } from "./long_book";
 import { ShortBook, ShortBookSDKType } from "./short_book";
@@ -7,9 +8,10 @@ import { Price, PriceSDKType, PriceCandlestick, PriceCandlestickSDKType } from "
 import { Twap, TwapSDKType } from "./twap";
 import { AssetMetadata, AssetMetadataSDKType } from "./asset_list";
 import { Pair, PairSDKType } from "./pair";
+import { ContractInfoV2, ContractInfoV2SDKType } from "./contract";
 import { MatchResult, MatchResultSDKType } from "./match_result";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { DeepPartial, Long } from "@osmonauts/helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
 }
@@ -23,7 +25,6 @@ export interface QueryParamsResponse {
 }
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-    /** params holds all the parameters of this module. */
     params: ParamsSDKType;
 }
 export interface QueryGetLongBookRequest {
@@ -45,24 +46,24 @@ export interface QueryGetLongBookResponseSDKType {
     LongBook: LongBookSDKType;
 }
 export interface QueryAllLongBookRequest {
-    pagination?: PageRequest;
+    pagination: PageRequest;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllLongBookRequestSDKType {
-    pagination?: PageRequestSDKType;
+    pagination: PageRequestSDKType;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllLongBookResponse {
     LongBook: LongBook[];
-    pagination?: PageResponse;
+    pagination: PageResponse;
 }
 export interface QueryAllLongBookResponseSDKType {
     LongBook: LongBookSDKType[];
-    pagination?: PageResponseSDKType;
+    pagination: PageResponseSDKType;
 }
 export interface QueryGetShortBookRequest {
     price: string;
@@ -83,24 +84,24 @@ export interface QueryGetShortBookResponseSDKType {
     ShortBook: ShortBookSDKType;
 }
 export interface QueryAllShortBookRequest {
-    pagination?: PageRequest;
+    pagination: PageRequest;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllShortBookRequestSDKType {
-    pagination?: PageRequestSDKType;
+    pagination: PageRequestSDKType;
     contractAddr: string;
     priceDenom: string;
     assetDenom: string;
 }
 export interface QueryAllShortBookResponse {
     ShortBook: ShortBook[];
-    pagination?: PageResponse;
+    pagination: PageResponse;
 }
 export interface QueryAllShortBookResponseSDKType {
     ShortBook: ShortBookSDKType[];
-    pagination?: PageResponseSDKType;
+    pagination: PageResponseSDKType;
 }
 export interface QueryGetPricesRequest {
     priceDenom: string;
@@ -191,16 +192,28 @@ export interface QueryAssetMetadataResponseSDKType {
     metadata: AssetMetadataSDKType;
 }
 export interface QueryRegisteredPairsRequest {
-    contractAddr?: string;
+    contractAddr: string;
 }
 export interface QueryRegisteredPairsRequestSDKType {
-    contractAddr?: string;
+    contractAddr: string;
 }
 export interface QueryRegisteredPairsResponse {
     pairs: Pair[];
 }
 export interface QueryRegisteredPairsResponseSDKType {
     pairs: PairSDKType[];
+}
+export interface QueryRegisteredContractRequest {
+    contractAddr: string;
+}
+export interface QueryRegisteredContractRequestSDKType {
+    contractAddr: string;
+}
+export interface QueryRegisteredContractResponse {
+    contractInfo: ContractInfoV2;
+}
+export interface QueryRegisteredContractResponseSDKType {
+    contract_info: ContractInfoV2SDKType;
 }
 export interface QueryGetOrdersRequest {
     contractAddr: string;
@@ -305,6 +318,26 @@ export interface QueryGetMatchResultResponse {
 }
 export interface QueryGetMatchResultResponseSDKType {
     result: MatchResultSDKType;
+}
+export interface QueryGetOrderCountRequest {
+    contractAddr: string;
+    priceDenom: string;
+    assetDenom: string;
+    price: string;
+    positionDirection: PositionDirection;
+}
+export interface QueryGetOrderCountRequestSDKType {
+    contractAddr: string;
+    priceDenom: string;
+    assetDenom: string;
+    price: string;
+    positionDirection: PositionDirection;
+}
+export interface QueryGetOrderCountResponse {
+    count: Long;
+}
+export interface QueryGetOrderCountResponseSDKType {
+    count: Long;
 }
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: _m0.Writer): _m0.Writer;
@@ -426,6 +459,16 @@ export declare const QueryRegisteredPairsResponse: {
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredPairsResponse;
     fromPartial(object: DeepPartial<QueryRegisteredPairsResponse>): QueryRegisteredPairsResponse;
 };
+export declare const QueryRegisteredContractRequest: {
+    encode(message: QueryRegisteredContractRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredContractRequest;
+    fromPartial(object: DeepPartial<QueryRegisteredContractRequest>): QueryRegisteredContractRequest;
+};
+export declare const QueryRegisteredContractResponse: {
+    encode(message: QueryRegisteredContractResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryRegisteredContractResponse;
+    fromPartial(object: DeepPartial<QueryRegisteredContractResponse>): QueryRegisteredContractResponse;
+};
 export declare const QueryGetOrdersRequest: {
     encode(message: QueryGetOrdersRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrdersRequest;
@@ -485,4 +528,14 @@ export declare const QueryGetMatchResultResponse: {
     encode(message: QueryGetMatchResultResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetMatchResultResponse;
     fromPartial(object: DeepPartial<QueryGetMatchResultResponse>): QueryGetMatchResultResponse;
+};
+export declare const QueryGetOrderCountRequest: {
+    encode(message: QueryGetOrderCountRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderCountRequest;
+    fromPartial(object: DeepPartial<QueryGetOrderCountRequest>): QueryGetOrderCountRequest;
+};
+export declare const QueryGetOrderCountResponse: {
+    encode(message: QueryGetOrderCountResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetOrderCountResponse;
+    fromPartial(object: DeepPartial<QueryGetOrderCountResponse>): QueryGetOrderCountResponse;
 };

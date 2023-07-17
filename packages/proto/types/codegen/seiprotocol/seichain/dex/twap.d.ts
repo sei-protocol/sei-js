@@ -1,6 +1,6 @@
 import { Pair, PairSDKType } from "./pair";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 export interface Twap {
     pair: Pair;
     twap: string;

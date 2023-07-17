@@ -5,8 +5,8 @@ import { ShortBook, ShortBookSDKType } from "./short_book";
 import { Order, OrderSDKType } from "./order";
 import { Pair, PairSDKType } from "./pair";
 import { Price, PriceSDKType } from "./price";
+import { Long, DeepPartial } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
-import { Long, DeepPartial } from "@osmonauts/helpers";
 /** GenesisState defines the dex module's genesis state. */
 export interface GenesisState {
     params: Params;
@@ -26,6 +26,7 @@ export interface ContractState {
     triggeredOrdersList: Order[];
     pairList: Pair[];
     priceList: ContractPairPrices[];
+    nextOrderId: Long;
 }
 export interface ContractStateSDKType {
     contractInfo: ContractInfoV2SDKType;
@@ -34,6 +35,7 @@ export interface ContractStateSDKType {
     triggeredOrdersList: OrderSDKType[];
     pairList: PairSDKType[];
     priceList: ContractPairPricesSDKType[];
+    nextOrderId: Long;
 }
 export interface ContractPairPrices {
     pricePair: Pair;
