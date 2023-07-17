@@ -35,7 +35,7 @@ export interface SeiWallet {
 	connect: (chainId: string) => Promise<void>;
 	disconnect: (chainId: string) => Promise<void>;
 	suggestChain?: (chainId: string) => void;
-	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature>;
+	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature | undefined>;
 }
 
 export type SeiWalletProviderProps = {
