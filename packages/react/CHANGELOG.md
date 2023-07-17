@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.4
+
+### Patch Changes
+
+- @sei-js/core@1.4.1
+
 ## 2.0.3
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/core",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "TypeScript library for front end integrations with Sei",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -33,7 +33,7 @@
     "@cosmjs/tendermint-rpc": "0.29.5",
     "@cosmjs/utils": "0.29.5",
     "@keplr-wallet/types": "^0.11.41",
-    "@sei-js/proto": "1.2.0",
+    "@sei-js/proto": "1.3.0",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
