@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { IconContext } from 'react-icons';
-import { IoCopyOutline, IoLogOutOutline, IoWalletOutline } from 'react-icons/io5';
 import { SeiWalletContext } from '../../provider';
 import { WalletConnectButtonProps } from './types';
 import './styles.css';
 import { isValidCSSColor } from '../../utils';
+import { IconContext } from '@react-icons/all-files';
+import { IoWalletOutline } from '@react-icons/all-files/io5/IoWalletOutline';
+import { IoLogOutOutline } from '@react-icons/all-files/io5/IoLogOutOutline';
+import { IoCopyOutline } from '@react-icons/all-files/io5/IoCopyOutline';
 
 export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
 

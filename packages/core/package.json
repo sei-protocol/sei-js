@@ -5,11 +5,11 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && tsc",
-    "clean": "rimraf dist",
-    "format": "eslint --fix . && prettier 'src/**/*.ts' --write --ignore-path .gitignore",
-    "lint": "eslint --ignore-path .eslintignore .",
-    "test": "jest"
+    "prebuild": "rimraf dist",
+    "build": "yarn build:types && yarn build:js && yarn build:prettier",
+    "build:types": "tsc --project tsconfig.declarations.json",
+    "build:js": "babel src --out-dir dist --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files",
+    "build:prettier": "prettier --write dist"
   },
   "homepage": "https://github.com/sei-protocol/sei-js#readme",
   "keywords": [
@@ -37,5 +37,11 @@
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/plugin-transform-runtime": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5"
+  }
 }
