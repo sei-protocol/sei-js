@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.5
+
+### Patch Changes
+
+- 3efcde8: Build optimizations
+  -Added babel instead of tsc to both /core and /react packages
+  -Added source maps to the outputs
+  -Remove unnecessary dependencies
+  -Removed unused assets folder from /react
+  -Fixed issue with the 'react-icons' package react-icons/react-icons#593
+- Updated dependencies [3efcde8]
+  - @sei-js/core@1.4.2
+
 ## 2.0.4
 
 ### Patch Changes
