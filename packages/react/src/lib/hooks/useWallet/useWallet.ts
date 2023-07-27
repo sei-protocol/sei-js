@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { SeiWallet, SeiWalletContext } from '../../provider';
+import { SeiWalletContext } from '../../provider';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
+import { SeiWallet } from '@sei-js/core';
 
 type UseWallet = {
 	connectedWallet?: SeiWallet;

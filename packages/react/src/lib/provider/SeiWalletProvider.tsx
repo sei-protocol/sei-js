@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
-import { SeiWallet, SeiWalletProviderProps, WalletProvider } from './types';
-import { findWalletByWindowKey } from '../config/supportedWallets';
+import { SeiWalletProviderProps, WalletProvider } from './types';
 import { WalletSelectModal } from '../components';
+import { SeiWallet } from '@sei-js/core';
+import { findWalletByWindowKey } from './helpers';
 
 export const SeiWalletContext = createContext<WalletProvider>({
 	chainId: '',
