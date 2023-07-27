@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0
+
+### Minor Changes
+
+- Added arbitrary string verification and moved supported wallets over from @sei-js/react
+
 ## 1.4.2
 
 ### Patch Changes
