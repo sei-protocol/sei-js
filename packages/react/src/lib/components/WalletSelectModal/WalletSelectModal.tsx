@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { WalletSelectModalProps } from './types';
-import { SeiWallet, SeiWalletContext } from '../../provider';
+import { SeiWalletContext } from '../../provider';
 import './styles.css';
 import { AiFillCloseCircle } from '@react-icons/all-files/ai/AiFillCloseCircle';
 import { BiErrorAlt } from '@react-icons/all-files/bi/BiErrorAlt';
 import { BiError } from '@react-icons/all-files/bi/BiError';
 import { FaCheckCircle } from '@react-icons/all-files/fa/FaCheckCircle';
+import { SeiWallet } from '@sei-js/core';
 
 const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) => {
 	const { connectedWallet, setTargetWallet, wallets, connectionError, targetWallet, setConnectionError, showConnectModal, setShowConnectModal } =

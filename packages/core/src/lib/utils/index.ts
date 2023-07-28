@@ -1,0 +1,1 @@
+export { verifyArbitrary } from './signing';

@@ -10,6 +10,7 @@
     "test:all": "nx run-many --target=test",
     "test:since": "nx affected --target=test",
     "release": "yarn build:all && changeset publish",
+    "release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
     "postrelease": "git push --follow-tags"
   },
   "private": true,

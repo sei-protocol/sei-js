@@ -1,4 +1,4 @@
-import { SeiWallet } from '../../provider';
+import { SeiWallet } from '@sei-js/core';
 
 export type WalletConnectButtonProps = {
 	buttonClassName?: string;
