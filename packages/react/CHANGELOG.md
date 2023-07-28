@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+### Minor Changes
+
+- 4b51605: Updated @sei-js/core dependency and updated provider to use imported wallet configs
+
 ## 2.0.5
 
 ### Patch Changes
