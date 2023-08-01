@@ -85,7 +85,24 @@ export const LEAP_WALLET: SeiWallet = {
 	}
 };
 
-export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];
+export const SHELL_WALLET: SeiWallet = {
+	getAccounts: async (chainId) => {
+		const offlineSigner = await window?.['shellwallet']?.getOfflineSignerAuto(chainId);
+		return offlineSigner?.getAccounts() || [];
+	},
+	connect: async (chainId) => await window?.['shellwallet']?.enable(chainId),
+	disconnect: async (chainId) => await window?.['shellwallet']?.disable(chainId),
+	getOfflineSigner: async (chainId) => window?.['shellwallet']?.getOfflineSignerAuto(chainId),
+	signArbitrary: async (chainId, signer, message) => window?.['shellwallet']?.signArbitrary(chainId, signer, message),
+	walletInfo: {
+		windowKey: 'shellwallet',
+		name: 'Shell',
+		website: 'https://chrome.google.com/webstore/detail/shell-wallet/kbdcddcmgoplfockflacnnefaehaiocb',
+		icon: 'https://shellwallet.io/logo/shell-icon.png'
+	}
+};
+
+export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET, SHELL_WALLET];
 
 const DEFAULT_CHAIN_INFO = {
 	chainName: 'Sei Testnet',
