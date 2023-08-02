@@ -1,12 +1,8 @@
+import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
 export declare const createRPCQueryClient: ({ rpcEndpoint }: {
-    rpcEndpoint: string;
+    rpcEndpoint: string | HttpEndpoint;
 }) => Promise<{
     cosmos: {
-        app: {
-            v1alpha1: {
-                config(request?: import("./app/v1alpha1/query").QueryConfigRequest): Promise<import("./app/v1alpha1/query").QueryConfigResponse>;
-            };
-        };
         auth: {
             v1beta1: {
                 accounts(request?: import("./auth/v1beta1/query").QueryAccountsRequest): Promise<import("./auth/v1beta1/query").QueryAccountsResponse>;
@@ -38,18 +34,6 @@ export declare const createRPCQueryClient: ({ rpcEndpoint }: {
                 denomOwners(request: import("./bank/v1beta1/query").QueryDenomOwnersRequest): Promise<import("./bank/v1beta1/query").QueryDenomOwnersResponse>;
             };
         };
-        base: {
-            tendermint: {
-                v1beta1: {
-                    getNodeInfo(request?: import("./base/tendermint/v1beta1/query").GetNodeInfoRequest): Promise<import("./base/tendermint/v1beta1/query").GetNodeInfoResponse>;
-                    getSyncing(request?: import("./base/tendermint/v1beta1/query").GetSyncingRequest): Promise<import("./base/tendermint/v1beta1/query").GetSyncingResponse>;
-                    getLatestBlock(request?: import("./base/tendermint/v1beta1/query").GetLatestBlockRequest): Promise<import("./base/tendermint/v1beta1/query").GetLatestBlockResponse>;
-                    getBlockByHeight(request: import("./base/tendermint/v1beta1/query").GetBlockByHeightRequest): Promise<import("./base/tendermint/v1beta1/query").GetBlockByHeightResponse>;
-                    getLatestValidatorSet(request?: import("./base/tendermint/v1beta1/query").GetLatestValidatorSetRequest): Promise<import("./base/tendermint/v1beta1/query").GetLatestValidatorSetResponse>;
-                    getValidatorSetByHeight(request: import("./base/tendermint/v1beta1/query").GetValidatorSetByHeightRequest): Promise<import("./base/tendermint/v1beta1/query").GetValidatorSetByHeightResponse>;
-                };
-            };
-        };
         distribution: {
             v1beta1: {
                 params(request?: import("./distribution/v1beta1/query").QueryParamsRequest): Promise<import("./distribution/v1beta1/query").QueryParamsResponse>;
@@ -63,30 +47,7 @@ export declare const createRPCQueryClient: ({ rpcEndpoint }: {
                 communityPool(request?: import("./distribution/v1beta1/query").QueryCommunityPoolRequest): Promise<import("./distribution/v1beta1/query").QueryCommunityPoolResponse>;
             };
         };
-        evidence: {
-            v1beta1: {
-                evidence(request: import("./evidence/v1beta1/query").QueryEvidenceRequest): Promise<import("./evidence/v1beta1/query").QueryEvidenceResponse>;
-                allEvidence(request?: import("./evidence/v1beta1/query").QueryAllEvidenceRequest): Promise<import("./evidence/v1beta1/query").QueryAllEvidenceResponse>;
-            };
-        };
-        feegrant: {
-            v1beta1: {
-                allowance(request: import("./feegrant/v1beta1/query").QueryAllowanceRequest): Promise<import("./feegrant/v1beta1/query").QueryAllowanceResponse>;
-                allowances(request: import("./feegrant/v1beta1/query").QueryAllowancesRequest): Promise<import("./feegrant/v1beta1/query").QueryAllowancesResponse>;
-                allowancesByGranter(request: import("./feegrant/v1beta1/query").QueryAllowancesByGranterRequest): Promise<import("./feegrant/v1beta1/query").QueryAllowancesByGranterResponse>;
-            };
-        };
         gov: {
-            v1: {
-                proposal(request: import("./gov/v1/query").QueryProposalRequest): Promise<import("./gov/v1/query").QueryProposalResponse>;
-                proposals(request: import("./gov/v1/query").QueryProposalsRequest): Promise<import("./gov/v1/query").QueryProposalsResponse>;
-                vote(request: import("./gov/v1/query").QueryVoteRequest): Promise<import("./gov/v1/query").QueryVoteResponse>;
-                votes(request: import("./gov/v1/query").QueryVotesRequest): Promise<import("./gov/v1/query").QueryVotesResponse>;
-                params(request: import("./gov/v1/query").QueryParamsRequest): Promise<import("./gov/v1/query").QueryParamsResponse>;
-                deposit(request: import("./gov/v1/query").QueryDepositRequest): Promise<import("./gov/v1/query").QueryDepositResponse>;
-                deposits(request: import("./gov/v1/query").QueryDepositsRequest): Promise<import("./gov/v1/query").QueryDepositsResponse>;
-                tallyResult(request: import("./gov/v1/query").QueryTallyResultRequest): Promise<import("./gov/v1/query").QueryTallyResultResponse>;
-            };
             v1beta1: {
                 proposal(request: import("./gov/v1beta1/query").QueryProposalRequest): Promise<import("./gov/v1beta1/query").QueryProposalResponse>;
                 proposals(request: import("./gov/v1beta1/query").QueryProposalsRequest): Promise<import("./gov/v1beta1/query").QueryProposalsResponse>;
@@ -96,54 +57,6 @@ export declare const createRPCQueryClient: ({ rpcEndpoint }: {
                 deposit(request: import("./gov/v1beta1/query").QueryDepositRequest): Promise<import("./gov/v1beta1/query").QueryDepositResponse>;
                 deposits(request: import("./gov/v1beta1/query").QueryDepositsRequest): Promise<import("./gov/v1beta1/query").QueryDepositsResponse>;
                 tallyResult(request: import("./gov/v1beta1/query").QueryTallyResultRequest): Promise<import("./gov/v1beta1/query").QueryTallyResultResponse>;
-            };
-        };
-        group: {
-            v1: {
-                groupInfo(request: import("./group/v1/query").QueryGroupInfoRequest): Promise<import("./group/v1/query").QueryGroupInfoResponse>;
-                groupPolicyInfo(request: import("./group/v1/query").QueryGroupPolicyInfoRequest): Promise<import("./group/v1/query").QueryGroupPolicyInfoResponse>;
-                groupMembers(request: import("./group/v1/query").QueryGroupMembersRequest): Promise<import("./group/v1/query").QueryGroupMembersResponse>;
-                groupsByAdmin(request: import("./group/v1/query").QueryGroupsByAdminRequest): Promise<import("./group/v1/query").QueryGroupsByAdminResponse>;
-                groupPoliciesByGroup(request: import("./group/v1/query").QueryGroupPoliciesByGroupRequest): Promise<import("./group/v1/query").QueryGroupPoliciesByGroupResponse>;
-                groupPoliciesByAdmin(request: import("./group/v1/query").QueryGroupPoliciesByAdminRequest): Promise<import("./group/v1/query").QueryGroupPoliciesByAdminResponse>;
-                proposal(request: import("./group/v1/query").QueryProposalRequest): Promise<import("./group/v1/query").QueryProposalResponse>;
-                proposalsByGroupPolicy(request: import("./group/v1/query").QueryProposalsByGroupPolicyRequest): Promise<import("./group/v1/query").QueryProposalsByGroupPolicyResponse>;
-                voteByProposalVoter(request: import("./group/v1/query").QueryVoteByProposalVoterRequest): Promise<import("./group/v1/query").QueryVoteByProposalVoterResponse>;
-                votesByProposal(request: import("./group/v1/query").QueryVotesByProposalRequest): Promise<import("./group/v1/query").QueryVotesByProposalResponse>;
-                votesByVoter(request: import("./group/v1/query").QueryVotesByVoterRequest): Promise<import("./group/v1/query").QueryVotesByVoterResponse>;
-                groupsByMember(request: import("./group/v1/query").QueryGroupsByMemberRequest): Promise<import("./group/v1/query").QueryGroupsByMemberResponse>;
-                tallyResult(request: import("./group/v1/query").QueryTallyResultRequest): Promise<import("./group/v1/query").QueryTallyResultResponse>;
-            };
-        };
-        mint: {
-            v1beta1: {
-                params(request?: import("./mint/v1beta1/query").QueryParamsRequest): Promise<import("./mint/v1beta1/query").QueryParamsResponse>;
-                inflation(request?: import("./mint/v1beta1/query").QueryInflationRequest): Promise<import("./mint/v1beta1/query").QueryInflationResponse>;
-                annualProvisions(request?: import("./mint/v1beta1/query").QueryAnnualProvisionsRequest): Promise<import("./mint/v1beta1/query").QueryAnnualProvisionsResponse>;
-            };
-        };
-        nft: {
-            v1beta1: {
-                balance(request: import("./nft/v1beta1/query").QueryBalanceRequest): Promise<import("./nft/v1beta1/query").QueryBalanceResponse>;
-                owner(request: import("./nft/v1beta1/query").QueryOwnerRequest): Promise<import("./nft/v1beta1/query").QueryOwnerResponse>;
-                supply(request: import("./nft/v1beta1/query").QuerySupplyRequest): Promise<import("./nft/v1beta1/query").QuerySupplyResponse>;
-                nFTs(request: import("./nft/v1beta1/query").QueryNFTsRequest): Promise<import("./nft/v1beta1/query").QueryNFTsResponse>;
-                nFT(request: import("./nft/v1beta1/query").QueryNFTRequest): Promise<import("./nft/v1beta1/query").QueryNFTResponse>;
-                class(request: import("./nft/v1beta1/query").QueryClassRequest): Promise<import("./nft/v1beta1/query").QueryClassResponse>;
-                classes(request?: import("./nft/v1beta1/query").QueryClassesRequest): Promise<import("./nft/v1beta1/query").QueryClassesResponse>;
-            };
-        };
-        params: {
-            v1beta1: {
-                params(request: import("./params/v1beta1/query").QueryParamsRequest): Promise<import("./params/v1beta1/query").QueryParamsResponse>;
-                subspaces(request?: import("./params/v1beta1/query").QuerySubspacesRequest): Promise<import("./params/v1beta1/query").QuerySubspacesResponse>;
-            };
-        };
-        slashing: {
-            v1beta1: {
-                params(request?: import("./slashing/v1beta1/query").QueryParamsRequest): Promise<import("./slashing/v1beta1/query").QueryParamsResponse>;
-                signingInfo(request: import("./slashing/v1beta1/query").QuerySigningInfoRequest): Promise<import("./slashing/v1beta1/query").QuerySigningInfoResponse>;
-                signingInfos(request?: import("./slashing/v1beta1/query").QuerySigningInfosRequest): Promise<import("./slashing/v1beta1/query").QuerySigningInfosResponse>;
             };
         };
         staking: {

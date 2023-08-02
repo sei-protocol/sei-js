@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { accessTypeFromJSON } from "./types";
 import { AminoMsg } from "@cosmjs/amino";
 import { toBase64, fromBase64, fromUtf8, toUtf8 } from "@cosmjs/encoding";

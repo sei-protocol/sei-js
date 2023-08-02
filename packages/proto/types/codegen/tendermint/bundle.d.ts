@@ -1,476 +1,476 @@
-import * as _169 from "./abci/types";
-import * as _170 from "./crypto/keys";
-import * as _171 from "./crypto/proof";
-import * as _172 from "./libs/bits/types";
-import * as _173 from "./p2p/types";
-import * as _174 from "./types/block";
-import * as _175 from "./types/evidence";
-import * as _176 from "./types/params";
-import * as _177 from "./types/types";
-import * as _178 from "./types/validator";
-import * as _179 from "./version/types";
+import * as _115 from "./abci/types";
+import * as _116 from "./crypto/keys";
+import * as _117 from "./crypto/proof";
+import * as _118 from "./libs/bits/types";
+import * as _119 from "./p2p/types";
+import * as _120 from "./types/block";
+import * as _121 from "./types/evidence";
+import * as _122 from "./types/params";
+import * as _123 from "./types/types";
+import * as _124 from "./types/validator";
+import * as _125 from "./version/types";
 export declare namespace tendermint {
     const abci: {
-        checkTxTypeFromJSON(object: any): _169.CheckTxType;
-        checkTxTypeToJSON(object: _169.CheckTxType): string;
-        responseOfferSnapshot_ResultFromJSON(object: any): _169.ResponseOfferSnapshot_Result;
-        responseOfferSnapshot_ResultToJSON(object: _169.ResponseOfferSnapshot_Result): string;
-        responseApplySnapshotChunk_ResultFromJSON(object: any): _169.ResponseApplySnapshotChunk_Result;
-        responseApplySnapshotChunk_ResultToJSON(object: _169.ResponseApplySnapshotChunk_Result): string;
-        evidenceTypeFromJSON(object: any): _169.EvidenceType;
-        evidenceTypeToJSON(object: _169.EvidenceType): string;
-        CheckTxType: typeof _169.CheckTxType;
-        CheckTxTypeSDKType: typeof _169.CheckTxType;
-        ResponseOfferSnapshot_Result: typeof _169.ResponseOfferSnapshot_Result;
-        ResponseOfferSnapshot_ResultSDKType: typeof _169.ResponseOfferSnapshot_Result;
-        ResponseApplySnapshotChunk_Result: typeof _169.ResponseApplySnapshotChunk_Result;
-        ResponseApplySnapshotChunk_ResultSDKType: typeof _169.ResponseApplySnapshotChunk_Result;
-        EvidenceType: typeof _169.EvidenceType;
-        EvidenceTypeSDKType: typeof _169.EvidenceType;
+        checkTxTypeFromJSON(object: any): _115.CheckTxType;
+        checkTxTypeToJSON(object: _115.CheckTxType): string;
+        responseOfferSnapshot_ResultFromJSON(object: any): _115.ResponseOfferSnapshot_Result;
+        responseOfferSnapshot_ResultToJSON(object: _115.ResponseOfferSnapshot_Result): string;
+        responseApplySnapshotChunk_ResultFromJSON(object: any): _115.ResponseApplySnapshotChunk_Result;
+        responseApplySnapshotChunk_ResultToJSON(object: _115.ResponseApplySnapshotChunk_Result): string;
+        evidenceTypeFromJSON(object: any): _115.EvidenceType;
+        evidenceTypeToJSON(object: _115.EvidenceType): string;
+        CheckTxType: typeof _115.CheckTxType;
+        CheckTxTypeSDKType: typeof _115.CheckTxType;
+        ResponseOfferSnapshot_Result: typeof _115.ResponseOfferSnapshot_Result;
+        ResponseOfferSnapshot_ResultSDKType: typeof _115.ResponseOfferSnapshot_Result;
+        ResponseApplySnapshotChunk_Result: typeof _115.ResponseApplySnapshotChunk_Result;
+        ResponseApplySnapshotChunk_ResultSDKType: typeof _115.ResponseApplySnapshotChunk_Result;
+        EvidenceType: typeof _115.EvidenceType;
+        EvidenceTypeSDKType: typeof _115.EvidenceType;
         Request: {
-            encode(message: _169.Request, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.Request;
-            fromPartial(object: any): _169.Request;
+            encode(message: _115.Request, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.Request;
+            fromPartial(object: any): _115.Request;
         };
         RequestEcho: {
-            encode(message: _169.RequestEcho, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestEcho;
-            fromPartial(object: any): _169.RequestEcho;
+            encode(message: _115.RequestEcho, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestEcho;
+            fromPartial(object: any): _115.RequestEcho;
         };
         RequestFlush: {
-            encode(_: _169.RequestFlush, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestFlush;
-            fromPartial(_: any): _169.RequestFlush;
+            encode(_: _115.RequestFlush, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestFlush;
+            fromPartial(_: any): _115.RequestFlush;
         };
         RequestInfo: {
-            encode(message: _169.RequestInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestInfo;
-            fromPartial(object: any): _169.RequestInfo;
+            encode(message: _115.RequestInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestInfo;
+            fromPartial(object: any): _115.RequestInfo;
         };
         RequestSetOption: {
-            encode(message: _169.RequestSetOption, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestSetOption;
-            fromPartial(object: any): _169.RequestSetOption;
+            encode(message: _115.RequestSetOption, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestSetOption;
+            fromPartial(object: any): _115.RequestSetOption;
         };
         RequestInitChain: {
-            encode(message: _169.RequestInitChain, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestInitChain;
-            fromPartial(object: any): _169.RequestInitChain;
+            encode(message: _115.RequestInitChain, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestInitChain;
+            fromPartial(object: any): _115.RequestInitChain;
         };
         RequestQuery: {
-            encode(message: _169.RequestQuery, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestQuery;
-            fromPartial(object: any): _169.RequestQuery;
+            encode(message: _115.RequestQuery, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestQuery;
+            fromPartial(object: any): _115.RequestQuery;
         };
         RequestBeginBlock: {
-            encode(message: _169.RequestBeginBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestBeginBlock;
-            fromPartial(object: any): _169.RequestBeginBlock;
+            encode(message: _115.RequestBeginBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestBeginBlock;
+            fromPartial(object: any): _115.RequestBeginBlock;
         };
         RequestCheckTx: {
-            encode(message: _169.RequestCheckTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestCheckTx;
-            fromPartial(object: any): _169.RequestCheckTx;
+            encode(message: _115.RequestCheckTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestCheckTx;
+            fromPartial(object: any): _115.RequestCheckTx;
         };
         RequestDeliverTx: {
-            encode(message: _169.RequestDeliverTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestDeliverTx;
-            fromPartial(object: any): _169.RequestDeliverTx;
+            encode(message: _115.RequestDeliverTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestDeliverTx;
+            fromPartial(object: any): _115.RequestDeliverTx;
         };
         RequestEndBlock: {
-            encode(message: _169.RequestEndBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestEndBlock;
-            fromPartial(object: any): _169.RequestEndBlock;
+            encode(message: _115.RequestEndBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestEndBlock;
+            fromPartial(object: any): _115.RequestEndBlock;
         };
         RequestCommit: {
-            encode(_: _169.RequestCommit, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestCommit;
-            fromPartial(_: any): _169.RequestCommit;
+            encode(_: _115.RequestCommit, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestCommit;
+            fromPartial(_: any): _115.RequestCommit;
         };
         RequestListSnapshots: {
-            encode(_: _169.RequestListSnapshots, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestListSnapshots;
-            fromPartial(_: any): _169.RequestListSnapshots;
+            encode(_: _115.RequestListSnapshots, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestListSnapshots;
+            fromPartial(_: any): _115.RequestListSnapshots;
         };
         RequestOfferSnapshot: {
-            encode(message: _169.RequestOfferSnapshot, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestOfferSnapshot;
-            fromPartial(object: any): _169.RequestOfferSnapshot;
+            encode(message: _115.RequestOfferSnapshot, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestOfferSnapshot;
+            fromPartial(object: any): _115.RequestOfferSnapshot;
         };
         RequestLoadSnapshotChunk: {
-            encode(message: _169.RequestLoadSnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestLoadSnapshotChunk;
-            fromPartial(object: any): _169.RequestLoadSnapshotChunk;
+            encode(message: _115.RequestLoadSnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestLoadSnapshotChunk;
+            fromPartial(object: any): _115.RequestLoadSnapshotChunk;
         };
         RequestApplySnapshotChunk: {
-            encode(message: _169.RequestApplySnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.RequestApplySnapshotChunk;
-            fromPartial(object: any): _169.RequestApplySnapshotChunk;
+            encode(message: _115.RequestApplySnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.RequestApplySnapshotChunk;
+            fromPartial(object: any): _115.RequestApplySnapshotChunk;
         };
         Response: {
-            encode(message: _169.Response, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.Response;
-            fromPartial(object: any): _169.Response;
+            encode(message: _115.Response, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.Response;
+            fromPartial(object: any): _115.Response;
         };
         ResponseException: {
-            encode(message: _169.ResponseException, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseException;
-            fromPartial(object: any): _169.ResponseException;
+            encode(message: _115.ResponseException, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseException;
+            fromPartial(object: any): _115.ResponseException;
         };
         ResponseEcho: {
-            encode(message: _169.ResponseEcho, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseEcho;
-            fromPartial(object: any): _169.ResponseEcho;
+            encode(message: _115.ResponseEcho, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseEcho;
+            fromPartial(object: any): _115.ResponseEcho;
         };
         ResponseFlush: {
-            encode(_: _169.ResponseFlush, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseFlush;
-            fromPartial(_: any): _169.ResponseFlush;
+            encode(_: _115.ResponseFlush, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseFlush;
+            fromPartial(_: any): _115.ResponseFlush;
         };
         ResponseInfo: {
-            encode(message: _169.ResponseInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseInfo;
-            fromPartial(object: any): _169.ResponseInfo;
+            encode(message: _115.ResponseInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseInfo;
+            fromPartial(object: any): _115.ResponseInfo;
         };
         ResponseSetOption: {
-            encode(message: _169.ResponseSetOption, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseSetOption;
-            fromPartial(object: any): _169.ResponseSetOption;
+            encode(message: _115.ResponseSetOption, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseSetOption;
+            fromPartial(object: any): _115.ResponseSetOption;
         };
         ResponseInitChain: {
-            encode(message: _169.ResponseInitChain, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseInitChain;
-            fromPartial(object: any): _169.ResponseInitChain;
+            encode(message: _115.ResponseInitChain, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseInitChain;
+            fromPartial(object: any): _115.ResponseInitChain;
         };
         ResponseQuery: {
-            encode(message: _169.ResponseQuery, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseQuery;
-            fromPartial(object: any): _169.ResponseQuery;
+            encode(message: _115.ResponseQuery, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseQuery;
+            fromPartial(object: any): _115.ResponseQuery;
         };
         ResponseBeginBlock: {
-            encode(message: _169.ResponseBeginBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseBeginBlock;
-            fromPartial(object: any): _169.ResponseBeginBlock;
+            encode(message: _115.ResponseBeginBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseBeginBlock;
+            fromPartial(object: any): _115.ResponseBeginBlock;
         };
         ResponseCheckTx: {
-            encode(message: _169.ResponseCheckTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseCheckTx;
-            fromPartial(object: any): _169.ResponseCheckTx;
+            encode(message: _115.ResponseCheckTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseCheckTx;
+            fromPartial(object: any): _115.ResponseCheckTx;
         };
         ResponseDeliverTx: {
-            encode(message: _169.ResponseDeliverTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseDeliverTx;
-            fromPartial(object: any): _169.ResponseDeliverTx;
+            encode(message: _115.ResponseDeliverTx, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseDeliverTx;
+            fromPartial(object: any): _115.ResponseDeliverTx;
         };
         ResponseEndBlock: {
-            encode(message: _169.ResponseEndBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseEndBlock;
-            fromPartial(object: any): _169.ResponseEndBlock;
+            encode(message: _115.ResponseEndBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseEndBlock;
+            fromPartial(object: any): _115.ResponseEndBlock;
         };
         ResponseCommit: {
-            encode(message: _169.ResponseCommit, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseCommit;
-            fromPartial(object: any): _169.ResponseCommit;
+            encode(message: _115.ResponseCommit, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseCommit;
+            fromPartial(object: any): _115.ResponseCommit;
         };
         ResponseListSnapshots: {
-            encode(message: _169.ResponseListSnapshots, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseListSnapshots;
-            fromPartial(object: any): _169.ResponseListSnapshots;
+            encode(message: _115.ResponseListSnapshots, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseListSnapshots;
+            fromPartial(object: any): _115.ResponseListSnapshots;
         };
         ResponseOfferSnapshot: {
-            encode(message: _169.ResponseOfferSnapshot, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseOfferSnapshot;
-            fromPartial(object: any): _169.ResponseOfferSnapshot;
+            encode(message: _115.ResponseOfferSnapshot, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseOfferSnapshot;
+            fromPartial(object: any): _115.ResponseOfferSnapshot;
         };
         ResponseLoadSnapshotChunk: {
-            encode(message: _169.ResponseLoadSnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseLoadSnapshotChunk;
-            fromPartial(object: any): _169.ResponseLoadSnapshotChunk;
+            encode(message: _115.ResponseLoadSnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseLoadSnapshotChunk;
+            fromPartial(object: any): _115.ResponseLoadSnapshotChunk;
         };
         ResponseApplySnapshotChunk: {
-            encode(message: _169.ResponseApplySnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ResponseApplySnapshotChunk;
-            fromPartial(object: any): _169.ResponseApplySnapshotChunk;
+            encode(message: _115.ResponseApplySnapshotChunk, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ResponseApplySnapshotChunk;
+            fromPartial(object: any): _115.ResponseApplySnapshotChunk;
         };
         ConsensusParams: {
-            encode(message: _169.ConsensusParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ConsensusParams;
-            fromPartial(object: any): _169.ConsensusParams;
+            encode(message: _115.ConsensusParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ConsensusParams;
+            fromPartial(object: any): _115.ConsensusParams;
         };
         BlockParams: {
-            encode(message: _169.BlockParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.BlockParams;
-            fromPartial(object: any): _169.BlockParams;
+            encode(message: _115.BlockParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.BlockParams;
+            fromPartial(object: any): _115.BlockParams;
         };
         LastCommitInfo: {
-            encode(message: _169.LastCommitInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.LastCommitInfo;
-            fromPartial(object: any): _169.LastCommitInfo;
+            encode(message: _115.LastCommitInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.LastCommitInfo;
+            fromPartial(object: any): _115.LastCommitInfo;
         };
         Event: {
-            encode(message: _169.Event, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.Event;
-            fromPartial(object: any): _169.Event;
+            encode(message: _115.Event, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.Event;
+            fromPartial(object: any): _115.Event;
         };
         EventAttribute: {
-            encode(message: _169.EventAttribute, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.EventAttribute;
-            fromPartial(object: any): _169.EventAttribute;
+            encode(message: _115.EventAttribute, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.EventAttribute;
+            fromPartial(object: any): _115.EventAttribute;
         };
         TxResult: {
-            encode(message: _169.TxResult, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.TxResult;
-            fromPartial(object: any): _169.TxResult;
+            encode(message: _115.TxResult, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.TxResult;
+            fromPartial(object: any): _115.TxResult;
         };
         Validator: {
-            encode(message: _169.Validator, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.Validator;
-            fromPartial(object: any): _169.Validator;
+            encode(message: _115.Validator, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.Validator;
+            fromPartial(object: any): _115.Validator;
         };
         ValidatorUpdate: {
-            encode(message: _169.ValidatorUpdate, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.ValidatorUpdate;
-            fromPartial(object: any): _169.ValidatorUpdate;
+            encode(message: _115.ValidatorUpdate, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.ValidatorUpdate;
+            fromPartial(object: any): _115.ValidatorUpdate;
         };
         VoteInfo: {
-            encode(message: _169.VoteInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.VoteInfo;
-            fromPartial(object: any): _169.VoteInfo;
+            encode(message: _115.VoteInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.VoteInfo;
+            fromPartial(object: any): _115.VoteInfo;
         };
         Evidence: {
-            encode(message: _169.Evidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.Evidence;
-            fromPartial(object: any): _169.Evidence;
+            encode(message: _115.Evidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.Evidence;
+            fromPartial(object: any): _115.Evidence;
         };
         Snapshot: {
-            encode(message: _169.Snapshot, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _169.Snapshot;
-            fromPartial(object: any): _169.Snapshot;
+            encode(message: _115.Snapshot, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _115.Snapshot;
+            fromPartial(object: any): _115.Snapshot;
         };
     };
     const crypto: {
         Proof: {
-            encode(message: _171.Proof, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _171.Proof;
-            fromPartial(object: any): _171.Proof;
+            encode(message: _117.Proof, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _117.Proof;
+            fromPartial(object: any): _117.Proof;
         };
         ValueOp: {
-            encode(message: _171.ValueOp, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _171.ValueOp;
-            fromPartial(object: any): _171.ValueOp;
+            encode(message: _117.ValueOp, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _117.ValueOp;
+            fromPartial(object: any): _117.ValueOp;
         };
         DominoOp: {
-            encode(message: _171.DominoOp, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _171.DominoOp;
-            fromPartial(object: any): _171.DominoOp;
+            encode(message: _117.DominoOp, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _117.DominoOp;
+            fromPartial(object: any): _117.DominoOp;
         };
         ProofOp: {
-            encode(message: _171.ProofOp, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _171.ProofOp;
-            fromPartial(object: any): _171.ProofOp;
+            encode(message: _117.ProofOp, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _117.ProofOp;
+            fromPartial(object: any): _117.ProofOp;
         };
         ProofOps: {
-            encode(message: _171.ProofOps, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _171.ProofOps;
-            fromPartial(object: any): _171.ProofOps;
+            encode(message: _117.ProofOps, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _117.ProofOps;
+            fromPartial(object: any): _117.ProofOps;
         };
         PublicKey: {
-            encode(message: _170.PublicKey, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _170.PublicKey;
-            fromPartial(object: any): _170.PublicKey;
+            encode(message: _116.PublicKey, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _116.PublicKey;
+            fromPartial(object: any): _116.PublicKey;
         };
     };
     namespace libs {
         const bits: {
             BitArray: {
-                encode(message: _172.BitArray, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-                decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _172.BitArray;
-                fromPartial(object: any): _172.BitArray;
+                encode(message: _118.BitArray, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+                decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _118.BitArray;
+                fromPartial(object: any): _118.BitArray;
             };
         };
     }
     const p2p: {
         ProtocolVersion: {
-            encode(message: _173.ProtocolVersion, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _173.ProtocolVersion;
-            fromPartial(object: any): _173.ProtocolVersion;
+            encode(message: _119.ProtocolVersion, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _119.ProtocolVersion;
+            fromPartial(object: any): _119.ProtocolVersion;
         };
         NodeInfo: {
-            encode(message: _173.NodeInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _173.NodeInfo;
-            fromPartial(object: any): _173.NodeInfo;
+            encode(message: _119.NodeInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _119.NodeInfo;
+            fromPartial(object: any): _119.NodeInfo;
         };
         NodeInfoOther: {
-            encode(message: _173.NodeInfoOther, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _173.NodeInfoOther;
-            fromPartial(object: any): _173.NodeInfoOther;
+            encode(message: _119.NodeInfoOther, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _119.NodeInfoOther;
+            fromPartial(object: any): _119.NodeInfoOther;
         };
         PeerInfo: {
-            encode(message: _173.PeerInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _173.PeerInfo;
-            fromPartial(object: any): _173.PeerInfo;
+            encode(message: _119.PeerInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _119.PeerInfo;
+            fromPartial(object: any): _119.PeerInfo;
         };
         PeerAddressInfo: {
-            encode(message: _173.PeerAddressInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _173.PeerAddressInfo;
-            fromPartial(object: any): _173.PeerAddressInfo;
+            encode(message: _119.PeerAddressInfo, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _119.PeerAddressInfo;
+            fromPartial(object: any): _119.PeerAddressInfo;
         };
     };
     const types: {
         ValidatorSet: {
-            encode(message: _178.ValidatorSet, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _178.ValidatorSet;
-            fromPartial(object: any): _178.ValidatorSet;
+            encode(message: _124.ValidatorSet, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _124.ValidatorSet;
+            fromPartial(object: any): _124.ValidatorSet;
         };
         Validator: {
-            encode(message: _178.Validator, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _178.Validator;
-            fromPartial(object: any): _178.Validator;
+            encode(message: _124.Validator, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _124.Validator;
+            fromPartial(object: any): _124.Validator;
         };
         SimpleValidator: {
-            encode(message: _178.SimpleValidator, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _178.SimpleValidator;
-            fromPartial(object: any): _178.SimpleValidator;
+            encode(message: _124.SimpleValidator, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _124.SimpleValidator;
+            fromPartial(object: any): _124.SimpleValidator;
         };
-        blockIDFlagFromJSON(object: any): _177.BlockIDFlag;
-        blockIDFlagToJSON(object: _177.BlockIDFlag): string;
-        signedMsgTypeFromJSON(object: any): _177.SignedMsgType;
-        signedMsgTypeToJSON(object: _177.SignedMsgType): string;
-        BlockIDFlag: typeof _177.BlockIDFlag;
-        BlockIDFlagSDKType: typeof _177.BlockIDFlag;
-        SignedMsgType: typeof _177.SignedMsgType;
-        SignedMsgTypeSDKType: typeof _177.SignedMsgType;
+        blockIDFlagFromJSON(object: any): _123.BlockIDFlag;
+        blockIDFlagToJSON(object: _123.BlockIDFlag): string;
+        signedMsgTypeFromJSON(object: any): _123.SignedMsgType;
+        signedMsgTypeToJSON(object: _123.SignedMsgType): string;
+        BlockIDFlag: typeof _123.BlockIDFlag;
+        BlockIDFlagSDKType: typeof _123.BlockIDFlag;
+        SignedMsgType: typeof _123.SignedMsgType;
+        SignedMsgTypeSDKType: typeof _123.SignedMsgType;
         PartSetHeader: {
-            encode(message: _177.PartSetHeader, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.PartSetHeader;
-            fromPartial(object: any): _177.PartSetHeader;
+            encode(message: _123.PartSetHeader, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.PartSetHeader;
+            fromPartial(object: any): _123.PartSetHeader;
         };
         Part: {
-            encode(message: _177.Part, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.Part;
-            fromPartial(object: any): _177.Part;
+            encode(message: _123.Part, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.Part;
+            fromPartial(object: any): _123.Part;
         };
         BlockID: {
-            encode(message: _177.BlockID, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.BlockID;
-            fromPartial(object: any): _177.BlockID;
+            encode(message: _123.BlockID, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.BlockID;
+            fromPartial(object: any): _123.BlockID;
         };
         Header: {
-            encode(message: _177.Header, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.Header;
-            fromPartial(object: any): _177.Header;
+            encode(message: _123.Header, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.Header;
+            fromPartial(object: any): _123.Header;
         };
         Data: {
-            encode(message: _177.Data, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.Data;
-            fromPartial(object: any): _177.Data;
+            encode(message: _123.Data, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.Data;
+            fromPartial(object: any): _123.Data;
         };
         Vote: {
-            encode(message: _177.Vote, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.Vote;
-            fromPartial(object: any): _177.Vote;
+            encode(message: _123.Vote, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.Vote;
+            fromPartial(object: any): _123.Vote;
         };
         Commit: {
-            encode(message: _177.Commit, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.Commit;
-            fromPartial(object: any): _177.Commit;
+            encode(message: _123.Commit, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.Commit;
+            fromPartial(object: any): _123.Commit;
         };
         CommitSig: {
-            encode(message: _177.CommitSig, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.CommitSig;
-            fromPartial(object: any): _177.CommitSig;
+            encode(message: _123.CommitSig, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.CommitSig;
+            fromPartial(object: any): _123.CommitSig;
         };
         Proposal: {
-            encode(message: _177.Proposal, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.Proposal;
-            fromPartial(object: any): _177.Proposal;
+            encode(message: _123.Proposal, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.Proposal;
+            fromPartial(object: any): _123.Proposal;
         };
         SignedHeader: {
-            encode(message: _177.SignedHeader, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.SignedHeader;
-            fromPartial(object: any): _177.SignedHeader;
+            encode(message: _123.SignedHeader, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.SignedHeader;
+            fromPartial(object: any): _123.SignedHeader;
         };
         LightBlock: {
-            encode(message: _177.LightBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.LightBlock;
-            fromPartial(object: any): _177.LightBlock;
+            encode(message: _123.LightBlock, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.LightBlock;
+            fromPartial(object: any): _123.LightBlock;
         };
         BlockMeta: {
-            encode(message: _177.BlockMeta, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.BlockMeta;
-            fromPartial(object: any): _177.BlockMeta;
+            encode(message: _123.BlockMeta, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.BlockMeta;
+            fromPartial(object: any): _123.BlockMeta;
         };
         TxProof: {
-            encode(message: _177.TxProof, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _177.TxProof;
-            fromPartial(object: any): _177.TxProof;
+            encode(message: _123.TxProof, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _123.TxProof;
+            fromPartial(object: any): _123.TxProof;
         };
         ConsensusParams: {
-            encode(message: _176.ConsensusParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _176.ConsensusParams;
-            fromPartial(object: any): _176.ConsensusParams;
+            encode(message: _122.ConsensusParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _122.ConsensusParams;
+            fromPartial(object: any): _122.ConsensusParams;
         };
         BlockParams: {
-            encode(message: _176.BlockParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _176.BlockParams;
-            fromPartial(object: any): _176.BlockParams;
+            encode(message: _122.BlockParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _122.BlockParams;
+            fromPartial(object: any): _122.BlockParams;
         };
         EvidenceParams: {
-            encode(message: _176.EvidenceParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _176.EvidenceParams;
-            fromPartial(object: any): _176.EvidenceParams;
+            encode(message: _122.EvidenceParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _122.EvidenceParams;
+            fromPartial(object: any): _122.EvidenceParams;
         };
         ValidatorParams: {
-            encode(message: _176.ValidatorParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _176.ValidatorParams;
-            fromPartial(object: any): _176.ValidatorParams;
+            encode(message: _122.ValidatorParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _122.ValidatorParams;
+            fromPartial(object: any): _122.ValidatorParams;
         };
         VersionParams: {
-            encode(message: _176.VersionParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _176.VersionParams;
-            fromPartial(object: any): _176.VersionParams;
+            encode(message: _122.VersionParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _122.VersionParams;
+            fromPartial(object: any): _122.VersionParams;
         };
         HashedParams: {
-            encode(message: _176.HashedParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _176.HashedParams;
-            fromPartial(object: any): _176.HashedParams;
+            encode(message: _122.HashedParams, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _122.HashedParams;
+            fromPartial(object: any): _122.HashedParams;
         };
         Evidence: {
-            encode(message: _175.Evidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _175.Evidence;
-            fromPartial(object: any): _175.Evidence;
+            encode(message: _121.Evidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _121.Evidence;
+            fromPartial(object: any): _121.Evidence;
         };
         DuplicateVoteEvidence: {
-            encode(message: _175.DuplicateVoteEvidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _175.DuplicateVoteEvidence;
-            fromPartial(object: any): _175.DuplicateVoteEvidence;
+            encode(message: _121.DuplicateVoteEvidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _121.DuplicateVoteEvidence;
+            fromPartial(object: any): _121.DuplicateVoteEvidence;
         };
         LightClientAttackEvidence: {
-            encode(message: _175.LightClientAttackEvidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _175.LightClientAttackEvidence;
-            fromPartial(object: any): _175.LightClientAttackEvidence;
+            encode(message: _121.LightClientAttackEvidence, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _121.LightClientAttackEvidence;
+            fromPartial(object: any): _121.LightClientAttackEvidence;
         };
         EvidenceList: {
-            encode(message: _175.EvidenceList, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _175.EvidenceList;
-            fromPartial(object: any): _175.EvidenceList;
+            encode(message: _121.EvidenceList, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _121.EvidenceList;
+            fromPartial(object: any): _121.EvidenceList;
         };
         Block: {
-            encode(message: _174.Block, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _174.Block;
-            fromPartial(object: any): _174.Block;
+            encode(message: _120.Block, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _120.Block;
+            fromPartial(object: any): _120.Block;
         };
     };
     const version: {
         App: {
-            encode(message: _179.App, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _179.App;
-            fromPartial(object: any): _179.App;
+            encode(message: _125.App, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _125.App;
+            fromPartial(object: any): _125.App;
         };
         Consensus: {
-            encode(message: _179.Consensus, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
-            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _179.Consensus;
-            fromPartial(object: any): _179.Consensus;
+            encode(message: _125.Consensus, writer?: import("protobufjs").Writer): import("protobufjs").Writer;
+            decode(input: Uint8Array | import("protobufjs").Reader, length?: number): _125.Consensus;
+            fromPartial(object: any): _125.Consensus;
         };
     };
 }

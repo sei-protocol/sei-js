@@ -1,6 +1,6 @@
-import { Rpc } from "@osmonauts/helpers";
+import { Rpc } from "../../../helpers";
 import { MsgCreateDenom, MsgCreateDenomResponse, MsgMint, MsgMintResponse, MsgBurn, MsgBurnResponse, MsgChangeAdmin, MsgChangeAdminResponse } from "./tx";
-/** Msg defines the RPC service */
+/** Msg defines the tokefactory module's gRPC message service. */
 export interface Msg {
     createDenom(request: MsgCreateDenom): Promise<MsgCreateDenomResponse>;
     mint(request: MsgMint): Promise<MsgMintResponse>;
