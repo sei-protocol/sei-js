@@ -34,3 +34,11 @@ export type ChainInfo = {
 	rpcUrl?: string;
 	gasPriceStep?: GasPriceStep;
 };
+
+export type Currency = {
+	coinDenom: string;
+	coinMinimalDenom: string;
+	coinDecimals: number;
+	coinGeckoId?: string;
+	coinImageUrl?: string;
+};

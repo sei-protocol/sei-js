@@ -1,4 +1,4 @@
-import { ChainInfo, WalletWindowKey } from './types';
+import { ChainInfo, Currency, WalletWindowKey } from './types';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { StdSignature } from '@cosmjs/amino';
 
@@ -87,16 +87,17 @@ export const LEAP_WALLET: SeiWallet = {
 
 export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];
 
-const DEFAULT_CHAIN_INFO = {
+const DEFAULT_CHAIN_INFO: ChainInfo = {
 	chainName: 'Sei Testnet',
 	chainId: 'atlantic-2',
 	restUrl: 'https://rest.atlantic-2.seinetwork.io',
-	rpcUrl: 'https://rpc.atlantic-2.seinetwork.io'
+	rpcUrl: 'https://rpc.atlantic-2.seinetwork.io',
+	gasPriceStep: { low: 0.1, average: 0.2, high: 0.3 }
 };
 
-export const getChainSuggest = (chainInfo: ChainInfo = {}) => {
+export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []) => {
 	const prefix = 'sei';
-	const { chainId, chainName, rpcUrl, restUrl } = {
+	const { chainId, chainName, rpcUrl, restUrl, gasPriceStep } = {
 		...DEFAULT_CHAIN_INFO,
 		...chainInfo
 	};
@@ -123,52 +124,14 @@ export const getChainSuggest = (chainInfo: ChainInfo = {}) => {
 				coinMinimalDenom: 'usei',
 				coinDecimals: 6
 			},
-			{
-				coinDenom: 'USDC',
-				coinMinimalDenom: 'uusdc',
-				coinDecimals: 6,
-				coinGeckoId: 'usd-coin'
-			},
-			{
-				coinDenom: 'ATOM',
-				coinMinimalDenom: 'uatom',
-				coinDecimals: 6,
-				coinGeckoId: 'cosmos'
-			},
-			{
-				coinDenom: 'WETH',
-				coinMinimalDenom: 'ibc/C2A89D98873BB55B62CE86700DFACA646EC80352E8D03CC6CF34DD44E46DC75D',
-				coinDecimals: 18,
-				coinGeckoId: 'weth'
-			},
-			{
-				coinDenom: 'WBTC',
-				coinMinimalDenom: 'ibc/42BCC21A2B784E813F8878739FD32B4AA2D0A68CAD94F4C88B9EA98609AB0CCD',
-				coinDecimals: 8,
-				coinGeckoId: 'bitcoin'
-			},
-			{
-				coinDenom: 'aUSDC',
-				coinMinimalDenom: 'ibc/6D45A5CD1AADE4B527E459025AC1A5AEF41AE99091EF3069F3FEAACAFCECCD21',
-				coinDecimals: 6,
-				coinGeckoId: 'usd-coin'
-			},
-			{
-				coinDenom: 'UST2',
-				coinMinimalDenom: 'factory/sei1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqpeheyc/uust2',
-				coinDecimals: 6
-			},
-			{
-				coinDenom: 'uCeler',
-				coinMinimalDenom: 'factory/sei174t9p63nzlmsycmd9x9zxx3ejq9lp2y9f69rp9/uceler',
-				coinDecimals: 6
-			}
+			...currencies
 		],
 		feeCurrencies: [
 			{
 				coinDenom: 'SEI',
 				coinMinimalDenom: 'usei',
-				coinDecimals: 6
+				coinDecimals: 6,
+				gasPriceStep
 			}
 		],
 		stakeCurrency: {
