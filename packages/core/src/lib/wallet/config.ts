@@ -1,4 +1,4 @@
-import { ChainInfo, Currency, WalletWindowKey } from './types';
+import { ChainConfig, ChainInfo, Currency } from './types';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { StdSignature } from '@cosmjs/amino';
 
@@ -13,8 +13,9 @@ export interface SeiWallet {
 	getAccounts: (chainId: string) => Promise<readonly AccountData[]>;
 	connect: (chainId: string) => Promise<void>;
 	disconnect: (chainId: string) => Promise<void>;
-	suggestChain?: (chainId: string) => void;
+	suggestChain?: (config: ChainConfig) => Promise<void>;
 	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature | undefined>;
+	verifyArbitrary?: (chainId: string, signingAddress: string, data: string, signature: StdSignature) => Promise<boolean>;
 }
 
 export const FIN_WALLET: SeiWallet = {
@@ -26,6 +27,7 @@ export const FIN_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['fin']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['fin']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['fin']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['fin']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	walletInfo: {
 		windowKey: 'fin',
 		name: 'Fin',
@@ -43,6 +45,7 @@ export const COMPASS_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['compass']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['compass']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['compass']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['compass']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	walletInfo: {
 		windowKey: 'compass',
 		name: 'Compass',
@@ -60,6 +63,8 @@ export const KEPLR_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['keplr']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['keplr']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['keplr']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
+	suggestChain: async (config) => window?.['keplr']?.experimentalSuggestChain(config),
 	walletInfo: {
 		windowKey: 'keplr',
 		name: 'Keplr',
@@ -77,6 +82,8 @@ export const LEAP_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['leap']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['leap']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['leap']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['leap']?.verifyArbitrary(chainId, signingAddress, data, signature),
+	suggestChain: async (config) => window?.['leap']?.experimentalSuggestChain(config),
 	walletInfo: {
 		windowKey: 'leap',
 		name: 'Leap',
@@ -87,15 +94,15 @@ export const LEAP_WALLET: SeiWallet = {
 
 export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];
 
-const DEFAULT_CHAIN_INFO: ChainInfo = {
-	chainName: 'Sei Testnet',
-	chainId: 'atlantic-2',
-	restUrl: 'https://rest.atlantic-2.seinetwork.io',
-	rpcUrl: 'https://rpc.atlantic-2.seinetwork.io',
+const DEFAULT_CHAIN_INFO = {
+	chainName: 'Sei',
+	chainId: 'pacific-1',
+	restUrl: 'https://rest.wallet.pacific-1.sei.io/',
+	rpcUrl: 'https://rpc.wallet.pacific-1.sei.io/',
 	gasPriceStep: { low: 0.1, average: 0.2, high: 0.3 }
 };
 
-export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []) => {
+export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []): ChainConfig => {
 	const prefix = 'sei';
 	const { chainId, chainName, rpcUrl, restUrl, gasPriceStep } = {
 		...DEFAULT_CHAIN_INFO,
@@ -142,19 +149,4 @@ export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[
 		coinType: 118,
 		features: ['stargate', 'ibc-transfer', 'cosmwasm']
 	};
-};
-
-export const suggestChain = async (inputWallet: WalletWindowKey, chainInfo?: ChainInfo) => {
-	if (typeof window === 'undefined' || !window) {
-		throw new Error('Window is undefined.');
-	}
-
-	const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
-	const walletProvider = window[windowKey];
-	if (!walletProvider) {
-		throw new Error(`Wallet ${inputWallet} is not installed.`);
-	}
-
-	const config = getChainSuggest(chainInfo);
-	await walletProvider.experimentalSuggestChain(config);
 };
