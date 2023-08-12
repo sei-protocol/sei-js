@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgCreateDenom, MsgMint, MsgBurn, MsgChangeAdmin } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/seiprotocol.seichain.tokenfactory.MsgCreateDenom", MsgCreateDenom], ["/seiprotocol.seichain.tokenfactory.MsgMint", MsgMint], ["/seiprotocol.seichain.tokenfactory.MsgBurn", MsgBurn], ["/seiprotocol.seichain.tokenfactory.MsgChangeAdmin", MsgChangeAdmin]];

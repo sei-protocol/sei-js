@@ -1,16 +1,25 @@
-import { Rpc } from "@osmonauts/helpers";
+import { Rpc } from "../../../helpers";
 import { QueryClient } from "@cosmjs/stargate";
 import { QueryContractInfoRequest, QueryContractInfoResponse, QueryContractHistoryRequest, QueryContractHistoryResponse, QueryContractsByCodeRequest, QueryContractsByCodeResponse, QueryAllContractStateRequest, QueryAllContractStateResponse, QueryRawContractStateRequest, QueryRawContractStateResponse, QuerySmartContractStateRequest, QuerySmartContractStateResponse, QueryCodeRequest, QueryCodeResponse, QueryCodesRequest, QueryCodesResponse, QueryPinnedCodesRequest, QueryPinnedCodesResponse } from "./query";
-/** Query defines the RPC service */
+/** Query provides defines the gRPC querier service */
 export interface Query {
+    /** ContractInfo gets the contract meta data */
     contractInfo(request: QueryContractInfoRequest): Promise<QueryContractInfoResponse>;
+    /** ContractHistory gets the contract code history */
     contractHistory(request: QueryContractHistoryRequest): Promise<QueryContractHistoryResponse>;
+    /** ContractsByCode lists all smart contracts for a code id */
     contractsByCode(request: QueryContractsByCodeRequest): Promise<QueryContractsByCodeResponse>;
+    /** AllContractState gets all raw store data for a single contract */
     allContractState(request: QueryAllContractStateRequest): Promise<QueryAllContractStateResponse>;
+    /** RawContractState gets single key from the raw store data of a contract */
     rawContractState(request: QueryRawContractStateRequest): Promise<QueryRawContractStateResponse>;
+    /** SmartContractState get smart query result from the contract */
     smartContractState(request: QuerySmartContractStateRequest): Promise<QuerySmartContractStateResponse>;
+    /** Code gets the binary code and metadata for a singe wasm code */
     code(request: QueryCodeRequest): Promise<QueryCodeResponse>;
+    /** Codes gets the metadata for all stored wasm codes */
     codes(request?: QueryCodesRequest): Promise<QueryCodesResponse>;
+    /** PinnedCodes gets the pinned code ids */
     pinnedCodes(request?: QueryPinnedCodesRequest): Promise<QueryPinnedCodesResponse>;
 }
 export declare class QueryClientImpl implements Query {

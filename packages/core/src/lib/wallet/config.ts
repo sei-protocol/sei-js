@@ -1,4 +1,4 @@
-import { ChainInfo, WalletWindowKey } from './types';
+import { ChainConfig, ChainInfo, Currency } from './types';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { StdSignature } from '@cosmjs/amino';
 
@@ -13,8 +13,10 @@ export interface SeiWallet {
 	getAccounts: (chainId: string) => Promise<readonly AccountData[]>;
 	connect: (chainId: string) => Promise<void>;
 	disconnect: (chainId: string) => Promise<void>;
-	suggestChain?: (chainId: string) => void;
+	suggestChain?: (config: ChainConfig) => Promise<void>;
 	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature | undefined>;
+	verifyArbitrary?: (chainId: string, signingAddress: string, data: string, signature: StdSignature) => Promise<boolean>;
+	isMobileSupported: boolean;
 }
 
 export const FIN_WALLET: SeiWallet = {
@@ -26,12 +28,14 @@ export const FIN_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['fin']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['fin']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['fin']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['fin']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	walletInfo: {
 		windowKey: 'fin',
 		name: 'Fin',
-		website: 'https://chrome.google.com/webstore/detail/fin-wallet-for-sei/dbgnhckhnppddckangcjbkjnlddbjkna',
+		website: 'https://finwallet.com',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/fin.png'
-	}
+	},
+	isMobileSupported: false
 };
 
 export const COMPASS_WALLET: SeiWallet = {
@@ -43,12 +47,14 @@ export const COMPASS_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['compass']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['compass']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['compass']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['compass']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	walletInfo: {
 		windowKey: 'compass',
 		name: 'Compass',
 		website: 'https://chrome.google.com/webstore/detail/compass-wallet/anokgmphncpekkhclmingpimjmcooifb',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/compass.png'
-	}
+	},
+	isMobileSupported: true
 };
 
 export const KEPLR_WALLET: SeiWallet = {
@@ -60,12 +66,15 @@ export const KEPLR_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['keplr']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['keplr']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['keplr']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
+	suggestChain: async (config) => window?.['keplr']?.experimentalSuggestChain(config),
 	walletInfo: {
 		windowKey: 'keplr',
 		name: 'Keplr',
 		website: 'https://www.keplr.app/download',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/keplr.png'
-	}
+	},
+	isMobileSupported: false
 };
 
 export const LEAP_WALLET: SeiWallet = {
@@ -77,26 +86,30 @@ export const LEAP_WALLET: SeiWallet = {
 	disconnect: async (chainId) => await window?.['leap']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['leap']?.getOfflineSignerAuto(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['leap']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['leap']?.verifyArbitrary(chainId, signingAddress, data, signature),
+	suggestChain: async (config) => window?.['leap']?.experimentalSuggestChain(config),
 	walletInfo: {
 		windowKey: 'leap',
 		name: 'Leap',
 		website: 'https://www.leapwallet.io/download',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/leap.png'
-	}
+	},
+	isMobileSupported: true
 };
 
 export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];
 
 const DEFAULT_CHAIN_INFO = {
-	chainName: 'Sei Testnet',
-	chainId: 'atlantic-2',
-	restUrl: 'https://rest.atlantic-2.seinetwork.io',
-	rpcUrl: 'https://rpc.atlantic-2.seinetwork.io'
+	chainName: 'Sei',
+	chainId: 'pacific-1',
+	restUrl: 'https://rest.wallet.pacific-1.sei.io/',
+	rpcUrl: 'https://rpc.wallet.pacific-1.sei.io/',
+	gasPriceStep: { low: 0.1, average: 0.2, high: 0.3 }
 };
 
-export const getChainSuggest = (chainInfo: ChainInfo = {}) => {
+export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []): ChainConfig => {
 	const prefix = 'sei';
-	const { chainId, chainName, rpcUrl, restUrl } = {
+	const { chainId, chainName, rpcUrl, restUrl, gasPriceStep } = {
 		...DEFAULT_CHAIN_INFO,
 		...chainInfo
 	};
@@ -123,52 +136,14 @@ export const getChainSuggest = (chainInfo: ChainInfo = {}) => {
 				coinMinimalDenom: 'usei',
 				coinDecimals: 6
 			},
-			{
-				coinDenom: 'USDC',
-				coinMinimalDenom: 'uusdc',
-				coinDecimals: 6,
-				coinGeckoId: 'usd-coin'
-			},
-			{
-				coinDenom: 'ATOM',
-				coinMinimalDenom: 'uatom',
-				coinDecimals: 6,
-				coinGeckoId: 'cosmos'
-			},
-			{
-				coinDenom: 'WETH',
-				coinMinimalDenom: 'ibc/C2A89D98873BB55B62CE86700DFACA646EC80352E8D03CC6CF34DD44E46DC75D',
-				coinDecimals: 18,
-				coinGeckoId: 'weth'
-			},
-			{
-				coinDenom: 'WBTC',
-				coinMinimalDenom: 'ibc/42BCC21A2B784E813F8878739FD32B4AA2D0A68CAD94F4C88B9EA98609AB0CCD',
-				coinDecimals: 8,
-				coinGeckoId: 'bitcoin'
-			},
-			{
-				coinDenom: 'aUSDC',
-				coinMinimalDenom: 'ibc/6D45A5CD1AADE4B527E459025AC1A5AEF41AE99091EF3069F3FEAACAFCECCD21',
-				coinDecimals: 6,
-				coinGeckoId: 'usd-coin'
-			},
-			{
-				coinDenom: 'UST2',
-				coinMinimalDenom: 'factory/sei1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqpeheyc/uust2',
-				coinDecimals: 6
-			},
-			{
-				coinDenom: 'uCeler',
-				coinMinimalDenom: 'factory/sei174t9p63nzlmsycmd9x9zxx3ejq9lp2y9f69rp9/uceler',
-				coinDecimals: 6
-			}
+			...currencies
 		],
 		feeCurrencies: [
 			{
 				coinDenom: 'SEI',
 				coinMinimalDenom: 'usei',
-				coinDecimals: 6
+				coinDecimals: 6,
+				gasPriceStep
 			}
 		],
 		stakeCurrency: {
@@ -179,19 +154,4 @@ export const getChainSuggest = (chainInfo: ChainInfo = {}) => {
 		coinType: 118,
 		features: ['stargate', 'ibc-transfer', 'cosmwasm']
 	};
-};
-
-export const suggestChain = async (inputWallet: WalletWindowKey, chainInfo?: ChainInfo) => {
-	if (typeof window === 'undefined' || !window) {
-		throw new Error('Window is undefined.');
-	}
-
-	const windowKey = inputWallet === 'coin98' ? 'keplr' : inputWallet;
-	const walletProvider = window[windowKey];
-	if (!walletProvider) {
-		throw new Error(`Wallet ${inputWallet} is not installed.`);
-	}
-
-	const config = getChainSuggest(chainInfo);
-	await walletProvider.experimentalSuggestChain(config);
 };

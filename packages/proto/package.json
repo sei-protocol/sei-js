@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "1.3.0",
+  "version": "0.0.0-internal-20230811175927",
   "description": "TypeScript library for Sei protobufs generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
