@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.0.0
+
+### Major Changes
+
+- 7229f87: Pacific-1 support and mobile/proto optimizations
+  - Excludes unnecessary modules in proto codegen
+  - Remove TM35 client (no longer used)
+  - Clean up helper functions in favor of using Sei wallet interfaces
+  - Update react hooks
+  - Adds mobile wallet support through UI components and inside wallet interfaces
+  - Adds support for Pacific-1
+  - Adds support for mobile wallets
+
+### Patch Changes
+
+- Updated dependencies [7229f87]
+  - @sei-js/proto@0.0.0
+
 ## 1.5.0
 
 ### Minor Changes
