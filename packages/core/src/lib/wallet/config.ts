@@ -31,7 +31,7 @@ export const FIN_WALLET: SeiWallet = {
 	walletInfo: {
 		windowKey: 'fin',
 		name: 'Fin',
-		website: 'https://chrome.google.com/webstore/detail/fin-wallet-for-sei/dbgnhckhnppddckangcjbkjnlddbjkna',
+		website: 'https://finwallet.com',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/fin.png'
 	}
 };
