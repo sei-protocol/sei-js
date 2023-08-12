@@ -1,7 +1,5 @@
 # Changelog
 
-## 0.0.0-internal-20230811175927
-
 ### Major Changes
 
 - Pacific-1 release with mobile support and optimized proto bundle size
