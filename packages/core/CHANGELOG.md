@@ -1,22 +1,5 @@
 # Changelog
 
-### Major Changes
-
-- Pacific-1 release with mobile support and optimized proto bundle size
-
-### Minor Changes
-
-- 7229f87: - Excludes unnecessary modules in proto codegen
-  - Remove TM35 client (no longer used)
-  - Clean up helper functions in favor of using Sei wallet interfaces
-  - Update react hooks
-
-### Patch Changes
-
-- Updated dependencies
-- Updated dependencies [7229f87]
-  - @sei-js/proto@0.0.0-internal-20230811175927
-
 ## 1.5.0
 
 ### Minor Changes
