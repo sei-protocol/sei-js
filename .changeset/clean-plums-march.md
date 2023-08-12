@@ -1,7 +1,7 @@
 ---
-'@sei-js/proto': minor
-'@sei-js/react': minor
-'@sei-js/core': minor
+'@sei-js/proto': major
+'@sei-js/react': major
+'@sei-js/core': major
 ---
 
 - Excludes unnecessary modules in proto codegen
