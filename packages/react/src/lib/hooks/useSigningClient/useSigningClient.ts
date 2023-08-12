@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { getSigningClient } from '@sei-js/core';
-import { SigningStargateClient, SigningStargateClientOptions } from '@cosmjs/stargate';
+import { SigningStargateClient } from '@cosmjs/stargate';
+
 import { SeiWalletContext } from '../../provider';
 
 export type UseSigningClient = {
@@ -8,7 +9,7 @@ export type UseSigningClient = {
 	signingClient?: SigningStargateClient;
 };
 
-const useSigningClient = (customRpcUrl?: string, options?: SigningStargateClientOptions): UseSigningClient => {
+const useSigningClient = (customRpcUrl?: string): UseSigningClient => {
 	const { offlineSigner, rpcUrl, chainId } = useContext(SeiWalletContext);
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -19,7 +20,7 @@ const useSigningClient = (customRpcUrl?: string, options?: SigningStargateClient
 			try {
 				if (!rpcUrl || !offlineSigner || !chainId) return;
 				setIsLoading(true);
-				const client = await getSigningClient(customRpcUrl || rpcUrl, offlineSigner, options);
+				const client = await getSigningClient(customRpcUrl || rpcUrl, offlineSigner);
 				setSigningClient(client);
 				setIsLoading(false);
 			} catch {

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { getSigningCosmWasmClient } from '@sei-js/core';
-import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
+import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+
 import { SeiWalletContext } from '../../provider';
 
 export type UseSigningCosmWasmClient = {
@@ -8,7 +9,7 @@ export type UseSigningCosmWasmClient = {
 	signingCosmWasmClient?: SigningCosmWasmClient;
 };
 
-const useSigningCosmWasmClient = (customRpcUrl?: string, options?: SigningCosmWasmClientOptions): UseSigningCosmWasmClient => {
+const useSigningCosmWasmClient = (customRpcUrl?: string): UseSigningCosmWasmClient => {
 	const { offlineSigner, rpcUrl, chainId } = useContext(SeiWalletContext);
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -19,7 +20,7 @@ const useSigningCosmWasmClient = (customRpcUrl?: string, options?: SigningCosmWa
 			try {
 				if (!rpcUrl || !offlineSigner || !chainId) return;
 				setIsLoading(true);
-				const client = await getSigningCosmWasmClient(customRpcUrl || rpcUrl, offlineSigner, options);
+				const client = await getSigningCosmWasmClient(customRpcUrl || rpcUrl, offlineSigner);
 				setSigningCosmWasmClient(client);
 				setIsLoading(false);
 			} catch {

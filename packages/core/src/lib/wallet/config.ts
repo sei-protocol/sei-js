@@ -16,6 +16,7 @@ export interface SeiWallet {
 	suggestChain?: (config: ChainConfig) => Promise<void>;
 	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature | undefined>;
 	verifyArbitrary?: (chainId: string, signingAddress: string, data: string, signature: StdSignature) => Promise<boolean>;
+	isMobileSupported: boolean;
 }
 
 export const FIN_WALLET: SeiWallet = {
@@ -33,7 +34,8 @@ export const FIN_WALLET: SeiWallet = {
 		name: 'Fin',
 		website: 'https://chrome.google.com/webstore/detail/fin-wallet-for-sei/dbgnhckhnppddckangcjbkjnlddbjkna',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/fin.png'
-	}
+	},
+	isMobileSupported: false
 };
 
 export const COMPASS_WALLET: SeiWallet = {
@@ -51,7 +53,8 @@ export const COMPASS_WALLET: SeiWallet = {
 		name: 'Compass',
 		website: 'https://chrome.google.com/webstore/detail/compass-wallet/anokgmphncpekkhclmingpimjmcooifb',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/compass.png'
-	}
+	},
+	isMobileSupported: true
 };
 
 export const KEPLR_WALLET: SeiWallet = {
@@ -70,7 +73,8 @@ export const KEPLR_WALLET: SeiWallet = {
 		name: 'Keplr',
 		website: 'https://www.keplr.app/download',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/keplr.png'
-	}
+	},
+	isMobileSupported: false
 };
 
 export const LEAP_WALLET: SeiWallet = {
@@ -89,7 +93,8 @@ export const LEAP_WALLET: SeiWallet = {
 		name: 'Leap',
 		website: 'https://www.leapwallet.io/download',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/leap.png'
-	}
+	},
+	isMobileSupported: true
 };
 
 export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];

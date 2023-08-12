@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { getStargateClient } from '@sei-js/core';
-import { StargateClient, StargateClientOptions } from '@cosmjs/stargate';
+import { StargateClient } from '@cosmjs/stargate';
+
 import { SeiWalletContext } from '../../provider';
 
 export type UseStargateClient = {
@@ -8,7 +9,7 @@ export type UseStargateClient = {
 	stargateClient?: StargateClient;
 };
 
-const useStargateClient = (customRpcUrl?: string, options?: StargateClientOptions): UseStargateClient => {
+const useStargateClient = (customRpcUrl?: string): UseStargateClient => {
 	const { rpcUrl, chainId } = useContext(SeiWalletContext);
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -19,7 +20,7 @@ const useStargateClient = (customRpcUrl?: string, options?: StargateClientOption
 			try {
 				if (!rpcUrl || !chainId) return;
 				setIsLoading(true);
-				const client = await getStargateClient(customRpcUrl || rpcUrl, options);
+				const client = await getStargateClient(customRpcUrl || rpcUrl);
 				setStargateClient(client);
 				setIsLoading(false);
 			} catch {

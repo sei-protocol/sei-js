@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { getCosmWasmClient } from '@sei-js/core';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+
 import { SeiWalletContext } from '../../provider';
 
 export type UseCosmWasmClient = {

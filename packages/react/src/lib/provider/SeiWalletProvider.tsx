@@ -34,6 +34,13 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 		return acc;
 	}, []);
 
+	const disconnect = () => {
+		setTargetWallet(undefined);
+		setOfflineSigner(undefined);
+		setAccounts([]);
+		setConnectedWallet(undefined);
+	};
+
 	const connectToChain = async () => {
 		if (!targetWallet) return;
 
@@ -43,17 +50,19 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 				return;
 			}
 
-			// const enableResponse = await targetWallet.connect(chainConfiguration.chainId);
+			const enableResponse = await targetWallet.connect(chainConfiguration.chainId);
 			const fetchedOfflineSigner = await targetWallet.getOfflineSigner(chainConfiguration.chainId);
 
 			if (!fetchedOfflineSigner) {
 				setConnectionError(targetWallet.walletInfo.windowKey);
+				disconnect();
 				return;
 			}
 			const fetchedAccounts = await targetWallet.getAccounts(chainConfiguration.chainId);
 
 			if (fetchedAccounts.length === 0) {
 				setConnectionError(targetWallet.walletInfo.windowKey);
+				disconnect();
 				return;
 			} else {
 				setShowConnectModal(false);
@@ -77,13 +86,6 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 			setConnectedWallet(undefined);
 		}
 	}, [targetWallet, chainConfiguration.chainId]);
-
-	const disconnect = () => {
-		setTargetWallet(undefined);
-		setOfflineSigner(undefined);
-		setAccounts([]);
-		setConnectedWallet(undefined);
-	};
 
 	const contextValue: WalletProvider = {
 		chainId: chainConfiguration.chainId,
