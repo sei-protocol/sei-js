@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.0.0
+
+### Major Changes
+
+- 7229f87: - Excludes unnecessary modules in proto codegen
+  - Remove TM35 client (no longer used)
+  - Clean up helper functions in favor of using Sei wallet interfaces
+  - Update react hooks
+  - Adds mobile wallet support through UI components and inside wallet interfaces
+
+### Patch Changes
+
+- Updated dependencies [7229f87]
+  - @sei-js/core@0.0.0
+
 ## 2.1.0
 
 ### Minor Changes

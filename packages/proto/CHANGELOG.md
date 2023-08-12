@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.0
+
+### Major Changes
+
+- 7229f87: - Excludes unnecessary modules in proto codegen
+  - Remove TM35 client (no longer used)
+  - Clean up helper functions in favor of using Sei wallet interfaces
+  - Update react hooks
+  - Adds mobile wallet support through UI components and inside wallet interfaces
+
 ## 1.3.0
 
 ### Minor Changes
