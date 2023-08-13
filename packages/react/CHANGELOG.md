@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.0.0
+
+### Major Changes
+
+- 43153ba: Bump all versions to 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [43153ba]
+  - @sei-js/core@3.0.0
+
 ## 2.0.0
 
 ### Major Changes
