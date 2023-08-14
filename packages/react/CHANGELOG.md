@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.1
+
+### Patch Changes
+
+- cc3bf83: Bump proto version
+- Updated dependencies [cc3bf83]
+  - @sei-js/core@3.0.1
+
 ## 3.0.0
 
 ### Major Changes
