@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1
+
+### Patch Changes
+
+- e45bc24: Fix build
+
 ## 3.0.0
 
 ### Major Changes

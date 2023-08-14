@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/core",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "TypeScript library for front end integrations with Sei",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -35,7 +35,7 @@
 		"@cosmjs/utils": "0.29.5",
 		"@ethersproject/keccak256": "^5.7.0",
 		"@keplr-wallet/types": "^0.11.41",
-		"@sei-js/proto": "^3.0.0",
+		"@sei-js/proto": "^3.0.1",
 		"crypto-js": "^4.1.1",
 		"readonly-date": "^1.0.0",
 		"sha.js": "^2.4.11",
