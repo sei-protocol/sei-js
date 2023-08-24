@@ -2,10 +2,10 @@ import { fromBech32 } from '@cosmjs/encoding';
 import CryptoJS from 'crypto-js';
 import { ec as EllipticCurve } from 'elliptic';
 
-export const isValidAddress = (address: string) => {
+export const isValidSeiAddress = (address: string) => {
 	try {
 		const { prefix } = fromBech32(address);
-		return !!prefix;
+		return prefix && prefix === 'sei';
 	} catch (e) {
 		return false;
 	}

@@ -1,7 +1,7 @@
 import { serializeSignDoc, StdSignature, StdSignDoc } from '@cosmjs/amino';
 import { fromBase64 } from '@cosmjs/encoding';
-import { toBech32, validateBech32 } from './bech32';
-import { getAddressFromPubKey, verifyDigest32 } from './address';
+import { toBech32 } from './bech32';
+import { getAddressFromPubKey, isValidSeiAddress, verifyDigest32 } from './address';
 import { sha256 } from './hash';
 
 function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
@@ -53,7 +53,7 @@ function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	if (!signer) {
 		throw new Error('Empty signer in the ADR-36 msg');
 	}
-	validateBech32(signer);
+	isValidSeiAddress(signer);
 	const data = msg.value.data;
 	if (!data) {
 		throw new Error('Empty data in the ADR-36 msg');

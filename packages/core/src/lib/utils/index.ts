@@ -1,2 +1,2 @@
 export { verifyArbitrary } from './signing';
-export { isValidAddress } from './address';
+export { isValidSeiAddress } from './address';
