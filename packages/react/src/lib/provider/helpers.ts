@@ -1,4 +1,4 @@
-import { COMPASS_WALLET, FIN_WALLET, KEPLR_WALLET, LEAP_WALLET, SeiWallet } from '@sei-js/core';
+import { COIN98_WALLET, COMPASS_WALLET, FIN_WALLET, KEPLR_WALLET, LEAP_WALLET, SeiWallet } from '@sei-js/core';
 
 export const findWalletByWindowKey = (windowKey: string): SeiWallet | undefined => {
 	switch (windowKey) {
@@ -10,6 +10,8 @@ export const findWalletByWindowKey = (windowKey: string): SeiWallet | undefined 
 			return KEPLR_WALLET;
 		case 'fin':
 			return FIN_WALLET;
+		case 'coin98':
+			return COIN98_WALLET;
 		default:
 			return undefined;
 	}

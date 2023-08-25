@@ -97,7 +97,26 @@ export const LEAP_WALLET: SeiWallet = {
 	isMobileSupported: true
 };
 
-export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];
+export const COIN98_WALLET: SeiWallet = {
+	getAccounts: async (chainId) => {
+		const offlineSigner = await window?.['coin98']?.['keplr']?.getOfflineSignerAuto(chainId);
+		return offlineSigner?.getAccounts() || [];
+	},
+	connect: async (chainId) => await window?.['coin98']?.['keplr']?.enable(chainId),
+	disconnect: async (chainId) => await window?.['coin98']?.['keplr']?.disable(chainId),
+	getOfflineSigner: async (chainId) => window?.['coin98']?.['keplr']?.getOfflineSignerAuto(chainId),
+	signArbitrary: async (chainId, signer, message) => window?.['coin98']?.['keplr']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['coin98']?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
+	walletInfo: {
+		windowKey: 'coin98',
+		name: 'Coin98',
+		website: 'https://coin98.com/wallet',
+		icon: 'https://inventory.coin98.com/images/c98logo.png'
+	},
+	isMobileSupported: true
+};
+
+export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET, COIN98_WALLET];
 
 const DEFAULT_CHAIN_INFO = {
 	chainName: 'Sei',

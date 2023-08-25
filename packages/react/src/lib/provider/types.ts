@@ -21,7 +21,7 @@ export type WalletProvider = {
 	disconnect: () => void;
 };
 
-export type SupportedWalletInput = 'compass' | 'leap' | 'fin' | 'keplr' | SeiWallet;
+export type SupportedWalletInput = 'coin98' | 'compass' | 'leap' | 'fin' | 'keplr' | SeiWallet;
 
 export type SeiWalletProviderProps = {
 	children: ReactNode;
