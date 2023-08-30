@@ -71,11 +71,8 @@ function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 }
 
 function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
-	if (typeof data === 'string') {
-		data = Buffer.from(data, 'base64').toString('base64'); // If data is already a base64 string, convert it to a Buffer and back to a string.
-	} else {
-		data = Buffer.from(data).toString('base64');
-	}
+	// If data is already a base64 string, convert it to a Buffer and back to a string.
+	data = Buffer.from(data).toString('base64');
 
 	//According to ADR-36 specifications https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md
 	return {
