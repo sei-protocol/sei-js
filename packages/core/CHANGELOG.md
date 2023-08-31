@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.2
+
+### Patch Changes
+
+- 908b5b5: Added polyfill, wallet, arbitrary signing, and address helper functions.
+
 ## 3.0.1
 
 ### Patch Changes
