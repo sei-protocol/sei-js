@@ -1,10 +1,10 @@
 import { serializeSignDoc, StdSignature, StdSignDoc } from '@cosmjs/amino';
 import { fromBase64 } from '@cosmjs/encoding';
-import { Bech32Address } from './Bech32Address';
-import { PubKeySecp256k1 } from './PubKeySecp256k1';
-import { Hash } from './Hash';
+import { toBech32 } from './bech32';
+import { getAddressFromPubKey, isValidSeiAddress, verifyDigest32 } from './address';
+import { sha256 } from './hash';
 
-export function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc, bech32PrefixAccAddr?: string): boolean {
+function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	const hasOnlyMsgSignData = (() => {
 		if (signDoc && signDoc.msgs && Array.isArray(signDoc.msgs) && signDoc.msgs.length === 1) {
 			const msg = signDoc.msgs[0];
@@ -53,7 +53,7 @@ export function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc, bech32Pre
 	if (!signer) {
 		throw new Error('Empty signer in the ADR-36 msg');
 	}
-	Bech32Address.validate(signer, bech32PrefixAccAddr);
+	isValidSeiAddress(signer);
 	const data = msg.value.data;
 	if (!data) {
 		throw new Error('Empty data in the ADR-36 msg');
@@ -70,19 +70,22 @@ export function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc, bech32Pre
 	return true;
 }
 
-export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
-	if (typeof data === 'string') {
-		data = Buffer.from(data).toString('base64');
-	} else {
-		data = Buffer.from(data).toString('base64');
-	}
+function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
+	// If data is already a base64 string, convert it to a Buffer and back to a string.
+	data = Buffer.from(data).toString('base64');
 
+	//According to ADR-36 specifications https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md
 	return {
+		// chain-id must be equal to “”
 		chain_id: '',
+		// must be invalid value
 		account_number: '0',
+		// nonce, sequence number must be equal to 0
 		sequence: '0',
 		fee: {
+			// fee gas must be equal to 0
 			gas: '0',
+			//fee amount must be an empty array
 			amount: []
 		},
 		msgs: [
@@ -90,32 +93,24 @@ export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array)
 				type: 'sign/MsgSignData',
 				value: {
 					signer,
+					// Data is arbitrary bytes which can represent text, files, objects. It's applications developers decision how Data should be deserialized, serialized and the object it can represent in their context
+					// It's applications developers decision how Data should be treated, by treated we mean the serialization and deserialization process and the Object Data should represent.
 					data
 				}
 			}
 		],
+		// the memo must be empty
 		memo: ''
 	};
 }
 
-export function verifyADR36AminoSignDoc(
-	bech32PrefixAccAddr: string,
-	signDoc: StdSignDoc,
-	pubKey: Uint8Array,
-	signature: Uint8Array,
-	algo: 'secp256k1' | 'ethsecp256k1' = 'secp256k1'
-): boolean {
-	if (!checkAndValidateADR36AminoSignDoc(signDoc, bech32PrefixAccAddr)) {
+function verifyADR36AminoSignDoc(signDoc: StdSignDoc, pubKey: Uint8Array, signature: Uint8Array): boolean {
+	if (!checkAndValidateADR36AminoSignDoc(signDoc)) {
 		throw new Error('Invalid sign doc for ADR-36');
 	}
 
-	const cryptoPubKey = new PubKeySecp256k1(pubKey);
-	const expectedSigner = (() => {
-		if (algo === 'ethsecp256k1') {
-			return new Bech32Address(cryptoPubKey.getEthAddress()).toBech32(bech32PrefixAccAddr);
-		}
-		return new Bech32Address(cryptoPubKey.getCosmosAddress()).toBech32(bech32PrefixAccAddr);
-	})();
+	const pubKeyAddress = getAddressFromPubKey(pubKey);
+	const expectedSigner = toBech32(pubKeyAddress);
 	const signer = signDoc.msgs[0].value.signer;
 	if (expectedSigner !== signer) {
 		throw new Error('Unmatched signer');
@@ -123,36 +118,21 @@ export function verifyADR36AminoSignDoc(
 
 	const msg = serializeSignDoc(signDoc);
 
-	return cryptoPubKey.verifyDigest32(
-		(() => {
-			if (algo === 'ethsecp256k1') {
-				return Hash.keccak256(msg);
-			}
-			return Hash.sha256(msg);
-		})(),
-		signature
-	);
+	return verifyDigest32(sha256(msg), signature, pubKey);
 }
 
-export function verifyADR36Amino(
-	bech32PrefixAccAddr: string,
-	signer: string,
-	data: string | Uint8Array,
-	pubKey: Uint8Array,
-	signature: Uint8Array,
-	algo: 'secp256k1' | 'ethsecp256k1' = 'secp256k1'
-): boolean {
+function verifyADR36Amino(signer: string, data: string | Uint8Array, pubKey: Uint8Array, signature: Uint8Array): boolean {
 	const signDoc = makeADR36AminoSignDoc(signer, data);
 
-	return verifyADR36AminoSignDoc(bech32PrefixAccAddr, signDoc, pubKey, signature, algo);
+	return verifyADR36AminoSignDoc(signDoc, pubKey, signature);
 }
 
 export const verifyArbitrary = async (signerAddress: string, expectedMessage: string, signatureToVerify: StdSignature): Promise<boolean> => {
 	try {
 		const { pub_key: pubKey, signature } = signatureToVerify;
-		return verifyADR36Amino('sei', signerAddress, expectedMessage, fromBase64(pubKey.value), fromBase64(signature));
+		return verifyADR36Amino(signerAddress, expectedMessage, fromBase64(pubKey.value), fromBase64(signature));
 	} catch (e) {
-		console.log('error verifying cosmos signature', e);
+		console.log('error verifying signature', e);
 		return false;
 	}
 };
