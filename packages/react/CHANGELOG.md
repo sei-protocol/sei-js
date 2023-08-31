@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2
+
+### Patch Changes
+
+- 908b5b5: Added polyfill, wallet, arbitrary signing, and address helper functions.
+- Updated dependencies [908b5b5]
+  - @sei-js/core@3.0.2
+
 ## 3.0.1
 
 ### Patch Changes
