@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.4
+
+### Patch Changes
+
+- 2183459: Loosened versioning of required @cosmjs dependencies
+- Updated dependencies [2183459]
+  - @sei-js/proto@3.0.2
+
 ## 3.0.3
 
 ### Patch Changes
