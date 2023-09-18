@@ -66,11 +66,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.18.9",
-    "@cosmjs/amino": "0.29.5",
-    "@cosmjs/encoding": "0.29.5",
-    "@cosmjs/proto-signing": "0.29.5",
-    "@cosmjs/stargate": "0.29.5",
-    "@cosmjs/tendermint-rpc": "0.29.5",
+    "@cosmjs/amino": "^0.29.5",
+    "@cosmjs/encoding": "^0.29.5",
+    "@cosmjs/proto-signing": "^0.29.5",
+    "@cosmjs/stargate": "^0.29.5",
+    "@cosmjs/tendermint-rpc": "^0.29.5",
     "@osmonauts/helpers": "^0.6.0",
     "@osmonauts/lcd": "^0.8.0",
     "protobufjs": "^6.11.2"
