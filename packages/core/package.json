@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/core",
-	"version": "3.0.2",
+	"version": "3.0.3",
 	"description": "TypeScript library for front end integrations with Sei",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
