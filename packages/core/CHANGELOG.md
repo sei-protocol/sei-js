@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.3
+
+### Patch Changes
+
+- 77217d5: Fixed an issue with polyfilling on Node environments be excluding environments that don't have self (non-browser environments)
+
 ## 3.0.2
 
 ### Patch Changes

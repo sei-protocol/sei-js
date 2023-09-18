@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.3
+
+### Patch Changes
+
+- 77217d5: Fixed an issue with polyfilling on Node environments be excluding environments that don't have self (non-browser environments)
+- Updated dependencies [77217d5]
+  - @sei-js/core@3.0.3
+
 ## 3.0.2
 
 ### Patch Changes
