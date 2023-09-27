@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.2
+
+### Patch Changes
+
+- 2183459: Loosened versioning of required @cosmjs dependencies
+
 ## 3.0.1
 
 ### Patch Changes
