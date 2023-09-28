@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "es6",
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
@@ -9,8 +9,8 @@
     "skipLibCheck": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "lib": [
-      "ES5",
       "DOM",
       "ES6",
       "DOM.Iterable",
