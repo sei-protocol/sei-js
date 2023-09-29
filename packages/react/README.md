@@ -25,6 +25,34 @@ The first step is to wrap your entire application in a Sei wallet provider and p
 </SeiWalletProvider>
 ```
 
+### Unofficial wallet providers
+To connect to an unofficial wallet provider such as Keplr, simply define an object of type `SeiWallet` and use it anywhere in this package.
+
+```typescript
+const CUSTOM_WALLET: SeiWallet = {
+  getAccounts: async (chainId) => {
+    const offlineSigner = await window?.['keplr']?.getOfflineSignerAuto(chainId);
+    return offlineSigner?.getAccounts() || [];
+  },
+  connect: async (chainId) => await window?.['keplr']?.enable(chainId),
+  disconnect: async (chainId) => await window?.['keplr']?.disable(chainId),
+  getOfflineSigner: async (chainId) => window?.['keplr']?.getOfflineSignerAuto(chainId),
+  getOfflineSignerAmino: async (chainId) => window?.['keplr']?.getOfflineSignerAmino(chainId),
+  signArbitrary: async (chainId, signer, message) => window?.['keplr']?.signArbitrary(chainId, signer, message),
+  verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
+  walletInfo: {
+    windowKey: 'keplr',
+    name: 'Keplr',
+    website: 'https://www.keplr.app/download',
+    icon: 'https://assets.website-files.com/63eb7ddf41cf5b1c8fdfbc74/63edd5d1a40b9a48841ac1d2_Keplr%20Logo.svg'
+  },
+  isMobileSupported: false
+};
+
+// Then pass this into <SeiWalletProvider /> if using React, or use it's functions if using node or another js library
+<SeiWalletProvider wallets={['fin', 'compass', CUSTOM_WALLET]} autoconnect={CUSTOM_WALLET} />
+```
+
 # Hooks
 
 | Hook                                          | Params                |
