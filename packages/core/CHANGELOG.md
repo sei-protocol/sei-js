@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.0-internal-20230928170616
+
+### Patch Changes
+
+- Adjusted build of packages to support esm and cjs builds to enable tree shaking
+
 ## 3.0.4
 
 ### Patch Changes

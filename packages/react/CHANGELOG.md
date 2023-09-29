@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.0-internal-20230928170616
+
+### Patch Changes
+
+- Adjusted build of packages to support esm and cjs builds to enable tree shaking
+- Updated dependencies
+  - @sei-js/core@0.0.0-internal-20230928170616
+
 ## 3.0.4
 
 ### Patch Changes

@@ -16,9 +16,10 @@
     "main"
   ],
   "scripts": {
-    "build": "cross-env BABEL_ENV=production babel src --out-dir main --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "BABEL_ENV=cjs babel src --out-dir main --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
+    "build:esm": "BABEL_ENV=esm babel src --out-dir esm --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
     "build:ts": "tsc --project ./tsconfig.json",
-    "buidl": "npm run build && npm run build:ts",
     "codegen": "cross-env NODE_ENV=development babel-node scripts/codegen.js",
     "dev": "cross-env NODE_ENV=development babel-node src/index --extensions \".tsx,.ts,.js\"",
     "watch": "cross-env NODE_ENV=development babel-watch src/index --extensions \".tsx,.ts,.js\"",
@@ -74,5 +75,9 @@
     "@osmonauts/helpers": "^0.6.0",
     "@osmonauts/lcd": "^0.8.0",
     "protobufjs": "^6.11.2"
+  },
+  "exports": {
+    "import": "./esm/index.js",
+    "require": "./main/index.js"
   }
 }

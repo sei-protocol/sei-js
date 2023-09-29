@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
-import { SeiWalletContext } from '../../provider';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { WalletConnectButtonProps } from './types';
 import './styles.css';
-import { isValidCSSColor } from '../../utils';
 import { IconContext } from '@react-icons/all-files';
 import { IoWalletOutline } from '@react-icons/all-files/io5/IoWalletOutline';
 import { IoLogOutOutline } from '@react-icons/all-files/io5/IoLogOutOutline';
 import { IoCopyOutline } from '@react-icons/all-files/io5/IoCopyOutline';
+import { isValidCSSColor } from '@sei-js/react/dist/lib/utils';
+import { SeiWalletContext } from '@sei-js/react';
 
 export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
 
@@ -16,6 +15,31 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 	const [recentlyCopied, setRecentlyCopied] = useState<boolean>(false);
 
 	const { connectedWallet, accounts, setTargetWallet, setShowConnectModal } = useContext(SeiWalletContext);
+
+	const componentRef = useRef(null);
+	const ignoreNextClickRef = useRef(false);
+
+	const handleClickOutside = (event: MouseEvent) => {
+		if (ignoreNextClickRef.current) {
+			ignoreNextClickRef.current = false;
+			return;
+		}
+		if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
+			setShowMenu(false);
+		}
+	};
+
+	useEffect(() => {
+		if (showMenu) {
+			document.addEventListener('click', handleClickOutside);
+		} else {
+			document.removeEventListener('click', handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
+	}, [showMenu]);
 
 	useEffect(() => {
 		const color = primaryColor && isValidCSSColor(primaryColor) ? primaryColor : '#121212';
@@ -66,28 +90,32 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 
 		return (
 			<div className='connect_wrapper'>
-				<button disabled={showMenu} className={buttonClassName} onClick={() => setShowMenu(true)}>
+				<button
+					disabled={showMenu}
+					className={buttonClassName}
+					onClick={() => {
+						setShowMenu(true);
+						ignoreNextClickRef.current = true;
+					}}>
 					{accountLabel}
 				</button>
 				{showMenu && (
-					<OutsideClickHandler onOutsideClick={() => setShowMenu(false)}>
-						<div className='wallet__menu'>
-							{accounts && (
-								<div className='wallet__menu--item' onClick={copyAddress}>
-									<IoCopyOutline className='wallet__menu--item-icon' />
-									<span>{recentlyCopied ? 'copied' : 'copy address'}</span>
-								</div>
-							)}
-							<div className='wallet__menu--item' onClick={changeWallet}>
-								<IoWalletOutline className='wallet__menu--item-icon' />
-								<span>change wallet</span>
+					<div ref={componentRef} className='wallet__menu'>
+						{accounts && (
+							<div className='wallet__menu--item' onClick={copyAddress}>
+								<IoCopyOutline className='wallet__menu--item-icon' />
+								<span>{recentlyCopied ? 'copied' : 'copy address'}</span>
 							</div>
-							<div className='wallet__menu--item' onClick={disconnect}>
-								<IoLogOutOutline className='wallet__menu--item-icon' />
-								<span>disconnect</span>
-							</div>
+						)}
+						<div className='wallet__menu--item' onClick={changeWallet}>
+							<IoWalletOutline className='wallet__menu--item-icon' />
+							<span>change wallet</span>
 						</div>
-					</OutsideClickHandler>
+						<div className='wallet__menu--item' onClick={disconnect}>
+							<IoLogOutOutline className='wallet__menu--item-icon' />
+							<span>disconnect</span>
+						</div>
+					</div>
 				)}
 			</div>
 		);
