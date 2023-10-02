@@ -1,6 +1,6 @@
 import { ChainConfig, ChainInfo, Currency } from './types';
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
-import { StdSignature } from '@cosmjs/amino';
+import { OfflineAminoSigner, StdSignature } from '@cosmjs/amino';
 
 export interface SeiWallet {
 	walletInfo: {
@@ -10,6 +10,7 @@ export interface SeiWallet {
 		website: string;
 	};
 	getOfflineSigner: (chainId: string) => Promise<OfflineSigner | undefined>;
+	getOfflineSignerAmino: (chainId: string) => Promise<OfflineAminoSigner | undefined>;
 	getAccounts: (chainId: string) => Promise<readonly AccountData[]>;
 	connect: (chainId: string) => Promise<void>;
 	disconnect: (chainId: string) => Promise<void>;
@@ -27,6 +28,7 @@ export const FIN_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['fin']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['fin']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['fin']?.getOfflineSignerAuto(chainId),
+	getOfflineSignerAmino: async (chainId) => window?.['fin']?.getOfflineSignerOnlyAmino(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['fin']?.signArbitrary(chainId, signer, message),
 	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['fin']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	walletInfo: {
@@ -46,6 +48,7 @@ export const COMPASS_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['compass']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['compass']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['compass']?.getOfflineSignerAuto(chainId),
+	getOfflineSignerAmino: async (chainId) => window?.['compass']?.getOfflineSignerOnlyAmino(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['compass']?.signArbitrary(chainId, signer, message),
 	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['compass']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	walletInfo: {
@@ -65,6 +68,7 @@ export const KEPLR_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['keplr']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['keplr']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['keplr']?.getOfflineSignerAuto(chainId),
+	getOfflineSignerAmino: async (chainId) => window?.['keplr']?.getOfflineSignerOnlyAmino(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['keplr']?.signArbitrary(chainId, signer, message),
 	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	suggestChain: async (config) => window?.['keplr']?.experimentalSuggestChain(config),
@@ -85,6 +89,7 @@ export const LEAP_WALLET: SeiWallet = {
 	connect: async (chainId) => await window?.['leap']?.enable(chainId),
 	disconnect: async (chainId) => await window?.['leap']?.disable(chainId),
 	getOfflineSigner: async (chainId) => window?.['leap']?.getOfflineSignerAuto(chainId),
+	getOfflineSignerAmino: async (chainId) => window?.['leap']?.getOfflineSignerOnlyAmino(chainId),
 	signArbitrary: async (chainId, signer, message) => window?.['leap']?.signArbitrary(chainId, signer, message),
 	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['leap']?.verifyArbitrary(chainId, signingAddress, data, signature),
 	suggestChain: async (config) => window?.['leap']?.experimentalSuggestChain(config),
