@@ -13,7 +13,8 @@
   },
   "files": [
     "types",
-    "main"
+    "main",
+    "esm"
   ],
   "scripts": {
     "build": "yarn build:cjs && yarn build:esm",

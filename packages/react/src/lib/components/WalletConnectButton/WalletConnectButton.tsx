@@ -5,8 +5,8 @@ import { IconContext } from '@react-icons/all-files';
 import { IoWalletOutline } from '@react-icons/all-files/io5/IoWalletOutline';
 import { IoLogOutOutline } from '@react-icons/all-files/io5/IoLogOutOutline';
 import { IoCopyOutline } from '@react-icons/all-files/io5/IoCopyOutline';
-import { isValidCSSColor } from '@sei-js/react/dist/lib/utils';
-import { SeiWalletContext } from '@sei-js/react';
+import { SeiWalletContext } from '../../provider';
+import { isValidCSSColor } from '../../utils';
 
 export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
 
@@ -16,7 +16,7 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 
 	const { connectedWallet, accounts, setTargetWallet, setShowConnectModal } = useContext(SeiWalletContext);
 
-	const componentRef = useRef(null);
+	const componentRef = useRef<HTMLDivElement>(null);
 	const ignoreNextClickRef = useRef(false);
 
 	const handleClickOutside = (event: MouseEvent) => {

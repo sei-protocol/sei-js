@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/react",
-  "version": "0.0.0-internal-20230928170616",
+  "version": "3.0.5",
   "description": "React library for front end integrations with Sei",
   "main": "./dist/cjs/index.js",
   "types": "./dist/index.d.ts",
@@ -25,7 +25,7 @@
   "private": false,
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
-    "@sei-js/core": "0.0.0-internal-20230928170616",
+    "@sei-js/core": "3.0.5",
     "buffer": "^6.0.3",
     "process": "^0.11.10"
   },
