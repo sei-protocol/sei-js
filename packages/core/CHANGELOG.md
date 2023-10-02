@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.5
+
+### Patch Changes
+
+- 7e55add: Add `getOfflineSignerAmino` to wallet interfaces
+
 ## 3.0.4
 
 ### Patch Changes

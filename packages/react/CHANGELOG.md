@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.5
+
+### Patch Changes
+
+- 7e55add: Add `getOfflineSignerAmino` to wallet interfaces
+- Updated dependencies [7e55add]
+  - @sei-js/core@3.0.5
+
 ## 3.0.4
 
 ### Patch Changes
