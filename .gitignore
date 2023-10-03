@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+packages/react/coverage
+
+packages/testing/src/lib/selenium/instance-data
+
 # compiled output
 dist
 tmp

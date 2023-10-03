@@ -1,42 +1,48 @@
-import { By, until, WebDriver } from 'selenium-webdriver';
+import { By, Locator, until, WebDriver } from 'selenium-webdriver';
+
+const WAIT_TIME = 50000;
+const INITIAL_LOAD_TIME = 1500;
+const INTERACTION_DELAY_TIME = 250;
+
+const naturallyFindAndClick = async (driver: WebDriver, locator: Locator) => {
+	const item = await driver.wait(until.elementLocated(locator), WAIT_TIME);
+	await driver.wait(until.elementIsVisible(item), WAIT_TIME);
+	await driver.sleep(INTERACTION_DELAY_TIME);
+	await item.click();
+	return item;
+};
 
 export const setupWallet = async (driver: WebDriver, extensionId: string, seedPhrase: string, password: string) => {
-	await driver.get(`chrome-extension://${extensionId}/tabs/welcome.html`);
+	await driver.sleep(INITIAL_LOAD_TIME);
 
-	const createWalletButton = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(), 'Restore a wallet')]")), 100000);
-	await driver.wait(until.elementIsVisible(createWalletButton), 5000);
-	await createWalletButton.click();
+	await naturallyFindAndClick(driver, By.css("[data-testing-id='import-seed-phrase']"));
 
-	const passwordInput = await driver.wait(until.elementLocated(By.xpath("//input[@placeholder='Enter your new password']")), 100000);
-	await driver.wait(until.elementIsVisible(passwordInput), 5000);
-	await passwordInput.click();
+	const seedPhraseInput = await naturallyFindAndClick(driver, By.css("[data-testing-id='enter-phrase']"));
+	await seedPhraseInput.sendKeys(seedPhrase);
+
+	await naturallyFindAndClick(driver, By.css("[data-testing-id='btn-import-wallet']"));
+
+	await naturallyFindAndClick(driver, By.css("[data-testing-id='wallet-1']"));
+
+	await naturallyFindAndClick(driver, By.css("[data-testing-id='btn-select-wallet-proceed']"));
+
+	const passwordInput = await naturallyFindAndClick(driver, By.css("[data-testing-id='input-password']"));
 	await passwordInput.sendKeys(password);
 
-	const confirmPasswordInput = await driver.wait(until.elementLocated(By.xpath("//input[@placeholder='Re-enter your new password']")), 100000);
-	await driver.wait(until.elementIsVisible(confirmPasswordInput), 5000);
-	await confirmPasswordInput.click();
+	const confirmPasswordInput = await naturallyFindAndClick(driver, By.css("[data-testing-id='input-confirm-password']"));
 	await confirmPasswordInput.sendKeys(password);
 
-	const checkBox = await driver.wait(until.elementLocated(By.xpath('//*[@id="__plasmo"]/main/div/div/div[2]/form/div[3]/div/div')), 100000);
-	await driver.wait(until.elementIsVisible(checkBox), 5000);
-	await checkBox.click();
+	await naturallyFindAndClick(driver, By.css("[data-testing-id='btn-password-proceed']"));
 
-	const createPasswordButton = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(), 'Create Password')]")), 100000);
-	await driver.wait(until.elementIsVisible(createPasswordButton), 5000);
-	await createPasswordButton.click();
+	driver.wait(until.elementLocated(By.css("[data-testing-id='ready-wallet-ele']")), WAIT_TIME);
+};
 
-	const restoreWalletButton = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(), 'Restore a wallet')]")), 100000);
-	await driver.wait(until.elementIsVisible(restoreWalletButton), 5000);
-	await restoreWalletButton.click();
-
-	const passphraseButton = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(), 'Using a passphrase')]")), 100000);
-	await driver.wait(until.elementIsVisible(passphraseButton), 5000);
-	await passphraseButton.click();
-
-	const seedPhraseInput = await driver.wait(until.elementLocated(By.xpath("//textarea[@placeholder='cake pizza cat...']")), 100000);
-	await driver.wait(until.elementIsVisible(seedPhraseInput), 5000);
-	await seedPhraseInput.click();
-	await seedPhraseInput.sendKeys(seedPhrase);
+export const connectToApp = async (driver: WebDriver, connect = true) => {
+	if (connect) {
+		return await naturallyFindAndClick(driver, By.xpath("//*[contains(text(), 'Connect')]"));
+	} else {
+		return await naturallyFindAndClick(driver, By.xpath("//*[contains(text(), 'Cancel')]"));
+	}
 };
 
 export const confirmTransaction = async (driver: WebDriver, confirm = true) => {
