@@ -2,26 +2,31 @@
 	"name": "@sei-js/core",
 	"version": "3.0.5",
 	"description": "TypeScript library for front end integrations with Sei",
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"sideEffects": false,
+	"types": "./dist/types/index.d.ts",
 	"scripts": {
 		"prebuild": "rimraf dist",
-		"build": "yarn build:types && yarn build:js && yarn build:prettier",
+		"build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
 		"build:types": "tsc --project tsconfig.declarations.json",
-		"build:js": "babel src --out-dir dist --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files",
-		"build:prettier": "prettier --write dist",
+		"build:cjs": "BABEL_ENV=cjs babel src --out-dir dist/cjs --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files",
+		"build:esm": "BABEL_ENV=esm babel src --out-dir dist/esm --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files",
+		"build:prettier": "prettier --write 'dist/**/*.js'",
 		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [
 		"sei",
 		"javascript",
-		"typescript",
-		"cosmos"
+		"typescript"
 	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"private": false,
+	"publishConfig": {
+		"access": "public"
+	},
 	"dependencies": {
 		"@cosmjs/amino": "^0.29.5",
 		"@cosmjs/cosmwasm-stargate": "^0.29.5",
@@ -36,22 +41,28 @@
 		"@ethersproject/keccak256": "^5.7.0",
 		"@keplr-wallet/types": "^0.11.41",
 		"@sei-js/proto": "^3.0.2",
+		"buffer": "^6.0.3",
 		"crypto-js": "^4.1.1",
+		"elliptic": "^6.5.4",
+		"process": "^0.11.10",
 		"readonly-date": "^1.0.0",
 		"sha.js": "^2.4.11",
-		"xstream": "^11.14.0",
-		"elliptic": "^6.5.4",
-		"buffer": "^6.0.3",
-		"process": "^0.11.10"
+		"xstream": "^11.14.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.22.9",
-		"@babel/plugin-transform-runtime": "^7.22.9",
-		"@babel/preset-env": "^7.22.9",
-		"@babel/preset-react": "^7.22.5",
-		"@babel/preset-typescript": "^7.22.5",
+		"@babel/core": "^7.23.0",
+		"@babel/plugin-transform-runtime": "^7.22.15",
+		"@babel/preset-env": "^7.22.20",
+		"@babel/preset-typescript": "^7.22.15",
 		"@types/crypto-js": "^4.1.1",
 		"@types/elliptic": "^6.4.14",
 		"@types/sha.js": "^2.4.1"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/esm/index.js",
+			"require": "./dist/cjs/index.js",
+			"types": "./dist/types/index.d.ts"
+		}
 	}
 }
