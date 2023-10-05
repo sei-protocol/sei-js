@@ -3,7 +3,7 @@
     "target": "es6",
     "module": "es6",
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./dist/types",
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,

@@ -1,25 +1,27 @@
 {
   "name": "@sei-js/proto",
   "version": "3.0.2",
-  "description": "TypeScript library for Sei protobufs generated using Telescope",
+  "description": "TypeScript library for Sei protobuf files generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
-  "license": "SEE LICENSE IN LICENSE",
-  "main": "main/index.js",
-  "typings": "types/index.d.ts",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "sideEffects": false,
   "directories": {
     "lib": "src",
     "test": "__tests__"
   },
-  "files": [
-    "types",
-    "main",
-    "esm"
-  ],
   "scripts": {
-    "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "BABEL_ENV=cjs babel src --out-dir main --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
-    "build:esm": "BABEL_ENV=esm babel src --out-dir esm --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
+    "prebuild": "rimraf dist",
+    "build": "yarn build:cjs && yarn build:esm && yarn build:ts",
+    "build:cjs": "BABEL_ENV=cjs babel src --out-dir dist/cjs --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
+    "build:esm": "BABEL_ENV=esm babel src --out-dir dist/esm --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
     "build:ts": "tsc --project ./tsconfig.json",
     "codegen": "cross-env NODE_ENV=development babel-node scripts/codegen.js",
     "dev": "cross-env NODE_ENV=development babel-node src/index --extensions \".tsx,.ts,.js\"",
@@ -28,9 +30,6 @@
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "repository": {
     "type": "git",
@@ -78,7 +77,10 @@
     "protobufjs": "^6.11.2"
   },
   "exports": {
-    "import": "./esm/index.js",
-    "require": "./main/index.js"
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
   }
 }

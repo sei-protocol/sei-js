@@ -1,19 +1,22 @@
 {
-    "compilerOptions": {
-        "module": "ESNext",
-        "declaration": true,
-        "declarationDir": "./types",
-        "emitDeclarationOnly": true,
-        "isolatedModules": true,
-        "allowJs": true,
-        "lib": [
-            "es2015"
-        ]
-    },
-    "include": [
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules"
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "declaration": true,
+    "outDir": "./dist/types",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "lib": [
+      "ES2020"
     ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

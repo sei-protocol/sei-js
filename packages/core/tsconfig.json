@@ -3,14 +3,15 @@
     "target": "es6",
     "module": "es6",
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./dist/types",
     "strict": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
     "lib": [
-      "ES6"
+      "ES6",
+      "DOM"
     ]
   },
   "include": ["src"],

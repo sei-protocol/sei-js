@@ -4,7 +4,8 @@
   "description": "React library for front end integrations with Sei",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
@@ -24,6 +25,9 @@
   "repository": "git@github.com:sei-protocol/sei-js.git",
   "license": "MIT",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "@sei-js/core": "3.0.5",
@@ -35,11 +39,11 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.9",
-    "@babel/plugin-transform-runtime": "^7.22.9",
-    "@babel/preset-env": "^7.22.9",
-    "@babel/preset-react": "^7.22.5",
-    "@babel/preset-typescript": "^7.22.5",
+    "@babel/core": "^7.23.0",
+    "@babel/plugin-transform-runtime": "^7.22.15",
+    "@babel/preset-env": "^7.22.20",
+    "@babel/preset-react": "^7.22.15",
+    "@babel/preset-typescript": "^7.22.15",
     "@types/react": "^17.0.0 || ^18.0.0",
     "prettier": "^3.0.0",
     "react": "^17.0.0 || ^18.0.0",
@@ -48,7 +52,8 @@
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
     }
   }
 }
