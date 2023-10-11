@@ -7,8 +7,7 @@ import { IoLogOutOutline } from '@react-icons/all-files/io5/IoLogOutOutline';
 import { IoCopyOutline } from '@react-icons/all-files/io5/IoCopyOutline';
 import { SeiWalletContext } from '../../provider';
 import { isValidCSSColor } from '../../utils';
-
-export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
+import { truncateAddress } from '../../utils/address';
 
 const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, backgroundColor }: WalletConnectButtonProps) => {
 	const [showMenu, setShowMenu] = useState<boolean>(false);

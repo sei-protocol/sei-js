@@ -23,7 +23,7 @@ const useSigningClient = (customRpcUrl?: string): UseSigningClient => {
 				const client = await getSigningClient(customRpcUrl || rpcUrl, offlineSigner);
 				setSigningClient(client);
 				setIsLoading(false);
-			} catch {
+			} catch (e: any) {
 				console.error('Error creating signing client');
 			}
 		};
