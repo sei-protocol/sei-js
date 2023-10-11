@@ -67,7 +67,7 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		return (
 			<div
 				key={wallet.walletInfo.name}
-				data-testid={wallet.walletInfo.name}
+				data-testid={wallet.walletInfo.windowKey}
 				onClick={selectWallet}
 				className={`wallet__item ${isConnectedWallet ? 'wallet__item-connected' : ''} ${
 					targetWallet?.walletInfo?.windowKey === wallet.walletInfo.windowKey ? 'wallet__item-targeted' : ''

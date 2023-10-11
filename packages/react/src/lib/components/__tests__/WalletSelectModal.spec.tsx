@@ -58,10 +58,10 @@ describe('WalletSelectModal', () => {
 			</SeiWalletContext.Provider>
 		);
 
-		expect(queryByTestId('Compass')).toBeInTheDocument();
-		expect(queryByTestId('Fin')).toBeInTheDocument();
-		expect(queryByTestId('Keplr')).toBeInTheDocument();
-		expect(queryByTestId('Custom Wallet')).toBeInTheDocument();
-		expect(queryByTestId('Falcon')).not.toBeInTheDocument();
+		expect(queryByTestId('compass')).toBeInTheDocument();
+		expect(queryByTestId('fin')).toBeInTheDocument();
+		expect(queryByTestId('keplr')).toBeInTheDocument();
+		expect(queryByTestId('customWallet')).toBeInTheDocument();
+		expect(queryByTestId('falcon')).not.toBeInTheDocument();
 	});
 });

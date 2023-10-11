@@ -20,15 +20,17 @@ describe('isValidSeiAddress', () => {
 
 	it('should return false for an invalid SEI address', () => {
 		const invalidAddress = 'invalidSeiAddress';
+
 		const result = isValidSeiAddress(invalidAddress);
+
 		expect(result).toBe(false);
 	});
 
 	it('should return false for a non-SEI Bech32 address', () => {
-		// Create a non-SEI Bech32 address
 		const nonSeiAddress = 'osmo1vx3456g8y9jqmg3yngw4thjc89ew6ukfcdr0hs';
 
 		const result = isValidSeiAddress(nonSeiAddress);
+
 		expect(result).toBe(false);
 	});
 });
@@ -81,5 +83,23 @@ describe('getAddressFromPubKey', () => {
 
 		expect(address).toBeInstanceOf(Uint8Array);
 		expect(address).toEqual(MOCK_PUB_KEY_ADDRESS);
+	});
+});
+
+describe('verifyDigest32', () => {
+	it('should throw an error if digest length is not 32', () => {
+		const incorrectDigest = new Uint8Array(31);
+		const signature = new Uint8Array(64);
+		const pubKey = MOCK_PUB_KEY;
+
+		expect(() => verifyDigest32(incorrectDigest, signature, pubKey)).toThrow('Invalid length of digest to verify: 31');
+	});
+
+	it('should throw an error if signature length is not 64', () => {
+		const digest = new Uint8Array(32);
+		const incorrectSignature = new Uint8Array(63);
+		const pubKey = MOCK_PUB_KEY;
+
+		expect(() => verifyDigest32(digest, incorrectSignature, pubKey)).toThrow('Invalid length of signature: 63');
 	});
 });
