@@ -31,13 +31,6 @@ jobs:
       - name: Run Jest tests
         run: yarn test:coverage
 
-      - name: List coverage files
-        run: |
-          ls -al ./packages/core
-          ls -al ./packages/core/coverage
-          ls -al ./packages/react/coverage
-          ls -al ./packages/proto/coverage
-
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:

@@ -9,7 +9,7 @@
     "lint:since": "nx affected --target=lint",
     "test:all": "nx run-many --target=test",
     "test:since": "nx affected --target=test",
-    "test:coverage": "nx affected:test --all --coverage --no-cache",
+    "test:coverage": "nx affected:test --all --coverage --skip-nx-cache",
     "release": "yarn build:all && changeset publish",
     "release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
     "postrelease": "git push --follow-tags"
