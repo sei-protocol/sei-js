@@ -17,8 +17,16 @@
       "ScriptHost",
       "ES2016.Array.Include"
     ],
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
   "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.spec.js",
+    "**/*.test.ts",
+    "**/*.test.js",
+    "**/__tests__/**/*"
+  ]
 }

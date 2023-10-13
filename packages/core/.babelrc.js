@@ -19,6 +19,7 @@ module.exports = (api) => {
 
 	return {
 		presets: isESM ? esmPresets : commonjsPresets,
-		plugins: ['@babel/plugin-transform-runtime']
+		plugins: ['@babel/plugin-transform-runtime'],
+		ignore: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx', '**/__tests__/**/*', '**/__mocks__/**/*']
 	};
 };

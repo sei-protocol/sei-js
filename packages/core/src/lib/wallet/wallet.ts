@@ -1,7 +1,7 @@
 import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
 import { HdPath, stringToPath } from '@cosmjs/crypto';
 
-const getHdPath = (accountIndex = 0): HdPath => {
+export const getHdPath = (accountIndex = 0): HdPath => {
 	const stringPath = `m/44'/118'/0'/0/${accountIndex}`;
 	return stringToPath(stringPath);
 };

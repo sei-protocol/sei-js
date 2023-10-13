@@ -1,24 +1,4 @@
-import { ChainConfig, ChainInfo, Currency } from './types';
-import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
-import { OfflineAminoSigner, StdSignature } from '@cosmjs/amino';
-
-export interface SeiWallet {
-	walletInfo: {
-		windowKey: string;
-		name: string;
-		icon: string;
-		website: string;
-	};
-	getOfflineSigner: (chainId: string) => Promise<OfflineSigner | undefined>;
-	getOfflineSignerAmino: (chainId: string) => Promise<OfflineAminoSigner | undefined>;
-	getAccounts: (chainId: string) => Promise<readonly AccountData[]>;
-	connect: (chainId: string) => Promise<void>;
-	disconnect: (chainId: string) => Promise<void>;
-	suggestChain?: (config: ChainConfig) => Promise<void>;
-	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature | undefined>;
-	verifyArbitrary?: (chainId: string, signingAddress: string, data: string, signature: StdSignature) => Promise<boolean>;
-	isMobileSupported: boolean;
-}
+import { ChainConfig, ChainInfo, Currency, SeiWallet } from './types';
 
 export const FIN_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
@@ -103,60 +83,3 @@ export const LEAP_WALLET: SeiWallet = {
 };
 
 export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];
-
-const DEFAULT_CHAIN_INFO = {
-	chainName: 'Sei',
-	chainId: 'pacific-1',
-	restUrl: 'https://rest.wallet.pacific-1.sei.io/',
-	rpcUrl: 'https://rpc.wallet.pacific-1.sei.io/',
-	gasPriceStep: { low: 0.1, average: 0.2, high: 0.3 }
-};
-
-export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []): ChainConfig => {
-	const prefix = 'sei';
-	const { chainId, chainName, rpcUrl, restUrl, gasPriceStep } = {
-		...DEFAULT_CHAIN_INFO,
-		...chainInfo
-	};
-
-	return {
-		chainId: chainId,
-		chainName: chainName,
-		rpc: rpcUrl,
-		rest: restUrl,
-		bip44: {
-			coinType: 118
-		},
-		bech32Config: {
-			bech32PrefixAccAddr: prefix,
-			bech32PrefixAccPub: `${prefix}pub`,
-			bech32PrefixValAddr: `${prefix}valoper`,
-			bech32PrefixValPub: `${prefix}valoperpub`,
-			bech32PrefixConsAddr: `${prefix}valcons`,
-			bech32PrefixConsPub: `${prefix}valconspub`
-		},
-		currencies: [
-			{
-				coinDenom: 'SEI',
-				coinMinimalDenom: 'usei',
-				coinDecimals: 6
-			},
-			...currencies
-		],
-		feeCurrencies: [
-			{
-				coinDenom: 'SEI',
-				coinMinimalDenom: 'usei',
-				coinDecimals: 6,
-				gasPriceStep
-			}
-		],
-		stakeCurrency: {
-			coinDenom: 'SEI',
-			coinMinimalDenom: 'usei',
-			coinDecimals: 6
-		},
-		coinType: 118,
-		features: ['stargate', 'ibc-transfer', 'cosmwasm']
-	};
-};

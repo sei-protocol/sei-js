@@ -1,0 +1,26 @@
+flags:
+  core:
+    paths:
+      - packages/core/**
+  react:
+    paths:
+      - packages/react/**
+  proto:
+    paths:
+      - packages/proto/**
+
+coverage:
+  status:
+    project:
+      core:
+        target: 80%
+        flags:
+          - core
+      react:
+        target: 80%
+        flags:
+          - react
+      proto:
+        target: 80%
+        flags:
+          - proto

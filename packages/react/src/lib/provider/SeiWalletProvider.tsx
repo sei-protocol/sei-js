@@ -50,7 +50,7 @@ const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect 
 				return;
 			}
 
-			const enableResponse = await targetWallet.connect(chainConfiguration.chainId);
+			await targetWallet.connect(chainConfiguration.chainId);
 			const fetchedOfflineSigner = await targetWallet.getOfflineSigner(chainConfiguration.chainId);
 
 			if (!fetchedOfflineSigner) {

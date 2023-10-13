@@ -12,14 +12,29 @@ module.exports = (api) => {
 				modules: 'commonjs'
 			}
 		],
-		'@babel/preset-react',
+		[
+			'@babel/preset-react',
+			{
+				runtime: 'automatic'
+			}
+		],
 		'@babel/preset-typescript'
 	];
 
-	const esmPresets = ['@babel/preset-react', '@babel/preset-env', '@babel/preset-typescript'];
+	const esmPresets = [
+		[
+			'@babel/preset-react',
+			{
+				runtime: 'automatic'
+			}
+		],
+		'@babel/preset-env',
+		'@babel/preset-typescript'
+	];
 
 	return {
 		presets: isESM ? esmPresets : commonjsPresets,
-		plugins: ['@babel/plugin-transform-runtime']
+		plugins: ['@babel/plugin-transform-runtime'],
+		ignore: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx', '**/__tests__/**/*', '**/__mocks__/**/*']
 	};
 };

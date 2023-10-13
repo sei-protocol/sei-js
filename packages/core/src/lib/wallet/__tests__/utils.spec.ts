@@ -1,8 +1,4 @@
-import { TextEncoder } from 'util';
-import { getChainSuggest } from './config';
-
-// Needed to generate an offline signer
-global.TextEncoder = TextEncoder;
+import { getChainSuggest } from '../utils';
 
 describe('getChainSuggest', () => {
 	it('should return a chain config', async () => {

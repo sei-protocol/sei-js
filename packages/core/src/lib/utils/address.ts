@@ -1,6 +1,7 @@
 import { fromBech32 } from '@cosmjs/encoding';
-import CryptoJS from 'crypto-js';
 import { ec as EllipticCurve } from 'elliptic';
+import { sha256 } from './hash';
+import { ripemd160 } from '@cosmjs/crypto';
 
 export const isValidSeiAddress = (address: string) => {
 	try {
@@ -35,10 +36,15 @@ export const pubKeyToBytes = (pubKey: Uint8Array, uncompressed?: boolean): Uint8
 };
 
 export const getAddressFromPubKey = (pubKey: Uint8Array): Uint8Array => {
-	let hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(pubKeyToBytes(pubKey) as any)).toString();
-	hash = CryptoJS.RIPEMD160(CryptoJS.enc.Hex.parse(hash)).toString();
+	const shaHash = sha256(pubKeyToBytes(pubKey));
+	let ripemdHash = ripemd160(shaHash); // Assuming ripemd160 takes Uint8Array and returns Uint8Array
 
-	return new Uint8Array(Buffer.from(hash, 'hex'));
+	// If ripemd160 returns a hex string, convert it to a Uint8Array
+	if (typeof ripemdHash === 'string') {
+		ripemdHash = new Uint8Array(Buffer.from(ripemdHash, 'hex'));
+	}
+
+	return ripemdHash;
 };
 
 export const verifyDigest32 = (digest: Uint8Array, signature: Uint8Array, pubKey: Uint8Array): boolean => {

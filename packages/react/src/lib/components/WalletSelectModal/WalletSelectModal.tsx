@@ -67,6 +67,7 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		return (
 			<div
 				key={wallet.walletInfo.name}
+				data-testid={wallet.walletInfo.windowKey}
 				onClick={selectWallet}
 				className={`wallet__item ${isConnectedWallet ? 'wallet__item-connected' : ''} ${
 					targetWallet?.walletInfo?.windowKey === wallet.walletInfo.windowKey ? 'wallet__item-targeted' : ''
@@ -212,7 +213,7 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 	};
 
 	return (
-		<div onClick={closeModal} className='modal__background'>
+		<div data-testid='modal__background' onClick={closeModal} className='modal__background'>
 			<div onClick={(e) => e.stopPropagation()} className='modal__card'>
 				{renderContent()}
 				{renderMobileHelper()}

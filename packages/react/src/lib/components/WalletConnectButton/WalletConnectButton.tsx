@@ -7,8 +7,7 @@ import { IoLogOutOutline } from '@react-icons/all-files/io5/IoLogOutOutline';
 import { IoCopyOutline } from '@react-icons/all-files/io5/IoCopyOutline';
 import { SeiWalletContext } from '../../provider';
 import { isValidCSSColor } from '../../utils';
-
-export const truncateAddress = (address: string) => `${address.slice(0, 3)}....${address.slice(address.length - 5)}`;
+import { truncateAddress } from '../../utils/address';
 
 const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, backgroundColor }: WalletConnectButtonProps) => {
 	const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -80,7 +79,7 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 	const renderButton = () => {
 		if (!connectedWallet) {
 			return (
-				<button className={buttonClassName} onClick={() => setShowConnectModal(true)}>
+				<button data-testid='connect-wallet' className={buttonClassName} onClick={() => setShowConnectModal(true)}>
 					connect wallet
 				</button>
 			);
@@ -102,16 +101,16 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 				{showMenu && (
 					<div ref={componentRef} className='wallet__menu'>
 						{accounts && (
-							<div className='wallet__menu--item' onClick={copyAddress}>
+							<div data-testid='copy-address' className='wallet__menu--item' onClick={copyAddress}>
 								<IoCopyOutline className='wallet__menu--item-icon' />
 								<span>{recentlyCopied ? 'copied' : 'copy address'}</span>
 							</div>
 						)}
-						<div className='wallet__menu--item' onClick={changeWallet}>
+						<div data-testid='change-wallet' className='wallet__menu--item' onClick={changeWallet}>
 							<IoWalletOutline className='wallet__menu--item-icon' />
 							<span>change wallet</span>
 						</div>
-						<div className='wallet__menu--item' onClick={disconnect}>
+						<div data-testid='disconnect-button' className='wallet__menu--item' onClick={disconnect}>
 							<IoLogOutOutline className='wallet__menu--item-icon' />
 							<span>disconnect</span>
 						</div>
