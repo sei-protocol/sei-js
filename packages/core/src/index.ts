@@ -1,12 +1,12 @@
 // Check if in browser environment
-if (typeof self !== 'undefined') {
+if (typeof window !== 'undefined') {
 	const process = require('process');
 	const Buffer = require('buffer').Buffer;
 
 	// Polyfill process and buffer environment variables
-	Object.assign(self, {
+	Object.assign(globalThis, {
 		process,
-		global: self,
+		global: globalThis,
 		Buffer
 	});
 }
