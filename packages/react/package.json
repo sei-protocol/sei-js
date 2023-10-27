@@ -10,7 +10,7 @@
     "prebuild": "rimraf dist",
     "build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
     "build:types": "tsc --project tsconfig.declarations.json",
-    "build:cjs": "BABEL_ENV=cjs babel src --out-dir dist/cjs --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored" ,
+    "build:cjs": "BABEL_ENV=cjs babel src --out-dir dist/cjs --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored",
     "build:esm": "BABEL_ENV=esm babel src --out-dir dist/esm --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored",
     "build:prettier": "prettier --write 'dist/**/*.js'",
     "test": "jest"
