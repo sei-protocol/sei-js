@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.1
+
+### Patch Changes
+
+- 43222ca: Added new browser specific export of polyfilled index.ts and added to package.json exports; Fixed issue with SeiWallet object implementations of "disconnect"; Fixed double connection issue on WalletSelectModal
+- Updated dependencies [43222ca]
+  - @sei-js/core@3.1.1
+
 ## 3.1.0
 
 ### Minor Changes
