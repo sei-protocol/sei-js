@@ -4,6 +4,7 @@
 	"description": "TypeScript library for front end integrations with Sei",
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
+	"browser": "./dist/esm/index-browser.js",
 	"sideEffects": false,
 	"types": "./dist/types/index.d.ts",
 	"scripts": {
@@ -61,6 +62,10 @@
 		".": {
 			"import": "./dist/esm/index.js",
 			"require": "./dist/cjs/index.js",
+			"browser": {
+				"import": "./dist/esm/index-browser.js",
+				"require": "./dist/cjs/index-browser.js"
+			},
 			"types": "./dist/types/index.d.ts"
 		}
 	}
