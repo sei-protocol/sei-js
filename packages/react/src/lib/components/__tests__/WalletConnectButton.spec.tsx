@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { WalletConnectButton } from '../WalletConnectButton';
@@ -18,13 +18,7 @@ if (!global.navigator.clipboard) {
 	};
 }
 
-const writeTextMock = jest.spyOn(navigator.clipboard, 'writeText');
-
 describe('WalletConnectButton', () => {
-	afterEach(() => {
-		writeTextMock.mockRestore();
-	});
-
 	test('renders connect wallet button when not connected', () => {
 		const { getByText } = render(
 			<SeiWalletProvider chainConfiguration={ATLANTIC_2_CONFIG} wallets={[COMPASS_WALLET]}>
@@ -58,6 +52,8 @@ describe('WalletConnectButton', () => {
 		const connectButton = queryByTestId('connect-wallet');
 		if (!connectButton) return;
 
+		const writeTextMock = jest.spyOn(navigator.clipboard, 'writeText');
+
 		fireEvent.click(connectButton);
 
 		const copyButton = queryByTestId('copy-address');
@@ -65,5 +61,14 @@ describe('WalletConnectButton', () => {
 
 		fireEvent.click(copyButton);
 		expect(writeTextMock).toHaveBeenCalled();
+
+		expect(copyButton.textContent).toContain('copied');
+
+		jest.advanceTimersByTime(1500);
+
+		// Verify state reverts back after timeout
+		waitFor(() => {
+			expect(copyButton.textContent).not.toContain('copied');
+		});
 	});
 });
