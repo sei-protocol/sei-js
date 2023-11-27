@@ -182,6 +182,25 @@ export default Component;
 
 ```
 
+## Styling
+This package uses Styled Components and allows you to override the theme with a primaryColor, secondaryColor, and backgroundColor to tint the text and icons.
+
+```typescript jsx
+import { ThemeProvider } from "styled-components";
+
+// Define theme
+export const theme = {
+  primaryColor: '#121212',
+  secondaryColor: '#8C8C8C',
+  backgroundColor: '#F1F1F1'
+};
+
+// Wrap your app in the theme provider
+<ThemeProvider theme={theme}>
+  <YOUR_APP/>
+</ThemeProvider>
+```
+
 ### Other helpful packages
 
 - [@sei-js/core](https://www.npmjs.com/package/@sei-js/core) - TypeScript library containing helper functions for wallet connection, transaction sig
