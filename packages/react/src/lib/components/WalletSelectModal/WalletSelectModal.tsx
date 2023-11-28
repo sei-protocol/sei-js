@@ -1,15 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { WalletSelectModalProps } from './types';
 import { SeiWalletContext } from '../../provider';
-import './styles.css';
-import { AiFillCloseCircle } from '@react-icons/all-files/ai/AiFillCloseCircle';
-import { BiErrorAlt } from '@react-icons/all-files/bi/BiErrorAlt';
-import { BiError } from '@react-icons/all-files/bi/BiError';
-import { FaCheckCircle } from '@react-icons/all-files/fa/FaCheckCircle';
+import * as Styles from './styles';
 import { SeiWallet } from '@sei-js/core';
-import { AiFillLeftCircle } from '@react-icons/all-files/ai/AiFillLeftCircle';
 
-const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) => {
+const WalletSelectModal = ({ wallets: inputWallets, classNameOverrides }: WalletSelectModalProps) => {
 	const { connectedWallet, setTargetWallet, wallets, connectionError, targetWallet, setConnectionError, showConnectModal, setShowConnectModal } =
 		useContext(SeiWalletContext);
 
@@ -34,7 +29,10 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
-	const isWalletInstalled: boolean = targetWallet !== undefined && window[targetWallet.walletInfo.windowKey as never] !== undefined;
+	const isWalletInstalled: boolean = useMemo(() => {
+		if (typeof window === 'undefined') return false;
+		return targetWallet !== undefined && window[targetWallet.walletInfo.windowKey as never] !== undefined;
+	}, [targetWallet]);
 
 	const hasImportantInfo = connectionError || infoTitle;
 
@@ -54,7 +52,7 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		const isConnectedWallet = connectedWallet?.walletInfo.name === wallet.walletInfo.name;
 
 		const renderConnection = () => {
-			if (isConnectedWallet) return <FaCheckCircle className='wallet__item--info-icon' />;
+			if (isConnectedWallet) return <Styles.WalletItemInfoIcon />;
 			return null;
 		};
 
@@ -65,110 +63,115 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 			setConnectionError(undefined);
 		};
 
+		const isWalletTargeted = targetWallet?.walletInfo?.windowKey === wallet.walletInfo.windowKey;
+
+		let CalculatedItemComponent = Styles.WalletItem;
+
+		if (isConnectedWallet) CalculatedItemComponent = Styles.WalletItemConnected;
+		if (isWalletTargeted) CalculatedItemComponent = Styles.WalletItemTargeted;
+
 		return (
-			<div
-				key={wallet.walletInfo.name}
-				data-testid={wallet.walletInfo.windowKey}
-				onClick={selectWallet}
-				className={`wallet__item ${isConnectedWallet ? 'wallet__item-connected' : ''} ${
-					targetWallet?.walletInfo?.windowKey === wallet.walletInfo.windowKey ? 'wallet__item-targeted' : ''
-				}`}>
-				<div className='wallet__item--info'>
-					<img alt={wallet.walletInfo.name} src={wallet.walletInfo.icon} className='wallet__item--info-icon' />
-					<p className='wallet__item--info-name'>{wallet.walletInfo.name}</p>
-				</div>
+			<CalculatedItemComponent key={wallet.walletInfo.name} data-testid={wallet.walletInfo.windowKey} onClick={selectWallet}>
+				<Styles.WalletItemInfo>
+					<Styles.WalletItemInfoImage alt={wallet.walletInfo.name} src={wallet.walletInfo.icon} />
+					<Styles.WalletItemInfoName>{wallet.walletInfo.name}</Styles.WalletItemInfoName>
+				</Styles.WalletItemInfo>
 				{renderConnection()}
-			</div>
+			</CalculatedItemComponent>
 		);
 	};
 
 	const renderAdditionalInfo = () => {
 		if (isConnecting) {
 			return (
-				<div className='card__right-centered'>
-					<img alt={targetWallet?.walletInfo.icon} src={targetWallet?.walletInfo.icon} className='card__right--connecting-icon' />
-					<p className='card__right--item-title'>Connecting to {targetWallet?.walletInfo.name}...</p>
-				</div>
+				<Styles.CardRightCentered>
+					<Styles.CardRightConnectingIcon alt={targetWallet?.walletInfo.icon} src={targetWallet?.walletInfo.icon} />
+					<Styles.CardRightItemTitle>Connecting to {targetWallet?.walletInfo.name}...</Styles.CardRightItemTitle>
+				</Styles.CardRightCentered>
 			);
 		}
 
 		if (!isWalletInstalled && targetWallet) {
 			return (
-				<div className='card__right'>
-					<div
-						className='card__right--header mobile-only'
+				<Styles.CardRight>
+					<Styles.CardRightHeader
 						onClick={() => {
 							setConnectionError(undefined);
 							setTargetWallet(undefined);
 						}}>
-						<AiFillLeftCircle className='card__right--icon' style={{ display: 'unset' }} />
-						<p className='card__right--title'>{targetWallet?.walletInfo?.name || 'Wallet'} not installed</p>
-					</div>
-					<div className='card__right--error'>
-						<BiErrorAlt className='card__right--error-icon' />
-						<p className='card__right--error-description'>
+						<Styles.CardRightIcon />
+						<Styles.CardRightTitle>{targetWallet?.walletInfo?.name || 'Wallet'} not installed</Styles.CardRightTitle>
+					</Styles.CardRightHeader>
+					<Styles.CardRightError>
+						<Styles.CardRightErrorIcon />
+						<Styles.CardRightErrorDescription>
 							Please ensure you open this webpage from within the {targetWallet?.walletInfo?.name || 'Wallet'} mobile app.
-						</p>
-					</div>
+						</Styles.CardRightErrorDescription>
+					</Styles.CardRightError>
 					{targetWallet?.walletInfo.website && (
-						<a target='_blank' href={targetWallet.walletInfo.website} className='card__right--download'>
+						<Styles.CardRightDownload target='_blank' href={targetWallet.walletInfo.website}>
 							Download {targetWallet?.walletInfo.name}
-						</a>
+						</Styles.CardRightDownload>
 					)}
-				</div>
+				</Styles.CardRight>
 			);
 		}
 
 		if (connectionError) {
 			return (
-				<div className='card__right'>
-					<div
-						className='card__right--header mobile-only'
+				<Styles.CardRight>
+					<Styles.CardRightHeader
 						onClick={() => {
 							setConnectionError(undefined);
 							setTargetWallet(undefined);
 						}}>
-						<AiFillLeftCircle className='card__right--icon' style={{ display: 'unset' }} />
-						<p className='card__right--title'>Connection error</p>
-					</div>
-					<div className='card__right--error'>
-						<BiError className='card__right--error-icon' />
-						<p className='card__right--title'>We couldn't connect to {targetWallet?.walletInfo?.name || 'your wallet'}</p>
-					</div>
-					<div className='card__right--item'>
-						<p className='card__right--item-title'>How to resolve this issue?</p>
-						<p className='card__right--item-description'>A pending action or a locked wallet can cause issues. Please open the extension manually and try again.</p>
-					</div>
-				</div>
+						<Styles.CardRightIcon />
+						<Styles.CardRightTitle>Connection error</Styles.CardRightTitle>
+					</Styles.CardRightHeader>
+					<Styles.CardRightError>
+						<Styles.CardRightErrorIcon />
+						<Styles.CardRightTitle>We couldn't connect to {targetWallet?.walletInfo?.name || 'your wallet'}</Styles.CardRightTitle>
+					</Styles.CardRightError>
+					<Styles.CardRightItem>
+						<Styles.CardRightItemTitle>How to resolve this issue?</Styles.CardRightItemTitle>
+						<Styles.CardRightItemDescription>
+							A pending action or a locked wallet can cause issues. Please open the extension manually and try again.
+						</Styles.CardRightItemDescription>
+					</Styles.CardRightItem>
+				</Styles.CardRight>
 			);
 		}
 
 		if (connectedWallet && !hasImportantInfo) {
 			return (
-				<div className='card__right-centered'>
-					<img alt={targetWallet?.walletInfo.icon} src={targetWallet?.walletInfo.icon} className='card__right--connecting-icon' />
-					<p className='card__right--item-title'>Connected to {targetWallet?.walletInfo.name}</p>
-				</div>
+				<Styles.CardRightCentered>
+					<Styles.CardRightConnectingIcon alt={targetWallet?.walletInfo.icon} src={targetWallet?.walletInfo.icon} />
+					<Styles.CardRightItemTitle>Connected to {targetWallet?.walletInfo.name}</Styles.CardRightItemTitle>
+				</Styles.CardRightCentered>
 			);
 		}
 
 		if (!hasImportantInfo && isMobile) return null;
 
 		return (
-			<div className='card__right'>
-				<div className='card__right--header' onClick={() => setInfoTitle(undefined)}>
-					<AiFillLeftCircle className='card__right--icon' onClick={() => setInfoTitle(undefined)} />
-					<p className='card__right--title'>New to using a wallet?</p>
-				</div>
-				<div className='card__right--item'>
-					<p className='card__right--item-title'>A Secure Hub for Digital Transactions</p>
-					<p className='card__right--item-description'>Wallets provide a secure environment for signing and sending transactions involving your tokens and NFTs.</p>
-				</div>
-				<div className='card__right--item'>
-					<p className='card__right--item-title'>A modern way to log in</p>
-					<p className='card__right--item-description'>Rather than generating new accounts and passwords for each website, simply link your wallet.</p>
-				</div>
-			</div>
+			<Styles.CardRight>
+				<Styles.CardRightHeader onClick={() => setInfoTitle(undefined)}>
+					<Styles.CardRightIcon onClick={() => setInfoTitle(undefined)} />
+					<Styles.CardRightTitle>New to using a wallet?</Styles.CardRightTitle>
+				</Styles.CardRightHeader>
+				<Styles.CardRightItem>
+					<Styles.CardRightItemTitle>A Secure Hub for Digital Transactions</Styles.CardRightItemTitle>
+					<Styles.CardRightItemDescription>
+						Wallets provide a secure environment for signing and sending transactions involving your tokens and NFTs.
+					</Styles.CardRightItemDescription>
+				</Styles.CardRightItem>
+				<Styles.CardRightItem>
+					<Styles.CardRightItemTitle>A modern way to log in</Styles.CardRightItemTitle>
+					<Styles.CardRightItemDescription>
+						Rather than generating new accounts and passwords for each website, simply link your wallet.
+					</Styles.CardRightItemDescription>
+				</Styles.CardRightItem>
+			</Styles.CardRight>
 		);
 	};
 
@@ -180,21 +183,21 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		return (
 			<>
 				{shouldShowHomeInfo && (
-					<div className='card__header'>
-						<h2 className='card__header--title'>Connect a wallet</h2>
-						<AiFillCloseCircle className='card__header--close' onClick={closeModal} />
-					</div>
+					<Styles.CardHeader>
+						<Styles.CardHeaderTitle>Connect a wallet</Styles.CardHeaderTitle>
+						<Styles.CardHeaderClose onClick={closeModal} />
+					</Styles.CardHeader>
 				)}
 
-				<div className='card__content'>
+				<Styles.CardContent>
 					{shouldShowHomeInfo && (
 						<>
-							<div className='card__content--wallets'>{visibleWallets.map(renderWallet)}</div>
-							<div className='card__content--separator' />
+							<Styles.CardContentWallets>{visibleWallets.map(renderWallet)}</Styles.CardContentWallets>
+							<Styles.CardContentSeparator />
 						</>
 					)}
 					{renderAdditionalInfo()}
-				</div>
+				</Styles.CardContent>
 			</>
 		);
 	};
@@ -205,21 +208,19 @@ const WalletSelectModal = ({ wallets: inputWallets }: WalletSelectModalProps) =>
 		const title = 'New to using a wallet?';
 
 		return (
-			<div className='card__content--mobile-helper'>
-				<p className='card__right--title-mobile' onClick={() => setInfoTitle(title)}>
-					{title}
-				</p>
-			</div>
+			<Styles.CardContentMobileHelper>
+				<Styles.CardRightTitle onClick={() => setInfoTitle(title)}>{title}</Styles.CardRightTitle>
+			</Styles.CardContentMobileHelper>
 		);
 	};
 
 	return (
-		<div data-testid='modal__background' onClick={closeModal} className='modal__background'>
-			<div onClick={(e) => e.stopPropagation()} className='modal__card'>
+		<Styles.ModalBackground data-testid='modal__background' className={classNameOverrides?.background} onClick={closeModal}>
+			<Styles.ModalCard className={classNameOverrides?.card} onClick={(e) => e.stopPropagation()}>
 				{renderContent()}
 				{renderMobileHelper()}
-			</div>
-		</div>
+			</Styles.ModalCard>
+		</Styles.ModalBackground>
 	);
 };
 

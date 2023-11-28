@@ -1,31 +1,19 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { WalletConnectButtonProps } from './types';
-import './styles.css';
 import { IconContext } from '@react-icons/all-files';
-import { IoWalletOutline } from '@react-icons/all-files/io5/IoWalletOutline';
-import { IoLogOutOutline } from '@react-icons/all-files/io5/IoLogOutOutline';
-import { IoCopyOutline } from '@react-icons/all-files/io5/IoCopyOutline';
 import { SeiWalletContext } from '../../provider';
-import { isValidCSSColor } from '../../utils';
+import * as Styles from './styles';
 import { truncateAddress } from '../../utils/address';
 
-const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, backgroundColor }: WalletConnectButtonProps) => {
+const WalletConnectButton = ({ buttonClassName }: WalletConnectButtonProps) => {
 	const [showMenu, setShowMenu] = useState<boolean>(false);
 	const [recentlyCopied, setRecentlyCopied] = useState<boolean>(false);
 
 	const { connectedWallet, accounts, setTargetWallet, setShowConnectModal } = useContext(SeiWalletContext);
 
-	const componentRef = useRef<HTMLDivElement>(null);
-	const ignoreNextClickRef = useRef(false);
-
 	const handleClickOutside = (event: MouseEvent) => {
-		if (ignoreNextClickRef.current) {
-			ignoreNextClickRef.current = false;
-			return;
-		}
-		if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
-			setShowMenu(false);
-		}
+		event.stopPropagation();
+		setShowMenu(false);
 	};
 
 	useEffect(() => {
@@ -39,25 +27,6 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 			document.removeEventListener('click', handleClickOutside);
 		};
 	}, [showMenu]);
-
-	useEffect(() => {
-		const color = primaryColor && isValidCSSColor(primaryColor) ? primaryColor : '#121212';
-		document.documentElement.style.setProperty('--wallet-primary-color', color);
-		document.documentElement.style.setProperty('--wallet-primary-color-11', `${color}11`);
-		document.documentElement.style.setProperty('--wallet-primary-color-22', `${color}22`);
-		document.documentElement.style.setProperty('--wallet-primary-color-33', `${color}33`);
-		document.documentElement.style.setProperty('--wallet-primary-color-44', `${color}44`);
-	}, [primaryColor]);
-
-	useEffect(() => {
-		const color = secondaryColor && isValidCSSColor(secondaryColor) ? secondaryColor : '#8C8C8C';
-		document.documentElement.style.setProperty('--wallet-secondary-color', color);
-	}, [secondaryColor]);
-
-	useEffect(() => {
-		const color = backgroundColor && isValidCSSColor(backgroundColor) ? backgroundColor : '#F1F1F1';
-		document.documentElement.style.setProperty('--wallet-background-color', color);
-	}, [backgroundColor]);
 
 	const changeWallet = () => {
 		setShowMenu(false);
@@ -88,43 +57,42 @@ const WalletConnectButton = ({ buttonClassName, primaryColor, secondaryColor, ba
 		const accountLabel = accounts?.[0] === undefined ? 'connecting...' : truncateAddress(accounts[0].address);
 
 		return (
-			<div className='connect_wrapper'>
+			<Styles.ConnectWrapper>
 				<button
 					disabled={showMenu}
 					className={buttonClassName}
-					onClick={() => {
+					onClick={(e) => {
+						e.stopPropagation();
 						setShowMenu(true);
-						ignoreNextClickRef.current = true;
 					}}>
 					{accountLabel}
 				</button>
 				{showMenu && (
-					<div ref={componentRef} className='wallet__menu'>
+					<Styles.WalletMenu>
 						{accounts && (
-							<div data-testid='copy-address' className='wallet__menu--item' onClick={copyAddress}>
-								<IoCopyOutline className='wallet__menu--item-icon' />
+							<Styles.WalletMenuItem data-testid='copy-address' onClick={copyAddress}>
+								<Styles.WalletMenuItemCopy />
 								<span>{recentlyCopied ? 'copied' : 'copy address'}</span>
-							</div>
+							</Styles.WalletMenuItem>
 						)}
-						<div data-testid='change-wallet' className='wallet__menu--item' onClick={changeWallet}>
-							<IoWalletOutline className='wallet__menu--item-icon' />
+						<Styles.WalletMenuItem data-testid='change-wallet' onClick={changeWallet}>
+							<Styles.WalletMenuItemChange />
 							<span>change wallet</span>
-						</div>
-						<div data-testid='disconnect-button' className='wallet__menu--item' onClick={disconnect}>
-							<IoLogOutOutline className='wallet__menu--item-icon' />
+						</Styles.WalletMenuItem>
+						<Styles.WalletMenuItem data-testid='disconnect-button' onClick={disconnect}>
+							<Styles.WalletMenuItemLogOut />
 							<span>disconnect</span>
-						</div>
-					</div>
+						</Styles.WalletMenuItem>
+					</Styles.WalletMenu>
 				)}
-			</div>
+			</Styles.ConnectWrapper>
 		);
 	};
 
 	return (
-		<>
-			<IconContext.Provider value={{ color: 'var(--wallet-primary-color)', size: '50px' }}>{renderButton()}</IconContext.Provider>
-		</>
-	);
+	<IconContext.Provider value={{ color: '#121212', size: '50px' }}>{renderButton()}</IconContext.Provider>
+
+);
 };
 
 export default WalletConnectButton;
