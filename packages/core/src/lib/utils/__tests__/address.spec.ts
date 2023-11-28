@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { getAddressFromPubKey, isValidSeiAddress, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
+import { getAddressHashFromPubKey, isValidSeiAddress, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
 import { randomBytes } from 'crypto';
 
 const MOCK_PUB_KEY = new Uint8Array([
@@ -7,7 +7,7 @@ const MOCK_PUB_KEY = new Uint8Array([
 	251, 27, 86, 34, 144, 170, 53, 1, 39, 215, 43, 232, 73, 1, 141, 150, 35, 103, 128, 242, 240, 169, 107, 169, 102, 44, 226, 126, 14
 ]);
 
-const MOCK_PUB_KEY_ADDRESS = new Uint8Array([78, 147, 198, 6, 144, 152, 234, 61, 25, 11, 200, 86, 12, 11, 124, 189, 203, 38, 208, 255]);
+const MOCK_PUB_KEY_ADDRESS = new Uint8Array([238, 39, 110, 158, 63, 196, 185, 243, 87, 44, 63, 181, 99, 247, 136, 235, 53, 144, 126, 40]);
 
 describe('isValidSeiAddress', () => {
 	it('should return true for a valid SEI address', () => {
@@ -79,7 +79,7 @@ describe('pubKeyToBytes', () => {
 
 describe('getAddressFromPubKey', () => {
 	it('should return a valid address from a given public key', () => {
-		const address = getAddressFromPubKey(MOCK_PUB_KEY);
+		const address = getAddressHashFromPubKey(MOCK_PUB_KEY);
 
 		expect(address).toBeInstanceOf(Uint8Array);
 		expect(address).toEqual(MOCK_PUB_KEY_ADDRESS);

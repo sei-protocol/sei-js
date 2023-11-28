@@ -1,8 +1,8 @@
-import { serializeSignDoc, StdSignature, StdSignDoc } from '@cosmjs/amino';
+import { StdSignature, StdSignDoc } from '@cosmjs/amino';
 import { fromBase64 } from '@cosmjs/encoding';
-import { toBech32 } from './bech32';
-import { getAddressFromPubKey, isValidSeiAddress, verifyDigest32 } from './address';
+import { compressedPubKeyToAddress, isValidSeiAddress, verifyDigest32 } from './address';
 import { sha256 } from './hash';
+import { serializeAminoSignDoc } from './serialize';
 
 function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	const hasOnlyMsgSignData = (() => {
@@ -70,7 +70,7 @@ function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	return true;
 }
 
-function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
+export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
 	// If data is already a base64 string, convert it to a Buffer and back to a string.
 	data = Buffer.from(data).toString('base64');
 
@@ -109,14 +109,13 @@ function verifyADR36AminoSignDoc(signDoc: StdSignDoc, pubKey: Uint8Array, signat
 		throw new Error('Invalid sign doc for ADR-36');
 	}
 
-	const pubKeyAddress = getAddressFromPubKey(pubKey);
-	const expectedSigner = toBech32(pubKeyAddress);
+	const expectedSigner = compressedPubKeyToAddress(pubKey);
 	const signer = signDoc.msgs[0].value.signer;
 	if (expectedSigner !== signer) {
 		throw new Error('Unmatched signer');
 	}
 
-	const msg = serializeSignDoc(signDoc);
+	const msg = serializeAminoSignDoc(signDoc);
 
 	return verifyDigest32(sha256(msg), signature, pubKey);
 }
