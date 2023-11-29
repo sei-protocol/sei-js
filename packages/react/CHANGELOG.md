@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0
+
+### Minor Changes
+
+- a16f4b2: Replaced css in /react package with styled components
+
 ## 3.1.1
 
 ### Patch Changes

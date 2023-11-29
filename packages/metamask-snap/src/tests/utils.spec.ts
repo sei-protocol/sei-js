@@ -1,5 +1,5 @@
+import { byteArrayToHex, longResponseToNumber, sanitizedUint8Array } from '../utils';
 import { RawLong } from '../types';
-import { byteArrayToHex, longToNumber, sanitizedUint8Array } from '../utils';
 
 describe('sanitizedUint8Array', () => {
 	it('should convert an object to Uint8Array', () => {
@@ -21,23 +21,23 @@ describe('sanitizedUint8Array', () => {
 	});
 });
 
-describe('longToNumber', () => {
+describe('longResponseToNumber', () => {
 	it('should convert RawLong to number', () => {
 		const input: RawLong = { low: 123, high: 0, unsigned: true };
 		const expected = 123;
-		expect(longToNumber(input)).toEqual(expected);
+		expect(longResponseToNumber(input)).toEqual(expected);
 	});
 
 	it('should handle negative numbers', () => {
 		const input: RawLong = { low: 4294967295, high: 4294967295, unsigned: false };
 		const expected = -1;
-		expect(longToNumber(input)).toEqual(expected);
+		expect(longResponseToNumber(input)).toEqual(expected);
 	});
 
 	it('should fail for invalid RawLong type', () => {
 		const input = { not: 1, valid: 3, keys: 'false' };
 		const expected = 0;
-		expect(longToNumber(input as unknown as RawLong)).toEqual(expected);
+		expect(longResponseToNumber(input as unknown as RawLong)).toEqual(expected);
 	});
 });
 

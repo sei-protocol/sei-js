@@ -1,5 +1,6 @@
 import { StdSignature, StdSignDoc } from '@cosmjs/amino';
 import { SignDoc } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
+
 import { MetaMaskInpageProvider } from '@metamask/providers';
 
 declare global {
@@ -11,11 +12,6 @@ declare global {
 export interface SnapRequest {
 	account_index?: number;
 }
-
-export type SignAminoOptions = {
-	isADR36?: boolean;
-	enableExtraEntropy?: boolean;
-};
 
 export interface VerifyArbitraryRequest extends SnapRequest {
 	readonly signer: string;

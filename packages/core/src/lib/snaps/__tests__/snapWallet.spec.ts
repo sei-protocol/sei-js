@@ -1,8 +1,5 @@
-import { getWallet, SEI_METAMASK_SNAP, SnapWallet } from '../snapWallet';
+import { experimental_SEI_METAMASK_SNAP, getWallet, SnapWallet } from '../snapWallet';
 import { sendReqToSnap } from '../cosmjs';
-import { installSnap } from '@metamask/snaps-jest';
-import { BIP44Node } from '@metamask/key-tree';
-import { sanitizedUint8Array } from '../utils';
 
 jest.mock('../cosmjs', () => {
 	const originalModule = jest.requireActual('../cosmjs');
@@ -65,11 +62,11 @@ describe('getWallet', () => {
 
 describe('SEI_METAMASK_SNAP', () => {
 	it('should have the expected properties and methods', () => {
-		expect(SEI_METAMASK_SNAP.getAccounts).toBeDefined();
-		expect(SEI_METAMASK_SNAP.connect).toBeDefined();
-		expect(SEI_METAMASK_SNAP.disconnect).toBeDefined();
-		expect(SEI_METAMASK_SNAP.getOfflineSigner).toBeDefined();
-		expect(SEI_METAMASK_SNAP.getOfflineSignerAmino).toBeDefined();
-		expect(SEI_METAMASK_SNAP.isMobileSupported).toBeTruthy();
+		expect(experimental_SEI_METAMASK_SNAP.getAccounts).toBeDefined();
+		expect(experimental_SEI_METAMASK_SNAP.connect).toBeDefined();
+		expect(experimental_SEI_METAMASK_SNAP.disconnect).toBeDefined();
+		expect(experimental_SEI_METAMASK_SNAP.getOfflineSigner).toBeDefined();
+		expect(experimental_SEI_METAMASK_SNAP.getOfflineSignerAmino).toBeDefined();
+		expect(experimental_SEI_METAMASK_SNAP.isMobileSupported).toBeTruthy();
 	});
 });

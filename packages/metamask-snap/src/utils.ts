@@ -6,7 +6,7 @@ export const sanitizedUint8Array = (value: any) => {
 	return new Uint8Array(valueArray);
 };
 
-export const longToNumber = (longObj: RawLong): number => {
+export const longResponseToNumber = (longObj: RawLong): number => {
 	return new Long(longObj.low, longObj.high, longObj.unsigned).toNumber();
 };
 

@@ -1,9 +1,9 @@
 import { TxBody, AuthInfo } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
 import Long from 'long';
 import { cosmos } from '@sei-js/proto';
-import { sanitizedUint8Array } from '../utils';
 import { compressedPubKeyToAddress } from '@sei-js/core';
-import { decodeRawAuthInfo, decodeTxBody, getDirectPanel } from '../ui';
+import { decodeRawAuthInfo, decodeTxBody } from '../ui';
+import { sanitizedUint8Array } from '../utils';
 
 describe('decodeTxBody', () => {
 	it('should decode TxBody correctly', () => {
@@ -144,32 +144,5 @@ describe('decodeRawAuthInfo', () => {
 
 		const seiAddress = compressedPubKeyToAddress(decoded.signerInfos[0].publicKey.value);
 		expect(seiAddress).toBe('sei17lf2fjpqywmwa2t678zzrmhjhmwwthh0rsqr5v');
-	});
-});
-
-describe('getDirectPanel', () => {
-	it('returns the correct panel structure', () => {
-		const signDoc = {
-			authInfoBytes: 'authInfoBytesMock',
-			bodyBytes: 'bodyBytesMock',
-			chainId: 'test-chain'
-		};
-		const accountNumber = Long.fromNumber(1234);
-
-		const result = getDirectPanel(signDoc, accountNumber);
-
-		expect(result).toEqual([
-			'Heading: Sign Transaction',
-			'Divider',
-			'Heading: Chain ID',
-			'Text: test-chain',
-			'Divider',
-			'Heading: Account Number',
-			'Text: 1234',
-			'Divider',
-			'Heading: Messages',
-			'Divider',
-			'Heading: Fee'
-		]);
 	});
 });

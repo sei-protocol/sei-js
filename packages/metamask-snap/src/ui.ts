@@ -1,5 +1,5 @@
 import { AuthInfo, TxBody } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
-import { byteArrayToHex, longToNumber, sanitizedUint8Array } from './utils';
+import { byteArrayToHex, longResponseToNumber, sanitizedUint8Array } from './utils';
 import { cosmos, ibc, seiprotocol, tendermint, cosmwasm, google } from '@sei-js/proto';
 import { Any } from '@sei-js/proto/dist/types/codegen/google/protobuf/any';
 import Long from 'long';
@@ -64,7 +64,7 @@ export const decodeTxBody = (txBody: TxBody): DecodedTxBody => {
 				} else {
 					throw new Error('Decode function not found');
 				}
-			} catch (error) {
+			} catch (error: any) {
 				//Default to bytes
 				console.warn(`Error decoding message: ${message.typeUrl}, Error: ${error.message}`);
 				return message;
@@ -79,7 +79,7 @@ export const decodeRawAuthInfo = (authInfo: AuthInfo): any => {
 
 	const publicKeyHex = byteArrayToHex(decodedPubKey.key);
 
-	const sequenceNumber = longToNumber(authInfo.signerInfos[0].sequence);
+	const sequenceNumber = longResponseToNumber(authInfo.signerInfos[0].sequence);
 	const signerInfos: any = [...authInfo.signerInfos];
 	signerInfos[0] = {
 		...authInfo.signerInfos[0],
@@ -90,7 +90,7 @@ export const decodeRawAuthInfo = (authInfo: AuthInfo): any => {
 		sequence: sequenceNumber
 	};
 
-	const gasLimit = longToNumber(authInfo.fee.gasLimit);
+	const gasLimit = longResponseToNumber(authInfo.fee.gasLimit);
 
 	return { ...authInfo, signerInfos, fee: { ...authInfo.fee, gasLimit } };
 };
