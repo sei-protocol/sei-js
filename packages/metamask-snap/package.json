@@ -44,7 +44,7 @@
 		"serve": "mm-snap serve",
 		"start": "mm-snap watch",
 		"test": "yarn test:lib && yarn test:snap",
-		"test:lib": "jest --config ./jest.config.lib.js",
+		"test:lib": "jest --config ./jest.config.lib.ts",
 		"test:snap": "jest --config ./jest.config.snap.js"
 	},
 	"dependencies": {
