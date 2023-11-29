@@ -4,9 +4,8 @@ import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { BIP44Node } from '@metamask/key-tree';
 import { AccountData, encodeSecp256k1Signature, StdSignDoc } from '@cosmjs/amino';
 import { Buffer } from 'buffer';
-import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc } from '../utils';
+import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc, SeiWallet } from '@sei-js/core';
 import { CosmJSOfflineSigner, sendReqToSnap } from './cosmjs';
-import { SeiWallet } from '../wallet';
 import { MM_SNAP_ORIGIN } from './config';
 
 export class SnapWallet {
@@ -78,7 +77,7 @@ export class SnapWallet {
 	}
 }
 
-export async function getWallet(account_index: number = 0): Promise<SnapWallet> {
+export async function getWallet(account_index = 0): Promise<SnapWallet> {
 	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index });
 
 	if (account.privateKey) {
@@ -105,7 +104,9 @@ export const experimental_SEI_METAMASK_SNAP: SeiWallet = {
 			});
 		}
 	},
-	disconnect: async (_: string) => {},
+	disconnect: async (_: string) => {
+		throw new Error('Not implemented');
+	},
 	getOfflineSigner: async (chainId) => {
 		return new CosmJSOfflineSigner(chainId);
 	},

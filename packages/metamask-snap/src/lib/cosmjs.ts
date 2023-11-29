@@ -4,15 +4,8 @@ import { DirectSignResponse, OfflineDirectSigner } from '@cosmjs/proto-signing';
 import Long from 'long';
 import { MM_SNAP_ORIGIN } from './config';
 import { SignAminoOptions } from './types';
-import { makeADR36AminoSignDoc } from '../utils';
-import { MetaMaskInpageProvider } from '@metamask/providers';
+import { makeADR36AminoSignDoc } from '@sei-js/core';
 import { getWallet } from './snapWallet';
-
-declare global {
-	interface Window {
-		ethereum: MetaMaskInpageProvider & { providers: any[]; detected: any[]; setProvider: (provider: MetaMaskInpageProvider) => void };
-	}
-}
 
 export const sendReqToSnap = async (method: string, params: any): Promise<any> => {
 	return window.ethereum.request({

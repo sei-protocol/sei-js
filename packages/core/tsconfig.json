@@ -1,24 +1,16 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "es6",
-    "declaration": true,
-    "outDir": "./dist/types",
-    "strict": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "noImplicitAny": false,
-    "lib": [
-      "ES6",
-      "DOM"
-    ]
-  },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/__tests__/**/*"
-  ]
+	"compilerOptions": {
+		"target": "es6",
+		"module": "es6",
+		"declaration": true,
+		"outDir": "./dist/types",
+		"strict": true,
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"noImplicitAny": false,
+		"lib": ["ES6", "DOM"]
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/**/*"]
 }

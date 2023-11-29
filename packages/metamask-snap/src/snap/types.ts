@@ -5,7 +5,11 @@ import { MetaMaskInpageProvider } from '@metamask/providers';
 
 declare global {
 	interface Window {
-		ethereum: MetaMaskInpageProvider & { providers: any[]; detected: any[]; setProvider: (provider: MetaMaskInpageProvider) => void };
+		ethereum: MetaMaskInpageProvider & {
+			providers: MetaMaskInpageProvider[];
+			detected: MetaMaskInpageProvider[];
+			setProvider: (provider: MetaMaskInpageProvider) => void;
+		};
 	}
 }
 
