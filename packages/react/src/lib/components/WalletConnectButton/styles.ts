@@ -23,6 +23,7 @@ export const WalletMenu = styled.div`
 
 export const WalletMenuItem = styled.div`
 	display: flex;
+	flex-direction: row;
 	align-items: center;
 	gap: 12px;
 	font-weight: 500;

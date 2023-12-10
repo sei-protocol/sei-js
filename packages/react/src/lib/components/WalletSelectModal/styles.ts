@@ -59,7 +59,8 @@ export const ModalCard = styled.div`
 
 export const CardHeader = styled.div`
 	display: flex;
-	min-height: 2rem;
+  flex-direction: row;
+  min-height: 2rem;
 	width: 100%;
 	justify-content: space-between;
 `;
@@ -106,7 +107,8 @@ export const CardContentWallets = styled.div`
 
 export const CardContentSeparator = styled.div`
 	display: flex;
-	height: 100%;
+  flex-direction: row;
+  height: 100%;
 	width: 2px;
 	border-radius: 2px;
 	background-color: ${(props) => addOpacityToColor(props.theme.primaryColor || '#121212', 0.16)};
@@ -163,7 +165,8 @@ export const CardContentMobileHelper = styled.div`
 
 	@media (max-width: 480px) {
 		display: flex;
-	}
+    flex-direction: row;
+  }
 `;
 
 export const CardRightItemTitle = styled.p`
@@ -256,7 +259,8 @@ export const CardRightConnectingIcon = styled.img`
 
 export const WalletItem = styled.div`
 	display: flex;
-	padding: 0.25rem 0.5rem;
+  flex-direction: row;
+  padding: 0.25rem 0.5rem;
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 0.5rem;

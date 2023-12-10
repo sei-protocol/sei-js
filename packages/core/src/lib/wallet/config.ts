@@ -82,4 +82,25 @@ export const LEAP_WALLET: SeiWallet = {
 	isMobileSupported: true
 };
 
-export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];
+export const OKX_WALLET: SeiWallet = {
+	getAccounts: async (chainId) => {
+		const offlineSigner = await window?.['okxwallet']?.['keplr']?.getOfflineSignerAuto(chainId);
+		return offlineSigner?.getAccounts() || [];
+	},
+	connect: async (chainId) => await window?.['okxwallet']?.['keplr']?.enable(chainId),
+	disconnect: async (chainId) => await window?.['okxwallet']?.['keplr']?.disconnect(chainId),
+	getOfflineSigner: async (chainId) => window?.['okxwallet']?.['keplr']?.getOfflineSignerAuto(chainId),
+	getOfflineSignerAmino: async (chainId) => window?.['okxwallet']?.['keplr']?.getOfflineSignerOnlyAmino(chainId),
+	signArbitrary: async (chainId, signer, message) => window?.['okxwallet']?.['keplr']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['okxwallet']?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
+	suggestChain: async (config) => window?.['okxwallet']?.['keplr']?.experimentalSuggestChain(config),
+	walletInfo: {
+		windowKey: 'okxwallet.keplr',
+		name: 'OKX Wallet',
+		website: 'https://www.okx.com/web3',
+		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/okx_wallet.png'
+	},
+	isMobileSupported: true
+};
+
+export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET, OKX_WALLET];
