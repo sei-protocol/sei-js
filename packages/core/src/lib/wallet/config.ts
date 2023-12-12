@@ -84,18 +84,18 @@ export const LEAP_WALLET: SeiWallet = {
 
 export const OKX_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
-		const offlineSigner = await window?.['okxwallet']?.['keplr']?.getOfflineSignerAuto(chainId);
+		const offlineSigner = await window?.['okxwallet']?.getOfflineSignerAuto(chainId);
 		return offlineSigner?.getAccounts() || [];
 	},
-	connect: async (chainId) => await window?.['okxwallet']?.['keplr']?.enable(chainId),
-	disconnect: async (chainId) => await window?.['okxwallet']?.['keplr']?.disconnect(chainId),
-	getOfflineSigner: async (chainId) => window?.['okxwallet']?.['keplr']?.getOfflineSignerAuto(chainId),
-	getOfflineSignerAmino: async (chainId) => window?.['okxwallet']?.['keplr']?.getOfflineSignerOnlyAmino(chainId),
-	signArbitrary: async (chainId, signer, message) => window?.['okxwallet']?.['keplr']?.signArbitrary(chainId, signer, message),
-	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['okxwallet']?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
-	suggestChain: async (config) => window?.['okxwallet']?.['keplr']?.experimentalSuggestChain(config),
+	connect: async (chainId) => await window?.['okxwallet']?.enable(chainId),
+	disconnect: async (chainId) => await window?.['okxwallet']?.disconnect(chainId),
+	getOfflineSigner: async (chainId) => window?.['okxwallet']?.getOfflineSignerAuto(chainId),
+	getOfflineSignerAmino: async (chainId) => window?.['okxwallet']?.getOfflineSignerOnlyAmino(chainId),
+	signArbitrary: async (chainId, signer, message) => window?.['okxwallet']?.signArbitrary(chainId, signer, message),
+	verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['okxwallet']?.verifyArbitrary(chainId, signingAddress, data, signature),
+	suggestChain: async (config) => window?.['okxwallet']?.experimentalSuggestChain(config),
 	walletInfo: {
-		windowKey: 'okxwallet.keplr',
+		windowKey: 'okxwallet',
 		name: 'OKX Wallet',
 		website: 'https://www.okx.com/web3',
 		icon: 'https://sei-js-assets.s3.us-west-2.amazonaws.com/okx_wallet.png'
