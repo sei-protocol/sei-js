@@ -1,5 +1,6 @@
 /* eslint-env node */
 module.exports = {
+	maxWorkers: 1,
 	preset: '@metamask/snaps-jest',
 	transform: {
 		'^.+\\.(t|j)sx?$': 'ts-jest'
