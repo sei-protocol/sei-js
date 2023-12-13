@@ -3,14 +3,17 @@
 		"target": "es6",
 		"module": "es6",
 		"declaration": true,
-		"outDir": "./dist/types",
+		"outDir": "./dist/lib/types",
 		"strict": true,
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
 		"noImplicitAny": false,
-		"lib": ["ES6", "DOM"]
+		"lib": ["ES6", "DOM"],
+		"emitDeclarationOnly": true
 	},
-	"include": ["src"],
-	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/**/*"]
+	"include": [
+		"src/lib"
+	],
+	"exclude": ["**/*.spec.ts", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/**/*"]
 }
