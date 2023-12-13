@@ -1,11 +1,5 @@
 # Changelog
 
-## 0.0.0
-
-### Minor Changes
-
-- 387cb59: Added helpful functions to wrap metamask snaps and use them as inputs to SeiWalletProvider
-
 ## 3.1.1
 
 ### Patch Changes
