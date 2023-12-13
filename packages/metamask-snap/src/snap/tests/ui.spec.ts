@@ -1,9 +1,9 @@
 import { TxBody, AuthInfo } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
 import Long from 'long';
 import { cosmos } from '@sei-js/proto';
-import { compressedPubKeyToAddress } from '@sei-js/core';
 import { decodeRawAuthInfo, decodeTxBody } from '../ui';
 import { sanitizedUint8Array } from '../utils';
+import { compressedPubKeyToAddress } from '@sei-js/core';
 
 describe('decodeTxBody', () => {
 	it('should decode TxBody correctly', () => {

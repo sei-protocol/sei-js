@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/metamask-snap",
-	"version": "0.0.0-internal-20231129060458",
+	"version": "0.1.0",
 	"description": "A MetaMask snap for the SEI blockchain",
 	"repository": {
 		"type": "git",
@@ -50,7 +50,7 @@
 	"dependencies": {
 		"@metamask/snaps-types": "^3.1.0",
 		"@metamask/snaps-ui": "^3.1.0",
-		"@sei-js/core": "^0.0.0-internal-20231129052901",
+		"@sei-js/core": "^3.1.2",
 		"buffer": "^6.0.3"
 	},
 	"devDependencies": {
