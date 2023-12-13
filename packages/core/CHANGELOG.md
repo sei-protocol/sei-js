@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.2
+
+### Patch Changes
+
+- d408b7b: Released MM snap helper functions
+
 ## 3.1.1
 
 ### Patch Changes
