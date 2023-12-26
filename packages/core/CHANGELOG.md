@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.0.0-internal-20231226184402
+
+### Minor Changes
+
+- Simplified exports
+
+## 0.0.0-internal-20231226181823
+
+### Patch Changes
+
+- Updated @noble versions
+
+## 0.0.0-internal-20231226173424
+
+### Patch Changes
+
+- Moved helper libraries to /core
+
 ## 3.1.2
 
 ### Patch Changes

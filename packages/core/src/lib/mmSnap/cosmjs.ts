@@ -2,23 +2,10 @@ import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { AccountData, AminoSignResponse, StdSignDoc } from '@cosmjs/amino';
 import { DirectSignResponse, OfflineDirectSigner } from '@cosmjs/proto-signing';
 import Long from 'long';
-import { MM_SNAP_ORIGIN } from './config';
 import { SignAminoOptions } from './types';
-import { makeADR36AminoSignDoc } from '@sei-js/core';
 import { getWallet } from './snapWallet';
-
-export const sendReqToSnap = async (method: string, params: any): Promise<any> => {
-	return window.ethereum.request({
-		method: 'wallet_invokeSnap',
-		params: {
-			snapId: MM_SNAP_ORIGIN,
-			request: {
-				method,
-				params
-			}
-		}
-	});
-};
+import { sendReqToSnap } from './utils';
+import { makeADR36AminoSignDoc } from '../utils';
 
 export const requestSignature = async (
 	chainId: string,

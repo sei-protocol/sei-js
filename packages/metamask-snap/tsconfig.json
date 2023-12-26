@@ -13,7 +13,5 @@
 		"allowJs": true
 	},
 	"include": ["src"],
-	"exclude": ["**/__snapshots__/**", "**/*.test.ts", "node_modules",
-		"src/lib"
-	]
+	"exclude": ["**/__snapshots__/**", "**/*.test.ts", "node_modules"]
 }

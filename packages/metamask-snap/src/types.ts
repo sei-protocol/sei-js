@@ -36,3 +36,14 @@ export interface SignAminoRequest extends SnapRequest {
 }
 
 export type RawLong = { low: number; high: number; unsigned: boolean };
+
+export type EthereumProvider = MetaMaskInpageProvider & {
+	providers: MetaMaskInpageProvider[];
+	detected: MetaMaskInpageProvider[];
+	setProvider: (provider: MetaMaskInpageProvider) => void;
+};
+
+export type SignAminoOptions = {
+	isADR36?: boolean;
+	enableExtraEntropy?: boolean;
+};

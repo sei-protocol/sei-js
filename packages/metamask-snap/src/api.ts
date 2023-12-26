@@ -1,12 +1,13 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types';
 import { SignAminoRequest, SignDirectRequest, VerifyArbitraryRequest } from './types';
-import { SnapWallet, verifyArbitrary } from '@sei-js/core';
+import { verifyArbitrary } from '@sei-js/core';
 import Long from 'long';
 import { sanitizedUint8Array } from './utils';
 import { heading, NodeType, panel } from '@metamask/snaps-ui';
 import { getDirectPanel } from './ui';
 import { BIP44CoinTypeNode, getBIP44AddressKeyDeriver } from '@metamask/key-tree';
 import { SnapRequest } from './types';
+import { SnapWallet } from './snapWallet';
 
 export const getPrivateKey = async (account_index?: number) => {
 	const bip44CoinNode = (await snap.request({
