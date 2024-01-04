@@ -2,4 +2,4 @@ export * from './queryClient';
 export * from './signingClient';
 export * from './wallet';
 export * from './utils';
-export * from './mmSnap';
+export * from './metamask-snap';

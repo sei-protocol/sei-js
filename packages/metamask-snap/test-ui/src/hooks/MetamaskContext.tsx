@@ -87,7 +87,7 @@ export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
 
 	// Set installed snaps
 	useEffect(() => {
-		const origin = import.meta.env.VITE_SNAP_ORIGIN || `npm:@sei-js/metamask-snap`;
+		const origin = import.meta.env.VITE_SNAP_ID || `npm:@sei-js/metamask-snap`;
 		async function detectSnapInstalled() {
 			dispatch({
 				type: MetamaskActions.SetInstalled,

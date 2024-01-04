@@ -64,7 +64,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 			return await wallet.signDirect(signerAddress, sd);
 		}
 		case 'signAmino': {
-			const { signerAddress, signDoc, chainId, enableExtraEntropy } = request.params as unknown as SignAminoRequest;
+			const { signerAddress, signDoc, chainId, enableExtraEntropy, isADR36 } = request.params as unknown as SignAminoRequest;
 
 			const sortedSignDoc: StdSignDoc = {
 				chain_id: chainId || 'pacific-1',
@@ -79,7 +79,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 				method: 'snap_dialog',
 				params: {
 					type: 'confirmation',
-					content: getAminoPanel(sortedSignDoc)
+					content: getAminoPanel(sortedSignDoc, isADR36)
 				}
 			});
 

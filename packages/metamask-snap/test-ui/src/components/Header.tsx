@@ -41,7 +41,7 @@ export const Header = ({ handleToggleClick }: { handleToggleClick(): void }) => 
 
 	const handleConnectClick = async () => {
 		try {
-			const origin = import.meta.env.VITE_SNAP_ORIGIN || `npm:@sei-js/metamask-snap`;
+			const origin = import.meta.env.VITE_SNAP_ID || `npm:@sei-js/metamask-snap`;
 			await connectSnap(origin);
 			const installedSnap = await getSnap(origin);
 

@@ -14,4 +14,4 @@ You will also see any lint errors in the console.
 
 ### Configuration
 #### Snap Origin 
-- Change between the local snap server and using a published npm build by setting the  `VITE_SNAP_ORIGIN` environment variable in `.env.local` to your snaps origin (`local:http://localhost:8080` for local, `npm:@sei-js/metamask-snap` for the latest published npm version)
+- Change between the local snap server and using a published npm build by setting the  `VITE_SNAP_ID` environment variable in `.env.local` to your snaps origin (`local:http://localhost:8080` for local, `npm:@sei-js/metamask-snap` for the latest published npm version)

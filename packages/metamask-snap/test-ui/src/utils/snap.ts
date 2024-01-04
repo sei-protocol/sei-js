@@ -34,7 +34,7 @@ export const getMetaMaskSnap = (snapId: string): SeiWallet => {
 		},
 		signArbitrary: async (chainId, signer, message) => {
 			const offlineSigner = new CosmJSOfflineSigner(chainId, snapId);
-			return offlineSigner.signArbitrary(signer, message);
+			return offlineSigner.signArbitrary(signer, message, { enableExtraEntropy: true });
 		},
 		verifyArbitrary: async (_: string, signingAddress, data, signature) => {
 			return (await sendReqToSnap(

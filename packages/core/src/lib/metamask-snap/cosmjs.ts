@@ -87,7 +87,6 @@ export class CosmJSOfflineSigner implements OfflineDirectSigner {
 		const signDoc = makeADR36AminoSignDoc(signer, data);
 		const result = await requestSignAmino(this.chainId, signer, signDoc, this.snapId, {
 			isADR36: true,
-			preferNoSetFee: true,
 			enableExtraEntropy: signOptions?.enableExtraEntropy
 		});
 		return result.signature;
@@ -101,17 +100,7 @@ export const requestSignAmino = async (
 	snapId: string,
 	options?: SignAminoOptions
 ): Promise<AminoSignResponse> => {
-	const { isADR36 = false, enableExtraEntropy = false, preferNoSetFee = true } = options || {};
-
-	if (!preferNoSetFee) {
-		// @ts-ignore
-		signDoc.fee.amount = [
-			{
-				amount: '0.1',
-				denom: 'usei'
-			}
-		];
-	}
+	const { isADR36 = false, enableExtraEntropy = false } = options || {};
 
 	if (!isADR36 && chainId !== signDoc.chain_id) {
 		throw new Error('Chain ID does not match signer chain ID');

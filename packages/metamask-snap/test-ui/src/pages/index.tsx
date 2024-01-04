@@ -154,7 +154,7 @@ const Index = () => {
 	const [bankSendAminoResponse, setBankSendAminoResponse] = useState<DeliverTxResponse>(null);
 	const [signArbitraryResponse, setSignArbitraryResponse] = useState<object>(null);
 
-	const origin = import.meta.env.VITE_SNAP_ORIGIN || `npm:@sei-js/metamask-snap`;
+	const origin = import.meta.env.VITE_SNAP_ID || `npm:@sei-js/metamask-snap`;
 	const metamaskSnap = getMetaMaskSnap(origin);
 	// const metamaskSnap = COMPASS_WALLET;
 
@@ -284,7 +284,7 @@ const Index = () => {
 
 	const handleConnectClick = async () => {
 		try {
-			const origin = import.meta.env.VITE_SNAP_ORIGIN || `npm:@sei-js/metamask-snap`;
+			const origin = import.meta.env.VITE_SNAP_ID || `npm:@sei-js/metamask-snap`;
 			await connectSnap(origin);
 			const installedSnap = await getSnap(origin);
 
@@ -413,7 +413,7 @@ const Index = () => {
 	return (
 		<Container>
 			<Heading>MetaMask Snap ID</Heading>
-			<Span>{import.meta.env.VITE_SNAP_ORIGIN || `npm:@sei-js/metamask-snap`}</Span>
+			<Span>{import.meta.env.VITE_SNAP_ID || `npm:@sei-js/metamask-snap`}</Span>
 			<CardContainer>
 				{state.error && (
 					<ErrorMessage>

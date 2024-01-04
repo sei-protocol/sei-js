@@ -3,7 +3,7 @@ import { byteArrayToHex, longResponseToNumber, sanitizedUint8Array } from './uti
 import { cosmos, ibc, seiprotocol, tendermint, cosmwasm, google } from '@sei-js/proto';
 import { Any } from '@sei-js/proto/dist/types/codegen/google/protobuf/any';
 import Long from 'long';
-import { copyable, divider, heading, NodeType, panel, text } from '@metamask/snaps-ui';
+import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { StdSignDoc } from '@cosmjs/amino';
 import { PanelOption } from './types';
 import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
@@ -134,9 +134,16 @@ export const getDirectPanel = (signDoc: SignDoc, accountNumber: Long): any => {
 	return panel(options);
 };
 
-export const getAminoPanel = (signDoc: StdSignDoc) => {
-	const options: PanelOption[] = [
-		heading('Sign Transaction (Amino)'),
+export const getAminoPanel = (signDoc: StdSignDoc, isADR36: boolean = false) => {
+	const options: PanelOption[] = [];
+
+	if (isADR36) {
+		options.push(heading('Sign Arbitrary (ADR-036)'));
+	} else {
+		options.push(heading('Sign Transaction (Amino)'));
+	}
+
+	options.push(
 		divider(),
 		heading('Chain ID:'),
 		text(signDoc.chain_id),
@@ -165,7 +172,7 @@ export const getAminoPanel = (signDoc: StdSignDoc) => {
 		divider(),
 		heading('Fee:'),
 		text(JSON.stringify(signDoc.fee, null, 2))
-	];
+	);
 	if (signDoc.memo) {
 		options.push(divider(), heading('Memo'), copyable(signDoc.memo));
 	}

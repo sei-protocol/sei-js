@@ -34,6 +34,7 @@ export interface SignAminoRequest extends SnapRequest {
 	readonly signerAddress: string;
 	readonly chainId: string;
 	readonly enableExtraEntropy?: boolean;
+	readonly isADR36?: boolean;
 }
 
 export type RawLong = { low: number; high: number; unsigned: boolean };
