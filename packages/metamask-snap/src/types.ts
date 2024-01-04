@@ -18,12 +18,6 @@ export interface SnapRequest {
 	account_index?: number;
 }
 
-export interface VerifyArbitraryRequest extends SnapRequest {
-	readonly signer: string;
-	readonly message: string;
-	readonly signature: StdSignature;
-}
-
 export interface SignDirectRequest extends SnapRequest {
 	readonly signDoc: SignDoc;
 	readonly signerAddress: string;

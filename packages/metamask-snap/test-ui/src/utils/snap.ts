@@ -1,4 +1,4 @@
-import { SeiWallet, CosmJSOfflineSigner, getSnapEthereumProvider, sendReqToSnap } from '@sei-js/core';
+import { SeiWallet, CosmJSOfflineSigner, getSnapEthereumProvider, verifyArbitrary } from '@sei-js/core';
 import Buffer from 'buffer';
 
 // @ts-ignore
@@ -37,15 +37,10 @@ export const getMetaMaskSnap = (snapId: string): SeiWallet => {
 			return offlineSigner.signArbitrary(signer, message, { enableExtraEntropy: true });
 		},
 		verifyArbitrary: async (_: string, signingAddress, data, signature) => {
-			return (await sendReqToSnap(
-				'verifyArbitrary',
-				{
-					signer: signingAddress,
-					message: data,
-					signature
-				},
-				snapId
-			)) as unknown as boolean;
+			if (!signingAddress || !data) {
+				throw new Error('Invalid params');
+			}
+			return await verifyArbitrary(signingAddress, data, signature);
 		},
 		walletInfo: {
 			windowKey: 'ethereum',

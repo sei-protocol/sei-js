@@ -1,6 +1,5 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { SignAminoRequest, SignDirectRequest, VerifyArbitraryRequest } from './types';
-import { verifyArbitrary } from '@sei-js/core';
+import { SignAminoRequest, SignDirectRequest } from './types';
 import Long from 'long';
 import { sanitizedUint8Array } from './utils';
 import { getAminoPanel, getDirectPanel } from './ui';
@@ -29,12 +28,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 	if (!account?.privateKey) return;
 	const wallet = SnapWallet.create(account.privateKey);
 	switch (request.method) {
-		case 'verifyArbitrary':
-			const { signer, message, signature } = request.params as unknown as VerifyArbitraryRequest;
-			if (!signer || !message) {
-				throw new Error('Invalid params');
-			}
-			return await verifyArbitrary(signer, message, signature);
 		case 'signDirect': {
 			const params = request.params as unknown as SignDirectRequest;
 
