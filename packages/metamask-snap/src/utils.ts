@@ -1,6 +1,5 @@
 import Long from 'long';
 import { EthereumProvider, RawLong } from './types';
-import { MM_SNAP_ORIGIN } from './config';
 
 export const sanitizedUint8Array = (value: any) => {
 	const valueArray = Object.values(value).map((val) => val as number);
@@ -64,12 +63,13 @@ export const getSnapEthereumProvider = async (): Promise<EthereumProvider> => {
 
 	return window.ethereum;
 };
-export const sendReqToSnap = async (method: string, params: any): Promise<any> => {
+
+export const sendReqToSnap = async (method: string, params: any, snapId: string): Promise<any> => {
 	const provider = await getSnapEthereumProvider();
 	return provider.request({
 		method: 'wallet_invokeSnap',
 		params: {
-			snapId: MM_SNAP_ORIGIN,
+			snapId,
 			request: {
 				method,
 				params

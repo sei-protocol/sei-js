@@ -3,7 +3,10 @@ import { byteArrayToHex, longResponseToNumber, sanitizedUint8Array } from './uti
 import { cosmos, ibc, seiprotocol, tendermint, cosmwasm, google } from '@sei-js/proto';
 import { Any } from '@sei-js/proto/dist/types/codegen/google/protobuf/any';
 import Long from 'long';
-import { divider, heading, text } from '@metamask/snaps-ui';
+import { copyable, divider, heading, NodeType, panel, text } from '@metamask/snaps-ui';
+import { StdSignDoc } from '@cosmjs/amino';
+import { PanelOption } from './types';
+import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 
 interface DecodedTxBody {
 	timeoutHeight: Long;
@@ -12,6 +15,8 @@ interface DecodedTxBody {
 	extensionOptions: Any[];
 	nonCriticalExtensionOptions: Any[];
 }
+
+const NOTICE_TEXT = '_Notice: This transaction will not show in your MetaMask activity tab as it is a cosmos transaction._';
 
 export const decodeTxBody = (txBody: TxBody): DecodedTxBody => {
 	return {
@@ -95,7 +100,7 @@ export const decodeRawAuthInfo = (authInfo: AuthInfo): any => {
 	return { ...authInfo, signerInfos, fee: { ...authInfo.fee, gasLimit } };
 };
 
-export const getDirectPanel = (signDoc: any, accountNumber: Long): any => {
+export const getDirectPanel = (signDoc: SignDoc, accountNumber: Long): any => {
 	const authInfoBytes = sanitizedUint8Array(signDoc.authInfoBytes);
 	const decodedAuthInfo = cosmos.tx.v1beta1.AuthInfo.decode(authInfoBytes);
 	const readableAuthInfo = decodeRawAuthInfo(decodedAuthInfo);
@@ -104,25 +109,66 @@ export const getDirectPanel = (signDoc: any, accountNumber: Long): any => {
 	const decodedBody = cosmos.tx.v1beta1.TxBody.decode(bodyBytes);
 	const readableBody = decodeTxBody(decodedBody);
 
-	const panel = [
+	const options: PanelOption[] = [
 		heading('Sign Transaction'),
 		divider(),
-		heading('Chain ID'),
+		heading('Chain ID:'),
 		text(signDoc.chainId),
 		divider(),
-		heading('Account Number'),
-		text(accountNumber.toString()),
+		heading('Account Number:'),
+		text(`${accountNumber.toInt()}`),
 		divider(),
-		heading('Messages'),
+		heading('Messages:'),
 		text(JSON.stringify(readableBody.messages, null, 2)),
 		divider(),
-		heading('Fee'),
+		heading('Fee:'),
 		text(JSON.stringify(readableAuthInfo.fee, null, 2))
 	];
 
 	if (readableBody.memo) {
-		panel.push(heading('Memo'), text(JSON.stringify(readableBody.memo, null, 2)), divider());
+		options.push(divider(), heading('Memo'), copyable(JSON.stringify(readableBody.memo, null, 2)));
 	}
 
-	return panel;
+	options.push(divider(), text(NOTICE_TEXT));
+
+	return panel(options);
+};
+
+export const getAminoPanel = (signDoc: StdSignDoc) => {
+	const options: PanelOption[] = [
+		heading('Sign Transaction (Amino)'),
+		divider(),
+		heading('Chain ID:'),
+		text(signDoc.chain_id),
+		divider(),
+		heading('Account Info:'),
+		text(`Account Number: ${signDoc.account_number.toString()}`),
+		text(`Account Sequence Number: ${signDoc.sequence}`),
+		divider(),
+		heading('Messages:'),
+		text(
+			JSON.stringify(
+				signDoc.msgs.map((msg) => {
+					try {
+						let bufferObj = Buffer.from(msg.value.data, 'base64');
+						let data = bufferObj.toString('utf8');
+						return { ...msg, value: { ...msg.value, data } };
+					} catch {
+						return msg;
+					}
+				}),
+				null,
+				2
+			)
+		),
+		text(JSON.stringify(signDoc.msgs, null, 2)),
+		divider(),
+		heading('Fee:'),
+		text(JSON.stringify(signDoc.fee, null, 2))
+	];
+	if (signDoc.memo) {
+		options.push(divider(), heading('Memo'), copyable(signDoc.memo));
+	}
+	options.push(divider(), text(NOTICE_TEXT));
+	return panel(options);
 };

@@ -14,7 +14,6 @@ export class SnapWallet {
 	static create(privateKey: string) {
 		const sanitizedPvtKey = privateKey.replace('0x', '');
 		const pvtKeyBytes = Buffer.from(sanitizedPvtKey, 'hex');
-
 		const compressedPubKey = getSecp256k1PublicKey(pvtKeyBytes, true);
 		const seiAddress = compressedPubKeyToAddress(compressedPubKey);
 		return new SnapWallet(pvtKeyBytes, compressedPubKey, seiAddress);
@@ -77,8 +76,8 @@ export class SnapWallet {
 	}
 }
 
-export async function getWallet(account_index = 0): Promise<SnapWallet> {
-	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index });
+export async function getWallet(account_index = 0, snapId: string): Promise<SnapWallet> {
+	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index }, snapId);
 
 	if (account.privateKey) {
 		return SnapWallet.create(account.privateKey);

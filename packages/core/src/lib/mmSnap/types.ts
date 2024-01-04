@@ -14,5 +14,6 @@ declare global {
 
 export type SignAminoOptions = {
 	isADR36?: boolean;
+	preferNoSetFee?: boolean;
 	enableExtraEntropy?: boolean;
 };

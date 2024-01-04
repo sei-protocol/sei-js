@@ -4964,10 +4964,10 @@
     "@noble/hashes" "~1.3.0"
     "@scure/base" "~1.1.0"
 
-"@sei-js/core@^3.1.1":
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/@sei-js/core/-/core-3.1.2.tgz#aa806eba3dd7c5b7feb5d28f5db6134c5566e694"
-  integrity sha512-apaYAvfd8qxBe50BGV7Y5OcsJBHymrSKVMfl/rNn3aYubf7La4L1zuxlBUfcrynKslTqUoFJ5gbhIvDsQ8lP0g==
+"@sei-js/core@0.0.0-internal-20240104081628":
+  version "0.0.0-internal-20240104081628"
+  resolved "https://registry.npmjs.org/@sei-js/core/-/core-0.0.0-internal-20240104081628.tgz#33b9a533e3b2e5b5da2ac529e2cd932e3521d2b0"
+  integrity sha512-7rchnDtrPhaCo4GoEHadO0PEyahyLK7+Tnrs2hI12ZcY7klLs/oIfTJqOhTh05CUyUSEUiLM/sOsq5k2aoDTEA==
   dependencies:
     "@cosmjs/amino" "^0.29.5"
     "@cosmjs/cosmwasm-stargate" "^0.29.5"
@@ -4981,6 +4981,7 @@
     "@cosmjs/utils" "^0.29.5"
     "@ethersproject/keccak256" "^5.7.0"
     "@keplr-wallet/types" "^0.11.41"
+    "@noble/secp256k1" "1.7.1"
     "@sei-js/proto" "^3.1.0"
     bech32 "^2.0.0"
     buffer "^6.0.3"

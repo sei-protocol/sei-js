@@ -2,6 +2,7 @@ import { StdSignature, StdSignDoc } from '@cosmjs/amino';
 import { SignDoc } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
 
 import { MetaMaskInpageProvider } from '@metamask/providers';
+import { NodeType } from '@metamask/snaps-ui/dist/types/nodes';
 
 declare global {
 	interface Window {
@@ -47,3 +48,28 @@ export type SignAminoOptions = {
 	isADR36?: boolean;
 	enableExtraEntropy?: boolean;
 };
+
+export type PanelOption =
+	| {
+			value: string;
+			type: NodeType.Copyable;
+	  }
+	| {
+			type: NodeType.Divider;
+	  }
+	| {
+			value: string;
+			type: NodeType.Heading;
+	  }
+	| {
+			type: NodeType.Spinner;
+	  }
+	| {
+			value: string;
+			type: NodeType.Text;
+			markdown?: boolean | undefined;
+	  }
+	| {
+			value: string;
+			type: NodeType.Image;
+	  };

@@ -1,5 +1,4 @@
 import { EthereumProvider } from './types';
-import { MM_SNAP_ORIGIN } from './config';
 
 /**
  * The fool proof version of getting the ethereum provider suggested by
@@ -51,12 +50,12 @@ export const getSnapEthereumProvider = async (): Promise<EthereumProvider> => {
 	return window.ethereum;
 };
 
-export const sendReqToSnap = async (method: string, params: any): Promise<any> => {
+export const sendReqToSnap = async (method: string, params: any, snapId: string): Promise<any> => {
 	const provider = await getSnapEthereumProvider();
 	return provider.request({
 		method: 'wallet_invokeSnap',
 		params: {
-			snapId: MM_SNAP_ORIGIN,
+			snapId,
 			request: {
 				method,
 				params

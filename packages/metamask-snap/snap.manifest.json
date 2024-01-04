@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0-internal-20231226181823",
+  "version": "1.0.0",
   "description": "A Metamask snap for Sei built with TypeScript",
   "proposedName": "Sei",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "y0eSuoFiPgSvDQoe+rRK2nY+u4bdcUz+8Iqj+d8va8Y=",
+    "shasum": "KnMVkpwhQT8eqt/6n1ynSYr0uvueW31mo6eRjg4sesY=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

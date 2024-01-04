@@ -15,13 +15,18 @@ export const requestSignature = async (
 		authInfoBytes?: Uint8Array | null;
 		chainId?: string | null;
 		accountNumber?: Long | null;
-	}
-) => {
-	const signature = await sendReqToSnap('signDirect', {
-		chainId,
-		signerAddress,
-		signDoc
-	});
+	},
+	snapId: string
+): Promise<DirectSignResponse> => {
+	const signature = await sendReqToSnap(
+		'signDirect',
+		{
+			chainId,
+			signerAddress,
+			signDoc
+		},
+		snapId
+	);
 
 	const { accountNumber } = signDoc;
 
@@ -40,13 +45,15 @@ export const requestSignature = async (
 
 export class CosmJSOfflineSigner implements OfflineDirectSigner {
 	readonly chainId: string;
+	readonly snapId: string;
 
-	constructor(chainId: string) {
+	constructor(chainId: string, snapId: string) {
 		this.chainId = chainId;
+		this.snapId = snapId;
 	}
 
 	async getAccounts(): Promise<AccountData[]> {
-		const wallet = await getWallet(0);
+		const wallet = await getWallet(0, this.snapId);
 		return wallet.getAccounts();
 	}
 
@@ -60,10 +67,9 @@ export class CosmJSOfflineSigner implements OfflineDirectSigner {
 			throw new Error('Signer address does not match wallet address');
 		}
 
-		return requestSignature(this.chainId, signerAddress, signDoc) as Promise<DirectSignResponse>;
+		return requestSignature(this.chainId, signerAddress, signDoc, this.snapId);
 	}
 
-	// This has been added as a placeholder.
 	async signAmino(signerAddress: string, signDoc: StdSignDoc, options?: SignAminoOptions): Promise<AminoSignResponse> {
 		if (this.chainId !== signDoc.chain_id) {
 			throw new Error('Chain ID does not match signer chain ID');
@@ -74,31 +80,52 @@ export class CosmJSOfflineSigner implements OfflineDirectSigner {
 			throw new Error('Signer address does not match wallet address');
 		}
 
-		return requestSignAmino(this.chainId, signerAddress, signDoc, options) as unknown as Promise<AminoSignResponse>;
+		return requestSignAmino(this.chainId, signerAddress, signDoc, this.snapId, options);
 	}
 
 	async signArbitrary(signer: string, data: string, signOptions?: { enableExtraEntropy?: boolean }) {
 		const signDoc = makeADR36AminoSignDoc(signer, data);
-		const result = await requestSignAmino(this.chainId, signer, signDoc, {
+		const result = await requestSignAmino(this.chainId, signer, signDoc, this.snapId, {
 			isADR36: true,
+			preferNoSetFee: true,
 			enableExtraEntropy: signOptions?.enableExtraEntropy
 		});
 		return result.signature;
 	}
 }
 
-export const requestSignAmino = async (chainId: string, signerAddress: string, signDoc: StdSignDoc, options?: SignAminoOptions) => {
-	const { isADR36 = false, enableExtraEntropy = false } = options || {};
+export const requestSignAmino = async (
+	chainId: string,
+	signerAddress: string,
+	signDoc: StdSignDoc,
+	snapId: string,
+	options?: SignAminoOptions
+): Promise<AminoSignResponse> => {
+	const { isADR36 = false, enableExtraEntropy = false, preferNoSetFee = true } = options || {};
+
+	if (!preferNoSetFee) {
+		// @ts-ignore
+		signDoc.fee.amount = [
+			{
+				amount: '0.1',
+				denom: 'usei'
+			}
+		];
+	}
 
 	if (!isADR36 && chainId !== signDoc.chain_id) {
 		throw new Error('Chain ID does not match signer chain ID');
 	}
 
-	return (await sendReqToSnap('signAmino', {
-		chainId,
-		signerAddress,
-		signDoc,
-		isADR36,
-		enableExtraEntropy
-	})) as AminoSignResponse;
+	return (await sendReqToSnap(
+		'signAmino',
+		{
+			chainId,
+			signerAddress,
+			signDoc,
+			isADR36,
+			enableExtraEntropy
+		},
+		snapId
+	)) as AminoSignResponse;
 };

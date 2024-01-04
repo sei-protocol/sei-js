@@ -1,15 +1,6 @@
 import { getWallet, SnapWallet } from '../snapWallet';
-
-import { sendReqToSnap } from '../utils';
-
-jest.mock('../cosmjs', () => {
-	const originalModule = jest.requireActual('../cosmjs');
-
-	return {
-		...originalModule,
-		sendReqToSnap: jest.fn()
-	};
-});
+import * as Utils from '../utils';
+import { ACCOUNT_ONE_ADDRESS, ACCOUNT_ONE_PRIVATE_KEY, ACCOUNT_ONE_PUBKEY_BYTES, ACCOUNT_ONE_PUBLIC_KEY } from './mocks';
 
 describe('SnapWallet', () => {
 	it('should create a SnapWallet instance', () => {
@@ -19,11 +10,10 @@ describe('SnapWallet', () => {
 	});
 
 	it('should get accounts with expected data', () => {
-		const privateKey = '0x0ca350a5d50a08caf95d0922d3adf4117a1ea5b7c24b7c6021173c8d46eceb37';
-		const snapWallet = SnapWallet.create(privateKey);
+		const snapWallet = SnapWallet.create(ACCOUNT_ONE_PRIVATE_KEY);
 		const accounts = snapWallet.getAccounts();
 		expect(accounts.length).toBe(1);
-		expect(accounts[0].address).toBe('sei15u8zs9pqdjddgv8pkyyh6zvsg4ujs2y6s6cq6u');
+		expect(accounts[0].address).toBe(ACCOUNT_ONE_ADDRESS);
 		expect(accounts[0].algo).toBe('secp256k1');
 	});
 });
@@ -34,23 +24,22 @@ describe('getWallet', () => {
 			depth: 5,
 			parentFingerprint: 567825211,
 			index: 0,
-			privateKey: '0x0ca350a5d50a08caf95d0922d3adf4117a1ea5b7c24b7c6021173c8d46eceb37',
-			publicKey: '0x0405794d2d33a8a8c7e21caa891a9cb5b4539fb4c2fb50e46b326b322474ce719763ca0a0c869a87640289ebe4a2c008822059bbf7564129bafe51676abc53b921',
+			privateKey: ACCOUNT_ONE_PRIVATE_KEY,
+			publicKey: ACCOUNT_ONE_PUBLIC_KEY,
 			chainCode: '0xf2a762ae70bddda87be9629e0be5857be287724fe6c5cc69c4c8cb1dcdccd089'
 		};
 
-		(sendReqToSnap as jest.Mock).mockResolvedValue(expectedBip44Node);
+		const mock = jest.spyOn(Utils, 'sendReqToSnap');
+		mock.mockResolvedValue(expectedBip44Node);
 
-		const wallet = await getWallet();
+		const wallet = await getWallet(0, 'npm:@sei-js/metamask-snap');
 		expect(wallet).toBeInstanceOf(SnapWallet);
 
 		const expectedAccounts = [
 			{
-				address: 'sei15u8zs9pqdjddgv8pkyyh6zvsg4ujs2y6s6cq6u',
+				address: ACCOUNT_ONE_ADDRESS,
 				algo: 'secp256k1',
-				pubkey: new Uint8Array([
-					3, 5, 121, 77, 45, 51, 168, 168, 199, 226, 28, 170, 137, 26, 156, 181, 180, 83, 159, 180, 194, 251, 80, 228, 107, 50, 107, 50, 36, 116, 206, 113, 151
-				])
+				pubkey: ACCOUNT_ONE_PUBKEY_BYTES
 			}
 		];
 

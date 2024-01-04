@@ -3,11 +3,12 @@ import { SignAminoRequest, SignDirectRequest, VerifyArbitraryRequest } from './t
 import { verifyArbitrary } from '@sei-js/core';
 import Long from 'long';
 import { sanitizedUint8Array } from './utils';
-import { heading, NodeType, panel } from '@metamask/snaps-ui';
-import { getDirectPanel } from './ui';
+import { getAminoPanel, getDirectPanel } from './ui';
 import { BIP44CoinTypeNode, getBIP44AddressKeyDeriver } from '@metamask/key-tree';
 import { SnapRequest } from './types';
 import { SnapWallet } from './snapWallet';
+import { StdSignDoc } from '@cosmjs/amino';
+import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 
 export const getPrivateKey = async (account_index?: number) => {
 	const bip44CoinNode = (await snap.request({
@@ -42,7 +43,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 			const { low, high, unsigned } = signDoc.accountNumber;
 			const accountNumber = new Long(low, high, unsigned);
 
-			const sd = {
+			const sd: SignDoc = {
 				bodyBytes: sanitizedUint8Array(signDoc.bodyBytes),
 				authInfoBytes: sanitizedUint8Array(signDoc.authInfoBytes),
 				chainId: signDoc.chainId,
@@ -53,7 +54,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 				method: 'snap_dialog',
 				params: {
 					type: 'confirmation',
-					content: panel(getDirectPanel(signDoc, accountNumber))
+					content: getDirectPanel(signDoc, accountNumber)
 				}
 			});
 
@@ -65,7 +66,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 		case 'signAmino': {
 			const { signerAddress, signDoc, chainId, enableExtraEntropy } = request.params as unknown as SignAminoRequest;
 
-			const sortedSignDoc = {
+			const sortedSignDoc: StdSignDoc = {
 				chain_id: chainId || 'pacific-1',
 				account_number: signDoc.account_number,
 				sequence: signDoc.sequence,
@@ -78,7 +79,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 				method: 'snap_dialog',
 				params: {
 					type: 'confirmation',
-					content: panel([heading('Sign Transaction'), { value: JSON.stringify(sortedSignDoc, null, 2), type: NodeType.Copyable }])
+					content: getAminoPanel(sortedSignDoc)
 				}
 			});
 

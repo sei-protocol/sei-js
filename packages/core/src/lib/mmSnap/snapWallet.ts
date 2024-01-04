@@ -5,10 +5,11 @@ import { BIP44Node } from '@metamask/key-tree';
 import { AccountData, encodeSecp256k1Signature, StdSignDoc } from '@cosmjs/amino';
 import { Buffer } from 'buffer';
 import { CosmJSOfflineSigner } from './cosmjs';
-import { MM_SNAP_ORIGIN } from './config';
 import { getSnapEthereumProvider, sendReqToSnap } from './utils';
 import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc } from '../utils';
 import { SeiWallet } from '../wallet';
+
+const MM_SNAP_ORIGIN = 'npm:@sei-js/metamask-snap';
 
 export class SnapWallet {
 	constructor(private privateKey: Uint8Array, private compressedPubKey: Uint8Array, private address: string) {}
@@ -16,7 +17,6 @@ export class SnapWallet {
 	static create(privateKey: string) {
 		const sanitizedPvtKey = privateKey.replace('0x', '');
 		const pvtKeyBytes = Buffer.from(sanitizedPvtKey, 'hex');
-
 		const compressedPubKey = getSecp256k1PublicKey(pvtKeyBytes, true);
 		const seiAddress = compressedPubKeyToAddress(compressedPubKey);
 		return new SnapWallet(pvtKeyBytes, compressedPubKey, seiAddress);
@@ -79,8 +79,8 @@ export class SnapWallet {
 	}
 }
 
-export async function getWallet(account_index = 0): Promise<SnapWallet> {
-	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index });
+export async function getWallet(account_index = 0, origin: string): Promise<SnapWallet> {
+	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index }, origin);
 
 	if (account.privateKey) {
 		return SnapWallet.create(account.privateKey);
@@ -91,7 +91,7 @@ export async function getWallet(account_index = 0): Promise<SnapWallet> {
 // Awaiting audit
 export const experimental_SEI_METAMASK_SNAP: SeiWallet = {
 	getAccounts: async (chainId) => {
-		const offlineSigner = new CosmJSOfflineSigner(chainId);
+		const offlineSigner = new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
 		return offlineSigner.getAccounts();
 	},
 	connect: async (_: string) => {
@@ -110,13 +110,13 @@ export const experimental_SEI_METAMASK_SNAP: SeiWallet = {
 		throw new Error('Not implemented');
 	},
 	getOfflineSigner: async (chainId) => {
-		return new CosmJSOfflineSigner(chainId);
+		return new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
 	},
 	getOfflineSignerAmino: async (chainId) => {
-		return new CosmJSOfflineSigner(chainId);
+		return new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
 	},
 	signArbitrary: async (chainId, signer, message) => {
-		const offlineSigner = new CosmJSOfflineSigner(chainId);
+		const offlineSigner = new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
 		return offlineSigner.signArbitrary(signer, message);
 	},
 	verifyArbitrary: async (_: string, signingAddress, data, signature) => {

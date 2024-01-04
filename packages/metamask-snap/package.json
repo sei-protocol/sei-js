@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/metamask-snap",
-	"version": "0.0.0-internal-20231226184402",
+	"version": "1.0.0",
 	"description": "A MetaMask snap for the SEI blockchain",
 	"repository": {
 		"type": "git",
@@ -15,9 +15,8 @@
 	],
 	"scripts": {
 		"prebuild": "yarn clean",
-		"build": "yarn build:snap && yarn build:prettier",
+		"build": "yarn build:snap",
 		"build:snap": "mm-snap build",
-		"build:prettier": "prettier --write 'dist/**/*.js'",
 		"build:clean": "yarn clean && yarn build",
 		"clean": "rimraf dist",
 		"lint": "yarn lint:eslint",
@@ -25,13 +24,13 @@
 		"lint:fix": "yarn lint:eslint --fix",
 		"serve": "mm-snap serve",
 		"start": "mm-snap watch",
-		"test": "yarn test:lib && yarn test:snap",
+		"test": "yarn test:snap",
 		"test:snap": "jest --config ./jest.config.snap.js"
 	},
 	"dependencies": {
 		"@metamask/snaps-types": "^3.1.0",
 		"@metamask/snaps-ui": "^3.1.0",
-		"@sei-js/core": "0.0.0-internal-20231226184402",
+		"@sei-js/core": "0.0.0-internal-20240104081628",
 		"buffer": "^6.0.3"
 	},
 	"devDependencies": {
@@ -67,9 +66,6 @@
 		"typescript": "^4.7.4"
 	},
 	"packageManager": "yarn@1.22.21",
-	"engines": {
-		"node": ">=16.20.2"
-	},
 	"publishConfig": {
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
