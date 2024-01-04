@@ -150,8 +150,8 @@ export const getAminoPanel = (signDoc: StdSignDoc) => {
 			JSON.stringify(
 				signDoc.msgs.map((msg) => {
 					try {
-						let bufferObj = Buffer.from(msg.value.data, 'base64');
-						let data = bufferObj.toString('utf8');
+						const bufferObj = Buffer.from(msg.value.data, 'base64');
+						const data = bufferObj.toString('utf8');
 						return { ...msg, value: { ...msg.value, data } };
 					} catch {
 						return msg;

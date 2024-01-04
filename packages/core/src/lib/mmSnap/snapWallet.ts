@@ -79,8 +79,8 @@ export class SnapWallet {
 	}
 }
 
-export async function getWallet(account_index = 0, origin: string): Promise<SnapWallet> {
-	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index }, origin);
+export async function getWallet(account_index = 0, snapId: string): Promise<SnapWallet> {
+	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index }, snapId);
 
 	if (account.privateKey) {
 		return SnapWallet.create(account.privateKey);
