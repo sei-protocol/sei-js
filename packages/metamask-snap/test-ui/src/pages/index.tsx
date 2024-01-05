@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
-import { connectSnap, getMetaMaskSnap, getSnap, isLocalSnap, shouldDisplayReconnectButton } from '../utils';
+import { connectSnap, getMetaMaskSnapSeiWallet, getSnap, isLocalSnap, shouldDisplayReconnectButton } from '../utils';
 import { Card, ConnectButton, InstallFlaskButton, ReconnectButton } from '../components';
 import { calculateFee, Coin, DeliverTxResponse, StdFee } from '@cosmjs/stargate';
-import { createSeiAminoTypes, createSeiRegistry, getSigningClient, getStargateClient } from '@sei-js/core';
+import { COMPASS_WALLET, createSeiAminoTypes, createSeiRegistry, getSigningClient, getStargateClient } from '@sei-js/core';
 import { makeSignDoc, decodeSignature, encodeSecp256k1Pubkey } from '@cosmjs/amino';
 import { encodePubkey, makeAuthInfoBytes, TxBodyEncodeObject } from '@cosmjs/proto-signing';
 import { SignMode } from 'cosmjs-types/cosmos/tx/signing/v1beta1/signing';
@@ -12,7 +12,7 @@ import { fromBase64 } from '@cosmjs/encoding';
 import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { Int53 } from '@cosmjs/math';
 import { toast } from 'react-toastify';
-import { HiBadgeCheck, HiClipboardCopy, HiOutlineGlobe, HiX } from 'react-icons/hi';
+import { HiBadgeCheck, HiOutlineGlobe, HiX } from 'react-icons/hi';
 import { JsonView, defaultStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
 
@@ -70,41 +70,62 @@ const ErrorMessage = styled.div`
 	}
 `;
 
+const LinkRow = styled.a`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+	max-width: 100%;
+
+	&:hover {
+		opacity: 0.5;
+	}
+`;
+
 const RowDiv = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	flex: 1;
 	gap: 1rem;
 	max-width: 100%;
 `;
 
-const Row = styled.div`
+const RefetchButton = styled.button<{ isRefetch: boolean }>`
 	display: flex;
-	flex-direction: row;
+	justify-content: center;
 	align-items: center;
-	gap: 0.5rem;
-	padding: 0.25rem 1rem;
-	background-color: #f1f1f166;
-	border-radius: 1rem;
-	max-width: 100%;
-	transition: all 150ms ease-in-out;
+	font-weight: 800;
+	color: ${(props) => (props.isRefetch ? props.theme.colors.text.alternative : props.theme.colors.text.inverse)};
+	font-size: ${(props) => props.theme.fontSizes.small};
+	border-radius: ${(props) => props.theme.radii.button};
+	background-color: ${({ theme, isRefetch }) => (isRefetch ? '#f1f1f122' : theme.colors.background.inverse)};
+	border: ${({ theme, isRefetch }) => (isRefetch ? `2px solid ${theme.colors.background.inverse}44` : `2px solid ${theme.colors.background.inverse}`)};
+	padding: 1rem;
+	min-height: 4.2rem;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
 
 	&:hover {
-		background-color: #f1f1f188;
+		border: 1px solid ${(props) => props.theme.colors.background.inverse};
+		color: ${(props) => props.theme.colors.text.default};
+	}
+
+	&:disabled,
+	&[disabled] {
+		border: 1px solid ${(props) => props.theme.colors.background.inverse};
+		cursor: not-allowed;
+	}
+
+	&:disabled:hover,
+	&[disabled]:hover {
+		background-color: ${(props) => props.theme.colors.background.inverse};
+		color: ${(props) => props.theme.colors.text.inverse};
+		border: 1px solid ${(props) => props.theme.colors.background.inverse};
 	}
 `;
 
-const CardRow = styled.div`
-	display: flex;
-	flex-direction: row;
+const SpreadDiv = styled(RowDiv)`
 	justify-content: space-between;
-	align-items: center;
-	gap: 1rem;
-	padding: 1rem;
-	background-color: #eee;
-	border-radius: 1rem;
-	overflow: hidden;
 `;
 
 const CardCodeRow = styled.div`
@@ -115,10 +136,12 @@ const CardCodeRow = styled.div`
 	background-color: #eee;
 	padding: 2rem;
 	border-radius: 0.5rem;
+	border: #121212 solid 1px;
 `;
 
 const chainId = 'atlantic-2';
 const rpcUrl = 'https://rpc.atlantic-2.seinetwork.io';
+const ADR36_MESSAGE = 'testing sign and verify arbitrary';
 
 const createBankSendSignDoc = async (
 	senderAddress: string,
@@ -155,8 +178,10 @@ const Index = () => {
 	const [signArbitraryResponse, setSignArbitraryResponse] = useState<object>(null);
 
 	const origin = import.meta.env.VITE_SNAP_ID || `npm:@sei-js/metamask-snap`;
-	const metamaskSnap = getMetaMaskSnap(origin);
+
+	// Can use COMPASS_WALLET to verify things are the same as Compass wallet after inputting the seed phrase from MM Flask into Compass
 	// const metamaskSnap = COMPASS_WALLET;
+	const metamaskSnap = getMetaMaskSnapSeiWallet(origin);
 
 	const isMetaMaskReady = isLocalSnap(origin) ? state.isFlask : state.snapsDetected;
 
@@ -166,15 +191,6 @@ const Index = () => {
 			setFirstAccountAddress(accounts[0].address);
 		} catch (e) {
 			toast.error(e.message);
-		}
-	};
-
-	const copyToClipboard = async (text: string) => {
-		try {
-			await navigator.clipboard.writeText(text);
-			toast.success('Copied TX hash to clipboard!');
-		} catch (err) {
-			toast.error('Failed to copy!');
 		}
 	};
 
@@ -269,16 +285,16 @@ const Index = () => {
 			setIsSigningAndVerifying(true);
 			const accounts = await metamaskSnap.getAccounts(chainId);
 			const account = accounts[0];
-			const signArbitraryResponse = await metamaskSnap.signArbitrary(chainId, account.address, 'test');
+			const signArbitraryResponse = await metamaskSnap.signArbitrary(chainId, account.address, ADR36_MESSAGE);
 			setSignArbitraryResponse(signArbitraryResponse);
 
-			const verified = await metamaskSnap.verifyArbitrary(chainId, account.address, 'test', signArbitraryResponse);
+			const verified = await metamaskSnap.verifyArbitrary(chainId, account.address, ADR36_MESSAGE, signArbitraryResponse);
 			setIsVerified(verified);
 			setIsSigningAndVerifying(false);
 		} catch (e) {
-			toast.error(e.message);
 			setIsVerified(false);
 			setIsSigningAndVerifying(false);
+			toast.error(e.message);
 		}
 	};
 
@@ -305,29 +321,45 @@ const Index = () => {
 			<>
 				<Card
 					content={{
+						title: 'Test 1: Fetch Account',
+						button: (
+							<RefetchButton isRefetch={!!firstAccountAddress} onClick={fetchAccountAddress} disabled={!state.installedSnap}>
+								Fetch account
+							</RefetchButton>
+						)
+					}}
+					disabled={!state.installedSnap}>
+					{firstAccountAddress ? (
+						<RowDiv>
+							<HiBadgeCheck color='#00d1b2' size={24} />
+							<p style={{ color: '#00d1b2', fontWeight: 700, margin: 0 }}>{firstAccountAddress}</p>
+						</RowDiv>
+					) : (
+						<p>Fetch the account associated with your MM snap by clicking the button below.</p>
+					)}
+				</Card>
+				<Card
+					content={{
 						title: 'Test 2: Direct Signing (Bank Send)',
 						button: (
-							<button onClick={bankSendDirect} disabled={!state.installedSnap}>
+							<RefetchButton isRefetch={!!bankSendDirectResponse?.transactionHash} onClick={bankSendDirect} disabled={!state.installedSnap}>
 								Direct Signing Bank Send
-							</button>
+							</RefetchButton>
 						)
 					}}
 					isLoading={isSendingDirect}
 					disabled={!state.installedSnap}>
 					{bankSendDirectResponse?.transactionHash ? (
-						<CardRow>
-							<HiBadgeCheck color='#00d1b2' size={24} />
-							<p style={{ fontWeight: 700, margin: 0, color: '#00d1b2' }}>Transaction success</p>
+						<SpreadDiv>
 							<RowDiv>
-								<Row style={{ cursor: 'pointer', width: 'fit-content' }} onClick={() => copyToClipboard(bankSendDirectResponse?.transactionHash)}>
-									<p style={{ fontWeight: 800, margin: 0, color: '#121212' }}>tx hash</p>
-									<HiClipboardCopy color='#121212' size={'2.25rem'} />
-								</Row>
+								<HiBadgeCheck color='#00d1b2' size={24} />
+								<p style={{ fontWeight: 700, margin: 0, color: '#00d1b2' }}>Transaction success</p>
 							</RowDiv>
-							<a href={`https://seiscan.app/${chainId}/tx/${bankSendDirectResponse.transactionHash}`} target='_blank'>
+							<LinkRow href={`https://seiscan.app/${chainId}/tx/${bankSendDirectResponse.transactionHash}`} target='_blank'>
 								<HiOutlineGlobe color='#f1f1f1' style={{ cursor: 'pointer' }} size={24} />
-							</a>
-						</CardRow>
+								<p style={{ fontWeight: 700, margin: 0, color: '#f1f1f1' }}>view on explorer</p>
+							</LinkRow>
+						</SpreadDiv>
 					) : (
 						<p>
 							Bank Send <b>100usei</b> to <b>sei14ae4g3422thcyuxler2ws3w25fpesrh2uqmgm9</b> from the connected account using <b>direct</b> signing.
@@ -338,28 +370,24 @@ const Index = () => {
 					content={{
 						title: 'Test 3: Amino Signing (Bank Send)',
 						button: (
-							<button onClick={bankSendAmino} disabled={!state.installedSnap}>
+							<RefetchButton onClick={bankSendAmino} isRefetch={!!bankSendAminoResponse?.transactionHash} disabled={!state.installedSnap}>
 								Amino Signing Bank Send
-							</button>
+							</RefetchButton>
 						)
 					}}
 					isLoading={isSendingAmino}
 					disabled={!state.installedSnap}>
 					{bankSendAminoResponse?.transactionHash ? (
-						<CardRow>
-							<HiBadgeCheck color='#00d1b2' size={24} />
-							<p style={{ fontWeight: 700, margin: 0, color: '#00d1b2' }}>Transaction success</p>
+						<SpreadDiv>
 							<RowDiv>
-								<Row style={{ cursor: 'pointer', width: 'fit-content' }} onClick={() => copyToClipboard(bankSendAminoResponse?.transactionHash)}>
-									<p style={{ fontWeight: 800, margin: 0, color: '#121212' }}>tx hash</p>
-									<HiClipboardCopy color='#121212' size={'2.25rem'} />
-								</Row>
+								<HiBadgeCheck color='#00d1b2' size={24} />
+								<p style={{ fontWeight: 700, margin: 0, color: '#00d1b2' }}>Transaction success</p>
 							</RowDiv>
-
-							<a href={`https://seiscan.app/${chainId}/tx/${bankSendAminoResponse.transactionHash}`} target='_blank'>
+							<LinkRow href={`https://seiscan.app/${chainId}/tx/${bankSendAminoResponse.transactionHash}`} target='_blank'>
 								<HiOutlineGlobe color='#f1f1f1' style={{ cursor: 'pointer' }} size={24} />
-							</a>
-						</CardRow>
+								<p style={{ fontWeight: 700, margin: 0, color: '#f1f1f1' }}>view on explorer</p>
+							</LinkRow>
+						</SpreadDiv>
 					) : (
 						<p>
 							Bank Send <b>100usei</b> to <b>sei14ae4g3422thcyuxler2ws3w25fpesrh2uqmgm9</b> from the connected account using <b>amino</b> signing.
@@ -370,44 +398,98 @@ const Index = () => {
 					content={{
 						title: 'Test 4: Sign and verify arbitrary',
 						button: (
-							<button onClick={signAndVerifyArbitrary} disabled={!state.installedSnap}>
-								Sign and verify arbitrary
-							</button>
+							<RefetchButton isRefetch={!!signArbitraryResponse} onClick={signAndVerifyArbitrary} disabled={!state.installedSnap}>
+								Sign ADR36 (Arbitrary) and verify response
+							</RefetchButton>
 						)
 					}}
 					isLoading={isSigningAndVerifying}
 					disabled={!state.installedSnap}>
 					{signArbitraryResponse ? (
 						<>
-							<p style={{ color: '#f1f1f188', margin: 0, textTransform: 'uppercase' }}>Sign Arbitrary Response</p>
+							<p style={{ color: '#f1f1f188', margin: 0, textTransform: 'uppercase' }}>SIGN ARBITRARY INPUT</p>
+							<CardCodeRow>
+								<JsonView style={defaultStyles} data={ADR36_MESSAGE} />
+							</CardCodeRow>
+							<p style={{ color: '#f1f1f188', margin: 0, textTransform: 'uppercase' }}>SIGN ARBITRARY RESPONSE</p>
 							<CardCodeRow>
 								<JsonView style={defaultStyles} data={signArbitraryResponse} />
 							</CardCodeRow>
 						</>
 					) : (
-						<p>Sign and verify arbitrary data</p>
+						<p>
+							ADR36 Sign string '<b>{ADR36_MESSAGE}</b>' and then verify it.
+						</p>
 					)}
-					<>
-						<p style={{ color: '#f1f1f188', margin: 0, textTransform: 'uppercase' }}>Verify Arbitrary Response</p>
-						{isVerified === true ? (
-							<CardCodeRow>
-								<HiBadgeCheck color='#00d1b2' size={24} />
-								<p>verified</p>
-							</CardCodeRow>
-						) : (
-							isVerified !== null && (
-								<CardRow>
+					{signArbitraryResponse && (
+						<>
+							<p style={{ color: '#f1f1f188', margin: 0, textTransform: 'uppercase' }}>Verify Arbitrary Response</p>
+							{!!isVerified ? (
+								<RowDiv style={{ margin: 0, backgroundColor: '#121212', padding: '2rem 1rem', borderRadius: '0.5rem' }}>
+									<HiBadgeCheck color='#00d1b2' size={24} />
+									<p style={{ margin: 0, color: '#00d1b2', fontWeight: 800 }}>verified</p>
+								</RowDiv>
+							) : (
+								isVerified !== null && (
 									<RowDiv>
 										<HiX color='#f87171' size={'2.5rem'} />
 										<p style={{ color: '#f87171', fontSize: '2rem', margin: 0 }}>Error verifying signArbitrary response</p>
 									</RowDiv>
-								</CardRow>
-							)
-						)}
-					</>
+								)
+							)}
+						</>
+					)}
 				</Card>
 			</>
 		);
+	};
+
+	const renderContainerContent = () => {
+		if (state.error) {
+			return (
+				<ErrorMessage>
+					<b>An error happened:</b> {state.error.message}
+				</ErrorMessage>
+			);
+		}
+
+		if (!isMetaMaskReady) {
+			return (
+				<Card
+					content={{
+						title: 'Install',
+						button: <InstallFlaskButton />
+					}}>
+					<p>Snaps is pre-release software only available in MetaMask Flask, a canary distribution for developers with access to upcoming features.</p>
+				</Card>
+			);
+		}
+
+		if (!state.installedSnap) {
+			return (
+				<Card
+					content={{
+						title: 'Connect',
+						button: <ConnectButton onClick={handleConnectClick} disabled={!isMetaMaskReady} />
+					}}
+					disabled={!isMetaMaskReady}>
+					<p style={{ margin: 0 }}>Get started by connecting to and installing the MetaMask snap.</p>
+				</Card>
+			);
+		}
+
+		if (shouldDisplayReconnectButton(state.installedSnap)) {
+			return (
+				<Card
+					content={{
+						title: 'Reconnect',
+						button: <ReconnectButton onClick={handleConnectClick} disabled={!state.installedSnap} />
+					}}
+					disabled={!state.installedSnap}>
+					<p style={{ margin: 0 }}>While connected to a local running snap this button will always be displayed in order to update the snap if a change is made.</p>
+				</Card>
+			);
+		}
 	};
 
 	return (
@@ -415,59 +497,7 @@ const Index = () => {
 			<Heading>MetaMask Snap ID</Heading>
 			<Span>{import.meta.env.VITE_SNAP_ID || `npm:@sei-js/metamask-snap`}</Span>
 			<CardContainer>
-				{state.error && (
-					<ErrorMessage>
-						<b>An error happened:</b> {state.error.message}
-					</ErrorMessage>
-				)}
-				{!isMetaMaskReady && (
-					<Card
-						content={{
-							title: 'Install',
-							button: <InstallFlaskButton />
-						}}>
-						<p>Snaps is pre-release software only available in MetaMask Flask, a canary distribution for developers with access to upcoming features.</p>
-					</Card>
-				)}
-				{!state.installedSnap && (
-					<Card
-						content={{
-							title: 'Connect',
-							button: <ConnectButton onClick={handleConnectClick} disabled={!isMetaMaskReady} />
-						}}
-						disabled={!isMetaMaskReady}>
-						<p>Get started by connecting to and installing the example snap.</p>
-					</Card>
-				)}
-				{shouldDisplayReconnectButton(state.installedSnap) && (
-					<Card
-						content={{
-							title: 'Reconnect',
-							button: <ReconnectButton onClick={handleConnectClick} disabled={!state.installedSnap} />
-						}}
-						disabled={!state.installedSnap}>
-						<p>While connected to a local running snap this button will always be displayed in order to update the snap if a change is made.</p>
-					</Card>
-				)}
-				<Card
-					content={{
-						title: 'Test 1: Fetch Account',
-						button: (
-							<button onClick={fetchAccountAddress} disabled={!state.installedSnap}>
-								{firstAccountAddress ? 'Re-' : ''}Fetch account
-							</button>
-						)
-					}}
-					disabled={!state.installedSnap}>
-					{firstAccountAddress ? (
-						<RowDiv>
-							<HiBadgeCheck color='#00d1b2' size={24} />
-							<p style={{ color: '#00d1b2', fontWeight: 700 }}>{firstAccountAddress}</p>
-						</RowDiv>
-					) : (
-						<p>Fetch the account associated with your MM snap by clicking the button below.</p>
-					)}
-				</Card>
+				{renderContainerContent()}
 				{renderAccountTests()}
 			</CardContainer>
 		</Container>

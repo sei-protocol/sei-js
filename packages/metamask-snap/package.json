@@ -27,7 +27,7 @@
 	"dependencies": {
 		"@metamask/snaps-types": "^3.1.0",
 		"@metamask/snaps-ui": "^3.1.0",
-		"@sei-js/core": "0.0.0-internal-20240104185656",
+		"@sei-js/core": "^3.1.2",
 		"buffer": "^6.0.3"
 	},
 	"devDependencies": {

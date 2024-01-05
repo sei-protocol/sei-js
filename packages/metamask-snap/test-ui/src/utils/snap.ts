@@ -4,7 +4,7 @@ import Buffer from 'buffer';
 // @ts-ignore
 if (typeof window !== 'undefined') window.Buffer = Buffer;
 
-export const getMetaMaskSnap = (snapId: string): SeiWallet => {
+export const getMetaMaskSnapSeiWallet = (snapId: string): SeiWallet => {
 	return {
 		getAccounts: async (chainId) => {
 			const offlineSigner = new CosmJSOfflineSigner(chainId, snapId);
@@ -34,7 +34,7 @@ export const getMetaMaskSnap = (snapId: string): SeiWallet => {
 		},
 		signArbitrary: async (chainId, signer, message) => {
 			const offlineSigner = new CosmJSOfflineSigner(chainId, snapId);
-			return offlineSigner.signArbitrary(signer, message, { enableExtraEntropy: true });
+			return offlineSigner.signArbitrary(signer, message);
 		},
 		verifyArbitrary: async (_: string, signingAddress, data, signature) => {
 			if (!signingAddress || !data) {

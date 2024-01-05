@@ -15,7 +15,7 @@ export const byteArrayToHex = (byteArray: Uint8Array) => {
 };
 
 /**
- * The fool proof version of getting the ethereum provider suggested by
+ * The "fool-proof" version of getting the ethereum provider suggested by
  * https://github.com/Montoya/snap-connect-test/blob/0dad2dd53ab2ecbf4b4369230d3aaaeca08c6dae/index.html#L41
  *
  * @returns the ethereum provider which supports snaps

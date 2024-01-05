@@ -6,10 +6,9 @@ import { getAminoPanel, getDirectPanel } from './ui';
 import { BIP44CoinTypeNode, getBIP44AddressKeyDeriver } from '@metamask/key-tree';
 import { SnapRequest } from './types';
 import { SnapWallet } from './snapWallet';
-import { StdSignDoc } from '@cosmjs/amino';
 import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 
-export const getPrivateKey = async (account_index?: number) => {
+export const getPrivateKey = async (account_index: number = 0) => {
 	const bip44CoinNode = (await snap.request({
 		method: 'snap_getBip44Entropy',
 		params: {
@@ -18,17 +17,20 @@ export const getPrivateKey = async (account_index?: number) => {
 	})) as unknown as BIP44CoinTypeNode;
 
 	const bip44AddressKeyDeriver = await getBIP44AddressKeyDeriver(bip44CoinNode);
-	return await bip44AddressKeyDeriver(account_index || 0);
+	return await bip44AddressKeyDeriver(account_index);
 };
 
 export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 	const { account_index } = request.params as unknown as SnapRequest;
 
-	const account = await getPrivateKey(account_index || 0);
-	if (!account?.privateKey) return;
-	const wallet = SnapWallet.create(account.privateKey);
 	switch (request.method) {
 		case 'signDirect': {
+			const account = await getPrivateKey(account_index);
+
+			if (!account?.privateKey) return;
+
+			const wallet = SnapWallet.create(account.privateKey);
+
 			const params = request.params as unknown as SignDirectRequest;
 
 			const { signerAddress, signDoc } = params;
@@ -51,34 +53,30 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 				}
 			});
 
-			if (!confirmed) {
-				throw new Error('User denied transaction');
-			}
+			if (!confirmed) throw new Error('User denied transaction');
+
 			return await wallet.signDirect(signerAddress, sd);
 		}
 		case 'signAmino': {
-			const { signerAddress, signDoc, chainId, enableExtraEntropy, isADR36 } = request.params as unknown as SignAminoRequest;
+			const { signerAddress, signDoc, enableExtraEntropy, isADR36 } = request.params as unknown as SignAminoRequest;
 
-			const sortedSignDoc: StdSignDoc = {
-				chain_id: chainId || 'pacific-1',
-				account_number: signDoc.account_number,
-				sequence: signDoc.sequence,
-				fee: signDoc.fee,
-				memo: signDoc.memo,
-				msgs: signDoc.msgs
-			};
+			const account = await getPrivateKey(account_index);
+
+			if (!account?.privateKey) return;
+
+			const wallet = SnapWallet.create(account.privateKey);
 
 			const confirmed = await snap.request({
 				method: 'snap_dialog',
 				params: {
 					type: 'confirmation',
-					content: getAminoPanel(sortedSignDoc, isADR36)
+					content: getAminoPanel(signDoc, isADR36)
 				}
 			});
 
 			if (!confirmed) throw new Error('User denied transaction');
 
-			return await wallet.signAmino(signerAddress, sortedSignDoc, { extraEntropy: !!enableExtraEntropy });
+			return await wallet.signAmino(signerAddress, signDoc, { extraEntropy: !!enableExtraEntropy });
 		}
 		case 'getPrivateKey': {
 			return await getPrivateKey(account_index);

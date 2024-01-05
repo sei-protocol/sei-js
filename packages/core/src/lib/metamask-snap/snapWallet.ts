@@ -4,12 +4,10 @@ import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { BIP44Node } from '@metamask/key-tree';
 import { AccountData, encodeSecp256k1Signature, StdSignDoc } from '@cosmjs/amino';
 import { Buffer } from 'buffer';
-import { CosmJSOfflineSigner } from './cosmjs';
 import { getSnapEthereumProvider, sendReqToSnap } from './utils';
-import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc } from '../utils';
+import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc, verifyArbitrary } from '../utils';
+import { CosmJSOfflineSigner } from './cosmjs';
 import { SeiWallet } from '../wallet';
-
-const MM_SNAP_ORIGIN = 'npm:@sei-js/metamask-snap';
 
 export class SnapWallet {
 	constructor(private privateKey: Uint8Array, private compressedPubKey: Uint8Array, private address: string) {}
@@ -88,60 +86,50 @@ export async function getWallet(account_index = 0, snapId: string): Promise<Snap
 	throw new Error(`Error creating sei wallet!`);
 }
 
-// Awaiting audit
-export const experimental_SEI_METAMASK_SNAP: SeiWallet = {
-	getAccounts: async (chainId) => {
-		const offlineSigner = new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
-		return offlineSigner.getAccounts();
-	},
-	connect: async (_: string) => {
-		const provider = await getSnapEthereumProvider();
-		const installedSnaps: any = await provider.request({ method: 'wallet_getSnaps' });
-		if (!installedSnaps || !installedSnaps[MM_SNAP_ORIGIN]) {
-			await provider.request({
-				method: 'wallet_requestSnaps',
-				params: {
-					[MM_SNAP_ORIGIN]: {}
-				}
-			});
-		}
-	},
-	disconnect: async (_: string) => {
-		throw new Error('Not implemented');
-	},
-	getOfflineSigner: async (chainId) => {
-		return new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
-	},
-	getOfflineSignerAmino: async (chainId) => {
-		return new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
-	},
-	signArbitrary: async (chainId, signer, message) => {
-		const offlineSigner = new CosmJSOfflineSigner(chainId, MM_SNAP_ORIGIN);
-		return offlineSigner.signArbitrary(signer, message);
-	},
-	verifyArbitrary: async (_: string, signingAddress, data, signature) => {
-		const provider = await getSnapEthereumProvider();
-
-		return (await provider.request({
-			method: 'wallet_invokeSnap',
-			params: {
-				snapId: MM_SNAP_ORIGIN,
-				request: {
-					method: 'verifyArbitrary',
+export const getMetaMaskSnapSeiWallet = (snapId: string): SeiWallet => {
+	return {
+		getAccounts: async (chainId) => {
+			const offlineSigner = new CosmJSOfflineSigner(chainId, snapId);
+			return offlineSigner.getAccounts();
+		},
+		connect: async (_: string) => {
+			const provider = await getSnapEthereumProvider();
+			const installedSnaps: any = await provider.request({ method: 'wallet_getSnaps' });
+			if (!installedSnaps || !installedSnaps[snapId]) {
+				await provider.request({
+					method: 'wallet_requestSnaps',
 					params: {
-						signer: signingAddress,
-						message: data,
-						signature
+						[snapId]: {}
 					}
-				}
+				});
 			}
-		})) as unknown as boolean;
-	},
-	walletInfo: {
-		windowKey: 'ethereum',
-		name: 'Sei Metamask Snap',
-		website: 'https://metamask.io/',
-		icon: 'https://github.com/MetaMask/brand-resources/raw/master/SVG/SVG_MetaMask_Icon_Color.svg'
-	},
-	isMobileSupported: true
+		},
+		disconnect: async (_: string) => {
+			throw new Error('Not implemented');
+		},
+		getOfflineSigner: async (chainId) => {
+			return new CosmJSOfflineSigner(chainId, snapId);
+		},
+		getOfflineSignerAmino: async (chainId) => {
+			// This signer includes both signDirect and signAmino, so just return it
+			return new CosmJSOfflineSigner(chainId, snapId);
+		},
+		signArbitrary: async (chainId, signer, message) => {
+			const offlineSigner = new CosmJSOfflineSigner(chainId, snapId);
+			return offlineSigner.signArbitrary(signer, message);
+		},
+		verifyArbitrary: async (_: string, signingAddress, data, signature) => {
+			if (!signingAddress || !data) {
+				throw new Error('Invalid params');
+			}
+			return await verifyArbitrary(signingAddress, data, signature);
+		},
+		walletInfo: {
+			windowKey: 'ethereum',
+			name: 'Sei Metamask Snap',
+			website: 'https://metamask.io/',
+			icon: 'https://github.com/MetaMask/brand-resources/raw/master/SVG/SVG_MetaMask_Icon_Color.svg'
+		},
+		isMobileSupported: true
+	};
 };

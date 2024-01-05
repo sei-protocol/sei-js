@@ -4,7 +4,7 @@ import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { BIP44Node } from '@metamask/key-tree';
 import { AccountData, encodeSecp256k1Signature, StdSignDoc } from '@cosmjs/amino';
 import { Buffer } from 'buffer';
-import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc, SeiWallet } from '@sei-js/core';
+import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc } from '@sei-js/core';
 
 import { sendReqToSnap } from './utils';
 
@@ -53,6 +53,7 @@ export class SnapWallet {
 	async signAmino(signerAddress: string, signDoc: StdSignDoc, options?: { extraEntropy: boolean }) {
 		const accounts = this.getAccounts();
 		const account = accounts.find((acc) => acc.address === signerAddress);
+
 		if (!account) {
 			throw new Error('Signer address does not match wallet address');
 		}

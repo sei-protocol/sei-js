@@ -1,6 +1,6 @@
 import { getWallet, SnapWallet } from '../snapWallet';
 import * as Utils from '../utils';
-import { ACCOUNT_ONE_ADDRESS, ACCOUNT_ONE_PRIVATE_KEY, ACCOUNT_ONE_PUBKEY_BYTES, ACCOUNT_ONE_PUBLIC_KEY } from './mocks';
+import { ACCOUNT_ONE_ADDRESS, ACCOUNT_ONE_PRIVATE_KEY, ACCOUNT_ONE_PUBKEY_BYTES, ACCOUNT_ONE_PUBLIC_KEY } from './mocks/mocks';
 
 describe('SnapWallet', () => {
 	it('should create a SnapWallet instance', () => {

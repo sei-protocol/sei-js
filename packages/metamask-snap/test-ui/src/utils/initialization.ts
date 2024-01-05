@@ -12,6 +12,7 @@ export const getSnaps = async (provider?: MetaMaskInpageProvider): Promise<GetSn
 	(await (provider ?? (await getSnapEthereumProvider())).request({
 		method: 'wallet_getSnaps'
 	})) as unknown as GetSnapsResponse;
+
 /**
  * Connect a snap to MetaMask.
  *
@@ -27,6 +28,7 @@ export const connectSnap = async (snapId: string, params: Record<'version' | str
 		}
 	});
 };
+
 /**
  * Get the snap from MetaMask.
  *

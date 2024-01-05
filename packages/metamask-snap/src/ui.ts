@@ -168,7 +168,6 @@ export const getAminoPanel = (signDoc: StdSignDoc, isADR36: boolean = false) => 
 				2
 			)
 		),
-		text(JSON.stringify(signDoc.msgs, null, 2)),
 		divider(),
 		heading('Fee:'),
 		text(JSON.stringify(signDoc.fee, null, 2))
