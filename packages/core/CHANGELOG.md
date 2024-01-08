@@ -1,11 +1,5 @@
 # Changelog
 
-## 0.0.0-internal-20240104081628
-
-### Patch Changes
-
-- pre-release test
-
 ## 3.1.2
 
 ### Patch Changes

@@ -46,14 +46,16 @@ export const requestSignature = async (
 export class CosmJSOfflineSigner implements OfflineDirectSigner {
 	readonly chainId: string;
 	readonly snapId: string;
+	readonly accountIndex: number;
 
-	constructor(chainId: string, snapId: string) {
+	constructor(chainId: string, snapId: string, accountIndex?: number) {
 		this.chainId = chainId;
 		this.snapId = snapId;
+		this.accountIndex = accountIndex || 0;
 	}
 
 	async getAccounts(): Promise<AccountData[]> {
-		const wallet = await getWallet(0, this.snapId);
+		const wallet = await getWallet(this.accountIndex, this.snapId);
 		return wallet.getAccounts();
 	}
 
