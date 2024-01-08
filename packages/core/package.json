@@ -49,6 +49,7 @@
 		"@cosmjs/utils": "^0.29.5",
 		"@ethersproject/keccak256": "^5.7.0",
 		"@keplr-wallet/types": "^0.11.41",
+		"@noble/secp256k1": "1.7.1",
 		"@sei-js/proto": "^3.1.0",
 		"bech32": "^2.0.0",
 		"buffer": "^6.0.3",

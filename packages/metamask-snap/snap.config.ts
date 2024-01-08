@@ -3,9 +3,9 @@ import type { SnapConfig } from '@metamask/snaps-cli';
 
 const config: SnapConfig = {
 	bundler: 'webpack',
-	input: resolve(__dirname, 'src/snap/index.ts'),
+	input: resolve(__dirname, 'src/index.ts'),
 	output: {
-		path: resolve(__dirname, 'dist/snap'),
+		path: resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
 		clean: true,
 		minimize: true

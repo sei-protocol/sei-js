@@ -5,6 +5,6 @@ module.exports = {
 	transform: {
 		'^.+\\.(t|j)sx?$': 'ts-jest'
 	},
-	testMatch: ['<rootDir>/src/snap/**/*.spec.ts', '**/src/lib/tests/snapWallet.spec.ts'],
+	testMatch: ['<rootDir>/src/**/*.spec.ts'],
 	testPathIgnorePatterns: ['node_modules', 'dist']
 };

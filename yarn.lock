@@ -4390,7 +4390,7 @@
   resolved "https://registry.npmjs.org/@noble/hashes/-/hashes-1.3.2.tgz#6f26dbc8fbc7205873ce3cee2f690eba0d421b39"
   integrity sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==
 
-"@noble/secp256k1@^1.5.5", "@noble/secp256k1@^1.7.1":
+"@noble/secp256k1@1.7.1", "@noble/secp256k1@^1.5.5", "@noble/secp256k1@^1.7.1":
   version "1.7.1"
   resolved "https://registry.npmjs.org/@noble/secp256k1/-/secp256k1-1.7.1.tgz#b251c70f824ce3ca7f8dc3df08d58f005cc0507c"
   integrity sha512-hOUk6AyBFmqVrv7k5WAw/LpszxVbj9gGN4JRkIX52fdFAj1UA61KXmZDvqVEm+pOyec3+fIeZB02LYa/pWOArw==
@@ -4963,32 +4963,6 @@
   dependencies:
     "@noble/hashes" "~1.3.0"
     "@scure/base" "~1.1.0"
-
-"@sei-js/core@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.npmjs.org/@sei-js/core/-/core-3.1.1.tgz#91de4dcc784eab01734e7411ee0c75bc817799cb"
-  integrity sha512-0Njp9Id+Yol2c8ZTBqXQE0NFvEQd979WNtPD0JoXQOOqRvipvHBhxSB/yCXXPSA869870NrjSHBUZUtylZBeyw==
-  dependencies:
-    "@cosmjs/amino" "^0.29.5"
-    "@cosmjs/cosmwasm-stargate" "^0.29.5"
-    "@cosmjs/crypto" "^0.29.5"
-    "@cosmjs/encoding" "^0.29.5"
-    "@cosmjs/json-rpc" "^0.29.5"
-    "@cosmjs/math" "^0.29.5"
-    "@cosmjs/proto-signing" "^0.29.5"
-    "@cosmjs/stargate" "^0.29.5"
-    "@cosmjs/tendermint-rpc" "^0.29.5"
-    "@cosmjs/utils" "^0.29.5"
-    "@ethersproject/keccak256" "^5.7.0"
-    "@keplr-wallet/types" "^0.11.41"
-    "@sei-js/proto" "^3.1.0"
-    bech32 "^2.0.0"
-    buffer "^6.0.3"
-    elliptic "^6.5.4"
-    process "^0.11.10"
-    readonly-date "^1.0.0"
-    sha.js "^2.4.11"
-    xstream "^11.14.0"
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.51"
