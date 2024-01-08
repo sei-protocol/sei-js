@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.3
+
+### Patch Changes
+
+- 2d1b863: Added MetaMask Snap and helper functions to library (experimental as this hasn't completed audit)
+
 ## 3.1.2
 
 ### Patch Changes
