@@ -12,7 +12,7 @@ export const getPrivateKey = async (account_index: number = 0) => {
 	const bip44CoinNode = (await snap.request({
 		method: 'snap_getBip44Entropy',
 		params: {
-			coinType: 60
+			coinType: 118
 		}
 	})) as unknown as BIP44CoinTypeNode;
 
