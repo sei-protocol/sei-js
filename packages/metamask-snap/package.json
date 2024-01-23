@@ -22,7 +22,7 @@
 		"serve": "mm-snap serve",
 		"start": "mm-snap watch",
 		"test": "yarn test:snap",
-		"test:snap": "jest --config ./jest.config.snap.js"
+		"test:snap": "jest"
 	},
 	"dependencies": {
 		"@metamask/snaps-types": "^3.1.0",
