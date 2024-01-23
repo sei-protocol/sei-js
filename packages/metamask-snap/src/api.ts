@@ -1,18 +1,18 @@
-import { BIP44CoinTypeNode, getBIP44AddressKeyDeriver } from '@metamask/key-tree';
 import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
+import { SignAminoRequest, SignDirectRequest } from './types';
 import Long from 'long';
-import { SnapWallet } from './snapWallet';
-
-import { SignAminoRequest, SignDirectRequest, SnapRequest } from './types';
-import { getAminoPanel, getDirectPanel } from './ui';
 import { sanitizedUint8Array } from './utils';
+import { getAminoPanel, getDirectPanel } from './ui';
+import { BIP44CoinTypeNode, getBIP44AddressKeyDeriver } from '@metamask/key-tree';
+import { SnapRequest } from './types';
+import { SnapWallet } from './snapWallet';
+import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 
 export const getPrivateKey = async (account_index: number = 0) => {
 	const bip44CoinNode = (await snap.request({
 		method: 'snap_getBip44Entropy',
 		params: {
-			coinType: 60
+			coinType: 118
 		}
 	})) as unknown as BIP44CoinTypeNode;
 
@@ -27,7 +27,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 		case 'signDirect': {
 			const account = await getPrivateKey(account_index);
 
-			if (!account?.privateKey) throw new Error('Unable to get private key from MetaMask.');
+			if (!account?.privateKey) return;
 
 			const wallet = SnapWallet.create(account.privateKey);
 
@@ -62,7 +62,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 
 			const account = await getPrivateKey(account_index);
 
-			if (!account?.privateKey) throw new Error('Unable to get private key from MetaMask.');
+			if (!account?.privateKey) return;
 
 			const wallet = SnapWallet.create(account.privateKey);
 
@@ -82,6 +82,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 			return await getPrivateKey(account_index);
 		}
 		default:
-			throw new Error('Function not found.');
-  }
+			throw new Error('Method not found.');
+	}
 };
