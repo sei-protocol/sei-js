@@ -303,7 +303,7 @@ const output = {
 		}
 	},
 	failure: {
-		invalidMethod: 'Method not found.'
+		invalidMethod: 'Function not found.'
 	}
 };
 

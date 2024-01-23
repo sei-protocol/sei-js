@@ -1,12 +1,9 @@
 import { sign as signSecp256k1, getPublicKey as getSecp256k1PublicKey } from '@noble/secp256k1';
 import { sha256 } from '@noble/hashes/sha256';
 import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
-import { BIP44Node } from '@metamask/key-tree';
 import { AccountData, encodeSecp256k1Signature, StdSignDoc } from '@cosmjs/amino';
 import { Buffer } from 'buffer';
 import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc } from '@sei-js/core';
-
-import { sendReqToSnap } from './utils';
 
 export class SnapWallet {
 	constructor(private privateKey: Uint8Array, private compressedPubKey: Uint8Array, private address: string) {}
@@ -75,13 +72,4 @@ export class SnapWallet {
 			signature: encodeSecp256k1Signature(account.pubkey, signature)
 		};
 	}
-}
-
-export async function getWallet(account_index = 0, snapId: string): Promise<SnapWallet> {
-	const account: BIP44Node = await sendReqToSnap('getPrivateKey', { account_index }, snapId);
-
-	if (account.privateKey) {
-		return SnapWallet.create(account.privateKey);
-	}
-	throw new Error(`Error creating sei wallet!`);
 }
