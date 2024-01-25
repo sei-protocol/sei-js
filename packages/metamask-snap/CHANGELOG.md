@@ -1,5 +1,11 @@
 # @sei-js/metamask-snap
 
+## 1.0.2
+
+### Patch Changes
+
+- 127ad0d: Fixes a silent return if the account private key is not found, adds documentation, removes unused getWallet function from @sei-js/metamask-snap all as fixes to code audit.
+
 ## 1.0.1
 
 ### Patch Changes
