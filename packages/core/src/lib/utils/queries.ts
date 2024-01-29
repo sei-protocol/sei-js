@@ -1,4 +1,4 @@
-import { ScheduledTokenRelease, ScheduledTokenReleaseSDKType } from "@sei-js/proto/dist/types/codegen/seiprotocol/seichain/mint/v1beta1/mint";
+import { ScheduledTokenReleaseSDKType } from "@sei-js/proto/dist/types/codegen/seiprotocol/seichain/mint/v1beta1/mint";
 import { getQueryClient } from "../queryClient";
 import moment, { Moment } from 'moment';
 export type QueryClient = Awaited<ReturnType<typeof getQueryClient>>;
@@ -46,7 +46,9 @@ export async function getMintParams(queryClient: QueryClient) {
 // Gets the number of tokens that will be minted in the given window based on the given releaseSchedule.
 // Assumes that releaseSchedule has no overlapping schedules.
 export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSchedule: ScheduledTokenReleaseSDKType[]): number {
-    const endDate = startDate.add(days, 'days')
+    // End date is the exclusive end date of the window to query. 
+    // Ie. if start date is 2023-1-1 and days is 365, end date here will be 2024-1-1 so rewards will be calculated from 2023-1-1 to 2023-12-31
+    const endDate = startDate.clone().add(days, 'days')
 
     // Sort release schedule in increasing order of start time.
     let sortedReleaseSchedule: ReleaseSchedule[] = getSortedReleaseSchedule(releaseSchedule);
@@ -54,31 +56,36 @@ export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSc
     var tokens: number = 0
     for (var release of sortedReleaseSchedule) {
         // Skip all schedules that ended before today.
-        if (release.end_date.isBefore(startDate)) {
+        if (release.endDate.isBefore(startDate)) {
             continue;
         }
         // If the start date is after end date, we have come to the end of all releases we should consider.
-        if (release.start_date.isAfter(endDate)) {
+        if (release.startDate.isAfter(endDate)) {
             break;
         }
         // All releases from here are part of the window.
         // The case where this release started before today.
-        if (release.start_date.isBefore(startDate)) {
-            var daysLeft = release.end_date.diff(startDate, 'days');
-            var totalPeriod = release.end_date.diff(release.start_date, 'days')
-            tokens += (daysLeft / totalPeriod) * release.token_release_amount;
+        if (release.startDate.isBefore(startDate)) {
+
+            // Need to deduct 1 day from endDate to make it an inclusive end date.
+            let earlierInclusiveEndDate = moment.min(endDate.clone().subtract(1, "days"), release.endDate);
+
+            // Number of days left in this release.
+            let daysLeft: number = calculateDaysInclusive(startDate, earlierInclusiveEndDate);
+            let totalPeriod: number = calculateDaysInclusive(release.startDate, release.endDate);
+            tokens += (daysLeft / totalPeriod) * release.tokenReleaseAmount;
         }
 
         // The case where this release ends after our search window.
-        if (release.end_date.isAfter(endDate)) {
-            var daysLeft = endDate.diff(release.start_date, 'days');
-            var totalPeriod = release.end_date.diff(release.start_date, 'days')
-            tokens += (daysLeft / totalPeriod) * release.token_release_amount;
+        else if (release.endDate.isAfter(endDate)) {
+            let daysLeft: number  = endDate.diff(release.startDate, 'days');
+            let totalPeriod: number  = calculateDaysInclusive(release.startDate, release.endDate);
+            tokens += (daysLeft / totalPeriod) * release.tokenReleaseAmount;
         }
 
         // In the final case, the entire period falls within our window.
         else {
-            tokens += release.token_release_amount;
+            tokens += release.tokenReleaseAmount;
         }
     }
 
@@ -93,10 +100,10 @@ function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenReleaseSDKType[
 
         // Sort release schedule in increasing order of start time.
         let sortedReleaseSchedule = releaseScheduleTimes.sort((x, y) => {
-            if (x.start_date.isAfter(y.start_date)) {
+            if (x.startDate.isAfter(y.startDate)) {
                 return 1;
             }
-            else if (y.start_date.isAfter(x.start_date)) {
+            else if (y.startDate.isAfter(x.startDate)) {
                 return -1;
             }
             return 0;
@@ -105,16 +112,21 @@ function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenReleaseSDKType[
         return sortedReleaseSchedule;
 }
 
+// Returns the number of days in the window inclusive of the start and end date.
+function calculateDaysInclusive(startDate: Moment, endDate: Moment) {
+    return endDate.diff(startDate, 'days') + 1;
+}
+
 interface ReleaseSchedule {
-    start_date: Moment;
-    end_date: Moment;
-    token_release_amount: number;
+    startDate: Moment;
+    endDate: Moment;
+    tokenReleaseAmount: number;
 }
 
 function CreateReleaseSchedule(start_date: string, end_date: string, token_release_amount: Long): ReleaseSchedule {
     return {
-        start_date: moment(start_date),
-        end_date: moment(end_date),
-        token_release_amount: Number(token_release_amount),
+        startDate: moment(start_date),
+        endDate: moment(end_date),
+        tokenReleaseAmount: Number(token_release_amount),
     }
 }
