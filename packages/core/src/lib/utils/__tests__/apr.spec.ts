@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 import { getUpcomingMintTokens } from '../apr';
 import moment from 'moment';
-import Long from 'long';
+import Long from 'long5';
 
 const releaseSchedule = [
 	{
@@ -76,5 +76,4 @@ describe('getUpcomingMintTokens', () => {
 
 		expect(result).toBe(2000000);
 	});
-	
 });
