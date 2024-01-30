@@ -78,7 +78,7 @@ export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSc
 
         // The case where this release ends after our search window.
         else if (release.endDate.isAfter(endDate)) {
-            let daysLeft: number  = endDate.diff(release.startDate, 'days');
+            let daysLeft: number  = Math.round(endDate.diff(release.startDate, 'days', true));
             let totalPeriod: number  = calculateDaysInclusive(release.startDate, release.endDate);
             tokens += (daysLeft / totalPeriod) * release.tokenReleaseAmount;
         }
@@ -114,7 +114,7 @@ function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenReleaseSDKType[
 
 // Returns the number of days in the window inclusive of the start and end date.
 function calculateDaysInclusive(startDate: Moment, endDate: Moment) {
-    return endDate.diff(startDate, 'days') + 1;
+    return Math.round(endDate.diff(startDate, 'days', true)) + 1;
 }
 
 interface ReleaseSchedule {
