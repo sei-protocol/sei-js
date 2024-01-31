@@ -95,7 +95,7 @@ export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSc
 // Converts the releaseSchedule into ReleaseSchedule[] and sorts it by start date.
 function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenReleaseSDKType[]) {
         let releaseScheduleTimes = releaseSchedule.map((schedule) => {
-            return CreateReleaseSchedule(schedule.start_date, schedule.end_date, schedule.token_release_amount);
+            return createReleaseSchedule(schedule.start_date, schedule.end_date, schedule.token_release_amount);
         })
 
         // Sort release schedule in increasing order of start time.
@@ -123,7 +123,7 @@ interface ReleaseSchedule {
     tokenReleaseAmount: number;
 }
 
-function CreateReleaseSchedule(start_date: string, end_date: string, token_release_amount: Long): ReleaseSchedule {
+function createReleaseSchedule(start_date: string, end_date: string, token_release_amount: Long): ReleaseSchedule {
     return {
         startDate: moment(start_date),
         endDate: moment(end_date),
