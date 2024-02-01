@@ -1,5 +1,5 @@
 ---
-'@sei-js/core': minor
+'@sei-js/core': patch
 ---
 
 Add APR utils to index
