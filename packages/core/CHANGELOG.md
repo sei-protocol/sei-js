@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.1
+
+### Patch Changes
+
+- 95c91e3: Add APR utils to index
+
 ## 3.2.0
 
 ### Minor Changes

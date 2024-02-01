@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/core",
-	"version": "3.2.0",
+	"version": "3.2.1",
 	"private": false,
 	"description": "TypeScript library for front end integrations with Sei",
 	"keywords": [
