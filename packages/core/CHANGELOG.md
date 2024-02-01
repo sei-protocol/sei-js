@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0
+
+### Minor Changes
+
+- 712fc82: Add APR utilities
+
 ## 3.1.3
 
 ### Patch Changes
