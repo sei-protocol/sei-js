@@ -2,7 +2,12 @@ import { StdSignDoc } from '@cosmjs/amino';
 import { serializeSignDoc } from '@cosmjs/amino/build/signdoc';
 import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 
-export function serializeDirectSignDoc(signDoc: SignDoc) {
+/**
+ * Serializes the given signDoc object.
+ * @param signDoc The SignDoc object to be serialized.
+ * @returns An array of bytes representing the serialized SignDoc object.
+ */
+export function serializeDirectSignDoc(signDoc: SignDoc): Uint8Array {
 	return SignDoc.encode(
 		SignDoc.fromPartial({
 			accountNumber: signDoc.accountNumber.toString(),
@@ -13,6 +18,11 @@ export function serializeDirectSignDoc(signDoc: SignDoc) {
 	).finish();
 }
 
-export function serializeAminoSignDoc(signDoc: StdSignDoc) {
+/**
+ * Serializes the given StdSignDoc object.
+ * @param signDoc The StdSignDoc object to be serialized.
+ * @returns An array of bytes representing the serialized StdSignDoc object.
+ */
+export function serializeAminoSignDoc(signDoc: StdSignDoc): Uint8Array {
 	return serializeSignDoc(signDoc);
 }

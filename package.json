@@ -7,7 +7,7 @@
 		"packages/*"
 	],
 	"scripts": {
-		"build:all": "nx run-many --target=build",
+		"build:all": "nx run-many --target=build && npx typedoc",
 		"build:since": "nx affected --target=build",
 		"lint:all": "nx run-many --target=lint",
 		"lint:since": "nx affected --target=lint",
@@ -43,6 +43,7 @@
 		"rimraf": "^3.0.2",
 		"ts-jest": "29.1.1",
 		"ts-node": "10.9.1",
+		"typedoc": "^0.25.7",
 		"typescript": "~4.8.4"
 	}
 }

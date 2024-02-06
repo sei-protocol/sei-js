@@ -1,6 +1,9 @@
 import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { OfflineAminoSigner, StdSignature } from '@cosmjs/amino';
 
+/**
+ * A representation of a Sei Wallet.
+ */
 export interface SeiWallet {
 	walletInfo: {
 		windowKey: string;

@@ -1,0 +1,9 @@
+{
+    "entryPoints": ["packages/core", "packages/react"],
+    "name": "Packages Example",
+    "entryPointStrategy": "packages",
+    "includeVersion": false
+  
+    // Potentially useful for debugging
+    // "logLevel": "Verbose"
+}

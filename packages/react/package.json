@@ -13,6 +13,7 @@
     "build:cjs": "BABEL_ENV=cjs babel src --out-dir dist/cjs --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored",
     "build:esm": "BABEL_ENV=esm babel src --out-dir dist/esm --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored",
     "build:prettier": "prettier --write 'dist/**/*.js'",
+    "docs": "typedoc --out docs",
     "test": "jest"
   },
   "homepage": "https://github.com/sei-protocol/sei-js#readme",
