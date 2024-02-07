@@ -44,7 +44,7 @@ jobs:
         uses: "actions/upload-pages-artifact@v3"
         with:
           path: "docs/"
-
+      
       - name: Deploy to GitHub Pages 2
         uses: crazy-max/ghaction-github-pages@v4
         with:
@@ -60,3 +60,7 @@ jobs:
       # environment created automatically by GitHub
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
