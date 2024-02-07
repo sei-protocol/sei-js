@@ -43,15 +43,11 @@ jobs:
 
       - name: Create Docs
         run: yarn build:all
-
-      - name: "Upload Pages artifact"
-        uses: "actions/upload-pages-artifact@v3"
-        with:
-          path: "docs/"
       
       # Checks out the newly built docs artifact to the gh-pages branch of this repo
       # Then, publishes to github actions.
-      - name: Deploy to GitHub Pages 2
+      - name: Checkout gh-pages and Deploy to GitHub Pages
+        id: deployment
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: gh-pages
