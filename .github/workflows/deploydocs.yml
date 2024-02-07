@@ -48,9 +48,6 @@ jobs:
   # Deployment job
   deploy:
     name: Deploy Docs to Github Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build_docs
     steps:
