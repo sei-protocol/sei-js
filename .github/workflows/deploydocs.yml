@@ -50,6 +50,10 @@ jobs:
     name: Deploy Docs to Github Pages
     runs-on: ubuntu-latest
     needs: build_docs
+    environment:
+      # environment created automatically by GitHub
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
