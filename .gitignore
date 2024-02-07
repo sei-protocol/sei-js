@@ -11,6 +11,7 @@ tmp
 /out-tsc
 main
 module
+docs
 
 # dependencies
 node_modules
