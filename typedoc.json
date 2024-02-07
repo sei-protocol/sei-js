@@ -1,6 +1,6 @@
 {
     "entryPoints": ["packages/core", "packages/react"],
-    "name": "Packages Example",
+    "name": "SeiJS",
     "entryPointStrategy": "packages",
     "includeVersion": false
   
