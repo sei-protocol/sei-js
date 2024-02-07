@@ -38,7 +38,7 @@ jobs:
         run: yarn
 
       - name: Create Docs
-        run: npx typedoc
+        run: yarn build:all
 
       - name: "Upload Pages artifact"
         uses: "actions/upload-pages-artifact@v3"
