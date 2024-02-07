@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_docs:
+    name: Build And Deploy Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Create Docs
+        run: npx typedoc
+        
+      - id: "upload-documentation"
+        name: "Upload Pages artifact"
+        uses: "actions/upload-pages-artifact@v2"
+        with:
+          path: "docs/"
+
+      - id: "deployment"
+        name: "Deploy documentation to GitHub Pages"
+        uses: "actions/deploy-pages@v2"
+          
