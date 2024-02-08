@@ -1,5 +1,5 @@
 # Sei-JS Javascript Reference
-Common javascript interactions for Sei
+This document shows examples of common javascript interactions for Sei using libraries in the @sei-js repo.
 
 ## Getting Started 
 Please review our [Getting Started](https://docs.sei.io/develop/get-started) page to set up your environment. 
