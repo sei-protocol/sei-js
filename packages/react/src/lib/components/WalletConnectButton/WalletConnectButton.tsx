@@ -5,6 +5,11 @@ import { SeiWalletContext } from '../../provider';
 import * as Styles from './styles';
 import { truncateAddress } from '../../utils/address';
 
+/**
+ * This component renders a button that will open a modal to connect to a wallet provider.
+ * @param walletConnectButtonProps Props that are passed to this component. Contains a string used to override the className of the rendered button.
+ * @returns A react component that renders a button that will open a modal to connect to a wallet provider.
+ */
 const WalletConnectButton = ({ buttonClassName }: WalletConnectButtonProps) => {
 	const [showMenu, setShowMenu] = useState<boolean>(false);
 	const [recentlyCopied, setRecentlyCopied] = useState<boolean>(false);

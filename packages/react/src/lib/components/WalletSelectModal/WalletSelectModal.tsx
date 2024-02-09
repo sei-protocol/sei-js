@@ -4,6 +4,11 @@ import { SeiWalletContext } from '../../provider';
 import * as Styles from './styles';
 import { SeiWallet } from '@sei-js/core';
 
+/**
+ * This component renders a Modal that allows users to connect to a wallet provider.
+ * @param WalletSelectModalProps Props passed to this component containing a list of SeiWallet options that the modal should provide and class overrides for the components within this component.
+ * @returns A modal that allows users to connect to a wallet provider.
+ */
 const WalletSelectModal = ({ wallets: inputWallets, classNameOverrides }: WalletSelectModalProps) => {
 	const { connectedWallet, setTargetWallet, wallets, connectionError, targetWallet, setConnectionError, showConnectModal, setShowConnectModal } =
 		useContext(SeiWalletContext);

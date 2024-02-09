@@ -4,7 +4,7 @@ A React helper library for [@sei-js/core](https://www.npmjs.com/package/@sei-js/
 
 ## Tutorial
 
-For an in depth tutorial, please see [our documentation](https://docs.seinetwork.io/front-end-development/react-tutorial).
+For an in depth tutorial, please see [our tutorial](https://docs.sei.io/develop/get-started/counter-smart-contract-tutorial/frontend-tutorial) or check out [our documentation](https://sei-protocol.github.io/sei-js/pages/EXAMPLES.html)
 
 ## Installation
 
@@ -156,7 +156,7 @@ export default Component;
 | secondaryColor  | string       | A secondary hex value of the color you want to tint the text and icons with |
 | backgroundColor | string       | A hex value of the color you want to use as a background                    |
 
-*If your page has a <WalletConnectButton/> on the page it can be opened programmatically by calling the hook "useSelectWallet"*
+*If your page has a `<WalletConnectButton/>` on the page it can be opened programmatically by calling the hook `useSelectWallet`*
 
 
 ## useSelectWallet()
@@ -203,6 +203,8 @@ export const theme = {
 
 ### Other helpful packages
 
-- [@sei-js/core](https://www.npmjs.com/package/@sei-js/core) - TypeScript library containing helper functions for wallet connection, transaction sig
-ning, and RPC querying.
+- [@sei-js/core](https://www.npmjs.com/package/@sei-js/core) - TypeScript library containing helper functions for wallet connection, transaction signing, and RPC querying.
 - [@sei-js/proto](https://www.npmjs.com/package/@sei-js/proto) - TypeScript library for Sei protobufs generated using Telescope
+
+### Examples
+- Visit the [js-examples](https://github.com/sei-protocol/js-examples) repo for examples on how to use the various typescript functions and react components in this library.

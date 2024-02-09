@@ -1,3 +1,9 @@
+/**
+ * Generates a color in rgba format given a hex color code and opacity value.
+ * @param color A 7 digit string in hex color code format (#RRGGBB) including the '#'.
+ * @param opacity The opacity value. This should be a number between 0 - 1
+ * @returns The color with the added opacity value in rgba format
+ */
 export const addOpacityToColor = (color: string, opacity: number) => {
 	// Check if the hex color is valid
 	if (!/^#[0-9A-Fa-f]{6}$/.test(color)) {

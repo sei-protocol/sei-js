@@ -5,6 +5,9 @@ import { WalletSelectModal } from '../components';
 import { SeiWallet } from '@sei-js/core';
 import { findWalletByWindowKey } from './helpers';
 
+/**
+ * A Context object containing key state that needs to be passed around by components that interact with Sei.
+ */
 export const SeiWalletContext = createContext<WalletProvider>({
 	chainId: '',
 	restUrl: '',
@@ -18,6 +21,10 @@ export const SeiWalletContext = createContext<WalletProvider>({
 	wallets: []
 });
 
+/**
+ * A component that wraps an app with the WalletSelectModal and passes down key props to it's child that allow it to interact with the chain.
+ * This should typically be used to wrap the entire application.
+ */
 const SeiWalletProvider = ({ children, chainConfiguration, wallets, autoConnect }: SeiWalletProviderProps) => {
 	const autoConnectSeiWallet = typeof autoConnect === 'string' ? findWalletByWindowKey(autoConnect) : autoConnect;
 
