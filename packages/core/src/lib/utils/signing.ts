@@ -4,6 +4,48 @@ import { compressedPubKeyToAddress, isValidSeiAddress, verifyDigest32 } from './
 import { sha256 } from './hash';
 import { serializeAminoSignDoc } from './serialize';
 
+/**
+ * Creates a StdSignDoc for an [ADR-36](https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md) object.
+ * @param signer A string representing the address of the signer.
+ * @param data A string or byte array representing the payload of the tx to be signed.
+ * Data is arbitrary bytes which can represent text, files, objects. It's applications developers decision how Data should be deserialized, serialized and the object it can represent in their context
+ * It's applications developers decision how Data should be treated, by treated we mean the serialization and deserialization process and the Object Data should represent.
+ * @returns A StdSignDoc object.
+ */
+export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
+	// If data is already a base64 string, convert it to a Buffer and back to a string.
+	data = Buffer.from(data).toString('base64');
+
+	//According to ADR-36 specifications https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md
+	return {
+		// chain-id must be equal to “”
+		chain_id: '',
+		// must be invalid value
+		account_number: '0',
+		// nonce, sequence number must be equal to 0
+		sequence: '0',
+		fee: {
+			// fee gas must be equal to 0
+			gas: '0',
+			//fee amount must be an empty array
+			amount: []
+		},
+		msgs: [
+			{
+				type: 'sign/MsgSignData',
+				value: {
+					signer,
+					// Data is arbitrary bytes which can represent text, files, objects. It's applications developers decision how Data should be deserialized, serialized and the object it can represent in their context
+					// It's applications developers decision how Data should be treated, by treated we mean the serialization and deserialization process and the Object Data should represent.
+					data
+				}
+			}
+		],
+		// the memo must be empty
+		memo: ''
+	};
+}
+
 function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	const hasOnlyMsgSignData = (() => {
 		if (signDoc && signDoc.msgs && Array.isArray(signDoc.msgs) && signDoc.msgs.length === 1) {
@@ -68,40 +110,6 @@ function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	}
 
 	return true;
-}
-
-export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
-	// If data is already a base64 string, convert it to a Buffer and back to a string.
-	data = Buffer.from(data).toString('base64');
-
-	//According to ADR-36 specifications https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md
-	return {
-		// chain-id must be equal to “”
-		chain_id: '',
-		// must be invalid value
-		account_number: '0',
-		// nonce, sequence number must be equal to 0
-		sequence: '0',
-		fee: {
-			// fee gas must be equal to 0
-			gas: '0',
-			//fee amount must be an empty array
-			amount: []
-		},
-		msgs: [
-			{
-				type: 'sign/MsgSignData',
-				value: {
-					signer,
-					// Data is arbitrary bytes which can represent text, files, objects. It's applications developers decision how Data should be deserialized, serialized and the object it can represent in their context
-					// It's applications developers decision how Data should be treated, by treated we mean the serialization and deserialization process and the Object Data should represent.
-					data
-				}
-			}
-		],
-		// the memo must be empty
-		memo: ''
-	};
 }
 
 function verifyADR36AminoSignDoc(signDoc: StdSignDoc, pubKey: Uint8Array, signature: Uint8Array): boolean {

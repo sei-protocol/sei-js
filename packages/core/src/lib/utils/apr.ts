@@ -1,9 +1,16 @@
-import { ScheduledTokenReleaseSDKType } from "@sei-js/proto/dist/types/codegen/seiprotocol/seichain/mint/v1beta1/mint";
+import { ParamsSDKType, ScheduledTokenReleaseSDKType } from "@sei-js/proto/dist/types/codegen/seiprotocol/seichain/mint/v1beta1/mint";
 import { getQueryClient } from "../queryClient";
 import moment, { Moment } from 'moment';
+import { PoolSDKType } from "@sei-js/proto/dist/types/codegen/cosmos/staking/v1beta1/staking";
 export type QueryClient = Awaited<ReturnType<typeof getQueryClient>>;
 
-export async function estimateStakingAPR(queryClient: QueryClient) {
+/**
+ * Calculates the estimated staking APR based on the upcoming token release schedule and the current number of bonded tokens.
+ * The APR is estimated to be the number of tokens released in next 365 days over the number of bonded tokens.
+ * @param queryClient A client configured to query the sei blockchain. (See {@linkcode getQueryClient})
+ * @returns The estimated APR percentage.
+ */
+export async function estimateStakingAPR(queryClient: QueryClient): Promise<number> {
     // Query number of bonded tokens
     const pool = await getPool(queryClient);
     const bondedTokens = Number(pool?.bonded_tokens);
@@ -23,8 +30,12 @@ export async function estimateStakingAPR(queryClient: QueryClient) {
     return upcomingMintTokens / bondedTokens
 }
 
-// Helper function to query the staking pool.
-export async function getPool(queryClient: QueryClient) {
+/**
+ * Gets data on the staking pool.
+ * @param queryClient A client configured to query the sei blockchain. (See {@linkcode getQueryClient})
+ * @returns An object with information about the amount of bonded and non bonded tokens in the staking pool.
+ */
+export async function getPool(queryClient: QueryClient): Promise<PoolSDKType | undefined> {
 	try {
 		const result = await queryClient.cosmos.staking.v1beta1.pool({});
 		return result.pool;
@@ -33,8 +44,12 @@ export async function getPool(queryClient: QueryClient) {
 	}
 }
 
-// Helper function to query the mint module params.
-export async function getMintParams(queryClient: QueryClient) {
+/**
+ * Retrieves the upcoming Mint schedule
+ * @param queryClient A client configured to query the sei blockchain. (See {@linkcode getQueryClient})
+ * @returns An object with information about the mint schedule and token denom.
+ */
+export async function getMintParams(queryClient: QueryClient): Promise<ParamsSDKType | undefined> {
 	try {
 		const result = await queryClient.seiprotocol.seichain.mint.params({});
 		return result.params;
@@ -43,8 +58,14 @@ export async function getMintParams(queryClient: QueryClient) {
 	}
 }
 
-// Gets the number of tokens that will be minted in the given window based on the given releaseSchedule.
-// Assumes that releaseSchedule has no overlapping schedules.
+/**
+ * Gets the number of tokens that will be minted in the given window based on the given releaseSchedule.
+ * Assumes that releaseSchedule has no overlapping schedules.
+ * @param startDate A moment object representing start of the window to query.
+ * @param days The number of days in the window.
+ * @param releaseSchedule The token release schedule. (See {@linkcode getMintParams}).
+ * @returns The number of tokens to be released in the given window.
+ */
 export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSchedule: ScheduledTokenReleaseSDKType[]): number {
     // End date is the exclusive end date of the window to query. 
     // Ie. if start date is 2023-1-1 and days is 365, end date here will be 2024-1-1 so rewards will be calculated from 2023-1-1 to 2023-12-31

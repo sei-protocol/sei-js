@@ -8,6 +8,12 @@ const DEFAULT_CHAIN_INFO = {
 	gasPriceStep: { low: 0.1, average: 0.2, high: 0.3 }
 };
 
+/**
+ * Returns a default chain configuration object with overrides from the supplied ChainInfo and any additional currencies.
+ * @param chainInfo A ChainInfo object. Fields from this object will override the default chain info.
+ * @param currencies A list of Currency objects to add to the created chain configuration.
+ * @returns A chain configuration object with overrides from ChainInfo and any additional currencies.
+ */
 export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []): ChainConfig => {
 	const prefix = 'sei';
 	const { chainId, chainName, rpcUrl, restUrl, gasPriceStep } = {

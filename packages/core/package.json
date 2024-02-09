@@ -34,6 +34,7 @@
 		"build:esm": "BABEL_ENV=esm babel src --out-dir dist/esm --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored",
 		"build:prettier": "prettier --write 'dist/**/*.js'",
 		"build:types": "tsc --project tsconfig.declarations.json",
+		"docs": "typedoc --out docs",
 		"test": "jest"
 	},
 	"dependencies": {
