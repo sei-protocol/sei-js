@@ -41,7 +41,7 @@ jobs:
         run: yarn
 
       - name: Create Docs
-        run: yarn build:all
+        run: yarn docs
       
       # Checks out the newly built docs artifact to the gh-pages branch of this repo
       # Then, publishes to github actions.

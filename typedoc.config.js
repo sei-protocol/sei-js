@@ -9,7 +9,7 @@ module.exports = {
         pages: [
             {
                 name: "Javascript Examples",
-                source: "./jsexamples.md"
+                source: "./EXAMPLES.md"
             },
         ],
         source: "./"

@@ -7,7 +7,8 @@
 		"packages/*"
 	],
 	"scripts": {
-		"build:all": "nx run-many --target=build && npx typedoc",
+		"build:all": "nx run-many --target=build",
+		"docs": "nx run-many --target=build -p core react && npx typedoc",
 		"build:since": "nx affected --target=build",
 		"lint:all": "nx run-many --target=lint",
 		"lint:since": "nx affected --target=lint",
