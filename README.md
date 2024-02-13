@@ -8,7 +8,7 @@ Please check [our documentation](https://v2.docs.sei.io/quickstart/building-a-fr
 
 The `EXAMPLES.md` file contains examples of how to use the classes and methods in this library to perform interactions with the chain.
 
-You can also refer to the [typedocs](https://sei-protocol.github.io/sei-js/) for reference on the contents of the @sei-js/core and @sei-js/react library.
+You can also refer to the [typedocs](https://sei-protocol.github.io/sei-js/) for reference on the contents of the @sei-js/core and @sei-js/react library and more examples.
 
 ### Examples
 
