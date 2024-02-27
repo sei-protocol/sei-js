@@ -11,6 +11,6 @@
 		"moduleResolution": "node",
 		"lib": ["ES2020"],
 	},
-	"include": ["src/**/*"],
+	"include": ["./src/**/*"],
 	"exclude": ["node_modules"]
 }

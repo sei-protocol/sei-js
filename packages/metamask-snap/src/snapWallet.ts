@@ -3,7 +3,8 @@ import { sha256 } from '@noble/hashes/sha256';
 import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { AccountData, encodeSecp256k1Signature, StdSignDoc } from '@cosmjs/amino';
 import { Buffer } from 'buffer';
-import { compressedPubKeyToAddress, serializeAminoSignDoc, serializeDirectSignDoc } from '@sei-js/core';
+import { serializeAminoSignDoc, serializeDirectSignDoc } from './serialize';
+import { compressedPubKeyToAddress } from './address';
 
 export class SnapWallet {
 	constructor(private privateKey: Uint8Array, private compressedPubKey: Uint8Array, private address: string) {}

@@ -3,7 +3,7 @@ import Long from 'long';
 import { cosmos } from '@sei-js/proto';
 import { decodeRawAuthInfo, decodeTxBody } from '../ui';
 import { sanitizedUint8Array } from '../utils';
-import { compressedPubKeyToAddress } from '@sei-js/core';
+import { compressedPubKeyToAddress } from '../address';
 
 describe('decodeTxBody', () => {
 	it('should decode TxBody correctly', () => {
