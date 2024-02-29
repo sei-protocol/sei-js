@@ -1,5 +1,5 @@
-import { COMPASS_WALLET, FIN_WALLET, KEPLR_WALLET, LEAP_WALLET, SeiWallet } from '@sei-js/core';
 import { findWalletByWindowKey } from '../helpers';
+import { COMPASS_WALLET, FIN_WALLET, KEPLR_WALLET, LEAP_WALLET, SeiWallet } from '../../../wallet';
 
 describe('findWalletByWindowKey', () => {
 	it('should return COMPASS_WALLET for compass windowKey', () => {

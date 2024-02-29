@@ -1,7 +1,8 @@
-import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/seiprotocol/seichain/mint/v1beta1/mint';
 import { getQueryClient } from '@sei-js/cosmjs/src/core/queryClient';
 import moment, { Moment } from 'moment';
 import { PoolSDKType } from '@sei-js/proto/dist/types/codegen/cosmos/staking/v1beta1/staking';
+import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/mint/v1beta1/mint';
+
 export type QueryClient = Awaited<ReturnType<typeof getQueryClient>>;
 
 /**
@@ -33,7 +34,7 @@ export async function estimateStakingAPR(queryClient: QueryClient): Promise<numb
 /**
  * Gets data on the staking pool.
  * @param queryClient A client configured to query the sei blockchain. (See {@linkcode getQueryClient})
- * @returns An object with information about the amount of bonded and non bonded tokens in the staking pool.
+ * @returns An object with information about the amount of bonded and non-bonded tokens in the staking pool.
  */
 export async function getPool(queryClient: QueryClient): Promise<PoolSDKType | undefined> {
 	try {
@@ -68,7 +69,7 @@ export async function getMintParams(queryClient: QueryClient): Promise<ParamsSDK
  */
 export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSchedule: ScheduledTokenReleaseSDKType[]): number {
 	// End date is the exclusive end date of the window to query.
-	// Ie. if start date is 2023-1-1 and days is 365, end date here will be 2024-1-1 so rewards will be calculated from 2023-1-1 to 2023-12-31
+	// I.e. if start date is 2023-1-1 and days is 365, end date here will be 2024-1-1 so rewards will be calculated from 2023-1-1 to 2023-12-31
 	const endDate = startDate.clone().add(days, 'days');
 
 	// Sort release schedule in increasing order of start time.
@@ -119,7 +120,7 @@ function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenReleaseSDKType[
 	});
 
 	// Sort release schedule in increasing order of start time.
-	const sortedReleaseSchedule = releaseScheduleTimes.sort((x, y) => {
+	return releaseScheduleTimes.sort((x, y) => {
 		if (x.startDate.isAfter(y.startDate)) {
 			return 1;
 		} else if (y.startDate.isAfter(x.startDate)) {
@@ -127,8 +128,6 @@ function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenReleaseSDKType[
 		}
 		return 0;
 	});
-
-	return sortedReleaseSchedule;
 }
 
 // Returns the number of days in the window inclusive of the start and end date.
@@ -142,7 +141,7 @@ interface ReleaseSchedule {
 	tokenReleaseAmount: number;
 }
 
-function createReleaseSchedule(start_date: string, end_date: string, token_release_amount: Long): ReleaseSchedule {
+function createReleaseSchedule(start_date: string, end_date: string, token_release_amount: bigint): ReleaseSchedule {
 	return {
 		startDate: moment(start_date),
 		endDate: moment(end_date),

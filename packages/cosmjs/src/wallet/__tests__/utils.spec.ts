@@ -33,7 +33,7 @@ describe('getChainSuggest', () => {
 					coinDenom: 'SEI',
 					coinMinimalDenom: 'usei',
 					coinDecimals: 6,
-					gasPriceStep: { low: 0.1, average: 0.2, high: 0.3 }
+					gasPriceStep: { low: 0.02, average: 0.04, high: 0.06 }
 				}
 			],
 			stakeCurrency: {

@@ -10,10 +10,11 @@ import {
 } from '@sei-js/proto';
 
 /**
- * Creates a Registry object that maps CosmWasm and Sei protobuf type identifiersto their actual implementations.
- * @returns A Registry object that maps CosmWasm and Sei protobuf type identifiersto their actual implementations.
+ * Creates a Registry object that maps CosmWasm and Sei protobuf type identifiers to their actual implementations.
+ * @returns A Registry object that maps CosmWasm and Sei protobuf type identifiers to their actual implementations.
  */
 export const createSeiRegistry = (): Registry => {
+	// @ts-ignore
 	return new Registry([...defaultRegistryTypes, ...cosmwasmProtoRegistry, ...seiprotocolProtoRegistry]);
 };
 

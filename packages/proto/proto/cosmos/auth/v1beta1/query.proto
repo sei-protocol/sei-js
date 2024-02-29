@@ -63,7 +63,7 @@ message QueryAccountsRequest {
 // Since: cosmos-sdk 0.43
 message QueryAccountsResponse {
   // accounts are the existing accounts
-  repeated google.protobuf.Any accounts = 1 [(cosmos_proto.accepts_interface) = "AccountI"];
+  repeated google.protobuf.Any accounts = 1 [(cosmos_proto.accepts_interface) = "cosmos.auth.AccountI"];
 
   // pagination defines the pagination in the response.
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
@@ -90,7 +90,7 @@ message QueryParamsResponse {
 // QueryAccountResponse is the response type for the Query/Account RPC method.
 message QueryAccountResponse {
   // account defines the account of the corresponding address.
-  google.protobuf.Any account = 1 [(cosmos_proto.accepts_interface) = "AccountI"];
+  google.protobuf.Any account = 1 [(cosmos_proto.accepts_interface) = "cosmos.auth.AccountI"];
 }
 
 // QueryParamsRequest is the request type for the Query/Params RPC method.
@@ -98,7 +98,7 @@ message QueryParamsRequest {}
 
 // QueryModuleAccountsResponse is the response type for the Query/ModuleAccounts RPC method.
 message QueryModuleAccountsResponse {
-  repeated google.protobuf.Any accounts = 1 [(cosmos_proto.accepts_interface) = "ModuleAccountI"];
+  repeated google.protobuf.Any accounts = 1 [(cosmos_proto.accepts_interface) = "cosmos.auth.ModuleAccountI"];
 }
 
 // Bech32PrefixRequest is the request type for Bech32Prefix rpc method

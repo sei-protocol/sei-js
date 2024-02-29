@@ -7,14 +7,14 @@
 		"packages/*"
 	],
 	"scripts": {
-		"build:all": "nx run-many --target=build",
-		"docs": "nx run-many --target=build -p core react && npx typedoc",
+		"build:all": "nx run-many --target=build --parallel=false",
+		"docs": "nx run-many --target=build -p common evm cosmjs && npx typedoc",
 		"build:since": "nx affected --target=build",
 		"lint:all": "nx run-many --target=lint",
 		"lint:since": "nx affected --target=lint",
 		"release": "yarn build:all && changeset publish",
 		"postrelease": "git push --follow-tags",
-		"release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
+		"release:internal-evm": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal-evm && yarn changeset publish --no-git-tag --snapshot --tag internal-evm",
 		"test:all": "nx run-many --target=test",
 		"test:coverage": "nx affected:test --all --coverage --skip-nx-cache",
 		"test:since": "nx affected --target=test"
@@ -41,7 +41,7 @@
 		"jest": "29.7.0",
 		"jest-environment-jsdom": "28.1.1",
 		"nx": "15.5.1",
-		"prettier": "^2.6.2",
+		"prettier": "^3.2.5",
 		"rimraf": "^3.0.2",
 		"ts-jest": "29.1.1",
 		"ts-node": "10.9.1",

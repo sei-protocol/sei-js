@@ -1,11 +1,11 @@
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { GetSnapsResponse, Snap } from '../types';
-import { getSnapEthereumProvider } from '@sei-js/core';
+import { getSnapEthereumProvider } from '@sei-js/cosmjs';
 
 /**
  * Get the installed snaps in MetaMask.
  *
- * @param provider - The MetaMask inpage provider.
+ * @param provider - The MetaMask in page provider.
  * @returns The snaps installed in MetaMask.
  */
 export const getSnaps = async (provider?: MetaMaskInpageProvider): Promise<GetSnapsResponse> =>

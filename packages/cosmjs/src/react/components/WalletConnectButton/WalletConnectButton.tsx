@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { WalletConnectButtonProps } from './types';
 import { IconContext } from '@react-icons/all-files';
 import { SeiWalletContext } from '../../provider';
 import * as Styles from './styles';
+import { WalletConnectButtonProps } from './types';
 import { truncateAddress } from '../../utils/address';
 
 /**
@@ -94,10 +94,7 @@ const WalletConnectButton = ({ buttonClassName }: WalletConnectButtonProps) => {
 		);
 	};
 
-	return (
-	<IconContext.Provider value={{ color: '#121212', size: '50px' }}>{renderButton()}</IconContext.Provider>
-
-);
+	return <IconContext.Provider value={{ color: '#121212', size: '50px' }}>{renderButton()}</IconContext.Provider>;
 };
 
 export default WalletConnectButton;
