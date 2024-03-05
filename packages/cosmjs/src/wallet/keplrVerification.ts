@@ -1,4 +1,4 @@
-import { ChainConfig } from '../../wallet';
+import { ChainConfig } from './index';
 
 /**
  * Creates a ChainConfig object for the given chainId using a standard template.

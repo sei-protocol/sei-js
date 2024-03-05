@@ -1,17 +1,14 @@
-import { getQueryClient } from '@sei-js/cosmjs/src/core/queryClient';
 import moment, { Moment } from 'moment';
 import { PoolSDKType } from '@sei-js/proto/dist/types/codegen/cosmos/staking/v1beta1/staking';
 import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/mint/v1beta1/mint';
 
-export type QueryClient = Awaited<ReturnType<typeof getQueryClient>>;
-
 /**
  * Calculates the estimated staking APR based on the upcoming token release schedule and the current number of bonded tokens.
  * The APR is estimated to be the number of tokens released in next 365 days over the number of bonded tokens.
- * @param queryClient A client configured to query the sei blockchain. (See {@linkcode getQueryClient})
+ * @param queryClient A client configured to query the sei blockchain.
  * @returns The estimated APR percentage.
  */
-export async function estimateStakingAPR(queryClient: QueryClient): Promise<number> {
+export async function estimateStakingAPR(queryClient: any): Promise<number> {
 	// Query number of bonded tokens
 	const pool = await getPool(queryClient);
 	const bondedTokens = Number(pool?.bonded_tokens);
@@ -33,10 +30,10 @@ export async function estimateStakingAPR(queryClient: QueryClient): Promise<numb
 
 /**
  * Gets data on the staking pool.
- * @param queryClient A client configured to query the sei blockchain. (See {@linkcode getQueryClient})
+ * @param queryClient A client configured to query the sei blockchain.
  * @returns An object with information about the amount of bonded and non-bonded tokens in the staking pool.
  */
-export async function getPool(queryClient: QueryClient): Promise<PoolSDKType | undefined> {
+export async function getPool(queryClient: any): Promise<PoolSDKType | undefined> {
 	try {
 		const result = await queryClient.cosmos.staking.v1beta1.pool({});
 		return result.pool;
@@ -47,10 +44,10 @@ export async function getPool(queryClient: QueryClient): Promise<PoolSDKType | u
 
 /**
  * Retrieves the upcoming Mint schedule
- * @param queryClient A client configured to query the sei blockchain. (See {@linkcode getQueryClient})
+ * @param queryClient A client configured to query the sei blockchain.
  * @returns An object with information about the mint schedule and token denom.
  */
-export async function getMintParams(queryClient: QueryClient): Promise<ParamsSDKType | undefined> {
+export async function getMintParams(queryClient: any): Promise<ParamsSDKType | undefined> {
 	try {
 		const result = await queryClient.seiprotocol.seichain.mint.params({});
 		return result.params;

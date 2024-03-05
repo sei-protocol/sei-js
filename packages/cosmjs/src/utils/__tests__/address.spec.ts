@@ -1,6 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
-import { getAddressHashFromPubKey, isValidSeiAddress, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
+import { getAddressHashFromPubKey, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
 import { randomBytes } from 'crypto';
+import { isValidSeiCosmosAddress } from '@sei-js/common';
 
 const MOCK_PUB_KEY = new Uint8Array([
 	4, 116, 1, 101, 176, 186, 244, 209, 5, 209, 19, 132, 244, 147, 197, 29, 25, 163, 111, 176, 167, 12, 14, 132, 111, 54, 27, 175, 58, 222, 9, 164, 17, 238, 10, 125,
@@ -13,7 +14,7 @@ describe('isValidSeiAddress', () => {
 	it('should return true for a valid SEI address', () => {
 		const validAddress = 'sei14ae4g3422thcyuxler2ws3w25fpesrh2uqmgm9';
 
-		const result = isValidSeiAddress(validAddress);
+		const result = isValidSeiCosmosAddress(validAddress);
 
 		expect(result).toBe(true);
 	});
@@ -21,7 +22,7 @@ describe('isValidSeiAddress', () => {
 	it('should return false for an invalid SEI address', () => {
 		const invalidAddress = 'invalidSeiAddress';
 
-		const result = isValidSeiAddress(invalidAddress);
+		const result = isValidSeiCosmosAddress(invalidAddress);
 
 		expect(result).toBe(false);
 	});
@@ -29,7 +30,7 @@ describe('isValidSeiAddress', () => {
 	it('should return false for a non-SEI Bech32 address', () => {
 		const nonSeiAddress = 'osmo1vx3456g8y9jqmg3yngw4thjc89ew6ukfcdr0hs';
 
-		const result = isValidSeiAddress(nonSeiAddress);
+		const result = isValidSeiCosmosAddress(nonSeiAddress);
 
 		expect(result).toBe(false);
 	});

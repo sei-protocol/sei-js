@@ -1,5 +1,3 @@
-/* eslint-disable*/
-
 /// <reference types="react-scripts" />
 
 import { MetaMaskInpageProvider } from '@metamask/providers';
@@ -8,11 +6,11 @@ import { MetaMaskInpageProvider } from '@metamask/providers';
  */
 
 declare global {
-  interface Window {
-    ethereum: MetaMaskInpageProvider & {
-      setProvider?: (provider: MetaMaskInpageProvider) => void;
-      detected?: MetaMaskInpageProvider[];
-      providers?: MetaMaskInpageProvider[];
-    };
-  }
+	interface Window {
+		ethereum: MetaMaskInpageProvider & {
+			setProvider?: (provider: MetaMaskInpageProvider) => void;
+			detected?: MetaMaskInpageProvider[];
+			providers?: MetaMaskInpageProvider[];
+		};
+	}
 }

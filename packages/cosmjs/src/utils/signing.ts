@@ -1,8 +1,9 @@
 import { StdSignature, StdSignDoc } from '@cosmjs/amino';
 import { fromBase64 } from '@cosmjs/encoding';
-import { compressedPubKeyToAddress, isValidSeiAddress, verifyDigest32 } from './address';
+import { compressedPubKeyToAddress, verifyDigest32 } from './address';
 import { sha256 } from './hash';
 import { serializeAminoSignDoc } from './serialize';
+import { isValidSeiCosmosAddress } from '@sei-js/common';
 
 /**
  * Creates a StdSignDoc for an [ADR-36](https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md) object.
@@ -95,7 +96,7 @@ function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	if (!signer) {
 		throw new Error('Empty signer in the ADR-36 msg');
 	}
-	isValidSeiAddress(signer);
+	isValidSeiCosmosAddress(signer);
 	const data = msg.value.data;
 	if (!data) {
 		throw new Error('Empty data in the ADR-36 msg');

@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/common",
-  "version": "4.0.0",
+  "version": "0.0.0-internal-evm-20240301223227",
   "description": "TypeScript library for common interactions with the Sei blockchain",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -30,9 +30,9 @@
     "access": "public"
   },
   "dependencies": {
+    "keccak": "^3.0.4"
   },
-  "peerDependencies": {
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@babel/core": "^7.23.0",
     "@babel/plugin-transform-runtime": "^7.22.15",

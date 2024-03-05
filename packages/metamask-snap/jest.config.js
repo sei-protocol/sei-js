@@ -1,4 +1,3 @@
-/* eslint-env node */
 module.exports = {
 	maxWorkers: 1,
 	preset: '@metamask/snaps-jest',

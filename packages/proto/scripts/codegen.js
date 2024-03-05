@@ -52,7 +52,6 @@ telescope({
 			enableMessageComposer: true,
 			includePackageVar: false,
 			typingsFormat: {
-				num64: 'bigint',
 				useTelescopeGeneratedType: true
 			}
 		},
