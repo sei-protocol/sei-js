@@ -15,7 +15,7 @@ export interface StoreCodeProposal {
   /** WASMByteCode can be raw or gzip compressed */
   wasmByteCode: Uint8Array;
   /** InstantiatePermission to apply on contract creation, optional */
-  instantiatePermission?: AccessConfig;
+  instantiatePermission?: AccessConfig | undefined;
   /** UnpinCode code on upload, optional */
   unpinCode: boolean;
   /** Source is the URL where the code is hosted */
@@ -46,7 +46,7 @@ export interface StoreCodeProposalAmino {
   /** WASMByteCode can be raw or gzip compressed */
   wasm_byte_code?: string;
   /** InstantiatePermission to apply on contract creation, optional */
-  instantiate_permission?: AccessConfigAmino;
+  instantiate_permission?: AccessConfigAmino | undefined;
   /** UnpinCode code on upload, optional */
   unpin_code?: boolean;
   /** Source is the URL where the code is hosted */
@@ -73,7 +73,7 @@ export interface StoreCodeProposalSDKType {
   description: string;
   run_as: string;
   wasm_byte_code: Uint8Array;
-  instantiate_permission?: AccessConfigSDKType;
+  instantiate_permission?: AccessConfigSDKType | undefined;
   unpin_code: boolean;
   source: string;
   builder: string;
@@ -548,7 +548,7 @@ export interface AccessConfigUpdate {
   /** CodeID is the reference to the stored WASM code to be updated */
   codeId: bigint;
   /** InstantiatePermission to apply to the set of code ids */
-  instantiatePermission: AccessConfig;
+  instantiatePermission: AccessConfig | undefined;
 }
 export interface AccessConfigUpdateProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.AccessConfigUpdate";
@@ -562,7 +562,7 @@ export interface AccessConfigUpdateAmino {
   /** CodeID is the reference to the stored WASM code to be updated */
   code_id?: string;
   /** InstantiatePermission to apply to the set of code ids */
-  instantiate_permission?: AccessConfigAmino;
+  instantiate_permission?: AccessConfigAmino | undefined;
 }
 export interface AccessConfigUpdateAminoMsg {
   type: "wasm/AccessConfigUpdate";
@@ -574,7 +574,7 @@ export interface AccessConfigUpdateAminoMsg {
  */
 export interface AccessConfigUpdateSDKType {
   code_id: bigint;
-  instantiate_permission: AccessConfigSDKType;
+  instantiate_permission: AccessConfigSDKType | undefined;
 }
 /**
  * UpdateInstantiateConfigProposal gov proposal content type to update
@@ -640,7 +640,7 @@ export interface StoreAndInstantiateContractProposal {
   /** WASMByteCode can be raw or gzip compressed */
   wasmByteCode: Uint8Array;
   /** InstantiatePermission to apply on contract creation, optional */
-  instantiatePermission?: AccessConfig;
+  instantiatePermission?: AccessConfig | undefined;
   /** UnpinCode code on upload, optional */
   unpinCode: boolean;
   /** Admin is an optional address that can execute migrations */
@@ -682,7 +682,7 @@ export interface StoreAndInstantiateContractProposalAmino {
   /** WASMByteCode can be raw or gzip compressed */
   wasm_byte_code?: string;
   /** InstantiatePermission to apply on contract creation, optional */
-  instantiate_permission?: AccessConfigAmino;
+  instantiate_permission?: AccessConfigAmino | undefined;
   /** UnpinCode code on upload, optional */
   unpin_code?: boolean;
   /** Admin is an optional address that can execute migrations */
@@ -720,7 +720,7 @@ export interface StoreAndInstantiateContractProposalSDKType {
   description: string;
   run_as: string;
   wasm_byte_code: Uint8Array;
-  instantiate_permission?: AccessConfigSDKType;
+  instantiate_permission?: AccessConfigSDKType | undefined;
   unpin_code: boolean;
   admin: string;
   label: string;

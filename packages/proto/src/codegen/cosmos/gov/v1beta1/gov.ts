@@ -257,12 +257,12 @@ export interface Proposal {
    * querying a proposal via gRPC, this field is not populated until the
    * proposal's voting period has ended.
    */
-  finalTallyResult: TallyResult;
-  submitTime: Date;
-  depositEndTime: Date;
+  finalTallyResult: TallyResult | undefined;
+  submitTime: Date | undefined;
+  depositEndTime: Date | undefined;
   totalDeposit: Coin[];
-  votingStartTime: Date;
-  votingEndTime: Date;
+  votingStartTime: Date | undefined;
+  votingEndTime: Date | undefined;
 }
 export interface ProposalProtoMsg {
   typeUrl: "/cosmos.gov.v1beta1.Proposal";
@@ -274,19 +274,19 @@ export type ProposalEncoded = Omit<Proposal, "content"> & {
 /** Proposal defines the core field members of a governance proposal. */
 export interface ProposalAmino {
   proposal_id?: string;
-  content?: AnyAmino;
+  content?: AnyAmino | undefined;
   status?: ProposalStatus;
   /**
    * final_tally_result is the final tally result of the proposal. When
    * querying a proposal via gRPC, this field is not populated until the
    * proposal's voting period has ended.
    */
-  final_tally_result?: TallyResultAmino;
-  submit_time?: string;
-  deposit_end_time?: string;
+  final_tally_result?: TallyResultAmino | undefined;
+  submit_time?: string | undefined;
+  deposit_end_time?: string | undefined;
   total_deposit?: CoinAmino[];
-  voting_start_time?: string;
-  voting_end_time?: string;
+  voting_start_time?: string | undefined;
+  voting_end_time?: string | undefined;
 }
 export interface ProposalAminoMsg {
   type: "cosmos-sdk/Proposal";
@@ -297,12 +297,12 @@ export interface ProposalSDKType {
   proposal_id: bigint;
   content?: TextProposalSDKType | CommunityPoolSpendProposalSDKType | CommunityPoolSpendProposalWithDepositSDKType | SoftwareUpgradeProposalSDKType | CancelSoftwareUpgradeProposalSDKType | StoreCodeProposalSDKType | InstantiateContractProposalSDKType | InstantiateContract2ProposalSDKType | MigrateContractProposalSDKType | SudoContractProposalSDKType | ExecuteContractProposalSDKType | UpdateAdminProposalSDKType | ClearAdminProposalSDKType | PinCodesProposalSDKType | UnpinCodesProposalSDKType | UpdateInstantiateConfigProposalSDKType | StoreAndInstantiateContractProposalSDKType | ClientUpdateProposalSDKType | UpgradeProposalSDKType | AnySDKType | undefined;
   status: ProposalStatus;
-  final_tally_result: TallyResultSDKType;
-  submit_time: Date;
-  deposit_end_time: Date;
+  final_tally_result: TallyResultSDKType | undefined;
+  submit_time: Date | undefined;
+  deposit_end_time: Date | undefined;
   total_deposit: CoinSDKType[];
-  voting_start_time: Date;
-  voting_end_time: Date;
+  voting_start_time: Date | undefined;
+  voting_end_time: Date | undefined;
 }
 /** TallyResult defines a standard tally for a governance proposal. */
 export interface TallyResult {
@@ -394,7 +394,7 @@ export interface DepositParams {
    * Maximum period for Atom holders to deposit on a proposal. Initial value: 2
    *  months.
    */
-  maxDepositPeriod: Duration;
+  maxDepositPeriod: Duration | undefined;
 }
 export interface DepositParamsProtoMsg {
   typeUrl: "/cosmos.gov.v1beta1.DepositParams";
@@ -408,7 +408,7 @@ export interface DepositParamsAmino {
    * Maximum period for Atom holders to deposit on a proposal. Initial value: 2
    *  months.
    */
-  max_deposit_period?: DurationAmino;
+  max_deposit_period?: DurationAmino | undefined;
 }
 export interface DepositParamsAminoMsg {
   type: "cosmos-sdk/DepositParams";
@@ -417,12 +417,12 @@ export interface DepositParamsAminoMsg {
 /** DepositParams defines the params for deposits on governance proposals. */
 export interface DepositParamsSDKType {
   min_deposit: CoinSDKType[];
-  max_deposit_period: DurationSDKType;
+  max_deposit_period: DurationSDKType | undefined;
 }
 /** VotingParams defines the params for voting on governance proposals. */
 export interface VotingParams {
   /** Length of the voting period. */
-  votingPeriod: Duration;
+  votingPeriod: Duration | undefined;
 }
 export interface VotingParamsProtoMsg {
   typeUrl: "/cosmos.gov.v1beta1.VotingParams";
@@ -431,7 +431,7 @@ export interface VotingParamsProtoMsg {
 /** VotingParams defines the params for voting on governance proposals. */
 export interface VotingParamsAmino {
   /** Length of the voting period. */
-  voting_period?: DurationAmino;
+  voting_period?: DurationAmino | undefined;
 }
 export interface VotingParamsAminoMsg {
   type: "cosmos-sdk/VotingParams";
@@ -439,7 +439,7 @@ export interface VotingParamsAminoMsg {
 }
 /** VotingParams defines the params for voting on governance proposals. */
 export interface VotingParamsSDKType {
-  voting_period: DurationSDKType;
+  voting_period: DurationSDKType | undefined;
 }
 /** TallyParams defines the params for tallying votes on governance proposals. */
 export interface TallyParams {

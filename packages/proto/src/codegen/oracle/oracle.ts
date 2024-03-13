@@ -126,7 +126,7 @@ export interface OracleExchangeRateSDKType {
 }
 export interface PriceSnapshotItem {
 	denom: string;
-	oracleExchangeRate: OracleExchangeRate;
+	oracleExchangeRate: OracleExchangeRate | undefined;
 }
 export interface PriceSnapshotItemProtoMsg {
 	typeUrl: '/seiprotocol.seichain.oracle.PriceSnapshotItem';
@@ -134,7 +134,7 @@ export interface PriceSnapshotItemProtoMsg {
 }
 export interface PriceSnapshotItemAmino {
 	denom?: string;
-	oracle_exchange_rate?: OracleExchangeRateAmino;
+	oracle_exchange_rate?: OracleExchangeRateAmino | undefined;
 }
 export interface PriceSnapshotItemAminoMsg {
 	type: '/seiprotocol.seichain.oracle.PriceSnapshotItem';
@@ -142,7 +142,7 @@ export interface PriceSnapshotItemAminoMsg {
 }
 export interface PriceSnapshotItemSDKType {
 	denom: string;
-	oracle_exchange_rate: OracleExchangeRateSDKType;
+	oracle_exchange_rate: OracleExchangeRateSDKType | undefined;
 }
 export interface PriceSnapshot {
 	snapshotTimestamp: bigint;

@@ -8,7 +8,7 @@ import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
  */
 export interface MsgChannelOpenInit {
   portId: string;
-  channel: Channel;
+  channel: Channel | undefined;
   signer: string;
 }
 export interface MsgChannelOpenInitProtoMsg {
@@ -21,7 +21,7 @@ export interface MsgChannelOpenInitProtoMsg {
  */
 export interface MsgChannelOpenInitAmino {
   port_id?: string;
-  channel?: ChannelAmino;
+  channel?: ChannelAmino | undefined;
   signer?: string;
 }
 export interface MsgChannelOpenInitAminoMsg {
@@ -34,7 +34,7 @@ export interface MsgChannelOpenInitAminoMsg {
  */
 export interface MsgChannelOpenInitSDKType {
   port_id: string;
-  channel: ChannelSDKType;
+  channel: ChannelSDKType | undefined;
   signer: string;
 }
 /** MsgChannelOpenInitResponse defines the Msg/ChannelOpenInit response type. */
@@ -62,10 +62,10 @@ export interface MsgChannelOpenTry {
    * the channel identifier of the previous channel in state INIT
    */
   previousChannelId: string;
-  channel: Channel;
+  channel: Channel | undefined;
   counterpartyVersion: string;
   proofInit: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   signer: string;
 }
 export interface MsgChannelOpenTryProtoMsg {
@@ -83,10 +83,10 @@ export interface MsgChannelOpenTryAmino {
    * the channel identifier of the previous channel in state INIT
    */
   previous_channel_id?: string;
-  channel?: ChannelAmino;
+  channel?: ChannelAmino | undefined;
   counterparty_version?: string;
   proof_init?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgChannelOpenTryAminoMsg {
@@ -100,10 +100,10 @@ export interface MsgChannelOpenTryAminoMsg {
 export interface MsgChannelOpenTrySDKType {
   port_id: string;
   previous_channel_id: string;
-  channel: ChannelSDKType;
+  channel: ChannelSDKType | undefined;
   counterparty_version: string;
   proof_init: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   signer: string;
 }
 /** MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type. */
@@ -130,7 +130,7 @@ export interface MsgChannelOpenAck {
   counterpartyChannelId: string;
   counterpartyVersion: string;
   proofTry: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   signer: string;
 }
 export interface MsgChannelOpenAckProtoMsg {
@@ -147,7 +147,7 @@ export interface MsgChannelOpenAckAmino {
   counterparty_channel_id?: string;
   counterparty_version?: string;
   proof_try?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgChannelOpenAckAminoMsg {
@@ -164,7 +164,7 @@ export interface MsgChannelOpenAckSDKType {
   counterparty_channel_id: string;
   counterparty_version: string;
   proof_try: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   signer: string;
 }
 /** MsgChannelOpenAckResponse defines the Msg/ChannelOpenAck response type. */
@@ -189,7 +189,7 @@ export interface MsgChannelOpenConfirm {
   portId: string;
   channelId: string;
   proofAck: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   signer: string;
 }
 export interface MsgChannelOpenConfirmProtoMsg {
@@ -204,7 +204,7 @@ export interface MsgChannelOpenConfirmAmino {
   port_id?: string;
   channel_id?: string;
   proof_ack?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgChannelOpenConfirmAminoMsg {
@@ -219,7 +219,7 @@ export interface MsgChannelOpenConfirmSDKType {
   port_id: string;
   channel_id: string;
   proof_ack: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   signer: string;
 }
 /**
@@ -302,7 +302,7 @@ export interface MsgChannelCloseConfirm {
   portId: string;
   channelId: string;
   proofInit: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   signer: string;
 }
 export interface MsgChannelCloseConfirmProtoMsg {
@@ -317,7 +317,7 @@ export interface MsgChannelCloseConfirmAmino {
   port_id?: string;
   channel_id?: string;
   proof_init?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgChannelCloseConfirmAminoMsg {
@@ -332,7 +332,7 @@ export interface MsgChannelCloseConfirmSDKType {
   port_id: string;
   channel_id: string;
   proof_init: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   signer: string;
 }
 /**
@@ -360,9 +360,9 @@ export interface MsgChannelCloseConfirmResponseAminoMsg {
 export interface MsgChannelCloseConfirmResponseSDKType {}
 /** MsgRecvPacket receives incoming IBC packet */
 export interface MsgRecvPacket {
-  packet: Packet;
+  packet: Packet | undefined;
   proofCommitment: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   signer: string;
 }
 export interface MsgRecvPacketProtoMsg {
@@ -371,9 +371,9 @@ export interface MsgRecvPacketProtoMsg {
 }
 /** MsgRecvPacket receives incoming IBC packet */
 export interface MsgRecvPacketAmino {
-  packet?: PacketAmino;
+  packet?: PacketAmino | undefined;
   proof_commitment?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgRecvPacketAminoMsg {
@@ -382,9 +382,9 @@ export interface MsgRecvPacketAminoMsg {
 }
 /** MsgRecvPacket receives incoming IBC packet */
 export interface MsgRecvPacketSDKType {
-  packet: PacketSDKType;
+  packet: PacketSDKType | undefined;
   proof_commitment: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   signer: string;
 }
 /** MsgRecvPacketResponse defines the Msg/RecvPacket response type. */
@@ -403,9 +403,9 @@ export interface MsgRecvPacketResponseAminoMsg {
 export interface MsgRecvPacketResponseSDKType {}
 /** MsgTimeout receives timed-out packet */
 export interface MsgTimeout {
-  packet: Packet;
+  packet: Packet | undefined;
   proofUnreceived: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   nextSequenceRecv: bigint;
   signer: string;
 }
@@ -415,9 +415,9 @@ export interface MsgTimeoutProtoMsg {
 }
 /** MsgTimeout receives timed-out packet */
 export interface MsgTimeoutAmino {
-  packet?: PacketAmino;
+  packet?: PacketAmino | undefined;
   proof_unreceived?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   next_sequence_recv?: string;
   signer?: string;
 }
@@ -427,9 +427,9 @@ export interface MsgTimeoutAminoMsg {
 }
 /** MsgTimeout receives timed-out packet */
 export interface MsgTimeoutSDKType {
-  packet: PacketSDKType;
+  packet: PacketSDKType | undefined;
   proof_unreceived: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   next_sequence_recv: bigint;
   signer: string;
 }
@@ -449,10 +449,10 @@ export interface MsgTimeoutResponseAminoMsg {
 export interface MsgTimeoutResponseSDKType {}
 /** MsgTimeoutOnClose timed-out packet upon counterparty channel closure. */
 export interface MsgTimeoutOnClose {
-  packet: Packet;
+  packet: Packet | undefined;
   proofUnreceived: Uint8Array;
   proofClose: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   nextSequenceRecv: bigint;
   signer: string;
 }
@@ -462,10 +462,10 @@ export interface MsgTimeoutOnCloseProtoMsg {
 }
 /** MsgTimeoutOnClose timed-out packet upon counterparty channel closure. */
 export interface MsgTimeoutOnCloseAmino {
-  packet?: PacketAmino;
+  packet?: PacketAmino | undefined;
   proof_unreceived?: string;
   proof_close?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   next_sequence_recv?: string;
   signer?: string;
 }
@@ -475,10 +475,10 @@ export interface MsgTimeoutOnCloseAminoMsg {
 }
 /** MsgTimeoutOnClose timed-out packet upon counterparty channel closure. */
 export interface MsgTimeoutOnCloseSDKType {
-  packet: PacketSDKType;
+  packet: PacketSDKType | undefined;
   proof_unreceived: Uint8Array;
   proof_close: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   next_sequence_recv: bigint;
   signer: string;
 }
@@ -498,10 +498,10 @@ export interface MsgTimeoutOnCloseResponseAminoMsg {
 export interface MsgTimeoutOnCloseResponseSDKType {}
 /** MsgAcknowledgement receives incoming IBC acknowledgement */
 export interface MsgAcknowledgement {
-  packet: Packet;
+  packet: Packet | undefined;
   acknowledgement: Uint8Array;
   proofAcked: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   signer: string;
 }
 export interface MsgAcknowledgementProtoMsg {
@@ -510,10 +510,10 @@ export interface MsgAcknowledgementProtoMsg {
 }
 /** MsgAcknowledgement receives incoming IBC acknowledgement */
 export interface MsgAcknowledgementAmino {
-  packet?: PacketAmino;
+  packet?: PacketAmino | undefined;
   acknowledgement?: string;
   proof_acked?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgAcknowledgementAminoMsg {
@@ -522,10 +522,10 @@ export interface MsgAcknowledgementAminoMsg {
 }
 /** MsgAcknowledgement receives incoming IBC acknowledgement */
 export interface MsgAcknowledgementSDKType {
-  packet: PacketSDKType;
+  packet: PacketSDKType | undefined;
   acknowledgement: Uint8Array;
   proof_acked: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   signer: string;
 }
 /** MsgAcknowledgementResponse defines the Msg/Acknowledgement response type. */

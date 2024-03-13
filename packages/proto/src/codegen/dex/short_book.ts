@@ -3,7 +3,7 @@ import { BinaryReader, BinaryWriter } from '../binary';
 import { Decimal } from '@cosmjs/math';
 export interface ShortBook {
 	price: string;
-	entry?: OrderEntry;
+	entry?: OrderEntry | undefined;
 }
 export interface ShortBookProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.ShortBook';
@@ -11,7 +11,7 @@ export interface ShortBookProtoMsg {
 }
 export interface ShortBookAmino {
 	price?: string;
-	entry?: OrderEntryAmino;
+	entry?: OrderEntryAmino | undefined;
 }
 export interface ShortBookAminoMsg {
 	type: '/seiprotocol.seichain.dex.ShortBook';
@@ -19,7 +19,7 @@ export interface ShortBookAminoMsg {
 }
 export interface ShortBookSDKType {
 	price: string;
-	entry?: OrderEntrySDKType;
+	entry?: OrderEntrySDKType | undefined;
 }
 function createBaseShortBook(): ShortBook {
 	return {

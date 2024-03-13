@@ -27,29 +27,29 @@ export interface AssetIBCInfoSDKType {
 	sourceChainID: string;
 }
 export interface AssetMetadata {
-	ibcInfo?: AssetIBCInfo;
+	ibcInfo?: AssetIBCInfo | undefined;
 	/** Ex: cw20, ics20, erc20 */
 	typeAsset: string;
-	metadata: Metadata;
+	metadata: Metadata | undefined;
 }
 export interface AssetMetadataProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.AssetMetadata';
 	value: Uint8Array;
 }
 export interface AssetMetadataAmino {
-	ibcInfo?: AssetIBCInfoAmino;
+	ibcInfo?: AssetIBCInfoAmino | undefined;
 	/** Ex: cw20, ics20, erc20 */
 	type_asset?: string;
-	metadata?: MetadataAmino;
+	metadata?: MetadataAmino | undefined;
 }
 export interface AssetMetadataAminoMsg {
 	type: '/seiprotocol.seichain.dex.AssetMetadata';
 	value: AssetMetadataAmino;
 }
 export interface AssetMetadataSDKType {
-	ibcInfo?: AssetIBCInfoSDKType;
+	ibcInfo?: AssetIBCInfoSDKType | undefined;
 	type_asset: string;
-	metadata: MetadataSDKType;
+	metadata: MetadataSDKType | undefined;
 }
 function createBaseAssetIBCInfo(): AssetIBCInfo {
 	return {

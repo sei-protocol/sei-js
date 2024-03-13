@@ -115,13 +115,13 @@ export interface ContractGrantAmino {
    * Limit defines execution limits that are enforced and updated when the grant
    * is applied. When the limit lapsed the grant is removed.
    */
-  limit?: AnyAmino;
+  limit?: AnyAmino | undefined;
   /**
    * Filter define more fine-grained control on the message payload passed
    * to the contract in the operation. When no filter applies on execution, the
    * operation is prohibited.
    */
-  filter?: AnyAmino;
+  filter?: AnyAmino | undefined;
 }
 export interface ContractGrantAminoMsg {
   type: "wasm/ContractGrant";

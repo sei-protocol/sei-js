@@ -8,7 +8,7 @@ import { Price, PriceAmino, PriceSDKType } from './price';
 import { BinaryReader, BinaryWriter } from '../binary';
 /** GenesisState defines the dex module's genesis state. */
 export interface GenesisState {
-	params: Params;
+	params: Params | undefined;
 	contractState: ContractState[];
 	lastEpoch: bigint;
 }
@@ -18,7 +18,7 @@ export interface GenesisStateProtoMsg {
 }
 /** GenesisState defines the dex module's genesis state. */
 export interface GenesisStateAmino {
-	params?: ParamsAmino;
+	params?: ParamsAmino | undefined;
 	contractState?: ContractStateAmino[];
 	lastEpoch?: string;
 }
@@ -28,12 +28,12 @@ export interface GenesisStateAminoMsg {
 }
 /** GenesisState defines the dex module's genesis state. */
 export interface GenesisStateSDKType {
-	params: ParamsSDKType;
+	params: ParamsSDKType | undefined;
 	contractState: ContractStateSDKType[];
 	lastEpoch: bigint;
 }
 export interface ContractState {
-	contractInfo: ContractInfoV2;
+	contractInfo: ContractInfoV2 | undefined;
 	longBookList: LongBook[];
 	shortBookList: ShortBook[];
 	triggeredOrdersList: Order[];
@@ -46,7 +46,7 @@ export interface ContractStateProtoMsg {
 	value: Uint8Array;
 }
 export interface ContractStateAmino {
-	contractInfo?: ContractInfoV2Amino;
+	contractInfo?: ContractInfoV2Amino | undefined;
 	longBookList?: LongBookAmino[];
 	shortBookList?: ShortBookAmino[];
 	triggeredOrdersList?: OrderAmino[];
@@ -59,7 +59,7 @@ export interface ContractStateAminoMsg {
 	value: ContractStateAmino;
 }
 export interface ContractStateSDKType {
-	contractInfo: ContractInfoV2SDKType;
+	contractInfo: ContractInfoV2SDKType | undefined;
 	longBookList: LongBookSDKType[];
 	shortBookList: ShortBookSDKType[];
 	triggeredOrdersList: OrderSDKType[];
@@ -68,7 +68,7 @@ export interface ContractStateSDKType {
 	nextOrderId: bigint;
 }
 export interface ContractPairPrices {
-	pricePair: Pair;
+	pricePair: Pair | undefined;
 	prices: Price[];
 }
 export interface ContractPairPricesProtoMsg {
@@ -76,7 +76,7 @@ export interface ContractPairPricesProtoMsg {
 	value: Uint8Array;
 }
 export interface ContractPairPricesAmino {
-	pricePair?: PairAmino;
+	pricePair?: PairAmino | undefined;
 	prices?: PriceAmino[];
 }
 export interface ContractPairPricesAminoMsg {
@@ -84,7 +84,7 @@ export interface ContractPairPricesAminoMsg {
 	value: ContractPairPricesAmino;
 }
 export interface ContractPairPricesSDKType {
-	pricePair: PairSDKType;
+	pricePair: PairSDKType | undefined;
 	prices: PriceSDKType[];
 }
 function createBaseGenesisState(): GenesisState {

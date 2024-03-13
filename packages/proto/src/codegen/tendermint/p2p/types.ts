@@ -25,42 +25,42 @@ export interface ProtocolVersionSDKType {
   app: bigint;
 }
 export interface NodeInfo {
-  protocolVersion: ProtocolVersion;
+  protocolVersion: ProtocolVersion | undefined;
   nodeId: string;
   listenAddr: string;
   network: string;
   version: string;
   channels: Uint8Array;
   moniker: string;
-  other: NodeInfoOther;
+  other: NodeInfoOther | undefined;
 }
 export interface NodeInfoProtoMsg {
   typeUrl: "/tendermint.p2p.NodeInfo";
   value: Uint8Array;
 }
 export interface NodeInfoAmino {
-  protocol_version?: ProtocolVersionAmino;
+  protocol_version?: ProtocolVersionAmino | undefined;
   node_id?: string;
   listen_addr?: string;
   network?: string;
   version?: string;
   channels?: string;
   moniker?: string;
-  other?: NodeInfoOtherAmino;
+  other?: NodeInfoOtherAmino | undefined;
 }
 export interface NodeInfoAminoMsg {
   type: "/tendermint.p2p.NodeInfo";
   value: NodeInfoAmino;
 }
 export interface NodeInfoSDKType {
-  protocol_version: ProtocolVersionSDKType;
+  protocol_version: ProtocolVersionSDKType | undefined;
   node_id: string;
   listen_addr: string;
   network: string;
   version: string;
   channels: Uint8Array;
   moniker: string;
-  other: NodeInfoOtherSDKType;
+  other: NodeInfoOtherSDKType | undefined;
 }
 export interface NodeInfoOther {
   txIndex: string;
@@ -85,7 +85,7 @@ export interface NodeInfoOtherSDKType {
 export interface PeerInfo {
   id: string;
   addressInfo: PeerAddressInfo[];
-  lastConnected?: Date;
+  lastConnected?: Date | undefined;
 }
 export interface PeerInfoProtoMsg {
   typeUrl: "/tendermint.p2p.PeerInfo";
@@ -94,7 +94,7 @@ export interface PeerInfoProtoMsg {
 export interface PeerInfoAmino {
   id?: string;
   address_info?: PeerAddressInfoAmino[];
-  last_connected?: string;
+  last_connected?: string | undefined;
 }
 export interface PeerInfoAminoMsg {
   type: "/tendermint.p2p.PeerInfo";
@@ -103,12 +103,12 @@ export interface PeerInfoAminoMsg {
 export interface PeerInfoSDKType {
   id: string;
   address_info: PeerAddressInfoSDKType[];
-  last_connected?: Date;
+  last_connected?: Date | undefined;
 }
 export interface PeerAddressInfo {
   address: string;
-  lastDialSuccess?: Date;
-  lastDialFailure?: Date;
+  lastDialSuccess?: Date | undefined;
+  lastDialFailure?: Date | undefined;
   dialFailures: number;
 }
 export interface PeerAddressInfoProtoMsg {
@@ -117,8 +117,8 @@ export interface PeerAddressInfoProtoMsg {
 }
 export interface PeerAddressInfoAmino {
   address?: string;
-  last_dial_success?: string;
-  last_dial_failure?: string;
+  last_dial_success?: string | undefined;
+  last_dial_failure?: string | undefined;
   dial_failures?: number;
 }
 export interface PeerAddressInfoAminoMsg {
@@ -127,8 +127,8 @@ export interface PeerAddressInfoAminoMsg {
 }
 export interface PeerAddressInfoSDKType {
   address: string;
-  last_dial_success?: Date;
-  last_dial_failure?: Date;
+  last_dial_success?: Date | undefined;
+  last_dial_failure?: Date | undefined;
   dial_failures: number;
 }
 function createBaseProtocolVersion(): ProtocolVersion {

@@ -1,7 +1,14 @@
 import { ethers } from 'ethers';
 
-export const JSON_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001003';
+/**
+ * @category JSON Precompile
+ */
+export const ARCTIC_1_JSON_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001003';
 
+/**
+ * The ABI for the precompile contract.
+ * @category JSON Precompile
+ */
 export const JSON_PRECOMPILE_ABI = [
 	{
 		inputs: [
@@ -35,6 +42,13 @@ export const JSON_PRECOMPILE_ABI = [
 	}
 ];
 
-export const getJSONPrecompileEthersV6Contract = (signer: ethers.Signer) => {
-	return new ethers.Contract(JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, signer);
+/**
+ * Creates and returns a `JSONPrecompileContract` instance with the provided signer.
+ * @param precompileAddress The 0X address of the precompile contract.
+ * @param signer The ethersJS signer to be used with the contract.
+ * @returns The typed contract instance allowing interaction with the precompile contract.
+ * @category JSON Precompile
+ */
+export const getJSONPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer) => {
+	return new ethers.Contract(precompileAddress, JSON_PRECOMPILE_ABI, signer);
 };

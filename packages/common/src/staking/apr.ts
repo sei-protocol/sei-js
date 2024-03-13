@@ -7,6 +7,7 @@ import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/
  * The APR is estimated to be the number of tokens released in next 365 days over the number of bonded tokens.
  * @param queryClient A client configured to query the sei blockchain.
  * @returns The estimated APR percentage.
+ * @category Staking
  */
 export async function estimateStakingAPR(queryClient: any): Promise<number> {
 	// Query number of bonded tokens
@@ -32,6 +33,7 @@ export async function estimateStakingAPR(queryClient: any): Promise<number> {
  * Gets data on the staking pool.
  * @param queryClient A client configured to query the sei blockchain.
  * @returns An object with information about the amount of bonded and non-bonded tokens in the staking pool.
+ * @category Staking
  */
 export async function getPool(queryClient: any): Promise<PoolSDKType | undefined> {
 	try {
@@ -46,6 +48,7 @@ export async function getPool(queryClient: any): Promise<PoolSDKType | undefined
  * Retrieves the upcoming Mint schedule
  * @param queryClient A client configured to query the sei blockchain.
  * @returns An object with information about the mint schedule and token denom.
+ * @category Staking
  */
 export async function getMintParams(queryClient: any): Promise<ParamsSDKType | undefined> {
 	try {
@@ -63,6 +66,7 @@ export async function getMintParams(queryClient: any): Promise<ParamsSDKType | u
  * @param days The number of days in the window.
  * @param releaseSchedule The token release schedule. (See {@linkcode getMintParams}).
  * @returns The number of tokens to be released in the given window.
+ * @category Staking
  */
 export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSchedule: ScheduledTokenReleaseSDKType[]): number {
 	// End date is the exclusive end date of the window to query.

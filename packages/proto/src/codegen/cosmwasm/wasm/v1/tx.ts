@@ -13,7 +13,7 @@ export interface MsgStoreCode {
    * InstantiatePermission access control to apply on contract creation,
    * optional
    */
-  instantiatePermission?: AccessConfig;
+  instantiatePermission?: AccessConfig | undefined;
 }
 export interface MsgStoreCodeProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode";
@@ -29,7 +29,7 @@ export interface MsgStoreCodeAmino {
    * InstantiatePermission access control to apply on contract creation,
    * optional
    */
-  instantiate_permission?: AccessConfigAmino;
+  instantiate_permission?: AccessConfigAmino | undefined;
 }
 export interface MsgStoreCodeAminoMsg {
   type: "wasm/MsgStoreCode";
@@ -39,7 +39,7 @@ export interface MsgStoreCodeAminoMsg {
 export interface MsgStoreCodeSDKType {
   sender: string;
   wasm_byte_code: Uint8Array;
-  instantiate_permission?: AccessConfigSDKType;
+  instantiate_permission?: AccessConfigSDKType | undefined;
 }
 /** MsgStoreCodeResponse returns store result data. */
 export interface MsgStoreCodeResponse {

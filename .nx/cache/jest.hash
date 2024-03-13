@@ -1,0 +1,398 @@
+{
+  "16843316775615737394": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/common"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14767616037918341670": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "560752184905459036": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/evm"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16484337105133243472": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/metamask-snap"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "12070416327703087820": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "17141930636833586207": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "3818445018750947316": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "2238138147945048228": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9076167433912692415": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "3322563317865213530": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16203767365225085342": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "7256690950063598569": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4976335863690003567": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "17180870479793151768": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6403175646201102806": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9155395870528022925": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "11323145857252439133": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16345729768247646109": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "10335146295741944681": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5493419399948837721": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "13346012820336709779": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14597197854449885106": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "13850494912520623881": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14071257167724643799": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4432549619201408909": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "11088168614756752904": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "8878255693797295479": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4908506063808539489": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "7849340973994605108": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "8529330987721523484": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5653543150252853817": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "18437736610994355640": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16152951552371608873": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  }
+}

@@ -1,3 +1,6 @@
+/**
+ * @category Cosmos Kit
+ */
 export const COSMOS_KIT_ASSET_LIST = {
 	chain_name: 'sei',
 	assets: [

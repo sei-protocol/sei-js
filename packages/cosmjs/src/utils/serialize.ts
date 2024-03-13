@@ -6,6 +6,7 @@ import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
  * Serializes the given signDoc object.
  * @param signDoc The SignDoc object to be serialized.
  * @returns An array of bytes representing the serialized SignDoc object.
+ * @category Utils
  */
 export function serializeDirectSignDoc(signDoc: SignDoc): Uint8Array {
 	return SignDoc.encode(
@@ -22,6 +23,7 @@ export function serializeDirectSignDoc(signDoc: SignDoc): Uint8Array {
  * Serializes the given StdSignDoc object.
  * @param signDoc The StdSignDoc object to be serialized.
  * @returns An array of bytes representing the serialized StdSignDoc object.
+ * @category Utils
  */
 export function serializeAminoSignDoc(signDoc: StdSignDoc): Uint8Array {
 	return serializeSignDoc(signDoc);

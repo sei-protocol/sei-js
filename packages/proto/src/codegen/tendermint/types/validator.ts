@@ -3,7 +3,7 @@ import { BinaryReader, BinaryWriter } from "../../binary";
 import { bytesFromBase64, base64FromBytes } from "../../helpers";
 export interface ValidatorSet {
   validators: Validator[];
-  proposer?: Validator;
+  proposer?: Validator | undefined;
   totalVotingPower: bigint;
 }
 export interface ValidatorSetProtoMsg {
@@ -12,7 +12,7 @@ export interface ValidatorSetProtoMsg {
 }
 export interface ValidatorSetAmino {
   validators?: ValidatorAmino[];
-  proposer?: ValidatorAmino;
+  proposer?: ValidatorAmino | undefined;
   total_voting_power?: string;
 }
 export interface ValidatorSetAminoMsg {
@@ -21,12 +21,12 @@ export interface ValidatorSetAminoMsg {
 }
 export interface ValidatorSetSDKType {
   validators: ValidatorSDKType[];
-  proposer?: ValidatorSDKType;
+  proposer?: ValidatorSDKType | undefined;
   total_voting_power: bigint;
 }
 export interface Validator {
   address: Uint8Array;
-  pubKey: PublicKey;
+  pubKey: PublicKey | undefined;
   votingPower: bigint;
   proposerPriority: bigint;
 }
@@ -36,7 +36,7 @@ export interface ValidatorProtoMsg {
 }
 export interface ValidatorAmino {
   address?: string;
-  pub_key?: PublicKeyAmino;
+  pub_key?: PublicKeyAmino | undefined;
   voting_power?: string;
   proposer_priority?: string;
 }
@@ -46,12 +46,12 @@ export interface ValidatorAminoMsg {
 }
 export interface ValidatorSDKType {
   address: Uint8Array;
-  pub_key: PublicKeySDKType;
+  pub_key: PublicKeySDKType | undefined;
   voting_power: bigint;
   proposer_priority: bigint;
 }
 export interface SimpleValidator {
-  pubKey?: PublicKey;
+  pubKey?: PublicKey | undefined;
   votingPower: bigint;
 }
 export interface SimpleValidatorProtoMsg {
@@ -59,7 +59,7 @@ export interface SimpleValidatorProtoMsg {
   value: Uint8Array;
 }
 export interface SimpleValidatorAmino {
-  pub_key?: PublicKeyAmino;
+  pub_key?: PublicKeyAmino | undefined;
   voting_power?: string;
 }
 export interface SimpleValidatorAminoMsg {
@@ -67,7 +67,7 @@ export interface SimpleValidatorAminoMsg {
   value: SimpleValidatorAmino;
 }
 export interface SimpleValidatorSDKType {
-  pub_key?: PublicKeySDKType;
+  pub_key?: PublicKeySDKType | undefined;
   voting_power: bigint;
 }
 function createBaseValidatorSet(): ValidatorSet {

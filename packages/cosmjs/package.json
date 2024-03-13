@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/cosmjs",
-  "version": "0.0.0-internal-evm-20240302031324",
+  "version": "0.0.0-internal-evm-20240311151206",
   "description": "TypeScript library for CosmJS interactions on the Sei blockchain",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -33,7 +33,7 @@
     "@cosmjs/amino": "^0.29.5",
     "@cosmjs/cosmwasm-stargate": "^0.29.5",
     "@cosmjs/crypto": "^0.29.5",
-    "@cosmjs/encoding": "^0.29.5",
+    "@cosmjs/encoding": "^0.32.3",
     "@cosmjs/json-rpc": "^0.29.5",
     "@cosmjs/math": "^0.29.5",
     "@cosmjs/proto-signing": "^0.29.5",
@@ -71,8 +71,7 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ts-jest": "^29.1.1",
-    "typescript": "5.2.2"
+    "ts-jest": "^29.1.1"
   },
   "exports": {
     ".": {

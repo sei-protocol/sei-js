@@ -4,7 +4,7 @@ import { BinaryReader, BinaryWriter } from "../../../binary";
 /** GenesisState defines the bank module's genesis state. */
 export interface GenesisState {
   /** params defines all the paramaters of the module. */
-  params: Params;
+  params: Params | undefined;
   /** balances is an array containing the balances of all the accounts. */
   balances: Balance[];
   /**
@@ -22,7 +22,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the bank module's genesis state. */
 export interface GenesisStateAmino {
   /** params defines all the paramaters of the module. */
-  params?: ParamsAmino;
+  params?: ParamsAmino | undefined;
   /** balances is an array containing the balances of all the accounts. */
   balances?: BalanceAmino[];
   /**
@@ -39,7 +39,7 @@ export interface GenesisStateAminoMsg {
 }
 /** GenesisState defines the bank module's genesis state. */
 export interface GenesisStateSDKType {
-  params: ParamsSDKType;
+  params: ParamsSDKType | undefined;
   balances: BalanceSDKType[];
   supply: CoinSDKType[];
   denom_metadata: MetadataSDKType[];

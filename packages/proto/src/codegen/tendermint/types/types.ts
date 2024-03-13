@@ -122,7 +122,7 @@ export interface PartSetHeaderSDKType {
 export interface Part {
   index: number;
   bytes: Uint8Array;
-  proof: Proof;
+  proof: Proof | undefined;
 }
 export interface PartProtoMsg {
   typeUrl: "/tendermint.types.Part";
@@ -131,7 +131,7 @@ export interface PartProtoMsg {
 export interface PartAmino {
   index?: number;
   bytes?: string;
-  proof?: ProofAmino;
+  proof?: ProofAmino | undefined;
 }
 export interface PartAminoMsg {
   type: "/tendermint.types.Part";
@@ -140,12 +140,12 @@ export interface PartAminoMsg {
 export interface PartSDKType {
   index: number;
   bytes: Uint8Array;
-  proof: ProofSDKType;
+  proof: ProofSDKType | undefined;
 }
 /** BlockID */
 export interface BlockID {
   hash: Uint8Array;
-  partSetHeader: PartSetHeader;
+  partSetHeader: PartSetHeader | undefined;
 }
 export interface BlockIDProtoMsg {
   typeUrl: "/tendermint.types.BlockID";
@@ -154,7 +154,7 @@ export interface BlockIDProtoMsg {
 /** BlockID */
 export interface BlockIDAmino {
   hash?: string;
-  part_set_header?: PartSetHeaderAmino;
+  part_set_header?: PartSetHeaderAmino | undefined;
 }
 export interface BlockIDAminoMsg {
   type: "/tendermint.types.BlockID";
@@ -163,17 +163,17 @@ export interface BlockIDAminoMsg {
 /** BlockID */
 export interface BlockIDSDKType {
   hash: Uint8Array;
-  part_set_header: PartSetHeaderSDKType;
+  part_set_header: PartSetHeaderSDKType | undefined;
 }
 /** Header defines the structure of a Tendermint block header. */
 export interface Header {
   /** basic block info */
-  version: Consensus;
+  version: Consensus | undefined;
   chainId: string;
   height: bigint;
-  time: Date;
+  time: Date | undefined;
   /** prev block info */
-  lastBlockId: BlockID;
+  lastBlockId: BlockID | undefined;
   /** hashes of block data */
   lastCommitHash: Uint8Array;
   dataHash: Uint8Array;
@@ -198,12 +198,12 @@ export interface HeaderProtoMsg {
 /** Header defines the structure of a Tendermint block header. */
 export interface HeaderAmino {
   /** basic block info */
-  version?: ConsensusAmino;
+  version?: ConsensusAmino | undefined;
   chain_id?: string;
   height?: string;
-  time?: string;
+  time?: string | undefined;
   /** prev block info */
-  last_block_id?: BlockIDAmino;
+  last_block_id?: BlockIDAmino | undefined;
   /** hashes of block data */
   last_commit_hash?: string;
   data_hash?: string;
@@ -227,11 +227,11 @@ export interface HeaderAminoMsg {
 }
 /** Header defines the structure of a Tendermint block header. */
 export interface HeaderSDKType {
-  version: ConsensusSDKType;
+  version: ConsensusSDKType | undefined;
   chain_id: string;
   height: bigint;
-  time: Date;
-  last_block_id: BlockIDSDKType;
+  time: Date | undefined;
+  last_block_id: BlockIDSDKType | undefined;
   last_commit_hash: Uint8Array;
   data_hash: Uint8Array;
   validators_hash: Uint8Array;
@@ -281,8 +281,8 @@ export interface Vote {
   height: bigint;
   round: number;
   /** zero if vote is nil. */
-  blockId: BlockID;
-  timestamp: Date;
+  blockId: BlockID | undefined;
+  timestamp: Date | undefined;
   validatorAddress: Uint8Array;
   validatorIndex: number;
   signature: Uint8Array;
@@ -300,8 +300,8 @@ export interface VoteAmino {
   height?: string;
   round?: number;
   /** zero if vote is nil. */
-  block_id?: BlockIDAmino;
-  timestamp?: string;
+  block_id?: BlockIDAmino | undefined;
+  timestamp?: string | undefined;
   validator_address?: string;
   validator_index?: number;
   signature?: string;
@@ -318,8 +318,8 @@ export interface VoteSDKType {
   type: SignedMsgType;
   height: bigint;
   round: number;
-  block_id: BlockIDSDKType;
-  timestamp: Date;
+  block_id: BlockIDSDKType | undefined;
+  timestamp: Date | undefined;
   validator_address: Uint8Array;
   validator_index: number;
   signature: Uint8Array;
@@ -328,7 +328,7 @@ export interface VoteSDKType {
 export interface Commit {
   height: bigint;
   round: number;
-  blockId: BlockID;
+  blockId: BlockID | undefined;
   signatures: CommitSig[];
 }
 export interface CommitProtoMsg {
@@ -339,7 +339,7 @@ export interface CommitProtoMsg {
 export interface CommitAmino {
   height?: string;
   round?: number;
-  block_id?: BlockIDAmino;
+  block_id?: BlockIDAmino | undefined;
   signatures?: CommitSigAmino[];
 }
 export interface CommitAminoMsg {
@@ -350,14 +350,14 @@ export interface CommitAminoMsg {
 export interface CommitSDKType {
   height: bigint;
   round: number;
-  block_id: BlockIDSDKType;
+  block_id: BlockIDSDKType | undefined;
   signatures: CommitSigSDKType[];
 }
 /** CommitSig is a part of the Vote included in a Commit. */
 export interface CommitSig {
   blockIdFlag: BlockIDFlag;
   validatorAddress: Uint8Array;
-  timestamp: Date;
+  timestamp: Date | undefined;
   signature: Uint8Array;
 }
 export interface CommitSigProtoMsg {
@@ -368,7 +368,7 @@ export interface CommitSigProtoMsg {
 export interface CommitSigAmino {
   block_id_flag?: BlockIDFlag;
   validator_address?: string;
-  timestamp?: string;
+  timestamp?: string | undefined;
   signature?: string;
 }
 export interface CommitSigAminoMsg {
@@ -379,7 +379,7 @@ export interface CommitSigAminoMsg {
 export interface CommitSigSDKType {
   block_id_flag: BlockIDFlag;
   validator_address: Uint8Array;
-  timestamp: Date;
+  timestamp: Date | undefined;
   signature: Uint8Array;
 }
 export interface Proposal {
@@ -387,8 +387,8 @@ export interface Proposal {
   height: bigint;
   round: number;
   polRound: number;
-  blockId: BlockID;
-  timestamp: Date;
+  blockId: BlockID | undefined;
+  timestamp: Date | undefined;
   signature: Uint8Array;
 }
 export interface ProposalProtoMsg {
@@ -400,8 +400,8 @@ export interface ProposalAmino {
   height?: string;
   round?: number;
   pol_round?: number;
-  block_id?: BlockIDAmino;
-  timestamp?: string;
+  block_id?: BlockIDAmino | undefined;
+  timestamp?: string | undefined;
   signature?: string;
 }
 export interface ProposalAminoMsg {
@@ -413,54 +413,54 @@ export interface ProposalSDKType {
   height: bigint;
   round: number;
   pol_round: number;
-  block_id: BlockIDSDKType;
-  timestamp: Date;
+  block_id: BlockIDSDKType | undefined;
+  timestamp: Date | undefined;
   signature: Uint8Array;
 }
 export interface SignedHeader {
-  header?: Header;
-  commit?: Commit;
+  header?: Header | undefined;
+  commit?: Commit | undefined;
 }
 export interface SignedHeaderProtoMsg {
   typeUrl: "/tendermint.types.SignedHeader";
   value: Uint8Array;
 }
 export interface SignedHeaderAmino {
-  header?: HeaderAmino;
-  commit?: CommitAmino;
+  header?: HeaderAmino | undefined;
+  commit?: CommitAmino | undefined;
 }
 export interface SignedHeaderAminoMsg {
   type: "/tendermint.types.SignedHeader";
   value: SignedHeaderAmino;
 }
 export interface SignedHeaderSDKType {
-  header?: HeaderSDKType;
-  commit?: CommitSDKType;
+  header?: HeaderSDKType | undefined;
+  commit?: CommitSDKType | undefined;
 }
 export interface LightBlock {
-  signedHeader?: SignedHeader;
-  validatorSet?: ValidatorSet;
+  signedHeader?: SignedHeader | undefined;
+  validatorSet?: ValidatorSet | undefined;
 }
 export interface LightBlockProtoMsg {
   typeUrl: "/tendermint.types.LightBlock";
   value: Uint8Array;
 }
 export interface LightBlockAmino {
-  signed_header?: SignedHeaderAmino;
-  validator_set?: ValidatorSetAmino;
+  signed_header?: SignedHeaderAmino | undefined;
+  validator_set?: ValidatorSetAmino | undefined;
 }
 export interface LightBlockAminoMsg {
   type: "/tendermint.types.LightBlock";
   value: LightBlockAmino;
 }
 export interface LightBlockSDKType {
-  signed_header?: SignedHeaderSDKType;
-  validator_set?: ValidatorSetSDKType;
+  signed_header?: SignedHeaderSDKType | undefined;
+  validator_set?: ValidatorSetSDKType | undefined;
 }
 export interface BlockMeta {
-  blockId: BlockID;
+  blockId: BlockID | undefined;
   blockSize: bigint;
-  header: Header;
+  header: Header | undefined;
   numTxs: bigint;
 }
 export interface BlockMetaProtoMsg {
@@ -468,9 +468,9 @@ export interface BlockMetaProtoMsg {
   value: Uint8Array;
 }
 export interface BlockMetaAmino {
-  block_id?: BlockIDAmino;
+  block_id?: BlockIDAmino | undefined;
   block_size?: string;
-  header?: HeaderAmino;
+  header?: HeaderAmino | undefined;
   num_txs?: string;
 }
 export interface BlockMetaAminoMsg {
@@ -478,16 +478,16 @@ export interface BlockMetaAminoMsg {
   value: BlockMetaAmino;
 }
 export interface BlockMetaSDKType {
-  block_id: BlockIDSDKType;
+  block_id: BlockIDSDKType | undefined;
   block_size: bigint;
-  header: HeaderSDKType;
+  header: HeaderSDKType | undefined;
   num_txs: bigint;
 }
 /** TxProof represents a Merkle proof of the presence of a transaction in the Merkle tree. */
 export interface TxProof {
   rootHash: Uint8Array;
   data: Uint8Array;
-  proof?: Proof;
+  proof?: Proof | undefined;
 }
 export interface TxProofProtoMsg {
   typeUrl: "/tendermint.types.TxProof";
@@ -497,7 +497,7 @@ export interface TxProofProtoMsg {
 export interface TxProofAmino {
   root_hash?: string;
   data?: string;
-  proof?: ProofAmino;
+  proof?: ProofAmino | undefined;
 }
 export interface TxProofAminoMsg {
   type: "/tendermint.types.TxProof";
@@ -507,7 +507,7 @@ export interface TxProofAminoMsg {
 export interface TxProofSDKType {
   root_hash: Uint8Array;
   data: Uint8Array;
-  proof?: ProofSDKType;
+  proof?: ProofSDKType | undefined;
 }
 function createBasePartSetHeader(): PartSetHeader {
   return {

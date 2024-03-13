@@ -1,0 +1,87 @@
+[2K[1G[2m$ rimraf dist[22m
+[2K[1G[2m$ yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier[22m
+[2K[1G[2m$ tsc --project tsconfig.json[22m
+[2K[1G[2m$ BABEL_ENV=cjs babel src --out-dir dist/cjs --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored[22m
+Successfully compiled 23 files with Babel (637ms).
+[2K[1G[2m$ BABEL_ENV=esm babel src --out-dir dist/esm --extensions '.js,.jsx,.ts,.tsx' --source-maps --copy-files --no-copy-ignored[22m
+Successfully compiled 23 files with Babel (610ms).
+[2K[1G[2m$ prettier --write 'dist/**/*.js'[22m
+[[33mwarn[39m] [33mjsxBracketSameLine[39m is deprecated.
+dist/cjs/core/index.js 25ms
+dist/cjs/core/queryClient/index.js 2ms
+dist/cjs/core/queryClient/queryClient.js 5ms
+dist/cjs/core/signingClient/cosmWasmClient.js 9ms
+dist/cjs/core/signingClient/index.js 3ms
+dist/cjs/core/signingClient/stargateClient.js 13ms
+dist/cjs/cosmoskit/assetlist.js 6ms
+dist/cjs/cosmoskit/chains.js 5ms
+dist/cjs/cosmoskit/index.js 2ms
+dist/cjs/index-browser.js 1ms
+dist/cjs/index.js 3ms
+dist/cjs/utils/address.js 7ms
+dist/cjs/utils/bech32.js 5ms
+dist/cjs/utils/hash.js 1ms
+dist/cjs/utils/index.js 3ms
+dist/cjs/utils/serialize.js 2ms
+dist/cjs/utils/signing.js 8ms
+dist/cjs/wallet/config.js 28ms
+dist/cjs/wallet/index.js 7ms
+dist/cjs/wallet/keplrVerification.js 1ms
+dist/cjs/wallet/types.js 1ms
+dist/cjs/wallet/utils.js 3ms
+dist/cjs/wallet/wallet.js 3ms
+dist/esm/core/index.js 1ms
+dist/esm/core/queryClient/index.js 1ms
+dist/esm/core/queryClient/queryClient.js 2ms
+dist/esm/core/signingClient/cosmWasmClient.js 8ms
+dist/esm/core/signingClient/index.js 1ms
+dist/esm/core/signingClient/stargateClient.js 5ms
+dist/esm/cosmoskit/assetlist.js 1ms
+dist/esm/cosmoskit/chains.js 3ms
+dist/esm/cosmoskit/index.js 1ms
+dist/esm/index-browser.js 1ms
+dist/esm/index.js 2ms
+dist/esm/utils/address.js 2ms
+dist/esm/utils/bech32.js 0ms
+dist/esm/utils/hash.js 1ms
+dist/esm/utils/index.js 2ms
+dist/esm/utils/serialize.js 0ms
+dist/esm/utils/signing.js 4ms
+dist/esm/wallet/config.js 27ms
+dist/esm/wallet/index.js 6ms
+dist/esm/wallet/keplrVerification.js 1ms
+dist/esm/wallet/types.js 1ms
+dist/esm/wallet/utils.js 3ms
+dist/esm/wallet/wallet.js 2ms
+[90mdist/types/core/index.js[39m 1ms (unchanged)
+dist/types/core/queryClient/__tests__/queryClient.spec.js 1ms
+[90mdist/types/core/queryClient/index.js[39m 1ms (unchanged)
+dist/types/core/queryClient/queryClient.js 1ms
+dist/types/core/signingClient/__tests__/cosmWasmClient.spec.js 1ms
+dist/types/core/signingClient/__tests__/stargateClient.spec.js 1ms
+dist/types/core/signingClient/cosmWasmClient.js 1ms
+[90mdist/types/core/signingClient/index.js[39m 0ms (unchanged)
+dist/types/core/signingClient/stargateClient.js 1ms
+dist/types/cosmoskit/assetlist.js 0ms
+dist/types/cosmoskit/chains.js 2ms
+[90mdist/types/cosmoskit/index.js[39m 1ms (unchanged)
+dist/types/index-browser.js 0ms
+[90mdist/types/index.js[39m 0ms (unchanged)
+dist/types/utils/__tests__/address.spec.js 3ms
+dist/types/utils/__tests__/bech32.spec.js 2ms
+dist/types/utils/__tests__/hash.spec.js 2ms
+dist/types/utils/address.js 3ms
+dist/types/utils/bech32.js 1ms
+dist/types/utils/hash.js 1ms
+[90mdist/types/utils/index.js[39m 1ms (unchanged)
+dist/types/utils/serialize.js 1ms
+dist/types/utils/signing.js 4ms
+dist/types/wallet/__tests__/keplrVerification.spec.js 1ms
+dist/types/wallet/__tests__/utils.spec.js 2ms
+dist/types/wallet/__tests__/wallet.spec.js 2ms
+dist/types/wallet/config.js 4ms
+[90mdist/types/wallet/index.js[39m 1ms (unchanged)
+dist/types/wallet/keplrVerification.js 1ms
+[90mdist/types/wallet/types.js[39m 1ms (unchanged)
+dist/types/wallet/utils.js 1ms
+dist/types/wallet/wallet.js 1ms

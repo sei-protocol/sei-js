@@ -2,7 +2,7 @@ import { Pair, PairAmino, PairSDKType } from './pair';
 import { BinaryReader, BinaryWriter } from '../binary';
 import { Decimal } from '@cosmjs/math';
 export interface Twap {
-	pair?: Pair;
+	pair?: Pair | undefined;
 	twap: string;
 	lookbackSeconds: bigint;
 }
@@ -11,7 +11,7 @@ export interface TwapProtoMsg {
 	value: Uint8Array;
 }
 export interface TwapAmino {
-	pair?: PairAmino;
+	pair?: PairAmino | undefined;
 	twap?: string;
 	lookbackSeconds?: string;
 }
@@ -20,7 +20,7 @@ export interface TwapAminoMsg {
 	value: TwapAmino;
 }
 export interface TwapSDKType {
-	pair?: PairSDKType;
+	pair?: PairSDKType | undefined;
 	twap: string;
 	lookbackSeconds: bigint;
 }

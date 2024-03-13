@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.0-internal-evm-20240311151206
+
+### Patch Changes
+
+- Added wagmi configs to /evm module
+
 ## 0.0.0-internal-evm-20240301223227
 
 ### Patch Changes

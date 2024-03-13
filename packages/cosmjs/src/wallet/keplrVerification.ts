@@ -4,6 +4,7 @@ import { ChainConfig } from './index';
  * Creates a ChainConfig object for the given chainId using a standard template.
  * @param chainId The chainId of the chain to create
  * @returns A standard template ChainConfig object that can be used to interact with the given chain.
+ * @category Wallets
  */
 export const getVerifiedSuggestChain = (chainId: string): ChainConfig => ({
 	chainId: chainId,

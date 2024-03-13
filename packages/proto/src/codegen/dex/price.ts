@@ -4,7 +4,7 @@ import { Decimal } from '@cosmjs/math';
 export interface Price {
 	snapshotTimestampInSeconds: bigint;
 	price: string;
-	pair?: Pair;
+	pair?: Pair | undefined;
 }
 export interface PriceProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.Price';
@@ -13,7 +13,7 @@ export interface PriceProtoMsg {
 export interface PriceAmino {
 	snapshotTimestampInSeconds?: string;
 	price?: string;
-	pair?: PairAmino;
+	pair?: PairAmino | undefined;
 }
 export interface PriceAminoMsg {
 	type: '/seiprotocol.seichain.dex.Price';
@@ -22,7 +22,7 @@ export interface PriceAminoMsg {
 export interface PriceSDKType {
 	snapshotTimestampInSeconds: bigint;
 	price: string;
-	pair?: PairSDKType;
+	pair?: PairSDKType | undefined;
 }
 export interface PriceCandlestick {
 	beginTimestamp: bigint;

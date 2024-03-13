@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "es6",
+    "target": "ES2022",
+    "module": "ES2022",
     "declaration": true,
     "strict": true,
     "moduleResolution": "node",
@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
-    "lib": ["ES6"],
+    "lib": ["ES2020"],
     "allowJs": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

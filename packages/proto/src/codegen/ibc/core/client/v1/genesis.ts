@@ -9,7 +9,7 @@ export interface GenesisState {
   clientsConsensus: ClientConsensusStates[];
   /** metadata from each client */
   clientsMetadata: IdentifiedGenesisMetadata[];
-  params: Params;
+  params: Params | undefined;
   /** create localhost on initialization */
   createLocalhost: boolean;
   /** the sequence for the next generated client identifier */
@@ -27,7 +27,7 @@ export interface GenesisStateAmino {
   clients_consensus?: ClientConsensusStatesAmino[];
   /** metadata from each client */
   clients_metadata?: IdentifiedGenesisMetadataAmino[];
-  params?: ParamsAmino;
+  params?: ParamsAmino | undefined;
   /** create localhost on initialization */
   create_localhost?: boolean;
   /** the sequence for the next generated client identifier */
@@ -42,7 +42,7 @@ export interface GenesisStateSDKType {
   clients: IdentifiedClientStateSDKType[];
   clients_consensus: ClientConsensusStatesSDKType[];
   clients_metadata: IdentifiedGenesisMetadataSDKType[];
-  params: ParamsSDKType;
+  params: ParamsSDKType | undefined;
   create_localhost: boolean;
   next_client_sequence: bigint;
 }

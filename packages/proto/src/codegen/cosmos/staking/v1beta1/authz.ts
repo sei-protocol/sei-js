@@ -64,14 +64,14 @@ export interface StakeAuthorization {
    * max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
    * empty, there is no spend limit and any amount of coins can be delegated.
    */
-  maxTokens?: Coin;
+  maxTokens?: Coin | undefined;
   /**
    * allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
    * account.
    */
-  allowList?: StakeAuthorization_Validators;
+  allowList?: StakeAuthorization_Validators | undefined;
   /** deny_list specifies list of validator addresses to whom grantee can not delegate tokens. */
-  denyList?: StakeAuthorization_Validators;
+  denyList?: StakeAuthorization_Validators | undefined;
   /** authorization_type defines one of AuthorizationType. */
   authorizationType: AuthorizationType;
 }
@@ -89,14 +89,14 @@ export interface StakeAuthorizationAmino {
    * max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
    * empty, there is no spend limit and any amount of coins can be delegated.
    */
-  max_tokens?: CoinAmino;
+  max_tokens?: CoinAmino | undefined;
   /**
    * allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
    * account.
    */
-  allow_list?: StakeAuthorization_ValidatorsAmino;
+  allow_list?: StakeAuthorization_ValidatorsAmino | undefined;
   /** deny_list specifies list of validator addresses to whom grantee can not delegate tokens. */
-  deny_list?: StakeAuthorization_ValidatorsAmino;
+  deny_list?: StakeAuthorization_ValidatorsAmino | undefined;
   /** authorization_type defines one of AuthorizationType. */
   authorization_type?: AuthorizationType;
 }
@@ -111,9 +111,9 @@ export interface StakeAuthorizationAminoMsg {
  */
 export interface StakeAuthorizationSDKType {
   $typeUrl?: "/cosmos.staking.v1beta1.StakeAuthorization";
-  max_tokens?: CoinSDKType;
-  allow_list?: StakeAuthorization_ValidatorsSDKType;
-  deny_list?: StakeAuthorization_ValidatorsSDKType;
+  max_tokens?: CoinSDKType | undefined;
+  allow_list?: StakeAuthorization_ValidatorsSDKType | undefined;
+  deny_list?: StakeAuthorization_ValidatorsSDKType | undefined;
   authorization_type: AuthorizationType;
 }
 /** Validators defines list of validator addresses. */

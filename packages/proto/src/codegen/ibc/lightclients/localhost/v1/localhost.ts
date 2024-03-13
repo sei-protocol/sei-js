@@ -8,7 +8,7 @@ export interface ClientState {
   /** self chain ID */
   chainId: string;
   /** self latest block height */
-  height: Height;
+  height: Height | undefined;
 }
 export interface ClientStateProtoMsg {
   typeUrl: "/ibc.lightclients.localhost.v1.ClientState";
@@ -22,7 +22,7 @@ export interface ClientStateAmino {
   /** self chain ID */
   chain_id?: string;
   /** self latest block height */
-  height?: HeightAmino;
+  height?: HeightAmino | undefined;
 }
 export interface ClientStateAminoMsg {
   type: "cosmos-sdk/ClientState";
@@ -34,7 +34,7 @@ export interface ClientStateAminoMsg {
  */
 export interface ClientStateSDKType {
   chain_id: string;
-  height: HeightSDKType;
+  height: HeightSDKType | undefined;
 }
 function createBaseClientState(): ClientState {
   return {

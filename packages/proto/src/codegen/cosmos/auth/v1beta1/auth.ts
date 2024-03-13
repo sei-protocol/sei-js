@@ -8,7 +8,7 @@ import { BinaryReader, BinaryWriter } from "../../../binary";
 export interface BaseAccount {
   $typeUrl?: "/cosmos.auth.v1beta1.BaseAccount";
   address: string;
-  pubKey?: Any;
+  pubKey?: Any | undefined;
   accountNumber: bigint;
   sequence: bigint;
 }
@@ -23,7 +23,7 @@ export interface BaseAccountProtoMsg {
  */
 export interface BaseAccountAmino {
   address?: string;
-  pub_key?: AnyAmino;
+  pub_key?: AnyAmino | undefined;
   account_number?: string;
   sequence?: string;
 }
@@ -39,14 +39,14 @@ export interface BaseAccountAminoMsg {
 export interface BaseAccountSDKType {
   $typeUrl?: "/cosmos.auth.v1beta1.BaseAccount";
   address: string;
-  pub_key?: AnySDKType;
+  pub_key?: AnySDKType | undefined;
   account_number: bigint;
   sequence: bigint;
 }
 /** ModuleAccount defines an account for modules that holds coins on a pool. */
 export interface ModuleAccount {
   $typeUrl?: "/cosmos.auth.v1beta1.ModuleAccount";
-  baseAccount?: BaseAccount;
+  baseAccount?: BaseAccount | undefined;
   name: string;
   permissions: string[];
 }
@@ -56,7 +56,7 @@ export interface ModuleAccountProtoMsg {
 }
 /** ModuleAccount defines an account for modules that holds coins on a pool. */
 export interface ModuleAccountAmino {
-  base_account?: BaseAccountAmino;
+  base_account?: BaseAccountAmino | undefined;
   name?: string;
   permissions?: string[];
 }
@@ -67,7 +67,7 @@ export interface ModuleAccountAminoMsg {
 /** ModuleAccount defines an account for modules that holds coins on a pool. */
 export interface ModuleAccountSDKType {
   $typeUrl?: "/cosmos.auth.v1beta1.ModuleAccount";
-  base_account?: BaseAccountSDKType;
+  base_account?: BaseAccountSDKType | undefined;
   name: string;
   permissions: string[];
 }

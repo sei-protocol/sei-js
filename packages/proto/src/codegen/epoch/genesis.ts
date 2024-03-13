@@ -3,8 +3,8 @@ import { Epoch, EpochAmino, EpochSDKType } from './epoch';
 import { BinaryReader, BinaryWriter } from '../binary';
 /** GenesisState defines the epoch module's genesis state. */
 export interface GenesisState {
-	params: Params;
-	epoch?: Epoch;
+	params: Params | undefined;
+	epoch?: Epoch | undefined;
 }
 export interface GenesisStateProtoMsg {
 	typeUrl: '/seiprotocol.seichain.epoch.GenesisState';
@@ -12,8 +12,8 @@ export interface GenesisStateProtoMsg {
 }
 /** GenesisState defines the epoch module's genesis state. */
 export interface GenesisStateAmino {
-	params?: ParamsAmino;
-	epoch?: EpochAmino;
+	params?: ParamsAmino | undefined;
+	epoch?: EpochAmino | undefined;
 }
 export interface GenesisStateAminoMsg {
 	type: '/seiprotocol.seichain.epoch.GenesisState';
@@ -21,8 +21,8 @@ export interface GenesisStateAminoMsg {
 }
 /** GenesisState defines the epoch module's genesis state. */
 export interface GenesisStateSDKType {
-	params: ParamsSDKType;
-	epoch?: EpochSDKType;
+	params: ParamsSDKType | undefined;
+	epoch?: EpochSDKType | undefined;
 }
 function createBaseGenesisState(): GenesisState {
 	return {

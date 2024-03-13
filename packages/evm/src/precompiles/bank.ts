@@ -1,7 +1,14 @@
 import { ethers } from 'ethers';
 
-export const BANK_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001001';
+/**
+ * @category Bank Precompile
+ */
+export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001001';
 
+/**
+ * The ABI for the precompile contract.
+ * @category Bank Precompile
+ */
 export const BANK_PRECOMPILE_ABI = [
 	{
 		inputs: [
@@ -62,6 +69,12 @@ export const BANK_PRECOMPILE_ABI = [
 	}
 ];
 
-export const getBankPrecompileEthersV6Contract = (signer: ethers.Signer) => {
-	return new ethers.Contract(BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, signer);
+/**
+ * @param precompileAddress The 0X address of the precompile contract.
+ * @param signer The 'ethers' signer to be used with the contract.
+ * @returns The typed contract instance allowing interaction with the precompile contract.
+ * @category Bank Precompile
+ */
+export const getBankPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer) => {
+	return new ethers.Contract(precompileAddress, BANK_PRECOMPILE_ABI, signer);
 };

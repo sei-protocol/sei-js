@@ -1,5 +1,9 @@
 import { SeiWallet } from './types';
 
+/**
+ * A SeiWallet interface for easy interactions with the wallet and a given chainId
+ * @category Wallets
+ */
 export const FIN_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['fin']?.getOfflineSignerAuto(chainId);
@@ -20,6 +24,10 @@ export const FIN_WALLET: SeiWallet = {
 	isMobileSupported: false
 };
 
+/**
+ * A SeiWallet interface for easy interactions with the wallet and a given chainId
+ * @category Wallets
+ */
 export const COMPASS_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['compass']?.getOfflineSignerAuto(chainId);
@@ -40,6 +48,10 @@ export const COMPASS_WALLET: SeiWallet = {
 	isMobileSupported: true
 };
 
+/**
+ * A SeiWallet interface for easy interactions with the wallet and a given chainId
+ * @category Wallets
+ */
 export const KEPLR_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['keplr']?.getOfflineSignerAuto(chainId);
@@ -61,6 +73,10 @@ export const KEPLR_WALLET: SeiWallet = {
 	isMobileSupported: false
 };
 
+/**
+ * A SeiWallet interface for easy interactions with the wallet and a given chainId
+ * @category Wallets
+ */
 export const LEAP_WALLET: SeiWallet = {
 	getAccounts: async (chainId) => {
 		const offlineSigner = await window?.['leap']?.getOfflineSignerAuto(chainId);
@@ -82,4 +98,8 @@ export const LEAP_WALLET: SeiWallet = {
 	isMobileSupported: true
 };
 
+/**
+ * An array of SeiWallet interfaces that are officially supported.
+ * @category Wallets
+ */
 export const SUPPORTED_WALLETS: SeiWallet[] = [COMPASS_WALLET, FIN_WALLET, LEAP_WALLET, KEPLR_WALLET];

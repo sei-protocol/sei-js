@@ -4,7 +4,7 @@ import { BinaryReader, BinaryWriter } from '../binary';
 /** GenesisState defines the tokenfactory module's genesis state. */
 export interface GenesisState {
 	/** params defines the paramaters of the module. */
-	params: Params;
+	params: Params | undefined;
 	factoryDenoms: GenesisDenom[];
 }
 export interface GenesisStateProtoMsg {
@@ -14,7 +14,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the tokenfactory module's genesis state. */
 export interface GenesisStateAmino {
 	/** params defines the paramaters of the module. */
-	params?: ParamsAmino;
+	params?: ParamsAmino | undefined;
 	factory_denoms?: GenesisDenomAmino[];
 }
 export interface GenesisStateAminoMsg {
@@ -23,7 +23,7 @@ export interface GenesisStateAminoMsg {
 }
 /** GenesisState defines the tokenfactory module's genesis state. */
 export interface GenesisStateSDKType {
-	params: ParamsSDKType;
+	params: ParamsSDKType | undefined;
 	factory_denoms: GenesisDenomSDKType[];
 }
 /**
@@ -33,7 +33,7 @@ export interface GenesisStateSDKType {
  */
 export interface GenesisDenom {
 	denom: string;
-	authorityMetadata: DenomAuthorityMetadata;
+	authorityMetadata: DenomAuthorityMetadata | undefined;
 }
 export interface GenesisDenomProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.GenesisDenom';
@@ -46,7 +46,7 @@ export interface GenesisDenomProtoMsg {
  */
 export interface GenesisDenomAmino {
 	denom?: string;
-	authority_metadata?: DenomAuthorityMetadataAmino;
+	authority_metadata?: DenomAuthorityMetadataAmino | undefined;
 }
 export interface GenesisDenomAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.GenesisDenom';
@@ -59,7 +59,7 @@ export interface GenesisDenomAminoMsg {
  */
 export interface GenesisDenomSDKType {
 	denom: string;
-	authority_metadata: DenomAuthorityMetadataSDKType;
+	authority_metadata: DenomAuthorityMetadataSDKType | undefined;
 }
 function createBaseGenesisState(): GenesisState {
 	return {

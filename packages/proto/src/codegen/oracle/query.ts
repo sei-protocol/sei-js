@@ -44,7 +44,7 @@ export interface QueryExchangeRateRequestSDKType {
  */
 export interface QueryExchangeRateResponse {
 	/** exchange_rate defines the exchange rate of Sei denominated in various Sei */
-	oracleExchangeRate: OracleExchangeRate;
+	oracleExchangeRate: OracleExchangeRate | undefined;
 }
 export interface QueryExchangeRateResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.oracle.QueryExchangeRateResponse';
@@ -56,7 +56,7 @@ export interface QueryExchangeRateResponseProtoMsg {
  */
 export interface QueryExchangeRateResponseAmino {
 	/** exchange_rate defines the exchange rate of Sei denominated in various Sei */
-	oracle_exchange_rate?: OracleExchangeRateAmino;
+	oracle_exchange_rate?: OracleExchangeRateAmino | undefined;
 }
 export interface QueryExchangeRateResponseAminoMsg {
 	type: '/seiprotocol.seichain.oracle.QueryExchangeRateResponse';
@@ -67,7 +67,7 @@ export interface QueryExchangeRateResponseAminoMsg {
  * Query/ExchangeRate RPC method.
  */
 export interface QueryExchangeRateResponseSDKType {
-	oracle_exchange_rate: OracleExchangeRateSDKType;
+	oracle_exchange_rate: OracleExchangeRateSDKType | undefined;
 }
 /** QueryExchangeRatesRequest is the request type for the Query/ExchangeRates RPC method. */
 export interface QueryExchangeRatesRequest {}
@@ -85,7 +85,7 @@ export interface QueryExchangeRatesRequestAminoMsg {
 export interface QueryExchangeRatesRequestSDKType {}
 export interface DenomOracleExchangeRatePair {
 	denom: string;
-	oracleExchangeRate: OracleExchangeRate;
+	oracleExchangeRate: OracleExchangeRate | undefined;
 }
 export interface DenomOracleExchangeRatePairProtoMsg {
 	typeUrl: '/seiprotocol.seichain.oracle.DenomOracleExchangeRatePair';
@@ -93,7 +93,7 @@ export interface DenomOracleExchangeRatePairProtoMsg {
 }
 export interface DenomOracleExchangeRatePairAmino {
 	denom?: string;
-	oracle_exchange_rate?: OracleExchangeRateAmino;
+	oracle_exchange_rate?: OracleExchangeRateAmino | undefined;
 }
 export interface DenomOracleExchangeRatePairAminoMsg {
 	type: '/seiprotocol.seichain.oracle.DenomOracleExchangeRatePair';
@@ -101,7 +101,7 @@ export interface DenomOracleExchangeRatePairAminoMsg {
 }
 export interface DenomOracleExchangeRatePairSDKType {
 	denom: string;
-	oracle_exchange_rate: OracleExchangeRateSDKType;
+	oracle_exchange_rate: OracleExchangeRateSDKType | undefined;
 }
 /**
  * QueryExchangeRatesResponse is response type for the
@@ -378,7 +378,7 @@ export interface QueryVotePenaltyCounterRequestSDKType {
  * Query/VotePenaltyCounter RPC method.
  */
 export interface QueryVotePenaltyCounterResponse {
-	votePenaltyCounter?: VotePenaltyCounter;
+	votePenaltyCounter?: VotePenaltyCounter | undefined;
 }
 export interface QueryVotePenaltyCounterResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.oracle.QueryVotePenaltyCounterResponse';
@@ -389,7 +389,7 @@ export interface QueryVotePenaltyCounterResponseProtoMsg {
  * Query/VotePenaltyCounter RPC method.
  */
 export interface QueryVotePenaltyCounterResponseAmino {
-	vote_penalty_counter?: VotePenaltyCounterAmino;
+	vote_penalty_counter?: VotePenaltyCounterAmino | undefined;
 }
 export interface QueryVotePenaltyCounterResponseAminoMsg {
 	type: '/seiprotocol.seichain.oracle.QueryVotePenaltyCounterResponse';
@@ -400,7 +400,7 @@ export interface QueryVotePenaltyCounterResponseAminoMsg {
  * Query/VotePenaltyCounter RPC method.
  */
 export interface QueryVotePenaltyCounterResponseSDKType {
-	vote_penalty_counter?: VotePenaltyCounterSDKType;
+	vote_penalty_counter?: VotePenaltyCounterSDKType | undefined;
 }
 /**
  * QuerySlashWindow is the request type for the
@@ -479,7 +479,7 @@ export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
 	/** params defines the parameters of the module. */
-	params: Params;
+	params: Params | undefined;
 }
 export interface QueryParamsResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.oracle.QueryParamsResponse';
@@ -488,7 +488,7 @@ export interface QueryParamsResponseProtoMsg {
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseAmino {
 	/** params defines the parameters of the module. */
-	params?: ParamsAmino;
+	params?: ParamsAmino | undefined;
 }
 export interface QueryParamsResponseAminoMsg {
 	type: '/seiprotocol.seichain.oracle.QueryParamsResponse';
@@ -496,7 +496,7 @@ export interface QueryParamsResponseAminoMsg {
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-	params: ParamsSDKType;
+	params: ParamsSDKType | undefined;
 }
 function createBaseQueryExchangeRateRequest(): QueryExchangeRateRequest {
 	return {

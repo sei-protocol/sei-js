@@ -18,7 +18,7 @@ export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
 	/** params holds all the parameters of this module. */
-	params: Params;
+	params: Params | undefined;
 }
 export interface QueryParamsResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.epoch.QueryParamsResponse';
@@ -27,7 +27,7 @@ export interface QueryParamsResponseProtoMsg {
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseAmino {
 	/** params holds all the parameters of this module. */
-	params?: ParamsAmino;
+	params?: ParamsAmino | undefined;
 }
 export interface QueryParamsResponseAminoMsg {
 	type: '/seiprotocol.seichain.epoch.QueryParamsResponse';
@@ -35,7 +35,7 @@ export interface QueryParamsResponseAminoMsg {
 }
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-	params: ParamsSDKType;
+	params: ParamsSDKType | undefined;
 }
 export interface QueryEpochRequest {}
 export interface QueryEpochRequestProtoMsg {
@@ -49,21 +49,21 @@ export interface QueryEpochRequestAminoMsg {
 }
 export interface QueryEpochRequestSDKType {}
 export interface QueryEpochResponse {
-	epoch: Epoch;
+	epoch: Epoch | undefined;
 }
 export interface QueryEpochResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.epoch.QueryEpochResponse';
 	value: Uint8Array;
 }
 export interface QueryEpochResponseAmino {
-	epoch?: EpochAmino;
+	epoch?: EpochAmino | undefined;
 }
 export interface QueryEpochResponseAminoMsg {
 	type: '/seiprotocol.seichain.epoch.QueryEpochResponse';
 	value: QueryEpochResponseAmino;
 }
 export interface QueryEpochResponseSDKType {
-	epoch: EpochSDKType;
+	epoch: EpochSDKType | undefined;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
 	return {};

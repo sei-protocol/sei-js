@@ -2,7 +2,7 @@ import { Pair, PairAmino, PairSDKType } from './pair';
 import { BinaryReader, BinaryWriter } from '../binary';
 import { Decimal } from '@cosmjs/math';
 export interface TickSize {
-	pair?: Pair;
+	pair?: Pair | undefined;
 	ticksize: string;
 	contractAddr: string;
 }
@@ -11,7 +11,7 @@ export interface TickSizeProtoMsg {
 	value: Uint8Array;
 }
 export interface TickSizeAmino {
-	pair?: PairAmino;
+	pair?: PairAmino | undefined;
 	ticksize?: string;
 	contractAddr?: string;
 }
@@ -20,7 +20,7 @@ export interface TickSizeAminoMsg {
 	value: TickSizeAmino;
 }
 export interface TickSizeSDKType {
-	pair?: PairSDKType;
+	pair?: PairSDKType | undefined;
 	ticksize: string;
 	contractAddr: string;
 }

@@ -20,7 +20,7 @@ export interface Plan {
    * If this field is not empty, an error will be thrown.
    */
   /** @deprecated */
-  time: Date;
+  time: Date | undefined;
   /**
    * The height at which the upgrade must be performed.
    * Only used if Time is not set.
@@ -37,7 +37,7 @@ export interface Plan {
    * If this field is not empty, an error will be thrown.
    */
   /** @deprecated */
-  upgradedClientState?: Any;
+  upgradedClientState?: Any | undefined;
 }
 export interface PlanProtoMsg {
   typeUrl: "/cosmos.upgrade.v1beta1.Plan";
@@ -61,7 +61,7 @@ export interface PlanAmino {
    * If this field is not empty, an error will be thrown.
    */
   /** @deprecated */
-  time?: string;
+  time?: string | undefined;
   /**
    * The height at which the upgrade must be performed.
    * Only used if Time is not set.
@@ -78,7 +78,7 @@ export interface PlanAmino {
    * If this field is not empty, an error will be thrown.
    */
   /** @deprecated */
-  upgraded_client_state?: AnyAmino;
+  upgraded_client_state?: AnyAmino | undefined;
 }
 export interface PlanAminoMsg {
   type: "cosmos-sdk/Plan";
@@ -88,11 +88,11 @@ export interface PlanAminoMsg {
 export interface PlanSDKType {
   name: string;
   /** @deprecated */
-  time: Date;
+  time: Date | undefined;
   height: bigint;
   info: string;
   /** @deprecated */
-  upgraded_client_state?: AnySDKType;
+  upgraded_client_state?: AnySDKType | undefined;
 }
 /**
  * SoftwareUpgradeProposal is a gov Content type for initiating a software
@@ -105,7 +105,7 @@ export interface SoftwareUpgradeProposal {
   $typeUrl?: "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal";
   title: string;
   description: string;
-  plan: Plan;
+  plan: Plan | undefined;
 }
 export interface SoftwareUpgradeProposalProtoMsg {
   typeUrl: "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal";
@@ -121,7 +121,7 @@ export interface SoftwareUpgradeProposalProtoMsg {
 export interface SoftwareUpgradeProposalAmino {
   title?: string;
   description?: string;
-  plan?: PlanAmino;
+  plan?: PlanAmino | undefined;
 }
 export interface SoftwareUpgradeProposalAminoMsg {
   type: "cosmos-sdk/SoftwareUpgradeProposal";
@@ -138,7 +138,7 @@ export interface SoftwareUpgradeProposalSDKType {
   $typeUrl?: "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal";
   title: string;
   description: string;
-  plan: PlanSDKType;
+  plan: PlanSDKType | undefined;
 }
 /**
  * CancelSoftwareUpgradeProposal is a gov Content type for cancelling a software

@@ -166,7 +166,7 @@ export interface AccessConfigSDKType {
 }
 /** Params defines the set of wasm parameters. */
 export interface Params {
-  codeUploadAccess: AccessConfig;
+  codeUploadAccess: AccessConfig | undefined;
   instantiateDefaultPermission: AccessType;
 }
 export interface ParamsProtoMsg {
@@ -175,7 +175,7 @@ export interface ParamsProtoMsg {
 }
 /** Params defines the set of wasm parameters. */
 export interface ParamsAmino {
-  code_upload_access?: AccessConfigAmino;
+  code_upload_access?: AccessConfigAmino | undefined;
   instantiate_default_permission?: AccessType;
 }
 export interface ParamsAminoMsg {
@@ -184,7 +184,7 @@ export interface ParamsAminoMsg {
 }
 /** Params defines the set of wasm parameters. */
 export interface ParamsSDKType {
-  code_upload_access: AccessConfigSDKType;
+  code_upload_access: AccessConfigSDKType | undefined;
   instantiate_default_permission: AccessType;
 }
 /** CodeInfo is data for the uploaded contract WASM code */
@@ -194,7 +194,7 @@ export interface CodeInfo {
   /** Creator address who initially stored the code */
   creator: string;
   /** InstantiateConfig access control to apply on contract creation, optional */
-  instantiateConfig: AccessConfig;
+  instantiateConfig: AccessConfig | undefined;
 }
 export interface CodeInfoProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.CodeInfo";
@@ -207,7 +207,7 @@ export interface CodeInfoAmino {
   /** Creator address who initially stored the code */
   creator?: string;
   /** InstantiateConfig access control to apply on contract creation, optional */
-  instantiate_config?: AccessConfigAmino;
+  instantiate_config?: AccessConfigAmino | undefined;
 }
 export interface CodeInfoAminoMsg {
   type: "wasm/CodeInfo";
@@ -217,7 +217,7 @@ export interface CodeInfoAminoMsg {
 export interface CodeInfoSDKType {
   code_hash: Uint8Array;
   creator: string;
-  instantiate_config: AccessConfigSDKType;
+  instantiate_config: AccessConfigSDKType | undefined;
 }
 /** ContractInfo stores a WASM contract instance */
 export interface ContractInfo {
@@ -230,7 +230,7 @@ export interface ContractInfo {
   /** Label is optional metadata to be stored with a contract instance. */
   label: string;
   /** Created Tx position when the contract was instantiated. */
-  created?: AbsoluteTxPosition;
+  created?: AbsoluteTxPosition | undefined;
   ibcPortId: string;
   /**
    * Extension is an extension point to store custom metadata within the
@@ -260,13 +260,13 @@ export interface ContractInfoAmino {
   /** Label is optional metadata to be stored with a contract instance. */
   label?: string;
   /** Created Tx position when the contract was instantiated. */
-  created?: AbsoluteTxPositionAmino;
+  created?: AbsoluteTxPositionAmino | undefined;
   ibc_port_id?: string;
   /**
    * Extension is an extension point to store custom metadata within the
    * persistence model.
    */
-  extension?: AnyAmino;
+  extension?: AnyAmino | undefined;
 }
 export interface ContractInfoAminoMsg {
   type: "wasm/ContractInfo";
@@ -278,7 +278,7 @@ export interface ContractInfoSDKType {
   creator: string;
   admin: string;
   label: string;
-  created?: AbsoluteTxPositionSDKType;
+  created?: AbsoluteTxPositionSDKType | undefined;
   ibc_port_id: string;
   extension?: AnySDKType | undefined;
 }
@@ -288,7 +288,7 @@ export interface ContractCodeHistoryEntry {
   /** CodeID is the reference to the stored WASM code */
   codeId: bigint;
   /** Updated Tx position when the operation was executed. */
-  updated?: AbsoluteTxPosition;
+  updated?: AbsoluteTxPosition | undefined;
   msg: Uint8Array;
 }
 export interface ContractCodeHistoryEntryProtoMsg {
@@ -301,7 +301,7 @@ export interface ContractCodeHistoryEntryAmino {
   /** CodeID is the reference to the stored WASM code */
   code_id?: string;
   /** Updated Tx position when the operation was executed. */
-  updated?: AbsoluteTxPositionAmino;
+  updated?: AbsoluteTxPositionAmino | undefined;
   msg?: any;
 }
 export interface ContractCodeHistoryEntryAminoMsg {
@@ -312,7 +312,7 @@ export interface ContractCodeHistoryEntryAminoMsg {
 export interface ContractCodeHistoryEntrySDKType {
   operation: ContractCodeHistoryOperationType;
   code_id: bigint;
-  updated?: AbsoluteTxPositionSDKType;
+  updated?: AbsoluteTxPositionSDKType | undefined;
   msg: Uint8Array;
 }
 /**

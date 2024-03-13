@@ -4,7 +4,7 @@ import { bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** GenesisState defines the staking module's genesis state. */
 export interface GenesisState {
   /** params defines all the paramaters of related to deposit. */
-  params: Params;
+  params: Params | undefined;
   /**
    * last_total_power tracks the total amounts of bonded tokens recorded during
    * the previous end block.
@@ -32,7 +32,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the staking module's genesis state. */
 export interface GenesisStateAmino {
   /** params defines all the paramaters of related to deposit. */
-  params?: ParamsAmino;
+  params?: ParamsAmino | undefined;
   /**
    * last_total_power tracks the total amounts of bonded tokens recorded during
    * the previous end block.
@@ -59,7 +59,7 @@ export interface GenesisStateAminoMsg {
 }
 /** GenesisState defines the staking module's genesis state. */
 export interface GenesisStateSDKType {
-  params: ParamsSDKType;
+  params: ParamsSDKType | undefined;
   last_total_power: Uint8Array;
   last_validator_powers: LastValidatorPowerSDKType[];
   validators: ValidatorSDKType[];

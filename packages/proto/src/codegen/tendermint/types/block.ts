@@ -2,30 +2,30 @@ import { Header, HeaderAmino, HeaderSDKType, Data, DataAmino, DataSDKType, Commi
 import { EvidenceList, EvidenceListAmino, EvidenceListSDKType } from "./evidence";
 import { BinaryReader, BinaryWriter } from "../../binary";
 export interface Block {
-  header: Header;
-  data: Data;
-  evidence: EvidenceList;
-  lastCommit?: Commit;
+  header: Header | undefined;
+  data: Data | undefined;
+  evidence: EvidenceList | undefined;
+  lastCommit?: Commit | undefined;
 }
 export interface BlockProtoMsg {
   typeUrl: "/tendermint.types.Block";
   value: Uint8Array;
 }
 export interface BlockAmino {
-  header?: HeaderAmino;
-  data?: DataAmino;
-  evidence?: EvidenceListAmino;
-  last_commit?: CommitAmino;
+  header?: HeaderAmino | undefined;
+  data?: DataAmino | undefined;
+  evidence?: EvidenceListAmino | undefined;
+  last_commit?: CommitAmino | undefined;
 }
 export interface BlockAminoMsg {
   type: "/tendermint.types.Block";
   value: BlockAmino;
 }
 export interface BlockSDKType {
-  header: HeaderSDKType;
-  data: DataSDKType;
-  evidence: EvidenceListSDKType;
-  last_commit?: CommitSDKType;
+  header: HeaderSDKType | undefined;
+  data: DataSDKType | undefined;
+  evidence: EvidenceListSDKType | undefined;
+  last_commit?: CommitSDKType | undefined;
 }
 function createBaseBlock(): Block {
   return {

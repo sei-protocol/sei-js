@@ -1,0 +1,20 @@
+[2K[1G[33mwarning[39m package.json: No license field
+[2K[1G[2m$ tsc[22m
+templates/next-app-tailwind.tsx(3,37): error TS2307: Cannot find module '../src/components/WalletConnectButton' or its corresponding type declarations.
+templates/next-app.tsx(1,37): error TS2307: Cannot find module '../src/components/WalletConnectButton' or its corresponding type declarations.
+templates/next-main.tsx(1,31): error TS2307: Cannot find module 'next/app' or its corresponding type declarations.
+templates/next-main.tsx(2,32): error TS2307: Cannot find module '../src/providers/WalletProvider' or its corresponding type declarations.
+templates/providers/cosmjs.tsx(1,10): error TS2305: Module '"@sei-js/cosmjs"' has no exported member 'ARCTIC_1_SEI_COSMOS_KIT_CHAIN'.
+templates/providers/cosmjs.tsx(1,41): error TS2305: Module '"@sei-js/cosmjs"' has no exported member 'COSMOS_KIT_ASSET_LIST'.
+templates/vite-app-css.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+templates/vite-app-css.tsx(5,37): error TS2307: Cannot find module './components/WalletConnectButton' or its corresponding type declarations.
+templates/vite-app-sass.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+templates/vite-app-sass.tsx(4,20): error TS2307: Cannot find module './App.module.sass' or its corresponding type declarations.
+templates/vite-app-sass.tsx(5,37): error TS2307: Cannot find module './components/WalletConnectButton' or its corresponding type declarations.
+templates/vite-app-tailwind.tsx(8,37): error TS2307: Cannot find module './components/WalletConnectButton' or its corresponding type declarations.
+templates/vite-main.tsx(3,17): error TS2307: Cannot find module './App.tsx' or its corresponding type declarations.
+templates/vite-main.tsx(6,32): error TS2307: Cannot find module './providers/WalletProvider.tsx' or its corresponding type declarations.
+templates/vite/config.ts(1,30): error TS2307: Cannot find module 'vite' or its corresponding type declarations.
+templates/vite/config.ts(2,19): error TS2307: Cannot find module '@vitejs/plugin-react' or its corresponding type declarations.
+[2K[1G[31merror[39m Command failed with exit code 2.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.

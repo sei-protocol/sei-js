@@ -29,7 +29,7 @@ export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
 	/** params holds all the parameters of this module. */
-	params: Params;
+	params: Params | undefined;
 }
 export interface QueryParamsResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryParamsResponse';
@@ -38,7 +38,7 @@ export interface QueryParamsResponseProtoMsg {
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseAmino {
 	/** params holds all the parameters of this module. */
-	params?: ParamsAmino;
+	params?: ParamsAmino | undefined;
 }
 export interface QueryParamsResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryParamsResponse';
@@ -46,7 +46,7 @@ export interface QueryParamsResponseAminoMsg {
 }
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-	params: ParamsSDKType;
+	params: ParamsSDKType | undefined;
 }
 export interface QueryGetLongBookRequest {
 	price: string;
@@ -75,24 +75,24 @@ export interface QueryGetLongBookRequestSDKType {
 	assetDenom: string;
 }
 export interface QueryGetLongBookResponse {
-	LongBook: LongBook;
+	LongBook: LongBook | undefined;
 }
 export interface QueryGetLongBookResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryGetLongBookResponse';
 	value: Uint8Array;
 }
 export interface QueryGetLongBookResponseAmino {
-	LongBook?: LongBookAmino;
+	LongBook?: LongBookAmino | undefined;
 }
 export interface QueryGetLongBookResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetLongBookResponse';
 	value: QueryGetLongBookResponseAmino;
 }
 export interface QueryGetLongBookResponseSDKType {
-	LongBook: LongBookSDKType;
+	LongBook: LongBookSDKType | undefined;
 }
 export interface QueryAllLongBookRequest {
-	pagination?: PageRequest;
+	pagination?: PageRequest | undefined;
 	contractAddr: string;
 	priceDenom: string;
 	assetDenom: string;
@@ -102,7 +102,7 @@ export interface QueryAllLongBookRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryAllLongBookRequestAmino {
-	pagination?: PageRequestAmino;
+	pagination?: PageRequestAmino | undefined;
 	contractAddr?: string;
 	priceDenom?: string;
 	assetDenom?: string;
@@ -112,14 +112,14 @@ export interface QueryAllLongBookRequestAminoMsg {
 	value: QueryAllLongBookRequestAmino;
 }
 export interface QueryAllLongBookRequestSDKType {
-	pagination?: PageRequestSDKType;
+	pagination?: PageRequestSDKType | undefined;
 	contractAddr: string;
 	priceDenom: string;
 	assetDenom: string;
 }
 export interface QueryAllLongBookResponse {
 	LongBook: LongBook[];
-	pagination?: PageResponse;
+	pagination?: PageResponse | undefined;
 }
 export interface QueryAllLongBookResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryAllLongBookResponse';
@@ -127,7 +127,7 @@ export interface QueryAllLongBookResponseProtoMsg {
 }
 export interface QueryAllLongBookResponseAmino {
 	LongBook?: LongBookAmino[];
-	pagination?: PageResponseAmino;
+	pagination?: PageResponseAmino | undefined;
 }
 export interface QueryAllLongBookResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryAllLongBookResponse';
@@ -135,7 +135,7 @@ export interface QueryAllLongBookResponseAminoMsg {
 }
 export interface QueryAllLongBookResponseSDKType {
 	LongBook: LongBookSDKType[];
-	pagination?: PageResponseSDKType;
+	pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryGetShortBookRequest {
 	price: string;
@@ -164,24 +164,24 @@ export interface QueryGetShortBookRequestSDKType {
 	assetDenom: string;
 }
 export interface QueryGetShortBookResponse {
-	ShortBook: ShortBook;
+	ShortBook: ShortBook | undefined;
 }
 export interface QueryGetShortBookResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryGetShortBookResponse';
 	value: Uint8Array;
 }
 export interface QueryGetShortBookResponseAmino {
-	ShortBook?: ShortBookAmino;
+	ShortBook?: ShortBookAmino | undefined;
 }
 export interface QueryGetShortBookResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetShortBookResponse';
 	value: QueryGetShortBookResponseAmino;
 }
 export interface QueryGetShortBookResponseSDKType {
-	ShortBook: ShortBookSDKType;
+	ShortBook: ShortBookSDKType | undefined;
 }
 export interface QueryAllShortBookRequest {
-	pagination?: PageRequest;
+	pagination?: PageRequest | undefined;
 	contractAddr: string;
 	priceDenom: string;
 	assetDenom: string;
@@ -191,7 +191,7 @@ export interface QueryAllShortBookRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryAllShortBookRequestAmino {
-	pagination?: PageRequestAmino;
+	pagination?: PageRequestAmino | undefined;
 	contractAddr?: string;
 	priceDenom?: string;
 	assetDenom?: string;
@@ -201,14 +201,14 @@ export interface QueryAllShortBookRequestAminoMsg {
 	value: QueryAllShortBookRequestAmino;
 }
 export interface QueryAllShortBookRequestSDKType {
-	pagination?: PageRequestSDKType;
+	pagination?: PageRequestSDKType | undefined;
 	contractAddr: string;
 	priceDenom: string;
 	assetDenom: string;
 }
 export interface QueryAllShortBookResponse {
 	ShortBook: ShortBook[];
-	pagination?: PageResponse;
+	pagination?: PageResponse | undefined;
 }
 export interface QueryAllShortBookResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryAllShortBookResponse';
@@ -216,7 +216,7 @@ export interface QueryAllShortBookResponseProtoMsg {
 }
 export interface QueryAllShortBookResponseAmino {
 	ShortBook?: ShortBookAmino[];
-	pagination?: PageResponseAmino;
+	pagination?: PageResponseAmino | undefined;
 }
 export interface QueryAllShortBookResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryAllShortBookResponse';
@@ -224,7 +224,7 @@ export interface QueryAllShortBookResponseAminoMsg {
 }
 export interface QueryAllShortBookResponseSDKType {
 	ShortBook: ShortBookSDKType[];
-	pagination?: PageResponseSDKType;
+	pagination?: PageResponseSDKType | undefined;
 }
 export interface QueryGetPricesRequest {
 	priceDenom: string;
@@ -293,7 +293,7 @@ export interface QueryGetPriceRequestSDKType {
 	timestamp: bigint;
 }
 export interface QueryGetPriceResponse {
-	price?: Price;
+	price?: Price | undefined;
 	found: boolean;
 }
 export interface QueryGetPriceResponseProtoMsg {
@@ -301,7 +301,7 @@ export interface QueryGetPriceResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetPriceResponseAmino {
-	price?: PriceAmino;
+	price?: PriceAmino | undefined;
 	found?: boolean;
 }
 export interface QueryGetPriceResponseAminoMsg {
@@ -309,7 +309,7 @@ export interface QueryGetPriceResponseAminoMsg {
 	value: QueryGetPriceResponseAmino;
 }
 export interface QueryGetPriceResponseSDKType {
-	price?: PriceSDKType;
+	price?: PriceSDKType | undefined;
 	found: boolean;
 }
 export interface QueryGetLatestPriceRequest {
@@ -336,21 +336,21 @@ export interface QueryGetLatestPriceRequestSDKType {
 	contractAddr: string;
 }
 export interface QueryGetLatestPriceResponse {
-	price?: Price;
+	price?: Price | undefined;
 }
 export interface QueryGetLatestPriceResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryGetLatestPriceResponse';
 	value: Uint8Array;
 }
 export interface QueryGetLatestPriceResponseAmino {
-	price?: PriceAmino;
+	price?: PriceAmino | undefined;
 }
 export interface QueryGetLatestPriceResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetLatestPriceResponse';
 	value: QueryGetLatestPriceResponseAmino;
 }
 export interface QueryGetLatestPriceResponseSDKType {
-	price?: PriceSDKType;
+	price?: PriceSDKType | undefined;
 }
 export interface QueryGetTwapsRequest {
 	contractAddr: string;
@@ -435,21 +435,21 @@ export interface QueryAssetMetadataRequestSDKType {
 	denom: string;
 }
 export interface QueryAssetMetadataResponse {
-	metadata?: AssetMetadata;
+	metadata?: AssetMetadata | undefined;
 }
 export interface QueryAssetMetadataResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryAssetMetadataResponse';
 	value: Uint8Array;
 }
 export interface QueryAssetMetadataResponseAmino {
-	metadata?: AssetMetadataAmino;
+	metadata?: AssetMetadataAmino | undefined;
 }
 export interface QueryAssetMetadataResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryAssetMetadataResponse';
 	value: QueryAssetMetadataResponseAmino;
 }
 export interface QueryAssetMetadataResponseSDKType {
-	metadata?: AssetMetadataSDKType;
+	metadata?: AssetMetadataSDKType | undefined;
 }
 export interface QueryRegisteredPairsRequest {
 	contractAddr: string;
@@ -503,21 +503,21 @@ export interface QueryRegisteredContractRequestSDKType {
 	contractAddr: string;
 }
 export interface QueryRegisteredContractResponse {
-	contractInfo?: ContractInfoV2;
+	contractInfo?: ContractInfoV2 | undefined;
 }
 export interface QueryRegisteredContractResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryRegisteredContractResponse';
 	value: Uint8Array;
 }
 export interface QueryRegisteredContractResponseAmino {
-	contract_info?: ContractInfoV2Amino;
+	contract_info?: ContractInfoV2Amino | undefined;
 }
 export interface QueryRegisteredContractResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryRegisteredContractResponse';
 	value: QueryRegisteredContractResponseAmino;
 }
 export interface QueryRegisteredContractResponseSDKType {
-	contract_info?: ContractInfoV2SDKType;
+	contract_info?: ContractInfoV2SDKType | undefined;
 }
 export interface QueryGetOrdersRequest {
 	contractAddr: string;
@@ -583,21 +583,21 @@ export interface QueryGetOrderByIDRequestSDKType {
 	id: bigint;
 }
 export interface QueryGetOrderByIDResponse {
-	order?: Order;
+	order?: Order | undefined;
 }
 export interface QueryGetOrderByIDResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryGetOrderByIDResponse';
 	value: Uint8Array;
 }
 export interface QueryGetOrderByIDResponseAmino {
-	order?: OrderAmino;
+	order?: OrderAmino | undefined;
 }
 export interface QueryGetOrderByIDResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetOrderByIDResponse';
 	value: QueryGetOrderByIDResponseAmino;
 }
 export interface QueryGetOrderByIDResponseSDKType {
-	order?: OrderSDKType;
+	order?: OrderSDKType | undefined;
 }
 export interface QueryGetHistoricalPricesRequest {
 	contractAddr: string;
@@ -701,7 +701,7 @@ export interface QueryGetMarketSummaryResponseSDKType {
 	lastPrice: string;
 }
 export interface QueryOrderSimulationRequest {
-	order?: Order;
+	order?: Order | undefined;
 	contractAddr: string;
 }
 export interface QueryOrderSimulationRequestProtoMsg {
@@ -709,7 +709,7 @@ export interface QueryOrderSimulationRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryOrderSimulationRequestAmino {
-	order?: OrderAmino;
+	order?: OrderAmino | undefined;
 	contractAddr?: string;
 }
 export interface QueryOrderSimulationRequestAminoMsg {
@@ -717,7 +717,7 @@ export interface QueryOrderSimulationRequestAminoMsg {
 	value: QueryOrderSimulationRequestAmino;
 }
 export interface QueryOrderSimulationRequestSDKType {
-	order?: OrderSDKType;
+	order?: OrderSDKType | undefined;
 	contractAddr: string;
 }
 export interface QueryOrderSimulationResponse {
@@ -755,21 +755,21 @@ export interface QueryGetMatchResultRequestSDKType {
 	contractAddr: string;
 }
 export interface QueryGetMatchResultResponse {
-	result?: MatchResult;
+	result?: MatchResult | undefined;
 }
 export interface QueryGetMatchResultResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.QueryGetMatchResultResponse';
 	value: Uint8Array;
 }
 export interface QueryGetMatchResultResponseAmino {
-	result?: MatchResultAmino;
+	result?: MatchResultAmino | undefined;
 }
 export interface QueryGetMatchResultResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetMatchResultResponse';
 	value: QueryGetMatchResultResponseAmino;
 }
 export interface QueryGetMatchResultResponseSDKType {
-	result?: MatchResultSDKType;
+	result?: MatchResultSDKType | undefined;
 }
 export interface QueryGetOrderCountRequest {
 	contractAddr: string;

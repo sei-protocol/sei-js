@@ -1,7 +1,14 @@
 import { ethers } from 'ethers';
 
-export const STAKING_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001005';
+/**
+ * @category Staking Precompile
+ */
+export const ARCTIC_1_STAKING_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001005';
 
+/**
+ * The ABI for the precompile contract.
+ * @category Staking Precompile
+ */
 export const STAKING_PRECOMPILE_ABI = [
 	{
 		inputs: [{ internalType: 'string', name: 'valAddress', type: 'string' }],
@@ -33,6 +40,13 @@ export const STAKING_PRECOMPILE_ABI = [
 	}
 ];
 
-export const getStakingPrecompileEthersV6Contract = (signer: ethers.Signer) => {
-	return new ethers.Contract(STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, signer);
+/**
+ * Creates and returns a `StakingPrecompileContract` instance with the provided signer.
+ * @param precompileAddress The 0X address of the precompile contract.
+ * @param signer The ethersJS signer to be used with the contract.
+ * @returns The typed contract instance allowing interaction with the precompile contract.
+ * @category Staking Precompile
+ */
+export const getStakingPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer) => {
+	return new ethers.Contract(precompileAddress, STAKING_PRECOMPILE_ABI, signer);
 };

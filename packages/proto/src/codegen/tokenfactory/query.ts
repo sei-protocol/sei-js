@@ -18,7 +18,7 @@ export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
 	/** params defines the parameters of the module. */
-	params: Params;
+	params: Params | undefined;
 }
 export interface QueryParamsResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryParamsResponse';
@@ -27,7 +27,7 @@ export interface QueryParamsResponseProtoMsg {
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseAmino {
 	/** params defines the parameters of the module. */
-	params?: ParamsAmino;
+	params?: ParamsAmino | undefined;
 }
 export interface QueryParamsResponseAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.QueryParamsResponse';
@@ -35,7 +35,7 @@ export interface QueryParamsResponseAminoMsg {
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-	params: ParamsSDKType;
+	params: ParamsSDKType | undefined;
 }
 /**
  * QueryDenomAuthorityMetadataRequest defines the request structure for the
@@ -71,7 +71,7 @@ export interface QueryDenomAuthorityMetadataRequestSDKType {
  * DenomAuthorityMetadata gRPC query.
  */
 export interface QueryDenomAuthorityMetadataResponse {
-	authorityMetadata: DenomAuthorityMetadata;
+	authorityMetadata: DenomAuthorityMetadata | undefined;
 }
 export interface QueryDenomAuthorityMetadataResponseProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse';
@@ -82,7 +82,7 @@ export interface QueryDenomAuthorityMetadataResponseProtoMsg {
  * DenomAuthorityMetadata gRPC query.
  */
 export interface QueryDenomAuthorityMetadataResponseAmino {
-	authority_metadata?: DenomAuthorityMetadataAmino;
+	authority_metadata?: DenomAuthorityMetadataAmino | undefined;
 }
 export interface QueryDenomAuthorityMetadataResponseAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse';
@@ -93,7 +93,7 @@ export interface QueryDenomAuthorityMetadataResponseAminoMsg {
  * DenomAuthorityMetadata gRPC query.
  */
 export interface QueryDenomAuthorityMetadataResponseSDKType {
-	authority_metadata: DenomAuthorityMetadataSDKType;
+	authority_metadata: DenomAuthorityMetadataSDKType | undefined;
 }
 /**
  * QueryDenomsFromCreatorRequest defines the request structure for the

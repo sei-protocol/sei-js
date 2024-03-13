@@ -30,7 +30,7 @@ export interface QueryCurrentPlanRequestSDKType {}
  */
 export interface QueryCurrentPlanResponse {
   /** plan is the current upgrade plan. */
-  plan?: Plan;
+  plan?: Plan | undefined;
 }
 export interface QueryCurrentPlanResponseProtoMsg {
   typeUrl: "/cosmos.upgrade.v1beta1.QueryCurrentPlanResponse";
@@ -42,7 +42,7 @@ export interface QueryCurrentPlanResponseProtoMsg {
  */
 export interface QueryCurrentPlanResponseAmino {
   /** plan is the current upgrade plan. */
-  plan?: PlanAmino;
+  plan?: PlanAmino | undefined;
 }
 export interface QueryCurrentPlanResponseAminoMsg {
   type: "cosmos-sdk/QueryCurrentPlanResponse";
@@ -53,7 +53,7 @@ export interface QueryCurrentPlanResponseAminoMsg {
  * method.
  */
 export interface QueryCurrentPlanResponseSDKType {
-  plan?: PlanSDKType;
+  plan?: PlanSDKType | undefined;
 }
 /**
  * QueryCurrentPlanRequest is the request type for the Query/AppliedPlan RPC

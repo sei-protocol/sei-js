@@ -3,10 +3,10 @@ import { Duration, DurationAmino, DurationSDKType } from '../google/protobuf/dur
 import { BinaryReader, BinaryWriter } from '../binary';
 import { toTimestamp, fromTimestamp } from '../helpers';
 export interface Epoch {
-	genesisTime: Date;
-	epochDuration: Duration;
+	genesisTime: Date | undefined;
+	epochDuration: Duration | undefined;
 	currentEpoch: bigint;
-	currentEpochStartTime: Date;
+	currentEpochStartTime: Date | undefined;
 	currentEpochHeight: bigint;
 }
 export interface EpochProtoMsg {
@@ -14,10 +14,10 @@ export interface EpochProtoMsg {
 	value: Uint8Array;
 }
 export interface EpochAmino {
-	genesis_time?: string;
-	epoch_duration?: DurationAmino;
+	genesis_time?: string | undefined;
+	epoch_duration?: DurationAmino | undefined;
 	current_epoch?: string;
-	current_epoch_start_time?: string;
+	current_epoch_start_time?: string | undefined;
 	current_epoch_height?: string;
 }
 export interface EpochAminoMsg {
@@ -25,10 +25,10 @@ export interface EpochAminoMsg {
 	value: EpochAmino;
 }
 export interface EpochSDKType {
-	genesis_time: Date;
-	epoch_duration: DurationSDKType;
+	genesis_time: Date | undefined;
+	epoch_duration: DurationSDKType | undefined;
 	current_epoch: bigint;
-	current_epoch_start_time: Date;
+	current_epoch_start_time: Date | undefined;
 	current_epoch_height: bigint;
 }
 function createBaseEpoch(): Epoch {

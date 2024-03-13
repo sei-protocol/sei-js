@@ -4,32 +4,32 @@ import { Validator, ValidatorAmino, ValidatorSDKType } from "./validator";
 import { BinaryReader, BinaryWriter } from "../../binary";
 import { toTimestamp, fromTimestamp } from "../../helpers";
 export interface Evidence {
-  duplicateVoteEvidence?: DuplicateVoteEvidence;
-  lightClientAttackEvidence?: LightClientAttackEvidence;
+  duplicateVoteEvidence?: DuplicateVoteEvidence | undefined;
+  lightClientAttackEvidence?: LightClientAttackEvidence | undefined;
 }
 export interface EvidenceProtoMsg {
   typeUrl: "/tendermint.types.Evidence";
   value: Uint8Array;
 }
 export interface EvidenceAmino {
-  duplicate_vote_evidence?: DuplicateVoteEvidenceAmino;
-  light_client_attack_evidence?: LightClientAttackEvidenceAmino;
+  duplicate_vote_evidence?: DuplicateVoteEvidenceAmino | undefined;
+  light_client_attack_evidence?: LightClientAttackEvidenceAmino | undefined;
 }
 export interface EvidenceAminoMsg {
   type: "/tendermint.types.Evidence";
   value: EvidenceAmino;
 }
 export interface EvidenceSDKType {
-  duplicate_vote_evidence?: DuplicateVoteEvidenceSDKType;
-  light_client_attack_evidence?: LightClientAttackEvidenceSDKType;
+  duplicate_vote_evidence?: DuplicateVoteEvidenceSDKType | undefined;
+  light_client_attack_evidence?: LightClientAttackEvidenceSDKType | undefined;
 }
 /** DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
 export interface DuplicateVoteEvidence {
-  voteA?: Vote;
-  voteB?: Vote;
+  voteA?: Vote | undefined;
+  voteB?: Vote | undefined;
   totalVotingPower: bigint;
   validatorPower: bigint;
-  timestamp: Date;
+  timestamp: Date | undefined;
 }
 export interface DuplicateVoteEvidenceProtoMsg {
   typeUrl: "/tendermint.types.DuplicateVoteEvidence";
@@ -37,11 +37,11 @@ export interface DuplicateVoteEvidenceProtoMsg {
 }
 /** DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
 export interface DuplicateVoteEvidenceAmino {
-  vote_a?: VoteAmino;
-  vote_b?: VoteAmino;
+  vote_a?: VoteAmino | undefined;
+  vote_b?: VoteAmino | undefined;
   total_voting_power?: string;
   validator_power?: string;
-  timestamp?: string;
+  timestamp?: string | undefined;
 }
 export interface DuplicateVoteEvidenceAminoMsg {
   type: "/tendermint.types.DuplicateVoteEvidence";
@@ -49,19 +49,19 @@ export interface DuplicateVoteEvidenceAminoMsg {
 }
 /** DuplicateVoteEvidence contains evidence of a validator signed two conflicting votes. */
 export interface DuplicateVoteEvidenceSDKType {
-  vote_a?: VoteSDKType;
-  vote_b?: VoteSDKType;
+  vote_a?: VoteSDKType | undefined;
+  vote_b?: VoteSDKType | undefined;
   total_voting_power: bigint;
   validator_power: bigint;
-  timestamp: Date;
+  timestamp: Date | undefined;
 }
 /** LightClientAttackEvidence contains evidence of a set of validators attempting to mislead a light client. */
 export interface LightClientAttackEvidence {
-  conflictingBlock?: LightBlock;
+  conflictingBlock?: LightBlock | undefined;
   commonHeight: bigint;
   byzantineValidators: Validator[];
   totalVotingPower: bigint;
-  timestamp: Date;
+  timestamp: Date | undefined;
 }
 export interface LightClientAttackEvidenceProtoMsg {
   typeUrl: "/tendermint.types.LightClientAttackEvidence";
@@ -69,11 +69,11 @@ export interface LightClientAttackEvidenceProtoMsg {
 }
 /** LightClientAttackEvidence contains evidence of a set of validators attempting to mislead a light client. */
 export interface LightClientAttackEvidenceAmino {
-  conflicting_block?: LightBlockAmino;
+  conflicting_block?: LightBlockAmino | undefined;
   common_height?: string;
   byzantine_validators?: ValidatorAmino[];
   total_voting_power?: string;
-  timestamp?: string;
+  timestamp?: string | undefined;
 }
 export interface LightClientAttackEvidenceAminoMsg {
   type: "/tendermint.types.LightClientAttackEvidence";
@@ -81,11 +81,11 @@ export interface LightClientAttackEvidenceAminoMsg {
 }
 /** LightClientAttackEvidence contains evidence of a set of validators attempting to mislead a light client. */
 export interface LightClientAttackEvidenceSDKType {
-  conflicting_block?: LightBlockSDKType;
+  conflicting_block?: LightBlockSDKType | undefined;
   common_height: bigint;
   byzantine_validators: ValidatorSDKType[];
   total_voting_power: bigint;
-  timestamp: Date;
+  timestamp: Date | undefined;
 }
 export interface EvidenceList {
   evidence: Evidence[];

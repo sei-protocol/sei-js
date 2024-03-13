@@ -357,7 +357,7 @@ export interface HttpRule {
    * HTTP method unspecified for this rule. The wild-card rule is useful
    * for services that provide content to Web (HTML) clients.
    */
-  custom?: CustomHttpPattern;
+  custom?: CustomHttpPattern | undefined;
   /**
    * The name of the request field whose value is mapped to the HTTP request
    * body, or `*` for mapping all request fields not captured by the path
@@ -684,7 +684,7 @@ export interface HttpRuleAmino {
    * HTTP method unspecified for this rule. The wild-card rule is useful
    * for services that provide content to Web (HTML) clients.
    */
-  custom?: CustomHttpPatternAmino;
+  custom?: CustomHttpPatternAmino | undefined;
   /**
    * The name of the request field whose value is mapped to the HTTP request
    * body, or `*` for mapping all request fields not captured by the path
@@ -992,7 +992,7 @@ export interface HttpRuleSDKType {
   post?: string;
   delete?: string;
   patch?: string;
-  custom?: CustomHttpPatternSDKType;
+  custom?: CustomHttpPatternSDKType | undefined;
   body: string;
   response_body: string;
   additional_bindings: HttpRuleSDKType[];

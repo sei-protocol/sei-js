@@ -27,7 +27,7 @@ export type MsgSubmitProposalEncoded = Omit<MsgSubmitProposal, "content"> & {
  * proposal Content.
  */
 export interface MsgSubmitProposalAmino {
-  content?: AnyAmino;
+  content?: AnyAmino | undefined;
   initial_deposit?: CoinAmino[];
   proposer?: string;
 }

@@ -1,0 +1,28 @@
+[2K[1G[2m$ rimraf dist && yarn md-docs[22m
+[2K[1G[2m$ widdershins src/sei-rest-open-api.yaml -o openapi.md  --omitHeader --c[22m
+Compiling all doT templates...
+Loaded def authentication.def
+Loaded def authentication_none.def
+Loaded def callbacks.def
+Loaded def debug.def
+Loaded def discovery.def
+Loaded def footer.def
+Loaded def links.def
+Loaded def parameters.def
+Loaded def responses.def
+Loaded def security.def
+Compiling code_csharp.dot to function
+Compiling code_go.dot to function
+Compiling code_http.dot to function
+Compiling code_java.dot to function
+Compiling code_javascript.dot to function
+Compiling code_jquery.dot to function
+Compiling code_nodejs.dot to function
+Compiling code_php.dot to function
+Compiling code_python.dot to function
+Compiling code_ruby.dot to function
+Compiling code_shell.dot to function
+Compiling main.dot to function
+Compiling operation.dot to function
+Compiling translations.dot to function
+[2K[1G[2m$ tsc --project tsconfig.json[22m

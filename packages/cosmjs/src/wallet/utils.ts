@@ -1,5 +1,8 @@
 import { ChainConfig, ChainInfo, Currency } from './types';
 
+/**
+ * @category Config
+ */
 const DEFAULT_CHAIN_INFO = {
 	chainName: 'Sei',
 	chainId: 'pacific-1',
@@ -13,6 +16,7 @@ const DEFAULT_CHAIN_INFO = {
  * @param chainInfo A ChainInfo object. Fields from this object will override the default chain info.
  * @param currencies A list of Currency objects to add to the created chain configuration.
  * @returns A chain configuration object with overrides from ChainInfo and any additional currencies.
+ * @category Config
  */
 export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []): ChainConfig => {
 	const prefix = 'sei';

@@ -1,0 +1,3534 @@
+{
+  "version": "6.0",
+  "nxVersion": "18.0.6",
+  "deps": {
+    "@changesets/cli": "^2.26.0",
+    "axios": "^1.6.0",
+    "glob": "^10.3.10",
+    "tslib": "^2.3.0",
+    "@knodes/typedoc-plugin-pages": "^0.23.4",
+    "@nrwl/node": "^18.0.7",
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/workspace": "^18.0.6",
+    "@nx/esbuild": "18.0.7",
+    "@nx/eslint": "18.0.7",
+    "@nx/eslint-plugin": "18.0.7",
+    "@nx/jest": "18.0.7",
+    "@nx/js": "18.0.7",
+    "@nx/node": "18.0.7",
+    "@swc-node/register": "~1.8.0",
+    "@swc/core": "~1.3.85",
+    "@swc/helpers": "~0.5.2",
+    "@types/jest": "^29.5.5",
+    "@types/node": "20.8.2",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "esbuild": "^0.19.2",
+    "eslint": "~8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "28.1.1",
+    "jest-environment-node": "^29.4.1",
+    "nodemon": "^3.1.0",
+    "nx": "^18.0.6",
+    "prettier": "^3.2.5",
+    "rimraf": "^3.0.2",
+    "ts-jest": "29.1.1",
+    "ts-node": "10.9.1",
+    "typedoc": "^0.25.12",
+    "typedoc-material-theme": "^1.0.2",
+    "typedoc-plugin-pages": "^1.1.0",
+    "typedoc-theme-category-nav": "^0.0.3",
+    "typedoc-theme-hierarchy": "^4.1.2",
+    "typescript": "5.4.2"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [
+    {
+      "name": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "name": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    }
+  ],
+  "fileMap": {
+    "nonProjectFiles": [],
+    "projectFileMap": {
+      "@sei-js/evm": [
+        {
+          "file": "packages/evm/.babelrc.js",
+          "hash": "4638744510834633633"
+        },
+        {
+          "file": "packages/evm/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/evm/.npmignore",
+          "hash": "17948297527781443299"
+        },
+        {
+          "file": "packages/evm/CHANGELOG.md",
+          "hash": "17711246691229296716"
+        },
+        {
+          "file": "packages/evm/README.md",
+          "hash": "6448127743107443704"
+        },
+        {
+          "file": "packages/evm/jest.config.js",
+          "hash": "16414517479619571110"
+        },
+        {
+          "file": "packages/evm/package.json",
+          "hash": "4836921611429240817",
+          "deps": [
+            "npm:ethers",
+            "npm:viem",
+            "npm:@babel/core",
+            "npm:@babel/plugin-transform-runtime",
+            "npm:@babel/preset-env",
+            "npm:@babel/preset-typescript",
+            "npm:@types/jest",
+            "npm:jest",
+            "npm:prettier",
+            "npm:ts-jest"
+          ]
+        },
+        {
+          "file": "packages/evm/src/chainInfo/chainInfo.ts",
+          "hash": "3488066252651875872"
+        },
+        {
+          "file": "packages/evm/src/chainInfo/index.ts",
+          "hash": "8801795190589789093"
+        },
+        {
+          "file": "packages/evm/src/index.ts",
+          "hash": "12278367612139455538"
+        },
+        {
+          "file": "packages/evm/src/precompiles/address.ts",
+          "hash": "8926483929372360799",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/bank.ts",
+          "hash": "10122030020330348829",
+          "deps": [
+            "npm:ethers"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/distribution.ts",
+          "hash": "1316722593201930812",
+          "deps": [
+            "npm:ethers"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/governance.ts",
+          "hash": "4574431504830989828",
+          "deps": [
+            "npm:ethers"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/index.ts",
+          "hash": "8790027785368875524"
+        },
+        {
+          "file": "packages/evm/src/precompiles/json.ts",
+          "hash": "6430853666139168309",
+          "deps": [
+            "npm:ethers"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/staking.ts",
+          "hash": "591211768183049033",
+          "deps": [
+            "npm:ethers"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/wasm.ts",
+          "hash": "9454805422795747689",
+          "deps": [
+            "npm:ethers"
+          ]
+        },
+        {
+          "file": "packages/evm/src/providers/index.ts",
+          "hash": "13517733170728051951"
+        },
+        {
+          "file": "packages/evm/src/providers/viem.ts",
+          "hash": "4440248180049719795",
+          "deps": [
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/providers/wagmi.ts",
+          "hash": "12424530825411596291"
+        },
+        {
+          "file": "packages/evm/src/utils/address.ts",
+          "hash": "3428000482669215838",
+          "deps": [
+            "npm:@noble/hashes"
+          ]
+        },
+        {
+          "file": "packages/evm/src/utils/index.ts",
+          "hash": "15261719139768578702"
+        },
+        {
+          "file": "packages/evm/tsconfig.json",
+          "hash": "4908106594217399269"
+        }
+      ],
+      "@sei-js/proto": [
+        {
+          "file": "packages/proto/.babelrc.js",
+          "hash": "3418602092928113443"
+        },
+        {
+          "file": "packages/proto/.editorconfig",
+          "hash": "6659929835606576556"
+        },
+        {
+          "file": "packages/proto/.eslintignore",
+          "hash": "15843596939255204587"
+        },
+        {
+          "file": "packages/proto/.gitignore",
+          "hash": "3034122857090724498"
+        },
+        {
+          "file": "packages/proto/.npmignore",
+          "hash": "9942348664221922945"
+        },
+        {
+          "file": "packages/proto/.npmrc",
+          "hash": "9537101888502001781"
+        },
+        {
+          "file": "packages/proto/.nvmrc",
+          "hash": "15205838613237911592"
+        },
+        {
+          "file": "packages/proto/CHANGELOG.md",
+          "hash": "10067180778734712748"
+        },
+        {
+          "file": "packages/proto/LICENSE",
+          "hash": "3816707786283403723"
+        },
+        {
+          "file": "packages/proto/README.md",
+          "hash": "13426667752484846375"
+        },
+        {
+          "file": "packages/proto/__tests__/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/proto/package.json",
+          "hash": "17208132797991278784",
+          "deps": [
+            "npm:@babel/runtime",
+            "npm:@cosmjs/amino",
+            "npm:@cosmjs/encoding",
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/tendermint-rpc",
+            "npm:@cosmology/lcd",
+            "npm:@cosmology/telescope",
+            "npm:@osmonauts/helpers",
+            "npm:protobufjs",
+            "npm:@babel/core",
+            "npm:@babel/plugin-proposal-object-rest-spread",
+            "npm:@babel/plugin-transform-runtime",
+            "npm:@babel/preset-env",
+            "npm:@babel/preset-typescript",
+            "npm:@protobufs/cosmos",
+            "npm:@protobufs/cosmos_proto",
+            "npm:@protobufs/cosmwasm",
+            "npm:@protobufs/gogoproto",
+            "npm:@protobufs/google",
+            "npm:@protobufs/ibc",
+            "npm:@protobufs/tendermint",
+            "npm:babel-core",
+            "npm:babel-jest",
+            "npm:cross-env",
+            "npm:jest-in-case",
+            "npm:long",
+            "npm:regenerator-runtime"
+          ]
+        },
+        {
+          "file": "packages/proto/proto/amino/LICENSE",
+          "hash": "7430036796824364084"
+        },
+        {
+          "file": "packages/proto/proto/amino/README.md",
+          "hash": "16058657723507988001"
+        },
+        {
+          "file": "packages/proto/proto/amino/amino.proto",
+          "hash": "13448892264553141400"
+        },
+        {
+          "file": "packages/proto/proto/confio/LICENSE",
+          "hash": "12630315715045862737"
+        },
+        {
+          "file": "packages/proto/proto/confio/README.md",
+          "hash": "10887895634166400041"
+        },
+        {
+          "file": "packages/proto/proto/confio/proofs.proto",
+          "hash": "7941129143059018391"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/LICENSE",
+          "hash": "7430036796824364084"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/README.md",
+          "hash": "9281595355068921688"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/app/v1alpha1/config.proto",
+          "hash": "16364771489532881368"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/app/v1alpha1/module.proto",
+          "hash": "1729555633830151177"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/app/v1alpha1/query.proto",
+          "hash": "11952222793391854387"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/auth/v1beta1/auth.proto",
+          "hash": "1484179478168395775"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/auth/v1beta1/genesis.proto",
+          "hash": "5283556573965435530"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/auth/v1beta1/query.proto",
+          "hash": "1630490803937127714"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/authz/v1beta1/authz.proto",
+          "hash": "1689136012844318979"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/authz/v1beta1/event.proto",
+          "hash": "13663309613359058589"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/authz/v1beta1/genesis.proto",
+          "hash": "3962907433000923585"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/authz/v1beta1/query.proto",
+          "hash": "1460254359398963239"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/authz/v1beta1/tx.proto",
+          "hash": "11986542784332932928"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/bank/v1beta1/authz.proto",
+          "hash": "15725840026247741519"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/bank/v1beta1/bank.proto",
+          "hash": "18360754859227203937"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/bank/v1beta1/genesis.proto",
+          "hash": "6541367646889136600"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/bank/v1beta1/query.proto",
+          "hash": "13101529809730330267"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/bank/v1beta1/tx.proto",
+          "hash": "10992338753965646800"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/abci/v1beta1/abci.proto",
+          "hash": "12586691719962959858"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/kv/v1beta1/kv.proto",
+          "hash": "14241632871372460405"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/query/v1beta1/pagination.proto",
+          "hash": "10888939315787948285"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/reflection/v1beta1/reflection.proto",
+          "hash": "15702375523418958633"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/reflection/v2alpha1/reflection.proto",
+          "hash": "17454918078161621575"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/snapshots/v1beta1/snapshot.proto",
+          "hash": "867584359568868548"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/store/v1beta1/commit_info.proto",
+          "hash": "1664138394868586767"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/store/v1beta1/listening.proto",
+          "hash": "5927335836121355995"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/tendermint/v1beta1/query.proto",
+          "hash": "3233785258959868745"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/base/v1beta1/coin.proto",
+          "hash": "11144027476192800712"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/capability/v1beta1/capability.proto",
+          "hash": "11365731688237332049"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/capability/v1beta1/genesis.proto",
+          "hash": "5545463329400695322"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crisis/v1beta1/genesis.proto",
+          "hash": "5956696825522273631"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crisis/v1beta1/tx.proto",
+          "hash": "1171225564868892263"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crypto/ed25519/keys.proto",
+          "hash": "4386548786825120436"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crypto/hd/v1/hd.proto",
+          "hash": "13834150395208541549"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crypto/keyring/v1/record.proto",
+          "hash": "1625732219751451679"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crypto/multisig/keys.proto",
+          "hash": "8713579893419903826"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crypto/multisig/v1beta1/multisig.proto",
+          "hash": "1330531265353915670"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crypto/secp256k1/keys.proto",
+          "hash": "17596667294040543369"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/crypto/secp256r1/keys.proto",
+          "hash": "16976529527590276187"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/distribution/v1beta1/distribution.proto",
+          "hash": "3314062949871660296"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/distribution/v1beta1/genesis.proto",
+          "hash": "4968474605852132919"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/distribution/v1beta1/query.proto",
+          "hash": "6624294493682583612"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/distribution/v1beta1/tx.proto",
+          "hash": "15759554033477345228"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/evidence/v1beta1/evidence.proto",
+          "hash": "2436856570998070251"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/evidence/v1beta1/genesis.proto",
+          "hash": "10763017197148388828"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/evidence/v1beta1/query.proto",
+          "hash": "7547257539146759915"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/evidence/v1beta1/tx.proto",
+          "hash": "16722517382451220819"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/feegrant/v1beta1/feegrant.proto",
+          "hash": "11858055473822173681"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/feegrant/v1beta1/genesis.proto",
+          "hash": "9539311578015202324"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/feegrant/v1beta1/query.proto",
+          "hash": "14167628492158866968"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/feegrant/v1beta1/tx.proto",
+          "hash": "986884345823395652"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/genutil/v1beta1/genesis.proto",
+          "hash": "10383273554355518599"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1/genesis.proto",
+          "hash": "2320385728546836657"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1/gov.proto",
+          "hash": "16168571522886705543"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1/query.proto",
+          "hash": "7726666575305907313"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1/tx.proto",
+          "hash": "2924419213329917595"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1beta1/genesis.proto",
+          "hash": "9414774741068019076"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1beta1/gov.proto",
+          "hash": "16110878998419379348"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1beta1/query.proto",
+          "hash": "6975963069458472671"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/gov/v1beta1/tx.proto",
+          "hash": "10135709596245703346"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/group/v1/events.proto",
+          "hash": "18375284916383076696"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/group/v1/genesis.proto",
+          "hash": "6466267717543956156"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/group/v1/query.proto",
+          "hash": "17082620288638289188"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/group/v1/tx.proto",
+          "hash": "5506613043173572271"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/group/v1/types.proto",
+          "hash": "15596073872581730323"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/mint/v1beta1/genesis.proto",
+          "hash": "14449595569514950818"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/mint/v1beta1/mint.proto",
+          "hash": "4119784773693995054"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/mint/v1beta1/query.proto",
+          "hash": "4897714486755047999"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/msg/v1/msg.proto",
+          "hash": "17940968320517529165"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/nft/v1beta1/event.proto",
+          "hash": "13743003755208328813"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/nft/v1beta1/genesis.proto",
+          "hash": "14018514143992050578"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/nft/v1beta1/nft.proto",
+          "hash": "10532448717263142664"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/nft/v1beta1/query.proto",
+          "hash": "14416744039712498681"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/nft/v1beta1/tx.proto",
+          "hash": "13214944124388255441"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/orm/v1/orm.proto",
+          "hash": "5179390496872356608"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/orm/v1alpha1/schema.proto",
+          "hash": "17782341424629399622"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/params/v1beta1/params.proto",
+          "hash": "5928828675833110661"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/params/v1beta1/query.proto",
+          "hash": "8455262713761354371"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/slashing/v1beta1/genesis.proto",
+          "hash": "3746757989742895886"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/slashing/v1beta1/query.proto",
+          "hash": "6104462878695062379"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/slashing/v1beta1/slashing.proto",
+          "hash": "7540751266834474863"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/slashing/v1beta1/tx.proto",
+          "hash": "9846171171856653840"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/staking/v1beta1/authz.proto",
+          "hash": "2109401239797661104"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/staking/v1beta1/genesis.proto",
+          "hash": "3816153203021831658"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/staking/v1beta1/query.proto",
+          "hash": "5065104386482672062"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/staking/v1beta1/staking.proto",
+          "hash": "7380404456118195606"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/staking/v1beta1/tx.proto",
+          "hash": "7583367862994723505"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/tx/signing/v1beta1/signing.proto",
+          "hash": "2518853794727336067"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/tx/v1beta1/service.proto",
+          "hash": "8703450162796664222"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/tx/v1beta1/tx.proto",
+          "hash": "5450136363250185702"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/upgrade/v1beta1/query.proto",
+          "hash": "17478222512013179016"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/upgrade/v1beta1/tx.proto",
+          "hash": "10157574960868426385"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/upgrade/v1beta1/upgrade.proto",
+          "hash": "6704978770117055834"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/vesting/v1beta1/tx.proto",
+          "hash": "13080933748510745170"
+        },
+        {
+          "file": "packages/proto/proto/cosmos/vesting/v1beta1/vesting.proto",
+          "hash": "13825533711511065651"
+        },
+        {
+          "file": "packages/proto/proto/cosmos_proto/LICENSE",
+          "hash": "1496281166914079976"
+        },
+        {
+          "file": "packages/proto/proto/cosmos_proto/README.md",
+          "hash": "1858003834504363458"
+        },
+        {
+          "file": "packages/proto/proto/cosmos_proto/cosmos.proto",
+          "hash": "15626735054699248211"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/LICENSE",
+          "hash": "8642738759140545307"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/README.md",
+          "hash": "3312017141539638991"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/wasm/v1/authz.proto",
+          "hash": "11761823092380572607"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/wasm/v1/genesis.proto",
+          "hash": "7135039903505562400"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/wasm/v1/ibc.proto",
+          "hash": "15094511901843970684"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/wasm/v1/proposal.proto",
+          "hash": "14561989459262641789"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/wasm/v1/query.proto",
+          "hash": "15107325283519397621"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/wasm/v1/tx.proto",
+          "hash": "6953483008717747900"
+        },
+        {
+          "file": "packages/proto/proto/cosmwasm/wasm/v1/types.proto",
+          "hash": "1314187226778562167"
+        },
+        {
+          "file": "packages/proto/proto/dex/asset_list.proto",
+          "hash": "3323801579291107230"
+        },
+        {
+          "file": "packages/proto/proto/dex/contract.proto",
+          "hash": "14856094572959027954"
+        },
+        {
+          "file": "packages/proto/proto/dex/deposit.proto",
+          "hash": "3640785679235954423"
+        },
+        {
+          "file": "packages/proto/proto/dex/enums.proto",
+          "hash": "8858529661027856289"
+        },
+        {
+          "file": "packages/proto/proto/dex/genesis.proto",
+          "hash": "11661973577924305317"
+        },
+        {
+          "file": "packages/proto/proto/dex/gov.proto",
+          "hash": "2692424966063945657"
+        },
+        {
+          "file": "packages/proto/proto/dex/long_book.proto",
+          "hash": "6325494783509346998"
+        },
+        {
+          "file": "packages/proto/proto/dex/match_result.proto",
+          "hash": "15629446674015559375"
+        },
+        {
+          "file": "packages/proto/proto/dex/order.proto",
+          "hash": "9445862751380700912"
+        },
+        {
+          "file": "packages/proto/proto/dex/order_entry.proto",
+          "hash": "14628438805036838156"
+        },
+        {
+          "file": "packages/proto/proto/dex/pair.proto",
+          "hash": "14908128709368629593"
+        },
+        {
+          "file": "packages/proto/proto/dex/params.proto",
+          "hash": "17207601691573450099"
+        },
+        {
+          "file": "packages/proto/proto/dex/price.proto",
+          "hash": "6326956407416437191"
+        },
+        {
+          "file": "packages/proto/proto/dex/query.proto",
+          "hash": "8443183472012247713"
+        },
+        {
+          "file": "packages/proto/proto/dex/settlement.proto",
+          "hash": "18101264866640497419"
+        },
+        {
+          "file": "packages/proto/proto/dex/short_book.proto",
+          "hash": "8027928085618956339"
+        },
+        {
+          "file": "packages/proto/proto/dex/tick_size.proto",
+          "hash": "169932541962101144"
+        },
+        {
+          "file": "packages/proto/proto/dex/twap.proto",
+          "hash": "10703675452796765576"
+        },
+        {
+          "file": "packages/proto/proto/dex/tx.proto",
+          "hash": "11449755961271454689"
+        },
+        {
+          "file": "packages/proto/proto/epoch/epoch.proto",
+          "hash": "5168505465049490961"
+        },
+        {
+          "file": "packages/proto/proto/epoch/genesis.proto",
+          "hash": "8350923206049491129"
+        },
+        {
+          "file": "packages/proto/proto/epoch/params.proto",
+          "hash": "4809212996286642335"
+        },
+        {
+          "file": "packages/proto/proto/epoch/query.proto",
+          "hash": "12443443449189335053"
+        },
+        {
+          "file": "packages/proto/proto/epoch/tx.proto",
+          "hash": "1413134398860202088"
+        },
+        {
+          "file": "packages/proto/proto/gogoproto/LICENSE",
+          "hash": "11431235788475345081"
+        },
+        {
+          "file": "packages/proto/proto/gogoproto/README.md",
+          "hash": "13605197034393277340"
+        },
+        {
+          "file": "packages/proto/proto/gogoproto/gogo.proto",
+          "hash": "13480929949321932482"
+        },
+        {
+          "file": "packages/proto/proto/google/LICENSE",
+          "hash": "12649885980860800067"
+        },
+        {
+          "file": "packages/proto/proto/google/README.md",
+          "hash": "17315465523785398899"
+        },
+        {
+          "file": "packages/proto/proto/google/api/annotations.proto",
+          "hash": "1182709725997987817"
+        },
+        {
+          "file": "packages/proto/proto/google/api/http.proto",
+          "hash": "18096629720393729571"
+        },
+        {
+          "file": "packages/proto/proto/google/protobuf/any.proto",
+          "hash": "10295707627416408606"
+        },
+        {
+          "file": "packages/proto/proto/google/protobuf/descriptor.proto",
+          "hash": "12475525962984989279"
+        },
+        {
+          "file": "packages/proto/proto/google/protobuf/duration.proto",
+          "hash": "423065006618444559"
+        },
+        {
+          "file": "packages/proto/proto/google/protobuf/empty.proto",
+          "hash": "7719442447519125178"
+        },
+        {
+          "file": "packages/proto/proto/google/protobuf/timestamp.proto",
+          "hash": "16036745133299459943"
+        },
+        {
+          "file": "packages/proto/proto/ibc/LICENSE",
+          "hash": "12000173296506488636"
+        },
+        {
+          "file": "packages/proto/proto/ibc/README.md",
+          "hash": "12621547654097653976"
+        },
+        {
+          "file": "packages/proto/proto/ibc/applications/transfer/v1/genesis.proto",
+          "hash": "3808831400203584846"
+        },
+        {
+          "file": "packages/proto/proto/ibc/applications/transfer/v1/query.proto",
+          "hash": "17500922781374669805"
+        },
+        {
+          "file": "packages/proto/proto/ibc/applications/transfer/v1/transfer.proto",
+          "hash": "7873826417130971740"
+        },
+        {
+          "file": "packages/proto/proto/ibc/applications/transfer/v1/tx.proto",
+          "hash": "1471507263607049940"
+        },
+        {
+          "file": "packages/proto/proto/ibc/applications/transfer/v2/packet.proto",
+          "hash": "15115319805538592736"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/channel/v1/channel.proto",
+          "hash": "5354185681251532944"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/channel/v1/genesis.proto",
+          "hash": "2708488443918099270"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/channel/v1/query.proto",
+          "hash": "5772411748081679"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/channel/v1/tx.proto",
+          "hash": "7371855293082441458"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/client/v1/client.proto",
+          "hash": "10991102822661492048"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/client/v1/genesis.proto",
+          "hash": "12947287597825793226"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/client/v1/query.proto",
+          "hash": "16667323054736099695"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/client/v1/tx.proto",
+          "hash": "17343449760310721695"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/commitment/v1/commitment.proto",
+          "hash": "3544704469717573088"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/connection/v1/connection.proto",
+          "hash": "6563133330681723815"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/connection/v1/genesis.proto",
+          "hash": "4924908359207129222"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/connection/v1/query.proto",
+          "hash": "9749370876293798970"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/connection/v1/tx.proto",
+          "hash": "12025539100697781766"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/port/v1/query.proto",
+          "hash": "15555295350005671839"
+        },
+        {
+          "file": "packages/proto/proto/ibc/core/types/v1/genesis.proto",
+          "hash": "2895840445625178204"
+        },
+        {
+          "file": "packages/proto/proto/ibc/lightclients/localhost/v1/localhost.proto",
+          "hash": "197773342049377359"
+        },
+        {
+          "file": "packages/proto/proto/ibc/lightclients/solomachine/v1/solomachine.proto",
+          "hash": "13252524266550483293"
+        },
+        {
+          "file": "packages/proto/proto/ibc/lightclients/solomachine/v2/solomachine.proto",
+          "hash": "7729111060396851186"
+        },
+        {
+          "file": "packages/proto/proto/ibc/lightclients/tendermint/v1/tendermint.proto",
+          "hash": "11927032626713545609"
+        },
+        {
+          "file": "packages/proto/proto/mint/v1beta1/genesis.proto",
+          "hash": "5022785509892739496"
+        },
+        {
+          "file": "packages/proto/proto/mint/v1beta1/gov.proto",
+          "hash": "15378645291706286266"
+        },
+        {
+          "file": "packages/proto/proto/mint/v1beta1/mint.proto",
+          "hash": "13005800834603604704"
+        },
+        {
+          "file": "packages/proto/proto/mint/v1beta1/query.proto",
+          "hash": "6068508588617405135"
+        },
+        {
+          "file": "packages/proto/proto/oracle/genesis.proto",
+          "hash": "215763067883159707"
+        },
+        {
+          "file": "packages/proto/proto/oracle/oracle.proto",
+          "hash": "10248325703375766927"
+        },
+        {
+          "file": "packages/proto/proto/oracle/query.proto",
+          "hash": "860453606514949060"
+        },
+        {
+          "file": "packages/proto/proto/oracle/tx.proto",
+          "hash": "11172005599845431593"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/LICENSE",
+          "hash": "14836457294800757697"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/README.md",
+          "hash": "9326091180112329195"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/abci/types.proto",
+          "hash": "499486604157682171"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/crypto/keys.proto",
+          "hash": "8135882848961926123"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/crypto/proof.proto",
+          "hash": "17948122973857451259"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/libs/bits/types.proto",
+          "hash": "875212906650434772"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/p2p/types.proto",
+          "hash": "4024075274817562887"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/types/block.proto",
+          "hash": "13656252294668261032"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/types/evidence.proto",
+          "hash": "7621225094217422938"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/types/params.proto",
+          "hash": "9975008105099177515"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/types/types.proto",
+          "hash": "13326300772353005976"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/types/validator.proto",
+          "hash": "14329637437172980500"
+        },
+        {
+          "file": "packages/proto/proto/tendermint/version/types.proto",
+          "hash": "900936713196982434"
+        },
+        {
+          "file": "packages/proto/proto/tokenfactory/authorityMetadata.proto",
+          "hash": "13306204896272721768"
+        },
+        {
+          "file": "packages/proto/proto/tokenfactory/genesis.proto",
+          "hash": "8066340422521695611"
+        },
+        {
+          "file": "packages/proto/proto/tokenfactory/params.proto",
+          "hash": "1749302897163244925"
+        },
+        {
+          "file": "packages/proto/proto/tokenfactory/query.proto",
+          "hash": "14326882725224473540"
+        },
+        {
+          "file": "packages/proto/proto/tokenfactory/tx.proto",
+          "hash": "5942277574298506644"
+        },
+        {
+          "file": "packages/proto/scripts/codegen.js",
+          "hash": "5537701471801954192",
+          "deps": [
+            "npm:path",
+            "npm:@cosmology/telescope",
+            "npm:rimraf"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/amino/amino.ts",
+          "hash": "4595979742548113990"
+        },
+        {
+          "file": "packages/proto/src/codegen/amino/bundle.ts",
+          "hash": "9935281139640517173"
+        },
+        {
+          "file": "packages/proto/src/codegen/binary.ts",
+          "hash": "16299989145035671121"
+        },
+        {
+          "file": "packages/proto/src/codegen/confio/proofs.ts",
+          "hash": "16535472763944754515"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/auth/v1beta1/auth.ts",
+          "hash": "2262891395525169541"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/auth/v1beta1/genesis.ts",
+          "hash": "4628909408011379068"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/auth/v1beta1/query.lcd.ts",
+          "hash": "11063411742015097811",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/auth/v1beta1/query.rpc.Query.ts",
+          "hash": "4684592239715285105",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/auth/v1beta1/query.ts",
+          "hash": "12434448594660844823"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/authz.ts",
+          "hash": "16830068080001439827"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/bank.ts",
+          "hash": "4482075361837233783"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/genesis.ts",
+          "hash": "12692291565353393204"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/query.lcd.ts",
+          "hash": "14584404509397694520",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/query.rpc.Query.ts",
+          "hash": "15601907078726665770",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/query.ts",
+          "hash": "3578866419216847302"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/tx.amino.ts",
+          "hash": "6662061855029299442"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/tx.registry.ts",
+          "hash": "12788415983440279687",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/tx.rpc.msg.ts",
+          "hash": "18077505937364147565"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bank/v1beta1/tx.ts",
+          "hash": "5968849456829072883"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/base/abci/v1beta1/abci.ts",
+          "hash": "14571370121234973536"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/base/query/v1beta1/pagination.ts",
+          "hash": "18426745086146472991"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/base/reflection/v2alpha1/reflection.ts",
+          "hash": "13961523031142918408"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/base/v1beta1/coin.ts",
+          "hash": "27472214128660010"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/bundle.ts",
+          "hash": "15610770486060787233"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/client.ts",
+          "hash": "12978874720542804101",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/tendermint-rpc"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/crypto/ed25519/keys.ts",
+          "hash": "15273324074741482876"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/crypto/hd/v1/hd.ts",
+          "hash": "14618858868641456965"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/crypto/keyring/v1/record.ts",
+          "hash": "6846366253842417531"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/crypto/multisig/keys.ts",
+          "hash": "5956766523041400167"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/crypto/multisig/v1beta1/multisig.ts",
+          "hash": "8042008611035960402"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/crypto/secp256k1/keys.ts",
+          "hash": "15840068158899885698"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/crypto/secp256r1/keys.ts",
+          "hash": "12264137486201340358"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/distribution.ts",
+          "hash": "2209963520492762105",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/genesis.ts",
+          "hash": "17558589165474687393"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/query.lcd.ts",
+          "hash": "588642752856075031",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/query.rpc.Query.ts",
+          "hash": "2129213387022620336",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/query.ts",
+          "hash": "7717344028918881625"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/tx.amino.ts",
+          "hash": "3738632784308378015"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/tx.registry.ts",
+          "hash": "2253652277991112140",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/tx.rpc.msg.ts",
+          "hash": "7948150229077132345"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/distribution/v1beta1/tx.ts",
+          "hash": "188702225863315377"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/genesis.ts",
+          "hash": "12125533541807520244"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/gov.ts",
+          "hash": "5638105452652724803",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/query.lcd.ts",
+          "hash": "12017404434676975058",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/query.rpc.Query.ts",
+          "hash": "11751263280731122734",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/query.ts",
+          "hash": "14672715694389266501"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/tx.amino.ts",
+          "hash": "17131210001370889971"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/tx.registry.ts",
+          "hash": "8460732316398798076",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/tx.rpc.msg.ts",
+          "hash": "4378123557044854072"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/gov/v1beta1/tx.ts",
+          "hash": "7772503545257351889"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/lcd.ts",
+          "hash": "14157700241941357223",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/msg/v1/msg.ts",
+          "hash": "5351412798757831531"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/rpc.query.ts",
+          "hash": "8288014779076733596",
+          "deps": [
+            "npm:@cosmjs/tendermint-rpc",
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/rpc.tx.ts",
+          "hash": "2903579613534027612"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/authz.ts",
+          "hash": "12046000323814349080"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/genesis.ts",
+          "hash": "16525020908384430888"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/query.lcd.ts",
+          "hash": "3817920740520657653",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/query.rpc.Query.ts",
+          "hash": "5006109385868458754",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/query.ts",
+          "hash": "14580645912489499174"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/staking.ts",
+          "hash": "14566811484702969777",
+          "deps": [
+            "npm:@cosmjs/math",
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/amino"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/tx.amino.ts",
+          "hash": "16108875338890371431"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/tx.registry.ts",
+          "hash": "10578904973021411139",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/tx.rpc.msg.ts",
+          "hash": "13040091759246780015"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/staking/v1beta1/tx.ts",
+          "hash": "9142950201508781292",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/math",
+            "npm:@cosmjs/amino"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/tx/signing/v1beta1/signing.ts",
+          "hash": "12775999281988978850"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/tx/v1beta1/service.lcd.ts",
+          "hash": "6655370418366996173",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/tx/v1beta1/service.rpc.Service.ts",
+          "hash": "10024868536466920782",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/tx/v1beta1/service.ts",
+          "hash": "16559858752716428650"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/tx/v1beta1/tx.ts",
+          "hash": "15065266191993019940"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/query.lcd.ts",
+          "hash": "5100189442627301226",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/query.rpc.Query.ts",
+          "hash": "12109282970860605416",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/query.ts",
+          "hash": "2184965118086605133"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/tx.amino.ts",
+          "hash": "5615725319467642077"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/tx.registry.ts",
+          "hash": "3342092883763430071",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/tx.rpc.msg.ts",
+          "hash": "15326143129354001912"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/tx.ts",
+          "hash": "2520121255266014108"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos/upgrade/v1beta1/upgrade.ts",
+          "hash": "14930290316253038570"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos_proto/bundle.ts",
+          "hash": "17503369267589004169"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmos_proto/cosmos.ts",
+          "hash": "16975795675784228896"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/bundle.ts",
+          "hash": "2356861818381573776"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/client.ts",
+          "hash": "1064549226613989419",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/tendermint-rpc"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/lcd.ts",
+          "hash": "14948468038426885851",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/rpc.query.ts",
+          "hash": "11453013201445676665",
+          "deps": [
+            "npm:@cosmjs/tendermint-rpc",
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/rpc.tx.ts",
+          "hash": "14727598573328034922"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/authz.ts",
+          "hash": "9801943186363027697",
+          "deps": [
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/genesis.ts",
+          "hash": "6101449763801736232"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/ibc.ts",
+          "hash": "2092734534493016106"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/proposal.ts",
+          "hash": "3898300665760274296",
+          "deps": [
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/query.lcd.ts",
+          "hash": "17758219076260199762",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/query.rpc.Query.ts",
+          "hash": "2107851018548802722",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/query.ts",
+          "hash": "17767238993669844495",
+          "deps": [
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/tx.amino.ts",
+          "hash": "15170520029406570032"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/tx.registry.ts",
+          "hash": "16685297573970129547",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/tx.rpc.msg.ts",
+          "hash": "5302235884627964834"
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/tx.ts",
+          "hash": "2562302195342813939",
+          "deps": [
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/cosmwasm/wasm/v1/types.ts",
+          "hash": "15388788771861239130",
+          "deps": [
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/asset_list.ts",
+          "hash": "9612874825539191232"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/contract.ts",
+          "hash": "810211715461211265"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/deposit.ts",
+          "hash": "776600924168501199",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/enums.ts",
+          "hash": "13380262543787130382"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/genesis.ts",
+          "hash": "15369056143928388045"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/gov.ts",
+          "hash": "9475613503713319475"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/long_book.ts",
+          "hash": "7112393097860004199",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/match_result.ts",
+          "hash": "5133510364047813149"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/order.ts",
+          "hash": "469714724418258521",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/order_entry.ts",
+          "hash": "12849039298142022173",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/pair.ts",
+          "hash": "16139988754195445391",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/params.ts",
+          "hash": "210727675851827325",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/price.ts",
+          "hash": "6028790822054553688",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/query.lcd.ts",
+          "hash": "10914927088476601921",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/query.rpc.Query.ts",
+          "hash": "325667620657807970",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/query.ts",
+          "hash": "14418914292610810781",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/settlement.ts",
+          "hash": "13987223522799445133",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/short_book.ts",
+          "hash": "2883873998421081880",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/tick_size.ts",
+          "hash": "18405445843563498313",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/twap.ts",
+          "hash": "5582159536270605232",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/tx.amino.ts",
+          "hash": "916959512518679407"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/tx.registry.ts",
+          "hash": "6739092971270860391",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/tx.rpc.msg.ts",
+          "hash": "9016873530263638568"
+        },
+        {
+          "file": "packages/proto/src/codegen/dex/tx.ts",
+          "hash": "17933518331222217990"
+        },
+        {
+          "file": "packages/proto/src/codegen/epoch/epoch.ts",
+          "hash": "9575598013130374012"
+        },
+        {
+          "file": "packages/proto/src/codegen/epoch/genesis.ts",
+          "hash": "14495977241383169381"
+        },
+        {
+          "file": "packages/proto/src/codegen/epoch/params.ts",
+          "hash": "14560387119800042998"
+        },
+        {
+          "file": "packages/proto/src/codegen/epoch/query.lcd.ts",
+          "hash": "9691273736076536625",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/epoch/query.rpc.Query.ts",
+          "hash": "13945152336640076547",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/epoch/query.ts",
+          "hash": "2631083454014041294"
+        },
+        {
+          "file": "packages/proto/src/codegen/epoch/tx.ts",
+          "hash": "4595979742548113990"
+        },
+        {
+          "file": "packages/proto/src/codegen/gogoproto/bundle.ts",
+          "hash": "14859401712238984117"
+        },
+        {
+          "file": "packages/proto/src/codegen/gogoproto/gogo.ts",
+          "hash": "4595979742548113990"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/api/annotations.ts",
+          "hash": "5351412798757831531"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/api/http.ts",
+          "hash": "17667507174777599034"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/bundle.ts",
+          "hash": "8448563083812071974"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/protobuf/any.ts",
+          "hash": "2874484002290010474"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/protobuf/descriptor.ts",
+          "hash": "8051419029817035088"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/protobuf/duration.ts",
+          "hash": "7870401388392750685"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/protobuf/empty.ts",
+          "hash": "11766595301445576383"
+        },
+        {
+          "file": "packages/proto/src/codegen/google/protobuf/timestamp.ts",
+          "hash": "14620815556390961257"
+        },
+        {
+          "file": "packages/proto/src/codegen/helpers.ts",
+          "hash": "17020608979511314130"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/genesis.ts",
+          "hash": "8988692588206679582"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/query.lcd.ts",
+          "hash": "2738639417475506674",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/query.rpc.Query.ts",
+          "hash": "9398663005906056503",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/query.ts",
+          "hash": "8390568441246161187"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/transfer.ts",
+          "hash": "2723142823413462237"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/tx.amino.ts",
+          "hash": "8240386956140084566"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/tx.registry.ts",
+          "hash": "6842420065232344312",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/tx.rpc.msg.ts",
+          "hash": "6844515290832833580"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v1/tx.ts",
+          "hash": "7659062688950678256"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/applications/transfer/v2/packet.ts",
+          "hash": "4735416444854540461"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/bundle.ts",
+          "hash": "4554901510294363448"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/client.ts",
+          "hash": "17076061534360833645",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/tendermint-rpc"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/channel.ts",
+          "hash": "16097692280555658260"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/genesis.ts",
+          "hash": "15954195453106372657"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/query.lcd.ts",
+          "hash": "15091704221226603620",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/query.rpc.Query.ts",
+          "hash": "16872845487882979425",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/query.ts",
+          "hash": "7782647597997743220"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/tx.amino.ts",
+          "hash": "2973252050135462337"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/tx.registry.ts",
+          "hash": "15725575124191029414",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/tx.rpc.msg.ts",
+          "hash": "15194201701032680349"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/channel/v1/tx.ts",
+          "hash": "14672664826230848807"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/client.ts",
+          "hash": "16871529862398127193"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/genesis.ts",
+          "hash": "3398354944974791772"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/query.lcd.ts",
+          "hash": "11486276853963315762",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/query.rpc.Query.ts",
+          "hash": "13546130675169014146",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/query.ts",
+          "hash": "5790140165295609920"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/tx.amino.ts",
+          "hash": "9234554740930759978"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/tx.registry.ts",
+          "hash": "17004109498519337397",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/tx.rpc.msg.ts",
+          "hash": "17561040257938349868"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/client/v1/tx.ts",
+          "hash": "5340967885641932279"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/commitment/v1/commitment.ts",
+          "hash": "11565544312464442121"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/connection.ts",
+          "hash": "17827627211587242593"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/genesis.ts",
+          "hash": "11725953224105691009"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/query.lcd.ts",
+          "hash": "12459865465394791186",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/query.rpc.Query.ts",
+          "hash": "5854722336789579621",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/query.ts",
+          "hash": "10205470217355426923"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/tx.amino.ts",
+          "hash": "2782399942543388686"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/tx.registry.ts",
+          "hash": "14565709335615872528",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/tx.rpc.msg.ts",
+          "hash": "4919059879254156362"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/core/connection/v1/tx.ts",
+          "hash": "7159929508104787277"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/lcd.ts",
+          "hash": "16798290781761018985",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/lightclients/localhost/v1/localhost.ts",
+          "hash": "15557256071998959887"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/lightclients/solomachine/v1/solomachine.ts",
+          "hash": "11464484805323347133"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/lightclients/solomachine/v2/solomachine.ts",
+          "hash": "14149516744632766543"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/lightclients/tendermint/v1/tendermint.ts",
+          "hash": "14370876206204902663"
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/rpc.query.ts",
+          "hash": "15545602079813742623",
+          "deps": [
+            "npm:@cosmjs/tendermint-rpc",
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/ibc/rpc.tx.ts",
+          "hash": "1627996866913678058"
+        },
+        {
+          "file": "packages/proto/src/codegen/ics23/bundle.ts",
+          "hash": "12565388786898919245"
+        },
+        {
+          "file": "packages/proto/src/codegen/index.ts",
+          "hash": "12389398239713025196"
+        },
+        {
+          "file": "packages/proto/src/codegen/mint/v1beta1/genesis.ts",
+          "hash": "17421180588412584177"
+        },
+        {
+          "file": "packages/proto/src/codegen/mint/v1beta1/gov.ts",
+          "hash": "12902373166389307816"
+        },
+        {
+          "file": "packages/proto/src/codegen/mint/v1beta1/mint.ts",
+          "hash": "10949106457959571368",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/mint/v1beta1/query.lcd.ts",
+          "hash": "10272622726384642678",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/mint/v1beta1/query.rpc.Query.ts",
+          "hash": "15208980424063708382",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/mint/v1beta1/query.ts",
+          "hash": "9221612268311079575"
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/genesis.ts",
+          "hash": "9168275636975615844"
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/oracle.ts",
+          "hash": "9002640993328740426",
+          "deps": [
+            "npm:@cosmjs/math"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/query.lcd.ts",
+          "hash": "14325054838344961258",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/query.rpc.Query.ts",
+          "hash": "14330792166726787070",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/query.ts",
+          "hash": "480222172561020630"
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/tx.amino.ts",
+          "hash": "15445929347885147659"
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/tx.registry.ts",
+          "hash": "7104620764891898764",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/tx.rpc.msg.ts",
+          "hash": "12524492057279080516"
+        },
+        {
+          "file": "packages/proto/src/codegen/oracle/tx.ts",
+          "hash": "13741755437267388351"
+        },
+        {
+          "file": "packages/proto/src/codegen/seiprotocol/bundle.ts",
+          "hash": "10804653148455631297"
+        },
+        {
+          "file": "packages/proto/src/codegen/seiprotocol/client.ts",
+          "hash": "2304928608509024929",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/tendermint-rpc"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/seiprotocol/lcd.ts",
+          "hash": "2442642337452391999",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/seiprotocol/rpc.query.ts",
+          "hash": "14967349652801067334",
+          "deps": [
+            "npm:@cosmjs/tendermint-rpc",
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/seiprotocol/rpc.tx.ts",
+          "hash": "13956181190078781712"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/abci/types.ts",
+          "hash": "10189183200575101745"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/bundle.ts",
+          "hash": "4201316977585570121"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/crypto/keys.ts",
+          "hash": "16185797714012987326"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/crypto/proof.ts",
+          "hash": "1962814002947003387"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/libs/bits/types.ts",
+          "hash": "16916856778640424009"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/p2p/types.ts",
+          "hash": "14340345333849798981"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/types/block.ts",
+          "hash": "2294980351404115074"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/types/evidence.ts",
+          "hash": "3302760659730074184"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/types/params.ts",
+          "hash": "7408061474131921824"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/types/types.ts",
+          "hash": "13208408666260663082"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/types/validator.ts",
+          "hash": "2253180922758480739"
+        },
+        {
+          "file": "packages/proto/src/codegen/tendermint/version/types.ts",
+          "hash": "4661834289083213205"
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/authorityMetadata.ts",
+          "hash": "13461115480544003615"
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/genesis.ts",
+          "hash": "5947645338821332400"
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/params.ts",
+          "hash": "6707728289702429349"
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/query.lcd.ts",
+          "hash": "17615570520358446965",
+          "deps": [
+            "npm:@cosmology/lcd"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/query.rpc.Query.ts",
+          "hash": "3204260961140687968",
+          "deps": [
+            "npm:@cosmjs/stargate"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/query.ts",
+          "hash": "11695266014299939504"
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/tx.amino.ts",
+          "hash": "14424294999132615539"
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/tx.registry.ts",
+          "hash": "16366995295917005842",
+          "deps": [
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/tx.rpc.msg.ts",
+          "hash": "3461266608414778016"
+        },
+        {
+          "file": "packages/proto/src/codegen/tokenfactory/tx.ts",
+          "hash": "2096513472929472407"
+        },
+        {
+          "file": "packages/proto/src/codegen/types.ts",
+          "hash": "12134019371677336264",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/tendermint-rpc"
+          ]
+        },
+        {
+          "file": "packages/proto/src/codegen/utf8.ts",
+          "hash": "394816039528757634"
+        },
+        {
+          "file": "packages/proto/src/codegen/varint.ts",
+          "hash": "12904184283285882531"
+        },
+        {
+          "file": "packages/proto/src/index.ts",
+          "hash": "10143525445546758884"
+        },
+        {
+          "file": "packages/proto/tsconfig.json",
+          "hash": "3886332946002976876"
+        }
+      ],
+      "@sei-js/rest": [
+        {
+          "file": "packages/rest/package.json",
+          "hash": "16696601006750825075",
+          "deps": [
+            "npm:widdershins"
+          ]
+        },
+        {
+          "file": "packages/rest/src/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/rest/tsconfig.json",
+          "hash": "3259221599939315844"
+        },
+        {
+          "file": "packages/rest/sei-openapi.yml",
+          "hash": "17035997468842752533"
+        },
+        {
+          "file": "packages/rest/openapi.md",
+          "hash": "11140893093239221451"
+        }
+      ],
+      "workspace": [
+        {
+          "file": ".changeset/README.md",
+          "hash": "4888845876018830777"
+        },
+        {
+          "file": ".changeset/config.json",
+          "hash": "11898648829354806339"
+        },
+        {
+          "file": ".editorconfig",
+          "hash": "5443105041930014821"
+        },
+        {
+          "file": ".eslintignore",
+          "hash": "7663861978715868291"
+        },
+        {
+          "file": ".eslintrc.base.json",
+          "hash": "17722112666649925219"
+        },
+        {
+          "file": ".eslintrc.json",
+          "hash": "966013245893916685"
+        },
+        {
+          "file": ".github/ISSUE_TEMPLATE/bug_report.md",
+          "hash": "4994310711565563414"
+        },
+        {
+          "file": ".github/workflows/checks.yml",
+          "hash": "9721976736310604434"
+        },
+        {
+          "file": ".github/workflows/coverage.yml",
+          "hash": "4408250068478511439"
+        },
+        {
+          "file": ".github/workflows/deploydocs.yml",
+          "hash": "2563622505854932440"
+        },
+        {
+          "file": ".github/workflows/release.yml",
+          "hash": "7645271809251993536"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "17245965085278831872"
+        },
+        {
+          "file": ".nvmrc",
+          "hash": "16887447689433830851"
+        },
+        {
+          "file": ".prettierignore",
+          "hash": "8783679128000005734"
+        },
+        {
+          "file": ".prettierrc",
+          "hash": "2830453978702584531"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "4637156562308165301"
+        },
+        {
+          "file": "CHANGELOG.md",
+          "hash": "7029576165764549660"
+        },
+        {
+          "file": "EXAMPLES.md",
+          "hash": "13921332029242299984"
+        },
+        {
+          "file": "README.md",
+          "hash": "16685246452928901721"
+        },
+        {
+          "file": "TYPEDOC-README.md",
+          "hash": "12699520628787485720"
+        },
+        {
+          "file": "codecov.yml",
+          "hash": "11423399279121125850"
+        },
+        {
+          "file": "jest.config.ts",
+          "hash": "6837822589450354725",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "jest.preset.js",
+          "hash": "9430166341120122740",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "nx.json",
+          "hash": "15869658554639297772"
+        },
+        {
+          "file": "package.json",
+          "hash": "15426415907148682809",
+          "deps": [
+            "npm:@changesets/cli",
+            "npm:axios",
+            "npm:glob",
+            "npm:tslib",
+            "npm:@knodes/typedoc-plugin-pages",
+            "npm:@nrwl/node",
+            "npm:@nrwl/nx-cloud",
+            "npm:@nrwl/workspace",
+            "npm:@nx/esbuild",
+            "npm:@nx/eslint",
+            "npm:@nx/eslint-plugin",
+            "npm:@nx/jest",
+            "npm:@nx/js",
+            "npm:@nx/node",
+            "npm:@swc-node/register",
+            "npm:@swc/core",
+            "npm:@swc/helpers",
+            "npm:@types/jest",
+            "npm:@types/node",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:esbuild",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:jest",
+            "npm:jest-environment-jsdom",
+            "npm:jest-environment-node",
+            "npm:nodemon",
+            "npm:nx",
+            "npm:prettier",
+            "npm:rimraf",
+            "npm:ts-jest",
+            "npm:ts-node",
+            "npm:typedoc",
+            "npm:typedoc-material-theme",
+            "npm:typedoc-plugin-pages",
+            "npm:typedoc-theme-category-nav",
+            "npm:typedoc-theme-hierarchy",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "project.json",
+          "hash": "596287135512902265"
+        },
+        {
+          "file": "tsconfig.base.json",
+          "hash": "15699908282418752302"
+        },
+        {
+          "file": "typedoc.base.json",
+          "hash": "2300223296991191619"
+        },
+        {
+          "file": "typedoc.config.js",
+          "hash": "18404079594242976624"
+        },
+        {
+          "file": "typedoc.theme.css",
+          "hash": "2332614387016867941"
+        },
+        {
+          "file": "yarn.lock",
+          "hash": "855782536338221333"
+        }
+      ],
+      "sei-metamask-test-ui": [
+        {
+          "file": "packages/metamask-snap/test-ui/.gitignore",
+          "hash": "13046175384202504187"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/README.md",
+          "hash": "17085567318566825417"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/globals.d.ts",
+          "hash": "18010592226211778406",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/index.html",
+          "hash": "8940447716739108774"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/package.json",
+          "hash": "1113330256847501553",
+          "deps": [
+            "npm:@metamask/providers",
+            "npm:react",
+            "npm:react-dom",
+            "npm:react-icons",
+            "npm:react-is",
+            "npm:styled-components",
+            "npm:@babel/preset-typescript",
+            "npm:@testing-library/dom",
+            "npm:@testing-library/jest-dom",
+            "npm:@testing-library/react",
+            "npm:@types/jest",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:prettier",
+            "npm:prettier-plugin-packagejson",
+            "npm:rimraf",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/public/favicon.ico",
+          "hash": "11880637422291255019"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/App.css",
+          "hash": "10836173040477289074"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/App.tsx",
+          "hash": "14233205448103133796",
+          "deps": [
+            "npm:react",
+            "npm:styled-components",
+            "npm:react-toastify",
+            "npm:react-toastify/dist/ReactToastify.css"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/Root.tsx",
+          "hash": "5926444855407688274",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/flask_fox.tsx",
+          "hash": "2560254200404894891",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/logo.svg",
+          "hash": "1097159363816691085"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/metamask_fox.svg",
+          "hash": "5754046496600256040"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/react.svg",
+          "hash": "16069471864800376455"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Buttons.tsx",
+          "hash": "13623267901046100867",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Card.tsx",
+          "hash": "8437501477220638303",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Header.tsx",
+          "hash": "10073051394063717034",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/MetaMask.tsx",
+          "hash": "16786724382036228453",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Toggle.tsx",
+          "hash": "10760470280326378103",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/index.ts",
+          "hash": "7642525245089394155"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/config/index.ts",
+          "hash": "9733984230409668645"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/config/theme.ts",
+          "hash": "11919451740524050345",
+          "deps": [
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/hooks/MetamaskContext.tsx",
+          "hash": "4632313409979775867",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/hooks/index.ts",
+          "hash": "2940315249067626444"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/index.css",
+          "hash": "957896817323665666"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/main.tsx",
+          "hash": "6788535232134525107",
+          "deps": [
+            "npm:react",
+            "npm:react-dom"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/pages/index.tsx",
+          "hash": "13623420556277086056",
+          "deps": [
+            "npm:react",
+            "npm:styled-components",
+            "npm:@cosmjs/stargate",
+            "npm:@sei-js/core",
+            "npm:@cosmjs/amino",
+            "npm:@cosmjs/proto-signing",
+            "npm:cosmjs-types",
+            "npm:@cosmjs/encoding",
+            "npm:@cosmjs/math",
+            "npm:react-toastify",
+            "npm:react-icons",
+            "npm:react-json-view-lite",
+            "npm:react-json-view-lite/dist/index.css"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/custom.d.ts",
+          "hash": "2505826915435419372",
+          "deps": [
+            "npm:@metamask/providers"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/index.ts",
+          "hash": "17854620319429399444"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/snap.ts",
+          "hash": "15134731834186712438"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/styled.d.ts",
+          "hash": "12715459989312354116",
+          "deps": [
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/button.ts",
+          "hash": "13352583186694235063"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/index.ts",
+          "hash": "11509460631358272260"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/initialization.ts",
+          "hash": "2264600837612842915",
+          "deps": [
+            "npm:@metamask/providers",
+            "@sei-js/cosmjs"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/localStorage.ts",
+          "hash": "18227165092003598449"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/metamask.ts",
+          "hash": "14742147972388070689"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/snap.ts",
+          "hash": "9788572302387679066",
+          "deps": [
+            "npm:@sei-js/core",
+            "npm:buffer"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/theme.ts",
+          "hash": "6349318666569118664"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/tsconfig.json",
+          "hash": "12040325883005372030"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/tsconfig.node.json",
+          "hash": "12040325883005372030"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/vite.config.ts",
+          "hash": "1920456401353505654",
+          "deps": [
+            "npm:vite",
+            "npm:@vitejs/plugin-react",
+            "npm:vite-plugin-node-polyfills"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/yarn.lock",
+          "hash": "2989265305720834725"
+        }
+      ],
+      "@sei-js/metamask-snap": [
+        {
+          "file": "packages/metamask-snap/CHANGELOG.md",
+          "hash": "1721267382703976653"
+        },
+        {
+          "file": "packages/metamask-snap/README.md",
+          "hash": "2313767540086855191"
+        },
+        {
+          "file": "packages/metamask-snap/bable.config.js",
+          "hash": "3860429126896203357"
+        },
+        {
+          "file": "packages/metamask-snap/images/icon.svg",
+          "hash": "14638442676295511792"
+        },
+        {
+          "file": "packages/metamask-snap/jest.config.js",
+          "hash": "8487951487002940767"
+        },
+        {
+          "file": "packages/metamask-snap/package.json",
+          "hash": "1487861145456002415",
+          "deps": [
+            "npm:@metamask/snaps-types",
+            "npm:@metamask/snaps-ui",
+            "npm:buffer",
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@jest/globals",
+            "npm:@lavamoat/allow-scripts",
+            "npm:@metamask/auto-changelog",
+            "npm:@metamask/key-tree",
+            "npm:@metamask/snaps-cli",
+            "npm:@metamask/snaps-jest",
+            "npm:@metamask/utils",
+            "npm:jest",
+            "npm:prettier",
+            "npm:prettier-plugin-packagejson",
+            "npm:rimraf",
+            "npm:through2",
+            "npm:ts-jest",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/snap.config.ts",
+          "hash": "15644264458731217536",
+          "deps": [
+            "npm:path",
+            "npm:@metamask/snaps-cli"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/snap.manifest.json",
+          "hash": "6633143188044317362"
+        },
+        {
+          "file": "packages/metamask-snap/src/address.ts",
+          "hash": "10148287988663214405",
+          "deps": [
+            "npm:@cosmjs/encoding",
+            "npm:elliptic",
+            "npm:@cosmjs/crypto"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/api.ts",
+          "hash": "1575003276268342866",
+          "deps": [
+            "npm:@metamask/key-tree",
+            "npm:@metamask/snaps-types",
+            "npm:cosmjs-types",
+            "npm:long"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/bech32.ts",
+          "hash": "6108783564488578414",
+          "deps": [
+            "npm:bech32"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/hash.ts",
+          "hash": "8046867279629614337",
+          "deps": [
+            "npm:sha.js"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/index.ts",
+          "hash": "14163432267913601153"
+        },
+        {
+          "file": "packages/metamask-snap/src/serialize.ts",
+          "hash": "7095509269987805224",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:cosmjs-types"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/snapWallet.ts",
+          "hash": "5731762160468671695",
+          "deps": [
+            "npm:@noble/secp256k1",
+            "npm:@noble/hashes",
+            "npm:cosmjs-types",
+            "npm:@cosmjs/amino",
+            "npm:buffer"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/api.spec.ts",
+          "hash": "11022211543395736058"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/input.mock.ts",
+          "hash": "9060408358939099653",
+          "deps": [
+            "npm:@metamask/snaps-types"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/mocks.ts",
+          "hash": "1593849281647233110"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/output.mock.ts",
+          "hash": "15091269791145208256"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/snap.mock.ts",
+          "hash": "2546581622722145809"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/snapWallet.spec.ts",
+          "hash": "5528533060060452569"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/ui.spec.ts",
+          "hash": "15881088193825827145",
+          "deps": [
+            "@sei-js/proto",
+            "npm:long"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/utils.spec.ts",
+          "hash": "14788153976588832665"
+        },
+        {
+          "file": "packages/metamask-snap/src/types.ts",
+          "hash": "15041783523938935056",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "@sei-js/proto",
+            "npm:@metamask/providers",
+            "npm:@metamask/snaps-ui"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/ui.ts",
+          "hash": "1786795094770415809",
+          "deps": [
+            "@sei-js/proto",
+            "npm:long",
+            "npm:@metamask/snaps-ui",
+            "npm:@cosmjs/amino",
+            "npm:cosmjs-types"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/utils.ts",
+          "hash": "3634616900003365308",
+          "deps": [
+            "npm:long"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/tsconfig.json",
+          "hash": "14169839991185264555"
+        }
+      ],
+      "@sei-js/cosmjs": [
+        {
+          "file": "packages/cosmjs/.babelrc.js",
+          "hash": "1614305020876056273"
+        },
+        {
+          "file": "packages/cosmjs/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/cosmjs/.npmignore",
+          "hash": "17948297527781443299"
+        },
+        {
+          "file": "packages/cosmjs/CHANGELOG.md",
+          "hash": "3293709969552461217"
+        },
+        {
+          "file": "packages/cosmjs/README.md",
+          "hash": "2352644169798728758"
+        },
+        {
+          "file": "packages/cosmjs/jest.config.ts",
+          "hash": "13773386777693418241"
+        },
+        {
+          "file": "packages/cosmjs/jest.setup.ts",
+          "hash": "4447872311442361023",
+          "deps": [
+            "npm:util"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/package.json",
+          "hash": "3597942621478576898",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:@cosmjs/cosmwasm-stargate",
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/encoding",
+            "npm:@cosmjs/json-rpc",
+            "npm:@cosmjs/math",
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/tendermint-rpc",
+            "npm:@cosmjs/utils",
+            "npm:@cosmos-kit/fin",
+            "npm:@ethersproject/keccak256",
+            "npm:@keplr-wallet/types",
+            "npm:@noble/secp256k1",
+            "npm:@react-icons/all-files",
+            "npm:bech32",
+            "npm:buffer",
+            "npm:elliptic",
+            "npm:moment",
+            "npm:process",
+            "npm:readonly-date",
+            "npm:sha.js",
+            "npm:styled-components",
+            "npm:xstream",
+            "npm:@babel/core",
+            "npm:@babel/plugin-transform-runtime",
+            "npm:@babel/preset-env",
+            "npm:@babel/preset-react",
+            "npm:@babel/preset-typescript",
+            "npm:@testing-library/jest-dom",
+            "npm:@testing-library/react",
+            "npm:@types/jest",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:jest",
+            "npm:prettier",
+            "npm:react",
+            "npm:react-dom",
+            "npm:ts-jest"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/index.ts",
+          "hash": "5680749426998586858"
+        },
+        {
+          "file": "packages/cosmjs/src/core/queryClient/__tests__/queryClient.spec.ts",
+          "hash": "8016411087549819109",
+          "deps": [
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/queryClient/index.ts",
+          "hash": "5704119470074586301"
+        },
+        {
+          "file": "packages/cosmjs/src/core/queryClient/queryClient.ts",
+          "hash": "7040944261903826968",
+          "deps": [
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/__tests__/cosmWasmClient.spec.ts",
+          "hash": "9012897895824932977",
+          "deps": [
+            "npm:@cosmjs/cosmwasm-stargate",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/__tests__/stargateClient.spec.ts",
+          "hash": "12730727078840062861",
+          "deps": [
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/cosmWasmClient.ts",
+          "hash": "1165184138659447701",
+          "deps": [
+            "npm:@cosmjs/cosmwasm-stargate",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/index.ts",
+          "hash": "6353634832382000905"
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/stargateClient.ts",
+          "hash": "6414156438937783546",
+          "deps": [
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/proto-signing",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/cosmoskit/assetlist.ts",
+          "hash": "9091537708521040809"
+        },
+        {
+          "file": "packages/cosmjs/src/cosmoskit/chains.ts",
+          "hash": "11508634826308446973"
+        },
+        {
+          "file": "packages/cosmjs/src/cosmoskit/index.ts",
+          "hash": "8494695671677550863"
+        },
+        {
+          "file": "packages/cosmjs/src/index-browser.ts",
+          "hash": "3575815536793750433",
+          "deps": [
+            [
+              "npm:process",
+              "dynamic"
+            ],
+            [
+              "npm:buffer",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/index.ts",
+          "hash": "18212069376693200351"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/__tests__/address.spec.ts",
+          "hash": "16128971137190552065",
+          "deps": [
+            "npm:@jest/globals",
+            "npm:crypto",
+            "@sei-js/common"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/__tests__/bech32.spec.ts",
+          "hash": "10187007763536503125"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/__tests__/hash.spec.ts",
+          "hash": "16097150894949636708"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/address.ts",
+          "hash": "5584029589136891750",
+          "deps": [
+            "npm:elliptic",
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/bech32.ts",
+          "hash": "12216228316263501956",
+          "deps": [
+            "npm:bech32"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/hash.ts",
+          "hash": "5848817909365932799",
+          "deps": [
+            "npm:sha.js"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/index.ts",
+          "hash": "16898439604466394058"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/serialize.ts",
+          "hash": "6846540775713741976",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:cosmjs-types"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/signing.ts",
+          "hash": "2608745902593423983",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/__tests__/keplrVerification.spec.ts",
+          "hash": "18175061336002946606"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/__tests__/utils.spec.ts",
+          "hash": "8180427844658594560"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/__tests__/wallet.spec.ts",
+          "hash": "14268442751072014788",
+          "deps": [
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/config.ts",
+          "hash": "13904738578375223470"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/index.ts",
+          "hash": "6576321689509407584"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/keplrVerification.ts",
+          "hash": "1256713926754002266"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/types.ts",
+          "hash": "13597144222494078618",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/amino"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/utils.ts",
+          "hash": "6317872337946889488"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/wallet.ts",
+          "hash": "14279441455313050682",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/crypto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/tsconfig.json",
+          "hash": "4610647157218252118"
+        }
+      ],
+      "@sei-js/common": [
+        {
+          "file": "packages/common/.babelrc.js",
+          "hash": "4638744510834633633"
+        },
+        {
+          "file": "packages/common/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/common/.npmignore",
+          "hash": "17948297527781443299"
+        },
+        {
+          "file": "packages/common/CHANGELOG.md",
+          "hash": "13509243794260723812"
+        },
+        {
+          "file": "packages/common/README.md",
+          "hash": "5364003662943584172"
+        },
+        {
+          "file": "packages/common/jest.config.ts",
+          "hash": "16414517479619571110"
+        },
+        {
+          "file": "packages/common/package.json",
+          "hash": "9476211433016248588",
+          "deps": [
+            "npm:@cosmjs/encoding",
+            "npm:keccak",
+            "npm:@babel/core",
+            "npm:@babel/plugin-transform-runtime",
+            "npm:@babel/preset-env",
+            "npm:@babel/preset-typescript",
+            "npm:@types/jest",
+            "npm:jest",
+            "npm:prettier",
+            "npm:ts-jest",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/common/src/index.ts",
+          "hash": "15712607641804478420"
+        },
+        {
+          "file": "packages/common/src/media/icons.ts",
+          "hash": "9790300863424653949"
+        },
+        {
+          "file": "packages/common/src/media/index.ts",
+          "hash": "11439764896261432272"
+        },
+        {
+          "file": "packages/common/src/staking/__tests__/apr.spec.ts",
+          "hash": "10566834306322537976",
+          "deps": [
+            "npm:moment",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/common/src/staking/apr.ts",
+          "hash": "11300504729557471401",
+          "deps": [
+            "npm:moment",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/common/src/staking/index.ts",
+          "hash": "13010439508999662695"
+        },
+        {
+          "file": "packages/common/tsconfig.json",
+          "hash": "8434672936855517005"
+        }
+      ],
+      "@sei-js/cli": [
+        {
+          "file": "packages/cli/.gitignore",
+          "hash": "3513492345290072647"
+        },
+        {
+          "file": "packages/cli/CHANGELOG.md",
+          "hash": "4714868311004852319"
+        },
+        {
+          "file": "packages/cli/README.md",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/cli/package.json",
+          "hash": "4318246840606828997",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "@sei-js/cosmjs",
+            "npm:boxen",
+            "npm:inquirer",
+            "npm:@esbuild-plugins/node-globals-polyfill",
+            "npm:@tanstack/react-query",
+            "npm:@types/boxen",
+            "npm:@types/inquirer",
+            "npm:autoprefixer",
+            "npm:cosmos-kit",
+            "npm:degit",
+            "npm:postcss",
+            "npm:tailwindcss",
+            "npm:viem",
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/src/main.ts",
+          "hash": "17327428629501239753",
+          "deps": [
+            "npm:inquirer",
+            "npm:boxen",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/frontend.ts",
+          "hash": "10934968386423337988",
+          "deps": [
+            "npm:util",
+            "npm:child_process",
+            "npm:inquirer",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/rpcIntegrations.ts",
+          "hash": "9661423763577530280",
+          "deps": [
+            "npm:inquirer",
+            "npm:child_process",
+            "npm:util",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/stylingFrameworks.ts",
+          "hash": "10309968695361964874",
+          "deps": [
+            "npm:inquirer",
+            "npm:child_process",
+            "npm:util",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/uiComponentLibraries.ts",
+          "hash": "5044201984655764154",
+          "deps": [
+            "npm:inquirer",
+            "npm:util",
+            "npm:child_process",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/walletConnectButton.ts",
+          "hash": "17509464576435051800",
+          "deps": [
+            "npm:fs",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/components/cosmjs.tsx",
+          "hash": "7574467660244208454",
+          "deps": [
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/components/evm.tsx",
+          "hash": "18050443899707350499",
+          "deps": [
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/next-app-tailwind.tsx",
+          "hash": "18057307534586363377",
+          "deps": [
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/next-app.tsx",
+          "hash": "10048315817878528428"
+        },
+        {
+          "file": "packages/cli/templates/next-main.tsx",
+          "hash": "5193888286075305665",
+          "deps": [
+            "npm:next/app"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/providers/cosmjs.tsx",
+          "hash": "8497436283241126718",
+          "deps": [
+            "@sei-js/cosmjs",
+            "npm:@cosmos-kit/react",
+            "npm:cosmos-kit",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/providers/evm.tsx",
+          "hash": "12510699700339813492",
+          "deps": [
+            "npm:react",
+            "npm:wagmi",
+            "npm:@tanstack/react-query",
+            "npm:viem",
+            "@sei-js/evm"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-next.css",
+          "hash": "601473408680314598"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-vite-css.css",
+          "hash": "2421724036607519854"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-vite.css",
+          "hash": "17322417069250368579"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-vite.module.sass",
+          "hash": "9799811431301101591"
+        },
+        {
+          "file": "packages/cli/templates/tailwind/config-nextjs.ts",
+          "hash": "14378259236105805895"
+        },
+        {
+          "file": "packages/cli/templates/tailwind/config-vite.ts",
+          "hash": "14819688527020775707"
+        },
+        {
+          "file": "packages/cli/templates/vite-app-css.tsx",
+          "hash": "6413704979636417625",
+          "deps": [
+            "npm:react",
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-sass.tsx",
+          "hash": "12510059976381567296",
+          "deps": [
+            "npm:react",
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-tailwind.tsx",
+          "hash": "10909437640869304669",
+          "deps": [
+            "npm:@interchain-ui/react/styles",
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-main.tsx",
+          "hash": "16196582691728036858",
+          "deps": [
+            "npm:react",
+            "npm:react-dom"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite/config.ts",
+          "hash": "16713360635170731793",
+          "deps": [
+            "npm:vite",
+            "npm:@vitejs/plugin-react",
+            "npm:@esbuild-plugins/node-globals-polyfill"
+          ]
+        },
+        {
+          "file": "packages/cli/tsconfig.json",
+          "hash": "663207735085963194"
+        }
+      ]
+    }
+  }
+}

@@ -9,8 +9,8 @@ import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
  */
 export interface MsgConnectionOpenInit {
   clientId: string;
-  counterparty: Counterparty;
-  version?: Version;
+  counterparty: Counterparty | undefined;
+  version?: Version | undefined;
   delayPeriod: bigint;
   signer: string;
 }
@@ -24,8 +24,8 @@ export interface MsgConnectionOpenInitProtoMsg {
  */
 export interface MsgConnectionOpenInitAmino {
   client_id?: string;
-  counterparty?: CounterpartyAmino;
-  version?: VersionAmino;
+  counterparty?: CounterpartyAmino | undefined;
+  version?: VersionAmino | undefined;
   delay_period?: string;
   signer?: string;
 }
@@ -39,8 +39,8 @@ export interface MsgConnectionOpenInitAminoMsg {
  */
 export interface MsgConnectionOpenInitSDKType {
   client_id: string;
-  counterparty: CounterpartySDKType;
-  version?: VersionSDKType;
+  counterparty: CounterpartySDKType | undefined;
+  version?: VersionSDKType | undefined;
   delay_period: bigint;
   signer: string;
 }
@@ -78,11 +78,11 @@ export interface MsgConnectionOpenTry {
    * the connection identifier of the previous connection in state INIT
    */
   previousConnectionId: string;
-  clientState?: Any;
-  counterparty: Counterparty;
+  clientState?: Any | undefined;
+  counterparty: Counterparty | undefined;
   delayPeriod: bigint;
   counterpartyVersions: Version[];
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   /**
    * proof of the initialization the connection on Chain A: `UNITIALIZED ->
    * INIT`
@@ -92,7 +92,7 @@ export interface MsgConnectionOpenTry {
   proofClient: Uint8Array;
   /** proof of client consensus state */
   proofConsensus: Uint8Array;
-  consensusHeight: Height;
+  consensusHeight: Height | undefined;
   signer: string;
 }
 export interface MsgConnectionOpenTryProtoMsg {
@@ -110,11 +110,11 @@ export interface MsgConnectionOpenTryAmino {
    * the connection identifier of the previous connection in state INIT
    */
   previous_connection_id?: string;
-  client_state?: AnyAmino;
-  counterparty?: CounterpartyAmino;
+  client_state?: AnyAmino | undefined;
+  counterparty?: CounterpartyAmino | undefined;
   delay_period?: string;
   counterparty_versions?: VersionAmino[];
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   /**
    * proof of the initialization the connection on Chain A: `UNITIALIZED ->
    * INIT`
@@ -124,7 +124,7 @@ export interface MsgConnectionOpenTryAmino {
   proof_client?: string;
   /** proof of client consensus state */
   proof_consensus?: string;
-  consensus_height?: HeightAmino;
+  consensus_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgConnectionOpenTryAminoMsg {
@@ -138,15 +138,15 @@ export interface MsgConnectionOpenTryAminoMsg {
 export interface MsgConnectionOpenTrySDKType {
   client_id: string;
   previous_connection_id: string;
-  client_state?: AnySDKType;
-  counterparty: CounterpartySDKType;
+  client_state?: AnySDKType | undefined;
+  counterparty: CounterpartySDKType | undefined;
   delay_period: bigint;
   counterparty_versions: VersionSDKType[];
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   proof_init: Uint8Array;
   proof_client: Uint8Array;
   proof_consensus: Uint8Array;
-  consensus_height: HeightSDKType;
+  consensus_height: HeightSDKType | undefined;
   signer: string;
 }
 /** MsgConnectionOpenTryResponse defines the Msg/ConnectionOpenTry response type. */
@@ -170,9 +170,9 @@ export interface MsgConnectionOpenTryResponseSDKType {}
 export interface MsgConnectionOpenAck {
   connectionId: string;
   counterpartyConnectionId: string;
-  version?: Version;
-  clientState?: Any;
-  proofHeight: Height;
+  version?: Version | undefined;
+  clientState?: Any | undefined;
+  proofHeight: Height | undefined;
   /**
    * proof of the initialization the connection on Chain B: `UNITIALIZED ->
    * TRYOPEN`
@@ -182,7 +182,7 @@ export interface MsgConnectionOpenAck {
   proofClient: Uint8Array;
   /** proof of client consensus state */
   proofConsensus: Uint8Array;
-  consensusHeight: Height;
+  consensusHeight: Height | undefined;
   signer: string;
 }
 export interface MsgConnectionOpenAckProtoMsg {
@@ -196,9 +196,9 @@ export interface MsgConnectionOpenAckProtoMsg {
 export interface MsgConnectionOpenAckAmino {
   connection_id?: string;
   counterparty_connection_id?: string;
-  version?: VersionAmino;
-  client_state?: AnyAmino;
-  proof_height?: HeightAmino;
+  version?: VersionAmino | undefined;
+  client_state?: AnyAmino | undefined;
+  proof_height?: HeightAmino | undefined;
   /**
    * proof of the initialization the connection on Chain B: `UNITIALIZED ->
    * TRYOPEN`
@@ -208,7 +208,7 @@ export interface MsgConnectionOpenAckAmino {
   proof_client?: string;
   /** proof of client consensus state */
   proof_consensus?: string;
-  consensus_height?: HeightAmino;
+  consensus_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgConnectionOpenAckAminoMsg {
@@ -222,13 +222,13 @@ export interface MsgConnectionOpenAckAminoMsg {
 export interface MsgConnectionOpenAckSDKType {
   connection_id: string;
   counterparty_connection_id: string;
-  version?: VersionSDKType;
-  client_state?: AnySDKType;
-  proof_height: HeightSDKType;
+  version?: VersionSDKType | undefined;
+  client_state?: AnySDKType | undefined;
+  proof_height: HeightSDKType | undefined;
   proof_try: Uint8Array;
   proof_client: Uint8Array;
   proof_consensus: Uint8Array;
-  consensus_height: HeightSDKType;
+  consensus_height: HeightSDKType | undefined;
   signer: string;
 }
 /** MsgConnectionOpenAckResponse defines the Msg/ConnectionOpenAck response type. */
@@ -253,7 +253,7 @@ export interface MsgConnectionOpenConfirm {
   connectionId: string;
   /** proof for the change of the connection state on Chain A: `INIT -> OPEN` */
   proofAck: Uint8Array;
-  proofHeight: Height;
+  proofHeight: Height | undefined;
   signer: string;
 }
 export interface MsgConnectionOpenConfirmProtoMsg {
@@ -268,7 +268,7 @@ export interface MsgConnectionOpenConfirmAmino {
   connection_id?: string;
   /** proof for the change of the connection state on Chain A: `INIT -> OPEN` */
   proof_ack?: string;
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
   signer?: string;
 }
 export interface MsgConnectionOpenConfirmAminoMsg {
@@ -282,7 +282,7 @@ export interface MsgConnectionOpenConfirmAminoMsg {
 export interface MsgConnectionOpenConfirmSDKType {
   connection_id: string;
   proof_ack: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
   signer: string;
 }
 /**

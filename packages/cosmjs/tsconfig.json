@@ -6,8 +6,10 @@
 		"jsx": "react-jsx",
 		"jsxImportSource": "react"
 	},
-	"include": ["src"],
-  "exclude": [
-    "src/metamask-snap/**/*",
-  ]
+  "typedocOptions": {
+    "readme": "./README.md",
+    "name": "cosmjs",
+    "entryPoints": ["src/index.ts"]
+  }
 }
+

@@ -3,7 +3,7 @@ import { BinaryReader, BinaryWriter } from '../binary';
 import { Decimal } from '@cosmjs/math';
 export interface LongBook {
 	price: string;
-	entry?: OrderEntry;
+	entry?: OrderEntry | undefined;
 }
 export interface LongBookProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.LongBook';
@@ -11,7 +11,7 @@ export interface LongBookProtoMsg {
 }
 export interface LongBookAmino {
 	price?: string;
-	entry?: OrderEntryAmino;
+	entry?: OrderEntryAmino | undefined;
 }
 export interface LongBookAminoMsg {
 	type: '/seiprotocol.seichain.dex.LongBook';
@@ -19,7 +19,7 @@ export interface LongBookAminoMsg {
 }
 export interface LongBookSDKType {
 	price: string;
-	entry?: OrderEntrySDKType;
+	entry?: OrderEntrySDKType | undefined;
 }
 function createBaseLongBook(): LongBook {
 	return {

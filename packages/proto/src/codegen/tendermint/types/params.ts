@@ -5,10 +5,10 @@ import { BinaryReader, BinaryWriter } from "../../binary";
  * validity of blocks.
  */
 export interface ConsensusParams {
-  block: BlockParams;
-  evidence: EvidenceParams;
-  validator: ValidatorParams;
-  version: VersionParams;
+  block: BlockParams | undefined;
+  evidence: EvidenceParams | undefined;
+  validator: ValidatorParams | undefined;
+  version: VersionParams | undefined;
 }
 export interface ConsensusParamsProtoMsg {
   typeUrl: "/tendermint.types.ConsensusParams";
@@ -19,10 +19,10 @@ export interface ConsensusParamsProtoMsg {
  * validity of blocks.
  */
 export interface ConsensusParamsAmino {
-  block?: BlockParamsAmino;
-  evidence?: EvidenceParamsAmino;
-  validator?: ValidatorParamsAmino;
-  version?: VersionParamsAmino;
+  block?: BlockParamsAmino | undefined;
+  evidence?: EvidenceParamsAmino | undefined;
+  validator?: ValidatorParamsAmino | undefined;
+  version?: VersionParamsAmino | undefined;
 }
 export interface ConsensusParamsAminoMsg {
   type: "/tendermint.types.ConsensusParams";
@@ -33,10 +33,10 @@ export interface ConsensusParamsAminoMsg {
  * validity of blocks.
  */
 export interface ConsensusParamsSDKType {
-  block: BlockParamsSDKType;
-  evidence: EvidenceParamsSDKType;
-  validator: ValidatorParamsSDKType;
-  version: VersionParamsSDKType;
+  block: BlockParamsSDKType | undefined;
+  evidence: EvidenceParamsSDKType | undefined;
+  validator: ValidatorParamsSDKType | undefined;
+  version: VersionParamsSDKType | undefined;
 }
 /** BlockParams contains limits on the block size. */
 export interface BlockParams {
@@ -108,7 +108,7 @@ export interface EvidenceParams {
    * mechanism for handling [Nothing-At-Stake
    * attacks](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ#what-is-the-nothing-at-stake-problem-and-how-can-it-be-fixed).
    */
-  maxAgeDuration: Duration;
+  maxAgeDuration: Duration | undefined;
   /**
    * This sets the maximum size of total evidence in bytes that can be committed in a single block.
    * and should fall comfortably under the max block bytes.
@@ -136,7 +136,7 @@ export interface EvidenceParamsAmino {
    * mechanism for handling [Nothing-At-Stake
    * attacks](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ#what-is-the-nothing-at-stake-problem-and-how-can-it-be-fixed).
    */
-  max_age_duration?: DurationAmino;
+  max_age_duration?: DurationAmino | undefined;
   /**
    * This sets the maximum size of total evidence in bytes that can be committed in a single block.
    * and should fall comfortably under the max block bytes.
@@ -151,7 +151,7 @@ export interface EvidenceParamsAminoMsg {
 /** EvidenceParams determine how we handle evidence of malfeasance. */
 export interface EvidenceParamsSDKType {
   max_age_num_blocks: bigint;
-  max_age_duration: DurationSDKType;
+  max_age_duration: DurationSDKType | undefined;
   max_bytes: bigint;
 }
 /**

@@ -1,9 +1,8 @@
 import { StdSignature, StdSignDoc } from '@cosmjs/amino';
 import { fromBase64 } from '@cosmjs/encoding';
-import { compressedPubKeyToAddress, verifyDigest32 } from './address';
+import { compressedPubKeyToAddress, isValidSeiCosmosAddress, verifyDigest32 } from './address';
 import { sha256 } from './hash';
 import { serializeAminoSignDoc } from './serialize';
-import { isValidSeiCosmosAddress } from '@sei-js/common';
 
 /**
  * Creates a StdSignDoc for an [ADR-36](https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md) object.
@@ -12,6 +11,7 @@ import { isValidSeiCosmosAddress } from '@sei-js/common';
  * Data is arbitrary bytes which can represent text, files, objects. It's applications developers decision how Data should be deserialized, serialized and the object it can represent in their context
  * It's applications developers decision how Data should be treated, by treated we mean the serialization and deserialization process and the Object Data should represent.
  * @returns A StdSignDoc object.
+ * @category Utils
  */
 export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
 	// If data is already a base64 string, convert it to a Buffer and back to a string.
@@ -129,12 +129,18 @@ function verifyADR36AminoSignDoc(signDoc: StdSignDoc, pubKey: Uint8Array, signat
 	return verifyDigest32(sha256(msg), signature, pubKey);
 }
 
+/**
+ * @category Utils
+ */
 function verifyADR36Amino(signer: string, data: string | Uint8Array, pubKey: Uint8Array, signature: Uint8Array): boolean {
 	const signDoc = makeADR36AminoSignDoc(signer, data);
 
 	return verifyADR36AminoSignDoc(signDoc, pubKey, signature);
 }
 
+/**
+ * @category Utils
+ */
 export const verifyArbitrary = async (signerAddress: string, expectedMessage: string, signatureToVerify: StdSignature): Promise<boolean> => {
 	try {
 		const { pub_key: pubKey, signature } = signatureToVerify;

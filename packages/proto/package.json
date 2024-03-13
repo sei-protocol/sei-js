@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "0.0.0-internal-evm-20240301223227",
+  "version": "0.0.0-internal-evm-20240311151206",
   "description": "TypeScript library for Sei protobuf files generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
@@ -26,6 +26,7 @@
     "codegen": "cross-env NODE_ENV=development babel-node scripts/codegen.js",
     "postcodegen": "yarn prettier --write ./src/codegen/**/*.ts --config ../../.prettierrc",
     "dev": "cross-env NODE_ENV=development babel-node src/index --extensions \".tsx,.ts,.js\"",
+    "docs": "typedoc --out docs",
     "watch": "cross-env NODE_ENV=development babel-watch src/index --extensions \".tsx,.ts,.js\"",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
@@ -70,7 +71,7 @@
   "dependencies": {
     "@babel/runtime": "^7.24.0",
     "@cosmjs/amino": "^0.32.2",
-    "@cosmjs/encoding": "^0.32.2",
+    "@cosmjs/encoding": "^0.32.3",
     "@cosmjs/proto-signing": "^0.32.2",
     "@cosmjs/stargate": "^0.32.2",
     "@cosmjs/tendermint-rpc": "^0.32.2",

@@ -2,7 +2,7 @@ import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
 import { OfflineAminoSigner, StdSignature } from '@cosmjs/amino';
 
 /**
- * A representation of a Sei Wallet.
+ * @category Interfaces
  */
 export interface SeiWallet {
 	walletInfo: {
@@ -22,12 +22,18 @@ export interface SeiWallet {
 	isMobileSupported: boolean;
 }
 
+/**
+ * @category Interfaces
+ */
 type GasPriceStep = {
 	low: number;
 	average: number;
 	high: number;
 };
 
+/**
+ * @category Interfaces
+ */
 export type ChainInfo = {
 	chainName?: string;
 	chainId?: string;
@@ -36,6 +42,9 @@ export type ChainInfo = {
 	gasPriceStep?: GasPriceStep;
 };
 
+/**
+ * @category Interfaces
+ */
 export type FeeCurrency = {
 	coinDenom: string;
 	coinMinimalDenom: string;
@@ -43,6 +52,9 @@ export type FeeCurrency = {
 	gasPriceStep: GasPriceStep;
 };
 
+/**
+ * @category Interfaces
+ */
 export type Currency = {
 	coinDenom: string;
 	coinMinimalDenom: string;
@@ -51,6 +63,9 @@ export type Currency = {
 	coinImageUrl?: string;
 };
 
+/**
+ * @category Interfaces
+ */
 export type ChainConfig = {
 	rpc: string;
 	rest: string;

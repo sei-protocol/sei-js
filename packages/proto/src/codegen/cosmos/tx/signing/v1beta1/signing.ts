@@ -117,8 +117,8 @@ export interface SignatureDescriptorsSDKType {
  */
 export interface SignatureDescriptor {
   /** public_key is the public key of the signer */
-  publicKey?: Any;
-  data?: SignatureDescriptor_Data;
+  publicKey?: Any | undefined;
+  data?: SignatureDescriptor_Data | undefined;
   /**
    * sequence is the sequence of the account, which describes the
    * number of committed transactions signed by a given address. It is used to prevent
@@ -138,8 +138,8 @@ export interface SignatureDescriptorProtoMsg {
  */
 export interface SignatureDescriptorAmino {
   /** public_key is the public key of the signer */
-  public_key?: AnyAmino;
-  data?: SignatureDescriptor_DataAmino;
+  public_key?: AnyAmino | undefined;
+  data?: SignatureDescriptor_DataAmino | undefined;
   /**
    * sequence is the sequence of the account, which describes the
    * number of committed transactions signed by a given address. It is used to prevent
@@ -158,16 +158,16 @@ export interface SignatureDescriptorAminoMsg {
  * clients.
  */
 export interface SignatureDescriptorSDKType {
-  public_key?: AnySDKType;
-  data?: SignatureDescriptor_DataSDKType;
+  public_key?: AnySDKType | undefined;
+  data?: SignatureDescriptor_DataSDKType | undefined;
   sequence: bigint;
 }
 /** Data represents signature data */
 export interface SignatureDescriptor_Data {
   /** single represents a single signer */
-  single?: SignatureDescriptor_Data_Single;
+  single?: SignatureDescriptor_Data_Single | undefined;
   /** multi represents a multisig signer */
-  multi?: SignatureDescriptor_Data_Multi;
+  multi?: SignatureDescriptor_Data_Multi | undefined;
 }
 export interface SignatureDescriptor_DataProtoMsg {
   typeUrl: "/cosmos.tx.signing.v1beta1.Data";
@@ -176,9 +176,9 @@ export interface SignatureDescriptor_DataProtoMsg {
 /** Data represents signature data */
 export interface SignatureDescriptor_DataAmino {
   /** single represents a single signer */
-  single?: SignatureDescriptor_Data_SingleAmino;
+  single?: SignatureDescriptor_Data_SingleAmino | undefined;
   /** multi represents a multisig signer */
-  multi?: SignatureDescriptor_Data_MultiAmino;
+  multi?: SignatureDescriptor_Data_MultiAmino | undefined;
 }
 export interface SignatureDescriptor_DataAminoMsg {
   type: "cosmos-sdk/Data";
@@ -186,8 +186,8 @@ export interface SignatureDescriptor_DataAminoMsg {
 }
 /** Data represents signature data */
 export interface SignatureDescriptor_DataSDKType {
-  single?: SignatureDescriptor_Data_SingleSDKType;
-  multi?: SignatureDescriptor_Data_MultiSDKType;
+  single?: SignatureDescriptor_Data_SingleSDKType | undefined;
+  multi?: SignatureDescriptor_Data_MultiSDKType | undefined;
 }
 /** Single is the signature data for a single signer */
 export interface SignatureDescriptor_Data_Single {
@@ -219,7 +219,7 @@ export interface SignatureDescriptor_Data_SingleSDKType {
 /** Multi is the signature data for a multisig public key */
 export interface SignatureDescriptor_Data_Multi {
   /** bitarray specifies which keys within the multisig are signing */
-  bitarray?: CompactBitArray;
+  bitarray?: CompactBitArray | undefined;
   /** signatures is the signatures of the multi-signature */
   signatures: SignatureDescriptor_Data[];
 }
@@ -230,7 +230,7 @@ export interface SignatureDescriptor_Data_MultiProtoMsg {
 /** Multi is the signature data for a multisig public key */
 export interface SignatureDescriptor_Data_MultiAmino {
   /** bitarray specifies which keys within the multisig are signing */
-  bitarray?: CompactBitArrayAmino;
+  bitarray?: CompactBitArrayAmino | undefined;
   /** signatures is the signatures of the multi-signature */
   signatures?: SignatureDescriptor_DataAmino[];
 }
@@ -240,7 +240,7 @@ export interface SignatureDescriptor_Data_MultiAminoMsg {
 }
 /** Multi is the signature data for a multisig public key */
 export interface SignatureDescriptor_Data_MultiSDKType {
-  bitarray?: CompactBitArraySDKType;
+  bitarray?: CompactBitArraySDKType | undefined;
   signatures: SignatureDescriptor_DataSDKType[];
 }
 function createBaseSignatureDescriptors(): SignatureDescriptors {

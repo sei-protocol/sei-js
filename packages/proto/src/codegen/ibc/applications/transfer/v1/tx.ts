@@ -12,7 +12,7 @@ export interface MsgTransfer {
   /** the channel by which the packet will be sent */
   sourceChannel: string;
   /** the tokens to be transferred */
-  token: Coin;
+  token: Coin | undefined;
   /** the sender address */
   sender: string;
   /** the recipient address on the destination chain */
@@ -21,7 +21,7 @@ export interface MsgTransfer {
    * Timeout height relative to the current block height.
    * The timeout is disabled when set to 0.
    */
-  timeoutHeight: Height;
+  timeoutHeight: Height | undefined;
   /**
    * Timeout timestamp (in nanoseconds) relative to the current block timestamp.
    * The timeout is disabled when set to 0.
@@ -43,7 +43,7 @@ export interface MsgTransferAmino {
   /** the channel by which the packet will be sent */
   source_channel?: string;
   /** the tokens to be transferred */
-  token?: CoinAmino;
+  token?: CoinAmino | undefined;
   /** the sender address */
   sender?: string;
   /** the recipient address on the destination chain */
@@ -52,7 +52,7 @@ export interface MsgTransferAmino {
    * Timeout height relative to the current block height.
    * The timeout is disabled when set to 0.
    */
-  timeout_height?: HeightAmino;
+  timeout_height?: HeightAmino | undefined;
   /**
    * Timeout timestamp (in nanoseconds) relative to the current block timestamp.
    * The timeout is disabled when set to 0.
@@ -71,10 +71,10 @@ export interface MsgTransferAminoMsg {
 export interface MsgTransferSDKType {
   source_port: string;
   source_channel: string;
-  token: CoinSDKType;
+  token: CoinSDKType | undefined;
   sender: string;
   receiver: string;
-  timeout_height: HeightSDKType;
+  timeout_height: HeightSDKType | undefined;
   timeout_timestamp: bigint;
 }
 /** MsgTransferResponse defines the Msg/Transfer response type. */

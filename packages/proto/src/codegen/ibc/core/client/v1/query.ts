@@ -41,11 +41,11 @@ export interface QueryClientStateRequestSDKType {
  */
 export interface QueryClientStateResponse {
   /** client state associated with the request identifier */
-  clientState?: Any;
+  clientState?: Any | undefined;
   /** merkle proof of existence */
   proof: Uint8Array;
   /** height at which the proof was retrieved */
-  proofHeight: Height;
+  proofHeight: Height | undefined;
 }
 export interface QueryClientStateResponseProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryClientStateResponse";
@@ -58,11 +58,11 @@ export interface QueryClientStateResponseProtoMsg {
  */
 export interface QueryClientStateResponseAmino {
   /** client state associated with the request identifier */
-  client_state?: AnyAmino;
+  client_state?: AnyAmino | undefined;
   /** merkle proof of existence */
   proof?: string;
   /** height at which the proof was retrieved */
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
 }
 export interface QueryClientStateResponseAminoMsg {
   type: "cosmos-sdk/QueryClientStateResponse";
@@ -74,9 +74,9 @@ export interface QueryClientStateResponseAminoMsg {
  * which the proof was retrieved.
  */
 export interface QueryClientStateResponseSDKType {
-  client_state?: AnySDKType;
+  client_state?: AnySDKType | undefined;
   proof: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
 }
 /**
  * QueryClientStatesRequest is the request type for the Query/ClientStates RPC
@@ -84,7 +84,7 @@ export interface QueryClientStateResponseSDKType {
  */
 export interface QueryClientStatesRequest {
   /** pagination request */
-  pagination?: PageRequest;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryClientStatesRequestProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryClientStatesRequest";
@@ -96,7 +96,7 @@ export interface QueryClientStatesRequestProtoMsg {
  */
 export interface QueryClientStatesRequestAmino {
   /** pagination request */
-  pagination?: PageRequestAmino;
+  pagination?: PageRequestAmino | undefined;
 }
 export interface QueryClientStatesRequestAminoMsg {
   type: "cosmos-sdk/QueryClientStatesRequest";
@@ -107,7 +107,7 @@ export interface QueryClientStatesRequestAminoMsg {
  * method
  */
 export interface QueryClientStatesRequestSDKType {
-  pagination?: PageRequestSDKType;
+  pagination?: PageRequestSDKType | undefined;
 }
 /**
  * QueryClientStatesResponse is the response type for the Query/ClientStates RPC
@@ -117,7 +117,7 @@ export interface QueryClientStatesResponse {
   /** list of stored ClientStates of the chain. */
   clientStates: IdentifiedClientState[];
   /** pagination response */
-  pagination?: PageResponse;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryClientStatesResponseProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryClientStatesResponse";
@@ -131,7 +131,7 @@ export interface QueryClientStatesResponseAmino {
   /** list of stored ClientStates of the chain. */
   client_states?: IdentifiedClientStateAmino[];
   /** pagination response */
-  pagination?: PageResponseAmino;
+  pagination?: PageResponseAmino | undefined;
 }
 export interface QueryClientStatesResponseAminoMsg {
   type: "cosmos-sdk/QueryClientStatesResponse";
@@ -143,7 +143,7 @@ export interface QueryClientStatesResponseAminoMsg {
  */
 export interface QueryClientStatesResponseSDKType {
   client_states: IdentifiedClientStateSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination?: PageResponseSDKType | undefined;
 }
 /**
  * QueryConsensusStateRequest is the request type for the Query/ConsensusState
@@ -206,11 +206,11 @@ export interface QueryConsensusStateRequestSDKType {
  */
 export interface QueryConsensusStateResponse {
   /** consensus state associated with the client identifier at the given height */
-  consensusState?: Any;
+  consensusState?: Any | undefined;
   /** merkle proof of existence */
   proof: Uint8Array;
   /** height at which the proof was retrieved */
-  proofHeight: Height;
+  proofHeight: Height | undefined;
 }
 export interface QueryConsensusStateResponseProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryConsensusStateResponse";
@@ -222,11 +222,11 @@ export interface QueryConsensusStateResponseProtoMsg {
  */
 export interface QueryConsensusStateResponseAmino {
   /** consensus state associated with the client identifier at the given height */
-  consensus_state?: AnyAmino;
+  consensus_state?: AnyAmino | undefined;
   /** merkle proof of existence */
   proof?: string;
   /** height at which the proof was retrieved */
-  proof_height?: HeightAmino;
+  proof_height?: HeightAmino | undefined;
 }
 export interface QueryConsensusStateResponseAminoMsg {
   type: "cosmos-sdk/QueryConsensusStateResponse";
@@ -237,9 +237,9 @@ export interface QueryConsensusStateResponseAminoMsg {
  * RPC method
  */
 export interface QueryConsensusStateResponseSDKType {
-  consensus_state?: AnySDKType;
+  consensus_state?: AnySDKType | undefined;
   proof: Uint8Array;
-  proof_height: HeightSDKType;
+  proof_height: HeightSDKType | undefined;
 }
 /**
  * QueryConsensusStatesRequest is the request type for the Query/ConsensusStates
@@ -249,7 +249,7 @@ export interface QueryConsensusStatesRequest {
   /** client identifier */
   clientId: string;
   /** pagination request */
-  pagination?: PageRequest;
+  pagination?: PageRequest | undefined;
 }
 export interface QueryConsensusStatesRequestProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryConsensusStatesRequest";
@@ -263,7 +263,7 @@ export interface QueryConsensusStatesRequestAmino {
   /** client identifier */
   client_id?: string;
   /** pagination request */
-  pagination?: PageRequestAmino;
+  pagination?: PageRequestAmino | undefined;
 }
 export interface QueryConsensusStatesRequestAminoMsg {
   type: "cosmos-sdk/QueryConsensusStatesRequest";
@@ -275,7 +275,7 @@ export interface QueryConsensusStatesRequestAminoMsg {
  */
 export interface QueryConsensusStatesRequestSDKType {
   client_id: string;
-  pagination?: PageRequestSDKType;
+  pagination?: PageRequestSDKType | undefined;
 }
 /**
  * QueryConsensusStatesResponse is the response type for the
@@ -285,7 +285,7 @@ export interface QueryConsensusStatesResponse {
   /** consensus states associated with the identifier */
   consensusStates: ConsensusStateWithHeight[];
   /** pagination response */
-  pagination?: PageResponse;
+  pagination?: PageResponse | undefined;
 }
 export interface QueryConsensusStatesResponseProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryConsensusStatesResponse";
@@ -299,7 +299,7 @@ export interface QueryConsensusStatesResponseAmino {
   /** consensus states associated with the identifier */
   consensus_states?: ConsensusStateWithHeightAmino[];
   /** pagination response */
-  pagination?: PageResponseAmino;
+  pagination?: PageResponseAmino | undefined;
 }
 export interface QueryConsensusStatesResponseAminoMsg {
   type: "cosmos-sdk/QueryConsensusStatesResponse";
@@ -311,7 +311,7 @@ export interface QueryConsensusStatesResponseAminoMsg {
  */
 export interface QueryConsensusStatesResponseSDKType {
   consensus_states: ConsensusStateWithHeightSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination?: PageResponseSDKType | undefined;
 }
 /**
  * QueryClientStatusRequest is the request type for the Query/ClientStatus RPC
@@ -402,7 +402,7 @@ export interface QueryClientParamsRequestSDKType {}
  */
 export interface QueryClientParamsResponse {
   /** params defines the parameters of the module. */
-  params?: Params;
+  params?: Params | undefined;
 }
 export interface QueryClientParamsResponseProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryClientParamsResponse";
@@ -414,7 +414,7 @@ export interface QueryClientParamsResponseProtoMsg {
  */
 export interface QueryClientParamsResponseAmino {
   /** params defines the parameters of the module. */
-  params?: ParamsAmino;
+  params?: ParamsAmino | undefined;
 }
 export interface QueryClientParamsResponseAminoMsg {
   type: "cosmos-sdk/QueryClientParamsResponse";
@@ -425,7 +425,7 @@ export interface QueryClientParamsResponseAminoMsg {
  * method.
  */
 export interface QueryClientParamsResponseSDKType {
-  params?: ParamsSDKType;
+  params?: ParamsSDKType | undefined;
 }
 /**
  * QueryUpgradedClientStateRequest is the request type for the
@@ -456,7 +456,7 @@ export interface QueryUpgradedClientStateRequestSDKType {}
  */
 export interface QueryUpgradedClientStateResponse {
   /** client state associated with the request identifier */
-  upgradedClientState?: Any;
+  upgradedClientState?: Any | undefined;
 }
 export interface QueryUpgradedClientStateResponseProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryUpgradedClientStateResponse";
@@ -468,7 +468,7 @@ export interface QueryUpgradedClientStateResponseProtoMsg {
  */
 export interface QueryUpgradedClientStateResponseAmino {
   /** client state associated with the request identifier */
-  upgraded_client_state?: AnyAmino;
+  upgraded_client_state?: AnyAmino | undefined;
 }
 export interface QueryUpgradedClientStateResponseAminoMsg {
   type: "cosmos-sdk/QueryUpgradedClientStateResponse";
@@ -479,7 +479,7 @@ export interface QueryUpgradedClientStateResponseAminoMsg {
  * Query/UpgradedClientState RPC method.
  */
 export interface QueryUpgradedClientStateResponseSDKType {
-  upgraded_client_state?: AnySDKType;
+  upgraded_client_state?: AnySDKType | undefined;
 }
 /**
  * QueryUpgradedConsensusStateRequest is the request type for the
@@ -510,7 +510,7 @@ export interface QueryUpgradedConsensusStateRequestSDKType {}
  */
 export interface QueryUpgradedConsensusStateResponse {
   /** Consensus state associated with the request identifier */
-  upgradedConsensusState?: Any;
+  upgradedConsensusState?: Any | undefined;
 }
 export interface QueryUpgradedConsensusStateResponseProtoMsg {
   typeUrl: "/ibc.core.client.v1.QueryUpgradedConsensusStateResponse";
@@ -522,7 +522,7 @@ export interface QueryUpgradedConsensusStateResponseProtoMsg {
  */
 export interface QueryUpgradedConsensusStateResponseAmino {
   /** Consensus state associated with the request identifier */
-  upgraded_consensus_state?: AnyAmino;
+  upgraded_consensus_state?: AnyAmino | undefined;
 }
 export interface QueryUpgradedConsensusStateResponseAminoMsg {
   type: "cosmos-sdk/QueryUpgradedConsensusStateResponse";
@@ -533,7 +533,7 @@ export interface QueryUpgradedConsensusStateResponseAminoMsg {
  * Query/UpgradedConsensusState RPC method.
  */
 export interface QueryUpgradedConsensusStateResponseSDKType {
-  upgraded_consensus_state?: AnySDKType;
+  upgraded_consensus_state?: AnySDKType | undefined;
 }
 function createBaseQueryClientStateRequest(): QueryClientStateRequest {
   return {

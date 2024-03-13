@@ -1,0 +1,3 @@
+[2K[1G[2m$ rimraf dist && yarn md-docs[22m
+[2K[1G[2m$ swagger-markdown -i src/sei-rest-open-api.yaml[22m
+[2K[1G[2m$ tsc --project tsconfig.json[22m

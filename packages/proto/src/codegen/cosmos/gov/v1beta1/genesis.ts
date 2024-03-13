@@ -11,11 +11,11 @@ export interface GenesisState {
   /** proposals defines all the proposals present at genesis. */
   proposals: Proposal[];
   /** params defines all the paramaters of related to deposit. */
-  depositParams: DepositParams;
+  depositParams: DepositParams | undefined;
   /** params defines all the paramaters of related to voting. */
-  votingParams: VotingParams;
+  votingParams: VotingParams | undefined;
   /** params defines all the paramaters of related to tally. */
-  tallyParams: TallyParams;
+  tallyParams: TallyParams | undefined;
 }
 export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.gov.v1beta1.GenesisState";
@@ -32,11 +32,11 @@ export interface GenesisStateAmino {
   /** proposals defines all the proposals present at genesis. */
   proposals?: ProposalAmino[];
   /** params defines all the paramaters of related to deposit. */
-  deposit_params?: DepositParamsAmino;
+  deposit_params?: DepositParamsAmino | undefined;
   /** params defines all the paramaters of related to voting. */
-  voting_params?: VotingParamsAmino;
+  voting_params?: VotingParamsAmino | undefined;
   /** params defines all the paramaters of related to tally. */
-  tally_params?: TallyParamsAmino;
+  tally_params?: TallyParamsAmino | undefined;
 }
 export interface GenesisStateAminoMsg {
   type: "cosmos-sdk/GenesisState";
@@ -48,9 +48,9 @@ export interface GenesisStateSDKType {
   deposits: DepositSDKType[];
   votes: VoteSDKType[];
   proposals: ProposalSDKType[];
-  deposit_params: DepositParamsSDKType;
-  voting_params: VotingParamsSDKType;
-  tally_params: TallyParamsSDKType;
+  deposit_params: DepositParamsSDKType | undefined;
+  voting_params: VotingParamsSDKType | undefined;
+  tally_params: TallyParamsSDKType | undefined;
 }
 function createBaseGenesisState(): GenesisState {
   return {

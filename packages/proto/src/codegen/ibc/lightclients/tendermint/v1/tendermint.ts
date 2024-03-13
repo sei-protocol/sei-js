@@ -13,20 +13,20 @@ import { toTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "..
  */
 export interface ClientState {
   chainId: string;
-  trustLevel: Fraction;
+  trustLevel: Fraction | undefined;
   /**
    * duration of the period since the LastestTimestamp during which the
    * submitted headers are valid for upgrade
    */
-  trustingPeriod: Duration;
+  trustingPeriod: Duration | undefined;
   /** duration of the staking unbonding period */
-  unbondingPeriod: Duration;
+  unbondingPeriod: Duration | undefined;
   /** defines how much new (untrusted) header's Time can drift into the future. */
-  maxClockDrift: Duration;
+  maxClockDrift: Duration | undefined;
   /** Block height when the client was frozen due to a misbehaviour */
-  frozenHeight: Height;
+  frozenHeight: Height | undefined;
   /** Latest height the client was updated to */
-  latestHeight: Height;
+  latestHeight: Height | undefined;
   /** Proof specifications used in verifying counterparty state */
   proofSpecs: ProofSpec[];
   /**
@@ -60,20 +60,20 @@ export interface ClientStateProtoMsg {
  */
 export interface ClientStateAmino {
   chain_id?: string;
-  trust_level?: FractionAmino;
+  trust_level?: FractionAmino | undefined;
   /**
    * duration of the period since the LastestTimestamp during which the
    * submitted headers are valid for upgrade
    */
-  trusting_period?: DurationAmino;
+  trusting_period?: DurationAmino | undefined;
   /** duration of the staking unbonding period */
-  unbonding_period?: DurationAmino;
+  unbonding_period?: DurationAmino | undefined;
   /** defines how much new (untrusted) header's Time can drift into the future. */
-  max_clock_drift?: DurationAmino;
+  max_clock_drift?: DurationAmino | undefined;
   /** Block height when the client was frozen due to a misbehaviour */
-  frozen_height?: HeightAmino;
+  frozen_height?: HeightAmino | undefined;
   /** Latest height the client was updated to */
-  latest_height?: HeightAmino;
+  latest_height?: HeightAmino | undefined;
   /** Proof specifications used in verifying counterparty state */
   proof_specs?: ProofSpecAmino[];
   /**
@@ -107,12 +107,12 @@ export interface ClientStateAminoMsg {
  */
 export interface ClientStateSDKType {
   chain_id: string;
-  trust_level: FractionSDKType;
-  trusting_period: DurationSDKType;
-  unbonding_period: DurationSDKType;
-  max_clock_drift: DurationSDKType;
-  frozen_height: HeightSDKType;
-  latest_height: HeightSDKType;
+  trust_level: FractionSDKType | undefined;
+  trusting_period: DurationSDKType | undefined;
+  unbonding_period: DurationSDKType | undefined;
+  max_clock_drift: DurationSDKType | undefined;
+  frozen_height: HeightSDKType | undefined;
+  latest_height: HeightSDKType | undefined;
   proof_specs: ProofSpecSDKType[];
   upgrade_path: string[];
   allow_update_after_expiry: boolean;
@@ -124,9 +124,9 @@ export interface ConsensusState {
    * timestamp that corresponds to the block height in which the ConsensusState
    * was stored.
    */
-  timestamp: Date;
+  timestamp: Date | undefined;
   /** commitment root (i.e app hash) */
-  root: MerkleRoot;
+  root: MerkleRoot | undefined;
   nextValidatorsHash: Uint8Array;
 }
 export interface ConsensusStateProtoMsg {
@@ -139,9 +139,9 @@ export interface ConsensusStateAmino {
    * timestamp that corresponds to the block height in which the ConsensusState
    * was stored.
    */
-  timestamp?: string;
+  timestamp?: string | undefined;
   /** commitment root (i.e app hash) */
-  root?: MerkleRootAmino;
+  root?: MerkleRootAmino | undefined;
   next_validators_hash?: string;
 }
 export interface ConsensusStateAminoMsg {
@@ -150,8 +150,8 @@ export interface ConsensusStateAminoMsg {
 }
 /** ConsensusState defines the consensus state from Tendermint. */
 export interface ConsensusStateSDKType {
-  timestamp: Date;
-  root: MerkleRootSDKType;
+  timestamp: Date | undefined;
+  root: MerkleRootSDKType | undefined;
   next_validators_hash: Uint8Array;
 }
 /**
@@ -160,8 +160,8 @@ export interface ConsensusStateSDKType {
  */
 export interface Misbehaviour {
   clientId: string;
-  header1?: Header;
-  header2?: Header;
+  header1?: Header | undefined;
+  header2?: Header | undefined;
 }
 export interface MisbehaviourProtoMsg {
   typeUrl: "/ibc.lightclients.tendermint.v1.Misbehaviour";
@@ -173,8 +173,8 @@ export interface MisbehaviourProtoMsg {
  */
 export interface MisbehaviourAmino {
   client_id?: string;
-  header_1?: HeaderAmino;
-  header_2?: HeaderAmino;
+  header_1?: HeaderAmino | undefined;
+  header_2?: HeaderAmino | undefined;
 }
 export interface MisbehaviourAminoMsg {
   type: "cosmos-sdk/Misbehaviour";
@@ -186,8 +186,8 @@ export interface MisbehaviourAminoMsg {
  */
 export interface MisbehaviourSDKType {
   client_id: string;
-  header_1?: HeaderSDKType;
-  header_2?: HeaderSDKType;
+  header_1?: HeaderSDKType | undefined;
+  header_2?: HeaderSDKType | undefined;
 }
 /**
  * Header defines the Tendermint client consensus Header.
@@ -204,10 +204,10 @@ export interface MisbehaviourSDKType {
  * trusted validator set at the TrustedHeight.
  */
 export interface Header {
-  signedHeader?: SignedHeader;
-  validatorSet?: ValidatorSet;
-  trustedHeight: Height;
-  trustedValidators?: ValidatorSet;
+  signedHeader?: SignedHeader | undefined;
+  validatorSet?: ValidatorSet | undefined;
+  trustedHeight: Height | undefined;
+  trustedValidators?: ValidatorSet | undefined;
 }
 export interface HeaderProtoMsg {
   typeUrl: "/ibc.lightclients.tendermint.v1.Header";
@@ -228,10 +228,10 @@ export interface HeaderProtoMsg {
  * trusted validator set at the TrustedHeight.
  */
 export interface HeaderAmino {
-  signed_header?: SignedHeaderAmino;
-  validator_set?: ValidatorSetAmino;
-  trusted_height?: HeightAmino;
-  trusted_validators?: ValidatorSetAmino;
+  signed_header?: SignedHeaderAmino | undefined;
+  validator_set?: ValidatorSetAmino | undefined;
+  trusted_height?: HeightAmino | undefined;
+  trusted_validators?: ValidatorSetAmino | undefined;
 }
 export interface HeaderAminoMsg {
   type: "cosmos-sdk/Header";
@@ -252,10 +252,10 @@ export interface HeaderAminoMsg {
  * trusted validator set at the TrustedHeight.
  */
 export interface HeaderSDKType {
-  signed_header?: SignedHeaderSDKType;
-  validator_set?: ValidatorSetSDKType;
-  trusted_height: HeightSDKType;
-  trusted_validators?: ValidatorSetSDKType;
+  signed_header?: SignedHeaderSDKType | undefined;
+  validator_set?: ValidatorSetSDKType | undefined;
+  trusted_height: HeightSDKType | undefined;
+  trusted_validators?: ValidatorSetSDKType | undefined;
 }
 /**
  * Fraction defines the protobuf message type for tmmath.Fraction that only

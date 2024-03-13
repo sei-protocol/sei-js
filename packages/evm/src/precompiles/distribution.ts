@@ -1,7 +1,14 @@
 import { ethers } from 'ethers';
 
-export const DISTRIBUTION_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001007';
+/**
+ * @category Distribution Precompile
+ */
+export const ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001007';
 
+/**
+ * The ABI for the precompile contract.
+ * @category Distribution Precompile
+ */
 export const DISTRIBUTION_PRECOMPILE_ABI = [
 	{
 		inputs: [{ internalType: 'address', name: 'withdrawAddr', type: 'address' }],
@@ -19,6 +26,12 @@ export const DISTRIBUTION_PRECOMPILE_ABI = [
 	}
 ];
 
-export const getDistributionPrecompileEthersV6Contract = (signer: ethers.Signer) => {
-	return new ethers.Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI, signer);
+/**
+ * @param precompileAddress The 0X address of the precompile contract.
+ * @param signer The 'ethers' signer to be used with the contract.
+ * @returns The typed contract instance allowing interaction with the precompile contract.
+ * @category Distribution Precompile
+ */
+export const getDistributionPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer) => {
+	return new ethers.Contract(precompileAddress, DISTRIBUTION_PRECOMPILE_ABI, signer);
 };

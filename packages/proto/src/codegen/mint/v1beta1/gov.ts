@@ -7,7 +7,7 @@ import { BinaryReader, BinaryWriter } from "../../binary";
 export interface UpdateMinterProposal {
   title: string;
   description: string;
-  minter?: Minter;
+  minter?: Minter | undefined;
 }
 export interface UpdateMinterProposalProtoMsg {
   typeUrl: "/seiprotocol.seichain.mint.UpdateMinterProposal";
@@ -20,7 +20,7 @@ export interface UpdateMinterProposalProtoMsg {
 export interface UpdateMinterProposalAmino {
   title?: string;
   description?: string;
-  minter?: MinterAmino;
+  minter?: MinterAmino | undefined;
 }
 export interface UpdateMinterProposalAminoMsg {
   type: "/seiprotocol.seichain.mint.UpdateMinterProposal";
@@ -33,7 +33,7 @@ export interface UpdateMinterProposalAminoMsg {
 export interface UpdateMinterProposalSDKType {
   title: string;
   description: string;
-  minter?: MinterSDKType;
+  minter?: MinterSDKType | undefined;
 }
 function createBaseUpdateMinterProposal(): UpdateMinterProposal {
   return {

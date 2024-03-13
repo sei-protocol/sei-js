@@ -1,3 +1,6 @@
+/**
+ * @category Cosmos Kit
+ */
 export const SEI_BASE_COSMOS_KIT_CHAIN = {
 	bech32_config: {
 		bech32PrefixAccAddr: 'sei',
@@ -50,6 +53,9 @@ export const SEI_BASE_COSMOS_KIT_CHAIN = {
 	]
 };
 
+/**
+ * @category Cosmos Kit
+ */
 export const PACIFIC_1_SEI_COSMOS_KIT_CHAIN = {
 	...SEI_BASE_COSMOS_KIT_CHAIN,
 	apis: {
@@ -84,6 +90,9 @@ export const PACIFIC_1_SEI_COSMOS_KIT_CHAIN = {
 	}
 };
 
+/**
+ * @category Cosmos Kit
+ */
 export const ATLANTIC_2_SEI_COSMOS_KIT_CHAIN = {
 	...SEI_BASE_COSMOS_KIT_CHAIN,
 	apis: {
@@ -106,6 +115,9 @@ export const ATLANTIC_2_SEI_COSMOS_KIT_CHAIN = {
 	}
 };
 
+/**
+ * @category Cosmos Kit
+ */
 export const ARCTIC_1_SEI_COSMOS_KIT_CHAIN = {
 	...SEI_BASE_COSMOS_KIT_CHAIN,
 	apis: {

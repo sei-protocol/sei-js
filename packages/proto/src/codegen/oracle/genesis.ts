@@ -17,7 +17,7 @@ import {
 } from './oracle';
 import { BinaryReader, BinaryWriter } from '../binary';
 export interface GenesisState {
-	params: Params;
+	params: Params | undefined;
 	feederDelegations: FeederDelegation[];
 	exchangeRates: ExchangeRateTuple[];
 	penaltyCounters: PenaltyCounter[];
@@ -29,7 +29,7 @@ export interface GenesisStateProtoMsg {
 	value: Uint8Array;
 }
 export interface GenesisStateAmino {
-	params?: ParamsAmino;
+	params?: ParamsAmino | undefined;
 	feeder_delegations?: FeederDelegationAmino[];
 	exchange_rates?: ExchangeRateTupleAmino[];
 	penalty_counters?: PenaltyCounterAmino[];
@@ -41,7 +41,7 @@ export interface GenesisStateAminoMsg {
 	value: GenesisStateAmino;
 }
 export interface GenesisStateSDKType {
-	params: ParamsSDKType;
+	params: ParamsSDKType | undefined;
 	feeder_delegations: FeederDelegationSDKType[];
 	exchange_rates: ExchangeRateTupleSDKType[];
 	penalty_counters: PenaltyCounterSDKType[];
@@ -70,7 +70,7 @@ export interface FeederDelegationSDKType {
 }
 export interface PenaltyCounter {
 	validatorAddress: string;
-	votePenaltyCounter?: VotePenaltyCounter;
+	votePenaltyCounter?: VotePenaltyCounter | undefined;
 }
 export interface PenaltyCounterProtoMsg {
 	typeUrl: '/seiprotocol.seichain.oracle.PenaltyCounter';
@@ -78,7 +78,7 @@ export interface PenaltyCounterProtoMsg {
 }
 export interface PenaltyCounterAmino {
 	validator_address?: string;
-	vote_penalty_counter?: VotePenaltyCounterAmino;
+	vote_penalty_counter?: VotePenaltyCounterAmino | undefined;
 }
 export interface PenaltyCounterAminoMsg {
 	type: '/seiprotocol.seichain.oracle.PenaltyCounter';
@@ -86,7 +86,7 @@ export interface PenaltyCounterAminoMsg {
 }
 export interface PenaltyCounterSDKType {
 	validator_address: string;
-	vote_penalty_counter?: VotePenaltyCounterSDKType;
+	vote_penalty_counter?: VotePenaltyCounterSDKType | undefined;
 }
 function createBaseGenesisState(): GenesisState {
 	return {

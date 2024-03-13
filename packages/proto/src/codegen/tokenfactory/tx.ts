@@ -91,7 +91,7 @@ export interface MsgCreateDenomResponseSDKType {
  */
 export interface MsgMint {
 	sender: string;
-	amount: Coin;
+	amount: Coin | undefined;
 }
 export interface MsgMintProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgMint';
@@ -103,7 +103,7 @@ export interface MsgMintProtoMsg {
  */
 export interface MsgMintAmino {
 	sender?: string;
-	amount?: CoinAmino;
+	amount?: CoinAmino | undefined;
 }
 export interface MsgMintAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.MsgMint';
@@ -115,7 +115,7 @@ export interface MsgMintAminoMsg {
  */
 export interface MsgMintSDKType {
 	sender: string;
-	amount: CoinSDKType;
+	amount: CoinSDKType | undefined;
 }
 export interface MsgMintResponse {}
 export interface MsgMintResponseProtoMsg {
@@ -134,7 +134,7 @@ export interface MsgMintResponseSDKType {}
  */
 export interface MsgBurn {
 	sender: string;
-	amount: Coin;
+	amount: Coin | undefined;
 }
 export interface MsgBurnProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgBurn';
@@ -146,7 +146,7 @@ export interface MsgBurnProtoMsg {
  */
 export interface MsgBurnAmino {
 	sender?: string;
-	amount?: CoinAmino;
+	amount?: CoinAmino | undefined;
 }
 export interface MsgBurnAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.MsgBurn';
@@ -158,7 +158,7 @@ export interface MsgBurnAminoMsg {
  */
 export interface MsgBurnSDKType {
 	sender: string;
-	amount: CoinSDKType;
+	amount: CoinSDKType | undefined;
 }
 export interface MsgBurnResponse {}
 export interface MsgBurnResponseProtoMsg {
@@ -235,7 +235,7 @@ export interface MsgChangeAdminResponseSDKType {}
  */
 export interface MsgSetDenomMetadata {
 	sender: string;
-	metadata: Metadata;
+	metadata: Metadata | undefined;
 }
 export interface MsgSetDenomMetadataProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata';
@@ -247,7 +247,7 @@ export interface MsgSetDenomMetadataProtoMsg {
  */
 export interface MsgSetDenomMetadataAmino {
 	sender?: string;
-	metadata?: MetadataAmino;
+	metadata?: MetadataAmino | undefined;
 }
 export interface MsgSetDenomMetadataAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata';
@@ -259,7 +259,7 @@ export interface MsgSetDenomMetadataAminoMsg {
  */
 export interface MsgSetDenomMetadataSDKType {
 	sender: string;
-	metadata: MetadataSDKType;
+	metadata: MetadataSDKType | undefined;
 }
 /**
  * MsgSetDenomMetadataResponse defines the response structure for an executed

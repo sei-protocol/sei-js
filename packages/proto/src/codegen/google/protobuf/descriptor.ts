@@ -406,14 +406,14 @@ export interface FileDescriptorProto {
   enumType: EnumDescriptorProto[];
   service: ServiceDescriptorProto[];
   extension: FieldDescriptorProto[];
-  options?: FileOptions;
+  options?: FileOptions | undefined;
   /**
    * This field contains optional information about the original source code.
    * You may safely remove this entire field without harming runtime
    * functionality of the descriptors -- the information is needed only by
    * development tools.
    */
-  sourceCodeInfo?: SourceCodeInfo;
+  sourceCodeInfo?: SourceCodeInfo | undefined;
   /**
    * The syntax of the proto file.
    * The supported values are "proto2" and "proto3".
@@ -443,14 +443,14 @@ export interface FileDescriptorProtoAmino {
   enum_type?: EnumDescriptorProtoAmino[];
   service?: ServiceDescriptorProtoAmino[];
   extension?: FieldDescriptorProtoAmino[];
-  options?: FileOptionsAmino;
+  options?: FileOptionsAmino | undefined;
   /**
    * This field contains optional information about the original source code.
    * You may safely remove this entire field without harming runtime
    * functionality of the descriptors -- the information is needed only by
    * development tools.
    */
-  source_code_info?: SourceCodeInfoAmino;
+  source_code_info?: SourceCodeInfoAmino | undefined;
   /**
    * The syntax of the proto file.
    * The supported values are "proto2" and "proto3".
@@ -472,8 +472,8 @@ export interface FileDescriptorProtoSDKType {
   enum_type: EnumDescriptorProtoSDKType[];
   service: ServiceDescriptorProtoSDKType[];
   extension: FieldDescriptorProtoSDKType[];
-  options?: FileOptionsSDKType;
-  source_code_info?: SourceCodeInfoSDKType;
+  options?: FileOptionsSDKType | undefined;
+  source_code_info?: SourceCodeInfoSDKType | undefined;
   syntax: string;
 }
 /** Describes a message type. */
@@ -485,7 +485,7 @@ export interface DescriptorProto {
   enumType: EnumDescriptorProto[];
   extensionRange: DescriptorProto_ExtensionRange[];
   oneofDecl: OneofDescriptorProto[];
-  options?: MessageOptions;
+  options?: MessageOptions | undefined;
   reservedRange: DescriptorProto_ReservedRange[];
   /**
    * Reserved field names, which may not be used by fields in the same message.
@@ -506,7 +506,7 @@ export interface DescriptorProtoAmino {
   enum_type?: EnumDescriptorProtoAmino[];
   extension_range?: DescriptorProto_ExtensionRangeAmino[];
   oneof_decl?: OneofDescriptorProtoAmino[];
-  options?: MessageOptionsAmino;
+  options?: MessageOptionsAmino | undefined;
   reserved_range?: DescriptorProto_ReservedRangeAmino[];
   /**
    * Reserved field names, which may not be used by fields in the same message.
@@ -527,7 +527,7 @@ export interface DescriptorProtoSDKType {
   enum_type: EnumDescriptorProtoSDKType[];
   extension_range: DescriptorProto_ExtensionRangeSDKType[];
   oneof_decl: OneofDescriptorProtoSDKType[];
-  options?: MessageOptionsSDKType;
+  options?: MessageOptionsSDKType | undefined;
   reserved_range: DescriptorProto_ReservedRangeSDKType[];
   reserved_name: string[];
 }
@@ -536,7 +536,7 @@ export interface DescriptorProto_ExtensionRange {
   start: number;
   /** Exclusive. */
   end: number;
-  options?: ExtensionRangeOptions;
+  options?: ExtensionRangeOptions | undefined;
 }
 export interface DescriptorProto_ExtensionRangeProtoMsg {
   typeUrl: "/google.protobuf.ExtensionRange";
@@ -547,7 +547,7 @@ export interface DescriptorProto_ExtensionRangeAmino {
   start?: number;
   /** Exclusive. */
   end?: number;
-  options?: ExtensionRangeOptionsAmino;
+  options?: ExtensionRangeOptionsAmino | undefined;
 }
 export interface DescriptorProto_ExtensionRangeAminoMsg {
   type: "/google.protobuf.ExtensionRange";
@@ -556,7 +556,7 @@ export interface DescriptorProto_ExtensionRangeAminoMsg {
 export interface DescriptorProto_ExtensionRangeSDKType {
   start: number;
   end: number;
-  options?: ExtensionRangeOptionsSDKType;
+  options?: ExtensionRangeOptionsSDKType | undefined;
 }
 /**
  * Range of reserved tag numbers. Reserved tag numbers may not be used by
@@ -659,7 +659,7 @@ export interface FieldDescriptorProto {
    * it to camelCase.
    */
   jsonName: string;
-  options?: FieldOptions;
+  options?: FieldOptions | undefined;
 }
 export interface FieldDescriptorProtoProtoMsg {
   typeUrl: "/google.protobuf.FieldDescriptorProto";
@@ -708,7 +708,7 @@ export interface FieldDescriptorProtoAmino {
    * it to camelCase.
    */
   json_name?: string;
-  options?: FieldOptionsAmino;
+  options?: FieldOptionsAmino | undefined;
 }
 export interface FieldDescriptorProtoAminoMsg {
   type: "/google.protobuf.FieldDescriptorProto";
@@ -725,12 +725,12 @@ export interface FieldDescriptorProtoSDKType {
   default_value: string;
   oneof_index: number;
   json_name: string;
-  options?: FieldOptionsSDKType;
+  options?: FieldOptionsSDKType | undefined;
 }
 /** Describes a oneof. */
 export interface OneofDescriptorProto {
   name: string;
-  options?: OneofOptions;
+  options?: OneofOptions | undefined;
 }
 export interface OneofDescriptorProtoProtoMsg {
   typeUrl: "/google.protobuf.OneofDescriptorProto";
@@ -739,7 +739,7 @@ export interface OneofDescriptorProtoProtoMsg {
 /** Describes a oneof. */
 export interface OneofDescriptorProtoAmino {
   name?: string;
-  options?: OneofOptionsAmino;
+  options?: OneofOptionsAmino | undefined;
 }
 export interface OneofDescriptorProtoAminoMsg {
   type: "/google.protobuf.OneofDescriptorProto";
@@ -748,13 +748,13 @@ export interface OneofDescriptorProtoAminoMsg {
 /** Describes a oneof. */
 export interface OneofDescriptorProtoSDKType {
   name: string;
-  options?: OneofOptionsSDKType;
+  options?: OneofOptionsSDKType | undefined;
 }
 /** Describes an enum type. */
 export interface EnumDescriptorProto {
   name: string;
   value: EnumValueDescriptorProto[];
-  options?: EnumOptions;
+  options?: EnumOptions | undefined;
   /**
    * Range of reserved numeric values. Reserved numeric values may not be used
    * by enum values in the same enum declaration. Reserved ranges may not
@@ -775,7 +775,7 @@ export interface EnumDescriptorProtoProtoMsg {
 export interface EnumDescriptorProtoAmino {
   name?: string;
   value?: EnumValueDescriptorProtoAmino[];
-  options?: EnumOptionsAmino;
+  options?: EnumOptionsAmino | undefined;
   /**
    * Range of reserved numeric values. Reserved numeric values may not be used
    * by enum values in the same enum declaration. Reserved ranges may not
@@ -796,7 +796,7 @@ export interface EnumDescriptorProtoAminoMsg {
 export interface EnumDescriptorProtoSDKType {
   name: string;
   value: EnumValueDescriptorProtoSDKType[];
-  options?: EnumOptionsSDKType;
+  options?: EnumOptionsSDKType | undefined;
   reserved_range: EnumDescriptorProto_EnumReservedRangeSDKType[];
   reserved_name: string[];
 }
@@ -852,7 +852,7 @@ export interface EnumDescriptorProto_EnumReservedRangeSDKType {
 export interface EnumValueDescriptorProto {
   name: string;
   number: number;
-  options?: EnumValueOptions;
+  options?: EnumValueOptions | undefined;
 }
 export interface EnumValueDescriptorProtoProtoMsg {
   typeUrl: "/google.protobuf.EnumValueDescriptorProto";
@@ -862,7 +862,7 @@ export interface EnumValueDescriptorProtoProtoMsg {
 export interface EnumValueDescriptorProtoAmino {
   name?: string;
   number?: number;
-  options?: EnumValueOptionsAmino;
+  options?: EnumValueOptionsAmino | undefined;
 }
 export interface EnumValueDescriptorProtoAminoMsg {
   type: "/google.protobuf.EnumValueDescriptorProto";
@@ -872,13 +872,13 @@ export interface EnumValueDescriptorProtoAminoMsg {
 export interface EnumValueDescriptorProtoSDKType {
   name: string;
   number: number;
-  options?: EnumValueOptionsSDKType;
+  options?: EnumValueOptionsSDKType | undefined;
 }
 /** Describes a service. */
 export interface ServiceDescriptorProto {
   name: string;
   method: MethodDescriptorProto[];
-  options?: ServiceOptions;
+  options?: ServiceOptions | undefined;
 }
 export interface ServiceDescriptorProtoProtoMsg {
   typeUrl: "/google.protobuf.ServiceDescriptorProto";
@@ -888,7 +888,7 @@ export interface ServiceDescriptorProtoProtoMsg {
 export interface ServiceDescriptorProtoAmino {
   name?: string;
   method?: MethodDescriptorProtoAmino[];
-  options?: ServiceOptionsAmino;
+  options?: ServiceOptionsAmino | undefined;
 }
 export interface ServiceDescriptorProtoAminoMsg {
   type: "/google.protobuf.ServiceDescriptorProto";
@@ -898,7 +898,7 @@ export interface ServiceDescriptorProtoAminoMsg {
 export interface ServiceDescriptorProtoSDKType {
   name: string;
   method: MethodDescriptorProtoSDKType[];
-  options?: ServiceOptionsSDKType;
+  options?: ServiceOptionsSDKType | undefined;
 }
 /** Describes a method of a service. */
 export interface MethodDescriptorProto {
@@ -909,7 +909,7 @@ export interface MethodDescriptorProto {
    */
   inputType: string;
   outputType: string;
-  options?: MethodOptions;
+  options?: MethodOptions | undefined;
   /** Identifies if client streams multiple client messages */
   clientStreaming: boolean;
   /** Identifies if server streams multiple server messages */
@@ -928,7 +928,7 @@ export interface MethodDescriptorProtoAmino {
    */
   input_type?: string;
   output_type?: string;
-  options?: MethodOptionsAmino;
+  options?: MethodOptionsAmino | undefined;
   /** Identifies if client streams multiple client messages */
   client_streaming?: boolean;
   /** Identifies if server streams multiple server messages */
@@ -943,7 +943,7 @@ export interface MethodDescriptorProtoSDKType {
   name: string;
   input_type: string;
   output_type: string;
-  options?: MethodOptionsSDKType;
+  options?: MethodOptionsSDKType | undefined;
   client_streaming: boolean;
   server_streaming: boolean;
 }

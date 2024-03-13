@@ -3,7 +3,7 @@ import { BinaryReader, BinaryWriter } from "../../../binary";
 import { bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** GenesisState - genesis state of x/wasm */
 export interface GenesisState {
-  params: Params;
+  params: Params | undefined;
   codes: Code[];
   contracts: Contract[];
   sequences: Sequence[];
@@ -14,7 +14,7 @@ export interface GenesisStateProtoMsg {
 }
 /** GenesisState - genesis state of x/wasm */
 export interface GenesisStateAmino {
-  params?: ParamsAmino;
+  params?: ParamsAmino | undefined;
   codes?: CodeAmino[];
   contracts?: ContractAmino[];
   sequences?: SequenceAmino[];
@@ -25,7 +25,7 @@ export interface GenesisStateAminoMsg {
 }
 /** GenesisState - genesis state of x/wasm */
 export interface GenesisStateSDKType {
-  params: ParamsSDKType;
+  params: ParamsSDKType | undefined;
   codes: CodeSDKType[];
   contracts: ContractSDKType[];
   sequences: SequenceSDKType[];
@@ -33,7 +33,7 @@ export interface GenesisStateSDKType {
 /** Code struct encompasses CodeInfo and CodeBytes */
 export interface Code {
   codeId: bigint;
-  codeInfo: CodeInfo;
+  codeInfo: CodeInfo | undefined;
   codeBytes: Uint8Array;
   /** Pinned to wasmvm cache */
   pinned: boolean;
@@ -45,7 +45,7 @@ export interface CodeProtoMsg {
 /** Code struct encompasses CodeInfo and CodeBytes */
 export interface CodeAmino {
   code_id?: string;
-  code_info?: CodeInfoAmino;
+  code_info?: CodeInfoAmino | undefined;
   code_bytes?: string;
   /** Pinned to wasmvm cache */
   pinned?: boolean;
@@ -57,14 +57,14 @@ export interface CodeAminoMsg {
 /** Code struct encompasses CodeInfo and CodeBytes */
 export interface CodeSDKType {
   code_id: bigint;
-  code_info: CodeInfoSDKType;
+  code_info: CodeInfoSDKType | undefined;
   code_bytes: Uint8Array;
   pinned: boolean;
 }
 /** Contract struct encompasses ContractAddress, ContractInfo, and ContractState */
 export interface Contract {
   contractAddress: string;
-  contractInfo: ContractInfo;
+  contractInfo: ContractInfo | undefined;
   contractState: Model[];
   contractCodeHistory: ContractCodeHistoryEntry[];
 }
@@ -75,7 +75,7 @@ export interface ContractProtoMsg {
 /** Contract struct encompasses ContractAddress, ContractInfo, and ContractState */
 export interface ContractAmino {
   contract_address?: string;
-  contract_info?: ContractInfoAmino;
+  contract_info?: ContractInfoAmino | undefined;
   contract_state?: ModelAmino[];
   contract_code_history?: ContractCodeHistoryEntryAmino[];
 }
@@ -86,7 +86,7 @@ export interface ContractAminoMsg {
 /** Contract struct encompasses ContractAddress, ContractInfo, and ContractState */
 export interface ContractSDKType {
   contract_address: string;
-  contract_info: ContractInfoSDKType;
+  contract_info: ContractInfoSDKType | undefined;
   contract_state: ModelSDKType[];
   contract_code_history: ContractCodeHistoryEntrySDKType[];
 }

@@ -51,6 +51,7 @@ telescope({
 			enableRegistryLoader: true,
 			enableMessageComposer: true,
 			includePackageVar: false,
+			allowUndefinedTypes: true,
 			typingsFormat: {
 				useTelescopeGeneratedType: true
 			}

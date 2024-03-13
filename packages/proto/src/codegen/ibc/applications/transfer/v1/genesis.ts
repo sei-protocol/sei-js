@@ -4,7 +4,7 @@ import { BinaryReader, BinaryWriter } from "../../../../binary";
 export interface GenesisState {
   portId: string;
   denomTraces: DenomTrace[];
-  params: Params;
+  params: Params | undefined;
 }
 export interface GenesisStateProtoMsg {
   typeUrl: "/ibc.applications.transfer.v1.GenesisState";
@@ -14,7 +14,7 @@ export interface GenesisStateProtoMsg {
 export interface GenesisStateAmino {
   port_id?: string;
   denom_traces?: DenomTraceAmino[];
-  params?: ParamsAmino;
+  params?: ParamsAmino | undefined;
 }
 export interface GenesisStateAminoMsg {
   type: "cosmos-sdk/GenesisState";
@@ -24,7 +24,7 @@ export interface GenesisStateAminoMsg {
 export interface GenesisStateSDKType {
   port_id: string;
   denom_traces: DenomTraceSDKType[];
-  params: ParamsSDKType;
+  params: ParamsSDKType | undefined;
 }
 function createBaseGenesisState(): GenesisState {
   return {

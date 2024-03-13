@@ -83,7 +83,7 @@ export interface MsgCancelOrdersResponseAminoMsg {
 export interface MsgCancelOrdersResponseSDKType {}
 export interface MsgRegisterContract {
 	creator: string;
-	contract?: ContractInfoV2;
+	contract?: ContractInfoV2 | undefined;
 }
 export interface MsgRegisterContractProtoMsg {
 	typeUrl: '/seiprotocol.seichain.dex.MsgRegisterContract';
@@ -91,7 +91,7 @@ export interface MsgRegisterContractProtoMsg {
 }
 export interface MsgRegisterContractAmino {
 	creator?: string;
-	contract?: ContractInfoV2Amino;
+	contract?: ContractInfoV2Amino | undefined;
 }
 export interface MsgRegisterContractAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgRegisterContract';
@@ -99,7 +99,7 @@ export interface MsgRegisterContractAminoMsg {
 }
 export interface MsgRegisterContractSDKType {
 	creator: string;
-	contract?: ContractInfoV2SDKType;
+	contract?: ContractInfoV2SDKType | undefined;
 }
 export interface MsgRegisterContractResponse {}
 export interface MsgRegisterContractResponseProtoMsg {

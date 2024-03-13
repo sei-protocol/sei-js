@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "typedocOptions": {
+    "readme": "openapi.md",
+    "name": "REST API",
+    "entryPoints": ["src/index.ts"],
+    "exclude": ["node_modules"]
+  }
+}

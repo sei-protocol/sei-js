@@ -113,7 +113,7 @@ export interface GetTxsEventRequest {
   /** events is the list of transaction event type. */
   events: string[];
   /** pagination defines a pagination for the request. */
-  pagination?: PageRequest;
+  pagination?: PageRequest | undefined;
   orderBy: OrderBy;
 }
 export interface GetTxsEventRequestProtoMsg {
@@ -128,7 +128,7 @@ export interface GetTxsEventRequestAmino {
   /** events is the list of transaction event type. */
   events?: string[];
   /** pagination defines a pagination for the request. */
-  pagination?: PageRequestAmino;
+  pagination?: PageRequestAmino | undefined;
   order_by?: OrderBy;
 }
 export interface GetTxsEventRequestAminoMsg {
@@ -141,7 +141,7 @@ export interface GetTxsEventRequestAminoMsg {
  */
 export interface GetTxsEventRequestSDKType {
   events: string[];
-  pagination?: PageRequestSDKType;
+  pagination?: PageRequestSDKType | undefined;
   order_by: OrderBy;
 }
 /**
@@ -154,7 +154,7 @@ export interface GetTxsEventResponse {
   /** tx_responses is the list of queried TxResponses. */
   txResponses: TxResponse[];
   /** pagination defines a pagination for the response. */
-  pagination?: PageResponse;
+  pagination?: PageResponse | undefined;
 }
 export interface GetTxsEventResponseProtoMsg {
   typeUrl: "/cosmos.tx.v1beta1.GetTxsEventResponse";
@@ -170,7 +170,7 @@ export interface GetTxsEventResponseAmino {
   /** tx_responses is the list of queried TxResponses. */
   tx_responses?: TxResponseAmino[];
   /** pagination defines a pagination for the response. */
-  pagination?: PageResponseAmino;
+  pagination?: PageResponseAmino | undefined;
 }
 export interface GetTxsEventResponseAminoMsg {
   type: "cosmos-sdk/GetTxsEventResponse";
@@ -183,7 +183,7 @@ export interface GetTxsEventResponseAminoMsg {
 export interface GetTxsEventResponseSDKType {
   txs: TxSDKType[];
   tx_responses: TxResponseSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination?: PageResponseSDKType | undefined;
 }
 /**
  * BroadcastTxRequest is the request type for the Service.BroadcastTxRequest
@@ -225,7 +225,7 @@ export interface BroadcastTxRequestSDKType {
  */
 export interface BroadcastTxResponse {
   /** tx_response is the queried TxResponses. */
-  txResponse?: TxResponse;
+  txResponse?: TxResponse | undefined;
 }
 export interface BroadcastTxResponseProtoMsg {
   typeUrl: "/cosmos.tx.v1beta1.BroadcastTxResponse";
@@ -237,7 +237,7 @@ export interface BroadcastTxResponseProtoMsg {
  */
 export interface BroadcastTxResponseAmino {
   /** tx_response is the queried TxResponses. */
-  tx_response?: TxResponseAmino;
+  tx_response?: TxResponseAmino | undefined;
 }
 export interface BroadcastTxResponseAminoMsg {
   type: "cosmos-sdk/BroadcastTxResponse";
@@ -248,7 +248,7 @@ export interface BroadcastTxResponseAminoMsg {
  * Service.BroadcastTx method.
  */
 export interface BroadcastTxResponseSDKType {
-  tx_response?: TxResponseSDKType;
+  tx_response?: TxResponseSDKType | undefined;
 }
 /**
  * SimulateRequest is the request type for the Service.Simulate
@@ -260,7 +260,7 @@ export interface SimulateRequest {
    * Deprecated. Send raw tx bytes instead.
    */
   /** @deprecated */
-  tx?: Tx;
+  tx?: Tx | undefined;
   /**
    * tx_bytes is the raw transaction.
    * 
@@ -282,7 +282,7 @@ export interface SimulateRequestAmino {
    * Deprecated. Send raw tx bytes instead.
    */
   /** @deprecated */
-  tx?: TxAmino;
+  tx?: TxAmino | undefined;
   /**
    * tx_bytes is the raw transaction.
    * 
@@ -300,7 +300,7 @@ export interface SimulateRequestAminoMsg {
  */
 export interface SimulateRequestSDKType {
   /** @deprecated */
-  tx?: TxSDKType;
+  tx?: TxSDKType | undefined;
   tx_bytes: Uint8Array;
 }
 /**
@@ -309,9 +309,9 @@ export interface SimulateRequestSDKType {
  */
 export interface SimulateResponse {
   /** gas_info is the information about gas used in the simulation. */
-  gasInfo?: GasInfo;
+  gasInfo?: GasInfo | undefined;
   /** result is the result of the simulation. */
-  result?: Result;
+  result?: Result | undefined;
 }
 export interface SimulateResponseProtoMsg {
   typeUrl: "/cosmos.tx.v1beta1.SimulateResponse";
@@ -323,9 +323,9 @@ export interface SimulateResponseProtoMsg {
  */
 export interface SimulateResponseAmino {
   /** gas_info is the information about gas used in the simulation. */
-  gas_info?: GasInfoAmino;
+  gas_info?: GasInfoAmino | undefined;
   /** result is the result of the simulation. */
-  result?: ResultAmino;
+  result?: ResultAmino | undefined;
 }
 export interface SimulateResponseAminoMsg {
   type: "cosmos-sdk/SimulateResponse";
@@ -336,8 +336,8 @@ export interface SimulateResponseAminoMsg {
  * Service.SimulateRPC method.
  */
 export interface SimulateResponseSDKType {
-  gas_info?: GasInfoSDKType;
-  result?: ResultSDKType;
+  gas_info?: GasInfoSDKType | undefined;
+  result?: ResultSDKType | undefined;
 }
 /**
  * GetTxRequest is the request type for the Service.GetTx
@@ -373,9 +373,9 @@ export interface GetTxRequestSDKType {
 /** GetTxResponse is the response type for the Service.GetTx method. */
 export interface GetTxResponse {
   /** tx is the queried transaction. */
-  tx?: Tx;
+  tx?: Tx | undefined;
   /** tx_response is the queried TxResponses. */
-  txResponse?: TxResponse;
+  txResponse?: TxResponse | undefined;
 }
 export interface GetTxResponseProtoMsg {
   typeUrl: "/cosmos.tx.v1beta1.GetTxResponse";
@@ -384,9 +384,9 @@ export interface GetTxResponseProtoMsg {
 /** GetTxResponse is the response type for the Service.GetTx method. */
 export interface GetTxResponseAmino {
   /** tx is the queried transaction. */
-  tx?: TxAmino;
+  tx?: TxAmino | undefined;
   /** tx_response is the queried TxResponses. */
-  tx_response?: TxResponseAmino;
+  tx_response?: TxResponseAmino | undefined;
 }
 export interface GetTxResponseAminoMsg {
   type: "cosmos-sdk/GetTxResponse";
@@ -394,8 +394,8 @@ export interface GetTxResponseAminoMsg {
 }
 /** GetTxResponse is the response type for the Service.GetTx method. */
 export interface GetTxResponseSDKType {
-  tx?: TxSDKType;
-  tx_response?: TxResponseSDKType;
+  tx?: TxSDKType | undefined;
+  tx_response?: TxResponseSDKType | undefined;
 }
 /**
  * GetBlockWithTxsRequest is the request type for the Service.GetBlockWithTxs
@@ -407,7 +407,7 @@ export interface GetBlockWithTxsRequest {
   /** height is the height of the block to query. */
   height: bigint;
   /** pagination defines a pagination for the request. */
-  pagination?: PageRequest;
+  pagination?: PageRequest | undefined;
 }
 export interface GetBlockWithTxsRequestProtoMsg {
   typeUrl: "/cosmos.tx.v1beta1.GetBlockWithTxsRequest";
@@ -423,7 +423,7 @@ export interface GetBlockWithTxsRequestAmino {
   /** height is the height of the block to query. */
   height?: string;
   /** pagination defines a pagination for the request. */
-  pagination?: PageRequestAmino;
+  pagination?: PageRequestAmino | undefined;
 }
 export interface GetBlockWithTxsRequestAminoMsg {
   type: "cosmos-sdk/GetBlockWithTxsRequest";
@@ -437,7 +437,7 @@ export interface GetBlockWithTxsRequestAminoMsg {
  */
 export interface GetBlockWithTxsRequestSDKType {
   height: bigint;
-  pagination?: PageRequestSDKType;
+  pagination?: PageRequestSDKType | undefined;
 }
 /**
  * GetBlockWithTxsResponse is the response type for the Service.GetBlockWithTxs method.
@@ -447,10 +447,10 @@ export interface GetBlockWithTxsRequestSDKType {
 export interface GetBlockWithTxsResponse {
   /** txs are the transactions in the block. */
   txs: Tx[];
-  blockId?: BlockID;
-  block?: Block;
+  blockId?: BlockID | undefined;
+  block?: Block | undefined;
   /** pagination defines a pagination for the response. */
-  pagination?: PageResponse;
+  pagination?: PageResponse | undefined;
 }
 export interface GetBlockWithTxsResponseProtoMsg {
   typeUrl: "/cosmos.tx.v1beta1.GetBlockWithTxsResponse";
@@ -464,10 +464,10 @@ export interface GetBlockWithTxsResponseProtoMsg {
 export interface GetBlockWithTxsResponseAmino {
   /** txs are the transactions in the block. */
   txs?: TxAmino[];
-  block_id?: BlockIDAmino;
-  block?: BlockAmino;
+  block_id?: BlockIDAmino | undefined;
+  block?: BlockAmino | undefined;
   /** pagination defines a pagination for the response. */
-  pagination?: PageResponseAmino;
+  pagination?: PageResponseAmino | undefined;
 }
 export interface GetBlockWithTxsResponseAminoMsg {
   type: "cosmos-sdk/GetBlockWithTxsResponse";
@@ -480,9 +480,9 @@ export interface GetBlockWithTxsResponseAminoMsg {
  */
 export interface GetBlockWithTxsResponseSDKType {
   txs: TxSDKType[];
-  block_id?: BlockIDSDKType;
-  block?: BlockSDKType;
-  pagination?: PageResponseSDKType;
+  block_id?: BlockIDSDKType | undefined;
+  block?: BlockSDKType | undefined;
+  pagination?: PageResponseSDKType | undefined;
 }
 function createBaseGetTxsEventRequest(): GetTxsEventRequest {
   return {

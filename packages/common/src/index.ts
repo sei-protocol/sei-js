@@ -1,2 +1,2 @@
-export * from './address';
+export * from './media';
 export * from './staking';
