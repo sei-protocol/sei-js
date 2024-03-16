@@ -1,6 +1,6 @@
 # @sei-js/common
 
-The `/common` package contains essential utilities, media assets, and configurations for Sei development. It includes general Sei chain configurations, utility functions, media handling tools, and more.
+The `/common` package contains essential utilities, media assets, and configurations for Sei development across EVM and Cosmos.
 
 ## Installation
 

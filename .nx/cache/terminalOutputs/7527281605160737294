@@ -1,4 +1,0 @@
-[2K[1G[2m$ rimraf dist && yarn md-docs[22m
-[2K[1G[2m$ widdershins src/sei-rest-open-api.yaml -o openapi.md  --omitHeader --c --version[22m
-4.0.1
-[2K[1G[2m$ tsc --project tsconfig.json[22m

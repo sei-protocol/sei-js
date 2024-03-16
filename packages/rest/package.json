@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/rest",
-  "version": "0.0.0-internal-evm-20240311234659",
+  "version": "0.0.0-internal-evm-20240315030508",
   "description": "A library to build and host the REST API documentation for Sei",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

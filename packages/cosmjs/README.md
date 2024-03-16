@@ -76,9 +76,9 @@ When querying a Sei chain it is helpful to use a query client from @sei-js in or
 
 ### Usage
 ```tsx
-import { getQueryClient } from '@sei-js/cosmjs';
+import { getLCDQueryClient } from '@sei-js/cosmjs';
 
-const queryClient = await getQueryClient(REST_URL);
+const queryClient = await getLCDQueryClient(REST_URL);
 
 // Getting the market summary from the Sei dex module
 const dexMarketSummary = await queryClient.seiprotocol.seichain.dex.getMarketSummary(params);

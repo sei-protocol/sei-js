@@ -60,6 +60,775 @@
   "fileMap": {
     "nonProjectFiles": [],
     "projectFileMap": {
+      "sei-metamask-test-ui": [
+        {
+          "file": "packages/metamask-snap/test-ui/.gitignore",
+          "hash": "13046175384202504187"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/README.md",
+          "hash": "17085567318566825417"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/globals.d.ts",
+          "hash": "18010592226211778406",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/index.html",
+          "hash": "8940447716739108774"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/package.json",
+          "hash": "1113330256847501553",
+          "deps": [
+            "npm:@metamask/providers",
+            "npm:react",
+            "npm:react-dom",
+            "npm:react-icons",
+            "npm:react-is",
+            "npm:styled-components",
+            "npm:@babel/preset-typescript",
+            "npm:@testing-library/dom",
+            "npm:@testing-library/jest-dom",
+            "npm:@testing-library/react",
+            "npm:@types/jest",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:prettier",
+            "npm:rimraf",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/public/favicon.ico",
+          "hash": "11880637422291255019"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/App.css",
+          "hash": "10836173040477289074"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/App.tsx",
+          "hash": "14233205448103133796",
+          "deps": [
+            "npm:react",
+            "npm:styled-components",
+            "npm:react-toastify",
+            "npm:react-toastify/dist/ReactToastify.css"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/Root.tsx",
+          "hash": "5926444855407688274",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/flask_fox.tsx",
+          "hash": "2560254200404894891",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/logo.svg",
+          "hash": "1097159363816691085"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/metamask_fox.svg",
+          "hash": "5754046496600256040"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/assets/react.svg",
+          "hash": "16069471864800376455"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Buttons.tsx",
+          "hash": "13623267901046100867",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Card.tsx",
+          "hash": "8437501477220638303",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Header.tsx",
+          "hash": "10073051394063717034",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/MetaMask.tsx",
+          "hash": "16786724382036228453",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/Toggle.tsx",
+          "hash": "10760470280326378103",
+          "deps": [
+            "npm:react",
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/components/index.ts",
+          "hash": "7642525245089394155"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/config/index.ts",
+          "hash": "9733984230409668645"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/config/theme.ts",
+          "hash": "11919451740524050345",
+          "deps": [
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/hooks/MetamaskContext.tsx",
+          "hash": "4632313409979775867",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/hooks/index.ts",
+          "hash": "2940315249067626444"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/index.css",
+          "hash": "957896817323665666"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/main.tsx",
+          "hash": "6788535232134525107",
+          "deps": [
+            "npm:react",
+            "npm:react-dom"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/pages/index.tsx",
+          "hash": "13623420556277086056",
+          "deps": [
+            "npm:react",
+            "npm:styled-components",
+            "npm:@cosmjs/stargate",
+            "npm:@sei-js/core",
+            "npm:@cosmjs/amino",
+            "npm:@cosmjs/proto-signing",
+            "npm:cosmjs-types",
+            "npm:@cosmjs/encoding",
+            "npm:@cosmjs/math",
+            "npm:react-toastify",
+            "npm:react-icons",
+            "npm:react-json-view-lite",
+            "npm:react-json-view-lite/dist/index.css"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/custom.d.ts",
+          "hash": "2505826915435419372",
+          "deps": [
+            "npm:@metamask/providers"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/index.ts",
+          "hash": "17854620319429399444"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/snap.ts",
+          "hash": "15134731834186712438"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/types/styled.d.ts",
+          "hash": "12715459989312354116",
+          "deps": [
+            "npm:styled-components"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/button.ts",
+          "hash": "13352583186694235063"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/index.ts",
+          "hash": "11509460631358272260"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/initialization.ts",
+          "hash": "2264600837612842915",
+          "deps": [
+            "npm:@metamask/providers",
+            "@sei-js/cosmjs"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/localStorage.ts",
+          "hash": "18227165092003598449"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/metamask.ts",
+          "hash": "14742147972388070689"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/snap.ts",
+          "hash": "9788572302387679066",
+          "deps": [
+            "npm:@sei-js/core",
+            "npm:buffer"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/utils/theme.ts",
+          "hash": "6349318666569118664"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/src/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/tsconfig.json",
+          "hash": "12040325883005372030"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/tsconfig.node.json",
+          "hash": "12040325883005372030"
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/vite.config.ts",
+          "hash": "1920456401353505654",
+          "deps": [
+            "npm:vite",
+            "npm:@vitejs/plugin-react",
+            "npm:vite-plugin-node-polyfills"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/test-ui/yarn.lock",
+          "hash": "2989265305720834725"
+        }
+      ],
+      "@sei-js/common": [
+        {
+          "file": "packages/common/.babelrc.js",
+          "hash": "4638744510834633633"
+        },
+        {
+          "file": "packages/common/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/common/.npmignore",
+          "hash": "17948297527781443299"
+        },
+        {
+          "file": "packages/common/CHANGELOG.md",
+          "hash": "14035733380430274157"
+        },
+        {
+          "file": "packages/common/README.md",
+          "hash": "6634191015763975550"
+        },
+        {
+          "file": "packages/common/jest.config.ts",
+          "hash": "16414517479619571110"
+        },
+        {
+          "file": "packages/common/package.json",
+          "hash": "5363368884019725790",
+          "deps": [
+            "npm:@cosmjs/encoding",
+            "npm:keccak",
+            "npm:@babel/core",
+            "npm:@babel/plugin-transform-runtime",
+            "npm:@babel/preset-env",
+            "npm:@babel/preset-typescript",
+            "npm:@types/jest",
+            "npm:jest",
+            "npm:prettier",
+            "npm:ts-jest",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/common/src/index.ts",
+          "hash": "882188741962666058"
+        },
+        {
+          "file": "packages/common/src/media/icons.ts",
+          "hash": "12685151217355577703"
+        },
+        {
+          "file": "packages/common/src/media/index.ts",
+          "hash": "11439764896261432272"
+        },
+        {
+          "file": "packages/common/tsconfig.json",
+          "hash": "8434672936855517005"
+        }
+      ],
+      "workspace": [
+        {
+          "file": ".changeset/README.md",
+          "hash": "4888845876018830777"
+        },
+        {
+          "file": ".changeset/config.json",
+          "hash": "11898648829354806339"
+        },
+        {
+          "file": ".editorconfig",
+          "hash": "5443105041930014821"
+        },
+        {
+          "file": ".eslintignore",
+          "hash": "7663861978715868291"
+        },
+        {
+          "file": ".eslintrc.base.json",
+          "hash": "17722112666649925219"
+        },
+        {
+          "file": ".eslintrc.json",
+          "hash": "966013245893916685"
+        },
+        {
+          "file": ".github/ISSUE_TEMPLATE/bug_report.md",
+          "hash": "4994310711565563414"
+        },
+        {
+          "file": ".github/workflows/checks.yml",
+          "hash": "9721976736310604434"
+        },
+        {
+          "file": ".github/workflows/coverage.yml",
+          "hash": "4408250068478511439"
+        },
+        {
+          "file": ".github/workflows/deploydocs.yml",
+          "hash": "2563622505854932440"
+        },
+        {
+          "file": ".github/workflows/release.yml",
+          "hash": "7645271809251993536"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "17245965085278831872"
+        },
+        {
+          "file": ".nvmrc",
+          "hash": "16887447689433830851"
+        },
+        {
+          "file": ".prettierignore",
+          "hash": "8783679128000005734"
+        },
+        {
+          "file": ".prettierrc",
+          "hash": "2830453978702584531"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "4637156562308165301"
+        },
+        {
+          "file": "CHANGELOG.md",
+          "hash": "7029576165764549660"
+        },
+        {
+          "file": "EXAMPLES.md",
+          "hash": "13921332029242299984"
+        },
+        {
+          "file": "README.md",
+          "hash": "16685246452928901721"
+        },
+        {
+          "file": "TYPEDOC-README.md",
+          "hash": "12699520628787485720"
+        },
+        {
+          "file": "codecov.yml",
+          "hash": "11423399279121125850"
+        },
+        {
+          "file": "jest.config.ts",
+          "hash": "6837822589450354725",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "jest.preset.js",
+          "hash": "9430166341120122740",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "nx.json",
+          "hash": "15869658554639297772"
+        },
+        {
+          "file": "output.json",
+          "hash": "8616809534340633688"
+        },
+        {
+          "file": "package.json",
+          "hash": "15426415907148682809",
+          "deps": [
+            "npm:@changesets/cli",
+            "npm:axios",
+            "npm:glob",
+            "npm:tslib",
+            "npm:@knodes/typedoc-plugin-pages",
+            "npm:@nrwl/node",
+            "npm:@nrwl/nx-cloud",
+            "npm:@nrwl/workspace",
+            "npm:@nx/esbuild",
+            "npm:@nx/eslint",
+            "npm:@nx/eslint-plugin",
+            "npm:@nx/jest",
+            "npm:@nx/js",
+            "npm:@nx/node",
+            "npm:@swc-node/register",
+            "npm:@swc/core",
+            "npm:@swc/helpers",
+            "npm:@types/jest",
+            "npm:@types/node",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:esbuild",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:jest",
+            "npm:jest-environment-jsdom",
+            "npm:jest-environment-node",
+            "npm:nodemon",
+            "npm:nx",
+            "npm:prettier",
+            "npm:rimraf",
+            "npm:ts-jest",
+            "npm:ts-node",
+            "npm:typedoc",
+            "npm:typedoc-material-theme",
+            "npm:typedoc-plugin-pages",
+            "npm:typedoc-theme-category-nav",
+            "npm:typedoc-theme-hierarchy",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "project.json",
+          "hash": "596287135512902265"
+        },
+        {
+          "file": "tsconfig.base.json",
+          "hash": "15699908282418752302"
+        },
+        {
+          "file": "typedoc.base.json",
+          "hash": "2300223296991191619"
+        },
+        {
+          "file": "typedoc.config.js",
+          "hash": "18404079594242976624"
+        },
+        {
+          "file": "typedoc.theme.css",
+          "hash": "2332614387016867941"
+        },
+        {
+          "file": "yarn.lock",
+          "hash": "12804766048408756129"
+        }
+      ],
+      "@sei-js/cli": [
+        {
+          "file": "packages/cli/.gitignore",
+          "hash": "3513492345290072647"
+        },
+        {
+          "file": "packages/cli/CHANGELOG.md",
+          "hash": "14318014886303552646"
+        },
+        {
+          "file": "packages/cli/README.md",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/cli/package.json",
+          "hash": "17941867507072440378",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "@sei-js/cosmjs",
+            "npm:boxen",
+            "npm:inquirer",
+            "npm:@esbuild-plugins/node-globals-polyfill",
+            "npm:@tanstack/react-query",
+            "npm:@types/boxen",
+            "npm:@types/inquirer",
+            "npm:autoprefixer",
+            "npm:cosmos-kit",
+            "npm:degit",
+            "npm:postcss",
+            "npm:tailwindcss",
+            "npm:viem",
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/src/main.ts",
+          "hash": "3713503109881486210",
+          "deps": [
+            "npm:inquirer",
+            "npm:boxen",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/frontend.ts",
+          "hash": "1872525862227800830",
+          "deps": [
+            "npm:util",
+            "npm:child_process",
+            "npm:inquirer",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/rpcIntegrations.ts",
+          "hash": "880966531342218763",
+          "deps": [
+            "npm:inquirer",
+            "npm:child_process",
+            "npm:util",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/stylingFrameworks.ts",
+          "hash": "1364600448378848380",
+          "deps": [
+            "npm:inquirer",
+            "npm:child_process",
+            "npm:util",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/uiComponentLibraries.ts",
+          "hash": "5044201984655764154",
+          "deps": [
+            "npm:inquirer",
+            "npm:util",
+            "npm:child_process",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/walletConnectButton.ts",
+          "hash": "17509464576435051800",
+          "deps": [
+            "npm:fs",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/components/cosmjs.tsx",
+          "hash": "7574467660244208454",
+          "deps": [
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/components/evm.tsx",
+          "hash": "18050443899707350499",
+          "deps": [
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/mantine/postcss.config.js",
+          "hash": "8854197412821501406"
+        },
+        {
+          "file": "packages/cli/templates/next-app-tailwind.tsx",
+          "hash": "11415325670893637895",
+          "deps": [
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/next-app.tsx",
+          "hash": "3479942692773767615",
+          "deps": [
+            "npm:@mantine/core/styles.css"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/next-main.tsx",
+          "hash": "1217111479534240036",
+          "deps": [
+            "npm:next/app"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/providers/cosmjs.tsx",
+          "hash": "10478227668018700911",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "npm:cosmos-kit",
+            "npm:react",
+            "@sei-js/cosmjs"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/providers/evm.tsx",
+          "hash": "9800808493639678110",
+          "deps": [
+            "npm:react",
+            "npm:wagmi",
+            "npm:@tanstack/react-query",
+            "@sei-js/evm"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-mantine.css",
+          "hash": "10904518076393673880"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-next.css",
+          "hash": "601473408680314598"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-vite-css.css",
+          "hash": "12334440410769162212"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-vite.css",
+          "hash": "17322417069250368579"
+        },
+        {
+          "file": "packages/cli/templates/tailwind/config-nextjs.ts",
+          "hash": "14378259236105805895"
+        },
+        {
+          "file": "packages/cli/templates/tailwind/config-vite.ts",
+          "hash": "14819688527020775707"
+        },
+        {
+          "file": "packages/cli/templates/vite-app-cosmjs-css.tsx",
+          "hash": "8142200763437999000",
+          "deps": [
+            "npm:react",
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-cosmjs-mantine.tsx",
+          "hash": "18175150840668463846",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "npm:@mantine/hooks",
+            "npm:@mantine/core"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-cosmjs-tailwind.tsx",
+          "hash": "17225446941157479271",
+          "deps": [
+            "npm:@interchain-ui/react/styles",
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-evm-css.tsx",
+          "hash": "6833794302830396240",
+          "deps": [
+            "npm:react",
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-evm-mantine.tsx",
+          "hash": "2945162569893856188",
+          "deps": [
+            "npm:@mantine/hooks",
+            "npm:@mantine/core",
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-evm-tailwind.tsx",
+          "hash": "16658314923407791299",
+          "deps": [
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-main-mantine.tsx",
+          "hash": "13381385879470397477",
+          "deps": [
+            "npm:react",
+            "npm:react-dom",
+            "npm:@mantine/core/styles.css",
+            "npm:@mantine/core"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-main.tsx",
+          "hash": "13933943102605933451",
+          "deps": [
+            "npm:react",
+            "npm:react-dom"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite/config.ts",
+          "hash": "7751163001201656816",
+          "deps": [
+            "npm:vite",
+            "npm:@vitejs/plugin-react",
+            "npm:@esbuild-plugins/node-globals-polyfill"
+          ]
+        },
+        {
+          "file": "packages/cli/tsconfig.json",
+          "hash": "16854617947789079458"
+        }
+      ],
       "@sei-js/evm": [
         {
           "file": "packages/evm/.babelrc.js",
@@ -75,19 +844,19 @@
         },
         {
           "file": "packages/evm/CHANGELOG.md",
-          "hash": "17711246691229296716"
+          "hash": "15478226895271794237"
         },
         {
           "file": "packages/evm/README.md",
           "hash": "6448127743107443704"
         },
         {
-          "file": "packages/evm/jest.config.js",
-          "hash": "16414517479619571110"
+          "file": "packages/evm/jest.config.ts",
+          "hash": "2498698932547873951"
         },
         {
           "file": "packages/evm/package.json",
-          "hash": "4836921611429240817",
+          "hash": "9119627007268452813",
           "deps": [
             "npm:ethers",
             "npm:viem",
@@ -102,8 +871,12 @@
           ]
         },
         {
+          "file": "packages/evm/src/chainInfo/__tests__/chainInfo.spec.ts",
+          "hash": "11203900342526596324"
+        },
+        {
           "file": "packages/evm/src/chainInfo/chainInfo.ts",
-          "hash": "3488066252651875872"
+          "hash": "953286951406688270"
         },
         {
           "file": "packages/evm/src/chainInfo/index.ts",
@@ -115,7 +888,7 @@
         },
         {
           "file": "packages/evm/src/precompiles/address.ts",
-          "hash": "8926483929372360799",
+          "hash": "8488035158818254015",
           "deps": [
             "npm:ethers",
             "npm:viem"
@@ -123,21 +896,23 @@
         },
         {
           "file": "packages/evm/src/precompiles/bank.ts",
-          "hash": "10122030020330348829",
+          "hash": "3241724363379882343",
           "deps": [
-            "npm:ethers"
+            "npm:ethers",
+            "npm:viem"
           ]
         },
         {
           "file": "packages/evm/src/precompiles/distribution.ts",
-          "hash": "1316722593201930812",
+          "hash": "13690120288777584057",
           "deps": [
-            "npm:ethers"
+            "npm:ethers",
+            "npm:viem"
           ]
         },
         {
           "file": "packages/evm/src/precompiles/governance.ts",
-          "hash": "4574431504830989828",
+          "hash": "2337674808625157980",
           "deps": [
             "npm:ethers"
           ]
@@ -148,21 +923,21 @@
         },
         {
           "file": "packages/evm/src/precompiles/json.ts",
-          "hash": "6430853666139168309",
+          "hash": "2962114459834574881",
           "deps": [
             "npm:ethers"
           ]
         },
         {
           "file": "packages/evm/src/precompiles/staking.ts",
-          "hash": "591211768183049033",
+          "hash": "4067416630181923099",
           "deps": [
             "npm:ethers"
           ]
         },
         {
           "file": "packages/evm/src/precompiles/wasm.ts",
-          "hash": "9454805422795747689",
+          "hash": "302043964705800660",
           "deps": [
             "npm:ethers"
           ]
@@ -173,18 +948,22 @@
         },
         {
           "file": "packages/evm/src/providers/viem.ts",
-          "hash": "4440248180049719795",
+          "hash": "14924268075872743445",
           "deps": [
             "npm:viem"
           ]
         },
         {
           "file": "packages/evm/src/providers/wagmi.ts",
-          "hash": "12424530825411596291"
+          "hash": "12522583263514063528",
+          "deps": [
+            "npm:viem",
+            "npm:wagmi"
+          ]
         },
         {
           "file": "packages/evm/src/utils/address.ts",
-          "hash": "3428000482669215838",
+          "hash": "16268042695415112307",
           "deps": [
             "npm:@noble/hashes"
           ]
@@ -195,7 +974,222 @@
         },
         {
           "file": "packages/evm/tsconfig.json",
-          "hash": "4908106594217399269"
+          "hash": "8159684403188430863"
+        }
+      ],
+      "@sei-js/rest": [
+        {
+          "file": "packages/rest/CHANGELOG.md",
+          "hash": "14804331464815147995"
+        },
+        {
+          "file": "packages/rest/openapi.md",
+          "hash": "11140893093239221451"
+        },
+        {
+          "file": "packages/rest/package.json",
+          "hash": "5717459149924361255",
+          "deps": [
+            "npm:widdershins"
+          ]
+        },
+        {
+          "file": "packages/rest/sei-openapi.yml",
+          "hash": "17035997468842752533"
+        },
+        {
+          "file": "packages/rest/src/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/rest/tsconfig.json",
+          "hash": "3259221599939315844"
+        }
+      ],
+      "@sei-js/metamask-snap": [
+        {
+          "file": "packages/metamask-snap/CHANGELOG.md",
+          "hash": "1721267382703976653"
+        },
+        {
+          "file": "packages/metamask-snap/README.md",
+          "hash": "2313767540086855191"
+        },
+        {
+          "file": "packages/metamask-snap/bable.config.js",
+          "hash": "3860429126896203357"
+        },
+        {
+          "file": "packages/metamask-snap/images/icon.svg",
+          "hash": "14638442676295511792"
+        },
+        {
+          "file": "packages/metamask-snap/jest.config.js",
+          "hash": "8487951487002940767"
+        },
+        {
+          "file": "packages/metamask-snap/package.json",
+          "hash": "1487861145456002415",
+          "deps": [
+            "npm:@metamask/snaps-types",
+            "npm:@metamask/snaps-ui",
+            "npm:buffer",
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@jest/globals",
+            "npm:@lavamoat/allow-scripts",
+            "npm:@metamask/auto-changelog",
+            "npm:@metamask/key-tree",
+            "npm:@metamask/snaps-cli",
+            "npm:@metamask/snaps-jest",
+            "npm:@metamask/utils",
+            "npm:jest",
+            "npm:prettier",
+            "npm:rimraf",
+            "npm:through2",
+            "npm:ts-jest",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/snap.config.ts",
+          "hash": "15644264458731217536",
+          "deps": [
+            "npm:path",
+            "npm:@metamask/snaps-cli"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/snap.manifest.json",
+          "hash": "6633143188044317362"
+        },
+        {
+          "file": "packages/metamask-snap/src/address.ts",
+          "hash": "10148287988663214405",
+          "deps": [
+            "npm:@cosmjs/encoding",
+            "npm:elliptic",
+            "npm:@cosmjs/crypto"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/api.ts",
+          "hash": "1575003276268342866",
+          "deps": [
+            "npm:@metamask/key-tree",
+            "npm:@metamask/snaps-types",
+            "npm:cosmjs-types",
+            "npm:long"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/bech32.ts",
+          "hash": "6108783564488578414",
+          "deps": [
+            "npm:bech32"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/hash.ts",
+          "hash": "8046867279629614337",
+          "deps": [
+            "npm:sha.js"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/index.ts",
+          "hash": "14163432267913601153"
+        },
+        {
+          "file": "packages/metamask-snap/src/serialize.ts",
+          "hash": "7095509269987805224",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:cosmjs-types"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/snapWallet.ts",
+          "hash": "5731762160468671695",
+          "deps": [
+            "npm:@noble/secp256k1",
+            "npm:@noble/hashes",
+            "npm:cosmjs-types",
+            "npm:@cosmjs/amino",
+            "npm:buffer"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/api.spec.ts",
+          "hash": "11022211543395736058"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/input.mock.ts",
+          "hash": "9060408358939099653",
+          "deps": [
+            "npm:@metamask/snaps-types"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/mocks.ts",
+          "hash": "1593849281647233110"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/output.mock.ts",
+          "hash": "15091269791145208256"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/mocks/snap.mock.ts",
+          "hash": "2546581622722145809"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/snapWallet.spec.ts",
+          "hash": "5528533060060452569"
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/ui.spec.ts",
+          "hash": "15881088193825827145",
+          "deps": [
+            "@sei-js/proto",
+            "npm:long"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/tests/utils.spec.ts",
+          "hash": "14788153976588832665"
+        },
+        {
+          "file": "packages/metamask-snap/src/types.ts",
+          "hash": "15041783523938935056",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "@sei-js/proto",
+            "npm:@metamask/providers",
+            "npm:@metamask/snaps-ui"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/ui.ts",
+          "hash": "1786795094770415809",
+          "deps": [
+            "@sei-js/proto",
+            "npm:long",
+            "npm:@metamask/snaps-ui",
+            "npm:@cosmjs/amino",
+            "npm:cosmjs-types"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/src/utils.ts",
+          "hash": "3634616900003365308",
+          "deps": [
+            "npm:long"
+          ]
+        },
+        {
+          "file": "packages/metamask-snap/tsconfig.json",
+          "hash": "14169839991185264555"
         }
       ],
       "@sei-js/proto": [
@@ -229,7 +1223,7 @@
         },
         {
           "file": "packages/proto/CHANGELOG.md",
-          "hash": "10067180778734712748"
+          "hash": "15339691580300801358"
         },
         {
           "file": "packages/proto/LICENSE",
@@ -237,7 +1231,7 @@
         },
         {
           "file": "packages/proto/README.md",
-          "hash": "13426667752484846375"
+          "hash": "2896137084529023733"
         },
         {
           "file": "packages/proto/__tests__/.gitkeep",
@@ -245,7 +1239,7 @@
         },
         {
           "file": "packages/proto/package.json",
-          "hash": "17208132797991278784",
+          "hash": "8806068551567467196",
           "deps": [
             "npm:@babel/runtime",
             "npm:@cosmjs/amino",
@@ -257,8 +1251,15 @@
             "npm:@cosmology/telescope",
             "npm:@osmonauts/helpers",
             "npm:protobufjs",
+            "npm:@babel/cli",
             "npm:@babel/core",
+            "npm:@babel/node",
+            "npm:@babel/plugin-proposal-class-properties",
+            "npm:@babel/plugin-proposal-export-default-from",
+            "npm:@babel/plugin-proposal-nullish-coalescing-operator",
+            "npm:@babel/plugin-proposal-numeric-separator",
             "npm:@babel/plugin-proposal-object-rest-spread",
+            "npm:@babel/plugin-proposal-optional-chaining",
             "npm:@babel/plugin-transform-runtime",
             "npm:@babel/preset-env",
             "npm:@babel/preset-typescript",
@@ -271,6 +1272,7 @@
             "npm:@protobufs/tendermint",
             "npm:babel-core",
             "npm:babel-jest",
+            "npm:babel-watch",
             "npm:cross-env",
             "npm:jest-in-case",
             "npm:long",
@@ -2293,663 +3295,131 @@
           "hash": "3886332946002976876"
         }
       ],
-      "@sei-js/rest": [
+      "test-vite-evm-mantine": [
         {
-          "file": "packages/rest/package.json",
-          "hash": "16696601006750825075",
-          "deps": [
-            "npm:widdershins"
-          ]
+          "file": "packages/cli/test/test-vite-evm-mantine/.eslintrc.cjs",
+          "hash": "18224317155734308275"
         },
         {
-          "file": "packages/rest/src/index.ts",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "packages/rest/tsconfig.json",
-          "hash": "3259221599939315844"
-        },
-        {
-          "file": "packages/rest/sei-openapi.yml",
-          "hash": "17035997468842752533"
-        },
-        {
-          "file": "packages/rest/openapi.md",
-          "hash": "11140893093239221451"
-        }
-      ],
-      "workspace": [
-        {
-          "file": ".changeset/README.md",
-          "hash": "4888845876018830777"
-        },
-        {
-          "file": ".changeset/config.json",
-          "hash": "11898648829354806339"
-        },
-        {
-          "file": ".editorconfig",
-          "hash": "5443105041930014821"
-        },
-        {
-          "file": ".eslintignore",
-          "hash": "7663861978715868291"
-        },
-        {
-          "file": ".eslintrc.base.json",
-          "hash": "17722112666649925219"
-        },
-        {
-          "file": ".eslintrc.json",
-          "hash": "966013245893916685"
-        },
-        {
-          "file": ".github/ISSUE_TEMPLATE/bug_report.md",
-          "hash": "4994310711565563414"
-        },
-        {
-          "file": ".github/workflows/checks.yml",
-          "hash": "9721976736310604434"
-        },
-        {
-          "file": ".github/workflows/coverage.yml",
-          "hash": "4408250068478511439"
-        },
-        {
-          "file": ".github/workflows/deploydocs.yml",
-          "hash": "2563622505854932440"
-        },
-        {
-          "file": ".github/workflows/release.yml",
-          "hash": "7645271809251993536"
-        },
-        {
-          "file": ".gitignore",
-          "hash": "17245965085278831872"
-        },
-        {
-          "file": ".nvmrc",
-          "hash": "16887447689433830851"
-        },
-        {
-          "file": ".prettierignore",
-          "hash": "8783679128000005734"
-        },
-        {
-          "file": ".prettierrc",
-          "hash": "2830453978702584531"
-        },
-        {
-          "file": ".vscode/extensions.json",
-          "hash": "4637156562308165301"
-        },
-        {
-          "file": "CHANGELOG.md",
-          "hash": "7029576165764549660"
-        },
-        {
-          "file": "EXAMPLES.md",
-          "hash": "13921332029242299984"
-        },
-        {
-          "file": "README.md",
-          "hash": "16685246452928901721"
-        },
-        {
-          "file": "TYPEDOC-README.md",
-          "hash": "12699520628787485720"
-        },
-        {
-          "file": "codecov.yml",
-          "hash": "11423399279121125850"
-        },
-        {
-          "file": "jest.config.ts",
-          "hash": "6837822589450354725",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "jest.preset.js",
-          "hash": "9430166341120122740",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "nx.json",
-          "hash": "15869658554639297772"
-        },
-        {
-          "file": "package.json",
-          "hash": "15426415907148682809",
-          "deps": [
-            "npm:@changesets/cli",
-            "npm:axios",
-            "npm:glob",
-            "npm:tslib",
-            "npm:@knodes/typedoc-plugin-pages",
-            "npm:@nrwl/node",
-            "npm:@nrwl/nx-cloud",
-            "npm:@nrwl/workspace",
-            "npm:@nx/esbuild",
-            "npm:@nx/eslint",
-            "npm:@nx/eslint-plugin",
-            "npm:@nx/jest",
-            "npm:@nx/js",
-            "npm:@nx/node",
-            "npm:@swc-node/register",
-            "npm:@swc/core",
-            "npm:@swc/helpers",
-            "npm:@types/jest",
-            "npm:@types/node",
-            "npm:@typescript-eslint/eslint-plugin",
-            "npm:@typescript-eslint/parser",
-            "npm:esbuild",
-            "npm:eslint",
-            "npm:eslint-config-prettier",
-            "npm:jest",
-            "npm:jest-environment-jsdom",
-            "npm:jest-environment-node",
-            "npm:nodemon",
-            "npm:nx",
-            "npm:prettier",
-            "npm:rimraf",
-            "npm:ts-jest",
-            "npm:ts-node",
-            "npm:typedoc",
-            "npm:typedoc-material-theme",
-            "npm:typedoc-plugin-pages",
-            "npm:typedoc-theme-category-nav",
-            "npm:typedoc-theme-hierarchy",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "packages/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "project.json",
-          "hash": "596287135512902265"
-        },
-        {
-          "file": "tsconfig.base.json",
-          "hash": "15699908282418752302"
-        },
-        {
-          "file": "typedoc.base.json",
-          "hash": "2300223296991191619"
-        },
-        {
-          "file": "typedoc.config.js",
-          "hash": "18404079594242976624"
-        },
-        {
-          "file": "typedoc.theme.css",
-          "hash": "2332614387016867941"
-        },
-        {
-          "file": "yarn.lock",
-          "hash": "855782536338221333"
-        }
-      ],
-      "sei-metamask-test-ui": [
-        {
-          "file": "packages/metamask-snap/test-ui/.gitignore",
+          "file": "packages/cli/test/test-vite-evm-mantine/.gitignore",
           "hash": "13046175384202504187"
         },
         {
-          "file": "packages/metamask-snap/test-ui/README.md",
-          "hash": "17085567318566825417"
+          "file": "packages/cli/test/test-vite-evm-mantine/README.md",
+          "hash": "11460966644741158790"
         },
         {
-          "file": "packages/metamask-snap/test-ui/globals.d.ts",
-          "hash": "18010592226211778406",
+          "file": "packages/cli/test/test-vite-evm-mantine/index.html",
+          "hash": "4025202329384162906"
+        },
+        {
+          "file": "packages/cli/test/test-vite-evm-mantine/package.json",
+          "hash": "959892577452985911",
           "deps": [
-            "npm:react"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/index.html",
-          "hash": "8940447716739108774"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/package.json",
-          "hash": "1113330256847501553",
-          "deps": [
-            "npm:@metamask/providers",
+            "@sei-js/evm",
+            "npm:@tanstack/react-query",
             "npm:react",
             "npm:react-dom",
-            "npm:react-icons",
-            "npm:react-is",
-            "npm:styled-components",
-            "npm:@babel/preset-typescript",
-            "npm:@testing-library/dom",
-            "npm:@testing-library/jest-dom",
-            "npm:@testing-library/react",
-            "npm:@types/jest",
+            "npm:viem",
+            "npm:wagmi",
+            "npm:@esbuild-plugins/node-globals-polyfill",
             "npm:@types/react",
             "npm:@types/react-dom",
             "npm:@typescript-eslint/eslint-plugin",
             "npm:@typescript-eslint/parser",
-            "npm:prettier",
-            "npm:prettier-plugin-packagejson",
-            "npm:rimraf",
+            "npm:eslint",
+            "npm:postcss",
             "npm:typescript"
           ]
         },
         {
-          "file": "packages/metamask-snap/test-ui/public/favicon.ico",
-          "hash": "11880637422291255019"
+          "file": "packages/cli/test/test-vite-evm-mantine/public/vite.svg",
+          "hash": "16046085400642193116"
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/App.css",
-          "hash": "10836173040477289074"
+          "file": "packages/cli/test/test-vite-evm-mantine/src/App.css",
+          "hash": "10904518076393673880"
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/App.tsx",
-          "hash": "14233205448103133796",
+          "file": "packages/cli/test/test-vite-evm-mantine/src/App.tsx",
+          "hash": "12014348616568580565",
           "deps": [
-            "npm:react",
-            "npm:styled-components",
-            "npm:react-toastify",
-            "npm:react-toastify/dist/ReactToastify.css"
+            "npm:@mantine/hooks",
+            "npm:@mantine/core",
+            "npm:wagmi",
+            "@sei-js/evm",
+            "npm:ethers"
           ]
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/Root.tsx",
-          "hash": "5926444855407688274",
-          "deps": [
-            "npm:react",
-            "npm:styled-components"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/assets/flask_fox.tsx",
-          "hash": "2560254200404894891",
-          "deps": [
-            "npm:react"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/assets/logo.svg",
-          "hash": "1097159363816691085"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/assets/metamask_fox.svg",
-          "hash": "5754046496600256040"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/assets/react.svg",
+          "file": "packages/cli/test/test-vite-evm-mantine/src/assets/react.svg",
           "hash": "16069471864800376455"
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/components/Buttons.tsx",
-          "hash": "13623267901046100867",
+          "file": "packages/cli/test/test-vite-evm-mantine/src/components/WalletConnectButton.tsx",
+          "hash": "18050443899707350499",
           "deps": [
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/test/test-vite-evm-mantine/src/hooks/useEthersSigner.tsx",
+          "hash": "5334160357577092175",
+          "deps": [
+            "npm:ethers",
             "npm:react",
-            "npm:styled-components"
+            "npm:viem",
+            "npm:wagmi"
           ]
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/components/Card.tsx",
-          "hash": "8437501477220638303",
-          "deps": [
-            "npm:react",
-            "npm:styled-components"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/components/Header.tsx",
-          "hash": "10073051394063717034",
-          "deps": [
-            "npm:react",
-            "npm:styled-components"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/components/MetaMask.tsx",
-          "hash": "16786724382036228453",
-          "deps": [
-            "npm:react"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/components/Toggle.tsx",
-          "hash": "10760470280326378103",
-          "deps": [
-            "npm:react",
-            "npm:styled-components"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/components/index.ts",
-          "hash": "7642525245089394155"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/config/index.ts",
-          "hash": "9733984230409668645"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/config/theme.ts",
-          "hash": "11919451740524050345",
-          "deps": [
-            "npm:styled-components"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/hooks/MetamaskContext.tsx",
-          "hash": "4632313409979775867",
-          "deps": [
-            "npm:react"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/hooks/index.ts",
-          "hash": "2940315249067626444"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/index.css",
+          "file": "packages/cli/test/test-vite-evm-mantine/src/index.css",
           "hash": "957896817323665666"
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/main.tsx",
-          "hash": "6788535232134525107",
+          "file": "packages/cli/test/test-vite-evm-mantine/src/main.tsx",
+          "hash": "13381385879470397477",
           "deps": [
             "npm:react",
-            "npm:react-dom"
+            "npm:react-dom",
+            "npm:@mantine/core/styles.css",
+            "npm:@mantine/core"
           ]
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/pages/index.tsx",
-          "hash": "13623420556277086056",
+          "file": "packages/cli/test/test-vite-evm-mantine/src/providers/WalletProvider.tsx",
+          "hash": "9800808493639678110",
           "deps": [
             "npm:react",
-            "npm:styled-components",
-            "npm:@cosmjs/stargate",
-            "npm:@sei-js/core",
-            "npm:@cosmjs/amino",
-            "npm:@cosmjs/proto-signing",
-            "npm:cosmjs-types",
-            "npm:@cosmjs/encoding",
-            "npm:@cosmjs/math",
-            "npm:react-toastify",
-            "npm:react-icons",
-            "npm:react-json-view-lite",
-            "npm:react-json-view-lite/dist/index.css"
+            "npm:wagmi",
+            "npm:@tanstack/react-query",
+            "@sei-js/evm"
           ]
         },
         {
-          "file": "packages/metamask-snap/test-ui/src/types/custom.d.ts",
-          "hash": "2505826915435419372",
-          "deps": [
-            "npm:@metamask/providers"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/types/index.ts",
-          "hash": "17854620319429399444"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/types/snap.ts",
-          "hash": "15134731834186712438"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/types/styled.d.ts",
-          "hash": "12715459989312354116",
-          "deps": [
-            "npm:styled-components"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/utils/button.ts",
-          "hash": "13352583186694235063"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/utils/index.ts",
-          "hash": "11509460631358272260"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/utils/initialization.ts",
-          "hash": "2264600837612842915",
-          "deps": [
-            "npm:@metamask/providers",
-            "@sei-js/cosmjs"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/utils/localStorage.ts",
-          "hash": "18227165092003598449"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/utils/metamask.ts",
-          "hash": "14742147972388070689"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/utils/snap.ts",
-          "hash": "9788572302387679066",
-          "deps": [
-            "npm:@sei-js/core",
-            "npm:buffer"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/utils/theme.ts",
-          "hash": "6349318666569118664"
-        },
-        {
-          "file": "packages/metamask-snap/test-ui/src/vite-env.d.ts",
+          "file": "packages/cli/test/test-vite-evm-mantine/src/vite-env.d.ts",
           "hash": "12946363841406869089"
         },
         {
-          "file": "packages/metamask-snap/test-ui/tsconfig.json",
-          "hash": "12040325883005372030"
+          "file": "packages/cli/test/test-vite-evm-mantine/tsconfig.json",
+          "hash": "14032556756270793734"
         },
         {
-          "file": "packages/metamask-snap/test-ui/tsconfig.node.json",
-          "hash": "12040325883005372030"
+          "file": "packages/cli/test/test-vite-evm-mantine/tsconfig.node.json",
+          "hash": "4208030242441905014"
         },
         {
-          "file": "packages/metamask-snap/test-ui/vite.config.ts",
-          "hash": "1920456401353505654",
+          "file": "packages/cli/test/test-vite-evm-mantine/vite.config.ts",
+          "hash": "7751163001201656816",
           "deps": [
             "npm:vite",
             "npm:@vitejs/plugin-react",
-            "npm:vite-plugin-node-polyfills"
+            "npm:@esbuild-plugins/node-globals-polyfill"
           ]
         },
         {
-          "file": "packages/metamask-snap/test-ui/yarn.lock",
-          "hash": "2989265305720834725"
-        }
-      ],
-      "@sei-js/metamask-snap": [
-        {
-          "file": "packages/metamask-snap/CHANGELOG.md",
-          "hash": "1721267382703976653"
-        },
-        {
-          "file": "packages/metamask-snap/README.md",
-          "hash": "2313767540086855191"
-        },
-        {
-          "file": "packages/metamask-snap/bable.config.js",
-          "hash": "3860429126896203357"
-        },
-        {
-          "file": "packages/metamask-snap/images/icon.svg",
-          "hash": "14638442676295511792"
-        },
-        {
-          "file": "packages/metamask-snap/jest.config.js",
-          "hash": "8487951487002940767"
-        },
-        {
-          "file": "packages/metamask-snap/package.json",
-          "hash": "1487861145456002415",
-          "deps": [
-            "npm:@metamask/snaps-types",
-            "npm:@metamask/snaps-ui",
-            "npm:buffer",
-            "npm:@cosmjs/crypto",
-            "npm:@cosmjs/proto-signing",
-            "npm:@cosmjs/stargate",
-            "npm:@jest/globals",
-            "npm:@lavamoat/allow-scripts",
-            "npm:@metamask/auto-changelog",
-            "npm:@metamask/key-tree",
-            "npm:@metamask/snaps-cli",
-            "npm:@metamask/snaps-jest",
-            "npm:@metamask/utils",
-            "npm:jest",
-            "npm:prettier",
-            "npm:prettier-plugin-packagejson",
-            "npm:rimraf",
-            "npm:through2",
-            "npm:ts-jest",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/snap.config.ts",
-          "hash": "15644264458731217536",
-          "deps": [
-            "npm:path",
-            "npm:@metamask/snaps-cli"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/snap.manifest.json",
-          "hash": "6633143188044317362"
-        },
-        {
-          "file": "packages/metamask-snap/src/address.ts",
-          "hash": "10148287988663214405",
-          "deps": [
-            "npm:@cosmjs/encoding",
-            "npm:elliptic",
-            "npm:@cosmjs/crypto"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/api.ts",
-          "hash": "1575003276268342866",
-          "deps": [
-            "npm:@metamask/key-tree",
-            "npm:@metamask/snaps-types",
-            "npm:cosmjs-types",
-            "npm:long"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/bech32.ts",
-          "hash": "6108783564488578414",
-          "deps": [
-            "npm:bech32"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/hash.ts",
-          "hash": "8046867279629614337",
-          "deps": [
-            "npm:sha.js"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/index.ts",
-          "hash": "14163432267913601153"
-        },
-        {
-          "file": "packages/metamask-snap/src/serialize.ts",
-          "hash": "7095509269987805224",
-          "deps": [
-            "npm:@cosmjs/amino",
-            "npm:cosmjs-types"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/snapWallet.ts",
-          "hash": "5731762160468671695",
-          "deps": [
-            "npm:@noble/secp256k1",
-            "npm:@noble/hashes",
-            "npm:cosmjs-types",
-            "npm:@cosmjs/amino",
-            "npm:buffer"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/api.spec.ts",
-          "hash": "11022211543395736058"
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/mocks/input.mock.ts",
-          "hash": "9060408358939099653",
-          "deps": [
-            "npm:@metamask/snaps-types"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/mocks/mocks.ts",
-          "hash": "1593849281647233110"
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/mocks/output.mock.ts",
-          "hash": "15091269791145208256"
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/mocks/snap.mock.ts",
-          "hash": "2546581622722145809"
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/snapWallet.spec.ts",
-          "hash": "5528533060060452569"
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/ui.spec.ts",
-          "hash": "15881088193825827145",
-          "deps": [
-            "@sei-js/proto",
-            "npm:long"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/tests/utils.spec.ts",
-          "hash": "14788153976588832665"
-        },
-        {
-          "file": "packages/metamask-snap/src/types.ts",
-          "hash": "15041783523938935056",
-          "deps": [
-            "npm:@cosmjs/amino",
-            "@sei-js/proto",
-            "npm:@metamask/providers",
-            "npm:@metamask/snaps-ui"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/ui.ts",
-          "hash": "1786795094770415809",
-          "deps": [
-            "@sei-js/proto",
-            "npm:long",
-            "npm:@metamask/snaps-ui",
-            "npm:@cosmjs/amino",
-            "npm:cosmjs-types"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/src/utils.ts",
-          "hash": "3634616900003365308",
-          "deps": [
-            "npm:long"
-          ]
-        },
-        {
-          "file": "packages/metamask-snap/tsconfig.json",
-          "hash": "14169839991185264555"
+          "file": "packages/cli/test/test-vite-evm-mantine/yarn.lock",
+          "hash": "10518031239016409065"
         }
       ],
       "@sei-js/cosmjs": [
@@ -2967,15 +3437,15 @@
         },
         {
           "file": "packages/cosmjs/CHANGELOG.md",
-          "hash": "3293709969552461217"
+          "hash": "13131592220279253691"
         },
         {
           "file": "packages/cosmjs/README.md",
-          "hash": "2352644169798728758"
+          "hash": "12999486017477166980"
         },
         {
           "file": "packages/cosmjs/jest.config.ts",
-          "hash": "13773386777693418241"
+          "hash": "2498698932547873951"
         },
         {
           "file": "packages/cosmjs/jest.setup.ts",
@@ -2986,7 +3456,7 @@
         },
         {
           "file": "packages/cosmjs/package.json",
-          "hash": "3597942621478576898",
+          "hash": "17556231145393349491",
           "deps": [
             "npm:@cosmjs/amino",
             "npm:@cosmjs/cosmwasm-stargate",
@@ -3015,7 +3485,6 @@
             "npm:@babel/core",
             "npm:@babel/plugin-transform-runtime",
             "npm:@babel/preset-env",
-            "npm:@babel/preset-react",
             "npm:@babel/preset-typescript",
             "npm:@testing-library/jest-dom",
             "npm:@testing-library/react",
@@ -3035,7 +3504,7 @@
         },
         {
           "file": "packages/cosmjs/src/core/queryClient/__tests__/queryClient.spec.ts",
-          "hash": "8016411087549819109",
+          "hash": "14249539357548728858",
           "deps": [
             "@sei-js/proto"
           ]
@@ -3046,7 +3515,7 @@
         },
         {
           "file": "packages/cosmjs/src/core/queryClient/queryClient.ts",
-          "hash": "7040944261903826968",
+          "hash": "5076550303451678185",
           "deps": [
             "@sei-js/proto"
           ]
@@ -3069,7 +3538,7 @@
         },
         {
           "file": "packages/cosmjs/src/core/signingClient/cosmWasmClient.ts",
-          "hash": "1165184138659447701",
+          "hash": "15232572057273067831",
           "deps": [
             "npm:@cosmjs/cosmwasm-stargate",
             "npm:@cosmjs/proto-signing"
@@ -3081,7 +3550,7 @@
         },
         {
           "file": "packages/cosmjs/src/core/signingClient/stargateClient.ts",
-          "hash": "6414156438937783546",
+          "hash": "3501717010535935944",
           "deps": [
             "npm:@cosmjs/stargate",
             "npm:@cosmjs/proto-signing",
@@ -3090,11 +3559,11 @@
         },
         {
           "file": "packages/cosmjs/src/cosmoskit/assetlist.ts",
-          "hash": "9091537708521040809"
+          "hash": "15743434605583554775"
         },
         {
           "file": "packages/cosmjs/src/cosmoskit/chains.ts",
-          "hash": "11508634826308446973"
+          "hash": "16766798766138334203"
         },
         {
           "file": "packages/cosmjs/src/cosmoskit/index.ts",
@@ -3116,15 +3585,34 @@
         },
         {
           "file": "packages/cosmjs/src/index.ts",
-          "hash": "18212069376693200351"
+          "hash": "16245213482152780087"
+        },
+        {
+          "file": "packages/cosmjs/src/staking/__tests__/apr.spec.ts",
+          "hash": "10566834306322537976",
+          "deps": [
+            "npm:moment",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/staking/apr.ts",
+          "hash": "9787712477362895944",
+          "deps": [
+            "npm:moment",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/staking/index.ts",
+          "hash": "13010439508999662695"
         },
         {
           "file": "packages/cosmjs/src/utils/__tests__/address.spec.ts",
-          "hash": "16128971137190552065",
+          "hash": "14366507061349766800",
           "deps": [
             "npm:@jest/globals",
-            "npm:crypto",
-            "@sei-js/common"
+            "npm:crypto"
           ]
         },
         {
@@ -3200,11 +3688,11 @@
         },
         {
           "file": "packages/cosmjs/src/wallet/index.ts",
-          "hash": "6576321689509407584"
+          "hash": "3796318897501563879"
         },
         {
           "file": "packages/cosmjs/src/wallet/keplrVerification.ts",
-          "hash": "1256713926754002266"
+          "hash": "736839642623499235"
         },
         {
           "file": "packages/cosmjs/src/wallet/types.ts",
@@ -3228,305 +3716,7 @@
         },
         {
           "file": "packages/cosmjs/tsconfig.json",
-          "hash": "4610647157218252118"
-        }
-      ],
-      "@sei-js/common": [
-        {
-          "file": "packages/common/.babelrc.js",
-          "hash": "4638744510834633633"
-        },
-        {
-          "file": "packages/common/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "packages/common/.npmignore",
-          "hash": "17948297527781443299"
-        },
-        {
-          "file": "packages/common/CHANGELOG.md",
-          "hash": "13509243794260723812"
-        },
-        {
-          "file": "packages/common/README.md",
-          "hash": "5364003662943584172"
-        },
-        {
-          "file": "packages/common/jest.config.ts",
-          "hash": "16414517479619571110"
-        },
-        {
-          "file": "packages/common/package.json",
-          "hash": "9476211433016248588",
-          "deps": [
-            "npm:@cosmjs/encoding",
-            "npm:keccak",
-            "npm:@babel/core",
-            "npm:@babel/plugin-transform-runtime",
-            "npm:@babel/preset-env",
-            "npm:@babel/preset-typescript",
-            "npm:@types/jest",
-            "npm:jest",
-            "npm:prettier",
-            "npm:ts-jest",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "packages/common/src/index.ts",
-          "hash": "15712607641804478420"
-        },
-        {
-          "file": "packages/common/src/media/icons.ts",
-          "hash": "9790300863424653949"
-        },
-        {
-          "file": "packages/common/src/media/index.ts",
-          "hash": "11439764896261432272"
-        },
-        {
-          "file": "packages/common/src/staking/__tests__/apr.spec.ts",
-          "hash": "10566834306322537976",
-          "deps": [
-            "npm:moment",
-            "@sei-js/proto"
-          ]
-        },
-        {
-          "file": "packages/common/src/staking/apr.ts",
-          "hash": "11300504729557471401",
-          "deps": [
-            "npm:moment",
-            "@sei-js/proto"
-          ]
-        },
-        {
-          "file": "packages/common/src/staking/index.ts",
-          "hash": "13010439508999662695"
-        },
-        {
-          "file": "packages/common/tsconfig.json",
-          "hash": "8434672936855517005"
-        }
-      ],
-      "@sei-js/cli": [
-        {
-          "file": "packages/cli/.gitignore",
-          "hash": "3513492345290072647"
-        },
-        {
-          "file": "packages/cli/CHANGELOG.md",
-          "hash": "4714868311004852319"
-        },
-        {
-          "file": "packages/cli/README.md",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "packages/cli/package.json",
-          "hash": "4318246840606828997",
-          "deps": [
-            "npm:@cosmos-kit/react",
-            "@sei-js/cosmjs",
-            "npm:boxen",
-            "npm:inquirer",
-            "npm:@esbuild-plugins/node-globals-polyfill",
-            "npm:@tanstack/react-query",
-            "npm:@types/boxen",
-            "npm:@types/inquirer",
-            "npm:autoprefixer",
-            "npm:cosmos-kit",
-            "npm:degit",
-            "npm:postcss",
-            "npm:tailwindcss",
-            "npm:viem",
-            "npm:wagmi"
-          ]
-        },
-        {
-          "file": "packages/cli/src/main.ts",
-          "hash": "17327428629501239753",
-          "deps": [
-            "npm:inquirer",
-            "npm:boxen",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/frontend.ts",
-          "hash": "10934968386423337988",
-          "deps": [
-            "npm:util",
-            "npm:child_process",
-            "npm:inquirer",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/rpcIntegrations.ts",
-          "hash": "9661423763577530280",
-          "deps": [
-            "npm:inquirer",
-            "npm:child_process",
-            "npm:util",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/stylingFrameworks.ts",
-          "hash": "10309968695361964874",
-          "deps": [
-            "npm:inquirer",
-            "npm:child_process",
-            "npm:util",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/uiComponentLibraries.ts",
-          "hash": "5044201984655764154",
-          "deps": [
-            "npm:inquirer",
-            "npm:util",
-            "npm:child_process",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/walletConnectButton.ts",
-          "hash": "17509464576435051800",
-          "deps": [
-            "npm:fs",
-            "npm:path"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/components/cosmjs.tsx",
-          "hash": "7574467660244208454",
-          "deps": [
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/components/evm.tsx",
-          "hash": "18050443899707350499",
-          "deps": [
-            "npm:wagmi"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/next-app-tailwind.tsx",
-          "hash": "18057307534586363377",
-          "deps": [
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/next-app.tsx",
-          "hash": "10048315817878528428"
-        },
-        {
-          "file": "packages/cli/templates/next-main.tsx",
-          "hash": "5193888286075305665",
-          "deps": [
-            "npm:next/app"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/providers/cosmjs.tsx",
-          "hash": "8497436283241126718",
-          "deps": [
-            "@sei-js/cosmjs",
-            "npm:@cosmos-kit/react",
-            "npm:cosmos-kit",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/providers/evm.tsx",
-          "hash": "12510699700339813492",
-          "deps": [
-            "npm:react",
-            "npm:wagmi",
-            "npm:@tanstack/react-query",
-            "npm:viem",
-            "@sei-js/evm"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/styles/defaults-next.css",
-          "hash": "601473408680314598"
-        },
-        {
-          "file": "packages/cli/templates/styles/defaults-vite-css.css",
-          "hash": "2421724036607519854"
-        },
-        {
-          "file": "packages/cli/templates/styles/defaults-vite.css",
-          "hash": "17322417069250368579"
-        },
-        {
-          "file": "packages/cli/templates/styles/defaults-vite.module.sass",
-          "hash": "9799811431301101591"
-        },
-        {
-          "file": "packages/cli/templates/tailwind/config-nextjs.ts",
-          "hash": "14378259236105805895"
-        },
-        {
-          "file": "packages/cli/templates/tailwind/config-vite.ts",
-          "hash": "14819688527020775707"
-        },
-        {
-          "file": "packages/cli/templates/vite-app-css.tsx",
-          "hash": "6413704979636417625",
-          "deps": [
-            "npm:react",
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/vite-app-sass.tsx",
-          "hash": "12510059976381567296",
-          "deps": [
-            "npm:react",
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/vite-app-tailwind.tsx",
-          "hash": "10909437640869304669",
-          "deps": [
-            "npm:@interchain-ui/react/styles",
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/vite-main.tsx",
-          "hash": "16196582691728036858",
-          "deps": [
-            "npm:react",
-            "npm:react-dom"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/vite/config.ts",
-          "hash": "16713360635170731793",
-          "deps": [
-            "npm:vite",
-            "npm:@vitejs/plugin-react",
-            "npm:@esbuild-plugins/node-globals-polyfill"
-          ]
-        },
-        {
-          "file": "packages/cli/tsconfig.json",
-          "hash": "663207735085963194"
+          "hash": "4793187525180277340"
         }
       ]
     }

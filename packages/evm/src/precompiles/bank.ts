@@ -1,15 +1,140 @@
-import { ethers } from 'ethers';
+import { ethers, InterfaceAbi } from 'ethers';
+import { Abi } from 'viem';
 
 /**
+ * Represents the functions available in the Bank precompile contract,
+ * facilitating interoperability between the EVM and Cosmos.
  * @category Bank Precompile
  */
-export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001001';
+export interface BankPrecompileFunctions {
+	/**
+	 * Retrieves the balance of the specified account for the given denomination.
+	 * @param acc The account address for which to retrieve the balance.
+	 * @param denom The denomination of the balance to retrieve.
+	 * @returns A Promise resolving to an object containing the balance amount.
+	 * @category Bank Precompile
+	 */
+	balance(acc: string, denom: string): Promise<{ amount: ethers.BigNumberish }>;
+	/**
+	 * Retrieves the number of decimal places for the specified denomination.
+	 * @param denom The denomination for which to retrieve the number of decimal places.
+	 * @returns A Promise resolving to an object containing the number of decimal places.
+	 * @category Bank Precompile
+	 */
+	decimals(denom: string): Promise<{ response: ethers.BigNumberish }>;
+	/**
+	 * Retrieves the name of the specified denomination.
+	 * @param denom The denomination for which to retrieve the name.
+	 * @returns A Promise resolving to an object containing the denomination name.
+	 * @category Bank Precompile
+	 */
+	name(denom: string): Promise<{ response: string }>;
+	/**
+	 * Sends tokens from one address to another.
+	 * @param fromAddress The sender's address.
+	 * @param toAddress The recipient's address.
+	 * @param denom The denomination of the tokens to send.
+	 * @param amount The amount of tokens to send.
+	 * @returns A Promise resolving to an object indicating the success of the transaction.
+	 * @category Bank Precompile
+	 */
+	send(fromAddress: string, toAddress: string, denom: string, amount: number): Promise<{ success: boolean }>;
+	/**
+	 * Retrieves the total supply of tokens for the specified denomination.
+	 * @param denom The denomination for which to retrieve the total supply.
+	 * @returns A Promise resolving to an object containing the total supply.
+	 * @category Bank Precompile
+	 */
+	supply(denom: string): Promise<{ response: ethers.BigNumberish }>;
+	/**
+	 * Retrieves the symbol of the specified denomination.
+	 * @param denom The denomination for which to retrieve the symbol.
+	 * @returns A Promise resolving to an object containing the denomination symbol.
+	 * @category Bank Precompile
+	 */
+	symbol(denom: string): Promise<{ response: string }>;
+	/**
+	 * Sends native tokens to a specified address.
+	 * @param toNativeAddress The recipient's native address.
+	 * @param value The amount of native tokens to send.
+	 * @returns A Promise resolving to an object indicating the success of the transaction.
+	 * @category Bank Precompile
+	 */
+	sendNative(toNativeAddress: string, value: ethers.BigNumberish): Promise<{ success: boolean }>;
+}
+
+/** Represents the typed contract instance for the BANK precompile contract.
+ * @category Bank Precompile
+ * */
+export type BankPrecompileContract = ethers.Contract & BankPrecompileFunctions;
 
 /**
- * The ABI for the precompile contract.
+ * The address of the BANK precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * Wagmi
+ * ```tsx
+ * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { useReadContract } from 'wagmi';
+ *
+ * const evmAddress = '0xEVM_ADDRESS';
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, signer);
+ *
+ * const balance = await bankPrecompileContract.balance(evmAddress, 'sei');
+ * ```
+ *
+ * @example
+ * ethers v6
+ * ```tsx
+ * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum);
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, signer);
+ *
+ * const balance = await bankPrecompileContract.balance(accounts[0], 'sei');
+ * ```
  * @category Bank Precompile
  */
-export const BANK_PRECOMPILE_ABI = [
+export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001001';
+
+/**
+ * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * Wagmi
+ * ```tsx
+ * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { useReadContract } from 'wagmi';
+ *
+ * const evmAddress = '0xEVM_ADDRESS';
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, signer);
+ *
+ * const balance = await bankPrecompileContract.balance(evmAddress, 'sei');
+ * ```
+ *
+ * @example
+ * ethers v6
+ * ```tsx
+ * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum);
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, signer);
+ *
+ * const balance = await bankPrecompileContract.balance(accounts[0], 'sei');
+ * ```
+ * @category Bank Precompile
+ */
+export const BANK_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [
 			{ internalType: 'address', name: 'acc', type: 'address' },
@@ -67,14 +192,30 @@ export const BANK_PRECOMPILE_ABI = [
 		stateMutability: 'payable',
 		type: 'function'
 	}
-];
+] as const;
 
 /**
+ * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * ```tsx
+ * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum);
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, signer);
+ *
+ * const balance = await bankPrecompileContract.balance(accounts[0], 'sei');
+ * ```
  * @param precompileAddress The 0X address of the precompile contract.
  * @param signer The 'ethers' signer to be used with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Bank Precompile
  */
-export const getBankPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer) => {
-	return new ethers.Contract(precompileAddress, BANK_PRECOMPILE_ABI, signer);
+export const getBankPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer): BankPrecompileContract => {
+	return new ethers.Contract(precompileAddress, BANK_PRECOMPILE_ABI as InterfaceAbi) as BankPrecompileContract;
 };

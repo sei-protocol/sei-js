@@ -1,23 +1,98 @@
-import { ethers } from 'ethers';
-import { getContract, GetContractReturnType } from 'viem';
+import { ethers, InterfaceAbi } from 'ethers';
+import { type Abi } from 'viem';
 
-interface AddressPrecompileFunctions {
+/**
+ * Represents the functions available in the Address precompile contract,
+ * facilitating interoperability between the EVM and Cosmos.
+ * @category Address Precompile
+ */
+export interface AddressPrecompileFunctions {
+	/**
+	 * Retrieves the associated EVM address for a given Cosmos address.
+	 * @param addr The Cosmos address for which to retrieve the associated EVM address.
+	 * @returns A Promise resolving to an object containing the associated EVM address.
+	 * @category Address Precompile
+	 */
 	getEvmAddr(addr: string): Promise<{ response: string }>;
+	/**
+	 * Retrieves the associated Cosmos address for a given EVM address.
+	 * @param addr The EVM address for which to retrieve the associated Cosmos address.
+	 * @returns A Promise resolving to an object containing the associated Cosmos address.
+	 * @category Address Precompile
+	 */
 	getSeiAddr(addr: string): Promise<{ response: string }>;
 }
 
-type AddressPrecompileContract = ethers.Contract & AddressPrecompileFunctions;
+/** Represents the typed contract instance for the ADDRESS precompile contract.
+ * @category Address Precompile
+ * */
+export type AddressPrecompileContract = ethers.Contract & AddressPrecompileFunctions;
 
 /**
+ * The address of the Address precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ * It can be used to get the associated EVM address for a given Cosmos address and vice versa.
+ *
+ * @example
+ * Wagmi
+ * ```tsx
+ * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { useReadContract } from 'wagmi';
+ *
+ * const evmAddress = '0xEVM_ADDRESS';
+ * const associatedSeiAddress = useReadContract({ abi: ADDRESS_PRECOMPILE_ABI, address: ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, functionName: 'getSeiAddr', args: [evmAddress] });
+ * ```
+ *
+ * @example
+ * ethers v6
+ * ```tsx
+ * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum);
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, signer);
+ *
+ * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
+ * ```
  * @category Address Precompile
  */
-export const ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS = '0x0000000000000000000000000000000000001004';
+export const ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001004';
 
 /**
- * The ABI for the precompile contract.
+ * The ABI for the precompile contract which can be used for interoperability between the EVM and Cosmos.
+ * It can be used to get the associated EVM address for a given Cosmos address and vice versa.
+ *
+ * @example
+ * Wagmi
+ * ```tsx
+ * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { useReadContract } from 'wagmi';
+ *
+ * const evmAddress = '0xEVM_ADDRESS';
+ * const associatedSeiAddress = useReadContract({ abi: ADDRESS_PRECOMPILE_ABI, address: ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, functionName: 'getSeiAddr', args: [evmAddress] });
+ * ```
+ *
+ * @example
+ * ethers v6
+ * ```tsx
+ * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum);
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, signer);
+ *
+ * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
+ * ```
  * @category Address Precompile
  */
-export const ADDRESS_PRECOMPILE_ABI = [
+export const ADDRESS_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [{ internalType: 'string', name: 'addr', type: 'string' }],
 		name: 'getEvmAddr',
@@ -35,33 +110,28 @@ export const ADDRESS_PRECOMPILE_ABI = [
 ];
 
 /**
- * Creates and returns an `AddressPrecompileContract` instance with the provided signer.
+ * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
+ * It can be used to get the associated EVM address for a given Cosmos address and vice versa.
+ *
+ * @example
+ * ```tsx
+ * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum);
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, signer);
+ *
+ * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
+ * ```
  * @param precompileAddress The 0X address of the precompile contract.
  * @param signer The ethersJS signer to be used with the contract.
  * @returns The typed contract instance allowing interaction with the ADDRESS precompile contract.
  * @category Address Precompile
  */
 export function getAddressPrecompileEthersV6Contract(precompileAddress: `0x${string}`, signer: ethers.Signer): AddressPrecompileContract {
-	return new ethers.Contract(precompileAddress, ADDRESS_PRECOMPILE_ABI, signer) as AddressPrecompileContract;
+	return new ethers.Contract(precompileAddress, ADDRESS_PRECOMPILE_ABI as InterfaceAbi, signer) as AddressPrecompileContract;
 }
-
-/**
- * Creates and returns a Viem contract instance with the default public and wallet signing.
- * @param address The 0X address of the precompile contract.
- * @param viemPublicClient The Viem public client instance.
- * @param viemWalletClient The Viem wallet client instance.
- * @returns The typed contract instance allowing interaction with the precompile contract.
- * @category Address Precompile
- */
-export const getAddressPrecompileViemContract = (address: `0x${string}`, viemPublicClient: any, viemWalletClient: any): GetContractReturnType<any, any, any> => {
-	const contractParams = {
-		address,
-		abi: ADDRESS_PRECOMPILE_ABI,
-		client: {
-			public: viemPublicClient,
-			wallet: viemWalletClient
-		}
-	};
-
-	return getContract(contractParams);
-};

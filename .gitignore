@@ -5,6 +5,8 @@ packages/react/coverage
 packages/proto/coverage
 packages/core/coverage
 
+.nx
+
 # compiled output
 dist
 tmp

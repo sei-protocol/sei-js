@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/common",
-  "version": "0.0.0-internal-evm-20240311151206",
+  "version": "0.0.0-internal-evm-20240315030508",
   "description": "TypeScript library for common interactions with the Sei blockchain",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

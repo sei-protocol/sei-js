@@ -4,7 +4,7 @@ import { bytesToHex } from '@noble/hashes/utils';
 const ADDRESS_LENGTH = 40;
 const INVALID_CHARACTERS = /([^0-9a-fA-F])/;
 
-const stripHexPrefix = (input: string) => {
+const stripHexPrefix = (input: `0x${string}`) => {
 	return input.slice(0, 2) === '0x' ? input.slice(2) : input;
 };
 
@@ -24,11 +24,11 @@ const validateChecksum = (checksum: string) => {
 /**
  * Takes a lowercase EVM address and returns the checksummed EVM address.
  * Checksummed addresses are used to verify that the address is valid.
- * @param inputAddress The address to checksum
+ * @param inputAddress The 0x address to checksum
  * @returns A checksummed version of the address.
  * @category Utils
  */
-export const toChecksumAddress = (inputAddress: string): string => {
+export const toChecksumAddress = (inputAddress: `0x${string}`): string => {
 	const address = stripHexPrefix(inputAddress).toLowerCase();
 	// Hash the address and convert the hash to a hex string
 	const hashHex = bytesToHex(keccak_256(new TextEncoder().encode(address)));
@@ -48,13 +48,12 @@ export const toChecksumAddress = (inputAddress: string): string => {
 };
 
 /**
- * Takes a lowercase EVM address and returns the checksummed EVM address.
- * Checksummed addresses are used to verify that the address is valid.
- * @param address The address to validate
+ * Validates an EVM address by checking its length, character set, and checksum.
+ * @param address The 0x address to validate
  * @returns A boolean indicating if the input EVM address is valid.
  * @category Utils
  */
-export const isValidEVMAddress = (address: string) => {
+export const isValidEVMAddress = (address: `0x${string}`) => {
 	let standardizedAddress = stripHexPrefix(address);
 
 	if (!validateCharacterSet(standardizedAddress)) return false;

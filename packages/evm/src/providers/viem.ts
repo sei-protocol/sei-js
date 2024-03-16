@@ -1,5 +1,5 @@
-import { Chain, createPublicClient, createWalletClient, http } from 'viem';
-import { ARCTIC_1_DEFAULT_EVM_RPC, ARCTIC_1_EVM_CHAIN_ID } from '../chainInfo/chainInfo';
+import { Chain, createPublicClient, createWalletClient, http, PublicClient, WalletClient } from 'viem';
+import { ARCTIC_1_DEFAULT_EVM_RPC, ARCTIC_1_EVM_CHAIN_ID } from '../chainInfo';
 import {
 	ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS,
 	ARCTIC_1_BANK_PRECOMPILE_ADDRESS,
@@ -12,7 +12,25 @@ import {
 
 /**
  * Creates and returns a Viem Chain with the default arctic-1 configs and precompile contracts added.
- * @returns Viem Chain.
+ * @example
+ * Use with Wagmi in a React app:
+ * ```tsx
+ * import { ReactNode } from 'react';
+ * import { WagmiProvider } from 'wagmi';
+ * import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+ * import { ARCTIC_1_EVM_VIEM_CHAIN, createWagmiConfig } from '@sei-js/evm';
+ *
+ * const queryClient = new QueryClient();
+ *
+ * export const WalletProvider = ({ children }: { children: ReactNode }) => {
+ *  return (
+ *    <WagmiProvider config={createWagmiConfig(ARCTIC_1_EVM_VIEM_CHAIN)}>
+ *      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+ *    </WagmiProvider>
+ *  );
+ * };
+ * ```
+ * @returns A 'viem' package chain compatible with Wagmi and Viem.
  * @category Viem
  */
 export const ARCTIC_1_EVM_VIEM_CHAIN: Chain = {
@@ -50,14 +68,16 @@ export const ARCTIC_1_EVM_VIEM_CHAIN: Chain = {
 
 /**
  * Creates and returns a Viem public client instance with the default arctic-1 chain and http transport.
- * @returns Viem public client.
+ * @param viemChain - A viem chain instance to create the public client with.
+ * @returns PublicClient from 'viem'.
  * @category Viem
  */
-export const ARCTIC_1_VIEM_PUBLIC_CLIENT = createPublicClient({ chain: ARCTIC_1_EVM_VIEM_CHAIN, transport: http() });
+export const createViemPublicClient = (viemChain: Chain): PublicClient => createPublicClient({ chain: viemChain, transport: http() });
 
 /**
  * Creates and returns a Viem wallet client instance with the default arctic-1 chain and http transport.
- * @returns Viem wallet client.
+ * @param viemChain - A viem chain instance to create the wallet client with.
+ * @returns WalletClient from 'viem'.
  * @category Viem
  */
-export const ARCTIC_1_VIEM_WALLET_CLIENT = createWalletClient({ chain: ARCTIC_1_EVM_VIEM_CHAIN, transport: http() });
+export const createViemWalletClient = (viemChain: Chain): WalletClient => createWalletClient({ chain: viemChain, transport: http() });

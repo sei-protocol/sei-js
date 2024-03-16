@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { AppProps } from 'next/app';
 import { WalletProvider } from '../src/providers/WalletProvider';
 

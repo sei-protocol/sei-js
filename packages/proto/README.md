@@ -8,11 +8,4 @@ TypeScript library for Sei protobufs generated using Telescope
 npm install @sei-js/evm
 ```
 
-## Usage
-Using types from @sei-js/proto
-
-```tsx
-import { seiprotocol } from "@sei-js/proto";
-```
-
 This project was generated using Telescope. For more information, please refer to the [Telescope Documentation](https://github.com/osmosis-labs/telescope).

@@ -102,7 +102,7 @@ async function runWizard(): Promise<string> {
 	const { evmLibrary } = await promptEVMLibrary(rpcIntegrationType);
 	const { stylingFramework } = await promptStylingFramework();
 
-	await setupFrontend(dAppName, frontendScaffolding, stylingFramework);
+	await setupFrontend(dAppName, frontendScaffolding, stylingFramework, rpcIntegrationType);
 	await setupRpcIntegrations(dAppName, rpcIntegrationType, frontendScaffolding, evmLibrary);
 	await setupStylingFrameworks(dAppName, stylingFramework, frontendScaffolding);
 	await setupWalletConnectButton(dAppName, rpcIntegrationType);

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useChain } from '@cosmos-kit/react';
 
 import { WalletConnectButton } from '../src/components/WalletConnectButton';

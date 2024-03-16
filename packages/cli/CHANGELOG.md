@@ -1,5 +1,21 @@
 # @sei-js/cli
 
+## 0.0.0-internal-evm-20240315030508
+
+### Patch Changes
+
+- Fixed EVM exports
+- Updated dependencies
+  - @sei-js/cosmjs@0.0.0-internal-evm-20240315030508
+
+## 0.0.0-internal-evm-20240315022114
+
+### Patch Changes
+
+- Tested CLI with cosmjs and all options, improved documentation and structure
+- Updated dependencies
+  - @sei-js/cosmjs@0.0.0-internal-evm-20240315022114
+
 ## 0.0.0-internal-evm-20240311234659
 
 ### Patch Changes

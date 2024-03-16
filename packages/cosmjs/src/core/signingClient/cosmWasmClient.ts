@@ -6,7 +6,7 @@ import { createSeiAminoTypes, createSeiRegistry } from './stargateClient';
  * Returns a interface used to interact with the Sei chain.
  * @param rpcEndpoint The url of the RPC Endpoint used to connect to the Sei chain.
  * @returns A CosmWasmClient used to interact with the Sei chain.
- * @category Clients
+ * @category CosmWasmClient
  */
 export const getCosmWasmClient = async (rpcEndpoint: string): Promise<CosmWasmClient> => {
 	return CosmWasmClient.connect(rpcEndpoint);
@@ -18,7 +18,7 @@ export const getCosmWasmClient = async (rpcEndpoint: string): Promise<CosmWasmCl
  * @param signer An OfflineAminoSigner or OfflineDirectSigner from @cosmjs/amino containing info about the signer.
  * @param options A SigningCosmWasmClientOptions object from @cosmjs/cosmwasm-stargate containing options to configure the signing client.
  * @returns A client that can be used to sign CosmWasm transactions on the Sei chain.
- * @category Clients
+ * @category CosmWasmClient
  */
 export const getSigningCosmWasmClient = async (
 	rpcEndpoint: string,

@@ -13,8 +13,13 @@ export enum FrontendScaffolding {
 
 export enum StylingFramework {
 	TailwindCSS = 'Tailwind CSS',
-	SASSModules = 'SASS Modules',
-	None = 'None'
+	Mantine = 'Mantine',
+	CSS = 'CSS'
+}
+
+export enum RPCIntegrationType {
+	EVM = 'EVM',
+	CosmJS = 'CosmJS'
 }
 
 export const promptFrontend = async () => {
@@ -36,13 +41,17 @@ const setupViteConfig = async (dAppName: string) => {
 	console.log('vite.config.ts copied to project successfully.');
 };
 
-const writeMainFile = async (dAppName: string, frontendScaffolding: FrontendScaffolding) => {
+const writeMainFile = async (dAppName: string, frontendScaffolding: FrontendScaffolding, stylingFramework: StylingFramework) => {
 	let templatePath: string;
 	let destinationPath: string;
 
 	switch (frontendScaffolding) {
 		case FrontendScaffolding.Vite:
-			templatePath = path.join('templates', 'vite-main.tsx');
+			if (stylingFramework === StylingFramework.Mantine) {
+				templatePath = path.join('templates', 'vite-main-mantine.tsx');
+			} else {
+				templatePath = path.join('templates', 'vite-main.tsx');
+			}
 			destinationPath = path.join(dAppName, 'src', 'main.tsx');
 			break;
 		case FrontendScaffolding.NextJs:
@@ -64,22 +73,40 @@ const writeMainFile = async (dAppName: string, frontendScaffolding: FrontendScaf
 	}
 };
 
-const setupAppFile = async (dAppName: string, frontendScaffolding: FrontendScaffolding, stylingFramework: StylingFramework) => {
+const setupAppFile = async (
+	dAppName: string,
+	frontendScaffolding: FrontendScaffolding,
+	stylingFramework: StylingFramework,
+	rpcIntegrationType: RPCIntegrationType
+) => {
 	let destinationPath: string;
 	let templatePath: string;
 
 	switch (frontendScaffolding) {
 		case FrontendScaffolding.Vite:
 			destinationPath = path.join(dAppName, 'src', 'App.tsx');
+
 			switch (stylingFramework) {
 				case StylingFramework.TailwindCSS:
-					templatePath = path.join('templates', 'vite-app-tailwind.tsx');
+					if (rpcIntegrationType === RPCIntegrationType.EVM) {
+						templatePath = path.join('templates', 'vite-app-evm-tailwind.tsx');
+					} else {
+						templatePath = path.join('templates', 'vite-app-cosmjs-tailwind.tsx');
+					}
 					break;
-				case StylingFramework.SASSModules:
-					templatePath = path.join('templates', 'vite-app-sass.tsx');
+				case StylingFramework.Mantine:
+					if (rpcIntegrationType === RPCIntegrationType.EVM) {
+						templatePath = path.join('templates', 'vite-app-evm-mantine.tsx');
+					} else {
+						templatePath = path.join('templates', 'vite-app-cosmjs-mantine.tsx');
+					}
 					break;
-				case StylingFramework.None:
-					templatePath = path.join('templates', 'vite-app.tsx');
+				case StylingFramework.CSS:
+					if (rpcIntegrationType === RPCIntegrationType.EVM) {
+						templatePath = path.join('templates', 'vite-app-evm-css.tsx');
+					} else {
+						templatePath = path.join('templates', 'vite-app-cosmjs-css.tsx');
+					}
 					break;
 			}
 			break;
@@ -92,10 +119,10 @@ const setupAppFile = async (dAppName: string, frontendScaffolding: FrontendScaff
 				case StylingFramework.TailwindCSS:
 					templatePath = path.join('templates', 'next-app-tailwind.tsx');
 					break;
-				case StylingFramework.SASSModules:
-					templatePath = path.join('templates', 'next-app-sass.tsx');
+				case StylingFramework.Mantine:
+					templatePath = path.join('templates', 'next-app-mantine.tsx');
 					break;
-				case StylingFramework.None:
+				case StylingFramework.CSS:
 					templatePath = path.join('templates', 'next-app.tsx');
 					break;
 			}
@@ -118,21 +145,17 @@ const setupGlobalStyles = async (dAppName: string, frontendScaffolding: Frontend
 				case StylingFramework.TailwindCSS:
 					templatePath = path.join('templates', 'styles', 'defaults-vite.css');
 					break;
-				case StylingFramework.SASSModules:
-					templatePath = path.join('templates', 'styles', 'defaults-vite.css');
-					const sassTemplatePath = path.join('templates', 'styles', 'defaults-vite.module.sass');
-					const sassDestinationPath = path.join(dAppName, 'src', 'App.module.sass');
-					fs.copyFileSync(sassTemplatePath, sassDestinationPath);
+				case StylingFramework.Mantine:
+					templatePath = path.join('templates', 'styles', 'defaults-mantine.css');
 					break;
-				case StylingFramework.None:
+				case StylingFramework.CSS:
 					templatePath = path.join('templates', 'styles', 'defaults-vite-css.css');
 					break;
 			}
 			break;
 		case FrontendScaffolding.NextJs:
-			destinationPath = path.join(dAppName, 'styles', 'global.css');
 			templatePath = path.join('templates', 'styles', 'defaults-next.css');
-
+			destinationPath = path.join(dAppName, 'styles', 'global.css');
 			break;
 	}
 
@@ -140,7 +163,12 @@ const setupGlobalStyles = async (dAppName: string, frontendScaffolding: Frontend
 	console.log('Global styles copied to project successfully.');
 };
 
-export const setupFrontend = async (dAppName: string, selectedFramework: FrontendScaffolding, stylingFramework: StylingFramework) => {
+export const setupFrontend = async (
+	dAppName: string,
+	selectedFramework: FrontendScaffolding,
+	stylingFramework: StylingFramework,
+	rpcIntegrationType: RPCIntegrationType
+) => {
 	switch (selectedFramework) {
 		case FrontendScaffolding.Vite:
 			console.log('Creating Vite project...');
@@ -162,8 +190,8 @@ export const setupFrontend = async (dAppName: string, selectedFramework: Fronten
 			}
 	}
 
-	await writeMainFile(dAppName, selectedFramework);
-	await setupAppFile(dAppName, selectedFramework, stylingFramework);
+	await writeMainFile(dAppName, selectedFramework, stylingFramework);
+	await setupAppFile(dAppName, selectedFramework, stylingFramework, rpcIntegrationType);
 	await setupViteConfig(dAppName);
 	await setupGlobalStyles(dAppName, selectedFramework, stylingFramework);
 

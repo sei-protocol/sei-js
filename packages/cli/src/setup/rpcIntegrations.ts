@@ -53,7 +53,7 @@ export const promptEVMLibrary = async (rpcIntegrationType: RPCIntegrationType): 
 const setupEvmLibrary = async (dAppName: string, evmLibrary: EVMLibrary) => {
 	switch (evmLibrary) {
 		case EVMLibrary.Wagmi:
-			await exec(`yarn add wagmi viem@2.x @tanstack/react-query @interchain-ui/react`, {
+			await exec(`yarn add wagmi viem@2.x @tanstack/react-query`, {
 				cwd: `./${dAppName}`
 			});
 			console.log('Wagmi library installed successfully.');
@@ -102,7 +102,9 @@ export const setupRpcIntegrations = async (
 			if (!evmLibrary) {
 				throw new Error('EVM library is required for EVM integration!');
 			}
-
+			await exec(`yarn add @sei-js/evm@0.0.0-internal-evm-20240315030636`, {
+				cwd: `./${dAppName}`
+			});
 			await setupEvmLibrary(dAppName, evmLibrary);
 			return;
 	}

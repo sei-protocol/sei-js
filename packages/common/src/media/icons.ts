@@ -1,9 +1,11 @@
 /**
+ * A hosted URL of the sei logo in PNG format.
  * @category Media
  */
-export const seiLogoPNGUrl = 'https://raw.githubusercontent.com/cosmos/chain-registry/master/sei/images/sei.png';
+export const seiLogoPNGUrl: string = 'https://raw.githubusercontent.com/cosmos/chain-registry/master/sei/images/sei.png';
 
 /**
+ * A hosted URL of the sei logo in SVG format.
  * @category Media
  */
-export const seiLogoSVGUrl = 'https://raw.githubusercontent.com/cosmos/chain-registry/master/sei/images/sei.svg';
+export const seiLogoSVGUrl: string = 'https://raw.githubusercontent.com/cosmos/chain-registry/master/sei/images/sei.svg';

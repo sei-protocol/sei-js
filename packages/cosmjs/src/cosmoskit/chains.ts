@@ -1,4 +1,5 @@
 /**
+ * A pre-configured chain object for Sei for use with Cosmos Kit.
  * @category Cosmos Kit
  */
 export const SEI_BASE_COSMOS_KIT_CHAIN = {
@@ -54,6 +55,7 @@ export const SEI_BASE_COSMOS_KIT_CHAIN = {
 };
 
 /**
+ * A pre-configured chain object for the pacific-1 network on Sei, for use with Cosmos Kit.
  * @category Cosmos Kit
  */
 export const PACIFIC_1_SEI_COSMOS_KIT_CHAIN = {
@@ -91,6 +93,7 @@ export const PACIFIC_1_SEI_COSMOS_KIT_CHAIN = {
 };
 
 /**
+ * A pre-configured chain object for the atlantic-2 network on Sei, for use with Cosmos Kit.
  * @category Cosmos Kit
  */
 export const ATLANTIC_2_SEI_COSMOS_KIT_CHAIN = {
@@ -116,6 +119,7 @@ export const ATLANTIC_2_SEI_COSMOS_KIT_CHAIN = {
 };
 
 /**
+ * A pre-configured chain object for the arctic-1 network on Sei, for use with Cosmos Kit.
  * @category Cosmos Kit
  */
 export const ARCTIC_1_SEI_COSMOS_KIT_CHAIN = {

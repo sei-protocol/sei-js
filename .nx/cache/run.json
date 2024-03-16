@@ -1,8 +1,8 @@
 {
   "run": {
     "command": "nx run-many --target=build -p common evm cosmjs",
-    "startTime": "2024-03-13T18:25:15.006Z",
-    "endTime": "2024-03-13T18:25:15.011Z",
+    "startTime": "2024-03-16T22:25:38.356Z",
+    "endTime": "2024-03-16T22:25:38.359Z",
     "inner": false
   },
   "tasks": []

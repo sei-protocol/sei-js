@@ -1,7 +1,8 @@
-import { ARCTIC_1_SEI_COSMOS_KIT_CHAIN, COSMOS_KIT_ASSET_LIST } from '@sei-js/cosmjs';
+// @ts-nocheck
 import { ChainProvider } from '@cosmos-kit/react';
 import { wallets } from 'cosmos-kit';
 import { ReactNode } from 'react';
+import { ARCTIC_1_SEI_COSMOS_KIT_CHAIN, COSMOS_KIT_ASSET_LIST } from '@sei-js/cosmjs';
 
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
 	return (

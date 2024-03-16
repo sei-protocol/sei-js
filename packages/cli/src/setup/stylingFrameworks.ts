@@ -9,8 +9,8 @@ const exec = promisify(execCallback);
 
 export enum StylingFramework {
 	TailwindCSS = 'Tailwind CSS',
-	SASSModules = 'SASS Modules',
-	None = 'None'
+	Mantine = 'Mantine',
+	CSS = 'CSS'
 }
 
 export const promptStylingFramework = async () => {
@@ -19,7 +19,7 @@ export const promptStylingFramework = async () => {
 			type: 'list',
 			name: 'stylingFramework',
 			message: 'Do you want any pre-installed styling framework?',
-			choices: [StylingFramework.None, StylingFramework.TailwindCSS, StylingFramework.SASSModules]
+			choices: [StylingFramework.Mantine, StylingFramework.TailwindCSS, StylingFramework.CSS]
 		}
 	]);
 };
@@ -39,17 +39,21 @@ const addTailwindDirectivesToAppCSS = async (dAppName: string, frontendScaffoldi
 	const tailwindDirectives = `@tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-#root {
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0;
-  text-align: center;
-}`;
+`;
 
 	try {
-		fs.writeFileSync(appCssPath, tailwindDirectives);
+		// Read existing content
+		let existingContent = '';
+		if (fs.existsSync(appCssPath)) {
+			existingContent = fs.readFileSync(appCssPath, 'utf8');
+		}
+
+		// Concatenate Tailwind directives with existing content
+		const newContent = tailwindDirectives + existingContent;
+
+		// Write new content back to the file
+		fs.writeFileSync(appCssPath, newContent);
+
 		console.log('Tailwind directives added to global css file.');
 	} catch (error) {
 		console.error('Failed to add Tailwind directives to global css file:', error);
@@ -83,10 +87,11 @@ export const setupStylingFrameworks = async (dAppName: string, selectedFramework
 			await addTailwindDirectivesToAppCSS(dAppName, frontendScaffolding);
 			await addTailwindConfig(dAppName, frontendScaffolding);
 			return;
-		case StylingFramework.SASSModules:
-			await exec(`yarn add -D sass`, { cwd: `./${dAppName}` });
+		case StylingFramework.Mantine:
+			await exec(`yarn add @mantine/core @mantine/hooks`, { cwd: `./${dAppName}` });
+			await exec(`yarn add --dev postcss postcss-preset-mantine postcss-simple-vars`, { cwd: `./${dAppName}` });
 			return;
-		case StylingFramework.None:
+		case StylingFramework.CSS:
 			return;
 	}
 };

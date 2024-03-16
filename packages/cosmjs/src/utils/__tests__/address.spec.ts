@@ -1,7 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { getAddressHashFromPubKey, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
+import { getAddressHashFromPubKey, isValidSeiCosmosAddress, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
 import { randomBytes } from 'crypto';
-import { isValidSeiCosmosAddress } from '@sei-js/common';
 import { truncateCosmosAddress } from '../address';
 
 describe('truncateAddress', () => {
