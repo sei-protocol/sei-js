@@ -1,4 +1,4 @@
-import { Params, ParamsAmino, ParamsSDKType } from './params';
+import { Params, ParamsAmino, ParamsSDKType, Metadata, MetadataAmino, MetadataSDKType } from '../cosmos/bank/v1beta1/bank';
 import { DenomAuthorityMetadata, DenomAuthorityMetadataAmino, DenomAuthorityMetadataSDKType } from './authorityMetadata';
 import { BinaryReader, BinaryWriter } from '../binary';
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
@@ -152,6 +152,59 @@ export interface QueryDenomsFromCreatorResponseAminoMsg {
  */
 export interface QueryDenomsFromCreatorResponseSDKType {
 	denoms: string[];
+}
+/** QueryDenomMetadataRequest is the request type for the DenomMetadata gRPC method. */
+export interface QueryDenomMetadataRequest {
+	/** denom is the coin denom to query the metadata for. */
+	denom: string;
+}
+export interface QueryDenomMetadataRequestProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest';
+	value: Uint8Array;
+}
+/** QueryDenomMetadataRequest is the request type for the DenomMetadata gRPC method. */
+export interface QueryDenomMetadataRequestAmino {
+	/** denom is the coin denom to query the metadata for. */
+	denom?: string;
+}
+export interface QueryDenomMetadataRequestAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest';
+	value: QueryDenomMetadataRequestAmino;
+}
+/** QueryDenomMetadataRequest is the request type for the DenomMetadata gRPC method. */
+export interface QueryDenomMetadataRequestSDKType {
+	denom: string;
+}
+/**
+ * QueryDenomMetadataResponse is the response type for the Query/DenomMetadata gRPC
+ * method.
+ */
+export interface QueryDenomMetadataResponse {
+	/** metadata describes and provides all the client information for the requested token. */
+	metadata: Metadata | undefined;
+}
+export interface QueryDenomMetadataResponseProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse';
+	value: Uint8Array;
+}
+/**
+ * QueryDenomMetadataResponse is the response type for the Query/DenomMetadata gRPC
+ * method.
+ */
+export interface QueryDenomMetadataResponseAmino {
+	/** metadata describes and provides all the client information for the requested token. */
+	metadata?: MetadataAmino | undefined;
+}
+export interface QueryDenomMetadataResponseAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse';
+	value: QueryDenomMetadataResponseAmino;
+}
+/**
+ * QueryDenomMetadataResponse is the response type for the Query/DenomMetadata gRPC
+ * method.
+ */
+export interface QueryDenomMetadataResponseSDKType {
+	metadata: MetadataSDKType | undefined;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
 	return {};
@@ -518,6 +571,132 @@ export const QueryDenomsFromCreatorResponse = {
 		return {
 			typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse',
 			value: QueryDenomsFromCreatorResponse.encode(message).finish()
+		};
+	}
+};
+function createBaseQueryDenomMetadataRequest(): QueryDenomMetadataRequest {
+	return {
+		denom: ''
+	};
+}
+export const QueryDenomMetadataRequest = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest',
+	encode(message: QueryDenomMetadataRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		if (message.denom !== '') {
+			writer.uint32(10).string(message.denom);
+		}
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomMetadataRequest {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomMetadataRequest();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					message.denom = reader.string();
+					break;
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(object: Partial<QueryDenomMetadataRequest>): QueryDenomMetadataRequest {
+		const message = createBaseQueryDenomMetadataRequest();
+		message.denom = object.denom ?? '';
+		return message;
+	},
+	fromAmino(object: QueryDenomMetadataRequestAmino): QueryDenomMetadataRequest {
+		const message = createBaseQueryDenomMetadataRequest();
+		if (object.denom !== undefined && object.denom !== null) {
+			message.denom = object.denom;
+		}
+		return message;
+	},
+	toAmino(message: QueryDenomMetadataRequest): QueryDenomMetadataRequestAmino {
+		const obj: any = {};
+		obj.denom = message.denom;
+		return obj;
+	},
+	fromAminoMsg(object: QueryDenomMetadataRequestAminoMsg): QueryDenomMetadataRequest {
+		return QueryDenomMetadataRequest.fromAmino(object.value);
+	},
+	fromProtoMsg(message: QueryDenomMetadataRequestProtoMsg): QueryDenomMetadataRequest {
+		return QueryDenomMetadataRequest.decode(message.value);
+	},
+	toProto(message: QueryDenomMetadataRequest): Uint8Array {
+		return QueryDenomMetadataRequest.encode(message).finish();
+	},
+	toProtoMsg(message: QueryDenomMetadataRequest): QueryDenomMetadataRequestProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest',
+			value: QueryDenomMetadataRequest.encode(message).finish()
+		};
+	}
+};
+function createBaseQueryDenomMetadataResponse(): QueryDenomMetadataResponse {
+	return {
+		metadata: Metadata.fromPartial({})
+	};
+}
+export const QueryDenomMetadataResponse = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse',
+	encode(message: QueryDenomMetadataResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		if (message.metadata !== undefined) {
+			Metadata.encode(message.metadata, writer.uint32(10).fork()).ldelim();
+		}
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomMetadataResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomMetadataResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					message.metadata = Metadata.decode(reader, reader.uint32());
+					break;
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(object: Partial<QueryDenomMetadataResponse>): QueryDenomMetadataResponse {
+		const message = createBaseQueryDenomMetadataResponse();
+		message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
+		return message;
+	},
+	fromAmino(object: QueryDenomMetadataResponseAmino): QueryDenomMetadataResponse {
+		const message = createBaseQueryDenomMetadataResponse();
+		if (object.metadata !== undefined && object.metadata !== null) {
+			message.metadata = Metadata.fromAmino(object.metadata);
+		}
+		return message;
+	},
+	toAmino(message: QueryDenomMetadataResponse): QueryDenomMetadataResponseAmino {
+		const obj: any = {};
+		obj.metadata = message.metadata ? Metadata.toAmino(message.metadata) : undefined;
+		return obj;
+	},
+	fromAminoMsg(object: QueryDenomMetadataResponseAminoMsg): QueryDenomMetadataResponse {
+		return QueryDenomMetadataResponse.fromAmino(object.value);
+	},
+	fromProtoMsg(message: QueryDenomMetadataResponseProtoMsg): QueryDenomMetadataResponse {
+		return QueryDenomMetadataResponse.decode(message.value);
+	},
+	toProto(message: QueryDenomMetadataResponse): Uint8Array {
+		return QueryDenomMetadataResponse.encode(message).finish();
+	},
+	toProtoMsg(message: QueryDenomMetadataResponse): QueryDenomMetadataResponseProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse',
+			value: QueryDenomMetadataResponse.encode(message).finish()
 		};
 	}
 };
