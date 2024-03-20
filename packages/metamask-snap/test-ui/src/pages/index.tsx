@@ -4,7 +4,7 @@ import { MetamaskActions, MetaMaskContext } from '../hooks';
 import { connectSnap, getMetaMaskSnapSeiWallet, getSnap, isLocalSnap, shouldDisplayReconnectButton } from '../utils';
 import { Card, ConnectButton, InstallFlaskButton, ReconnectButton } from '../components';
 import { calculateFee, Coin, DeliverTxResponse, StdFee } from '@cosmjs/stargate';
-import { COMPASS_WALLET, createSeiAminoTypes, createSeiRegistry, getSigningClient, getStargateClient } from '@sei-js/core';
+import { createSeiAminoTypes, createSeiRegistry, getSigningStargateClient, getStargateClient } from '@sei-js/core';
 import { makeSignDoc, decodeSignature, encodeSecp256k1Pubkey } from '@cosmjs/amino';
 import { encodePubkey, makeAuthInfoBytes, TxBodyEncodeObject } from '@cosmjs/proto-signing';
 import { SignMode } from 'cosmjs-types/cosmos/tx/signing/v1beta1/signing';
@@ -199,7 +199,7 @@ const Index = () => {
 			if (isSendingDirect) return;
 			setIsSendingDirect(true);
 			const offlineSignerAmino = await metamaskSnap.getOfflineSigner(chainId);
-			const signingClient = await getSigningClient(rpcUrl, offlineSignerAmino);
+			const signingClient = await getSigningStargateClient(rpcUrl, offlineSignerAmino);
 			const accounts = await metamaskSnap.getAccounts(chainId);
 			const account = accounts[0];
 

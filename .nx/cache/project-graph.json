@@ -1,37 +1,5 @@
 {
   "nodes": {
-    "test-vite-evm-mantine": {
-      "name": "test-vite-evm-mantine",
-      "type": "lib",
-      "data": {
-        "root": "packages/cli/test/test-vite-evm-mantine",
-        "targets": {
-          "lint": {
-            "cache": true,
-            "options": {
-              "cwd": "packages/cli/test/test-vite-evm-mantine",
-              "command": "eslint ."
-            },
-            "inputs": [
-              "default",
-              "{workspaceRoot}/.eslintrc.base.json",
-              "{workspaceRoot}/packages/cli/test/test-vite-evm-mantine/.eslintrc.cjs",
-              "{workspaceRoot}/tools/eslint-rules/**/*",
-              {
-                "externalDependencies": [
-                  "eslint"
-                ]
-              }
-            ],
-            "executor": "nx:run-commands",
-            "configurations": {}
-          }
-        },
-        "name": "test-vite-evm-mantine",
-        "implicitDependencies": [],
-        "tags": []
-      }
-    },
     "sei-metamask-test-ui": {
       "name": "sei-metamask-test-ui",
       "type": "lib",
@@ -147,108 +115,6 @@
         },
         "sourceRoot": "packages/metamask-snap",
         "name": "@sei-js/metamask-snap",
-        "projectType": "library",
-        "implicitDependencies": [],
-        "tags": []
-      }
-    },
-    "@sei-js/common": {
-      "name": "@sei-js/common",
-      "type": "lib",
-      "data": {
-        "root": "packages/common",
-        "targets": {
-          "lint": {
-            "cache": true,
-            "inputs": [
-              "default"
-            ],
-            "executor": "nx:run-commands",
-            "options": {
-              "cwd": "packages/common",
-              "command": "eslint ."
-            },
-            "configurations": {}
-          },
-          "test": {
-            "executor": "nx:run-script",
-            "inputs": [
-              "default",
-              "^production",
-              "{workspaceRoot}/jest.preset.js"
-            ],
-            "options": {
-              "script": "test"
-            },
-            "configurations": {}
-          },
-          "build": {
-            "executor": "nx:run-script",
-            "dependsOn": [
-              "^build"
-            ],
-            "inputs": [
-              "production",
-              "^production"
-            ],
-            "options": {
-              "script": "build"
-            },
-            "configurations": {}
-          },
-          "prebuild": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "prebuild"
-            },
-            "configurations": {}
-          },
-          "build:types": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "build:types"
-            },
-            "configurations": {}
-          },
-          "build:cjs": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "build:cjs"
-            },
-            "configurations": {}
-          },
-          "build:esm": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "build:esm"
-            },
-            "configurations": {}
-          },
-          "build:prettier": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "build:prettier"
-            },
-            "configurations": {}
-          },
-          "docs": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "docs"
-            },
-            "configurations": {}
-          },
-          "nx-release-publish": {
-            "dependsOn": [
-              "^nx-release-publish"
-            ],
-            "executor": "@nx/js:release-publish",
-            "options": {},
-            "configurations": {}
-          }
-        },
-        "sourceRoot": "packages/common",
-        "name": "@sei-js/common",
         "projectType": "library",
         "implicitDependencies": [],
         "tags": []
@@ -21554,83 +21420,6 @@
     }
   },
   "dependencies": {
-    "test-vite-evm-mantine": [
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "@sei-js/evm",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:@tanstack/react-query",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:react",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:react-dom",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:viem",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:wagmi",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:@esbuild-plugins/node-globals-polyfill",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:@types/react",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:@types/react-dom",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:@typescript-eslint/eslint-plugin",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:@typescript-eslint/parser",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:eslint",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:postcss",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:typescript",
-        "type": "static"
-      },
-      {
-        "source": "test-vite-evm-mantine",
-        "target": "npm:ethers",
-        "type": "static"
-      }
-    ],
     "sei-metamask-test-ui": [
       {
         "source": "sei-metamask-test-ui",
@@ -21912,63 +21701,6 @@
       {
         "source": "@sei-js/metamask-snap",
         "target": "npm:@metamask/providers",
-        "type": "static"
-      }
-    ],
-    "@sei-js/common": [
-      {
-        "source": "@sei-js/common",
-        "target": "npm:@cosmjs/encoding",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:keccak",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:@babel/core",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:@babel/plugin-transform-runtime",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:@babel/preset-env",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:@babel/preset-typescript",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:@types/jest",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:jest",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:prettier",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:ts-jest",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/common",
-        "target": "npm:typescript",
         "type": "static"
       }
     ],
@@ -22544,11 +22276,6 @@
       {
         "source": "@sei-js/evm",
         "target": "npm:wagmi",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/evm",
-        "target": "npm:@noble/hashes",
         "type": "static"
       }
     ],

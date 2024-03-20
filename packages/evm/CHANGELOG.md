@@ -1,5 +1,17 @@
 # @sei-js/evm
 
+## 0.0.0-internal-evm-20240320163000
+
+### Patch Changes
+
+- Finished typedocs
+
+## 0.0.0-internal-evm-20240316223815
+
+### Patch Changes
+
+- Changed exports
+
 ## 0.0.0-internal-evm-20240315030636
 
 ### Patch Changes

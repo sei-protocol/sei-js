@@ -1,4 +1,3 @@
-export * from './config';
 export * from './keplrVerification';
 export * from './types';
 export * from './utils';

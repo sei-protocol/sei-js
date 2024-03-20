@@ -1,5 +1,12 @@
 # @sei-js/cli
 
+## 0.0.0-internal-evm-20240320163000
+
+### Patch Changes
+
+- Updated dependencies
+  - @sei-js/cosmjs@0.0.0-internal-evm-20240320163000
+
 ## 0.0.0-internal-evm-20240315030508
 
 ### Patch Changes

@@ -1,27 +1,3 @@
-import { AccountData, OfflineSigner } from '@cosmjs/proto-signing';
-import { OfflineAminoSigner, StdSignature } from '@cosmjs/amino';
-
-/**
- * @category Interfaces
- */
-export interface SeiWallet {
-	walletInfo: {
-		windowKey: string;
-		name: string;
-		icon: string;
-		website: string;
-	};
-	getOfflineSigner: (chainId: string) => Promise<OfflineSigner | undefined>;
-	getOfflineSignerAmino: (chainId: string) => Promise<OfflineAminoSigner | undefined>;
-	getAccounts: (chainId: string) => Promise<readonly AccountData[]>;
-	connect: (chainId: string) => Promise<void>;
-	disconnect: (chainId: string) => Promise<void>;
-	suggestChain?: (config: ChainConfig) => Promise<void>;
-	signArbitrary?: (chainId: string, signer: string, message: string) => Promise<StdSignature | undefined>;
-	verifyArbitrary?: (chainId: string, signingAddress: string, data: string, signature: StdSignature) => Promise<boolean>;
-	isMobileSupported: boolean;
-}
-
 /**
  * @category Interfaces
  */

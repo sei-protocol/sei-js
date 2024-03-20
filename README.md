@@ -17,7 +17,6 @@ SeiJS consists of smaller NPM packages within the @sei-js namespace. For more de
 
 | Package                           | Description                                                                                                               |
 |-----------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| [@sei-js/common](packages/common) | TypeScript library containing general configs and helper functions for interacting with a Sei blockchain.                 |
 | [@sei-js/cosmjs](packages/cosmjs) | TypeScript library containing helper functions for wallet connection, transaction signing, and RPC querying using cosmjs. |
 | [@sei-js/evm](packages/evm)       | Typescript library containing helper functions for interacting with the EVM on Sei.                                       |
 | [@sei-js/proto](packages/proto)   | TypeScript library for Sei protobufs generated using [Telescope](https://github.com/osmosis-labs/telescope)               |

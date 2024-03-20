@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/cli",
-  "version": "0.0.0-internal-evm-20240315030508",
+  "version": "0.0.0-internal-evm-20240320163000",
   "module": "dist/main.js",
   "type": "module",
   "bin": {
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@cosmos-kit/react": "^2.10.11",
-    "@sei-js/cosmjs": "0.0.0-internal-evm-20240315030508",
+    "@sei-js/cosmjs": "0.0.0-internal-evm-20240320163000",
     "boxen": "^7.1.1",
     "inquirer": "^9.2.15"
   },

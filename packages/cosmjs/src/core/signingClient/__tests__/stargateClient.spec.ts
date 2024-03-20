@@ -1,6 +1,6 @@
 import { StargateClient, SigningStargateClient, AminoTypes } from '@cosmjs/stargate';
 import { OfflineSigner, Registry } from '@cosmjs/proto-signing';
-import { createSeiAminoTypes, createSeiRegistry, getSigningClient, getStargateClient } from '../stargateClient';
+import { createSeiAminoTypes, createSeiRegistry, getSigningStargateClient, getStargateClient } from '../stargateClient';
 
 jest.mock('@cosmjs/stargate', () => {
 	const originalModule = jest.requireActual('@cosmjs/stargate');
@@ -48,13 +48,13 @@ describe('stargateClient', () => {
 		});
 	});
 
-	describe('getSigningClient', () => {
+	describe('getSigningStargateClient', () => {
 		it('should call SigningStargateClient.connectWithSigner with the correct parameters', async () => {
 			const rpcEndpoint = 'http://localhost:26657';
 			const signer = {} as OfflineSigner;
 			const options = {};
 
-			await getSigningClient(rpcEndpoint, signer, options);
+			await getSigningStargateClient(rpcEndpoint, signer, options);
 
 			expect(SigningStargateClient.connectWithSigner).toHaveBeenCalledWith(
 				rpcEndpoint,

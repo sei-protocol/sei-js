@@ -9,48 +9,6 @@ yarn add @sei-js/cosmjs
 ```
 
 ## Usage
-### Wallet Connection
-This package exports objects of type SeiWallet for all the officially supported Cosmos wallets. These wallet objects contain functions for connecting, disconnecting, getting accounts, signing arbitrary strings, and verifying arbitrary signatures. The wallet objects also contain information about the wallet such as the name, website, and icon.
-```tsx
-import { COMPASS_WALLET, FIN_WALLET, KEPLR_WALLET } from "@sei-js/cosmjs";
-
-await COMPASS_WALLET.connect(chainId);
-
-const offlineSigner = await COMPASS_WALLET.getOfflineSigner(chainId);
-const accounts = await COMPASS_WALLET.getAccounts(chainId);
-const stdSignature = await COMPASS_WALLET.signArbitrary(chainId, accounts[0].address, "Message to sign");
-const isVerified = await COMPASS_WALLET.verifyArbitrary(chainId, accounts[0].address, "Message to sign", stdSignature.signature);
-
-console.log( { walletInfo });
-console.log( { isMobileSupported });
-
-await COMPASS_WALLET.disconnect(chainId);
-```
-
-### Custom Wallet (Keplr example)
-If you would like to connect to an unofficial wallet extension such as Keplr you can define an object of type SeiWallet.
-
-```tsx
-
-const CUSTOM_WALLET: SeiWallet = {
-  getAccounts: async (chainId) => {
-    const offlineSigner = await window?.['keplr']?.getOfflineSignerAuto(chainId);
-    return offlineSigner?.getAccounts() || [];
-  },
-  connect: async (chainId) => await window?.['keplr']?.enable(chainId),
-  disconnect: async (chainId) => await window?.['keplr']?.disable(chainId),
-  getOfflineSigner: async (chainId) => window?.['keplr']?.getOfflineSignerAuto(chainId),
-  signArbitrary: async (chainId, signer, message) => window?.['keplr']?.signArbitrary(chainId, signer, message),
-  verifyArbitrary: async (chainId, signingAddress, data, signature) => window?.['keplr']?.verifyArbitrary(chainId, signingAddress, data, signature),
-  walletInfo: {
-    windowKey: 'keplr',
-    name: 'Keplr',
-    website: 'https://www.keplr.app/download',
-    icon: 'https://assets.website-files.com/63eb7ddf41cf5b1c8fdfbc74/63edd5d1a40b9a48841ac1d2_Keplr%20Logo.svg'
-  },
-  isMobileSupported: false
-};
-```
 
 ### Generating or Restoring a Wallet from Seed Phrase
 In some circumstances it is necessary to generate a  new wallet or to restore a wallet from a given seed phrase.
@@ -66,8 +24,6 @@ const restoredWallet = await restoreWallet(SEED_PHRASE);
 console.log('restored mnemonic', restoredWallet.mnemonic);
 
 //Both the above functions have optional parameters for selecting a certain account index in a given wallet
-
-...
 ```
 
 
@@ -76,9 +32,9 @@ When querying a Sei chain it is helpful to use a query client from @sei-js in or
 
 ### Usage
 ```tsx
-import { getLCDQueryClient } from '@sei-js/cosmjs';
+import { getQueryClient } from '@sei-js/cosmjs';
 
-const queryClient = await getLCDQueryClient(REST_URL);
+const queryClient = await getQueryClient(REST_URL);
 
 // Getting the market summary from the Sei dex module
 const dexMarketSummary = await queryClient.seiprotocol.seichain.dex.getMarketSummary(params);
@@ -96,25 +52,23 @@ const txInfo = await queryClient.cosmos.tx.v1beta1.getTx({ hash });
 
 ### Getting a Signing Client
 ```tsx
-import { getSigningClient, COMPASS_WALLET } from '@sei-js/cosmjs';
+import { getSigningStargateClient } from '@sei-js/cosmjs';
 
 // Don't forget to connect if using a wallet extension
 // or create a wallet from a mnemonic (See above)
-await COMPASS_WALLET.connect(chainId);
+await window.compass.connect(chainId);
 
-const offlineSigner = await COMPASS_WALLET.getOfflineSigner(chainId);
+const offlineSigner = await window.compass.getOfflineSigner(chainId);
 
-const signingClient = await getSigningClient(RPC_URL, offlineSigner);
+const signingClient = await getSigningStargateClient(RPC_URL, offlineSigner);
 ```
 
 Using Custom Registry or Amino Types:
 ```tsx
 import { Registry } from "@cosmjs/proto-signing";
 import { defaultRegistryTypes } from "@cosmjs/stargate";
-import { getSigningClient } from '@sei-js/cosmjs';
+import { getSigningStargateClient } from '@sei-js/cosmjs';
 import { seiprotocol, seiprotocolProtoRegistry } from "@sei-js/proto";
-
-...
 
 // Set up Sei proto registry
 const registry = new Registry([
@@ -123,7 +77,7 @@ const registry = new Registry([
 ]);
 
 // Create a client with registry
-const signingClient = await getSigningClient(RPC_URL, offlineSigner, { registry });
+const signingClient = await getSigningStargateClient(RPC_URL, offlineSigner, { registry });
 ```
 
 ### Common Transactions
@@ -169,7 +123,7 @@ const cosmWasmClient = await getCosmWasmClient(RPC_URL);
 ```
 
 ### Querying a Contract
-Build the `queryMsg` according to the contracts specific query specifications.
+Build the `queryMsg` according to the contracts specific query specifications. Each contract will define its own queryable state, so check the contract documentation for the correct query message format by examining the contract source code or documentation.
 ```tsx
 // Create the query msg json based on contract specific query specifications
 const queryMsg = {
@@ -217,12 +171,12 @@ const isValidSeiAddress = isValidSeiAddress(ADDRESS_TO_TEST);
 ```
 
 ## Arbitrary String Signing and Verification
-Sometimes it it necessary to prove account ownership without executing anything on chain. To achieve this verification you can use the signArbitrary function in all official Sei wallets to create a StdSignature which can be verified using the `verifyArbitrary` function from @sei-js/cosmjs
+Sometimes it is necessary to prove account ownership without executing anything on chain. To achieve this verification you can use the signArbitrary function in all official Sei wallets to create a StdSignature which can be verified using the `verifyArbitrary` function from @sei-js/cosmjs
 
 ```tsx
-import { COMPASS_WALLET, verifyArbitrary } from "@sei-js/cosmjs";
+import { verifyArbitrary } from "@sei-js/cosmjs";
 
-const stdSignature = await COMPASS_WALLET.signArbitrary('atlantic-2', SEI_ADDRESS, "Message to sign"); // or FIN_WALLET, KEPLR_WALLET, LEAP_WALLET
+const stdSignature = await window.compass.signArbitrary('atlantic-2', SEI_ADDRESS, "Message to sign"); // or FIN_WALLET, KEPLR_WALLET, LEAP_WALLET
 ```
 
 ## Multi-Sig Signing and Broadcasting
@@ -244,11 +198,11 @@ Note that if the multi sig account has neither broadcasted a transaction nor rec
 ### Step 2: Sign a transaction with custom sign options
 Repeat this step by signing the exact same msg, with the same fee across all the required accounts in the multi-sig.
 ```tsx
-import { COMPASS_WALLET } from '@sei-js/cosmjs';
+import { getSigningStargateClient } from '@sei-js/cosmjs';
 
-const offlineAminoSigner = await COMPASS_WALLET.getOfflineSignerAmino(chainId); // Or use another way to get the offline amino signer
+const offlineAminoSigner = await window.compass.getOfflineSignerAmino(chainId); // Or use another way to get the offline amino signer
 
-const signingClient = await getSigningClient(rpcUrl, offlineAminoSigner); // Or use another way to get a StargateSigningClient
+const signingClient = await getSigningStargateClient(rpcUrl, offlineAminoSigner); // Or use another way to get a StargateSigningClient
 
 const accounts = await offlineAminoSigner.getAccounts();
 

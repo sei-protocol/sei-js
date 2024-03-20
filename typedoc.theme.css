@@ -1,3 +1,7 @@
+.container-main {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 2fr) !important;
+}
+
 .tsd-generator {
   display: none;
 }
@@ -29,7 +33,7 @@
   margin-left: unset !important;
 }
 
-.tsd-page-title {
+.tsd-page-title > h1 {
   display: none;
 }
 
@@ -54,4 +58,8 @@
   flex-direction: column;
   gap: 2rem !important;
   padding: 2rem !important;
+}
+
+.warning {
+  display: none;
 }

@@ -1,9 +1,9 @@
 {
-  "5173129290936441979": {
+  "5551754099446051409": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/common"
+        "cwd": "packages/evm"
       },
       "cache": true,
       "outputs": [
@@ -11,19 +11,7 @@
       ]
     }
   },
-  "12759446649006422985": {
-    "test": {
-      "command": "jest",
-      "options": {
-        "cwd": "packages/cosmjs"
-      },
-      "cache": true,
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
-    }
-  },
-  "16484337105133243472": {
+  "3265072172824521811": {
     "test": {
       "command": "jest",
       "options": {
@@ -35,7 +23,7 @@
       ]
     }
   },
-  "6819989331401408575": {
+  "4004694172127582424": {
     "test": {
       "command": "jest",
       "options": {
@@ -47,11 +35,11 @@
       ]
     }
   },
-  "148463966341743455": {
+  "14121905639973817168": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -59,7 +47,7 @@
       ]
     }
   },
-  "17048863117635588796": {
+  "16697868955615340475": {
     "test": {
       "command": "jest",
       "options": {
@@ -71,11 +59,11 @@
       ]
     }
   },
-  "9171747292083534845": {
+  "1372628265884606328": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -83,7 +71,7 @@
       ]
     }
   },
-  "5829140745307677094": {
+  "7546572299913920481": {
     "test": {
       "command": "jest",
       "options": {
@@ -95,11 +83,11 @@
       ]
     }
   },
-  "6579812188515124204": {
+  "9770411166370603892": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -107,7 +95,7 @@
       ]
     }
   },
-  "13303429451739743792": {
+  "2409616556129694876": {
     "test": {
       "command": "jest",
       "options": {
@@ -119,11 +107,11 @@
       ]
     }
   },
-  "18176773354237823849": {
+  "8472432344060551420": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -131,7 +119,7 @@
       ]
     }
   },
-  "6717669247997062057": {
+  "12121176315090545066": {
     "test": {
       "command": "jest",
       "options": {
@@ -143,11 +131,11 @@
       ]
     }
   },
-  "5271402652025863239": {
+  "17477972883737937927": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -155,7 +143,7 @@
       ]
     }
   },
-  "12405069246818182697": {
+  "7075979361530856960": {
     "test": {
       "command": "jest",
       "options": {
@@ -167,11 +155,11 @@
       ]
     }
   },
-  "4283326940315826998": {
+  "4798669932430501739": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -179,7 +167,7 @@
       ]
     }
   },
-  "6117398997470254334": {
+  "11567370638870445512": {
     "test": {
       "command": "jest",
       "options": {
@@ -191,11 +179,11 @@
       ]
     }
   },
-  "3442981300990432592": {
+  "17698311163609464561": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -203,7 +191,7 @@
       ]
     }
   },
-  "9797003036228719351": {
+  "4775852089950173014": {
     "test": {
       "command": "jest",
       "options": {
@@ -215,11 +203,11 @@
       ]
     }
   },
-  "9630475161506418990": {
+  "6056971975552359095": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -227,7 +215,7 @@
       ]
     }
   },
-  "3792671725113088101": {
+  "8303719228923665753": {
     "test": {
       "command": "jest",
       "options": {
@@ -239,11 +227,11 @@
       ]
     }
   },
-  "17069368650744417136": {
+  "13399852789878945889": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -251,7 +239,7 @@
       ]
     }
   },
-  "16744390135063389246": {
+  "11700549308504252081": {
     "test": {
       "command": "jest",
       "options": {
@@ -263,11 +251,11 @@
       ]
     }
   },
-  "9758834476457624486": {
+  "2305357097648350830": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -275,7 +263,7 @@
       ]
     }
   },
-  "17275963727257772759": {
+  "9375978885143990637": {
     "test": {
       "command": "jest",
       "options": {
@@ -287,11 +275,11 @@
       ]
     }
   },
-  "5803514794949810013": {
+  "14221417839406255013": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -299,7 +287,7 @@
       ]
     }
   },
-  "12615008236192346898": {
+  "16509967316781075141": {
     "test": {
       "command": "jest",
       "options": {
@@ -311,11 +299,11 @@
       ]
     }
   },
-  "6923586246199409113": {
+  "12726771767977294700": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -323,7 +311,7 @@
       ]
     }
   },
-  "1243539699789099383": {
+  "6153486188711902405": {
     "test": {
       "command": "jest",
       "options": {
@@ -335,11 +323,11 @@
       ]
     }
   },
-  "133741264885777967": {
+  "2962288587737564044": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -347,7 +335,7 @@
       ]
     }
   },
-  "9176773624364887251": {
+  "2943716743913141490": {
     "test": {
       "command": "jest",
       "options": {
@@ -359,11 +347,11 @@
       ]
     }
   },
-  "3147891949436502814": {
+  "5926054476064072686": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -371,7 +359,7 @@
       ]
     }
   },
-  "11825105783457299491": {
+  "15691048100674706074": {
     "test": {
       "command": "jest",
       "options": {
@@ -383,11 +371,11 @@
       ]
     }
   },
-  "9837400357552191534": {
+  "16933183707563680547": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -395,7 +383,7 @@
       ]
     }
   },
-  "1239442781768434407": {
+  "18104892358011260869": {
     "test": {
       "command": "jest",
       "options": {
@@ -407,11 +395,11 @@
       ]
     }
   },
-  "10103602960838274650": {
+  "2766601456798099505": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -419,7 +407,7 @@
       ]
     }
   },
-  "1145893967754064846": {
+  "3026361061191185905": {
     "test": {
       "command": "jest",
       "options": {
@@ -431,11 +419,11 @@
       ]
     }
   },
-  "7433456499387754997": {
+  "6448465692902042029": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -443,7 +431,7 @@
       ]
     }
   },
-  "16447700942281880659": {
+  "12879232222046086953": {
     "test": {
       "command": "jest",
       "options": {
@@ -455,11 +443,11 @@
       ]
     }
   },
-  "11131261221237117874": {
+  "8832174625767233977": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/evm"
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
@@ -467,7 +455,7 @@
       ]
     }
   },
-  "4435712960258508916": {
+  "15129221014891206138": {
     "test": {
       "command": "jest",
       "options": {
@@ -479,11 +467,971 @@
       ]
     }
   },
-  "8670592110314970107": {
+  "3417537410090194317": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9319630944621394438": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9481559046869811587": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14075320128240011143": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16021132461452791580": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9683528124663673338": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "3602522972957120598": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "15698542668922656662": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16513023752026319527": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14272743586959484178": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "2804142655524940239": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4244807327963385059": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6142289406792876804": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9113898105887401130": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "8356190208877689108": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14061329775114118852": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "3750246551981769442": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14506512959530005819": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "2156622960104710000": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "11340587362069336621": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6400623869478044584": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5333121830347332468": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "921259227300153096": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4156287327123036319": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6408055118373170640": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "11188326411896362238": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6730684528007366121": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "8718765558949590241": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16773340929928024535": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "17986158682756774112": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "827304741785650972": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "944398513874551727": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9224720432599443751": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6191458783183285717": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14520697133469544483": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6640767641738080315": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "7910492978350407251": {
     "test": {
       "command": "jest",
       "options": {
         "cwd": "packages/evm"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "9351563760989352157": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "8106132811167616194": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "3022738315391947645": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "7291423279176243928": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "1030971228686071233": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "109119512773111043": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "17819891910961421667": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "15026125438360059236": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5942169122687966806": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "12690834250306552158": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "18057708612530731273": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "10835053746200451257": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5062745518314305923": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "18303076364468974056": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "11300736573433920583": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "13313012846674338931": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "11448105581744043171": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "8105112579042393165": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5992301867059537628": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6573329373085422303": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16169380605237059046": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "18045605143575646450": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14557535178317363610": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "17042088861424732146": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5047402692484670188": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6947621232290613361": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "13348488201426100476": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "13704377259560502636": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "7108410995576839034": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "2093317490113213050": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5246021739128767834": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "12256427379696952718": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "209504460611198757": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "14690117065797088249": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "16909619349058455707": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "12406963652712328112": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "10766967831384422840": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5286564053817012535": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "11797435446163692837": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4360265546171930014": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "2011722486949462780": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "5087740183050704056": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "6313288940466265457": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "2722465317605189512": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "packages/cosmjs"
       },
       "cache": true,
       "outputs": [
