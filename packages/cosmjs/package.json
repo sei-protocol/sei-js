@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/cosmjs",
-  "version": "0.0.0-internal-evm-20240320163000",
+  "version": "0.0.0-internal-evm-20240321223223",
   "description": "TypeScript library for CosmJS interactions on the Sei blockchain",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -45,6 +45,7 @@
     "@keplr-wallet/types": "^0.11.41",
     "@noble/secp256k1": "1.7.1",
     "@react-icons/all-files": "^4.1.0",
+    "@sei-js/proto": "0.0.0-internal-evm-20240321223223",
     "bech32": "^2.0.0",
     "buffer": "^6.0.3",
     "elliptic": "^6.5.4",

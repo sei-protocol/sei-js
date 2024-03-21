@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "0.0.0-internal-evm-20240315030508",
+  "version": "0.0.0-internal-evm-20240321223223",
   "description": "TypeScript library for Sei protobuf files generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
@@ -78,6 +78,7 @@
     "@cosmology/lcd": "^0.13.3",
     "@cosmology/telescope": "^1.4.12",
     "@osmonauts/helpers": "^0.7.0",
+    "cosmjs-types": "^0.9.0",
     "protobufjs": "^7.2.6"
   },
   "exports": {

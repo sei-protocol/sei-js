@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.0-internal-evm-20240321223223
+
+### Patch Changes
+
+- Added static versioning to cosmjs for /proto
+
 ## 0.0.0-internal-evm-20240315030508
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @sei-js/cosmjs
 
+## 0.0.0-internal-evm-20240321223223
+
+### Patch Changes
+
+- Added static versioning to cosmjs for /proto
+- Updated dependencies
+  - @sei-js/proto@0.0.0-internal-evm-20240321223223
+
 ## 0.0.0-internal-evm-20240320163000
 
 ### Patch Changes

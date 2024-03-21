@@ -3,8 +3,7 @@
   "include": ["src"],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "outDir": "./dist/types",
-    "target": "ES2022"
+    "outDir": "./dist/types"
   },
   "typedocOptions": {
     "readme": "./README.md",
