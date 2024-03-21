@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/evm",
-  "version": "0.0.0-internal-evm-20240320163000",
+  "version": "0.0.0-internal-evm-20240321200255",
   "description": "TypeScript library for EVM interactions on the Sei blockchain",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

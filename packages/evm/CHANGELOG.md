@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 0.0.0-internal-evm-20240321200255
+
+### Patch Changes
+
+- Added optional wallet configs to 'createWagmiConfig'
+
 ## 0.0.0-internal-evm-20240320163000
 
 ### Patch Changes
