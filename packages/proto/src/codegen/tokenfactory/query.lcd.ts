@@ -4,6 +4,8 @@ import {
 	QueryParamsResponseSDKType,
 	QueryDenomAuthorityMetadataRequest,
 	QueryDenomAuthorityMetadataResponseSDKType,
+	QueryDenomMetadataRequest,
+	QueryDenomMetadataResponseSDKType,
 	QueryDenomsFromCreatorRequest,
 	QueryDenomsFromCreatorResponseSDKType
 } from './query';
@@ -13,6 +15,7 @@ export class LCDQueryClient {
 		this.req = requestClient;
 		this.params = this.params.bind(this);
 		this.denomAuthorityMetadata = this.denomAuthorityMetadata.bind(this);
+		this.denomMetadata = this.denomMetadata.bind(this);
 		this.denomsFromCreator = this.denomsFromCreator.bind(this);
 	}
 	/* Params defines a gRPC query method that returns the tokenfactory module's
@@ -26,6 +29,18 @@ export class LCDQueryClient {
 	async denomAuthorityMetadata(params: QueryDenomAuthorityMetadataRequest): Promise<QueryDenomAuthorityMetadataResponseSDKType> {
 		const endpoint = `sei-protocol/seichain/tokenfactory/denoms/${params.denom}/authority_metadata`;
 		return await this.req.get<QueryDenomAuthorityMetadataResponseSDKType>(endpoint);
+	}
+	/* DenomsMetadata defines a gRPC query method for fetching
+    DenomMetadata for a particular denom. */
+	async denomMetadata(params: QueryDenomMetadataRequest): Promise<QueryDenomMetadataResponseSDKType> {
+		const options: any = {
+			params: {}
+		};
+		if (typeof params?.denom !== 'undefined') {
+			options.params.denom = params.denom;
+		}
+		const endpoint = `sei-protocol/seichain/tokenfactory/denoms/metadata`;
+		return await this.req.get<QueryDenomMetadataResponseSDKType>(endpoint, options);
 	}
 	/* DenomsFromCreator defines a gRPC query method for fetching all
    denominations created by a specific admin/creator. */

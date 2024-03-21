@@ -6,6 +6,8 @@ import {
 	QueryParamsResponse,
 	QueryDenomAuthorityMetadataRequest,
 	QueryDenomAuthorityMetadataResponse,
+	QueryDenomMetadataRequest,
+	QueryDenomMetadataResponse,
 	QueryDenomsFromCreatorRequest,
 	QueryDenomsFromCreatorResponse
 } from './query';
@@ -22,6 +24,11 @@ export interface Query {
 	 */
 	denomAuthorityMetadata(request: QueryDenomAuthorityMetadataRequest): Promise<QueryDenomAuthorityMetadataResponse>;
 	/**
+	 * DenomsMetadata defines a gRPC query method for fetching
+	 *  DenomMetadata for a particular denom.
+	 */
+	denomMetadata(request: QueryDenomMetadataRequest): Promise<QueryDenomMetadataResponse>;
+	/**
 	 * DenomsFromCreator defines a gRPC query method for fetching all
 	 * denominations created by a specific admin/creator.
 	 */
@@ -33,6 +40,7 @@ export class QueryClientImpl implements Query {
 		this.rpc = rpc;
 		this.params = this.params.bind(this);
 		this.denomAuthorityMetadata = this.denomAuthorityMetadata.bind(this);
+		this.denomMetadata = this.denomMetadata.bind(this);
 		this.denomsFromCreator = this.denomsFromCreator.bind(this);
 	}
 	params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
@@ -44,6 +52,11 @@ export class QueryClientImpl implements Query {
 		const data = QueryDenomAuthorityMetadataRequest.encode(request).finish();
 		const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'DenomAuthorityMetadata', data);
 		return promise.then((data) => QueryDenomAuthorityMetadataResponse.decode(new BinaryReader(data)));
+	}
+	denomMetadata(request: QueryDenomMetadataRequest): Promise<QueryDenomMetadataResponse> {
+		const data = QueryDenomMetadataRequest.encode(request).finish();
+		const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'DenomMetadata', data);
+		return promise.then((data) => QueryDenomMetadataResponse.decode(new BinaryReader(data)));
 	}
 	denomsFromCreator(request: QueryDenomsFromCreatorRequest): Promise<QueryDenomsFromCreatorResponse> {
 		const data = QueryDenomsFromCreatorRequest.encode(request).finish();
@@ -60,6 +73,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
 		},
 		denomAuthorityMetadata(request: QueryDenomAuthorityMetadataRequest): Promise<QueryDenomAuthorityMetadataResponse> {
 			return queryService.denomAuthorityMetadata(request);
+		},
+		denomMetadata(request: QueryDenomMetadataRequest): Promise<QueryDenomMetadataResponse> {
+			return queryService.denomMetadata(request);
 		},
 		denomsFromCreator(request: QueryDenomsFromCreatorRequest): Promise<QueryDenomsFromCreatorResponse> {
 			return queryService.denomsFromCreator(request);
