@@ -131,7 +131,7 @@ export const ADDRESS_PRECOMPILE_ABI: Abi = [
  *
  * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, signer);
  *
- * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
+ * const associatedSeiAddress = await addressPrecompileContract.connect().getSeiAddr(accounts[0]);
  * ```
  * @param precompileAddress The 0X address of the precompile contract.
  * @param signer The ethersJS signer to be used with the contract.

@@ -1,9 +1,54 @@
 {
   "run": {
-    "command": "nx run-many --target=build -p common evm cosmjs",
-    "startTime": "2024-03-20T18:07:20.950Z",
-    "endTime": "2024-03-20T18:07:20.953Z",
+    "command": "nx run-many --target=test",
+    "startTime": "2024-03-21T05:53:29.478Z",
+    "endTime": "2024-03-21T05:53:35.360Z",
     "inner": false
   },
-  "tasks": []
+  "tasks": [
+    {
+      "taskId": "@sei-js/evm:test",
+      "target": "test",
+      "projectName": "@sei-js/evm",
+      "hash": "18090992631039743231",
+      "startTime": "2024-03-21T05:53:29.485Z",
+      "endTime": "2024-03-21T05:53:29.535Z",
+      "params": "",
+      "cacheStatus": "local-cache-hit",
+      "status": 0
+    },
+    {
+      "taskId": "@sei-js/proto:test",
+      "target": "test",
+      "projectName": "@sei-js/proto",
+      "hash": "5088059723250536897",
+      "startTime": "2024-03-21T05:53:29.485Z",
+      "endTime": "2024-03-21T05:53:29.535Z",
+      "params": "",
+      "cacheStatus": "local-cache-hit",
+      "status": 0
+    },
+    {
+      "taskId": "workspace:test",
+      "target": "test",
+      "projectName": "workspace",
+      "hash": "15003130775875289495",
+      "startTime": "2024-03-21T05:53:29.537Z",
+      "endTime": "2024-03-21T05:53:31.751Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    },
+    {
+      "taskId": "@sei-js/cosmjs:test",
+      "target": "test",
+      "projectName": "@sei-js/cosmjs",
+      "hash": "7511536443247720500",
+      "startTime": "2024-03-21T05:53:29.485Z",
+      "endTime": "2024-03-21T05:53:35.357Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    }
+  ]
 }

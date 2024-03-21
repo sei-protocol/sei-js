@@ -1,21 +1,21 @@
 {
   "nodes": {
-    "sei-metamask-test-ui": {
-      "name": "sei-metamask-test-ui",
+    "test-vite-cosmjs-mantine": {
+      "name": "test-vite-cosmjs-mantine",
       "type": "lib",
       "data": {
-        "root": "packages/metamask-snap/test-ui",
+        "root": "packages/cli/test-vite-cosmjs-mantine",
         "targets": {
           "lint": {
             "cache": true,
             "options": {
-              "cwd": "packages/metamask-snap/test-ui",
+              "cwd": "packages/cli/test-vite-cosmjs-mantine",
               "command": "eslint ."
             },
             "inputs": [
               "default",
               "{workspaceRoot}/.eslintrc.base.json",
-              "{workspaceRoot}/.eslintrc.json",
+              "{workspaceRoot}/packages/cli/test-vite-cosmjs-mantine/.eslintrc.cjs",
               "{workspaceRoot}/tools/eslint-rules/**/*",
               {
                 "externalDependencies": [
@@ -27,95 +27,7 @@
             "configurations": {}
           }
         },
-        "name": "sei-metamask-test-ui",
-        "implicitDependencies": [],
-        "tags": []
-      }
-    },
-    "@sei-js/metamask-snap": {
-      "name": "@sei-js/metamask-snap",
-      "type": "lib",
-      "data": {
-        "root": "packages/metamask-snap",
-        "targets": {
-          "lint": {
-            "cache": true,
-            "inputs": [
-              "default"
-            ],
-            "executor": "nx:run-commands",
-            "options": {
-              "cwd": "packages/metamask-snap",
-              "command": "eslint ."
-            },
-            "configurations": {}
-          },
-          "test": {
-            "executor": "nx:run-script",
-            "inputs": [
-              "default",
-              "^production",
-              "{workspaceRoot}/jest.preset.js"
-            ],
-            "options": {
-              "script": "test"
-            },
-            "configurations": {}
-          },
-          "build": {
-            "executor": "nx:run-script",
-            "dependsOn": [
-              "^build"
-            ],
-            "inputs": [
-              "production",
-              "^production"
-            ],
-            "options": {
-              "script": "build"
-            },
-            "configurations": {}
-          },
-          "prebuild": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "prebuild"
-            },
-            "configurations": {}
-          },
-          "serve": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "serve"
-            },
-            "configurations": {}
-          },
-          "start": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "start"
-            },
-            "configurations": {}
-          },
-          "test:snap": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "test:snap"
-            },
-            "configurations": {}
-          },
-          "nx-release-publish": {
-            "dependsOn": [
-              "^nx-release-publish"
-            ],
-            "executor": "@nx/js:release-publish",
-            "options": {},
-            "configurations": {}
-          }
-        },
-        "sourceRoot": "packages/metamask-snap",
-        "name": "@sei-js/metamask-snap",
-        "projectType": "library",
+        "name": "test-vite-cosmjs-mantine",
         "implicitDependencies": [],
         "tags": []
       }
@@ -354,82 +266,6 @@
         },
         "sourceRoot": "packages/proto",
         "name": "@sei-js/proto",
-        "projectType": "library",
-        "implicitDependencies": [],
-        "tags": []
-      }
-    },
-    "@sei-js/rest": {
-      "name": "@sei-js/rest",
-      "type": "lib",
-      "data": {
-        "root": "packages/rest",
-        "targets": {
-          "lint": {
-            "cache": true,
-            "inputs": [
-              "default"
-            ],
-            "executor": "nx:run-commands",
-            "options": {
-              "cwd": "packages/rest",
-              "command": "eslint ."
-            },
-            "configurations": {}
-          },
-          "build": {
-            "executor": "nx:run-script",
-            "dependsOn": [
-              "^build"
-            ],
-            "inputs": [
-              "production",
-              "^production"
-            ],
-            "options": {
-              "script": "build"
-            },
-            "configurations": {}
-          },
-          "prebuild": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "prebuild"
-            },
-            "configurations": {}
-          },
-          "fetch-openapi": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "fetch-openapi"
-            },
-            "configurations": {}
-          },
-          "md-docs": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "md-docs"
-            },
-            "configurations": {}
-          },
-          "docs": {
-            "executor": "nx:run-script",
-            "options": {
-              "script": "docs"
-            },
-            "configurations": {}
-          },
-          "nx-release-publish": {
-            "dependsOn": [
-              "^nx-release-publish"
-            ],
-            "executor": "@nx/js:release-publish",
-            "options": {},
-            "configurations": {}
-          }
-        },
-        "sourceRoot": "packages/rest",
-        "name": "@sei-js/rest",
         "projectType": "library",
         "implicitDependencies": [],
         "tags": []
@@ -21420,296 +21256,74 @@
     }
   },
   "dependencies": {
-    "sei-metamask-test-ui": [
+    "test-vite-cosmjs-mantine": [
       {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:react",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:@cosmos-kit/react",
         "type": "static"
       },
       {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@metamask/providers",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:react-dom",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:react-icons",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:react-is",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:styled-components",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@babel/preset-typescript",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@testing-library/dom",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@testing-library/jest-dom",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@testing-library/react",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@types/jest",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@types/react",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@types/react-dom",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@typescript-eslint/eslint-plugin",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@typescript-eslint/parser",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:prettier",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:rimraf",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:typescript",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@cosmjs/stargate",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@cosmjs/amino",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@cosmjs/proto-signing",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:cosmjs-types",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@cosmjs/encoding",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:@cosmjs/math",
-        "type": "static"
-      },
-      {
-        "source": "sei-metamask-test-ui",
+        "source": "test-vite-cosmjs-mantine",
         "target": "@sei-js/cosmjs",
         "type": "static"
       },
       {
-        "source": "sei-metamask-test-ui",
-        "target": "npm:buffer",
-        "type": "static"
-      }
-    ],
-    "@sei-js/metamask-snap": [
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/snaps-types",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:cosmos-kit",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/snaps-ui",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:react",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:buffer",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:react-dom",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@cosmjs/crypto",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:@esbuild-plugins/node-globals-polyfill",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@cosmjs/proto-signing",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:@types/react",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@cosmjs/stargate",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:@types/react-dom",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@jest/globals",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:@typescript-eslint/eslint-plugin",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@lavamoat/allow-scripts",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:@typescript-eslint/parser",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/auto-changelog",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:eslint",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/key-tree",
+        "source": "test-vite-cosmjs-mantine",
+        "target": "npm:postcss",
         "type": "static"
       },
       {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/snaps-cli",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/snaps-jest",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/utils",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:jest",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:prettier",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:rimraf",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:through2",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:ts-jest",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
+        "source": "test-vite-cosmjs-mantine",
         "target": "npm:typescript",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@cosmjs/encoding",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:elliptic",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:cosmjs-types",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:long",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:bech32",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:sha.js",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@cosmjs/amino",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@noble/secp256k1",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@noble/hashes",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "@sei-js/proto",
-        "type": "static"
-      },
-      {
-        "source": "@sei-js/metamask-snap",
-        "target": "npm:@metamask/providers",
         "type": "static"
       }
     ],
     "@sei-js/cosmjs": [
-      {
-        "source": "@sei-js/cosmjs",
-        "target": "npm:util",
-        "type": "static"
-      },
       {
         "source": "@sei-js/cosmjs",
         "target": "npm:@cosmjs/amino",
@@ -22115,13 +21729,6 @@
       {
         "source": "@sei-js/proto",
         "target": "npm:@cosmjs/math",
-        "type": "static"
-      }
-    ],
-    "@sei-js/rest": [
-      {
-        "source": "@sei-js/rest",
-        "target": "npm:widdershins",
         "type": "static"
       }
     ],
