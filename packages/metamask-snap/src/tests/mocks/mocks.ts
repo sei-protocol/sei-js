@@ -1,3 +1,0 @@
-export const ACCOUNT_ONE_PRIVATE_KEY = '0x0ca350a5d50a08caf95d0922d3adf4117a1ea5b7c24b7c6021173c8d46eceb37';
-export const ACCOUNT_ONE_ADDRESS = 'sei15u8zs9pqdjddgv8pkyyh6zvsg4ujs2y6s6cq6u';
-

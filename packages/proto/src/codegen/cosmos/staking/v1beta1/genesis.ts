@@ -1,10 +1,10 @@
-import { Params, ParamsSDKType, Validator, ValidatorSDKType, Delegation, DelegationSDKType, UnbondingDelegation, UnbondingDelegationSDKType, Redelegation, RedelegationSDKType } from "./staking";
-import { Long, DeepPartial } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { Params, ParamsAmino, ParamsSDKType, Validator, ValidatorAmino, ValidatorSDKType, Delegation, DelegationAmino, DelegationSDKType, UnbondingDelegation, UnbondingDelegationAmino, UnbondingDelegationSDKType, Redelegation, RedelegationAmino, RedelegationSDKType } from "./staking";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** GenesisState defines the staking module's genesis state. */
 export interface GenesisState {
   /** params defines all the paramaters of related to deposit. */
-  params: Params;
+  params: Params | undefined;
   /**
    * last_total_power tracks the total amounts of bonded tokens recorded during
    * the previous end block.
@@ -25,9 +25,41 @@ export interface GenesisState {
   redelegations: Redelegation[];
   exported: boolean;
 }
+export interface GenesisStateProtoMsg {
+  typeUrl: "/cosmos.staking.v1beta1.GenesisState";
+  value: Uint8Array;
+}
+/** GenesisState defines the staking module's genesis state. */
+export interface GenesisStateAmino {
+  /** params defines all the paramaters of related to deposit. */
+  params?: ParamsAmino | undefined;
+  /**
+   * last_total_power tracks the total amounts of bonded tokens recorded during
+   * the previous end block.
+   */
+  last_total_power?: string;
+  /**
+   * last_validator_powers is a special index that provides a historical list
+   * of the last-block's bonded validators.
+   */
+  last_validator_powers?: LastValidatorPowerAmino[];
+  /** delegations defines the validator set at genesis. */
+  validators?: ValidatorAmino[];
+  /** delegations defines the delegations active at genesis. */
+  delegations?: DelegationAmino[];
+  /** unbonding_delegations defines the unbonding delegations active at genesis. */
+  unbonding_delegations?: UnbondingDelegationAmino[];
+  /** redelegations defines the redelegations active at genesis. */
+  redelegations?: RedelegationAmino[];
+  exported?: boolean;
+}
+export interface GenesisStateAminoMsg {
+  type: "cosmos-sdk/GenesisState";
+  value: GenesisStateAmino;
+}
 /** GenesisState defines the staking module's genesis state. */
 export interface GenesisStateSDKType {
-  params: ParamsSDKType;
+  params: ParamsSDKType | undefined;
   last_total_power: Uint8Array;
   last_validator_powers: LastValidatorPowerSDKType[];
   validators: ValidatorSDKType[];
@@ -41,12 +73,27 @@ export interface LastValidatorPower {
   /** address is the address of the validator. */
   address: string;
   /** power defines the power of the validator. */
-  power: Long;
+  power: bigint;
+}
+export interface LastValidatorPowerProtoMsg {
+  typeUrl: "/cosmos.staking.v1beta1.LastValidatorPower";
+  value: Uint8Array;
+}
+/** LastValidatorPower required for validator set update logic. */
+export interface LastValidatorPowerAmino {
+  /** address is the address of the validator. */
+  address?: string;
+  /** power defines the power of the validator. */
+  power?: string;
+}
+export interface LastValidatorPowerAminoMsg {
+  type: "cosmos-sdk/LastValidatorPower";
+  value: LastValidatorPowerAmino;
 }
 /** LastValidatorPower required for validator set update logic. */
 export interface LastValidatorPowerSDKType {
   address: string;
-  power: Long;
+  power: bigint;
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -61,7 +108,8 @@ function createBaseGenesisState(): GenesisState {
   };
 }
 export const GenesisState = {
-  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.staking.v1beta1.GenesisState",
+  encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -88,8 +136,8 @@ export const GenesisState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -126,7 +174,7 @@ export const GenesisState = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<GenesisState>): GenesisState {
+  fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.lastTotalPower = object.lastTotalPower ?? new Uint8Array();
@@ -137,26 +185,98 @@ export const GenesisState = {
     message.redelegations = object.redelegations?.map(e => Redelegation.fromPartial(e)) || [];
     message.exported = object.exported ?? false;
     return message;
+  },
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    const message = createBaseGenesisState();
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    if (object.last_total_power !== undefined && object.last_total_power !== null) {
+      message.lastTotalPower = bytesFromBase64(object.last_total_power);
+    }
+    message.lastValidatorPowers = object.last_validator_powers?.map(e => LastValidatorPower.fromAmino(e)) || [];
+    message.validators = object.validators?.map(e => Validator.fromAmino(e)) || [];
+    message.delegations = object.delegations?.map(e => Delegation.fromAmino(e)) || [];
+    message.unbondingDelegations = object.unbonding_delegations?.map(e => UnbondingDelegation.fromAmino(e)) || [];
+    message.redelegations = object.redelegations?.map(e => Redelegation.fromAmino(e)) || [];
+    if (object.exported !== undefined && object.exported !== null) {
+      message.exported = object.exported;
+    }
+    return message;
+  },
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    obj.last_total_power = message.lastTotalPower ? base64FromBytes(message.lastTotalPower) : undefined;
+    if (message.lastValidatorPowers) {
+      obj.last_validator_powers = message.lastValidatorPowers.map(e => e ? LastValidatorPower.toAmino(e) : undefined);
+    } else {
+      obj.last_validator_powers = [];
+    }
+    if (message.validators) {
+      obj.validators = message.validators.map(e => e ? Validator.toAmino(e) : undefined);
+    } else {
+      obj.validators = [];
+    }
+    if (message.delegations) {
+      obj.delegations = message.delegations.map(e => e ? Delegation.toAmino(e) : undefined);
+    } else {
+      obj.delegations = [];
+    }
+    if (message.unbondingDelegations) {
+      obj.unbonding_delegations = message.unbondingDelegations.map(e => e ? UnbondingDelegation.toAmino(e) : undefined);
+    } else {
+      obj.unbonding_delegations = [];
+    }
+    if (message.redelegations) {
+      obj.redelegations = message.redelegations.map(e => e ? Redelegation.toAmino(e) : undefined);
+    } else {
+      obj.redelegations = [];
+    }
+    obj.exported = message.exported;
+    return obj;
+  },
+  fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {
+    return GenesisState.fromAmino(object.value);
+  },
+  toAminoMsg(message: GenesisState): GenesisStateAminoMsg {
+    return {
+      type: "cosmos-sdk/GenesisState",
+      value: GenesisState.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: GenesisStateProtoMsg): GenesisState {
+    return GenesisState.decode(message.value);
+  },
+  toProto(message: GenesisState): Uint8Array {
+    return GenesisState.encode(message).finish();
+  },
+  toProtoMsg(message: GenesisState): GenesisStateProtoMsg {
+    return {
+      typeUrl: "/cosmos.staking.v1beta1.GenesisState",
+      value: GenesisState.encode(message).finish()
+    };
   }
 };
 function createBaseLastValidatorPower(): LastValidatorPower {
   return {
     address: "",
-    power: Long.ZERO
+    power: BigInt(0)
   };
 }
 export const LastValidatorPower = {
-  encode(message: LastValidatorPower, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  typeUrl: "/cosmos.staking.v1beta1.LastValidatorPower",
+  encode(message: LastValidatorPower, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
-    if (!message.power.isZero()) {
+    if (message.power !== BigInt(0)) {
       writer.uint32(16).int64(message.power);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): LastValidatorPower {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): LastValidatorPower {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLastValidatorPower();
     while (reader.pos < end) {
@@ -166,7 +286,7 @@ export const LastValidatorPower = {
           message.address = reader.string();
           break;
         case 2:
-          message.power = (reader.int64() as Long);
+          message.power = reader.int64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -175,10 +295,47 @@ export const LastValidatorPower = {
     }
     return message;
   },
-  fromPartial(object: DeepPartial<LastValidatorPower>): LastValidatorPower {
+  fromPartial(object: Partial<LastValidatorPower>): LastValidatorPower {
     const message = createBaseLastValidatorPower();
     message.address = object.address ?? "";
-    message.power = object.power !== undefined && object.power !== null ? Long.fromValue(object.power) : Long.ZERO;
+    message.power = object.power !== undefined && object.power !== null ? BigInt(object.power.toString()) : BigInt(0);
     return message;
+  },
+  fromAmino(object: LastValidatorPowerAmino): LastValidatorPower {
+    const message = createBaseLastValidatorPower();
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    if (object.power !== undefined && object.power !== null) {
+      message.power = BigInt(object.power);
+    }
+    return message;
+  },
+  toAmino(message: LastValidatorPower): LastValidatorPowerAmino {
+    const obj: any = {};
+    obj.address = message.address;
+    obj.power = message.power ? message.power.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: LastValidatorPowerAminoMsg): LastValidatorPower {
+    return LastValidatorPower.fromAmino(object.value);
+  },
+  toAminoMsg(message: LastValidatorPower): LastValidatorPowerAminoMsg {
+    return {
+      type: "cosmos-sdk/LastValidatorPower",
+      value: LastValidatorPower.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: LastValidatorPowerProtoMsg): LastValidatorPower {
+    return LastValidatorPower.decode(message.value);
+  },
+  toProto(message: LastValidatorPower): Uint8Array {
+    return LastValidatorPower.encode(message).finish();
+  },
+  toProtoMsg(message: LastValidatorPower): LastValidatorPowerProtoMsg {
+    return {
+      typeUrl: "/cosmos.staking.v1beta1.LastValidatorPower",
+      value: LastValidatorPower.encode(message).finish()
+    };
   }
 };

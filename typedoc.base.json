@@ -1,10 +1,8 @@
 {
     "compilerOptions": {
-      "module": "Node16",
+      "module": "ES2022",
       "strict": true,
       "composite": true,
-  
-      // These options are necessary so that TypeDoc can resolve references across packages
       "declaration": true,
       "declarationMap": true
     }

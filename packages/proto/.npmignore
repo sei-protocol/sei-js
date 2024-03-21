@@ -18,9 +18,6 @@ __tests__
 .babelrc
 .babelrc.js
 .editorconfig
-.eslintignore
-.eslintrc
-.eslintrc.js
 .gitignore
 .travis.yml
 .vscode

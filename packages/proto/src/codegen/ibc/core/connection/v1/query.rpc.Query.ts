@@ -1,5 +1,5 @@
-import { Rpc } from "../../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { TxRpc } from "../../../../types";
+import { BinaryReader } from "../../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
 import { QueryConnectionRequest, QueryConnectionResponse, QueryConnectionsRequest, QueryConnectionsResponse, QueryClientConnectionsRequest, QueryClientConnectionsResponse, QueryConnectionClientStateRequest, QueryConnectionClientStateResponse, QueryConnectionConsensusStateRequest, QueryConnectionConsensusStateResponse } from "./query";
 /** Query provides defines the gRPC querier service */
@@ -25,8 +25,8 @@ export interface Query {
   connectionConsensusState(request: QueryConnectionConsensusStateRequest): Promise<QueryConnectionConsensusStateResponse>;
 }
 export class QueryClientImpl implements Query {
-  private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly rpc: TxRpc;
+  constructor(rpc: TxRpc) {
     this.rpc = rpc;
     this.connection = this.connection.bind(this);
     this.connections = this.connections.bind(this);
@@ -37,29 +37,29 @@ export class QueryClientImpl implements Query {
   connection(request: QueryConnectionRequest): Promise<QueryConnectionResponse> {
     const data = QueryConnectionRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "Connection", data);
-    return promise.then(data => QueryConnectionResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryConnectionResponse.decode(new BinaryReader(data)));
   }
   connections(request: QueryConnectionsRequest = {
     pagination: undefined
   }): Promise<QueryConnectionsResponse> {
     const data = QueryConnectionsRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "Connections", data);
-    return promise.then(data => QueryConnectionsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryConnectionsResponse.decode(new BinaryReader(data)));
   }
   clientConnections(request: QueryClientConnectionsRequest): Promise<QueryClientConnectionsResponse> {
     const data = QueryClientConnectionsRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "ClientConnections", data);
-    return promise.then(data => QueryClientConnectionsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryClientConnectionsResponse.decode(new BinaryReader(data)));
   }
   connectionClientState(request: QueryConnectionClientStateRequest): Promise<QueryConnectionClientStateResponse> {
     const data = QueryConnectionClientStateRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "ConnectionClientState", data);
-    return promise.then(data => QueryConnectionClientStateResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryConnectionClientStateResponse.decode(new BinaryReader(data)));
   }
   connectionConsensusState(request: QueryConnectionConsensusStateRequest): Promise<QueryConnectionConsensusStateResponse> {
     const data = QueryConnectionConsensusStateRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "ConnectionConsensusState", data);
-    return promise.then(data => QueryConnectionConsensusStateResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryConnectionConsensusStateResponse.decode(new BinaryReader(data)));
   }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {

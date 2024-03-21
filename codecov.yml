@@ -1,10 +1,10 @@
 flags:
   core:
     paths:
-      - packages/core/**
+      - packages/cosmjs/**
   react:
     paths:
-      - packages/react/**
+      - packages/evm/**
   proto:
     paths:
       - packages/proto/**
@@ -15,11 +15,11 @@ coverage:
       core:
         target: 80%
         flags:
-          - core
+          - cosmjs
       react:
         target: 80%
         flags:
-          - react
+          - evm
       proto:
         target: 80%
         flags:
