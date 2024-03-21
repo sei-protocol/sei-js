@@ -5999,6 +5999,15 @@
         "hash": "sha512-mSM/iKUk5fDDrEV/e83qY+Cr3I1+Q3qqTuEn++HAWYjEa1+NxZr6CNrcJGf2ZTnq4HoFGC3zaTPZTobCzCFukA=="
       }
     },
+    "npm:@types/bn.js": {
+      "type": "npm",
+      "name": "npm:@types/bn.js",
+      "data": {
+        "version": "5.1.5",
+        "packageName": "@types/bn.js",
+        "hash": "sha512-V46N0zwKRF5Q00AZ6hWtN0T8gGmDUaUzLWQvHFo5yThtVwK/VCenFY3wXVbOvNfajEpsTfQM4IN9k/d6gUVX3A=="
+      }
+    },
     "npm:@types/boxen": {
       "type": "npm",
       "name": "npm:@types/boxen",
@@ -6033,6 +6042,15 @@
         "version": "1.0.3",
         "packageName": "@types/dom-screen-wake-lock",
         "hash": "sha512-3Iten7X3Zgwvk6kh6/NRdwN7WbZ760YgFCsF5AxDifltUQzW1RaW+WRmcVtgwFzLjaNu64H+0MPJ13yRa8g3Dw=="
+      }
+    },
+    "npm:@types/elliptic": {
+      "type": "npm",
+      "name": "npm:@types/elliptic",
+      "data": {
+        "version": "6.4.18",
+        "packageName": "@types/elliptic",
+        "hash": "sha512-UseG6H5vjRiNpQvrhy4VF/JXdA3V/Fp5amvveaL+fs28BZ6xIKJBPnUPRlEaZpysD9MbpfaLi8lbl7PGUAkpWw=="
       }
     },
     "npm:@types/filesystem": {
@@ -6330,6 +6348,15 @@
         "version": "7.5.6",
         "packageName": "@types/semver",
         "hash": "sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A=="
+      }
+    },
+    "npm:@types/sha.js": {
+      "type": "npm",
+      "name": "npm:@types/sha.js",
+      "data": {
+        "version": "2.4.4",
+        "packageName": "@types/sha.js",
+        "hash": "sha512-Qukd+D6S2Hm0wLVt2Vh+/eWBIoUt+wF8jWjBsG4F8EFQRwKtYvtXCPcNl2OEUQ1R+eTr3xuSaBYUyM3WD1x/Qw=="
       }
     },
     "npm:@types/stack-utils": {
@@ -17355,6 +17382,11 @@
       },
       {
         "source": "@sei-js/cosmjs",
+        "target": "npm:@types/elliptic",
+        "type": "static"
+      },
+      {
+        "source": "@sei-js/cosmjs",
         "target": "npm:@types/jest",
         "type": "static"
       },
@@ -17366,6 +17398,11 @@
       {
         "source": "@sei-js/cosmjs",
         "target": "npm:@types/react-dom",
+        "type": "static"
+      },
+      {
+        "source": "@sei-js/cosmjs",
+        "target": "npm:@types/sha.js",
         "type": "static"
       },
       {
@@ -28647,6 +28684,13 @@
         "type": "static"
       }
     ],
+    "npm:@types/bn.js": [
+      {
+        "source": "npm:@types/bn.js",
+        "target": "npm:@types/node@20.10.0",
+        "type": "static"
+      }
+    ],
     "npm:@types/boxen": [
       {
         "source": "npm:@types/boxen",
@@ -28670,6 +28714,13 @@
       {
         "source": "npm:@types/debug",
         "target": "npm:@types/ms",
+        "type": "static"
+      }
+    ],
+    "npm:@types/elliptic": [
+      {
+        "source": "npm:@types/elliptic",
+        "target": "npm:@types/bn.js",
         "type": "static"
       }
     ],
@@ -28788,6 +28839,13 @@
     "npm:@types/secp256k1": [
       {
         "source": "npm:@types/secp256k1",
+        "target": "npm:@types/node@20.10.0",
+        "type": "static"
+      }
+    ],
+    "npm:@types/sha.js": [
+      {
+        "source": "npm:@types/sha.js",
         "target": "npm:@types/node@20.10.0",
         "type": "static"
       }

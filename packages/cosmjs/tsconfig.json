@@ -1,17 +1,12 @@
 {
-  "extends": "../../typedoc.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./dist/types",
-		"jsx": "react-jsx",
-		"jsxImportSource": "react",
-    "target": "esnext",
-    "esModuleInterop": true,
-    "moduleResolution": "NodeNext"
+    "outDir": "./dist/types"
   },
   "typedocOptions": {
     "readme": "./README.md",
     "name": "cosmjs",
     "entryPoints": ["src/index.ts"]
-  },
+  }
 }
 

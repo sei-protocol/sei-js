@@ -1,54 +1,21 @@
 {
   "run": {
-    "command": "nx affected:test --all --coverage --skip-nx-cache",
-    "startTime": "2024-03-21T06:07:55.181Z",
-    "endTime": "2024-03-21T06:08:04.731Z",
+    "command": "nx test --all --coverage --skip-nx-cache",
+    "startTime": "2024-03-21T06:41:12.580Z",
+    "endTime": "2024-03-21T06:41:41.262Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "@sei-js/proto:test",
-      "target": "test",
-      "projectName": "@sei-js/proto",
-      "hash": "4543870767516757437",
-      "startTime": "2024-03-21T06:07:55.184Z",
-      "endTime": "2024-03-21T06:07:56.337Z",
-      "params": "",
-      "cacheStatus": "cache-miss",
-      "status": 0
-    },
-    {
       "taskId": "workspace:test",
       "target": "test",
       "projectName": "workspace",
-      "hash": "8161925471837584538",
-      "startTime": "2024-03-21T06:07:56.338Z",
-      "endTime": "2024-03-21T06:07:58.746Z",
-      "params": "",
-      "cacheStatus": "cache-miss",
-      "status": 1
-    },
-    {
-      "taskId": "@sei-js/evm:test",
-      "target": "test",
-      "projectName": "@sei-js/evm",
-      "hash": "164321132755404158",
-      "startTime": "2024-03-21T06:07:55.184Z",
-      "endTime": "2024-03-21T06:07:59.997Z",
+      "hash": "9491656716705318592",
+      "startTime": "2024-03-21T06:41:12.584Z",
+      "endTime": "2024-03-21T06:41:41.262Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 0
-    },
-    {
-      "taskId": "@sei-js/cosmjs:test",
-      "target": "test",
-      "projectName": "@sei-js/cosmjs",
-      "hash": "7961573135699809181",
-      "startTime": "2024-03-21T06:07:55.184Z",
-      "endTime": "2024-03-21T06:08:04.728Z",
-      "params": "",
-      "cacheStatus": "cache-miss",
-      "status": 1
     }
   ]
 }

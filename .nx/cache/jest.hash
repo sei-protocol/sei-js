@@ -1,52 +1,4 @@
 {
-  "4812644345098564295": {
-    "test": {
-      "command": "jest",
-      "options": {
-        "cwd": "packages/cosmjs"
-      },
-      "cache": true,
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
-    }
-  },
-  "8879013106596236306": {
-    "test": {
-      "command": "jest",
-      "options": {
-        "cwd": "packages/evm"
-      },
-      "cache": true,
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
-    }
-  },
-  "14024176840299839285": {
-    "test": {
-      "command": "jest",
-      "options": {
-        "cwd": "."
-      },
-      "cache": true,
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
-    }
-  },
-  "14260206214335965942": {
-    "test": {
-      "command": "jest",
-      "options": {
-        "cwd": "."
-      },
-      "cache": true,
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
-    }
-  },
   "16937687953169754570": {
     "test": {
       "command": "jest",
@@ -59,7 +11,7 @@
       ]
     }
   },
-  "2971305440779527677": {
+  "9210865272751463978": {
     "test": {
       "command": "jest",
       "options": {
@@ -71,7 +23,7 @@
       ]
     }
   },
-  "890378465084408674": {
+  "14131289548123576345": {
     "test": {
       "command": "jest",
       "options": {
@@ -83,7 +35,7 @@
       ]
     }
   },
-  "2936917948143530288": {
+  "694847675562863053": {
     "test": {
       "command": "jest",
       "options": {
@@ -95,11 +47,11 @@
       ]
     }
   },
-  "6152597043417462447": {
+  "4367322672181447748": {
     "test": {
       "command": "jest",
       "options": {
-        "cwd": "packages/cosmjs"
+        "cwd": "."
       },
       "cache": true,
       "outputs": [
@@ -107,7 +59,55 @@
       ]
     }
   },
-  "5642190723570920627": {
+  "3042078716623768820": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4449356706213481221": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "3983397481284566549": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "7264610703408906983": {
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "."
+      },
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "4398654370320698275": {
     "test": {
       "command": "jest",
       "options": {

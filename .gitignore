@@ -5,7 +5,7 @@ packages/react/coverage
 packages/proto/coverage
 packages/core/coverage
 
-.nx
+.nx/
 
 # compiled output
 dist
