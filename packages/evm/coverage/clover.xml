@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1711001279925" clover="3.2.0">
+  <project timestamp="1711001279925" name="All files">
+    <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="1" coveredelements="1" complexity="0" loc="1" ncloc="1" packages="1" files="1" classes="1"/>
+    <file name="chainInfo.ts" path="/Users/carsonaberle/Development/sei/sei-js/packages/evm/src/chainInfo/chainInfo.ts">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="5" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

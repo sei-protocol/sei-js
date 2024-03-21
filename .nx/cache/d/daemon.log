@@ -12000,3 +12000,65 @@ Error: write EPIPE
 [NX Daemon Server] - 2024-03-21T05:53:35.408Z - Sending EndRun request
 [NX Daemon Server] - 2024-03-21T05:53:35.415Z - Closed a connection. Number of open connections: 0
 [NX Daemon Server] - 2024-03-21T05:53:35.551Z - Done sending EndRun request
+[NX Daemon Server] - 2024-03-21T05:57:13.151Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:07:54.001Z - Started listening on: /var/folders/h7/w4_0254s7tv1kzvzljh37jtm0000gn/T/ed5c6a17e5f812a581b3/d.sock
+[NX Daemon Server] - 2024-03-21T06:07:54.003Z - [WATCHER]: Subscribed to changes within: /Users/carsonaberle/Development/sei/sei-js (native)
+[NX Daemon Server] - 2024-03-21T06:07:54.010Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-03-21T06:07:54.010Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2024-03-21T06:07:54.011Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-03-21T06:07:54.012Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2024-03-21T06:07:54.012Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-03-21T06:07:54.013Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-21T06:07:54.013Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-21T06:07:54.348Z - Time taken for 'hash changed files from watcher' 0.6029999852180481ms
+[NX Daemon Server] - 2024-03-21T06:07:54.910Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2024-03-21T06:07:54.912Z - Time taken for 'total for creating and serializing project graph' 898.8176670074463ms
+[NX Daemon Server] - 2024-03-21T06:07:54.916Z - Done responding to the client project-graph
+[NX Daemon Server] - 2024-03-21T06:07:54.916Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 898. Response time: 6.
+[NX Daemon Server] - 2024-03-21T06:07:54.991Z - [REQUEST]: Responding to the client. handleRequestFileData
+[NX Daemon Server] - 2024-03-21T06:07:54.991Z - Done responding to the client handleRequestFileData
+[NX Daemon Server] - 2024-03-21T06:07:54.991Z - Handled REQUEST_FILE_DATA. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2024-03-21T06:07:55.157Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX Daemon Server] - 2024-03-21T06:07:55.157Z - Done responding to the client handleHashTasks
+[NX Daemon Server] - 2024-03-21T06:07:55.157Z - Handled HASH_TASKS. Handling time: 11. Response time: 0.
+[NX Daemon Server] - 2024-03-21T06:07:56.285Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:07:56.337Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:07:56.337Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:07:56.337Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2024-03-21T06:07:58.746Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:07:58.746Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:07:58.746Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2024-03-21T06:07:58.746Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:07:59.977Z - [WATCHER]: 12 file(s) created or restored, 0 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2024-03-21T06:07:59.977Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:07:59.997Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:07:59.997Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:07:59.997Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2024-03-21T06:08:00.080Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-03-21T06:08:00.080Z - [REQUEST]: packages/evm/coverage/lcov-report/prettify.js,packages/evm/coverage/clover.xml,packages/evm/coverage/lcov-report/sort-arrow-sprite.png,packages/evm/coverage/lcov-report/sorter.js,packages/evm/coverage/coverage-final.json,packages/evm/coverage/lcov-report/index.html,packages/evm/coverage/lcov-report/chainInfo.ts.html,packages/evm/coverage/lcov.info,packages/evm/coverage/lcov-report/prettify.css,packages/evm/coverage/lcov-report/block-navigation.js,packages/evm/coverage/lcov-report/base.css,packages/evm/coverage/lcov-report/favicon.png
+[NX Daemon Server] - 2024-03-21T06:08:00.080Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-21T06:08:00.190Z - Time taken for 'hash changed files from watcher' 1.3281660079956055ms
+[NX Daemon Server] - 2024-03-21T06:08:04.727Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:08:04.727Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2024-03-21T06:08:04.728Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2024-03-21T06:08:04.735Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2024-03-21T06:08:04.745Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:08:04.745Z - [WATCHER]: 20 file(s) created or restored, 0 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2024-03-21T06:08:04.848Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-03-21T06:08:04.848Z - [REQUEST]: packages/cosmjs/coverage/lcov-report/wallet/keplrVerification.ts.html,packages/cosmjs/coverage/lcov-report/favicon.png,packages/cosmjs/coverage/coverage-final.json,packages/cosmjs/coverage/lcov-report/sorter.js,packages/cosmjs/coverage/lcov.info,packages/cosmjs/coverage/lcov-report/utils/index.html,packages/cosmjs/coverage/lcov-report/prettify.js,packages/cosmjs/coverage/lcov-report/core/signingClient/stargateClient.ts.html,packages/cosmjs/coverage/lcov-report/index.html,packages/cosmjs/coverage/lcov-report/core/signingClient/cosmWasmClient.ts.html,packages/cosmjs/coverage/lcov-report/base.css,packages/cosmjs/coverage/lcov-report/utils/bech32.ts.html,packages/cosmjs/coverage/lcov-report/wallet/index.html,packages/cosmjs/coverage/clover.xml,packages/cosmjs/coverage/lcov-report/wallet/utils.ts.html,packages/cosmjs/coverage/lcov-report/block-navigation.js,packages/cosmjs/coverage/lcov-report/core/signingClient/index.html,packages/cosmjs/coverage/lcov-report/prettify.css,packages/cosmjs/coverage/lcov-report/wallet/wallet.ts.html,packages/cosmjs/coverage/lcov-report/sort-arrow-sprite.png
+[NX Daemon Server] - 2024-03-21T06:08:04.848Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-21T06:08:04.931Z - Time taken for 'hash changed files from watcher' 1.0154590010643005ms
+[NX Daemon Server] - 2024-03-21T06:16:58.579Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:18:52.286Z - [WATCHER]: 0 file(s) created or restored, 20 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2024-03-21T06:18:52.286Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:18:52.490Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-03-21T06:18:52.490Z - [REQUEST]: packages/cosmjs/coverage/lcov-report/prettify.js,packages/cosmjs/coverage/lcov-report/utils/bech32.ts.html,packages/cosmjs/coverage/lcov-report/wallet/index.html,packages/cosmjs/coverage/lcov-report/wallet/utils.ts.html,packages/cosmjs/coverage/lcov-report/sort-arrow-sprite.png,packages/cosmjs/coverage/lcov-report/wallet/wallet.ts.html,packages/cosmjs/coverage/lcov-report/prettify.css,packages/cosmjs/coverage/lcov.info,packages/cosmjs/coverage/clover.xml,packages/cosmjs/coverage/lcov-report/utils/index.html,packages/cosmjs/coverage/lcov-report/block-navigation.js,packages/cosmjs/coverage/lcov-report/index.html,packages/cosmjs/coverage/lcov-report/base.css,packages/cosmjs/coverage/lcov-report/favicon.png,packages/cosmjs/coverage/lcov-report/core/signingClient/cosmWasmClient.ts.html,packages/cosmjs/coverage/coverage-final.json,packages/cosmjs/coverage/lcov-report/wallet/keplrVerification.ts.html,packages/cosmjs/coverage/lcov-report/core/signingClient/stargateClient.ts.html,packages/cosmjs/coverage/lcov-report/sorter.js,packages/cosmjs/coverage/lcov-report/core/signingClient/index.html
+[NX Daemon Server] - 2024-03-21T06:18:52.490Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-21T06:18:52.561Z - Time taken for 'hash changed files from watcher' 1.8705000281333923ms
+[NX Daemon Server] - 2024-03-21T06:20:29.900Z - [WATCHER]: package.json was modified
+[NX Daemon Server] - 2024-03-21T06:20:29.901Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:20:30.301Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-03-21T06:20:30.301Z - [REQUEST]: package.json
+[NX Daemon Server] - 2024-03-21T06:20:30.301Z - [REQUEST]: 
+[NX Daemon Server] - 2024-03-21T06:20:30.350Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-03-21T06:20:30.350Z - Time taken for 'hash changed files from watcher' 0.39112502336502075ms

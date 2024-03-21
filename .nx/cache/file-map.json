@@ -60,236 +60,77 @@
   "fileMap": {
     "nonProjectFiles": [],
     "projectFileMap": {
-      "@sei-js/cli": [
+      "test-vite-cosmjs-mantine": [
         {
-          "file": "packages/cli/.gitignore",
-          "hash": "15412792236914324222"
+          "file": "packages/cli/test-vite-cosmjs-mantine/.eslintrc.cjs",
+          "hash": "18224317155734308275"
         },
         {
-          "file": "packages/cli/CHANGELOG.md",
-          "hash": "120370134287353867"
+          "file": "packages/cli/test-vite-cosmjs-mantine/.gitignore",
+          "hash": "13046175384202504187"
         },
         {
-          "file": "packages/cli/README.md",
-          "hash": "3244421341483603138"
+          "file": "packages/cli/test-vite-cosmjs-mantine/README.md",
+          "hash": "11460966644741158790"
         },
         {
-          "file": "packages/cli/package.json",
-          "hash": "5406231041007397455",
+          "file": "packages/cli/test-vite-cosmjs-mantine/index.html",
+          "hash": "4025202329384162906"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/package.json",
+          "hash": "3020042822048761968",
           "deps": [
             "npm:@cosmos-kit/react",
             "@sei-js/cosmjs",
-            "npm:boxen",
-            "npm:inquirer",
+            "npm:cosmos-kit",
+            "npm:react",
+            "npm:react-dom",
             "npm:@esbuild-plugins/node-globals-polyfill",
-            "npm:@tanstack/react-query",
-            "npm:@types/boxen",
-            "npm:@types/inquirer",
-            "npm:autoprefixer",
-            "npm:cosmos-kit",
-            "npm:degit",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:eslint",
             "npm:postcss",
-            "npm:tailwindcss",
-            "npm:viem",
-            "npm:wagmi"
+            "npm:typescript"
           ]
         },
         {
-          "file": "packages/cli/src/main.ts",
-          "hash": "3713503109881486210",
-          "deps": [
-            "npm:inquirer",
-            "npm:boxen",
-            "npm:path",
-            "npm:fs"
-          ]
+          "file": "packages/cli/test-vite-cosmjs-mantine/public/vite.svg",
+          "hash": "16046085400642193116"
         },
         {
-          "file": "packages/cli/src/setup/frontend.ts",
-          "hash": "1872525862227800830",
-          "deps": [
-            "npm:util",
-            "npm:child_process",
-            "npm:inquirer",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/rpcIntegrations.ts",
-          "hash": "880966531342218763",
-          "deps": [
-            "npm:inquirer",
-            "npm:child_process",
-            "npm:util",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/stylingFrameworks.ts",
-          "hash": "1364600448378848380",
-          "deps": [
-            "npm:inquirer",
-            "npm:child_process",
-            "npm:util",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/uiComponentLibraries.ts",
-          "hash": "5044201984655764154",
-          "deps": [
-            "npm:inquirer",
-            "npm:util",
-            "npm:child_process",
-            "npm:path",
-            "npm:fs"
-          ]
-        },
-        {
-          "file": "packages/cli/src/setup/walletConnectButton.ts",
-          "hash": "17509464576435051800",
-          "deps": [
-            "npm:fs",
-            "npm:path"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/components/cosmjs.tsx",
-          "hash": "7574467660244208454",
-          "deps": [
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/components/evm.tsx",
-          "hash": "18050443899707350499",
-          "deps": [
-            "npm:wagmi"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/mantine/postcss.config.js",
-          "hash": "8854197412821501406"
-        },
-        {
-          "file": "packages/cli/templates/next-app-tailwind.tsx",
-          "hash": "11415325670893637895",
-          "deps": [
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/next-app.tsx",
-          "hash": "3479942692773767615",
-          "deps": [
-            "npm:@mantine/core/styles.css"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/next-main.tsx",
-          "hash": "1217111479534240036",
-          "deps": [
-            "npm:next/app"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/providers/cosmjs.tsx",
-          "hash": "10478227668018700911",
-          "deps": [
-            "npm:@cosmos-kit/react",
-            "npm:cosmos-kit",
-            "npm:react",
-            "@sei-js/cosmjs"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/providers/evm.tsx",
-          "hash": "3672023099093471360",
-          "deps": [
-            "npm:react",
-            "npm:wagmi",
-            "npm:@tanstack/react-query",
-            "@sei-js/evm"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/styles/defaults-mantine.css",
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.css",
           "hash": "10904518076393673880"
         },
         {
-          "file": "packages/cli/templates/styles/defaults-next.css",
-          "hash": "601473408680314598"
-        },
-        {
-          "file": "packages/cli/templates/styles/defaults-vite-css.css",
-          "hash": "12334440410769162212"
-        },
-        {
-          "file": "packages/cli/templates/styles/defaults-vite.css",
-          "hash": "17322417069250368579"
-        },
-        {
-          "file": "packages/cli/templates/tailwind/config-nextjs.ts",
-          "hash": "14378259236105805895"
-        },
-        {
-          "file": "packages/cli/templates/tailwind/config-vite.ts",
-          "hash": "14819688527020775707"
-        },
-        {
-          "file": "packages/cli/templates/vite-app-cosmjs-css.tsx",
-          "hash": "8142200763437999000",
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.tsx",
+          "hash": "3237755724182633019",
           "deps": [
-            "npm:react",
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/vite-app-cosmjs-mantine.tsx",
-          "hash": "18175150840668463846",
-          "deps": [
+            "npm:@interchain-ui/react/styles",
             "npm:@cosmos-kit/react",
             "npm:@mantine/hooks",
             "npm:@mantine/core"
           ]
         },
         {
-          "file": "packages/cli/templates/vite-app-cosmjs-tailwind.tsx",
-          "hash": "17225446941157479271",
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/assets/react.svg",
+          "hash": "16069471864800376455"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/components/WalletConnectButton.tsx",
+          "hash": "7574467660244208454",
           "deps": [
-            "npm:@interchain-ui/react/styles",
             "npm:@cosmos-kit/react"
           ]
         },
         {
-          "file": "packages/cli/templates/vite-app-evm-css.tsx",
-          "hash": "6833794302830396240",
-          "deps": [
-            "npm:react",
-            "npm:wagmi"
-          ]
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/index.css",
+          "hash": "957896817323665666"
         },
         {
-          "file": "packages/cli/templates/vite-app-evm-mantine.tsx",
-          "hash": "2945162569893856188",
-          "deps": [
-            "npm:@mantine/hooks",
-            "npm:@mantine/core",
-            "npm:wagmi"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/vite-app-evm-tailwind.tsx",
-          "hash": "16658314923407791299",
-          "deps": [
-            "npm:wagmi"
-          ]
-        },
-        {
-          "file": "packages/cli/templates/vite-main-mantine.tsx",
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/main.tsx",
           "hash": "13381385879470397477",
           "deps": [
             "npm:react",
@@ -299,15 +140,29 @@
           ]
         },
         {
-          "file": "packages/cli/templates/vite-main.tsx",
-          "hash": "13933943102605933451",
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/providers/WalletProvider.tsx",
+          "hash": "10478227668018700911",
           "deps": [
+            "npm:@cosmos-kit/react",
+            "npm:cosmos-kit",
             "npm:react",
-            "npm:react-dom"
+            "npm:@sei-js/cosmjs"
           ]
         },
         {
-          "file": "packages/cli/templates/vite/config.ts",
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.json",
+          "hash": "14032556756270793734"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.node.json",
+          "hash": "4208030242441905014"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/vite.config.ts",
           "hash": "7751163001201656816",
           "deps": [
             "npm:vite",
@@ -316,185 +171,8 @@
           ]
         },
         {
-          "file": "packages/cli/tsconfig.json",
-          "hash": "16854617947789079458"
-        }
-      ],
-      "workspace": [
-        {
-          "file": ".changeset/README.md",
-          "hash": "4888845876018830777"
-        },
-        {
-          "file": ".changeset/config.json",
-          "hash": "11898648829354806339"
-        },
-        {
-          "file": ".editorconfig",
-          "hash": "5443105041930014821"
-        },
-        {
-          "file": ".eslintignore",
-          "hash": "7663861978715868291"
-        },
-        {
-          "file": ".eslintrc.base.json",
-          "hash": "17722112666649925219"
-        },
-        {
-          "file": ".eslintrc.json",
-          "hash": "966013245893916685"
-        },
-        {
-          "file": ".github/ISSUE_TEMPLATE/bug_report.md",
-          "hash": "4994310711565563414"
-        },
-        {
-          "file": ".github/workflows/checks.yml",
-          "hash": "11352175122225821775"
-        },
-        {
-          "file": ".github/workflows/coverage.yml",
-          "hash": "4408250068478511439"
-        },
-        {
-          "file": ".github/workflows/deploydocs.yml",
-          "hash": "2563622505854932440"
-        },
-        {
-          "file": ".github/workflows/release.yml",
-          "hash": "7645271809251993536"
-        },
-        {
-          "file": ".gitignore",
-          "hash": "12395014417388060107"
-        },
-        {
-          "file": ".nvmrc",
-          "hash": "16887447689433830851"
-        },
-        {
-          "file": ".prettierignore",
-          "hash": "8783679128000005734"
-        },
-        {
-          "file": ".prettierrc",
-          "hash": "2830453978702584531"
-        },
-        {
-          "file": ".vscode/extensions.json",
-          "hash": "4637156562308165301"
-        },
-        {
-          "file": "CHANGELOG.md",
-          "hash": "7029576165764549660"
-        },
-        {
-          "file": "EXAMPLES.md",
-          "hash": "13921332029242299984"
-        },
-        {
-          "file": "README.md",
-          "hash": "8093241485592907463"
-        },
-        {
-          "file": "TYPEDOC-README.md",
-          "hash": "9096096729159368899"
-        },
-        {
-          "file": "codecov.yml",
-          "hash": "11423399279121125850"
-        },
-        {
-          "file": "jest.config.ts",
-          "hash": "6837822589450354725",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "jest.preset.js",
-          "hash": "9430166341120122740",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "nx.json",
-          "hash": "15869658554639297772"
-        },
-        {
-          "file": "package.json",
-          "hash": "15426415907148682809",
-          "deps": [
-            "npm:@changesets/cli",
-            "npm:axios",
-            "npm:glob",
-            "npm:tslib",
-            "npm:@knodes/typedoc-plugin-pages",
-            "npm:@nrwl/node",
-            "npm:@nrwl/nx-cloud",
-            "npm:@nrwl/workspace",
-            "npm:@nx/esbuild",
-            "npm:@nx/eslint",
-            "npm:@nx/eslint-plugin",
-            "npm:@nx/jest",
-            "npm:@nx/js",
-            "npm:@nx/node",
-            "npm:@swc-node/register",
-            "npm:@swc/core",
-            "npm:@swc/helpers",
-            "npm:@types/jest",
-            "npm:@types/node",
-            "npm:@typescript-eslint/eslint-plugin",
-            "npm:@typescript-eslint/parser",
-            "npm:esbuild",
-            "npm:eslint",
-            "npm:eslint-config-prettier",
-            "npm:jest",
-            "npm:jest-environment-jsdom",
-            "npm:jest-environment-node",
-            "npm:nodemon",
-            "npm:nx",
-            "npm:prettier",
-            "npm:rimraf",
-            "npm:ts-jest",
-            "npm:ts-node",
-            "npm:typedoc",
-            "npm:typedoc-material-theme",
-            "npm:typedoc-plugin-pages",
-            "npm:typedoc-theme-category-nav",
-            "npm:typedoc-theme-hierarchy",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "packages/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "project.json",
-          "hash": "596287135512902265"
-        },
-        {
-          "file": "tsconfig.base.json",
-          "hash": "8816841557177337104"
-        },
-        {
-          "file": "typedoc.base.json",
-          "hash": "2300223296991191619"
-        },
-        {
-          "file": "typedoc.config.js",
-          "hash": "10754063165786003956"
-        },
-        {
-          "file": "typedoc.theme.css",
-          "hash": "10582931171413783769"
-        },
-        {
-          "file": "yarn.lock",
-          "hash": "12804766048408756129"
+          "file": "packages/cli/test-vite-cosmjs-mantine/yarn.lock",
+          "hash": "9905675192492263449"
         }
       ],
       "@sei-js/cosmjs": [
@@ -777,79 +455,692 @@
         {
           "file": "packages/cosmjs/tsconfig.json",
           "hash": "6117755122305116139"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/prettify.js",
+          "hash": "15884788582061322779"
+        },
+        {
+          "file": "packages/cosmjs/coverage/clover.xml",
+          "hash": "17542885592564617026"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/prettify.css",
+          "hash": "8163588510556258587"
+        },
+        {
+          "file": "packages/cosmjs/coverage/coverage-final.json",
+          "hash": "16414240167467936495"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/wallet.ts.html",
+          "hash": "7477976396338304344"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/utils.ts.html",
+          "hash": "12427164661974233637"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/sort-arrow-sprite.png",
+          "hash": "254831142482329146"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/sorter.js",
+          "hash": "17053119163225536857"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/index.html",
+          "hash": "3490613410250309640"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov.info",
+          "hash": "7699821624558026750"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/utils/bech32.ts.html",
+          "hash": "16281462510224821397"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/favicon.png",
+          "hash": "13402560043085226048"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/index.html",
+          "hash": "13237073768454616197"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/index.html",
+          "hash": "1527944173702352933"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/base.css",
+          "hash": "6204767174569381253"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/cosmWasmClient.ts.html",
+          "hash": "3581439906186774125"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/stargateClient.ts.html",
+          "hash": "2897276322671189401"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/keplrVerification.ts.html",
+          "hash": "11606847511778097731"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/utils/index.html",
+          "hash": "10548494686205437993"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/block-navigation.js",
+          "hash": "1801078621803424330"
         }
       ],
-      "test-vite-cosmjs-mantine": [
+      "@sei-js/evm": [
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/.eslintrc.cjs",
-          "hash": "18224317155734308275"
+          "file": "packages/evm/.babelrc.js",
+          "hash": "4638744510834633633"
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/.gitignore",
-          "hash": "13046175384202504187"
+          "file": "packages/evm/.gitkeep",
+          "hash": "3244421341483603138"
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/README.md",
-          "hash": "11460966644741158790"
+          "file": "packages/evm/.npmignore",
+          "hash": "17948297527781443299"
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/index.html",
-          "hash": "4025202329384162906"
+          "file": "packages/evm/CHANGELOG.md",
+          "hash": "2227664941370985313"
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/package.json",
-          "hash": "3020042822048761968",
+          "file": "packages/evm/README.md",
+          "hash": "2304421174447500960"
+        },
+        {
+          "file": "packages/evm/jest.config.ts",
+          "hash": "12381679649627596485"
+        },
+        {
+          "file": "packages/evm/package.json",
+          "hash": "796712455943990133",
           "deps": [
-            "npm:@cosmos-kit/react",
-            "@sei-js/cosmjs",
-            "npm:cosmos-kit",
-            "npm:react",
-            "npm:react-dom",
-            "npm:@esbuild-plugins/node-globals-polyfill",
-            "npm:@types/react",
-            "npm:@types/react-dom",
+            "npm:ethers",
+            "npm:viem",
+            "npm:@babel/core",
+            "npm:@babel/plugin-transform-runtime",
+            "npm:@babel/preset-env",
+            "npm:@babel/preset-typescript",
+            "npm:@types/jest",
+            "npm:jest",
+            "npm:prettier",
+            "npm:ts-jest"
+          ]
+        },
+        {
+          "file": "packages/evm/src/chainInfo/__tests__/chainInfo.spec.ts",
+          "hash": "10411339941988620049"
+        },
+        {
+          "file": "packages/evm/src/chainInfo/chainInfo.ts",
+          "hash": "562642144892992273"
+        },
+        {
+          "file": "packages/evm/src/chainInfo/index.ts",
+          "hash": "8801795190589789093"
+        },
+        {
+          "file": "packages/evm/src/index.ts",
+          "hash": "12278367612139455538"
+        },
+        {
+          "file": "packages/evm/src/precompiles/address.ts",
+          "hash": "594457089732215999",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/bank.ts",
+          "hash": "4225224641645477965",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/distribution.ts",
+          "hash": "1436943723789486783",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/governance.ts",
+          "hash": "4885314429406605427",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/index.ts",
+          "hash": "8790027785368875524"
+        },
+        {
+          "file": "packages/evm/src/precompiles/json.ts",
+          "hash": "1614997647146550493",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/staking.ts",
+          "hash": "9149139339174047381",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/precompiles/wasm.ts",
+          "hash": "3448357288319185300",
+          "deps": [
+            "npm:ethers",
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/providers/index.ts",
+          "hash": "13517733170728051951"
+        },
+        {
+          "file": "packages/evm/src/providers/viem.ts",
+          "hash": "4742219174031979106",
+          "deps": [
+            "npm:viem"
+          ]
+        },
+        {
+          "file": "packages/evm/src/providers/wagmi.ts",
+          "hash": "12082316220154749425",
+          "deps": [
+            "npm:viem",
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/evm/src/utils/index.ts",
+          "hash": "12648313856129369785"
+        },
+        {
+          "file": "packages/evm/src/utils/parse.ts",
+          "hash": "9127903358539077285"
+        },
+        {
+          "file": "packages/evm/tsconfig.json",
+          "hash": "6511372199017497614"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/chainInfo.ts.html",
+          "hash": "17828224734775853217"
+        },
+        {
+          "file": "packages/evm/coverage/clover.xml",
+          "hash": "1953374412905172586"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/sort-arrow-sprite.png",
+          "hash": "254831142482329146"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/base.css",
+          "hash": "6204767174569381253"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/sorter.js",
+          "hash": "17053119163225536857"
+        },
+        {
+          "file": "packages/evm/coverage/coverage-final.json",
+          "hash": "1479378722292048996"
+        },
+        {
+          "file": "packages/evm/coverage/lcov.info",
+          "hash": "1025589479771650251"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/index.html",
+          "hash": "7666397898556491069"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/favicon.png",
+          "hash": "13402560043085226048"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/prettify.css",
+          "hash": "8163588510556258587"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/prettify.js",
+          "hash": "15884788582061322779"
+        },
+        {
+          "file": "packages/evm/coverage/lcov-report/block-navigation.js",
+          "hash": "1801078621803424330"
+        }
+      ],
+      "workspace": [
+        {
+          "file": ".changeset/README.md",
+          "hash": "4888845876018830777"
+        },
+        {
+          "file": ".changeset/config.json",
+          "hash": "11898648829354806339"
+        },
+        {
+          "file": ".editorconfig",
+          "hash": "5443105041930014821"
+        },
+        {
+          "file": ".eslintignore",
+          "hash": "7663861978715868291"
+        },
+        {
+          "file": ".eslintrc.base.json",
+          "hash": "17722112666649925219"
+        },
+        {
+          "file": ".eslintrc.json",
+          "hash": "966013245893916685"
+        },
+        {
+          "file": ".github/ISSUE_TEMPLATE/bug_report.md",
+          "hash": "4994310711565563414"
+        },
+        {
+          "file": ".github/workflows/checks.yml",
+          "hash": "11352175122225821775"
+        },
+        {
+          "file": ".github/workflows/coverage.yml",
+          "hash": "4408250068478511439"
+        },
+        {
+          "file": ".github/workflows/deploydocs.yml",
+          "hash": "2563622505854932440"
+        },
+        {
+          "file": ".github/workflows/release.yml",
+          "hash": "7645271809251993536"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "12395014417388060107"
+        },
+        {
+          "file": ".nvmrc",
+          "hash": "16887447689433830851"
+        },
+        {
+          "file": ".prettierignore",
+          "hash": "8783679128000005734"
+        },
+        {
+          "file": ".prettierrc",
+          "hash": "2830453978702584531"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "4637156562308165301"
+        },
+        {
+          "file": "CHANGELOG.md",
+          "hash": "7029576165764549660"
+        },
+        {
+          "file": "EXAMPLES.md",
+          "hash": "13921332029242299984"
+        },
+        {
+          "file": "README.md",
+          "hash": "8093241485592907463"
+        },
+        {
+          "file": "TYPEDOC-README.md",
+          "hash": "9096096729159368899"
+        },
+        {
+          "file": "codecov.yml",
+          "hash": "11423399279121125850"
+        },
+        {
+          "file": "jest.config.ts",
+          "hash": "6837822589450354725",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "jest.preset.js",
+          "hash": "9430166341120122740",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "nx.json",
+          "hash": "15869658554639297772"
+        },
+        {
+          "file": "package.json",
+          "hash": "9947329275637979021",
+          "deps": [
+            "npm:@changesets/cli",
+            "npm:axios",
+            "npm:glob",
+            "npm:tslib",
+            "npm:@knodes/typedoc-plugin-pages",
+            "npm:@nrwl/node",
+            "npm:@nrwl/nx-cloud",
+            "npm:@nrwl/workspace",
+            "npm:@nx/esbuild",
+            "npm:@nx/eslint",
+            "npm:@nx/eslint-plugin",
+            "npm:@nx/jest",
+            "npm:@nx/js",
+            "npm:@nx/node",
+            "npm:@swc-node/register",
+            "npm:@swc/core",
+            "npm:@swc/helpers",
+            "npm:@types/jest",
+            "npm:@types/node",
             "npm:@typescript-eslint/eslint-plugin",
             "npm:@typescript-eslint/parser",
+            "npm:esbuild",
             "npm:eslint",
-            "npm:postcss",
+            "npm:eslint-config-prettier",
+            "npm:jest",
+            "npm:jest-environment-jsdom",
+            "npm:jest-environment-node",
+            "npm:nodemon",
+            "npm:nx",
+            "npm:prettier",
+            "npm:rimraf",
+            "npm:ts-jest",
+            "npm:ts-node",
+            "npm:typedoc",
+            "npm:typedoc-material-theme",
+            "npm:typedoc-plugin-pages",
+            "npm:typedoc-theme-category-nav",
+            "npm:typedoc-theme-hierarchy",
             "npm:typescript"
           ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/public/vite.svg",
-          "hash": "16046085400642193116"
+          "file": "packages/.gitkeep",
+          "hash": "3244421341483603138"
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.css",
-          "hash": "10904518076393673880"
+          "file": "project.json",
+          "hash": "596287135512902265"
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.tsx",
-          "hash": "3237755724182633019",
+          "file": "tsconfig.base.json",
+          "hash": "8816841557177337104"
+        },
+        {
+          "file": "typedoc.base.json",
+          "hash": "2300223296991191619"
+        },
+        {
+          "file": "typedoc.config.js",
+          "hash": "10754063165786003956"
+        },
+        {
+          "file": "typedoc.theme.css",
+          "hash": "10582931171413783769"
+        },
+        {
+          "file": "yarn.lock",
+          "hash": "5032571814990191538"
+        }
+      ],
+      "@sei-js/cli": [
+        {
+          "file": "packages/cli/.gitignore",
+          "hash": "15412792236914324222"
+        },
+        {
+          "file": "packages/cli/CHANGELOG.md",
+          "hash": "120370134287353867"
+        },
+        {
+          "file": "packages/cli/README.md",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/cli/package.json",
+          "hash": "5406231041007397455",
           "deps": [
-            "npm:@interchain-ui/react/styles",
             "npm:@cosmos-kit/react",
-            "npm:@mantine/hooks",
-            "npm:@mantine/core"
+            "@sei-js/cosmjs",
+            "npm:boxen",
+            "npm:inquirer",
+            "npm:@esbuild-plugins/node-globals-polyfill",
+            "npm:@tanstack/react-query",
+            "npm:@types/boxen",
+            "npm:@types/inquirer",
+            "npm:autoprefixer",
+            "npm:cosmos-kit",
+            "npm:degit",
+            "npm:postcss",
+            "npm:tailwindcss",
+            "npm:viem",
+            "npm:wagmi"
           ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/assets/react.svg",
-          "hash": "16069471864800376455"
+          "file": "packages/cli/src/main.ts",
+          "hash": "3713503109881486210",
+          "deps": [
+            "npm:inquirer",
+            "npm:boxen",
+            "npm:path",
+            "npm:fs"
+          ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/components/WalletConnectButton.tsx",
+          "file": "packages/cli/src/setup/frontend.ts",
+          "hash": "1872525862227800830",
+          "deps": [
+            "npm:util",
+            "npm:child_process",
+            "npm:inquirer",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/rpcIntegrations.ts",
+          "hash": "880966531342218763",
+          "deps": [
+            "npm:inquirer",
+            "npm:child_process",
+            "npm:util",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/stylingFrameworks.ts",
+          "hash": "1364600448378848380",
+          "deps": [
+            "npm:inquirer",
+            "npm:child_process",
+            "npm:util",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/uiComponentLibraries.ts",
+          "hash": "5044201984655764154",
+          "deps": [
+            "npm:inquirer",
+            "npm:util",
+            "npm:child_process",
+            "npm:path",
+            "npm:fs"
+          ]
+        },
+        {
+          "file": "packages/cli/src/setup/walletConnectButton.ts",
+          "hash": "17509464576435051800",
+          "deps": [
+            "npm:fs",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/components/cosmjs.tsx",
           "hash": "7574467660244208454",
           "deps": [
             "npm:@cosmos-kit/react"
           ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/index.css",
-          "hash": "957896817323665666"
+          "file": "packages/cli/templates/components/evm.tsx",
+          "hash": "18050443899707350499",
+          "deps": [
+            "npm:wagmi"
+          ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/main.tsx",
+          "file": "packages/cli/templates/mantine/postcss.config.js",
+          "hash": "8854197412821501406"
+        },
+        {
+          "file": "packages/cli/templates/next-app-tailwind.tsx",
+          "hash": "11415325670893637895",
+          "deps": [
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/next-app.tsx",
+          "hash": "3479942692773767615",
+          "deps": [
+            "npm:@mantine/core/styles.css"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/next-main.tsx",
+          "hash": "1217111479534240036",
+          "deps": [
+            "npm:next/app"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/providers/cosmjs.tsx",
+          "hash": "10478227668018700911",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "npm:cosmos-kit",
+            "npm:react",
+            "@sei-js/cosmjs"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/providers/evm.tsx",
+          "hash": "3672023099093471360",
+          "deps": [
+            "npm:react",
+            "npm:wagmi",
+            "npm:@tanstack/react-query",
+            "@sei-js/evm"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-mantine.css",
+          "hash": "10904518076393673880"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-next.css",
+          "hash": "601473408680314598"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-vite-css.css",
+          "hash": "12334440410769162212"
+        },
+        {
+          "file": "packages/cli/templates/styles/defaults-vite.css",
+          "hash": "17322417069250368579"
+        },
+        {
+          "file": "packages/cli/templates/tailwind/config-nextjs.ts",
+          "hash": "14378259236105805895"
+        },
+        {
+          "file": "packages/cli/templates/tailwind/config-vite.ts",
+          "hash": "14819688527020775707"
+        },
+        {
+          "file": "packages/cli/templates/vite-app-cosmjs-css.tsx",
+          "hash": "8142200763437999000",
+          "deps": [
+            "npm:react",
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-cosmjs-mantine.tsx",
+          "hash": "18175150840668463846",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "npm:@mantine/hooks",
+            "npm:@mantine/core"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-cosmjs-tailwind.tsx",
+          "hash": "17225446941157479271",
+          "deps": [
+            "npm:@interchain-ui/react/styles",
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-evm-css.tsx",
+          "hash": "6833794302830396240",
+          "deps": [
+            "npm:react",
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-evm-mantine.tsx",
+          "hash": "2945162569893856188",
+          "deps": [
+            "npm:@mantine/hooks",
+            "npm:@mantine/core",
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-app-evm-tailwind.tsx",
+          "hash": "16658314923407791299",
+          "deps": [
+            "npm:wagmi"
+          ]
+        },
+        {
+          "file": "packages/cli/templates/vite-main-mantine.tsx",
           "hash": "13381385879470397477",
           "deps": [
             "npm:react",
@@ -859,29 +1150,15 @@
           ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/providers/WalletProvider.tsx",
-          "hash": "10478227668018700911",
+          "file": "packages/cli/templates/vite-main.tsx",
+          "hash": "13933943102605933451",
           "deps": [
-            "npm:@cosmos-kit/react",
-            "npm:cosmos-kit",
             "npm:react",
-            "npm:@sei-js/cosmjs"
+            "npm:react-dom"
           ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/vite-env.d.ts",
-          "hash": "12946363841406869089"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.json",
-          "hash": "14032556756270793734"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.node.json",
-          "hash": "4208030242441905014"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/vite.config.ts",
+          "file": "packages/cli/templates/vite/config.ts",
           "hash": "7751163001201656816",
           "deps": [
             "npm:vite",
@@ -890,8 +1167,8 @@
           ]
         },
         {
-          "file": "packages/cli/test-vite-cosmjs-mantine/yarn.lock",
-          "hash": "9905675192492263449"
+          "file": "packages/cli/tsconfig.json",
+          "hash": "16854617947789079458"
         }
       ],
       "@sei-js/proto": [
@@ -2995,155 +3272,6 @@
         {
           "file": "packages/proto/tsconfig.json",
           "hash": "3886332946002976876"
-        }
-      ],
-      "@sei-js/evm": [
-        {
-          "file": "packages/evm/.babelrc.js",
-          "hash": "4638744510834633633"
-        },
-        {
-          "file": "packages/evm/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "packages/evm/.npmignore",
-          "hash": "17948297527781443299"
-        },
-        {
-          "file": "packages/evm/CHANGELOG.md",
-          "hash": "2227664941370985313"
-        },
-        {
-          "file": "packages/evm/README.md",
-          "hash": "2304421174447500960"
-        },
-        {
-          "file": "packages/evm/jest.config.ts",
-          "hash": "12381679649627596485"
-        },
-        {
-          "file": "packages/evm/package.json",
-          "hash": "796712455943990133",
-          "deps": [
-            "npm:ethers",
-            "npm:viem",
-            "npm:@babel/core",
-            "npm:@babel/plugin-transform-runtime",
-            "npm:@babel/preset-env",
-            "npm:@babel/preset-typescript",
-            "npm:@types/jest",
-            "npm:jest",
-            "npm:prettier",
-            "npm:ts-jest"
-          ]
-        },
-        {
-          "file": "packages/evm/src/chainInfo/__tests__/chainInfo.spec.ts",
-          "hash": "10411339941988620049"
-        },
-        {
-          "file": "packages/evm/src/chainInfo/chainInfo.ts",
-          "hash": "562642144892992273"
-        },
-        {
-          "file": "packages/evm/src/chainInfo/index.ts",
-          "hash": "8801795190589789093"
-        },
-        {
-          "file": "packages/evm/src/index.ts",
-          "hash": "12278367612139455538"
-        },
-        {
-          "file": "packages/evm/src/precompiles/address.ts",
-          "hash": "594457089732215999",
-          "deps": [
-            "npm:ethers",
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/precompiles/bank.ts",
-          "hash": "4225224641645477965",
-          "deps": [
-            "npm:ethers",
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/precompiles/distribution.ts",
-          "hash": "1436943723789486783",
-          "deps": [
-            "npm:ethers",
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/precompiles/governance.ts",
-          "hash": "4885314429406605427",
-          "deps": [
-            "npm:ethers",
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/precompiles/index.ts",
-          "hash": "8790027785368875524"
-        },
-        {
-          "file": "packages/evm/src/precompiles/json.ts",
-          "hash": "1614997647146550493",
-          "deps": [
-            "npm:ethers",
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/precompiles/staking.ts",
-          "hash": "9149139339174047381",
-          "deps": [
-            "npm:ethers",
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/precompiles/wasm.ts",
-          "hash": "3448357288319185300",
-          "deps": [
-            "npm:ethers",
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/providers/index.ts",
-          "hash": "13517733170728051951"
-        },
-        {
-          "file": "packages/evm/src/providers/viem.ts",
-          "hash": "4742219174031979106",
-          "deps": [
-            "npm:viem"
-          ]
-        },
-        {
-          "file": "packages/evm/src/providers/wagmi.ts",
-          "hash": "12082316220154749425",
-          "deps": [
-            "npm:viem",
-            "npm:wagmi"
-          ]
-        },
-        {
-          "file": "packages/evm/src/utils/index.ts",
-          "hash": "12648313856129369785"
-        },
-        {
-          "file": "packages/evm/src/utils/parse.ts",
-          "hash": "9127903358539077285"
-        },
-        {
-          "file": "packages/evm/tsconfig.json",
-          "hash": "6511372199017497614"
         }
       ]
     }

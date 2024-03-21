@@ -16,7 +16,7 @@
 		"postrelease": "git push --follow-tags",
 		"release:internal-evm": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal-evm && yarn changeset publish --no-git-tag --snapshot --tag internal-evm",
 		"test:all": "nx run-many --target=test",
-		"test:coverage": "nx affected:test --all --coverage --skip-nx-cache",
+		"test:coverage": "nx test --all --coverage --skip-nx-cache",
 		"test:since": "nx affected --target=test"
 	},
 	"dependencies": {
