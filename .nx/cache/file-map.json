@@ -60,662 +60,6 @@
   "fileMap": {
     "nonProjectFiles": [],
     "projectFileMap": {
-      "@sei-js/cosmjs": [
-        {
-          "file": "packages/cosmjs/.babelrc.js",
-          "hash": "1614305020876056273"
-        },
-        {
-          "file": "packages/cosmjs/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "packages/cosmjs/.npmignore",
-          "hash": "17948297527781443299"
-        },
-        {
-          "file": "packages/cosmjs/CHANGELOG.md",
-          "hash": "3083988097077789166"
-        },
-        {
-          "file": "packages/cosmjs/README.md",
-          "hash": "6818467581399096015"
-        },
-        {
-          "file": "packages/cosmjs/coverage/clover.xml",
-          "hash": "17542885592564617026"
-        },
-        {
-          "file": "packages/cosmjs/coverage/coverage-final.json",
-          "hash": "16414240167467936495"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/base.css",
-          "hash": "6204767174569381253"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/block-navigation.js",
-          "hash": "1801078621803424330"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/cosmWasmClient.ts.html",
-          "hash": "3581439906186774125"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/index.html",
-          "hash": "1527944173702352933"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/stargateClient.ts.html",
-          "hash": "2897276322671189401"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/favicon.png",
-          "hash": "13402560043085226048"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/index.html",
-          "hash": "13237073768454616197"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/prettify.css",
-          "hash": "8163588510556258587"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/prettify.js",
-          "hash": "15884788582061322779"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/sort-arrow-sprite.png",
-          "hash": "254831142482329146"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/sorter.js",
-          "hash": "17053119163225536857"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/utils/bech32.ts.html",
-          "hash": "16281462510224821397"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/utils/index.html",
-          "hash": "10548494686205437993"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/wallet/index.html",
-          "hash": "3490613410250309640"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/wallet/keplrVerification.ts.html",
-          "hash": "11606847511778097731"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/wallet/utils.ts.html",
-          "hash": "12427164661974233637"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov-report/wallet/wallet.ts.html",
-          "hash": "7477976396338304344"
-        },
-        {
-          "file": "packages/cosmjs/coverage/lcov.info",
-          "hash": "7699821624558026750"
-        },
-        {
-          "file": "packages/cosmjs/jest.config.ts",
-          "hash": "2498698932547873951"
-        },
-        {
-          "file": "packages/cosmjs/package.json",
-          "hash": "7448326779676668589",
-          "deps": [
-            "npm:@cosmjs/amino",
-            "npm:@cosmjs/cosmwasm-stargate",
-            "npm:@cosmjs/crypto",
-            "npm:@cosmjs/encoding",
-            "npm:@cosmjs/json-rpc",
-            "npm:@cosmjs/math",
-            "npm:@cosmjs/proto-signing",
-            "npm:@cosmjs/stargate",
-            "npm:@cosmjs/tendermint-rpc",
-            "npm:@cosmjs/utils",
-            "npm:@cosmos-kit/fin",
-            "npm:@ethersproject/keccak256",
-            "npm:@keplr-wallet/types",
-            "npm:@noble/secp256k1",
-            "npm:@react-icons/all-files",
-            "npm:bech32",
-            "npm:buffer",
-            "npm:elliptic",
-            "npm:moment",
-            "npm:process",
-            "npm:readonly-date",
-            "npm:sha.js",
-            "npm:styled-components",
-            "npm:xstream",
-            "npm:@babel/core",
-            "npm:@babel/plugin-transform-runtime",
-            "npm:@babel/preset-env",
-            "npm:@babel/preset-typescript",
-            "npm:@testing-library/jest-dom",
-            "npm:@testing-library/react",
-            "npm:@types/elliptic",
-            "npm:@types/jest",
-            "npm:@types/react",
-            "npm:@types/react-dom",
-            "npm:@types/sha.js",
-            "npm:jest",
-            "npm:prettier",
-            "npm:react",
-            "npm:react-dom",
-            "npm:ts-jest"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/core/index.ts",
-          "hash": "5680749426998586858"
-        },
-        {
-          "file": "packages/cosmjs/src/core/queryClient/__tests__/queryClient.spec.ts",
-          "hash": "8016411087549819109",
-          "deps": [
-            "@sei-js/proto"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/core/queryClient/index.ts",
-          "hash": "5704119470074586301"
-        },
-        {
-          "file": "packages/cosmjs/src/core/queryClient/queryClient.ts",
-          "hash": "1403833611595868584",
-          "deps": [
-            "@sei-js/proto"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/core/signingClient/__tests__/cosmWasmClient.spec.ts",
-          "hash": "9012897895824932977",
-          "deps": [
-            "npm:@cosmjs/cosmwasm-stargate",
-            "npm:@cosmjs/proto-signing"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/core/signingClient/__tests__/stargateClient.spec.ts",
-          "hash": "11390158742426004197",
-          "deps": [
-            "npm:@cosmjs/stargate",
-            "npm:@cosmjs/proto-signing"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/core/signingClient/cosmWasmClient.ts",
-          "hash": "7216575999229880509",
-          "deps": [
-            "npm:@cosmjs/cosmwasm-stargate",
-            "npm:@cosmjs/proto-signing"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/core/signingClient/index.ts",
-          "hash": "6353634832382000905"
-        },
-        {
-          "file": "packages/cosmjs/src/core/signingClient/stargateClient.ts",
-          "hash": "3844102887407386653",
-          "deps": [
-            "npm:@cosmjs/stargate",
-            "npm:@cosmjs/proto-signing",
-            "@sei-js/proto"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/cosmoskit/assetlist.ts",
-          "hash": "15743434605583554775"
-        },
-        {
-          "file": "packages/cosmjs/src/cosmoskit/chains.ts",
-          "hash": "16766798766138334203"
-        },
-        {
-          "file": "packages/cosmjs/src/cosmoskit/index.ts",
-          "hash": "8494695671677550863"
-        },
-        {
-          "file": "packages/cosmjs/src/index-browser.ts",
-          "hash": "3575815536793750433",
-          "deps": [
-            [
-              "npm:process",
-              "dynamic"
-            ],
-            [
-              "npm:buffer",
-              "dynamic"
-            ]
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/index.ts",
-          "hash": "16245213482152780087"
-        },
-        {
-          "file": "packages/cosmjs/src/staking/__tests__/apr.spec.ts",
-          "hash": "17124743713347959712",
-          "deps": [
-            "npm:moment",
-            "@sei-js/proto"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/staking/apr.ts",
-          "hash": "9787712477362895944",
-          "deps": [
-            "npm:moment",
-            "@sei-js/proto"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/staking/index.ts",
-          "hash": "13010439508999662695"
-        },
-        {
-          "file": "packages/cosmjs/src/utils/__tests__/address.spec.ts",
-          "hash": "14366507061349766800",
-          "deps": [
-            "npm:@jest/globals",
-            "npm:crypto"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/utils/__tests__/bech32.spec.ts",
-          "hash": "10187007763536503125"
-        },
-        {
-          "file": "packages/cosmjs/src/utils/__tests__/hash.spec.ts",
-          "hash": "16097150894949636708"
-        },
-        {
-          "file": "packages/cosmjs/src/utils/address.ts",
-          "hash": "5584029589136891750",
-          "deps": [
-            "npm:elliptic",
-            "npm:@cosmjs/crypto",
-            "npm:@cosmjs/encoding"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/utils/bech32.ts",
-          "hash": "12216228316263501956",
-          "deps": [
-            "npm:bech32"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/utils/hash.ts",
-          "hash": "5848817909365932799",
-          "deps": [
-            "npm:sha.js"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/utils/index.ts",
-          "hash": "16898439604466394058"
-        },
-        {
-          "file": "packages/cosmjs/src/utils/serialize.ts",
-          "hash": "6846540775713741976",
-          "deps": [
-            "npm:@cosmjs/amino",
-            "npm:cosmjs-types"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/utils/signing.ts",
-          "hash": "2608745902593423983",
-          "deps": [
-            "npm:@cosmjs/amino",
-            "npm:@cosmjs/encoding"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/__tests__/keplrVerification.spec.ts",
-          "hash": "18175061336002946606"
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/__tests__/utils.spec.ts",
-          "hash": "8180427844658594560"
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/__tests__/wallet.spec.ts",
-          "hash": "14268442751072014788",
-          "deps": [
-            "npm:@cosmjs/crypto",
-            "npm:@cosmjs/proto-signing"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/index.ts",
-          "hash": "10868914944196004500"
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/keplrVerification.ts",
-          "hash": "736839642623499235"
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/types.ts",
-          "hash": "11242015759772326247"
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/utils.ts",
-          "hash": "7209514047455661628"
-        },
-        {
-          "file": "packages/cosmjs/src/wallet/wallet.ts",
-          "hash": "12916956596967570466",
-          "deps": [
-            "npm:@cosmjs/proto-signing",
-            "npm:@cosmjs/crypto"
-          ]
-        },
-        {
-          "file": "packages/cosmjs/tsconfig.json",
-          "hash": "1161951306408624447"
-        }
-      ],
-      "test-vite-cosmjs-mantine": [
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/.eslintrc.cjs",
-          "hash": "18224317155734308275"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/.gitignore",
-          "hash": "13046175384202504187"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/README.md",
-          "hash": "11460966644741158790"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/index.html",
-          "hash": "4025202329384162906"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/package.json",
-          "hash": "3020042822048761968",
-          "deps": [
-            "npm:@cosmos-kit/react",
-            "@sei-js/cosmjs",
-            "npm:cosmos-kit",
-            "npm:react",
-            "npm:react-dom",
-            "npm:@esbuild-plugins/node-globals-polyfill",
-            "npm:@types/react",
-            "npm:@types/react-dom",
-            "npm:@typescript-eslint/eslint-plugin",
-            "npm:@typescript-eslint/parser",
-            "npm:eslint",
-            "npm:postcss",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/public/vite.svg",
-          "hash": "16046085400642193116"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.css",
-          "hash": "10904518076393673880"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.tsx",
-          "hash": "3237755724182633019",
-          "deps": [
-            "npm:@interchain-ui/react/styles",
-            "npm:@cosmos-kit/react",
-            "npm:@mantine/hooks",
-            "npm:@mantine/core"
-          ]
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/assets/react.svg",
-          "hash": "16069471864800376455"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/components/WalletConnectButton.tsx",
-          "hash": "7574467660244208454",
-          "deps": [
-            "npm:@cosmos-kit/react"
-          ]
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/index.css",
-          "hash": "957896817323665666"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/main.tsx",
-          "hash": "13381385879470397477",
-          "deps": [
-            "npm:react",
-            "npm:react-dom",
-            "npm:@mantine/core/styles.css",
-            "npm:@mantine/core"
-          ]
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/providers/WalletProvider.tsx",
-          "hash": "10478227668018700911",
-          "deps": [
-            "npm:@cosmos-kit/react",
-            "npm:cosmos-kit",
-            "npm:react",
-            "npm:@sei-js/cosmjs"
-          ]
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/src/vite-env.d.ts",
-          "hash": "12946363841406869089"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.json",
-          "hash": "14032556756270793734"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.node.json",
-          "hash": "4208030242441905014"
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/vite.config.ts",
-          "hash": "7751163001201656816",
-          "deps": [
-            "npm:vite",
-            "npm:@vitejs/plugin-react",
-            "npm:@esbuild-plugins/node-globals-polyfill"
-          ]
-        },
-        {
-          "file": "packages/cli/test-vite-cosmjs-mantine/yarn.lock",
-          "hash": "9905675192492263449"
-        }
-      ],
-      "workspace": [
-        {
-          "file": ".changeset/README.md",
-          "hash": "4888845876018830777"
-        },
-        {
-          "file": ".changeset/config.json",
-          "hash": "11898648829354806339"
-        },
-        {
-          "file": ".editorconfig",
-          "hash": "5443105041930014821"
-        },
-        {
-          "file": ".eslintignore",
-          "hash": "7663861978715868291"
-        },
-        {
-          "file": ".eslintrc.base.json",
-          "hash": "17722112666649925219"
-        },
-        {
-          "file": ".eslintrc.json",
-          "hash": "966013245893916685"
-        },
-        {
-          "file": ".github/ISSUE_TEMPLATE/bug_report.md",
-          "hash": "4994310711565563414"
-        },
-        {
-          "file": ".github/workflows/checks.yml",
-          "hash": "11352175122225821775"
-        },
-        {
-          "file": ".github/workflows/coverage.yml",
-          "hash": "4408250068478511439"
-        },
-        {
-          "file": ".github/workflows/deploydocs.yml",
-          "hash": "2563622505854932440"
-        },
-        {
-          "file": ".github/workflows/release.yml",
-          "hash": "7645271809251993536"
-        },
-        {
-          "file": ".gitignore",
-          "hash": "12395014417388060107"
-        },
-        {
-          "file": ".nvmrc",
-          "hash": "16887447689433830851"
-        },
-        {
-          "file": ".prettierignore",
-          "hash": "8783679128000005734"
-        },
-        {
-          "file": ".prettierrc",
-          "hash": "2830453978702584531"
-        },
-        {
-          "file": ".vscode/extensions.json",
-          "hash": "4637156562308165301"
-        },
-        {
-          "file": "CHANGELOG.md",
-          "hash": "7029576165764549660"
-        },
-        {
-          "file": "EXAMPLES.md",
-          "hash": "13921332029242299984"
-        },
-        {
-          "file": "README.md",
-          "hash": "8093241485592907463"
-        },
-        {
-          "file": "TYPEDOC-README.md",
-          "hash": "9096096729159368899"
-        },
-        {
-          "file": "codecov.yml",
-          "hash": "11423399279121125850"
-        },
-        {
-          "file": "jest.config.ts",
-          "hash": "15433291190258934972",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "jest.preset.js",
-          "hash": "9430166341120122740",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "nx.json",
-          "hash": "15869658554639297772"
-        },
-        {
-          "file": "package.json",
-          "hash": "9947329275637979021",
-          "deps": [
-            "npm:@changesets/cli",
-            "npm:axios",
-            "npm:glob",
-            "npm:tslib",
-            "npm:@knodes/typedoc-plugin-pages",
-            "npm:@nrwl/node",
-            "npm:@nrwl/nx-cloud",
-            "npm:@nrwl/workspace",
-            "npm:@nx/esbuild",
-            "npm:@nx/eslint",
-            "npm:@nx/eslint-plugin",
-            "npm:@nx/jest",
-            "npm:@nx/js",
-            "npm:@nx/node",
-            "npm:@swc-node/register",
-            "npm:@swc/core",
-            "npm:@swc/helpers",
-            "npm:@types/jest",
-            "npm:@types/node",
-            "npm:@typescript-eslint/eslint-plugin",
-            "npm:@typescript-eslint/parser",
-            "npm:esbuild",
-            "npm:eslint",
-            "npm:eslint-config-prettier",
-            "npm:jest",
-            "npm:jest-environment-jsdom",
-            "npm:jest-environment-node",
-            "npm:nodemon",
-            "npm:nx",
-            "npm:prettier",
-            "npm:rimraf",
-            "npm:ts-jest",
-            "npm:ts-node",
-            "npm:typedoc",
-            "npm:typedoc-material-theme",
-            "npm:typedoc-plugin-pages",
-            "npm:typedoc-theme-category-nav",
-            "npm:typedoc-theme-hierarchy",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "packages/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "project.json",
-          "hash": "596287135512902265"
-        },
-        {
-          "file": "tsconfig.base.json",
-          "hash": "13600089954555928699"
-        },
-        {
-          "file": "typedoc.base.json",
-          "hash": "2300223296991191619"
-        },
-        {
-          "file": "typedoc.config.js",
-          "hash": "10754063165786003956"
-        },
-        {
-          "file": "typedoc.theme.css",
-          "hash": "10582931171413783769"
-        },
-        {
-          "file": "yarn.lock",
-          "hash": "2028273930031789991"
-        }
-      ],
       "@sei-js/cli": [
         {
           "file": "packages/cli/.gitignore",
@@ -1861,7 +1205,7 @@
         },
         {
           "file": "packages/proto/proto/tokenfactory/query.proto",
-          "hash": "14326882725224473540"
+          "hash": "13833238152098102671"
         },
         {
           "file": "packages/proto/proto/tokenfactory/tx.proto",
@@ -3019,21 +2363,21 @@
         },
         {
           "file": "packages/proto/src/codegen/tokenfactory/query.lcd.ts",
-          "hash": "17615570520358446965",
+          "hash": "5999583077448495687",
           "deps": [
             "npm:@cosmology/lcd"
           ]
         },
         {
           "file": "packages/proto/src/codegen/tokenfactory/query.rpc.Query.ts",
-          "hash": "3204260961140687968",
+          "hash": "4895277439114936634",
           "deps": [
             "npm:@cosmjs/stargate"
           ]
         },
         {
           "file": "packages/proto/src/codegen/tokenfactory/query.ts",
-          "hash": "11695266014299939504"
+          "hash": "3866677029411129481"
         },
         {
           "file": "packages/proto/src/codegen/tokenfactory/tx.amino.ts",
@@ -3077,6 +2421,547 @@
         {
           "file": "packages/proto/tsconfig.json",
           "hash": "3886332946002976876"
+        }
+      ],
+      "@sei-js/cosmjs": [
+        {
+          "file": "packages/cosmjs/.babelrc.js",
+          "hash": "1614305020876056273"
+        },
+        {
+          "file": "packages/cosmjs/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/cosmjs/.npmignore",
+          "hash": "17948297527781443299"
+        },
+        {
+          "file": "packages/cosmjs/CHANGELOG.md",
+          "hash": "3083988097077789166"
+        },
+        {
+          "file": "packages/cosmjs/README.md",
+          "hash": "6818467581399096015"
+        },
+        {
+          "file": "packages/cosmjs/coverage/clover.xml",
+          "hash": "17542885592564617026"
+        },
+        {
+          "file": "packages/cosmjs/coverage/coverage-final.json",
+          "hash": "16414240167467936495"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/base.css",
+          "hash": "6204767174569381253"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/block-navigation.js",
+          "hash": "1801078621803424330"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/cosmWasmClient.ts.html",
+          "hash": "3581439906186774125"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/index.html",
+          "hash": "1527944173702352933"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/core/signingClient/stargateClient.ts.html",
+          "hash": "2897276322671189401"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/favicon.png",
+          "hash": "13402560043085226048"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/index.html",
+          "hash": "13237073768454616197"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/prettify.css",
+          "hash": "8163588510556258587"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/prettify.js",
+          "hash": "15884788582061322779"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/sort-arrow-sprite.png",
+          "hash": "254831142482329146"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/sorter.js",
+          "hash": "17053119163225536857"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/utils/bech32.ts.html",
+          "hash": "16281462510224821397"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/utils/index.html",
+          "hash": "10548494686205437993"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/index.html",
+          "hash": "3490613410250309640"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/keplrVerification.ts.html",
+          "hash": "11606847511778097731"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/utils.ts.html",
+          "hash": "12427164661974233637"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov-report/wallet/wallet.ts.html",
+          "hash": "7477976396338304344"
+        },
+        {
+          "file": "packages/cosmjs/coverage/lcov.info",
+          "hash": "7699821624558026750"
+        },
+        {
+          "file": "packages/cosmjs/jest.config.ts",
+          "hash": "2498698932547873951"
+        },
+        {
+          "file": "packages/cosmjs/package.json",
+          "hash": "7448326779676668589",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:@cosmjs/cosmwasm-stargate",
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/encoding",
+            "npm:@cosmjs/json-rpc",
+            "npm:@cosmjs/math",
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/tendermint-rpc",
+            "npm:@cosmjs/utils",
+            "npm:@cosmos-kit/fin",
+            "npm:@ethersproject/keccak256",
+            "npm:@keplr-wallet/types",
+            "npm:@noble/secp256k1",
+            "npm:@react-icons/all-files",
+            "npm:bech32",
+            "npm:buffer",
+            "npm:elliptic",
+            "npm:moment",
+            "npm:process",
+            "npm:readonly-date",
+            "npm:sha.js",
+            "npm:styled-components",
+            "npm:xstream",
+            "npm:@babel/core",
+            "npm:@babel/plugin-transform-runtime",
+            "npm:@babel/preset-env",
+            "npm:@babel/preset-typescript",
+            "npm:@testing-library/jest-dom",
+            "npm:@testing-library/react",
+            "npm:@types/elliptic",
+            "npm:@types/jest",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@types/sha.js",
+            "npm:jest",
+            "npm:prettier",
+            "npm:react",
+            "npm:react-dom",
+            "npm:ts-jest"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/index.ts",
+          "hash": "5680749426998586858"
+        },
+        {
+          "file": "packages/cosmjs/src/core/queryClient/__tests__/queryClient.spec.ts",
+          "hash": "8016411087549819109",
+          "deps": [
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/queryClient/index.ts",
+          "hash": "5704119470074586301"
+        },
+        {
+          "file": "packages/cosmjs/src/core/queryClient/queryClient.ts",
+          "hash": "1403833611595868584",
+          "deps": [
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/__tests__/cosmWasmClient.spec.ts",
+          "hash": "9012897895824932977",
+          "deps": [
+            "npm:@cosmjs/cosmwasm-stargate",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/__tests__/stargateClient.spec.ts",
+          "hash": "11390158742426004197",
+          "deps": [
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/cosmWasmClient.ts",
+          "hash": "7216575999229880509",
+          "deps": [
+            "npm:@cosmjs/cosmwasm-stargate",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/index.ts",
+          "hash": "6353634832382000905"
+        },
+        {
+          "file": "packages/cosmjs/src/core/signingClient/stargateClient.ts",
+          "hash": "3844102887407386653",
+          "deps": [
+            "npm:@cosmjs/stargate",
+            "npm:@cosmjs/proto-signing",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/cosmoskit/assetlist.ts",
+          "hash": "15743434605583554775"
+        },
+        {
+          "file": "packages/cosmjs/src/cosmoskit/chains.ts",
+          "hash": "16766798766138334203"
+        },
+        {
+          "file": "packages/cosmjs/src/cosmoskit/index.ts",
+          "hash": "8494695671677550863"
+        },
+        {
+          "file": "packages/cosmjs/src/index-browser.ts",
+          "hash": "3575815536793750433",
+          "deps": [
+            [
+              "npm:process",
+              "dynamic"
+            ],
+            [
+              "npm:buffer",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/index.ts",
+          "hash": "16245213482152780087"
+        },
+        {
+          "file": "packages/cosmjs/src/staking/__tests__/apr.spec.ts",
+          "hash": "17124743713347959712",
+          "deps": [
+            "npm:moment",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/staking/apr.ts",
+          "hash": "9787712477362895944",
+          "deps": [
+            "npm:moment",
+            "@sei-js/proto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/staking/index.ts",
+          "hash": "13010439508999662695"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/__tests__/address.spec.ts",
+          "hash": "14366507061349766800",
+          "deps": [
+            "npm:@jest/globals",
+            "npm:crypto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/__tests__/bech32.spec.ts",
+          "hash": "10187007763536503125"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/__tests__/hash.spec.ts",
+          "hash": "16097150894949636708"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/address.ts",
+          "hash": "5584029589136891750",
+          "deps": [
+            "npm:elliptic",
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/bech32.ts",
+          "hash": "12216228316263501956",
+          "deps": [
+            "npm:bech32"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/hash.ts",
+          "hash": "5848817909365932799",
+          "deps": [
+            "npm:sha.js"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/index.ts",
+          "hash": "16898439604466394058"
+        },
+        {
+          "file": "packages/cosmjs/src/utils/serialize.ts",
+          "hash": "6846540775713741976",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:cosmjs-types"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/utils/signing.ts",
+          "hash": "2608745902593423983",
+          "deps": [
+            "npm:@cosmjs/amino",
+            "npm:@cosmjs/encoding"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/__tests__/keplrVerification.spec.ts",
+          "hash": "18175061336002946606"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/__tests__/utils.spec.ts",
+          "hash": "8180427844658594560"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/__tests__/wallet.spec.ts",
+          "hash": "14268442751072014788",
+          "deps": [
+            "npm:@cosmjs/crypto",
+            "npm:@cosmjs/proto-signing"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/index.ts",
+          "hash": "10868914944196004500"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/keplrVerification.ts",
+          "hash": "736839642623499235"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/types.ts",
+          "hash": "11242015759772326247"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/utils.ts",
+          "hash": "7209514047455661628"
+        },
+        {
+          "file": "packages/cosmjs/src/wallet/wallet.ts",
+          "hash": "12916956596967570466",
+          "deps": [
+            "npm:@cosmjs/proto-signing",
+            "npm:@cosmjs/crypto"
+          ]
+        },
+        {
+          "file": "packages/cosmjs/tsconfig.json",
+          "hash": "1161951306408624447"
+        }
+      ],
+      "workspace": [
+        {
+          "file": ".changeset/README.md",
+          "hash": "4888845876018830777"
+        },
+        {
+          "file": ".changeset/config.json",
+          "hash": "11898648829354806339"
+        },
+        {
+          "file": ".editorconfig",
+          "hash": "5443105041930014821"
+        },
+        {
+          "file": ".eslintignore",
+          "hash": "7663861978715868291"
+        },
+        {
+          "file": ".eslintrc.base.json",
+          "hash": "17722112666649925219"
+        },
+        {
+          "file": ".eslintrc.json",
+          "hash": "966013245893916685"
+        },
+        {
+          "file": ".github/ISSUE_TEMPLATE/bug_report.md",
+          "hash": "4994310711565563414"
+        },
+        {
+          "file": ".github/workflows/checks.yml",
+          "hash": "11352175122225821775"
+        },
+        {
+          "file": ".github/workflows/coverage.yml",
+          "hash": "4408250068478511439"
+        },
+        {
+          "file": ".github/workflows/deploydocs.yml",
+          "hash": "2563622505854932440"
+        },
+        {
+          "file": ".github/workflows/release.yml",
+          "hash": "7645271809251993536"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "6004984743852526100"
+        },
+        {
+          "file": ".nvmrc",
+          "hash": "16887447689433830851"
+        },
+        {
+          "file": ".prettierignore",
+          "hash": "8783679128000005734"
+        },
+        {
+          "file": ".prettierrc",
+          "hash": "2830453978702584531"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "4637156562308165301"
+        },
+        {
+          "file": "CHANGELOG.md",
+          "hash": "7029576165764549660"
+        },
+        {
+          "file": "EXAMPLES.md",
+          "hash": "13921332029242299984"
+        },
+        {
+          "file": "README.md",
+          "hash": "8093241485592907463"
+        },
+        {
+          "file": "TYPEDOC-README.md",
+          "hash": "9096096729159368899"
+        },
+        {
+          "file": "codecov.yml",
+          "hash": "10413803895684756977"
+        },
+        {
+          "file": "jest.config.ts",
+          "hash": "15433291190258934972",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "jest.preset.js",
+          "hash": "9430166341120122740",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "nx.json",
+          "hash": "15869658554639297772"
+        },
+        {
+          "file": "package.json",
+          "hash": "9947329275637979021",
+          "deps": [
+            "npm:@changesets/cli",
+            "npm:axios",
+            "npm:glob",
+            "npm:tslib",
+            "npm:@knodes/typedoc-plugin-pages",
+            "npm:@nrwl/node",
+            "npm:@nrwl/nx-cloud",
+            "npm:@nrwl/workspace",
+            "npm:@nx/esbuild",
+            "npm:@nx/eslint",
+            "npm:@nx/eslint-plugin",
+            "npm:@nx/jest",
+            "npm:@nx/js",
+            "npm:@nx/node",
+            "npm:@swc-node/register",
+            "npm:@swc/core",
+            "npm:@swc/helpers",
+            "npm:@types/jest",
+            "npm:@types/node",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:esbuild",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:jest",
+            "npm:jest-environment-jsdom",
+            "npm:jest-environment-node",
+            "npm:nodemon",
+            "npm:nx",
+            "npm:prettier",
+            "npm:rimraf",
+            "npm:ts-jest",
+            "npm:ts-node",
+            "npm:typedoc",
+            "npm:typedoc-material-theme",
+            "npm:typedoc-plugin-pages",
+            "npm:typedoc-theme-category-nav",
+            "npm:typedoc-theme-hierarchy",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "project.json",
+          "hash": "596287135512902265"
+        },
+        {
+          "file": "tsconfig.base.json",
+          "hash": "13600089954555928699"
+        },
+        {
+          "file": "typedoc.base.json",
+          "hash": "2300223296991191619"
+        },
+        {
+          "file": "typedoc.config.js",
+          "hash": "10754063165786003956"
+        },
+        {
+          "file": "typedoc.theme.css",
+          "hash": "10582931171413783769"
+        },
+        {
+          "file": "yarn.lock",
+          "hash": "2028273930031789991"
         }
       ],
       "@sei-js/evm": [
@@ -3274,6 +3159,121 @@
         {
           "file": "packages/evm/tsconfig.json",
           "hash": "6511372199017497614"
+        }
+      ],
+      "test-vite-cosmjs-mantine": [
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/.eslintrc.cjs",
+          "hash": "18224317155734308275"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/.gitignore",
+          "hash": "13046175384202504187"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/README.md",
+          "hash": "11460966644741158790"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/index.html",
+          "hash": "4025202329384162906"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/package.json",
+          "hash": "3020042822048761968",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "@sei-js/cosmjs",
+            "npm:cosmos-kit",
+            "npm:react",
+            "npm:react-dom",
+            "npm:@esbuild-plugins/node-globals-polyfill",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:eslint",
+            "npm:postcss",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/public/vite.svg",
+          "hash": "16046085400642193116"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.css",
+          "hash": "10904518076393673880"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/App.tsx",
+          "hash": "3237755724182633019",
+          "deps": [
+            "npm:@interchain-ui/react/styles",
+            "npm:@cosmos-kit/react",
+            "npm:@mantine/hooks",
+            "npm:@mantine/core"
+          ]
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/assets/react.svg",
+          "hash": "16069471864800376455"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/components/WalletConnectButton.tsx",
+          "hash": "7574467660244208454",
+          "deps": [
+            "npm:@cosmos-kit/react"
+          ]
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/index.css",
+          "hash": "957896817323665666"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/main.tsx",
+          "hash": "13381385879470397477",
+          "deps": [
+            "npm:react",
+            "npm:react-dom",
+            "npm:@mantine/core/styles.css",
+            "npm:@mantine/core"
+          ]
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/providers/WalletProvider.tsx",
+          "hash": "10478227668018700911",
+          "deps": [
+            "npm:@cosmos-kit/react",
+            "npm:cosmos-kit",
+            "npm:react",
+            "npm:@sei-js/cosmjs"
+          ]
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/src/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.json",
+          "hash": "14032556756270793734"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/tsconfig.node.json",
+          "hash": "4208030242441905014"
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/vite.config.ts",
+          "hash": "7751163001201656816",
+          "deps": [
+            "npm:vite",
+            "npm:@vitejs/plugin-react",
+            "npm:@esbuild-plugins/node-globals-polyfill"
+          ]
+        },
+        {
+          "file": "packages/cli/test-vite-cosmjs-mantine/yarn.lock",
+          "hash": "9905675192492263449"
         }
       ]
     }

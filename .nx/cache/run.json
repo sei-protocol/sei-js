@@ -1,21 +1,9 @@
 {
   "run": {
-    "command": "nx test --all --coverage --skip-nx-cache",
-    "startTime": "2024-03-21T06:41:12.580Z",
-    "endTime": "2024-03-21T06:41:41.262Z",
+    "command": "nx run-many --target=build -p common evm cosmjs",
+    "startTime": "2024-03-21T16:03:08.451Z",
+    "endTime": "2024-03-21T16:03:08.455Z",
     "inner": false
   },
-  "tasks": [
-    {
-      "taskId": "workspace:test",
-      "target": "test",
-      "projectName": "workspace",
-      "hash": "9491656716705318592",
-      "startTime": "2024-03-21T06:41:12.584Z",
-      "endTime": "2024-03-21T06:41:41.262Z",
-      "params": "",
-      "cacheStatus": "cache-miss",
-      "status": 0
-    }
-  ]
+  "tasks": []
 }

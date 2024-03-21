@@ -31,7 +31,7 @@ const queryClient = new QueryClient();
 
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
  return (
-   <WagmiProvider config={createWagmiConfig(ARCTIC_1_VIEM_CHAIN)}>
+   <WagmiProvider config={createWagmiConfig([ARCTIC_1_VIEM_CHAIN])}>
      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
    </WagmiProvider>
  );
