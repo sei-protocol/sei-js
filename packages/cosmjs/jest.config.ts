@@ -1,7 +1,14 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
+import { getJestProjects } from '@nx/jest';
+
+export default {
+	projects: getJestProjects(),
 	preset: 'ts-jest',
-	testEnvironment: 'node',
-	testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
-	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
+	testMatch: ['**/*.spec.ts', '**/*.spec.tsx'],
+	globals: {
+		'ts-jest': {
+			tsconfig: './tsconfig.json'
+		}
+	},
+	modulePathIgnorePatterns: ['<rootDir>/packages/*/dist/']
 };
