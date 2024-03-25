@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/cosmjs",
-  "version": "0.0.0-internal-evm-20240321223223",
+  "version": "0.0.0-internal-evm-20240325234009",
   "description": "TypeScript library for CosmJS interactions on the Sei blockchain",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

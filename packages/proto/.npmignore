@@ -27,3 +27,13 @@ jest.config.js
 package.json
 src
 test
+
+.gitkeep
+jest.config.ts
+tsconfig.json
+.nvmrc
+yarn-error.log
+
+docs
+scripts
+proto

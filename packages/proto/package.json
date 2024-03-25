@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "0.0.0-internal-evm-20240321223223",
+  "version": "0.0.0-internal-evm-20240325234009",
   "description": "TypeScript library for Sei protobuf files generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
@@ -9,9 +9,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/cjs/codgen/index.js",
+  "module": "./dist/esm/codgen/index.js",
+  "types": "./dist/types/codgen/index.d.ts",
   "sideEffects": false,
   "directories": {
     "lib": "src",
@@ -34,11 +34,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sei-protocol/js-proto"
+    "url": "https://github.com/sei-protocol/sei-js"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/sei-protocol/js-proto/issues"
+    "url": "https://github.com/sei-protocol/sei-js/issues"
   },
   "devDependencies": {
     "@babel/cli": "7.18.10",
@@ -83,9 +83,10 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
-    }
+      "import": "./dist/esm/codegen/index.js",
+      "require": "./dist/cjs/codegen/index.js",
+      "types": "./dist/types/codegen/index.d.ts"
+    },
+    "./types/*": "./dist/types/codegen/*"
   }
 }
