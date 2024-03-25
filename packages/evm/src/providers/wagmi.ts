@@ -1,5 +1,5 @@
 import { Chain, createClient } from 'viem';
-import { createConfig, http, CreateConnectorFn } from 'wagmi';
+import { createConfig, http, CreateConnectorFn, Config } from 'wagmi';
 import { injected } from '@wagmi/connectors';
 
 /**
@@ -27,7 +27,7 @@ import { injected } from '@wagmi/connectors';
  * @param additionalConnectors - A list of additional connectors to add to the Wagmi config for other wallets
  * @category Wagmi
  */
-export const createWagmiConfig = (chains: [Chain], additionalConnectors: CreateConnectorFn[] = []) => {
+export const createWagmiConfig = (chains: [Chain], additionalConnectors: CreateConnectorFn[] = []): Config => {
 	return createConfig({
 		chains: chains,
 		client({ chain }) {
