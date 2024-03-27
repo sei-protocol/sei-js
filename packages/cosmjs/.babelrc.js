@@ -12,25 +12,10 @@ module.exports = (api) => {
 				modules: 'commonjs'
 			}
 		],
-		[
-			'@babel/preset-react',
-			{
-				runtime: 'automatic'
-			}
-		],
 		'@babel/preset-typescript'
 	];
 
-	const esmPresets = [
-		[
-			'@babel/preset-react',
-			{
-				runtime: 'automatic'
-			}
-		],
-		'@babel/preset-env',
-		'@babel/preset-typescript'
-	];
+	const esmPresets = ['@babel/preset-env', '@babel/preset-typescript'];
 
 	return {
 		presets: isESM ? esmPresets : commonjsPresets,

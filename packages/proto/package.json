@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "0.0.0-internal-evm-20240325234009",
+  "version": "4.0.0",
   "description": "TypeScript library for Sei protobuf files generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
@@ -30,7 +30,8 @@
     "watch": "cross-env NODE_ENV=development babel-watch src/index --extensions \".tsx,.ts,.js\"",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "lint": "eslint --ext .ts"
   },
   "repository": {
     "type": "git",

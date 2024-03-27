@@ -114,7 +114,7 @@ export const isValidSeiCosmosAddress = (address: string) => {
  * @returns A shortened version of the address in the format sei...xxxxx. Returns the input address if it is not a valid sei address.
  * @category Utils
  */
-export const truncateCosmosAddress = (address: string) => {
+export const truncateSeiAddress = (address: string) => {
 	if (!isValidSeiCosmosAddress(address)) {
 		return address;
 	}

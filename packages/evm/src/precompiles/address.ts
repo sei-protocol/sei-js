@@ -1,4 +1,4 @@
-import { ethers, InterfaceAbi } from 'ethers';
+import { ContractRunner, ethers, InterfaceAbi } from 'ethers';
 import { type Abi } from 'viem';
 
 /**
@@ -134,10 +134,10 @@ export const ADDRESS_PRECOMPILE_ABI: Abi = [
  * const associatedSeiAddress = await addressPrecompileContract.connect().getSeiAddr(accounts[0]);
  * ```
  * @param precompileAddress The 0X address of the precompile contract.
- * @param signer The ethersJS signer to be used with the contract.
+ * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the ADDRESS precompile contract.
  * @category Cosmos Interoperability
  */
-export function getAddressPrecompileEthersV6Contract(precompileAddress: `0x${string}`, signer: ethers.Signer): AddressPrecompileContract {
-	return new ethers.Contract(precompileAddress, ADDRESS_PRECOMPILE_ABI as InterfaceAbi, signer) as AddressPrecompileContract;
+export function getAddressPrecompileEthersV6Contract(precompileAddress: `0x${string}`, runner: ContractRunner): AddressPrecompileContract {
+	return new ethers.Contract(precompileAddress, ADDRESS_PRECOMPILE_ABI as InterfaceAbi, runner) as AddressPrecompileContract;
 }

@@ -133,9 +133,9 @@ export const ARCTIC_1_SEI_COSMOS_KIT_CHAIN = {
 	explorers: [
 		{
 			kind: 'seiscan',
-			url: 'https://www.seiscan.app/arctic-1',
-			tx_page: 'https://www.seiscan.app/arctic-1/txs/${txHash}',
-			account_page: 'https://www.seiscan.app/arctic-1/accounts/${accountAddress}'
+			url: 'https://seitrace.com',
+			tx_page: 'https://seitrace.com/tx/${txHash}',
+			account_page: 'https://seitrace.com/address/${accountAddress}'
 		}
 	],
 	peers: {

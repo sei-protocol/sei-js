@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "node --loader ts-node/esm src/main.ts"
+    "dev": "node --loader ts-node/esm src/main.ts",
+    "lint": "eslint --ext .ts"
   },
   "dependencies": {
     "@cosmos-kit/react": "^2.10.11",

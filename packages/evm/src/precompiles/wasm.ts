@@ -1,4 +1,4 @@
-import { ethers, InterfaceAbi } from 'ethers';
+import { ContractRunner, ethers, InterfaceAbi } from 'ethers';
 import { Abi } from 'viem';
 /**
  * Represents the functions available in the WASM precompile contract,
@@ -10,22 +10,20 @@ export interface WasmPrecompileFunctions {
 	 * Executes a message on the specified contract with provided coins.
 	 * @param contractAddress The address of the contract to execute the message on.
 	 * @param msg The message to execute.
-	 * @param coins The coins to provide for execution.
 	 * @returns A Promise resolving to an object containing the response.
 	 * @category Cosmos Interoperability
 	 */
-	execute(contractAddress: string, msg: Uint8Array, coins: Uint8Array): Promise<{ response: Uint8Array }>;
+	execute(contractAddress: string, msg: Uint8Array): Promise<{ response: Uint8Array }>;
 	/**
 	 * Instantiates a new contract with the specified code ID, admin, and coins.
 	 * @param codeID The code ID of the contract to instantiate.
 	 * @param admin The admin address for the new contract.
 	 * @param msg The initialization message for the new contract.
 	 * @param label The label for the new contract.
-	 * @param coins The coins to provide for instantiation.
 	 * @returns A Promise resolving to an object containing the contract address and data.
 	 * @category Cosmos Interoperability
 	 */
-	instantiate(codeID: bigint, admin: string, msg: Uint8Array, label: string, coins: Uint8Array): Promise<{ contractAddr: string; data: Uint8Array }>;
+	instantiate(codeID: bigint, admin: string, msg: Uint8Array, label: string): Promise<{ contractAddr: string; data: Uint8Array }>;
 	/**
 	 * Queries the specified contract with the provided request.
 	 * @param contractAddress The address of the contract to query.
@@ -110,7 +108,7 @@ export const WASM_PRECOMPILE_ABI: Abi = [
 		],
 		name: 'execute',
 		outputs: [{ internalType: 'bytes', name: 'response', type: 'bytes' }],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -126,7 +124,7 @@ export const WASM_PRECOMPILE_ABI: Abi = [
 			{ internalType: 'string', name: 'contractAddr', type: 'string' },
 			{ internalType: 'bytes', name: 'data', type: 'bytes' }
 		],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -139,7 +137,7 @@ export const WASM_PRECOMPILE_ABI: Abi = [
 		stateMutability: 'view',
 		type: 'function'
 	}
-] as const;
+];
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
@@ -159,10 +157,10 @@ export const WASM_PRECOMPILE_ABI: Abi = [
  * ```
  *
  * @param precompileAddress The 0X address of the precompile contract.
- * @param signer The ethersJS signer to be used with the contract.
+ * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getWasmPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer) => {
-	return new ethers.Contract(precompileAddress, WASM_PRECOMPILE_ABI as InterfaceAbi) as WasmPrecompileContract;
+export const getWasmPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner) => {
+	return new ethers.Contract(precompileAddress, WASM_PRECOMPILE_ABI as InterfaceAbi, runner) as WasmPrecompileContract;
 };

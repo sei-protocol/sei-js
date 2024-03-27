@@ -1,4 +1,4 @@
-import { ethers, InterfaceAbi } from 'ethers';
+import { ContractRunner, ethers, InterfaceAbi } from 'ethers';
 import { Abi } from 'viem';
 
 /**
@@ -135,7 +135,7 @@ export const JSON_PRECOMPILE_ABI: Abi = [
 		stateMutability: 'view',
 		type: 'function'
 	}
-] as const;
+];
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
@@ -155,10 +155,10 @@ export const JSON_PRECOMPILE_ABI: Abi = [
  * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
  * ```
  * @param precompileAddress The 0X address of the precompile contract.
- * @param signer The ethersJS signer to be used with the contract.
+ * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getJSONPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer): JSONPrecompileContract => {
-	return new ethers.Contract(precompileAddress, JSON_PRECOMPILE_ABI as InterfaceAbi) as JSONPrecompileContract;
+export const getJSONPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): JSONPrecompileContract => {
+	return new ethers.Contract(precompileAddress, JSON_PRECOMPILE_ABI as InterfaceAbi, runner) as JSONPrecompileContract;
 };
