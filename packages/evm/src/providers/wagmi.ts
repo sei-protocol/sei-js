@@ -1,9 +1,9 @@
 import { Chain, createClient } from 'viem';
-import { createConfig, http, CreateConnectorFn } from 'wagmi';
+import { createConfig, http, CreateConnectorFn, Config } from 'wagmi';
 import { injected } from '@wagmi/connectors';
 
 /**
- * Creates and returns a Wagmi config for the passed in Viem chain.
+ * Creates and returns a Wagmi config for the passed in Viem chain. This config includes the injected connector for MetaMask and Compass. If you need to add additional parameters it is recommended that you extend the object returned from this function.
  *
  * @example
  * React: Use with arctic-1 'viem' Chain and WagmiProvider
@@ -14,7 +14,7 @@ import { injected } from '@wagmi/connectors';
  *
  * export const WalletProvider = ({ children }: { children: ReactNode }) => {
  *   return (
- *       <WagmiProvider config={createWagmiConfig([ARCTIC_1_VIEM_CHAIN])}>
+ *       <WagmiProvider config={getBaseSeiWagmiConfig([ARCTIC_1_VIEM_CHAIN])}>
  *         <QueryClientProvider client={queryClient}>
  *           {children}
  *         </QueryClientProvider>
@@ -27,7 +27,7 @@ import { injected } from '@wagmi/connectors';
  * @param additionalConnectors - A list of additional connectors to add to the Wagmi config for other wallets
  * @category Wagmi
  */
-export const createWagmiConfig = (chains: [Chain], additionalConnectors: CreateConnectorFn[] = []) => {
+export const getBaseSeiWagmiConfig = (chains: [Chain], additionalConnectors: CreateConnectorFn[] = []): Config => {
 	return createConfig({
 		chains: chains,
 		client({ chain }) {
@@ -41,8 +41,7 @@ export const createWagmiConfig = (chains: [Chain], additionalConnectors: CreateC
 				target: {
 					id: 'compassWalletProvider',
 					name: 'Compass',
-					// @ts-ignore
-					provider: window.compassEvm,
+					provider: window['compassEvm'],
 					icon: 'https://lh3.googleusercontent.com/zMrH9Wrqlv5BG0w28woqEnopKhXBdSvpLhs-nHYft9BcAvseloVTZDfTJu97cGjWVFUKZ4dM12Y-lyvipJOlcbcAtQ=s120'
 				}
 			})

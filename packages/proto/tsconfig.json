@@ -1,10 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"declaration": true,
 		"outDir": "./dist/types",
-    "strict": false,
-    "module": "commonjs"
   },
   "include": ["./src/**/*"],
 	"exclude": ["node_modules"],

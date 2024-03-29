@@ -1,4 +1,4 @@
-import { ethers, InterfaceAbi } from 'ethers';
+import { ContractRunner, ethers, InterfaceAbi } from 'ethers';
 import { Abi } from 'viem';
 
 /**
@@ -26,7 +26,7 @@ export interface StakingPrecompileFunctions {
 	redelegate(srcAddress: string, dstAddress: string, amount: ethers.BigNumberish): Promise<{ success: boolean }>;
 
 	/**
-	 * Undelegates tokens from the specified validator.
+	 * Un-delegates tokens from the specified validator.
 	 * @param valAddress The address of the validator from which to undelegate tokens.
 	 * @param amount The amount of tokens to undelegate.
 	 * @returns A Promise resolving to an object indicating the success of the undelegation transaction.
@@ -151,7 +151,7 @@ export const STAKING_PRECOMPILE_ABI: Abi = [
 		stateMutability: 'nonpayable',
 		type: 'function'
 	}
-] as const;
+];
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
@@ -171,10 +171,10 @@ export const STAKING_PRECOMPILE_ABI: Abi = [
  * const response = await contract.connect().delegate('0xVALIDATOR_ADDRESS', parseSei(1));
  * ```
  * @param precompileAddress The 0X address of the precompile contract.
- * @param signer The ethersJS signer to be used with the contract.
+ * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getStakingPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, signer: ethers.Signer): StakingPrecompileContract => {
-	return new ethers.Contract(precompileAddress, STAKING_PRECOMPILE_ABI as InterfaceAbi) as StakingPrecompileContract;
+export const getStakingPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): StakingPrecompileContract => {
+	return new ethers.Contract(precompileAddress, STAKING_PRECOMPILE_ABI as InterfaceAbi, runner) as StakingPrecompileContract;
 };
