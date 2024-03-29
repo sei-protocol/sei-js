@@ -40,6 +40,6 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: ./packages/cosmjs/coverage/coverage-final.json,./packages/evm/coverage/coverage-final.json,./packages/proto/coverage/coverage-final.json
+          files: ./coverage/coverage-final.json
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
