@@ -40,7 +40,7 @@ jobs:
         run: yarn
 
       - name: Install Peer Dependencies
-        run: yarn add -W viem@2.x wagmi
+        run: yarn add -W viem@2.x wagmi @sei-js/proto
 
       - name: Create Docs
         run: yarn docs
