@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "strict": true,
+    "moduleResolution": "Bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "lib": ["ES2022"],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "@sei-js/proto/types/*": ["packages/proto/dist/types/codegen/*"],
+      "@sei-js/proto/*": ["packages/proto/dist/esm/codegen/*", "packages/proto/dist/cjs/codegen/*"],
+      "@sei-js/cosmjs/types/*": ["packages/cosmjs/dist/types/codegen/*"],
+      "@sei-js/cosmjs/*": ["packages/cosmjs/dist/esm/codegen/*", "packages/cosmjs/dist/cjs/codegen/*"],
+      "@sei-js/evm/types/*": ["packages/evm/dist/types/codegen/*"],
+      "@sei-js/evm/*": ["packages/evm/dist/esm/codegen/*", "packages/evm/dist/cjs/codegen/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.spec.js",
+    "**/*.test.js",
+    "**/__tests__/**/*"
+  ]
+}

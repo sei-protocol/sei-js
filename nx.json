@@ -16,21 +16,43 @@
 			"inputs": ["production", "^production"]
 		},
 		"lint": {
-			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+			"inputs": ["default"]
 		},
 		"test": {
 			"inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+		},
+		"@nx/esbuild:esbuild": {
+			"cache": true,
+			"dependsOn": ["^build"],
+			"inputs": ["production", "^production"]
 		}
 	},
 	"namedInputs": {
 		"default": ["{projectRoot}/**/*", "sharedGlobals"],
 		"production": [
 			"default",
-			"!{projectRoot}/.eslintrc.json",
 			"!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
 			"!{projectRoot}/tsconfig.spec.json",
-			"!{projectRoot}/jest.config.[jt]s"
+			"!{projectRoot}/jest.config.[jt]s",
+			"!{projectRoot}/.eslintrc.json",
+			"!{projectRoot}/eslint.config.js",
+			"!{projectRoot}/src/test-setup.[jt]s",
+			"!{projectRoot}/test-setup.[jt]s"
 		],
 		"sharedGlobals": []
-	}
+	},
+	"plugins": [
+		{
+			"plugin": "@nx/eslint/plugin",
+			"options": {
+				"targetName": "lint"
+			}
+		},
+		{
+			"plugin": "@nx/jest/plugin",
+			"options": {
+				"targetName": "test"
+			}
+		}
+	]
 }

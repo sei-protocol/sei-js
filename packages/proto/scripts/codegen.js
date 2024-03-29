@@ -1,5 +1,5 @@
 import { join } from 'path';
-import telescope from '@osmonauts/telescope';
+import telescope from '@cosmology/telescope';
 import { sync as rimraf } from 'rimraf';
 
 const protoDirs = [join(__dirname, '/../proto')];
@@ -11,8 +11,9 @@ telescope({
 	outPath,
 	options: {
 		removeUnusedImports: true,
-		tsDisable: {
-			patterns: ['**/*amino.ts', '**/*registry.ts']
+		interfaces: {
+			//This fixes some typescript errors in the generated code when using Any type
+			useUnionTypes: true
 		},
 		prototypes: {
 			excluded: {
@@ -20,6 +21,7 @@ telescope({
 					'cosmos.app.v1alpha1',
 					'cosmos.app.v1beta1',
 					'cosmos.autocli.v1',
+					'cosmos.authz.v1beta1',
 					'cosmos.base.kv.v1beta1',
 					'cosmos.base.reflection.v1beta1',
 					'cosmos.base.snapshots.v1beta1',
@@ -46,11 +48,12 @@ telescope({
 					'ibc.core.types.v1'
 				]
 			},
+			enableRegistryLoader: true,
+			enableMessageComposer: true,
 			includePackageVar: false,
+			allowUndefinedTypes: true,
 			typingsFormat: {
-				useExact: false,
-				timestamp: 'date',
-				duration: 'duration'
+				useTelescopeGeneratedType: true
 			}
 		},
 		aminoEncoding: {

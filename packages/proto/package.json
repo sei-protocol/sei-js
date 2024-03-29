@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "TypeScript library for Sei protobuf files generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
@@ -9,9 +9,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/cjs/codgen/index.js",
+  "module": "./dist/esm/codgen/index.js",
+  "types": "./dist/types/codgen/index.d.ts",
   "sideEffects": false,
   "directories": {
     "lib": "src",
@@ -24,25 +24,26 @@
     "build:esm": "BABEL_ENV=esm babel src --out-dir dist/esm --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
     "build:ts": "tsc --project ./tsconfig.json",
     "codegen": "cross-env NODE_ENV=development babel-node scripts/codegen.js",
+    "postcodegen": "yarn prettier --write ./src/codegen/**/*.ts --config ../../.prettierrc",
     "dev": "cross-env NODE_ENV=development babel-node src/index --extensions \".tsx,.ts,.js\"",
+    "docs": "typedoc --out docs",
     "watch": "cross-env NODE_ENV=development babel-watch src/index --extensions \".tsx,.ts,.js\"",
-    "lint": "eslint --ext .ts",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "lint": "eslint --ext .ts"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sei-protocol/js-proto"
+    "url": "https://github.com/sei-protocol/sei-js"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/sei-protocol/js-proto/issues"
+    "url": "https://github.com/sei-protocol/sei-js/issues"
   },
   "devDependencies": {
     "@babel/cli": "7.18.10",
     "@babel/core": "7.18.10",
-    "@babel/eslint-parser": "^7.18.9",
     "@babel/node": "^7.18.10",
     "@babel/plugin-proposal-class-properties": "7.18.6",
     "@babel/plugin-proposal-export-default-from": "7.18.10",
@@ -53,11 +54,14 @@
     "@babel/plugin-transform-runtime": "7.18.10",
     "@babel/preset-env": "7.18.10",
     "@babel/preset-typescript": "^7.18.6",
-    "@osmonauts/telescope": "^0.99.0",
-    "@protobufs/cosmos": "^0.0.11",
-    "@protobufs/cosmwasm": "^0.0.11",
-    "@protobufs/ibc": "^0.0.11",
-    "babel-core": "7.0.0-bridge.0",
+    "@protobufs/cosmos": "^0.1.0",
+    "@protobufs/cosmos_proto": "^0.0.10",
+    "@protobufs/cosmwasm": "^0.1.1",
+    "@protobufs/gogoproto": "^0.0.10",
+    "@protobufs/google": "^0.0.10",
+    "@protobufs/ibc": "^0.1.0",
+    "@protobufs/tendermint": "^0.0.10",
+    "babel-core": "6.26.3",
     "babel-jest": "28.1.3",
     "babel-watch": "^7.0.0",
     "cross-env": "^7.0.2",
@@ -66,21 +70,24 @@
     "regenerator-runtime": "^0.13.7"
   },
   "dependencies": {
-    "@babel/runtime": "^7.18.9",
-    "@cosmjs/amino": "^0.29.5",
-    "@cosmjs/encoding": "^0.29.5",
-    "@cosmjs/proto-signing": "^0.29.5",
-    "@cosmjs/stargate": "^0.29.5",
-    "@cosmjs/tendermint-rpc": "^0.29.5",
-    "@osmonauts/helpers": "^0.6.0",
-    "@osmonauts/lcd": "^0.8.0",
-    "protobufjs": "^6.11.2"
+    "@babel/runtime": "^7.24.0",
+    "@cosmjs/amino": "^0.32.2",
+    "@cosmjs/encoding": "^0.32.3",
+    "@cosmjs/proto-signing": "^0.32.2",
+    "@cosmjs/stargate": "^0.32.2",
+    "@cosmjs/tendermint-rpc": "^0.32.2",
+    "@cosmology/lcd": "^0.13.3",
+    "@cosmology/telescope": "^1.4.12",
+    "@osmonauts/helpers": "^0.7.0",
+    "cosmjs-types": "^0.9.0",
+    "protobufjs": "^7.2.6"
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
-    }
+      "import": "./dist/esm/codegen/index.js",
+      "require": "./dist/cjs/codegen/index.js",
+      "types": "./dist/types/codegen/index.d.ts"
+    },
+    "./types/*": "./dist/types/codegen/*"
   }
 }

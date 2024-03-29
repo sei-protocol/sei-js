@@ -1,20 +1,23 @@
 module.exports = {
-    entryPoints: ["packages/core", "packages/react"],
-    name: "SeiJS",
-    entryPointStrategy: "packages",
-    includeVersion: false,
-    
-    // Enable the typedoc-plugin-pages plugin
-    pluginPages: {
-        pages: [
-            {
-                name: "Javascript Examples",
-                source: "./EXAMPLES.md"
-            },
-        ],
-        source: "./"
-    }
-
-    // Potentially useful for debugging
-    // logLevel: "Verbose"
-}
+	entryPoints: ['packages/evm', 'packages/cosmjs', 'packages/proto'],
+	name: '@sei-js',
+	entryPointStrategy: 'packages',
+	includeVersion: false,
+	customCss: './typedoc.theme.css',
+	readme: 'TYPEDOC-README.md',
+	plugin: ['typedoc-material-theme'],
+	themeColor: '#9d1f19',
+	navigation: {
+		includeCategories: true,
+		includeGroups: true,
+		includeFolders: true
+	},
+	categorizeByGroup: false,
+	compilerOptions: {
+		module: 'Node16',
+		strict: true,
+		composite: true,
+		declaration: true,
+		declarationMap: true
+	}
+};

@@ -36,7 +36,7 @@ message Members {
 
 // ThresholdDecisionPolicy implements the DecisionPolicy interface
 message ThresholdDecisionPolicy {
-  option (cosmos_proto.implements_interface) = "DecisionPolicy";
+  option (cosmos_proto.implements_interface) = "cosmos.group.DecisionPolicy";
 
   // threshold is the minimum weighted sum of yes votes that must be met or exceeded for a proposal to succeed.
   string threshold = 1;
@@ -47,7 +47,7 @@ message ThresholdDecisionPolicy {
 
 // PercentageDecisionPolicy implements the DecisionPolicy interface
 message PercentageDecisionPolicy {
-  option (cosmos_proto.implements_interface) = "DecisionPolicy";
+  option (cosmos_proto.implements_interface) = "cosmos.group.DecisionPolicy";
 
   // percentage is the minimum percentage the weighted sum of yes votes must meet for a proposal to succeed.
   string percentage = 1;
@@ -153,7 +153,7 @@ message GroupPolicyInfo {
   uint64 version = 5;
 
   // decision_policy specifies the group policy's decision policy.
-  google.protobuf.Any decision_policy = 6 [(cosmos_proto.accepts_interface) = "DecisionPolicy"];
+  google.protobuf.Any decision_policy = 6 [(cosmos_proto.accepts_interface) = "cosmos.group.DecisionPolicy"];
 
   // created_at is a timestamp specifying when a group policy was created.
   google.protobuf.Timestamp created_at = 7 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];

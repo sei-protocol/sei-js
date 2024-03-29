@@ -14,6 +14,10 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
       - run: chrome --version
       - run: yarn
+
+      - name: Install Peer Dependencies
+        run: yarn add -W viem@2.x wagmi
+
       - run: yarn lint:all
       - run: yarn build:all
       - run: yarn test:all

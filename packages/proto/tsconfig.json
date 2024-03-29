@@ -1,16 +1,13 @@
 {
+  "extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"target": "es2020",
-		"module": "es2020",
-		"declaration": true,
 		"outDir": "./dist/types",
-		"allowSyntheticDefaultImports": true,
-		"skipLibCheck": true,
-		"noImplicitAny": false,
-		"esModuleInterop": true,
-		"moduleResolution": "node",
-		"lib": ["ES2020"],
-	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules"]
+  },
+  "include": ["./src/**/*"],
+	"exclude": ["node_modules"],
+  "typedocOptions": {
+    "readme": "./README.md",
+    "name": "proto",
+    "entryPoints": ["src/index.ts"]
+  }
 }

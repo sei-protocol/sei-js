@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"],
+  "compilerOptions": {
+    "outDir": "./dist/types",
+  },
+  "typedocOptions": {
+    "readme": "./README.md",
+    "name": "cosmjs",
+    "entryPoints": ["src/index.ts"]
+  }
+}
+

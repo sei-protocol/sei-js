@@ -1,9 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # testing
-packages/react/coverage
-packages/proto/coverage
-packages/core/coverage
+packages/cosmjs/coverage
+packages/evm/coverage
+
+.nx/
 
 # compiled output
 dist
