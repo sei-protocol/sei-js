@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -39,9 +39,12 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
+      - name: Install Peer Dependencies
+        run: yarn add -W viem@2.x wagmi
+
       - name: Create Docs
         run: yarn docs
-      
+
       # Checks out the newly built docs artifact to the gh-pages branch of this repo
       # Then, publishes to github actions.
       - name: Checkout gh-pages and Deploy to GitHub Pages
