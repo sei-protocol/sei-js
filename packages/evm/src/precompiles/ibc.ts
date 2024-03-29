@@ -8,7 +8,7 @@ import { Abi } from 'viem';
  */
 export interface IbcPrecompileFunctions {
   /**
-   * Sends tokens from the caller's address to another on a different (IBC compatible) chain.
+   * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
    * @param toAddress The recipient's address on the other chain
    * @param port IBC port in source chain (e.g. 'transfer')
    * @param channel IBC channel in source chain (e.g. 'channel-0')
