@@ -1,0 +1,6 @@
+[submodule "packages/registry/chain-registry"]
+	path = packages/registry/chain-registry
+	url = https://github.com/sei-protocol/chain-registry.git
+[submodule "packages/registry/kingnodes-assetlist"]
+	path = packages/registry/kingnodes-assetlist
+	url = https://github.com/kingnodes/sei-assetlist.git
