@@ -1,5 +1,5 @@
 module.exports = {
-	entryPoints: ['packages/evm', 'packages/cosmjs', 'packages/proto'],
+	entryPoints: ['packages/evm', 'packages/cosmjs', 'packages/proto', 'packages/registry'],
 	name: '@sei-js',
 	entryPointStrategy: 'packages',
 	includeVersion: false,

@@ -2,8 +2,8 @@ import { Wallet, Wallets } from '../index';
 
 describe('Wallet Extensions Configuration Tests', () => {
 	it('contains an array of wallet extensions', () => {
-		expect(Array.isArray(Wallets.extensions)).toBeTruthy();
-		Wallets.extensions.forEach((extension: Wallet) => {
+		expect(Array.isArray(Wallets)).toBeTruthy();
+		Wallets.forEach((extension: Wallet) => {
 			expect(typeof extension.name).toBe('string');
 			expect(typeof extension.identifier).toBe('string');
 			expect(typeof extension.icon).toBe('string');
@@ -17,7 +17,7 @@ describe('Wallet Extensions Configuration Tests', () => {
 
 	it('contains specific wallet extension by identifier', () => {
 		const identifierToCheck = 'compass'; // Example identifier
-		const extension = Wallets.extensions.find((ext) => ext.identifier === identifierToCheck);
+		const extension = Wallets.find((ext) => ext.identifier === identifierToCheck);
 		expect(extension).toBeDefined();
 		if (extension) {
 			expect(extension.name).toBe('Compass Wallet');
