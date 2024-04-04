@@ -162,9 +162,9 @@ export const MsgAggregateExchangeRateVote = {
 	},
 	toAmino(message: MsgAggregateExchangeRateVote): MsgAggregateExchangeRateVoteAmino {
 		const obj: any = {};
-		obj.exchange_rates = message.exchangeRates;
-		obj.feeder = message.feeder;
-		obj.validator = message.validator;
+		obj.exchange_rates = message.exchangeRates === '' ? undefined : message.exchangeRates;
+		obj.feeder = message.feeder === '' ? undefined : message.feeder;
+		obj.validator = message.validator === '' ? undefined : message.validator;
 		return obj;
 	},
 	fromAminoMsg(object: MsgAggregateExchangeRateVoteAminoMsg): MsgAggregateExchangeRateVote {
@@ -288,8 +288,8 @@ export const MsgDelegateFeedConsent = {
 	},
 	toAmino(message: MsgDelegateFeedConsent): MsgDelegateFeedConsentAmino {
 		const obj: any = {};
-		obj.operator = message.operator;
-		obj.delegate = message.delegate;
+		obj.operator = message.operator === '' ? undefined : message.operator;
+		obj.delegate = message.delegate === '' ? undefined : message.delegate;
 		return obj;
 	},
 	fromAminoMsg(object: MsgDelegateFeedConsentAminoMsg): MsgDelegateFeedConsent {

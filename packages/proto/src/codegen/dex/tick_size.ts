@@ -11,9 +11,9 @@ export interface TickSizeProtoMsg {
 	value: Uint8Array;
 }
 export interface TickSizeAmino {
-	pair?: PairAmino | undefined;
-	ticksize?: string;
-	contractAddr?: string;
+	pair: PairAmino | undefined;
+	ticksize: string;
+	contractAddr: string;
 }
 export interface TickSizeAminoMsg {
 	type: '/seiprotocol.seichain.dex.TickSize';
@@ -90,9 +90,9 @@ export const TickSize = {
 	},
 	toAmino(message: TickSize): TickSizeAmino {
 		const obj: any = {};
-		obj.pair = message.pair ? Pair.toAmino(message.pair) : undefined;
-		obj.ticksize = message.ticksize;
-		obj.contractAddr = message.contractAddr;
+		obj.pair = message.pair ? Pair.toAmino(message.pair) : Pair.toAmino(Pair.fromPartial({}));
+		obj.ticksize = message.ticksize ?? '';
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: TickSizeAminoMsg): TickSize {

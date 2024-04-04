@@ -181,27 +181,27 @@ export const GenesisState = {
 		if (message.feederDelegations) {
 			obj.feeder_delegations = message.feederDelegations.map((e) => (e ? FeederDelegation.toAmino(e) : undefined));
 		} else {
-			obj.feeder_delegations = [];
+			obj.feeder_delegations = message.feederDelegations;
 		}
 		if (message.exchangeRates) {
 			obj.exchange_rates = message.exchangeRates.map((e) => (e ? ExchangeRateTuple.toAmino(e) : undefined));
 		} else {
-			obj.exchange_rates = [];
+			obj.exchange_rates = message.exchangeRates;
 		}
 		if (message.penaltyCounters) {
 			obj.penalty_counters = message.penaltyCounters.map((e) => (e ? PenaltyCounter.toAmino(e) : undefined));
 		} else {
-			obj.penalty_counters = [];
+			obj.penalty_counters = message.penaltyCounters;
 		}
 		if (message.aggregateExchangeRateVotes) {
 			obj.aggregate_exchange_rate_votes = message.aggregateExchangeRateVotes.map((e) => (e ? AggregateExchangeRateVote.toAmino(e) : undefined));
 		} else {
-			obj.aggregate_exchange_rate_votes = [];
+			obj.aggregate_exchange_rate_votes = message.aggregateExchangeRateVotes;
 		}
 		if (message.priceSnapshots) {
 			obj.price_snapshots = message.priceSnapshots.map((e) => (e ? PriceSnapshot.toAmino(e) : undefined));
 		} else {
-			obj.price_snapshots = [];
+			obj.price_snapshots = message.priceSnapshots;
 		}
 		return obj;
 	},
@@ -276,8 +276,8 @@ export const FeederDelegation = {
 	},
 	toAmino(message: FeederDelegation): FeederDelegationAmino {
 		const obj: any = {};
-		obj.feeder_address = message.feederAddress;
-		obj.validator_address = message.validatorAddress;
+		obj.feeder_address = message.feederAddress === '' ? undefined : message.feederAddress;
+		obj.validator_address = message.validatorAddress === '' ? undefined : message.validatorAddress;
 		return obj;
 	},
 	fromAminoMsg(object: FeederDelegationAminoMsg): FeederDelegation {
@@ -352,7 +352,7 @@ export const PenaltyCounter = {
 	},
 	toAmino(message: PenaltyCounter): PenaltyCounterAmino {
 		const obj: any = {};
-		obj.validator_address = message.validatorAddress;
+		obj.validator_address = message.validatorAddress === '' ? undefined : message.validatorAddress;
 		obj.vote_penalty_counter = message.votePenaltyCounter ? VotePenaltyCounter.toAmino(message.votePenaltyCounter) : undefined;
 		return obj;
 	},

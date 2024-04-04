@@ -101,8 +101,8 @@ export const UpdateMinterProposal = {
   },
   toAmino(message: UpdateMinterProposal): UpdateMinterProposalAmino {
     const obj: any = {};
-    obj.title = message.title;
-    obj.description = message.description;
+    obj.title = message.title === "" ? undefined : message.title;
+    obj.description = message.description === "" ? undefined : message.description;
     obj.minter = message.minter ? Minter.toAmino(message.minter) : undefined;
     return obj;
   },

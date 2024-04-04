@@ -99,12 +99,12 @@ export const AddAssetMetadataProposal = {
 	},
 	toAmino(message: AddAssetMetadataProposal): AddAssetMetadataProposalAmino {
 		const obj: any = {};
-		obj.title = message.title;
-		obj.description = message.description;
+		obj.title = message.title === '' ? undefined : message.title;
+		obj.description = message.description === '' ? undefined : message.description;
 		if (message.assetList) {
 			obj.assetList = message.assetList.map((e) => (e ? AssetMetadata.toAmino(e) : undefined));
 		} else {
-			obj.assetList = [];
+			obj.assetList = message.assetList;
 		}
 		return obj;
 	},

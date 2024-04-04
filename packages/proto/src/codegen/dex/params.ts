@@ -23,20 +23,20 @@ export interface ParamsProtoMsg {
 }
 /** Params defines the parameters for the module. */
 export interface ParamsAmino {
-	price_snapshot_retention?: string;
-	sudo_call_gas_price?: string;
-	begin_block_gas_limit?: string;
-	end_block_gas_limit?: string;
-	default_gas_per_order?: string;
-	default_gas_per_cancel?: string;
-	min_rent_deposit?: string;
-	gas_allowance_per_settlement?: string;
-	min_processable_rent?: string;
-	order_book_entries_per_load?: string;
-	contract_unsuspend_cost?: string;
-	max_order_per_price?: string;
-	max_pairs_per_contract?: string;
-	default_gas_per_order_data_byte?: string;
+	price_snapshot_retention: string;
+	sudo_call_gas_price: string;
+	begin_block_gas_limit: string;
+	end_block_gas_limit: string;
+	default_gas_per_order: string;
+	default_gas_per_cancel: string;
+	min_rent_deposit: string;
+	gas_allowance_per_settlement: string;
+	min_processable_rent: string;
+	order_book_entries_per_load: string;
+	contract_unsuspend_cost: string;
+	max_order_per_price: string;
+	max_pairs_per_contract: string;
+	default_gas_per_order_data_byte: string;
 }
 export interface ParamsAminoMsg {
 	type: '/seiprotocol.seichain.dex.Params';
@@ -258,20 +258,20 @@ export const Params = {
 	},
 	toAmino(message: Params): ParamsAmino {
 		const obj: any = {};
-		obj.price_snapshot_retention = message.priceSnapshotRetention ? message.priceSnapshotRetention.toString() : undefined;
-		obj.sudo_call_gas_price = message.sudoCallGasPrice;
-		obj.begin_block_gas_limit = message.beginBlockGasLimit ? message.beginBlockGasLimit.toString() : undefined;
-		obj.end_block_gas_limit = message.endBlockGasLimit ? message.endBlockGasLimit.toString() : undefined;
-		obj.default_gas_per_order = message.defaultGasPerOrder ? message.defaultGasPerOrder.toString() : undefined;
-		obj.default_gas_per_cancel = message.defaultGasPerCancel ? message.defaultGasPerCancel.toString() : undefined;
-		obj.min_rent_deposit = message.minRentDeposit ? message.minRentDeposit.toString() : undefined;
-		obj.gas_allowance_per_settlement = message.gasAllowancePerSettlement ? message.gasAllowancePerSettlement.toString() : undefined;
-		obj.min_processable_rent = message.minProcessableRent ? message.minProcessableRent.toString() : undefined;
-		obj.order_book_entries_per_load = message.orderBookEntriesPerLoad ? message.orderBookEntriesPerLoad.toString() : undefined;
-		obj.contract_unsuspend_cost = message.contractUnsuspendCost ? message.contractUnsuspendCost.toString() : undefined;
-		obj.max_order_per_price = message.maxOrderPerPrice ? message.maxOrderPerPrice.toString() : undefined;
-		obj.max_pairs_per_contract = message.maxPairsPerContract ? message.maxPairsPerContract.toString() : undefined;
-		obj.default_gas_per_order_data_byte = message.defaultGasPerOrderDataByte ? message.defaultGasPerOrderDataByte.toString() : undefined;
+		obj.price_snapshot_retention = message.priceSnapshotRetention ? message.priceSnapshotRetention.toString() : '0';
+		obj.sudo_call_gas_price = message.sudoCallGasPrice ?? '';
+		obj.begin_block_gas_limit = message.beginBlockGasLimit ? message.beginBlockGasLimit.toString() : '0';
+		obj.end_block_gas_limit = message.endBlockGasLimit ? message.endBlockGasLimit.toString() : '0';
+		obj.default_gas_per_order = message.defaultGasPerOrder ? message.defaultGasPerOrder.toString() : '0';
+		obj.default_gas_per_cancel = message.defaultGasPerCancel ? message.defaultGasPerCancel.toString() : '0';
+		obj.min_rent_deposit = message.minRentDeposit ? message.minRentDeposit.toString() : '0';
+		obj.gas_allowance_per_settlement = message.gasAllowancePerSettlement ? message.gasAllowancePerSettlement.toString() : '0';
+		obj.min_processable_rent = message.minProcessableRent ? message.minProcessableRent.toString() : '0';
+		obj.order_book_entries_per_load = message.orderBookEntriesPerLoad ? message.orderBookEntriesPerLoad.toString() : '0';
+		obj.contract_unsuspend_cost = message.contractUnsuspendCost ? message.contractUnsuspendCost.toString() : '0';
+		obj.max_order_per_price = message.maxOrderPerPrice ? message.maxOrderPerPrice.toString() : '0';
+		obj.max_pairs_per_contract = message.maxPairsPerContract ? message.maxPairsPerContract.toString() : '0';
+		obj.default_gas_per_order_data_byte = message.defaultGasPerOrderDataByte ? message.defaultGasPerOrderDataByte.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: ParamsAminoMsg): Params {

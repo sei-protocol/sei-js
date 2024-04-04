@@ -393,14 +393,14 @@ export const QueryMinterResponse = {
   },
   toAmino(message: QueryMinterResponse): QueryMinterResponseAmino {
     const obj: any = {};
-    obj.start_date = message.startDate;
-    obj.end_date = message.endDate;
-    obj.denom = message.denom;
-    obj.total_mint_amount = message.totalMintAmount ? message.totalMintAmount.toString() : undefined;
-    obj.remaining_mint_amount = message.remainingMintAmount ? message.remainingMintAmount.toString() : undefined;
-    obj.last_mint_amount = message.lastMintAmount ? message.lastMintAmount.toString() : undefined;
-    obj.last_mint_date = message.lastMintDate;
-    obj.last_mint_height = message.lastMintHeight ? message.lastMintHeight.toString() : undefined;
+    obj.start_date = message.startDate === "" ? undefined : message.startDate;
+    obj.end_date = message.endDate === "" ? undefined : message.endDate;
+    obj.denom = message.denom === "" ? undefined : message.denom;
+    obj.total_mint_amount = message.totalMintAmount !== BigInt(0) ? message.totalMintAmount.toString() : undefined;
+    obj.remaining_mint_amount = message.remainingMintAmount !== BigInt(0) ? message.remainingMintAmount.toString() : undefined;
+    obj.last_mint_amount = message.lastMintAmount !== BigInt(0) ? message.lastMintAmount.toString() : undefined;
+    obj.last_mint_date = message.lastMintDate === "" ? undefined : message.lastMintDate;
+    obj.last_mint_height = message.lastMintHeight !== BigInt(0) ? message.lastMintHeight.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryMinterResponseAminoMsg): QueryMinterResponse {

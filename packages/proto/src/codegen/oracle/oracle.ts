@@ -329,18 +329,18 @@ export const Params = {
 	},
 	toAmino(message: Params): ParamsAmino {
 		const obj: any = {};
-		obj.vote_period = message.votePeriod ? message.votePeriod.toString() : undefined;
-		obj.vote_threshold = message.voteThreshold;
-		obj.reward_band = message.rewardBand;
+		obj.vote_period = message.votePeriod !== BigInt(0) ? message.votePeriod.toString() : undefined;
+		obj.vote_threshold = message.voteThreshold === '' ? undefined : message.voteThreshold;
+		obj.reward_band = message.rewardBand === '' ? undefined : message.rewardBand;
 		if (message.whitelist) {
 			obj.whitelist = message.whitelist.map((e) => (e ? Denom.toAmino(e) : undefined));
 		} else {
-			obj.whitelist = [];
+			obj.whitelist = message.whitelist;
 		}
-		obj.slash_fraction = message.slashFraction;
-		obj.slash_window = message.slashWindow ? message.slashWindow.toString() : undefined;
-		obj.min_valid_per_window = message.minValidPerWindow;
-		obj.lookback_duration = message.lookbackDuration ? message.lookbackDuration.toString() : undefined;
+		obj.slash_fraction = message.slashFraction === '' ? undefined : message.slashFraction;
+		obj.slash_window = message.slashWindow !== BigInt(0) ? message.slashWindow.toString() : undefined;
+		obj.min_valid_per_window = message.minValidPerWindow === '' ? undefined : message.minValidPerWindow;
+		obj.lookback_duration = message.lookbackDuration !== BigInt(0) ? message.lookbackDuration.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: ParamsAminoMsg): Params {
@@ -403,7 +403,7 @@ export const Denom = {
 	},
 	toAmino(message: Denom): DenomAmino {
 		const obj: any = {};
-		obj.name = message.name;
+		obj.name = message.name === '' ? undefined : message.name;
 		return obj;
 	},
 	fromAminoMsg(object: DenomAminoMsg): Denom {
@@ -478,9 +478,9 @@ export const AggregateExchangeRateVote = {
 		if (message.exchangeRateTuples) {
 			obj.exchange_rate_tuples = message.exchangeRateTuples.map((e) => (e ? ExchangeRateTuple.toAmino(e) : undefined));
 		} else {
-			obj.exchange_rate_tuples = [];
+			obj.exchange_rate_tuples = message.exchangeRateTuples;
 		}
-		obj.voter = message.voter;
+		obj.voter = message.voter === '' ? undefined : message.voter;
 		return obj;
 	},
 	fromAminoMsg(object: AggregateExchangeRateVoteAminoMsg): AggregateExchangeRateVote {
@@ -554,8 +554,8 @@ export const ExchangeRateTuple = {
 	},
 	toAmino(message: ExchangeRateTuple): ExchangeRateTupleAmino {
 		const obj: any = {};
-		obj.denom = message.denom;
-		obj.exchange_rate = message.exchangeRate;
+		obj.denom = message.denom === '' ? undefined : message.denom;
+		obj.exchange_rate = message.exchangeRate === '' ? undefined : message.exchangeRate;
 		return obj;
 	},
 	fromAminoMsg(object: ExchangeRateTupleAminoMsg): ExchangeRateTuple {
@@ -641,9 +641,9 @@ export const OracleExchangeRate = {
 	},
 	toAmino(message: OracleExchangeRate): OracleExchangeRateAmino {
 		const obj: any = {};
-		obj.exchange_rate = message.exchangeRate;
-		obj.last_update = message.lastUpdate;
-		obj.last_update_timestamp = message.lastUpdateTimestamp ? message.lastUpdateTimestamp.toString() : undefined;
+		obj.exchange_rate = message.exchangeRate === '' ? undefined : message.exchangeRate;
+		obj.last_update = message.lastUpdate === '' ? undefined : message.lastUpdate;
+		obj.last_update_timestamp = message.lastUpdateTimestamp !== BigInt(0) ? message.lastUpdateTimestamp.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: OracleExchangeRateAminoMsg): OracleExchangeRate {
@@ -718,7 +718,7 @@ export const PriceSnapshotItem = {
 	},
 	toAmino(message: PriceSnapshotItem): PriceSnapshotItemAmino {
 		const obj: any = {};
-		obj.denom = message.denom;
+		obj.denom = message.denom === '' ? undefined : message.denom;
 		obj.oracle_exchange_rate = message.oracleExchangeRate ? OracleExchangeRate.toAmino(message.oracleExchangeRate) : undefined;
 		return obj;
 	},
@@ -792,11 +792,11 @@ export const PriceSnapshot = {
 	},
 	toAmino(message: PriceSnapshot): PriceSnapshotAmino {
 		const obj: any = {};
-		obj.snapshot_timestamp = message.snapshotTimestamp ? message.snapshotTimestamp.toString() : undefined;
+		obj.snapshot_timestamp = message.snapshotTimestamp !== BigInt(0) ? message.snapshotTimestamp.toString() : undefined;
 		if (message.priceSnapshotItems) {
 			obj.price_snapshot_items = message.priceSnapshotItems.map((e) => (e ? PriceSnapshotItem.toAmino(e) : undefined));
 		} else {
-			obj.price_snapshot_items = [];
+			obj.price_snapshot_items = message.priceSnapshotItems;
 		}
 		return obj;
 	},
@@ -882,9 +882,9 @@ export const OracleTwap = {
 	},
 	toAmino(message: OracleTwap): OracleTwapAmino {
 		const obj: any = {};
-		obj.denom = message.denom;
-		obj.twap = message.twap;
-		obj.lookback_seconds = message.lookbackSeconds ? message.lookbackSeconds.toString() : undefined;
+		obj.denom = message.denom === '' ? undefined : message.denom;
+		obj.twap = message.twap === '' ? undefined : message.twap;
+		obj.lookback_seconds = message.lookbackSeconds !== BigInt(0) ? message.lookbackSeconds.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: OracleTwapAminoMsg): OracleTwap {
@@ -969,9 +969,9 @@ export const VotePenaltyCounter = {
 	},
 	toAmino(message: VotePenaltyCounter): VotePenaltyCounterAmino {
 		const obj: any = {};
-		obj.miss_count = message.missCount ? message.missCount.toString() : undefined;
-		obj.abstain_count = message.abstainCount ? message.abstainCount.toString() : undefined;
-		obj.success_count = message.successCount ? message.successCount.toString() : undefined;
+		obj.miss_count = message.missCount !== BigInt(0) ? message.missCount.toString() : undefined;
+		obj.abstain_count = message.abstainCount !== BigInt(0) ? message.abstainCount.toString() : undefined;
+		obj.success_count = message.successCount !== BigInt(0) ? message.successCount.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: VotePenaltyCounterAminoMsg): VotePenaltyCounter {

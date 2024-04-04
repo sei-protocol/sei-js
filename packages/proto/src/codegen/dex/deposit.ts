@@ -10,9 +10,9 @@ export interface DepositInfoEntryProtoMsg {
 	value: Uint8Array;
 }
 export interface DepositInfoEntryAmino {
-	creator?: string;
-	denom?: string;
-	amount?: string;
+	creator: string;
+	denom: string;
+	amount: string;
 }
 export interface DepositInfoEntryAminoMsg {
 	type: '/seiprotocol.seichain.dex.DepositInfoEntry';
@@ -89,9 +89,9 @@ export const DepositInfoEntry = {
 	},
 	toAmino(message: DepositInfoEntry): DepositInfoEntryAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
-		obj.denom = message.denom;
-		obj.amount = message.amount;
+		obj.creator = message.creator ?? '';
+		obj.denom = message.denom ?? '';
+		obj.amount = message.amount ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: DepositInfoEntryAminoMsg): DepositInfoEntry {

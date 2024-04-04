@@ -10,8 +10,8 @@ export interface LongBookProtoMsg {
 	value: Uint8Array;
 }
 export interface LongBookAmino {
-	price?: string;
-	entry?: OrderEntryAmino | undefined;
+	price: string;
+	entry: OrderEntryAmino | undefined;
 }
 export interface LongBookAminoMsg {
 	type: '/seiprotocol.seichain.dex.LongBook';
@@ -76,8 +76,8 @@ export const LongBook = {
 	},
 	toAmino(message: LongBook): LongBookAmino {
 		const obj: any = {};
-		obj.price = message.price;
-		obj.entry = message.entry ? OrderEntry.toAmino(message.entry) : undefined;
+		obj.price = message.price ?? '';
+		obj.entry = message.entry ? OrderEntry.toAmino(message.entry) : OrderEntry.toAmino(OrderEntry.fromPartial({}));
 		return obj;
 	},
 	fromAminoMsg(object: LongBookAminoMsg): LongBook {
