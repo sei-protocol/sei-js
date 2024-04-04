@@ -240,16 +240,16 @@ export const ContractInfo = {
 	},
 	toAmino(message: ContractInfo): ContractInfoAmino {
 		const obj: any = {};
-		obj.codeId = message.codeId ? message.codeId.toString() : undefined;
-		obj.contractAddr = message.contractAddr;
-		obj.needHook = message.needHook;
-		obj.needOrderMatching = message.needOrderMatching;
+		obj.codeId = message.codeId !== BigInt(0) ? message.codeId.toString() : undefined;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.needHook = message.needHook === false ? undefined : message.needHook;
+		obj.needOrderMatching = message.needOrderMatching === false ? undefined : message.needOrderMatching;
 		if (message.dependencies) {
 			obj.dependencies = message.dependencies.map((e) => (e ? ContractDependencyInfo.toAmino(e) : undefined));
 		} else {
-			obj.dependencies = [];
+			obj.dependencies = message.dependencies;
 		}
-		obj.numIncomingDependencies = message.numIncomingDependencies ? message.numIncomingDependencies.toString() : undefined;
+		obj.numIncomingDependencies = message.numIncomingDependencies !== BigInt(0) ? message.numIncomingDependencies.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: ContractInfoAminoMsg): ContractInfo {
@@ -410,20 +410,20 @@ export const ContractInfoV2 = {
 	},
 	toAmino(message: ContractInfoV2): ContractInfoV2Amino {
 		const obj: any = {};
-		obj.codeId = message.codeId ? message.codeId.toString() : undefined;
-		obj.contractAddr = message.contractAddr;
-		obj.needHook = message.needHook;
-		obj.needOrderMatching = message.needOrderMatching;
+		obj.codeId = message.codeId !== BigInt(0) ? message.codeId.toString() : undefined;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.needHook = message.needHook === false ? undefined : message.needHook;
+		obj.needOrderMatching = message.needOrderMatching === false ? undefined : message.needOrderMatching;
 		if (message.dependencies) {
 			obj.dependencies = message.dependencies.map((e) => (e ? ContractDependencyInfo.toAmino(e) : undefined));
 		} else {
-			obj.dependencies = [];
+			obj.dependencies = message.dependencies;
 		}
-		obj.numIncomingDependencies = message.numIncomingDependencies ? message.numIncomingDependencies.toString() : undefined;
-		obj.creator = message.creator;
-		obj.rentBalance = message.rentBalance ? message.rentBalance.toString() : undefined;
-		obj.suspended = message.suspended;
-		obj.suspensionReason = message.suspensionReason;
+		obj.numIncomingDependencies = message.numIncomingDependencies !== BigInt(0) ? message.numIncomingDependencies.toString() : undefined;
+		obj.creator = message.creator === '' ? undefined : message.creator;
+		obj.rentBalance = message.rentBalance !== BigInt(0) ? message.rentBalance.toString() : undefined;
+		obj.suspended = message.suspended === false ? undefined : message.suspended;
+		obj.suspensionReason = message.suspensionReason === '' ? undefined : message.suspensionReason;
 		return obj;
 	},
 	fromAminoMsg(object: ContractInfoV2AminoMsg): ContractInfoV2 {
@@ -508,9 +508,9 @@ export const ContractDependencyInfo = {
 	},
 	toAmino(message: ContractDependencyInfo): ContractDependencyInfoAmino {
 		const obj: any = {};
-		obj.dependency = message.dependency;
-		obj.immediateElderSibling = message.immediateElderSibling;
-		obj.immediateYoungerSibling = message.immediateYoungerSibling;
+		obj.dependency = message.dependency === '' ? undefined : message.dependency;
+		obj.immediateElderSibling = message.immediateElderSibling === '' ? undefined : message.immediateElderSibling;
+		obj.immediateYoungerSibling = message.immediateYoungerSibling === '' ? undefined : message.immediateYoungerSibling;
 		return obj;
 	},
 	fromAminoMsg(object: ContractDependencyInfoAminoMsg): ContractDependencyInfo {
@@ -615,14 +615,14 @@ export const LegacyContractInfo = {
 	},
 	toAmino(message: LegacyContractInfo): LegacyContractInfoAmino {
 		const obj: any = {};
-		obj.codeId = message.codeId ? message.codeId.toString() : undefined;
-		obj.contractAddr = message.contractAddr;
-		obj.needHook = message.needHook;
-		obj.needOrderMatching = message.needOrderMatching;
+		obj.codeId = message.codeId !== BigInt(0) ? message.codeId.toString() : undefined;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.needHook = message.needHook === false ? undefined : message.needHook;
+		obj.needOrderMatching = message.needOrderMatching === false ? undefined : message.needOrderMatching;
 		if (message.dependentContractAddrs) {
 			obj.dependentContractAddrs = message.dependentContractAddrs.map((e) => e);
 		} else {
-			obj.dependentContractAddrs = [];
+			obj.dependentContractAddrs = message.dependentContractAddrs;
 		}
 		return obj;
 	},

@@ -300,14 +300,14 @@ export const Minter = {
   },
   toAmino(message: Minter): MinterAmino {
     const obj: any = {};
-    obj.start_date = message.startDate;
-    obj.end_date = message.endDate;
-    obj.denom = message.denom;
-    obj.total_mint_amount = message.totalMintAmount ? message.totalMintAmount.toString() : undefined;
-    obj.remaining_mint_amount = message.remainingMintAmount ? message.remainingMintAmount.toString() : undefined;
-    obj.last_mint_amount = message.lastMintAmount ? message.lastMintAmount.toString() : undefined;
-    obj.last_mint_date = message.lastMintDate;
-    obj.last_mint_height = message.lastMintHeight ? message.lastMintHeight.toString() : undefined;
+    obj.start_date = message.startDate === "" ? undefined : message.startDate;
+    obj.end_date = message.endDate === "" ? undefined : message.endDate;
+    obj.denom = message.denom === "" ? undefined : message.denom;
+    obj.total_mint_amount = message.totalMintAmount !== BigInt(0) ? message.totalMintAmount.toString() : undefined;
+    obj.remaining_mint_amount = message.remainingMintAmount !== BigInt(0) ? message.remainingMintAmount.toString() : undefined;
+    obj.last_mint_amount = message.lastMintAmount !== BigInt(0) ? message.lastMintAmount.toString() : undefined;
+    obj.last_mint_date = message.lastMintDate === "" ? undefined : message.lastMintDate;
+    obj.last_mint_height = message.lastMintHeight !== BigInt(0) ? message.lastMintHeight.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MinterAminoMsg): Minter {
@@ -392,9 +392,9 @@ export const ScheduledTokenRelease = {
   },
   toAmino(message: ScheduledTokenRelease): ScheduledTokenReleaseAmino {
     const obj: any = {};
-    obj.start_date = message.startDate;
-    obj.end_date = message.endDate;
-    obj.token_release_amount = message.tokenReleaseAmount ? message.tokenReleaseAmount.toString() : undefined;
+    obj.start_date = message.startDate === "" ? undefined : message.startDate;
+    obj.end_date = message.endDate === "" ? undefined : message.endDate;
+    obj.token_release_amount = message.tokenReleaseAmount !== BigInt(0) ? message.tokenReleaseAmount.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: ScheduledTokenReleaseAminoMsg): ScheduledTokenRelease {
@@ -466,11 +466,11 @@ export const Params = {
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
-    obj.mint_denom = message.mintDenom;
+    obj.mint_denom = message.mintDenom === "" ? undefined : message.mintDenom;
     if (message.tokenReleaseSchedule) {
       obj.token_release_schedule = message.tokenReleaseSchedule.map(e => e ? ScheduledTokenRelease.toAmino(e) : undefined);
     } else {
-      obj.token_release_schedule = [];
+      obj.token_release_schedule = message.tokenReleaseSchedule;
     }
     return obj;
   },
@@ -567,10 +567,10 @@ export const Version2Minter = {
   },
   toAmino(message: Version2Minter): Version2MinterAmino {
     const obj: any = {};
-    obj.last_mint_amount = message.lastMintAmount;
-    obj.last_mint_date = message.lastMintDate;
-    obj.last_mint_height = message.lastMintHeight ? message.lastMintHeight.toString() : undefined;
-    obj.denom = message.denom;
+    obj.last_mint_amount = message.lastMintAmount === "" ? undefined : message.lastMintAmount;
+    obj.last_mint_date = message.lastMintDate === "" ? undefined : message.lastMintDate;
+    obj.last_mint_height = message.lastMintHeight !== BigInt(0) ? message.lastMintHeight.toString() : undefined;
+    obj.denom = message.denom === "" ? undefined : message.denom;
     return obj;
   },
   fromAminoMsg(object: Version2MinterAminoMsg): Version2Minter {
@@ -644,8 +644,8 @@ export const Version2ScheduledTokenRelease = {
   },
   toAmino(message: Version2ScheduledTokenRelease): Version2ScheduledTokenReleaseAmino {
     const obj: any = {};
-    obj.date = message.date;
-    obj.token_release_amount = message.tokenReleaseAmount ? message.tokenReleaseAmount.toString() : undefined;
+    obj.date = message.date === "" ? undefined : message.date;
+    obj.token_release_amount = message.tokenReleaseAmount !== BigInt(0) ? message.tokenReleaseAmount.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: Version2ScheduledTokenReleaseAminoMsg): Version2ScheduledTokenRelease {
@@ -717,11 +717,11 @@ export const Version2Params = {
   },
   toAmino(message: Version2Params): Version2ParamsAmino {
     const obj: any = {};
-    obj.mint_denom = message.mintDenom;
+    obj.mint_denom = message.mintDenom === "" ? undefined : message.mintDenom;
     if (message.tokenReleaseSchedule) {
       obj.token_release_schedule = message.tokenReleaseSchedule.map(e => e ? Version2ScheduledTokenRelease.toAmino(e) : undefined);
     } else {
-      obj.token_release_schedule = [];
+      obj.token_release_schedule = message.tokenReleaseSchedule;
     }
     return obj;
   },

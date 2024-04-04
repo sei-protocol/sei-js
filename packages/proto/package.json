@@ -9,9 +9,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/cjs/codgen/index.js",
-  "module": "./dist/esm/codgen/index.js",
-  "types": "./dist/types/codgen/index.d.ts",
+  "main": "./dist/cjs/codegen/index.js",
+  "module": "./dist/esm/codegen/index.js",
+  "types": "./dist/types/codegen/index.d.ts",
   "sideEffects": false,
   "directories": {
     "lib": "src",
@@ -19,10 +19,10 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "yarn build:cjs && yarn build:esm && yarn build:ts",
-    "build:cjs": "BABEL_ENV=cjs babel src --out-dir dist/cjs --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
-    "build:esm": "BABEL_ENV=esm babel src --out-dir dist/esm --delete-dir-on-start --extensions \".tsx,.ts,.js\"",
-    "build:ts": "tsc --project ./tsconfig.json",
+    "build": "yarn build:cjs && yarn build:esm && yarn build:types",
+    "build:cjs": "tsc --outDir dist/cjs --module commonjs",
+    "build:esm": "tsc --outDir dist/esm --module esnext",
+    "build:types": "tsc --project ./tsconfig.declaration.json",
     "codegen": "cross-env NODE_ENV=development babel-node scripts/codegen.js",
     "postcodegen": "yarn prettier --write ./src/codegen/**/*.ts --config ../../.prettierrc",
     "dev": "cross-env NODE_ENV=development babel-node src/index --extensions \".tsx,.ts,.js\"",
@@ -77,7 +77,7 @@
     "@cosmjs/stargate": "^0.32.2",
     "@cosmjs/tendermint-rpc": "^0.32.2",
     "@cosmology/lcd": "^0.13.3",
-    "@cosmology/telescope": "^1.4.12",
+    "@cosmology/telescope": "^1.5.3",
     "@osmonauts/helpers": "^0.7.0",
     "cosmjs-types": "^0.9.0",
     "protobufjs": "^7.2.6"

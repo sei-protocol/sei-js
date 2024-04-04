@@ -12,11 +12,11 @@ export interface OrderEntryProtoMsg {
 	value: Uint8Array;
 }
 export interface OrderEntryAmino {
-	price?: string;
-	quantity?: string;
-	allocations?: AllocationAmino[];
-	priceDenom?: string;
-	assetDenom?: string;
+	price: string;
+	quantity: string;
+	allocations: AllocationAmino[];
+	priceDenom: string;
+	assetDenom: string;
 }
 export interface OrderEntryAminoMsg {
 	type: '/seiprotocol.seichain.dex.OrderEntry';
@@ -39,9 +39,9 @@ export interface AllocationProtoMsg {
 	value: Uint8Array;
 }
 export interface AllocationAmino {
-	orderId?: string;
-	quantity?: string;
-	account?: string;
+	orderId: string;
+	quantity: string;
+	account: string;
 }
 export interface AllocationAminoMsg {
 	type: '/seiprotocol.seichain.dex.Allocation';
@@ -138,15 +138,15 @@ export const OrderEntry = {
 	},
 	toAmino(message: OrderEntry): OrderEntryAmino {
 		const obj: any = {};
-		obj.price = message.price;
-		obj.quantity = message.quantity;
+		obj.price = message.price ?? '';
+		obj.quantity = message.quantity ?? '';
 		if (message.allocations) {
 			obj.allocations = message.allocations.map((e) => (e ? Allocation.toAmino(e) : undefined));
 		} else {
-			obj.allocations = [];
+			obj.allocations = message.allocations;
 		}
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: OrderEntryAminoMsg): OrderEntry {
@@ -231,9 +231,9 @@ export const Allocation = {
 	},
 	toAmino(message: Allocation): AllocationAmino {
 		const obj: any = {};
-		obj.orderId = message.orderId ? message.orderId.toString() : undefined;
-		obj.quantity = message.quantity;
-		obj.account = message.account;
+		obj.orderId = message.orderId ? message.orderId.toString() : '0';
+		obj.quantity = message.quantity ?? '';
+		obj.account = message.account ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: AllocationAminoMsg): Allocation {

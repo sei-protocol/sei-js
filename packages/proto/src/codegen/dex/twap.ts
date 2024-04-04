@@ -11,9 +11,9 @@ export interface TwapProtoMsg {
 	value: Uint8Array;
 }
 export interface TwapAmino {
-	pair?: PairAmino | undefined;
-	twap?: string;
-	lookbackSeconds?: string;
+	pair: PairAmino | undefined;
+	twap: string;
+	lookbackSeconds: string;
 }
 export interface TwapAminoMsg {
 	type: '/seiprotocol.seichain.dex.Twap';
@@ -90,9 +90,9 @@ export const Twap = {
 	},
 	toAmino(message: Twap): TwapAmino {
 		const obj: any = {};
-		obj.pair = message.pair ? Pair.toAmino(message.pair) : undefined;
-		obj.twap = message.twap;
-		obj.lookbackSeconds = message.lookbackSeconds ? message.lookbackSeconds.toString() : undefined;
+		obj.pair = message.pair ? Pair.toAmino(message.pair) : Pair.toAmino(Pair.fromPartial({}));
+		obj.twap = message.twap ?? '';
+		obj.lookbackSeconds = message.lookbackSeconds ? message.lookbackSeconds.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: TwapAminoMsg): Twap {

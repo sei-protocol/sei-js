@@ -16,9 +16,9 @@ export interface EpochProtoMsg {
 export interface EpochAmino {
 	genesis_time?: string | undefined;
 	epoch_duration?: DurationAmino | undefined;
-	current_epoch?: string;
+	current_epoch: string;
 	current_epoch_start_time?: string | undefined;
-	current_epoch_height?: string;
+	current_epoch_height: string;
 }
 export interface EpochAminoMsg {
 	type: '/seiprotocol.seichain.epoch.Epoch';
@@ -122,9 +122,9 @@ export const Epoch = {
 		const obj: any = {};
 		obj.genesis_time = message.genesisTime ? Timestamp.toAmino(toTimestamp(message.genesisTime)) : undefined;
 		obj.epoch_duration = message.epochDuration ? Duration.toAmino(message.epochDuration) : undefined;
-		obj.current_epoch = message.currentEpoch ? message.currentEpoch.toString() : undefined;
+		obj.current_epoch = message.currentEpoch ? message.currentEpoch.toString() : '0';
 		obj.current_epoch_start_time = message.currentEpochStartTime ? Timestamp.toAmino(toTimestamp(message.currentEpochStartTime)) : undefined;
-		obj.current_epoch_height = message.currentEpochHeight ? message.currentEpochHeight.toString() : undefined;
+		obj.current_epoch_height = message.currentEpochHeight ? message.currentEpochHeight.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: EpochAminoMsg): Epoch {

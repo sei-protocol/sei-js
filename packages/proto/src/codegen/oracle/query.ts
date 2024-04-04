@@ -542,7 +542,7 @@ export const QueryExchangeRateRequest = {
 	},
 	toAmino(message: QueryExchangeRateRequest): QueryExchangeRateRequestAmino {
 		const obj: any = {};
-		obj.denom = message.denom;
+		obj.denom = message.denom === '' ? undefined : message.denom;
 		return obj;
 	},
 	fromAminoMsg(object: QueryExchangeRateRequestAminoMsg): QueryExchangeRateRequest {
@@ -731,7 +731,7 @@ export const DenomOracleExchangeRatePair = {
 	},
 	toAmino(message: DenomOracleExchangeRatePair): DenomOracleExchangeRatePairAmino {
 		const obj: any = {};
-		obj.denom = message.denom;
+		obj.denom = message.denom === '' ? undefined : message.denom;
 		obj.oracle_exchange_rate = message.oracleExchangeRate ? OracleExchangeRate.toAmino(message.oracleExchangeRate) : undefined;
 		return obj;
 	},
@@ -796,7 +796,7 @@ export const QueryExchangeRatesResponse = {
 		if (message.denomOracleExchangeRatePairs) {
 			obj.denom_oracle_exchange_rate_pairs = message.denomOracleExchangeRatePairs.map((e) => (e ? DenomOracleExchangeRatePair.toAmino(e) : undefined));
 		} else {
-			obj.denom_oracle_exchange_rate_pairs = [];
+			obj.denom_oracle_exchange_rate_pairs = message.denomOracleExchangeRatePairs;
 		}
 		return obj;
 	},
@@ -911,7 +911,7 @@ export const QueryActivesResponse = {
 		if (message.actives) {
 			obj.actives = message.actives.map((e) => e);
 		} else {
-			obj.actives = [];
+			obj.actives = message.actives;
 		}
 		return obj;
 	},
@@ -1026,7 +1026,7 @@ export const QueryVoteTargetsResponse = {
 		if (message.voteTargets) {
 			obj.vote_targets = message.voteTargets.map((e) => e);
 		} else {
-			obj.vote_targets = [];
+			obj.vote_targets = message.voteTargets;
 		}
 		return obj;
 	},
@@ -1141,7 +1141,7 @@ export const QueryPriceSnapshotHistoryResponse = {
 		if (message.priceSnapshots) {
 			obj.price_snapshots = message.priceSnapshots.map((e) => (e ? PriceSnapshot.toAmino(e) : undefined));
 		} else {
-			obj.price_snapshots = [];
+			obj.price_snapshots = message.priceSnapshots;
 		}
 		return obj;
 	},
@@ -1205,7 +1205,7 @@ export const QueryTwapsRequest = {
 	},
 	toAmino(message: QueryTwapsRequest): QueryTwapsRequestAmino {
 		const obj: any = {};
-		obj.lookback_seconds = message.lookbackSeconds ? message.lookbackSeconds.toString() : undefined;
+		obj.lookback_seconds = message.lookbackSeconds !== BigInt(0) ? message.lookbackSeconds.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: QueryTwapsRequestAminoMsg): QueryTwapsRequest {
@@ -1269,7 +1269,7 @@ export const QueryTwapsResponse = {
 		if (message.oracleTwaps) {
 			obj.oracle_twaps = message.oracleTwaps.map((e) => (e ? OracleTwap.toAmino(e) : undefined));
 		} else {
-			obj.oracle_twaps = [];
+			obj.oracle_twaps = message.oracleTwaps;
 		}
 		return obj;
 	},
@@ -1333,7 +1333,7 @@ export const QueryFeederDelegationRequest = {
 	},
 	toAmino(message: QueryFeederDelegationRequest): QueryFeederDelegationRequestAmino {
 		const obj: any = {};
-		obj.validator_addr = message.validatorAddr;
+		obj.validator_addr = message.validatorAddr === '' ? undefined : message.validatorAddr;
 		return obj;
 	},
 	fromAminoMsg(object: QueryFeederDelegationRequestAminoMsg): QueryFeederDelegationRequest {
@@ -1396,7 +1396,7 @@ export const QueryFeederDelegationResponse = {
 	},
 	toAmino(message: QueryFeederDelegationResponse): QueryFeederDelegationResponseAmino {
 		const obj: any = {};
-		obj.feeder_addr = message.feederAddr;
+		obj.feeder_addr = message.feederAddr === '' ? undefined : message.feederAddr;
 		return obj;
 	},
 	fromAminoMsg(object: QueryFeederDelegationResponseAminoMsg): QueryFeederDelegationResponse {
@@ -1459,7 +1459,7 @@ export const QueryVotePenaltyCounterRequest = {
 	},
 	toAmino(message: QueryVotePenaltyCounterRequest): QueryVotePenaltyCounterRequestAmino {
 		const obj: any = {};
-		obj.validator_addr = message.validatorAddr;
+		obj.validator_addr = message.validatorAddr === '' ? undefined : message.validatorAddr;
 		return obj;
 	},
 	fromAminoMsg(object: QueryVotePenaltyCounterRequestAminoMsg): QueryVotePenaltyCounterRequest {
@@ -1636,7 +1636,7 @@ export const QuerySlashWindowResponse = {
 	},
 	toAmino(message: QuerySlashWindowResponse): QuerySlashWindowResponseAmino {
 		const obj: any = {};
-		obj.window_progress = message.windowProgress ? message.windowProgress.toString() : undefined;
+		obj.window_progress = message.windowProgress !== BigInt(0) ? message.windowProgress.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: QuerySlashWindowResponseAminoMsg): QuerySlashWindowResponse {

@@ -11,10 +11,10 @@ export interface AssetIBCInfoProtoMsg {
 	value: Uint8Array;
 }
 export interface AssetIBCInfoAmino {
-	sourceChannel?: string;
-	dstChannel?: string;
-	sourceDenom?: string;
-	sourceChainID?: string;
+	sourceChannel: string;
+	dstChannel: string;
+	sourceDenom: string;
+	sourceChainID: string;
 }
 export interface AssetIBCInfoAminoMsg {
 	type: '/seiprotocol.seichain.dex.AssetIBCInfo';
@@ -37,10 +37,10 @@ export interface AssetMetadataProtoMsg {
 	value: Uint8Array;
 }
 export interface AssetMetadataAmino {
-	ibcInfo?: AssetIBCInfoAmino | undefined;
+	ibcInfo: AssetIBCInfoAmino | undefined;
 	/** Ex: cw20, ics20, erc20 */
-	type_asset?: string;
-	metadata?: MetadataAmino | undefined;
+	type_asset: string;
+	metadata: MetadataAmino | undefined;
 }
 export interface AssetMetadataAminoMsg {
 	type: '/seiprotocol.seichain.dex.AssetMetadata';
@@ -128,10 +128,10 @@ export const AssetIBCInfo = {
 	},
 	toAmino(message: AssetIBCInfo): AssetIBCInfoAmino {
 		const obj: any = {};
-		obj.sourceChannel = message.sourceChannel;
-		obj.dstChannel = message.dstChannel;
-		obj.sourceDenom = message.sourceDenom;
-		obj.sourceChainID = message.sourceChainID;
+		obj.sourceChannel = message.sourceChannel ?? '';
+		obj.dstChannel = message.dstChannel ?? '';
+		obj.sourceDenom = message.sourceDenom ?? '';
+		obj.sourceChainID = message.sourceChainID ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: AssetIBCInfoAminoMsg): AssetIBCInfo {
@@ -216,9 +216,9 @@ export const AssetMetadata = {
 	},
 	toAmino(message: AssetMetadata): AssetMetadataAmino {
 		const obj: any = {};
-		obj.ibcInfo = message.ibcInfo ? AssetIBCInfo.toAmino(message.ibcInfo) : undefined;
-		obj.type_asset = message.typeAsset;
-		obj.metadata = message.metadata ? Metadata.toAmino(message.metadata) : undefined;
+		obj.ibcInfo = message.ibcInfo ? AssetIBCInfo.toAmino(message.ibcInfo) : AssetIBCInfo.toAmino(AssetIBCInfo.fromPartial({}));
+		obj.type_asset = message.typeAsset ?? '';
+		obj.metadata = message.metadata ? Metadata.toAmino(message.metadata) : Metadata.toAmino(Metadata.fromPartial({}));
 		return obj;
 	},
 	fromAminoMsg(object: AssetMetadataAminoMsg): AssetMetadata {

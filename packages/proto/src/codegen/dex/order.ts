@@ -1,13 +1,4 @@
-import {
-	OrderStatus,
-	OrderType,
-	PositionDirection,
-	CancellationInitiator,
-	orderStatusFromJSON,
-	orderTypeFromJSON,
-	positionDirectionFromJSON,
-	cancellationInitiatorFromJSON
-} from './enums';
+import { OrderStatus, OrderType, PositionDirection, CancellationInitiator } from './enums';
 import { BinaryReader, BinaryWriter } from '../binary';
 import { Decimal } from '@cosmjs/math';
 export interface Order {
@@ -32,21 +23,21 @@ export interface OrderProtoMsg {
 	value: Uint8Array;
 }
 export interface OrderAmino {
-	id?: string;
-	status?: OrderStatus;
-	account?: string;
-	contractAddr?: string;
-	price?: string;
-	quantity?: string;
-	priceDenom?: string;
-	assetDenom?: string;
-	orderType?: OrderType;
-	positionDirection?: PositionDirection;
-	data?: string;
-	statusDescription?: string;
-	nominal?: string;
-	triggerPrice?: string;
-	triggerStatus?: boolean;
+	id: string;
+	status: OrderStatus;
+	account: string;
+	contractAddr: string;
+	price: string;
+	quantity: string;
+	priceDenom: string;
+	assetDenom: string;
+	orderType: OrderType;
+	positionDirection: PositionDirection;
+	data: string;
+	statusDescription: string;
+	nominal: string;
+	triggerPrice: string;
+	triggerStatus: boolean;
 }
 export interface OrderAminoMsg {
 	type: '/seiprotocol.seichain.dex.Order';
@@ -84,14 +75,14 @@ export interface CancellationProtoMsg {
 	value: Uint8Array;
 }
 export interface CancellationAmino {
-	id?: string;
-	initiator?: CancellationInitiator;
-	creator?: string;
-	contractAddr?: string;
-	priceDenom?: string;
-	assetDenom?: string;
-	positionDirection?: PositionDirection;
-	price?: string;
+	id: string;
+	initiator: CancellationInitiator;
+	creator: string;
+	contractAddr: string;
+	priceDenom: string;
+	assetDenom: string;
+	positionDirection: PositionDirection;
+	price: string;
 }
 export interface CancellationAminoMsg {
 	type: '/seiprotocol.seichain.dex.Cancellation';
@@ -115,7 +106,7 @@ export interface ActiveOrdersProtoMsg {
 	value: Uint8Array;
 }
 export interface ActiveOrdersAmino {
-	ids?: string[];
+	ids: string[];
 }
 export interface ActiveOrdersAminoMsg {
 	type: '/seiprotocol.seichain.dex.ActiveOrders';
@@ -277,7 +268,7 @@ export const Order = {
 			message.id = BigInt(object.id);
 		}
 		if (object.status !== undefined && object.status !== null) {
-			message.status = orderStatusFromJSON(object.status);
+			message.status = object.status;
 		}
 		if (object.account !== undefined && object.account !== null) {
 			message.account = object.account;
@@ -298,10 +289,10 @@ export const Order = {
 			message.assetDenom = object.assetDenom;
 		}
 		if (object.orderType !== undefined && object.orderType !== null) {
-			message.orderType = orderTypeFromJSON(object.orderType);
+			message.orderType = object.orderType;
 		}
 		if (object.positionDirection !== undefined && object.positionDirection !== null) {
-			message.positionDirection = positionDirectionFromJSON(object.positionDirection);
+			message.positionDirection = object.positionDirection;
 		}
 		if (object.data !== undefined && object.data !== null) {
 			message.data = object.data;
@@ -322,21 +313,21 @@ export const Order = {
 	},
 	toAmino(message: Order): OrderAmino {
 		const obj: any = {};
-		obj.id = message.id ? message.id.toString() : undefined;
-		obj.status = message.status;
-		obj.account = message.account;
-		obj.contractAddr = message.contractAddr;
-		obj.price = message.price;
-		obj.quantity = message.quantity;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.orderType = message.orderType;
-		obj.positionDirection = message.positionDirection;
-		obj.data = message.data;
-		obj.statusDescription = message.statusDescription;
-		obj.nominal = message.nominal;
-		obj.triggerPrice = message.triggerPrice;
-		obj.triggerStatus = message.triggerStatus;
+		obj.id = message.id ? message.id.toString() : '0';
+		obj.status = message.status ?? null;
+		obj.account = message.account ?? null;
+		obj.contractAddr = message.contractAddr ?? null;
+		obj.price = message.price ?? '';
+		obj.quantity = message.quantity ?? '';
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.orderType = message.orderType ?? 0;
+		obj.positionDirection = message.positionDirection ?? 0;
+		obj.data = message.data ?? '';
+		obj.statusDescription = message.statusDescription ?? '';
+		obj.nominal = message.nominal ?? '';
+		obj.triggerPrice = message.triggerPrice ?? '';
+		obj.triggerStatus = message.triggerStatus ?? false;
 		return obj;
 	},
 	fromAminoMsg(object: OrderAminoMsg): Order {
@@ -452,7 +443,7 @@ export const Cancellation = {
 			message.id = BigInt(object.id);
 		}
 		if (object.initiator !== undefined && object.initiator !== null) {
-			message.initiator = cancellationInitiatorFromJSON(object.initiator);
+			message.initiator = object.initiator;
 		}
 		if (object.creator !== undefined && object.creator !== null) {
 			message.creator = object.creator;
@@ -467,7 +458,7 @@ export const Cancellation = {
 			message.assetDenom = object.assetDenom;
 		}
 		if (object.positionDirection !== undefined && object.positionDirection !== null) {
-			message.positionDirection = positionDirectionFromJSON(object.positionDirection);
+			message.positionDirection = object.positionDirection;
 		}
 		if (object.price !== undefined && object.price !== null) {
 			message.price = object.price;
@@ -476,14 +467,14 @@ export const Cancellation = {
 	},
 	toAmino(message: Cancellation): CancellationAmino {
 		const obj: any = {};
-		obj.id = message.id ? message.id.toString() : undefined;
-		obj.initiator = message.initiator;
-		obj.creator = message.creator;
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.positionDirection = message.positionDirection;
-		obj.price = message.price;
+		obj.id = message.id ? message.id.toString() : '0';
+		obj.initiator = message.initiator ?? 0;
+		obj.creator = message.creator ?? null;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.positionDirection = message.positionDirection ?? 0;
+		obj.price = message.price ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: CancellationAminoMsg): Cancellation {
@@ -556,7 +547,7 @@ export const ActiveOrders = {
 		if (message.ids) {
 			obj.ids = message.ids.map((e) => e.toString());
 		} else {
-			obj.ids = [];
+			obj.ids = message.ids;
 		}
 		return obj;
 	},

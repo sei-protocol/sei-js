@@ -1,6 +1,6 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from '../cosmos/base/query/v1beta1/pagination';
 import { Order, OrderAmino, OrderSDKType } from './order';
-import { PositionDirection, positionDirectionFromJSON } from './enums';
+import { PositionDirection } from './enums';
 import { Params, ParamsAmino, ParamsSDKType } from './params';
 import { LongBook, LongBookAmino, LongBookSDKType } from './long_book';
 import { ShortBook, ShortBookAmino, ShortBookSDKType } from './short_book';
@@ -322,9 +322,9 @@ export interface QueryGetLatestPriceRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetLatestPriceRequestAmino {
-	priceDenom?: string;
-	assetDenom?: string;
-	contractAddr?: string;
+	priceDenom: string;
+	assetDenom: string;
+	contractAddr: string;
 }
 export interface QueryGetLatestPriceRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetLatestPriceRequest';
@@ -361,8 +361,8 @@ export interface QueryGetTwapsRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetTwapsRequestAmino {
-	contractAddr?: string;
-	lookbackSeconds?: string;
+	contractAddr: string;
+	lookbackSeconds: string;
 }
 export interface QueryGetTwapsRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetTwapsRequest';
@@ -380,7 +380,7 @@ export interface QueryGetTwapsResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetTwapsResponseAmino {
-	twaps?: TwapAmino[];
+	twaps: TwapAmino[];
 }
 export interface QueryGetTwapsResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetTwapsResponse';
@@ -459,7 +459,7 @@ export interface QueryRegisteredPairsRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryRegisteredPairsRequestAmino {
-	contractAddr?: string;
+	contractAddr: string;
 }
 export interface QueryRegisteredPairsRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryRegisteredPairsRequest';
@@ -493,7 +493,7 @@ export interface QueryRegisteredContractRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryRegisteredContractRequestAmino {
-	contractAddr?: string;
+	contractAddr: string;
 }
 export interface QueryRegisteredContractRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryRegisteredContractRequest';
@@ -528,8 +528,8 @@ export interface QueryGetOrdersRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetOrdersRequestAmino {
-	contractAddr?: string;
-	account?: string;
+	contractAddr: string;
+	account: string;
 }
 export interface QueryGetOrdersRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetOrdersRequest';
@@ -547,7 +547,7 @@ export interface QueryGetOrdersResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetOrdersResponseAmino {
-	orders?: OrderAmino[];
+	orders: OrderAmino[];
 }
 export interface QueryGetOrdersResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetOrdersResponse';
@@ -567,10 +567,10 @@ export interface QueryGetOrderByIDRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetOrderByIDRequestAmino {
-	contractAddr?: string;
-	priceDenom?: string;
-	assetDenom?: string;
-	id?: string;
+	contractAddr: string;
+	priceDenom: string;
+	assetDenom: string;
+	id: string;
 }
 export interface QueryGetOrderByIDRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetOrderByIDRequest';
@@ -590,7 +590,7 @@ export interface QueryGetOrderByIDResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetOrderByIDResponseAmino {
-	order?: OrderAmino | undefined;
+	order: OrderAmino | undefined;
 }
 export interface QueryGetOrderByIDResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetOrderByIDResponse';
@@ -611,11 +611,11 @@ export interface QueryGetHistoricalPricesRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetHistoricalPricesRequestAmino {
-	contractAddr?: string;
-	priceDenom?: string;
-	assetDenom?: string;
-	periodLengthInSeconds?: string;
-	numOfPeriods?: string;
+	contractAddr: string;
+	priceDenom: string;
+	assetDenom: string;
+	periodLengthInSeconds: string;
+	numOfPeriods: string;
 }
 export interface QueryGetHistoricalPricesRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetHistoricalPricesRequest';
@@ -636,7 +636,7 @@ export interface QueryGetHistoricalPricesResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetHistoricalPricesResponseAmino {
-	prices?: PriceCandlestickAmino[];
+	prices: PriceCandlestickAmino[];
 }
 export interface QueryGetHistoricalPricesResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetHistoricalPricesResponse';
@@ -656,10 +656,10 @@ export interface QueryGetMarketSummaryRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetMarketSummaryRequestAmino {
-	contractAddr?: string;
-	priceDenom?: string;
-	assetDenom?: string;
-	lookbackInSeconds?: string;
+	contractAddr: string;
+	priceDenom: string;
+	assetDenom: string;
+	lookbackInSeconds: string;
 }
 export interface QueryGetMarketSummaryRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetMarketSummaryRequest';
@@ -683,11 +683,11 @@ export interface QueryGetMarketSummaryResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetMarketSummaryResponseAmino {
-	totalVolume?: string;
-	totalVolumeNotional?: string;
-	highPrice?: string;
-	lowPrice?: string;
-	lastPrice?: string;
+	totalVolume: string;
+	totalVolumeNotional: string;
+	highPrice: string;
+	lowPrice: string;
+	lastPrice: string;
 }
 export interface QueryGetMarketSummaryResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetMarketSummaryResponse';
@@ -709,8 +709,8 @@ export interface QueryOrderSimulationRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryOrderSimulationRequestAmino {
-	order?: OrderAmino | undefined;
-	contractAddr?: string;
+	order: OrderAmino | undefined;
+	contractAddr: string;
 }
 export interface QueryOrderSimulationRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryOrderSimulationRequest';
@@ -728,7 +728,7 @@ export interface QueryOrderSimulationResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryOrderSimulationResponseAmino {
-	ExecutedQuantity?: string;
+	ExecutedQuantity: string;
 }
 export interface QueryOrderSimulationResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryOrderSimulationResponse';
@@ -745,7 +745,7 @@ export interface QueryGetMatchResultRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetMatchResultRequestAmino {
-	contractAddr?: string;
+	contractAddr: string;
 }
 export interface QueryGetMatchResultRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetMatchResultRequest';
@@ -762,7 +762,7 @@ export interface QueryGetMatchResultResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetMatchResultResponseAmino {
-	result?: MatchResultAmino | undefined;
+	result: MatchResultAmino | undefined;
 }
 export interface QueryGetMatchResultResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetMatchResultResponse';
@@ -783,11 +783,11 @@ export interface QueryGetOrderCountRequestProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetOrderCountRequestAmino {
-	contractAddr?: string;
-	priceDenom?: string;
-	assetDenom?: string;
-	price?: string;
-	positionDirection?: PositionDirection;
+	contractAddr: string;
+	priceDenom: string;
+	assetDenom: string;
+	price: string;
+	positionDirection: PositionDirection;
 }
 export interface QueryGetOrderCountRequestAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetOrderCountRequest';
@@ -808,7 +808,7 @@ export interface QueryGetOrderCountResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface QueryGetOrderCountResponseAmino {
-	count?: string;
+	count: string;
 }
 export interface QueryGetOrderCountResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.QueryGetOrderCountResponse';
@@ -1007,10 +1007,10 @@ export const QueryGetLongBookRequest = {
 	},
 	toAmino(message: QueryGetLongBookRequest): QueryGetLongBookRequestAmino {
 		const obj: any = {};
-		obj.price = message.price;
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
+		obj.price = message.price === '' ? undefined : message.price;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.priceDenom = message.priceDenom === '' ? undefined : message.priceDenom;
+		obj.assetDenom = message.assetDenom === '' ? undefined : message.assetDenom;
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetLongBookRequestAminoMsg): QueryGetLongBookRequest {
@@ -1170,9 +1170,9 @@ export const QueryAllLongBookRequest = {
 	toAmino(message: QueryAllLongBookRequest): QueryAllLongBookRequestAmino {
 		const obj: any = {};
 		obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.priceDenom = message.priceDenom === '' ? undefined : message.priceDenom;
+		obj.assetDenom = message.assetDenom === '' ? undefined : message.assetDenom;
 		return obj;
 	},
 	fromAminoMsg(object: QueryAllLongBookRequestAminoMsg): QueryAllLongBookRequest {
@@ -1247,7 +1247,7 @@ export const QueryAllLongBookResponse = {
 		if (message.LongBook) {
 			obj.LongBook = message.LongBook.map((e) => (e ? LongBook.toAmino(e) : undefined));
 		} else {
-			obj.LongBook = [];
+			obj.LongBook = message.LongBook;
 		}
 		obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
 		return obj;
@@ -1345,10 +1345,10 @@ export const QueryGetShortBookRequest = {
 	},
 	toAmino(message: QueryGetShortBookRequest): QueryGetShortBookRequestAmino {
 		const obj: any = {};
-		obj.price = message.price;
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
+		obj.price = message.price === '' ? undefined : message.price;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.priceDenom = message.priceDenom === '' ? undefined : message.priceDenom;
+		obj.assetDenom = message.assetDenom === '' ? undefined : message.assetDenom;
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetShortBookRequestAminoMsg): QueryGetShortBookRequest {
@@ -1508,9 +1508,9 @@ export const QueryAllShortBookRequest = {
 	toAmino(message: QueryAllShortBookRequest): QueryAllShortBookRequestAmino {
 		const obj: any = {};
 		obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.priceDenom = message.priceDenom === '' ? undefined : message.priceDenom;
+		obj.assetDenom = message.assetDenom === '' ? undefined : message.assetDenom;
 		return obj;
 	},
 	fromAminoMsg(object: QueryAllShortBookRequestAminoMsg): QueryAllShortBookRequest {
@@ -1585,7 +1585,7 @@ export const QueryAllShortBookResponse = {
 		if (message.ShortBook) {
 			obj.ShortBook = message.ShortBook.map((e) => (e ? ShortBook.toAmino(e) : undefined));
 		} else {
-			obj.ShortBook = [];
+			obj.ShortBook = message.ShortBook;
 		}
 		obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
 		return obj;
@@ -1672,9 +1672,9 @@ export const QueryGetPricesRequest = {
 	},
 	toAmino(message: QueryGetPricesRequest): QueryGetPricesRequestAmino {
 		const obj: any = {};
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.contractAddr = message.contractAddr;
+		obj.priceDenom = message.priceDenom === '' ? undefined : message.priceDenom;
+		obj.assetDenom = message.assetDenom === '' ? undefined : message.assetDenom;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetPricesRequestAminoMsg): QueryGetPricesRequest {
@@ -1738,7 +1738,7 @@ export const QueryGetPricesResponse = {
 		if (message.prices) {
 			obj.prices = message.prices.map((e) => (e ? Price.toAmino(e) : undefined));
 		} else {
-			obj.prices = [];
+			obj.prices = message.prices;
 		}
 		return obj;
 	},
@@ -1835,10 +1835,10 @@ export const QueryGetPriceRequest = {
 	},
 	toAmino(message: QueryGetPriceRequest): QueryGetPriceRequestAmino {
 		const obj: any = {};
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.contractAddr = message.contractAddr;
-		obj.timestamp = message.timestamp ? message.timestamp.toString() : undefined;
+		obj.priceDenom = message.priceDenom === '' ? undefined : message.priceDenom;
+		obj.assetDenom = message.assetDenom === '' ? undefined : message.assetDenom;
+		obj.contractAddr = message.contractAddr === '' ? undefined : message.contractAddr;
+		obj.timestamp = message.timestamp !== BigInt(0) ? message.timestamp.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetPriceRequestAminoMsg): QueryGetPriceRequest {
@@ -1913,7 +1913,7 @@ export const QueryGetPriceResponse = {
 	toAmino(message: QueryGetPriceResponse): QueryGetPriceResponseAmino {
 		const obj: any = {};
 		obj.price = message.price ? Price.toAmino(message.price) : undefined;
-		obj.found = message.found;
+		obj.found = message.found === false ? undefined : message.found;
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetPriceResponseAminoMsg): QueryGetPriceResponse {
@@ -1998,9 +1998,9 @@ export const QueryGetLatestPriceRequest = {
 	},
 	toAmino(message: QueryGetLatestPriceRequest): QueryGetLatestPriceRequestAmino {
 		const obj: any = {};
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.contractAddr = message.contractAddr;
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetLatestPriceRequestAminoMsg): QueryGetLatestPriceRequest {
@@ -2137,8 +2137,8 @@ export const QueryGetTwapsRequest = {
 	},
 	toAmino(message: QueryGetTwapsRequest): QueryGetTwapsRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
-		obj.lookbackSeconds = message.lookbackSeconds ? message.lookbackSeconds.toString() : undefined;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.lookbackSeconds = message.lookbackSeconds ? message.lookbackSeconds.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetTwapsRequestAminoMsg): QueryGetTwapsRequest {
@@ -2202,7 +2202,7 @@ export const QueryGetTwapsResponse = {
 		if (message.twaps) {
 			obj.twaps = message.twaps.map((e) => (e ? Twap.toAmino(e) : undefined));
 		} else {
-			obj.twaps = [];
+			obj.twaps = message.twaps;
 		}
 		return obj;
 	},
@@ -2317,7 +2317,7 @@ export const QueryAssetListResponse = {
 		if (message.assetList) {
 			obj.assetList = message.assetList.map((e) => (e ? AssetMetadata.toAmino(e) : undefined));
 		} else {
-			obj.assetList = [];
+			obj.assetList = message.assetList;
 		}
 		return obj;
 	},
@@ -2381,7 +2381,7 @@ export const QueryAssetMetadataRequest = {
 	},
 	toAmino(message: QueryAssetMetadataRequest): QueryAssetMetadataRequestAmino {
 		const obj: any = {};
-		obj.denom = message.denom;
+		obj.denom = message.denom === '' ? undefined : message.denom;
 		return obj;
 	},
 	fromAminoMsg(object: QueryAssetMetadataRequestAminoMsg): QueryAssetMetadataRequest {
@@ -2507,7 +2507,7 @@ export const QueryRegisteredPairsRequest = {
 	},
 	toAmino(message: QueryRegisteredPairsRequest): QueryRegisteredPairsRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryRegisteredPairsRequestAminoMsg): QueryRegisteredPairsRequest {
@@ -2571,7 +2571,7 @@ export const QueryRegisteredPairsResponse = {
 		if (message.pairs) {
 			obj.pairs = message.pairs.map((e) => (e ? Pair.toAmino(e) : undefined));
 		} else {
-			obj.pairs = [];
+			obj.pairs = message.pairs;
 		}
 		return obj;
 	},
@@ -2635,7 +2635,7 @@ export const QueryRegisteredContractRequest = {
 	},
 	toAmino(message: QueryRegisteredContractRequest): QueryRegisteredContractRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryRegisteredContractRequestAminoMsg): QueryRegisteredContractRequest {
@@ -2772,8 +2772,8 @@ export const QueryGetOrdersRequest = {
 	},
 	toAmino(message: QueryGetOrdersRequest): QueryGetOrdersRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
-		obj.account = message.account;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.account = message.account ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetOrdersRequestAminoMsg): QueryGetOrdersRequest {
@@ -2837,7 +2837,7 @@ export const QueryGetOrdersResponse = {
 		if (message.orders) {
 			obj.orders = message.orders.map((e) => (e ? Order.toAmino(e) : undefined));
 		} else {
-			obj.orders = [];
+			obj.orders = message.orders;
 		}
 		return obj;
 	},
@@ -2934,10 +2934,10 @@ export const QueryGetOrderByIDRequest = {
 	},
 	toAmino(message: QueryGetOrderByIDRequest): QueryGetOrderByIDRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.id = message.id ? message.id.toString() : undefined;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.id = message.id ? message.id.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetOrderByIDRequestAminoMsg): QueryGetOrderByIDRequest {
@@ -3000,7 +3000,7 @@ export const QueryGetOrderByIDResponse = {
 	},
 	toAmino(message: QueryGetOrderByIDResponse): QueryGetOrderByIDResponseAmino {
 		const obj: any = {};
-		obj.order = message.order ? Order.toAmino(message.order) : undefined;
+		obj.order = message.order ? Order.toAmino(message.order) : Order.toAmino(Order.fromPartial({}));
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetOrderByIDResponseAminoMsg): QueryGetOrderByIDResponse {
@@ -3108,11 +3108,11 @@ export const QueryGetHistoricalPricesRequest = {
 	},
 	toAmino(message: QueryGetHistoricalPricesRequest): QueryGetHistoricalPricesRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.periodLengthInSeconds = message.periodLengthInSeconds ? message.periodLengthInSeconds.toString() : undefined;
-		obj.numOfPeriods = message.numOfPeriods ? message.numOfPeriods.toString() : undefined;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.periodLengthInSeconds = message.periodLengthInSeconds ? message.periodLengthInSeconds.toString() : '0';
+		obj.numOfPeriods = message.numOfPeriods ? message.numOfPeriods.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetHistoricalPricesRequestAminoMsg): QueryGetHistoricalPricesRequest {
@@ -3176,7 +3176,7 @@ export const QueryGetHistoricalPricesResponse = {
 		if (message.prices) {
 			obj.prices = message.prices.map((e) => (e ? PriceCandlestick.toAmino(e) : undefined));
 		} else {
-			obj.prices = [];
+			obj.prices = message.prices;
 		}
 		return obj;
 	},
@@ -3274,10 +3274,10 @@ export const QueryGetMarketSummaryRequest = {
 	},
 	toAmino(message: QueryGetMarketSummaryRequest): QueryGetMarketSummaryRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.lookbackInSeconds = message.lookbackInSeconds ? message.lookbackInSeconds.toString() : undefined;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.lookbackInSeconds = message.lookbackInSeconds ? message.lookbackInSeconds.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetMarketSummaryRequestAminoMsg): QueryGetMarketSummaryRequest {
@@ -3384,11 +3384,11 @@ export const QueryGetMarketSummaryResponse = {
 	},
 	toAmino(message: QueryGetMarketSummaryResponse): QueryGetMarketSummaryResponseAmino {
 		const obj: any = {};
-		obj.totalVolume = message.totalVolume;
-		obj.totalVolumeNotional = message.totalVolumeNotional;
-		obj.highPrice = message.highPrice;
-		obj.lowPrice = message.lowPrice;
-		obj.lastPrice = message.lastPrice;
+		obj.totalVolume = message.totalVolume ?? '';
+		obj.totalVolumeNotional = message.totalVolumeNotional ?? '';
+		obj.highPrice = message.highPrice ?? '';
+		obj.lowPrice = message.lowPrice ?? '';
+		obj.lastPrice = message.lastPrice ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetMarketSummaryResponseAminoMsg): QueryGetMarketSummaryResponse {
@@ -3462,8 +3462,8 @@ export const QueryOrderSimulationRequest = {
 	},
 	toAmino(message: QueryOrderSimulationRequest): QueryOrderSimulationRequestAmino {
 		const obj: any = {};
-		obj.order = message.order ? Order.toAmino(message.order) : undefined;
-		obj.contractAddr = message.contractAddr;
+		obj.order = message.order ? Order.toAmino(message.order) : Order.toAmino(Order.fromPartial({}));
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryOrderSimulationRequestAminoMsg): QueryOrderSimulationRequest {
@@ -3526,7 +3526,7 @@ export const QueryOrderSimulationResponse = {
 	},
 	toAmino(message: QueryOrderSimulationResponse): QueryOrderSimulationResponseAmino {
 		const obj: any = {};
-		obj.ExecutedQuantity = message.ExecutedQuantity;
+		obj.ExecutedQuantity = message.ExecutedQuantity ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryOrderSimulationResponseAminoMsg): QueryOrderSimulationResponse {
@@ -3589,7 +3589,7 @@ export const QueryGetMatchResultRequest = {
 	},
 	toAmino(message: QueryGetMatchResultRequest): QueryGetMatchResultRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetMatchResultRequestAminoMsg): QueryGetMatchResultRequest {
@@ -3652,7 +3652,7 @@ export const QueryGetMatchResultResponse = {
 	},
 	toAmino(message: QueryGetMatchResultResponse): QueryGetMatchResultResponseAmino {
 		const obj: any = {};
-		obj.result = message.result ? MatchResult.toAmino(message.result) : undefined;
+		obj.result = message.result ? MatchResult.toAmino(message.result) : MatchResult.toAmino(MatchResult.fromPartial({}));
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetMatchResultResponseAminoMsg): QueryGetMatchResultResponse {
@@ -3753,17 +3753,17 @@ export const QueryGetOrderCountRequest = {
 			message.price = object.price;
 		}
 		if (object.positionDirection !== undefined && object.positionDirection !== null) {
-			message.positionDirection = positionDirectionFromJSON(object.positionDirection);
+			message.positionDirection = object.positionDirection;
 		}
 		return message;
 	},
 	toAmino(message: QueryGetOrderCountRequest): QueryGetOrderCountRequestAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.price = message.price;
-		obj.positionDirection = message.positionDirection;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.price = message.price ?? '';
+		obj.positionDirection = message.positionDirection ?? 0;
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetOrderCountRequestAminoMsg): QueryGetOrderCountRequest {
@@ -3826,7 +3826,7 @@ export const QueryGetOrderCountResponse = {
 	},
 	toAmino(message: QueryGetOrderCountResponse): QueryGetOrderCountResponseAmino {
 		const obj: any = {};
-		obj.count = message.count ? message.count.toString() : undefined;
+		obj.count = message.count ? message.count.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: QueryGetOrderCountResponseAminoMsg): QueryGetOrderCountResponse {

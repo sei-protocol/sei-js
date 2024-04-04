@@ -11,9 +11,9 @@ export interface PriceProtoMsg {
 	value: Uint8Array;
 }
 export interface PriceAmino {
-	snapshotTimestampInSeconds?: string;
-	price?: string;
-	pair?: PairAmino | undefined;
+	snapshotTimestampInSeconds: string;
+	price: string;
+	pair: PairAmino | undefined;
 }
 export interface PriceAminoMsg {
 	type: '/seiprotocol.seichain.dex.Price';
@@ -38,13 +38,13 @@ export interface PriceCandlestickProtoMsg {
 	value: Uint8Array;
 }
 export interface PriceCandlestickAmino {
-	beginTimestamp?: string;
-	endTimestamp?: string;
-	open?: string;
-	high?: string;
-	low?: string;
-	close?: string;
-	volume?: string;
+	beginTimestamp: string;
+	endTimestamp: string;
+	open: string;
+	high: string;
+	low: string;
+	close: string;
+	volume: string;
 }
 export interface PriceCandlestickAminoMsg {
 	type: '/seiprotocol.seichain.dex.PriceCandlestick';
@@ -128,9 +128,9 @@ export const Price = {
 	},
 	toAmino(message: Price): PriceAmino {
 		const obj: any = {};
-		obj.snapshotTimestampInSeconds = message.snapshotTimestampInSeconds ? message.snapshotTimestampInSeconds.toString() : undefined;
-		obj.price = message.price;
-		obj.pair = message.pair ? Pair.toAmino(message.pair) : undefined;
+		obj.snapshotTimestampInSeconds = message.snapshotTimestampInSeconds ? message.snapshotTimestampInSeconds.toString() : '0';
+		obj.price = message.price ?? '';
+		obj.pair = message.pair ? Pair.toAmino(message.pair) : Pair.toAmino(Pair.fromPartial({}));
 		return obj;
 	},
 	fromAminoMsg(object: PriceAminoMsg): Price {
@@ -259,13 +259,13 @@ export const PriceCandlestick = {
 	},
 	toAmino(message: PriceCandlestick): PriceCandlestickAmino {
 		const obj: any = {};
-		obj.beginTimestamp = message.beginTimestamp ? message.beginTimestamp.toString() : undefined;
-		obj.endTimestamp = message.endTimestamp ? message.endTimestamp.toString() : undefined;
-		obj.open = message.open;
-		obj.high = message.high;
-		obj.low = message.low;
-		obj.close = message.close;
-		obj.volume = message.volume;
+		obj.beginTimestamp = message.beginTimestamp ? message.beginTimestamp.toString() : '0';
+		obj.endTimestamp = message.endTimestamp ? message.endTimestamp.toString() : '0';
+		obj.open = message.open ?? '';
+		obj.high = message.high ?? '';
+		obj.low = message.low ?? '';
+		obj.close = message.close ?? '';
+		obj.volume = message.volume ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: PriceCandlestickAminoMsg): PriceCandlestick {

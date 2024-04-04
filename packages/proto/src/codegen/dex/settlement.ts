@@ -19,18 +19,18 @@ export interface SettlementEntryProtoMsg {
 	value: Uint8Array;
 }
 export interface SettlementEntryAmino {
-	account?: string;
-	priceDenom?: string;
-	assetDenom?: string;
-	quantity?: string;
-	executionCostOrProceed?: string;
-	expectedCostOrProceed?: string;
-	positionDirection?: string;
-	orderType?: string;
-	orderId?: string;
-	timestamp?: string;
-	height?: string;
-	settlementId?: string;
+	account: string;
+	priceDenom: string;
+	assetDenom: string;
+	quantity: string;
+	executionCostOrProceed: string;
+	expectedCostOrProceed: string;
+	positionDirection: string;
+	orderType: string;
+	orderId: string;
+	timestamp: string;
+	height: string;
+	settlementId: string;
 }
 export interface SettlementEntryAminoMsg {
 	type: '/seiprotocol.seichain.dex.SettlementEntry';
@@ -59,8 +59,8 @@ export interface SettlementsProtoMsg {
 	value: Uint8Array;
 }
 export interface SettlementsAmino {
-	epoch?: string;
-	entries?: SettlementEntryAmino[];
+	epoch: string;
+	entries: SettlementEntryAmino[];
 }
 export interface SettlementsAminoMsg {
 	type: '/seiprotocol.seichain.dex.Settlements';
@@ -235,18 +235,18 @@ export const SettlementEntry = {
 	},
 	toAmino(message: SettlementEntry): SettlementEntryAmino {
 		const obj: any = {};
-		obj.account = message.account;
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.quantity = message.quantity;
-		obj.executionCostOrProceed = message.executionCostOrProceed;
-		obj.expectedCostOrProceed = message.expectedCostOrProceed;
-		obj.positionDirection = message.positionDirection;
-		obj.orderType = message.orderType;
-		obj.orderId = message.orderId ? message.orderId.toString() : undefined;
-		obj.timestamp = message.timestamp ? message.timestamp.toString() : undefined;
-		obj.height = message.height ? message.height.toString() : undefined;
-		obj.settlementId = message.settlementId ? message.settlementId.toString() : undefined;
+		obj.account = message.account ?? '';
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.quantity = message.quantity ?? '';
+		obj.executionCostOrProceed = message.executionCostOrProceed ?? '';
+		obj.expectedCostOrProceed = message.expectedCostOrProceed ?? '';
+		obj.positionDirection = message.positionDirection ?? '';
+		obj.orderType = message.orderType ?? '';
+		obj.orderId = message.orderId ? message.orderId.toString() : '0';
+		obj.timestamp = message.timestamp ? message.timestamp.toString() : '0';
+		obj.height = message.height ? message.height.toString() : '0';
+		obj.settlementId = message.settlementId ? message.settlementId.toString() : '0';
 		return obj;
 	},
 	fromAminoMsg(object: SettlementEntryAminoMsg): SettlementEntry {
@@ -318,11 +318,11 @@ export const Settlements = {
 	},
 	toAmino(message: Settlements): SettlementsAmino {
 		const obj: any = {};
-		obj.epoch = message.epoch ? message.epoch.toString() : undefined;
+		obj.epoch = message.epoch ? message.epoch.toString() : '0';
 		if (message.entries) {
 			obj.entries = message.entries.map((e) => (e ? SettlementEntry.toAmino(e) : undefined));
 		} else {
-			obj.entries = [];
+			obj.entries = message.entries;
 		}
 		return obj;
 	},

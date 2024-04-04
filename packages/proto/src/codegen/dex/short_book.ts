@@ -10,8 +10,8 @@ export interface ShortBookProtoMsg {
 	value: Uint8Array;
 }
 export interface ShortBookAmino {
-	price?: string;
-	entry?: OrderEntryAmino | undefined;
+	price: string;
+	entry: OrderEntryAmino | undefined;
 }
 export interface ShortBookAminoMsg {
 	type: '/seiprotocol.seichain.dex.ShortBook';
@@ -76,8 +76,8 @@ export const ShortBook = {
 	},
 	toAmino(message: ShortBook): ShortBookAmino {
 		const obj: any = {};
-		obj.price = message.price;
-		obj.entry = message.entry ? OrderEntry.toAmino(message.entry) : undefined;
+		obj.price = message.price ?? '';
+		obj.entry = message.entry ? OrderEntry.toAmino(message.entry) : OrderEntry.toAmino(OrderEntry.fromPartial({}));
 		return obj;
 	},
 	fromAminoMsg(object: ShortBookAminoMsg): ShortBook {

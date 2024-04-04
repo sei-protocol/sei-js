@@ -11,10 +11,10 @@ export interface PairProtoMsg {
 	value: Uint8Array;
 }
 export interface PairAmino {
-	priceDenom?: string;
-	assetDenom?: string;
-	priceTicksize?: string;
-	quantityTicksize?: string;
+	priceDenom: string;
+	assetDenom: string;
+	priceTicksize: string;
+	quantityTicksize: string;
 }
 export interface PairAminoMsg {
 	type: '/seiprotocol.seichain.dex.Pair';
@@ -35,8 +35,8 @@ export interface BatchContractPairProtoMsg {
 	value: Uint8Array;
 }
 export interface BatchContractPairAmino {
-	contractAddr?: string;
-	pairs?: PairAmino[];
+	contractAddr: string;
+	pairs: PairAmino[];
 }
 export interface BatchContractPairAminoMsg {
 	type: '/seiprotocol.seichain.dex.BatchContractPair';
@@ -123,10 +123,10 @@ export const Pair = {
 	},
 	toAmino(message: Pair): PairAmino {
 		const obj: any = {};
-		obj.priceDenom = message.priceDenom;
-		obj.assetDenom = message.assetDenom;
-		obj.priceTicksize = message.priceTicksize;
-		obj.quantityTicksize = message.quantityTicksize;
+		obj.priceDenom = message.priceDenom ?? '';
+		obj.assetDenom = message.assetDenom ?? '';
+		obj.priceTicksize = message.priceTicksize ?? null;
+		obj.quantityTicksize = message.quantityTicksize ?? null;
 		return obj;
 	},
 	fromAminoMsg(object: PairAminoMsg): Pair {
@@ -198,11 +198,11 @@ export const BatchContractPair = {
 	},
 	toAmino(message: BatchContractPair): BatchContractPairAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
+		obj.contractAddr = message.contractAddr ?? '';
 		if (message.pairs) {
 			obj.pairs = message.pairs.map((e) => (e ? Pair.toAmino(e) : undefined));
 		} else {
-			obj.pairs = [];
+			obj.pairs = message.pairs;
 		}
 		return obj;
 	},

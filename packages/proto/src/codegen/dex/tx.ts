@@ -15,10 +15,10 @@ export interface MsgPlaceOrdersProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgPlaceOrdersAmino {
-	creator?: string;
-	orders?: OrderAmino[];
-	contractAddr?: string;
-	funds?: CoinAmino[];
+	creator: string;
+	orders: OrderAmino[];
+	contractAddr: string;
+	funds: CoinAmino[];
 }
 export interface MsgPlaceOrdersAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgPlaceOrders';
@@ -38,7 +38,7 @@ export interface MsgPlaceOrdersResponseProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgPlaceOrdersResponseAmino {
-	orderIds?: string[];
+	orderIds: string[];
 }
 export interface MsgPlaceOrdersResponseAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgPlaceOrdersResponse';
@@ -57,9 +57,9 @@ export interface MsgCancelOrdersProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgCancelOrdersAmino {
-	creator?: string;
-	cancellations?: CancellationAmino[];
-	contractAddr?: string;
+	creator: string;
+	cancellations: CancellationAmino[];
+	contractAddr: string;
 }
 export interface MsgCancelOrdersAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgCancelOrders';
@@ -122,9 +122,9 @@ export interface MsgContractDepositRentProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgContractDepositRentAmino {
-	contractAddr?: string;
-	amount?: string;
-	sender?: string;
+	contractAddr: string;
+	amount: string;
+	sender: string;
 }
 export interface MsgContractDepositRentAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgContractDepositRent';
@@ -155,8 +155,8 @@ export interface MsgUnregisterContractProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgUnregisterContractAmino {
-	creator?: string;
-	contractAddr?: string;
+	creator: string;
+	contractAddr: string;
 }
 export interface MsgUnregisterContractAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgUnregisterContract';
@@ -187,7 +187,7 @@ export interface MsgRegisterPairsProtoMsg {
 }
 export interface MsgRegisterPairsAmino {
 	creator?: string;
-	batchcontractpair?: BatchContractPairAmino[];
+	batchcontractpair: BatchContractPairAmino[];
 }
 export interface MsgRegisterPairsAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgRegisterPairs';
@@ -217,8 +217,8 @@ export interface MsgUpdatePriceTickSizeProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgUpdatePriceTickSizeAmino {
-	creator?: string;
-	tickSizeList?: TickSizeAmino[];
+	creator: string;
+	tickSizeList: TickSizeAmino[];
 }
 export interface MsgUpdatePriceTickSizeAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgUpdatePriceTickSize';
@@ -237,8 +237,8 @@ export interface MsgUpdateQuantityTickSizeProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgUpdateQuantityTickSizeAmino {
-	creator?: string;
-	tickSizeList?: TickSizeAmino[];
+	creator: string;
+	tickSizeList: TickSizeAmino[];
 }
 export interface MsgUpdateQuantityTickSizeAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgUpdateQuantityTickSize';
@@ -268,8 +268,8 @@ export interface MsgUnsuspendContractProtoMsg {
 	value: Uint8Array;
 }
 export interface MsgUnsuspendContractAmino {
-	creator?: string;
-	contractAddr?: string;
+	creator: string;
+	contractAddr: string;
 }
 export interface MsgUnsuspendContractAminoMsg {
 	type: '/seiprotocol.seichain.dex.MsgUnsuspendContract';
@@ -363,17 +363,17 @@ export const MsgPlaceOrders = {
 	},
 	toAmino(message: MsgPlaceOrders): MsgPlaceOrdersAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
+		obj.creator = message.creator ?? '';
 		if (message.orders) {
 			obj.orders = message.orders.map((e) => (e ? Order.toAmino(e) : undefined));
 		} else {
-			obj.orders = [];
+			obj.orders = message.orders;
 		}
-		obj.contractAddr = message.contractAddr;
+		obj.contractAddr = message.contractAddr ?? '';
 		if (message.funds) {
 			obj.funds = message.funds.map((e) => (e ? Coin.toAmino(e) : undefined));
 		} else {
-			obj.funds = [];
+			obj.funds = message.funds;
 		}
 		return obj;
 	},
@@ -447,7 +447,7 @@ export const MsgPlaceOrdersResponse = {
 		if (message.orderIds) {
 			obj.orderIds = message.orderIds.map((e) => e.toString());
 		} else {
-			obj.orderIds = [];
+			obj.orderIds = message.orderIds;
 		}
 		return obj;
 	},
@@ -531,13 +531,13 @@ export const MsgCancelOrders = {
 	},
 	toAmino(message: MsgCancelOrders): MsgCancelOrdersAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
+		obj.creator = message.creator ?? '';
 		if (message.cancellations) {
 			obj.cancellations = message.cancellations.map((e) => (e ? Cancellation.toAmino(e) : undefined));
 		} else {
-			obj.cancellations = [];
+			obj.cancellations = message.cancellations;
 		}
-		obj.contractAddr = message.contractAddr;
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: MsgCancelOrdersAminoMsg): MsgCancelOrders {
@@ -661,7 +661,7 @@ export const MsgRegisterContract = {
 	},
 	toAmino(message: MsgRegisterContract): MsgRegisterContractAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
+		obj.creator = message.creator === '' ? undefined : message.creator;
 		obj.contract = message.contract ? ContractInfoV2.toAmino(message.contract) : undefined;
 		return obj;
 	},
@@ -797,9 +797,9 @@ export const MsgContractDepositRent = {
 	},
 	toAmino(message: MsgContractDepositRent): MsgContractDepositRentAmino {
 		const obj: any = {};
-		obj.contractAddr = message.contractAddr;
-		obj.amount = message.amount ? message.amount.toString() : undefined;
-		obj.sender = message.sender;
+		obj.contractAddr = message.contractAddr ?? '';
+		obj.amount = message.amount ? message.amount.toString() : '0';
+		obj.sender = message.sender ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: MsgContractDepositRentAminoMsg): MsgContractDepositRent {
@@ -923,8 +923,8 @@ export const MsgUnregisterContract = {
 	},
 	toAmino(message: MsgUnregisterContract): MsgUnregisterContractAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
-		obj.contractAddr = message.contractAddr;
+		obj.creator = message.creator ?? '';
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: MsgUnregisterContractAminoMsg): MsgUnregisterContract {
@@ -1046,11 +1046,11 @@ export const MsgRegisterPairs = {
 	},
 	toAmino(message: MsgRegisterPairs): MsgRegisterPairsAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
+		obj.creator = message.creator === '' ? undefined : message.creator;
 		if (message.batchcontractpair) {
 			obj.batchcontractpair = message.batchcontractpair.map((e) => (e ? BatchContractPair.toAmino(e) : undefined));
 		} else {
-			obj.batchcontractpair = [];
+			obj.batchcontractpair = message.batchcontractpair;
 		}
 		return obj;
 	},
@@ -1173,11 +1173,11 @@ export const MsgUpdatePriceTickSize = {
 	},
 	toAmino(message: MsgUpdatePriceTickSize): MsgUpdatePriceTickSizeAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
+		obj.creator = message.creator ?? '';
 		if (message.tickSizeList) {
 			obj.tickSizeList = message.tickSizeList.map((e) => (e ? TickSize.toAmino(e) : undefined));
 		} else {
-			obj.tickSizeList = [];
+			obj.tickSizeList = message.tickSizeList;
 		}
 		return obj;
 	},
@@ -1250,11 +1250,11 @@ export const MsgUpdateQuantityTickSize = {
 	},
 	toAmino(message: MsgUpdateQuantityTickSize): MsgUpdateQuantityTickSizeAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
+		obj.creator = message.creator ?? '';
 		if (message.tickSizeList) {
 			obj.tickSizeList = message.tickSizeList.map((e) => (e ? TickSize.toAmino(e) : undefined));
 		} else {
-			obj.tickSizeList = [];
+			obj.tickSizeList = message.tickSizeList;
 		}
 		return obj;
 	},
@@ -1379,8 +1379,8 @@ export const MsgUnsuspendContract = {
 	},
 	toAmino(message: MsgUnsuspendContract): MsgUnsuspendContractAmino {
 		const obj: any = {};
-		obj.creator = message.creator;
-		obj.contractAddr = message.contractAddr;
+		obj.creator = message.creator ?? '';
+		obj.contractAddr = message.contractAddr ?? '';
 		return obj;
 	},
 	fromAminoMsg(object: MsgUnsuspendContractAminoMsg): MsgUnsuspendContract {

@@ -155,9 +155,9 @@ export const GenesisState = {
 		if (message.contractState) {
 			obj.contractState = message.contractState.map((e) => (e ? ContractState.toAmino(e) : undefined));
 		} else {
-			obj.contractState = [];
+			obj.contractState = message.contractState;
 		}
-		obj.lastEpoch = message.lastEpoch ? message.lastEpoch.toString() : undefined;
+		obj.lastEpoch = message.lastEpoch !== BigInt(0) ? message.lastEpoch.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {
@@ -280,29 +280,29 @@ export const ContractState = {
 		if (message.longBookList) {
 			obj.longBookList = message.longBookList.map((e) => (e ? LongBook.toAmino(e) : undefined));
 		} else {
-			obj.longBookList = [];
+			obj.longBookList = message.longBookList;
 		}
 		if (message.shortBookList) {
 			obj.shortBookList = message.shortBookList.map((e) => (e ? ShortBook.toAmino(e) : undefined));
 		} else {
-			obj.shortBookList = [];
+			obj.shortBookList = message.shortBookList;
 		}
 		if (message.triggeredOrdersList) {
 			obj.triggeredOrdersList = message.triggeredOrdersList.map((e) => (e ? Order.toAmino(e) : undefined));
 		} else {
-			obj.triggeredOrdersList = [];
+			obj.triggeredOrdersList = message.triggeredOrdersList;
 		}
 		if (message.pairList) {
 			obj.pairList = message.pairList.map((e) => (e ? Pair.toAmino(e) : undefined));
 		} else {
-			obj.pairList = [];
+			obj.pairList = message.pairList;
 		}
 		if (message.priceList) {
 			obj.priceList = message.priceList.map((e) => (e ? ContractPairPrices.toAmino(e) : undefined));
 		} else {
-			obj.priceList = [];
+			obj.priceList = message.priceList;
 		}
-		obj.nextOrderId = message.nextOrderId ? message.nextOrderId.toString() : undefined;
+		obj.nextOrderId = message.nextOrderId !== BigInt(0) ? message.nextOrderId.toString() : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: ContractStateAminoMsg): ContractState {
@@ -378,7 +378,7 @@ export const ContractPairPrices = {
 		if (message.prices) {
 			obj.prices = message.prices.map((e) => (e ? Price.toAmino(e) : undefined));
 		} else {
-			obj.prices = [];
+			obj.prices = message.prices;
 		}
 		return obj;
 	},

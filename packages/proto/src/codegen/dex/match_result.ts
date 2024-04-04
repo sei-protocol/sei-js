@@ -13,11 +13,11 @@ export interface MatchResultProtoMsg {
 	value: Uint8Array;
 }
 export interface MatchResultAmino {
-	height?: string;
-	contractAddr?: string;
-	orders?: OrderAmino[];
-	settlements?: SettlementEntryAmino[];
-	cancellations?: CancellationAmino[];
+	height: string;
+	contractAddr: string;
+	orders: OrderAmino[];
+	settlements: SettlementEntryAmino[];
+	cancellations: CancellationAmino[];
 }
 export interface MatchResultAminoMsg {
 	type: '/seiprotocol.seichain.dex.MatchResult';
@@ -112,22 +112,22 @@ export const MatchResult = {
 	},
 	toAmino(message: MatchResult): MatchResultAmino {
 		const obj: any = {};
-		obj.height = message.height ? message.height.toString() : undefined;
-		obj.contractAddr = message.contractAddr;
+		obj.height = message.height ? message.height.toString() : '0';
+		obj.contractAddr = message.contractAddr ?? '';
 		if (message.orders) {
 			obj.orders = message.orders.map((e) => (e ? Order.toAmino(e) : undefined));
 		} else {
-			obj.orders = [];
+			obj.orders = message.orders;
 		}
 		if (message.settlements) {
 			obj.settlements = message.settlements.map((e) => (e ? SettlementEntry.toAmino(e) : undefined));
 		} else {
-			obj.settlements = [];
+			obj.settlements = message.settlements;
 		}
 		if (message.cancellations) {
 			obj.cancellations = message.cancellations.map((e) => (e ? Cancellation.toAmino(e) : undefined));
 		} else {
-			obj.cancellations = [];
+			obj.cancellations = message.cancellations;
 		}
 		return obj;
 	},
