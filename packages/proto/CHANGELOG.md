@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.2
+
+### Patch Changes
+
+- 07951bc: Updated Telescope to latest version, changed build tool from babel to TSC, fixed typos in exports
+
 ## 4.0.1
 
 ### Patch Changes
