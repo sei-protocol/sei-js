@@ -220,3 +220,18 @@ The WASM precompile contract facilitates execution, instantiation, and querying 
 
 #### Precompile Addresses
 - [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_WASM_PRECOMPILE_ADDRESS.html)
+
+<br>
+<br>
+
+### IBC Precompile
+
+The IBC precompile contract facilitates messages exchange between Sei and other IBC compatible blockchains.
+#### Functions
+
+| Function Name                                                                  | Input Parameters                                                                                                                                                                                               | Return Value           | Description                                                                                  |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|----------------------------------------------------------------------------------------------|
+| [`transfer`](/sei-js/docs/interfaces/evm.IbcPrecompileFunctions.html#transfer) | `toAddress: ` `string`, `port: ` `string`, `channel: ` `string`, `denom: ` `string`, `amount: ` `ethers.BigNumberish`, `revisionNumber: ` `BigInt`, `revisionHeight: ` `BigInt`, `timeoutTimestamp: ` `BigInt` | `{ success: boolean }` | Transfers tokens from the caller's address to another on a different (IBC compatible) chain. |
+
+#### Precompile Addresses
+- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_IBC_PRECOMPILE_ADDRESS.html)

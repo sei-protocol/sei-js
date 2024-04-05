@@ -9,6 +9,7 @@ import {
 	ARCTIC_1_STAKING_PRECOMPILE_ADDRESS,
 	ARCTIC_1_WASM_PRECOMPILE_ADDRESS
 } from '../precompiles';
+import { ARCTIC_1_IBC_PRECOMPILE_ADDRESS } from '../precompiles/ibc';
 
 /**
  * Creates and returns a Viem Chain with the default arctic-1 configs and precompile contracts added.
@@ -47,7 +48,8 @@ export const ARCTIC_1_VIEM_CHAIN: Chain = {
 		governancePrecompile: { address: ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS },
 		jsonPrecompile: { address: ARCTIC_1_JSON_PRECOMPILE_ADDRESS },
 		stakingPrecompile: { address: ARCTIC_1_STAKING_PRECOMPILE_ADDRESS },
-		wasmPrecompile: { address: ARCTIC_1_WASM_PRECOMPILE_ADDRESS }
+		wasmPrecompile: { address: ARCTIC_1_WASM_PRECOMPILE_ADDRESS },
+		ibcPrecompile: { address: ARCTIC_1_IBC_PRECOMPILE_ADDRESS }
 	},
 	fees: undefined,
 	id: SeiChainInfo.devnet.chainId,
