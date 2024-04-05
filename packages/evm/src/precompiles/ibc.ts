@@ -133,4 +133,3 @@ export const IBC_PRECOMPILE_ABI: Abi = [
 export const getIbcPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): IbcPrecompileContract => {
 	return new ethers.Contract(precompileAddress, IBC_PRECOMPILE_ABI as InterfaceAbi, runner) as IbcPrecompileContract;
 };
-
