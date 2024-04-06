@@ -10,6 +10,7 @@
     "build:all": "nx run-many --target=build",
     "build:since": "nx affected --target=build",
     "prebuild": "yarn build:since",
+    "postinstall": "git submodule update --init --recursive",
     "docs": "npx typedoc",
     "lint:all": "nx run-many --target=lint",
     "lint:since": "nx affected --target=lint",
