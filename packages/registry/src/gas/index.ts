@@ -31,8 +31,7 @@ export interface ChainGasInfo {
 }
 
 /**
- * A mapping of network identifiers to their respective gas information,
- * facilitating network-specific gas pricing and module adjustments.
+ * A mapping of network identifiers (chain id's) to their respective gas information.
  */
 type GasInfoType = {
 	/** Each network identifier is associated with its gas information. */
