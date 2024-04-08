@@ -1,5 +1,11 @@
 # @sei-js/cosmjs
 
+## 1.0.2
+
+### Patch Changes
+
+- f91e176: Replaced babel with tsc for building
+
 ## 1.0.1
 
 ### Patch Changes

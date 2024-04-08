@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.3
+
+### Patch Changes
+
+- f91e176: Replaced babel with tsc for building
+
 ## 4.0.2
 
 ### Patch Changes
