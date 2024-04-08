@@ -1,9 +1,9 @@
-import { join } from 'path';
-import telescope from '@cosmology/telescope';
-import { sync as rimraf } from 'rimraf';
+const path = require('path');
+const telescope = require('@cosmology/telescope').default;
+const rimraf = require('rimraf').sync;
 
-const protoDirs = [join(__dirname, '/../proto')];
-const outPath = join(__dirname, '../src/codegen');
+const protoDirs = [path.join(__dirname, '/../proto')];
+const outPath = path.join(__dirname, '../src/codegen');
 rimraf(outPath);
 
 telescope({
