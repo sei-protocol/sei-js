@@ -3,7 +3,6 @@ node_modules
 docs
 coverage
 
-.babelrc.js
 .gitkeep
 jest.config.ts
 tsconfig.json

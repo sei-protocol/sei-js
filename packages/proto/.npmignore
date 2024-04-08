@@ -15,8 +15,6 @@ yarn.lock
 # project files
 __fixtures__
 __tests__
-.babelrc
-.babelrc.js
 .editorconfig
 .gitignore
 .travis.yml
