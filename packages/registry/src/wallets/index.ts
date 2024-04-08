@@ -43,4 +43,4 @@ export interface Wallet {
  * const compass = Wallets.find((wallet) => wallet.identifier === 'compass');
  * ```
  */
-export const Wallets: Wallet[] = WalletsJSON.extensions as Wallet[];
+export const WALLETS: Wallet[] = WalletsJSON.extensions as Wallet[];

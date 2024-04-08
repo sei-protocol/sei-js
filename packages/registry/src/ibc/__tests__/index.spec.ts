@@ -1,4 +1,4 @@
-import { IBCInfo } from '../index';
+import { IBC_INFO } from '../index';
 import { Network } from '../../index';
 
 describe('IBCInfo Tests', () => {
@@ -6,13 +6,13 @@ describe('IBCInfo Tests', () => {
 	it('contains all required networks', () => {
 		const expectedNetworks: Network[] = ['pacific-1', 'atlantic-2', 'arctic-1'];
 		expectedNetworks.forEach((network) => {
-			expect(IBCInfo).toHaveProperty(network);
+			expect(IBC_INFO).toHaveProperty(network);
 		});
 	});
 
 	// Validate the structure of IBCInfo for each network
 	it('validates structure for each network', () => {
-		Object.values(IBCInfo).forEach((channels) => {
+		Object.values(IBC_INFO).forEach((channels) => {
 			channels.forEach((channel) => {
 				expect(typeof channel.counterparty_chain_name).toBe('string');
 				expect(typeof channel.dst_channel).toBe('string');
@@ -25,7 +25,7 @@ describe('IBCInfo Tests', () => {
 
 	// Example: Check specific content for a given network
 	it('checks specific values for a given network', () => {
-		const pacific1Channels = IBCInfo['pacific-1'];
+		const pacific1Channels = IBC_INFO['pacific-1'];
 		expect(pacific1Channels.length).toBeGreaterThan(0); // Ensure there's at least one channel
 		const firstChannel = pacific1Channels[0];
 		expect(firstChannel.counterparty_chain_name).not.toBe('');

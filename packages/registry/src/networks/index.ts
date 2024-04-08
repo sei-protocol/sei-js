@@ -67,4 +67,4 @@ type NetworksConfig = {
  * const pacific1 = Networks.find((network) => network.chainId === 'pacific-1');
  * ```
  */
-export const Networks: NetworksConfig = NetworksJSON as NetworksConfig;
+export const NETWORKS: NetworksConfig = NetworksJSON as NetworksConfig;

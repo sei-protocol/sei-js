@@ -1,12 +1,12 @@
-import { TokenList } from '../index';
+import { TOKEN_LIST } from '../index';
 import { Network } from '../../index';
 
 describe('AssetList Tests', () => {
 	it('should have the correct structure for each network', () => {
 		const networks: Network[] = ['pacific-1', 'atlantic-2', 'arctic-1'];
 		networks.forEach((network) => {
-			expect(Array.isArray(TokenList[network])).toBeTruthy();
-			TokenList[network].forEach((asset) => {
+			expect(Array.isArray(TOKEN_LIST[network])).toBeTruthy();
+			TOKEN_LIST[network].forEach((asset) => {
 				expect(asset).toHaveProperty('name');
 				expect(asset).toHaveProperty('description');
 				expect(asset).toHaveProperty('symbol');
@@ -32,8 +32,8 @@ describe('AssetList Tests', () => {
 });
 
 it('should contain the "sei" asset with correct properties in each network', () => {
-	Object.keys(TokenList).forEach((network) => {
-		const seiAsset = TokenList[network as Network].find((asset) => asset.symbol === 'SEI');
+	Object.keys(TOKEN_LIST).forEach((network) => {
+		const seiAsset = TOKEN_LIST[network as Network].find((asset) => asset.symbol === 'SEI');
 		expect(seiAsset).toBeDefined();
 		expect(seiAsset?.name).toBe('Sei');
 		expect(seiAsset?.description).toBe('The native token of Sei');

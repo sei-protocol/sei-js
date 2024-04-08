@@ -32,7 +32,7 @@ export interface ChannelInfo {
  * A mapping of Sei network names to arrays of `ChannelInfo`, providing
  * detailed IBC channel configurations for each network.
  */
-type IBCNetworkInfo = {
+type IBCInfo = {
 	/**
 	 * Associates each official Sei network with its respective array of `ChannelInfo` objects,
 	 * detailing the IBC channels available on that network.
@@ -50,4 +50,4 @@ type IBCNetworkInfo = {
  * const pacific1 = IBCInfo['pacific-1'].find((ibcInfo) => ibcInfo.counterparty_chain_name === 'cosmoshub-4');
  * ```
  */
-export const IBCInfo: IBCNetworkInfo = IBCInfoJSON as IBCNetworkInfo;
+export const IBC_INFO: IBCInfo = IBCInfoJSON as IBCInfo;

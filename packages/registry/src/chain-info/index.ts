@@ -3,7 +3,7 @@ import ChainInfoJSON from '../../chain-registry/chain_info.json';
 /**
  * Represents the essential information about an official Sei network.
  */
-export interface ChainInfoType {
+export interface ChainInfo {
 	/** The name of the chain. (Sei) */
 	chain_name: string;
 	/** The type of network, indicating whether it's a mainnet, testnet, or devnet. */
@@ -34,4 +34,4 @@ export interface ChainInfoType {
  * console.log(ChainInfo.bech32_prefix); // 'sei'
  * ```
  */
-export const ChainInfo: ChainInfoType = ChainInfoJSON as ChainInfoType;
+export const CHAIN_INFO: ChainInfo = ChainInfoJSON as ChainInfo;

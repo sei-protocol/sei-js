@@ -69,4 +69,4 @@ type SeiTokens = {
  * const uSei = TokenList['pacific-1'].find((asset) => asset.symbol === 'sei');
  * ```
  */
-export const TokenList: SeiTokens = TokenListJSON as unknown as SeiTokens;
+export const TOKEN_LIST: SeiTokens = TokenListJSON as unknown as SeiTokens;

@@ -33,7 +33,7 @@ export interface ChainGasInfo {
 /**
  * A mapping of network identifiers (chain id's) to their respective gas information.
  */
-type GasInfoType = {
+type GasInfo = {
 	/** Each network identifier is associated with its gas information. */
 	[network in Network]: ChainGasInfo;
 };
@@ -50,4 +50,4 @@ type GasInfoType = {
  * console.log(pacific1Info.denom); // 'usei'
  * ```
  */
-export const GasInfo: GasInfoType = GasInfoJSON as GasInfoType;
+export const GAS_INFO: GasInfo = GasInfoJSON as GasInfo;
