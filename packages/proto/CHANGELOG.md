@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.4
+
+### Patch Changes
+
+- a37f7a8: Updated dependencies to fix error if @sei-js/proto is not installed
+
 ## 4.0.3
 
 ### Patch Changes
