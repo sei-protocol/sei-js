@@ -45,9 +45,9 @@ type IBCInfo = {
  *
  * @example
  * ```tsx
- * import { IBCInfo } from '@sei-js/registry';
+ * import { IBC_INFO } from '@sei-js/registry';
  *
- * const pacific1 = IBCInfo['pacific-1'].find((ibcInfo) => ibcInfo.counterparty_chain_name === 'cosmoshub-4');
+ * const pacific1 = IBC_INFO['pacific-1'].find((ibcInfo) => ibcInfo.counterparty_chain_name === 'cosmoshub-4');
  * ```
  */
 export const IBC_INFO: IBCInfo = IBCInfoJSON as IBCInfo;

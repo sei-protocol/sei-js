@@ -29,9 +29,9 @@ export interface ChainInfo {
  *
  * @example
  * ```tsx
- * import { ChainInfo } from '@sei-js/registry';
+ * import { CHAIN_INFO } from '@sei-js/registry';
  *
- * console.log(ChainInfo.bech32_prefix); // 'sei'
+ * console.log(CHAIN_INFO.bech32_prefix); // 'sei'
  * ```
  */
 export const CHAIN_INFO: ChainInfo = ChainInfoJSON as ChainInfo;

@@ -62,9 +62,9 @@ type NetworksConfig = {
  *
  * @example
  * ```tsx
- * import { Networks } from '@sei-js/registry';
+ * import { NETWORKS } from '@sei-js/registry';
  *
- * const pacific1 = Networks.find((network) => network.chainId === 'pacific-1');
+ * const pacific1 = NETWORKS.find((network) => network.chainId === 'pacific-1');
  * ```
  */
 export const NETWORKS: NetworksConfig = NetworksJSON as NetworksConfig;

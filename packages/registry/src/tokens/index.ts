@@ -64,9 +64,9 @@ type SeiTokens = {
  *
  * @example
  * ```tsx
- * import { TokenList } from '@sei-js/registry';
+ * import { TOKEN_LIST } from '@sei-js/registry';
  *
- * const uSei = TokenList['pacific-1'].find((asset) => asset.symbol === 'sei');
+ * const uSei = TOKEN_LIST['pacific-1'].find((asset) => asset.symbol === 'sei');
  * ```
  */
 export const TOKEN_LIST: SeiTokens = TokenListJSON as unknown as SeiTokens;

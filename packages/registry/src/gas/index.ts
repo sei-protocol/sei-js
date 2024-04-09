@@ -44,9 +44,9 @@ type GasInfo = {
  *
  * @example
  * ```tsx
- * import { GasInfo } from '@sei-js/registry';
+ * import { GAS_INFO } from '@sei-js/registry';
  *
- * const pacific1Info = GasInfo['pacific-1'];
+ * const pacific1Info = GAS_INFO['pacific-1'];
  * console.log(pacific1Info.denom); // 'usei'
  * ```
  */
