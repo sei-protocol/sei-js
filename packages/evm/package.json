@@ -31,18 +31,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
-  "peerDependencies": {
+  "dependencies": {
     "ethers": "^6.0.0",
-    "viem": "2.x"
+    "viem": "^2.0.0",
+    "wagmi": "^2.5.19"
   },
-  "devDependencies": {
-    "@types/jest": "^29.5.5",
-    "ethers": "^6.11.1",
-    "jest": "^29.7.0",
-    "prettier": "^3.2.5",
-    "ts-jest": "^29.1.1"
-  },
+  "peerDependencies": {},
+  "devDependencies": {},
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",

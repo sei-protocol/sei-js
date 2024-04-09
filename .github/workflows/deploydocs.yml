@@ -39,9 +39,6 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
-      - name: Install Peer Dependencies
-        run: yarn add -W viem@2.x wagmi @sei-js/proto
-
       - name: Build all packages
         run: yarn build:all
 
