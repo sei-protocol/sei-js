@@ -28,9 +28,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Install Peer Dependencies
-        run: yarn add -W viem@2.x wagmi
-
       - name: Build packages
         run: yarn build:all
 
