@@ -1,5 +1,13 @@
 # @sei-js/cosmjs
 
+## 1.0.3
+
+### Patch Changes
+
+- ed4940b: Updated dependencies to fix proto issue
+- Updated dependencies [a37f7a8]
+  - @sei-js/proto@4.0.4
+
 ## 1.0.2
 
 ### Patch Changes
