@@ -1,0 +1,65 @@
+.container-main {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 2fr) !important;
+}
+
+.tsd-generator {
+  display: none;
+}
+
+.tsd-accordion-summary {
+  margin-top: 0.25rem;
+}
+
+.tsd-accordion-summary > svg {
+  margin-top: 2px !important;
+  right: 1rem !important;
+}
+
+.tsd-accordion-summary > a {
+  padding: 0.88rem 1.25rem !important;
+}
+
+.tsd-accordion-details {
+  margin-top: 1rem !important;
+}
+
+.site-menu {
+  overflow: scroll !important;
+  padding-right: 0.5rem !important;
+  margin-right: 1rem !important;
+}
+
+.tsd-nested-navigation > li > details {
+  margin-left: unset !important;
+}
+
+.tsd-page-title > h1 {
+  display: none;
+}
+
+.tsd-page-toolbar {
+  height: unset !important;
+}
+
+.container-main {
+  margin-top: 1rem !important;
+}
+
+.current {
+  padding: 0.88rem 1.25rem !important;
+}
+
+.settings {
+  margin: 0 !important;
+}
+
+.page-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem !important;
+  padding: 2rem !important;
+}
+
+.warning {
+  display: none;
+}

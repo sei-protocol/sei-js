@@ -1,42 +1,169 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>SeiJS</title><meta name="description" content="Documentation for SeiJS"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script><link rel="stylesheet" href="assets/pages.css"/></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
-<div class="tsd-toolbar-contents container">
-<div class="table-cell" id="tsd-search" data-base=".">
-<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
-<div class="field">
-<div id="tsd-toolbar-links"></div></div>
-<ul class="results">
-<li class="state loading">Preparing search index...</li>
-<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">SeiJS</a></div>
-<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
-<div class="container container-main">
-<div class="col-8 col-content">
-<div class="tsd-page-title">
-<h2>SeiJS</h2></div>
-<div class="tsd-panel tsd-typography">
-<a href="#seijs" id="seijs" style="color: inherit; text-decoration: none;">
-  <h1>SeiJS</h1>
-</a>
-<p>SeiJS is a monorepo that contains multiple NPM libraries for writing applications that interact with the Sei network.</p>
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@sei-js</title><meta name="description" content="Documentation for @sei-js"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/custom.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script><style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-sys-color-primary: #ffb4aa;
+    --md-sys-color-on-primary: #690003;
+    --md-sys-color-primary-container: #8e1310;
+    --md-sys-color-on-primary-container: #ffdad5;
+    --md-sys-color-secondary: #e7bdb7;
+    --md-sys-color-on-secondary: #442926;
+    --md-sys-color-secondary-container: #5d3f3b;
+    --md-sys-color-on-secondary-container: #ffdad5;
+    --md-sys-color-tertiary: #dfc38c;
+    --md-sys-color-on-tertiary: #3f2e04;
+    --md-sys-color-tertiary-container: #574419;
+    --md-sys-color-on-tertiary-container: #fddfa6;
+    --md-sys-color-error: #ffb4ab;
+    --md-sys-color-on-error: #690005;
+    --md-sys-color-error-container: #93000a;
+    --md-sys-color-on-error-container: #ffb4ab;
+    --md-sys-color-background: #201a19;
+    --md-sys-color-on-background: #ede0de;
+    --md-sys-color-surface: #201a19;
+    --md-sys-color-on-surface: #ede0de;
+    --md-sys-color-surface-variant: #534341;
+    --md-sys-color-on-surface-variant: #d8c2be;
+    --md-sys-color-outline: #a08c8a;
+    --md-sys-color-outline-variant: #534341;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-inverse-surface: #ede0de;
+    --md-sys-color-inverse-on-surface: #362f2e;
+    --md-sys-color-inverse-primary: #b02d25;
+    --md-sys-color-surface-dim: #181211;
+    --md-sys-color-surface-bright: #3f3736;
+    --md-sys-color-surface-container-lowest: #120d0c;
+    --md-sys-color-surface-container-low: #201a19;
+    --md-sys-color-surface-container: #251e1d;
+    --md-sys-color-surface-container-high: #2f2827;
+    --md-sys-color-surface-container-highest: #3b3332
+  }
+}
+:root[data-theme="dark"] {
+  --md-sys-color-primary: #ffb4aa;
+  --md-sys-color-on-primary: #690003;
+  --md-sys-color-primary-container: #8e1310;
+  --md-sys-color-on-primary-container: #ffdad5;
+  --md-sys-color-secondary: #e7bdb7;
+  --md-sys-color-on-secondary: #442926;
+  --md-sys-color-secondary-container: #5d3f3b;
+  --md-sys-color-on-secondary-container: #ffdad5;
+  --md-sys-color-tertiary: #dfc38c;
+  --md-sys-color-on-tertiary: #3f2e04;
+  --md-sys-color-tertiary-container: #574419;
+  --md-sys-color-on-tertiary-container: #fddfa6;
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffb4ab;
+  --md-sys-color-background: #201a19;
+  --md-sys-color-on-background: #ede0de;
+  --md-sys-color-surface: #201a19;
+  --md-sys-color-on-surface: #ede0de;
+  --md-sys-color-surface-variant: #534341;
+  --md-sys-color-on-surface-variant: #d8c2be;
+  --md-sys-color-outline: #a08c8a;
+  --md-sys-color-outline-variant: #534341;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #ede0de;
+  --md-sys-color-inverse-on-surface: #362f2e;
+  --md-sys-color-inverse-primary: #b02d25;
+  --md-sys-color-surface-dim: #181211;
+  --md-sys-color-surface-bright: #3f3736;
+  --md-sys-color-surface-container-lowest: #120d0c;
+  --md-sys-color-surface-container-low: #201a19;
+  --md-sys-color-surface-container: #251e1d;
+  --md-sys-color-surface-container-high: #2f2827;
+  --md-sys-color-surface-container-highest: #3b3332
+}
 
-<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
-  <h2>Documentation</h2>
-</a>
-<p>Please check <a href="https://docs.seinetwork.io/front-end-development/javascript-tutorial">our documentation</a> for notes on how to get up and running. The tutorial has examples on how to connect to a Sei wallet, query an RPC endpoint, transfer tokens, IBC transfer, and interact with contracts.</p>
-<p>The <code>EXAMPLES.md</code> file contains examples of how to use the classes and methods in this library to perform interactions with the chain.</p>
-<p>You can also refer to the <a href="https://sei-protocol.github.io/sei-js/">typedocs</a> for reference on the contents of the @sei-js/core and @sei-js/react library.</p>
+@media (prefers-color-scheme: light) {
+  :root {
+    --md-sys-color-primary: #b02d25;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-primary-container: #ffdad5;
+    --md-sys-color-on-primary-container: #410001;
+    --md-sys-color-secondary: #775652;
+    --md-sys-color-on-secondary: #ffffff;
+    --md-sys-color-secondary-container: #ffdad5;
+    --md-sys-color-on-secondary-container: #2c1512;
+    --md-sys-color-tertiary: #715c2e;
+    --md-sys-color-on-tertiary: #ffffff;
+    --md-sys-color-tertiary-container: #fddfa6;
+    --md-sys-color-on-tertiary-container: #261a00;
+    --md-sys-color-error: #ba1a1a;
+    --md-sys-color-on-error: #ffffff;
+    --md-sys-color-error-container: #ffdad6;
+    --md-sys-color-on-error-container: #410002;
+    --md-sys-color-background: #fffbff;
+    --md-sys-color-on-background: #201a19;
+    --md-sys-color-surface: #fffbff;
+    --md-sys-color-on-surface: #201a19;
+    --md-sys-color-surface-variant: #f5ddda;
+    --md-sys-color-on-surface-variant: #534341;
+    --md-sys-color-outline: #857370;
+    --md-sys-color-outline-variant: #d8c2be;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-inverse-surface: #362f2e;
+    --md-sys-color-inverse-on-surface: #fbeeec;
+    --md-sys-color-inverse-primary: #ffb4aa;
+    --md-sys-color-surface-dim: #e4d7d5;
+    --md-sys-color-surface-bright: #fff8f7;
+    --md-sys-color-surface-container-lowest: #ffffff;
+    --md-sys-color-surface-container-low: #fef1ef;
+    --md-sys-color-surface-container: #f8ebe9;
+    --md-sys-color-surface-container-high: #f3e5e3;
+    --md-sys-color-surface-container-highest: #ede0de
+  }
+}
+:root[data-theme="light"] {
+  --md-sys-color-primary: #b02d25;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #ffdad5;
+  --md-sys-color-on-primary-container: #410001;
+  --md-sys-color-secondary: #775652;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #ffdad5;
+  --md-sys-color-on-secondary-container: #2c1512;
+  --md-sys-color-tertiary: #715c2e;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #fddfa6;
+  --md-sys-color-on-tertiary-container: #261a00;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+  --md-sys-color-background: #fffbff;
+  --md-sys-color-on-background: #201a19;
+  --md-sys-color-surface: #fffbff;
+  --md-sys-color-on-surface: #201a19;
+  --md-sys-color-surface-variant: #f5ddda;
+  --md-sys-color-on-surface-variant: #534341;
+  --md-sys-color-outline: #857370;
+  --md-sys-color-outline-variant: #d8c2be;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #362f2e;
+  --md-sys-color-inverse-on-surface: #fbeeec;
+  --md-sys-color-inverse-primary: #ffb4aa;
+  --md-sys-color-surface-dim: #e4d7d5;
+  --md-sys-color-surface-bright: #fff8f7;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #fef1ef;
+  --md-sys-color-surface-container: #f8ebe9;
+  --md-sys-color-surface-container-high: #f3e5e3;
+  --md-sys-color-surface-container-highest: #ede0de
+}
+</style><link rel="stylesheet" href="assets/material-style.css"/></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@sei-js</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h2>@sei-js</h2></div><div class="tsd-panel tsd-typography"><div align="center">
+<img src="https://raw.githubusercontent.com/cosmos/chain-registry/master/sei/images/sei.png" alt="SEI Logo" width="200">
+<h1 style="margin: 0">@sei-js</h1>
+</div>
 
-<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
-  <h3>Examples</h3>
-</a>
-<ul>
-<li><a href="https://github.com/sei-protocol/js-examples">sei-protocol/js-examples</a> - An example repo demonstrating how to use various typescript functions from SeiJS</li>
-</ul>
-
-<a href="#packages" id="packages" style="color: inherit; text-decoration: none;">
-  <h2>Packages</h2>
-</a>
-<p>SeiJS consists of smaller NPM packages within the @sei-js namespace. For more detailed documentation on each package, please refer to the table below.</p>
-<table>
+<p><br><br></p>
+<p><strong>@sei-js</strong> is a collection of TypeScript libraries designed to streamline development on the Sei platform. Whether you&#39;re building decentralized applications, interacting with Sei via the EVM or Cosmos interfaces, or working with protocol buffers, <strong>@sei-js</strong> has you covered.</p>
+<a id="md:packages" class="tsd-anchor"></a><h2><a href="#md:packages">Packages</a></h2><table>
 <thead>
 <tr>
 <th>Package</th>
@@ -44,49 +171,40 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="packages/core">@sei-js/core</a></td>
-<td>TypeScript library containing helper functions for wallet connection, transaction signing, and RPC querying.</td>
+<td><a href="/sei-js/docs/modules/evm.html">evm</a></td>
+<td>The <code>/evm</code> package provides utilities, functions, wrappers, and configurations for seamless interaction with Sei via the Ethereum Virtual Machine (EVM). If you&#39;re building smart contracts or integrating Sei with Ethereum-based tooling, or interacting with EVM contacts like ERC20 tokens this package contains all the configs needed.</td>
 </tr>
 <tr>
-<td><a href="packages/react">@sei-js/react</a></td>
-<td>ReactJS specific library with helpful hooks for wallet connections, transaction signing, and RPC querying.</td>
+<td><a href="/sei-js/docs/modules/cosmjs.html">cosmjs</a></td>
+<td>The <code>/cosmjs</code> package offers similar functionality to the <code>/evm</code> package but tailored for interactions with Sei via the Cosmos interfaces. It includes utilities, functions, wrappers, and configurations specifically designed for CosmWasm and Rust development.</td>
 </tr>
 <tr>
-<td><a href="packages/proto">@sei-js/proto</a></td>
-<td>TypeScript library for Sei protobufs generated using <a href="https://github.com/osmosis-labs/telescope">Telescope</a></td>
+<td><a href="/sei-js/docs/modules/proto.html">proto</a></td>
+<td>The <code>/proto</code> package contains Sei client libraries and types generated using protocol buffers. If you&#39;re working with Sei&#39;s protocol buffer definitions or building clients for Sei services, this package will be invaluable.</td>
+</tr>
+<tr>
+<td><a href="/sei-js/docs/modules/registry.html">registry</a></td>
+<td>The <code>/registry</code> package contains exports data from the <a href="https://github.com/sei-protocol/chain-registry">Sei chain-registry</a> and the <a href="https://github.com/Sei-Public-Goods/sei-assetlist">community asset list</a> as constants in typescript.</td>
 </tr>
 </tbody></table>
+<a id="md:resources" class="tsd-anchor"></a><h2><a href="#md:resources">Resources</a></h2><ul>
+<li><a href="https://docs.sei.io">Sei Documentation</a></li>
+<li><a href="https://www.sei.io/developers">Sei Developers Hub</a></li>
+</ul>
+<p>Feel free to explore each package for detailed documentation and examples. We&#39;re excited to see what you build on Sei!</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-index-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><h4 class="uppercase">Member Visibility</h4><form><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div><div class="tsd-theme-toggle"><h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#md:packages"><span>Packages</span></a><a href="#md:resources"><span>Resources</span></a></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="index.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="assets/icons.svg#icon-1"></use></svg><span>@sei-js</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="."><li>Loading...</li></ul></nav></div></div></div><div class="tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script>
+          try {
+            const generateLinkElement = document.querySelector(".tsd-generator a");
+            const link = document.createElement("a");
+            Object.assign(link, {
+              href: "https://github.com/dmnsgn/typedoc-material-theme",
+              target: "_blank",
+              rel: "noreferrer",
+              innerText: "typedoc-material-theme."
+            });
+            generateLinkElement.insertAdjacentElement("afterend", link);
+            generateLinkElement.insertAdjacentText("afterend", " with ");
+          } catch (error) {
 
-<a href="#development" id="development" style="color: inherit; text-decoration: none;">
-  <h2>Development</h2>
-</a>
-<p>To build all packages and docs, run <code>yarn install</code> then <code>yarn build:all</code></p>
-<p>This workspace was generated by <a href="https://nx.dev">Nx, a Smart, fast and extensible build system.</a>.</p>
-</div></div>
-<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-<div class="tsd-navigation settings">
-<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
-<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
-<div class="tsd-accordion-details">
-<div class="tsd-filter-visibility">
-<h4 class="uppercase">Member Visibility</h4><form>
-<ul id="tsd-filter-options">
-<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
-<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
-<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
-<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
-<div class="tsd-theme-toggle">
-<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
-<nav class="tsd-navigation primary">
-<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
-<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
-<div class="tsd-accordion-details">
-<ul>
-<li class="current selected"><a href="modules.html">SeiJS</a>
-<ul>
-<li class="pages-entry pages-entry-page pages-entry-depth-1"><a href="pages/EXAMPLES.html">Javascript <wbr/>Examples</a></li>
-<li class="tsd-kind-module"><a href="modules/_sei_js_core.html">@sei-<wbr/>js/core</a></li>
-<li class="tsd-kind-module"><a href="modules/_sei_js_react.html">@sei-<wbr/>js/react</a></li></ul></li></ul></div></details></nav></div></div>
-<div class="container tsd-generator">
-<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
-<div class="overlay"></div><script src="assets/main.js"></script></body></html>
+          }
+        </script></body></html>
