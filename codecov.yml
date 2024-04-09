@@ -8,6 +8,9 @@ flags:
   proto:
     paths:
       - packages/proto/**
+  registry:
+    paths:
+      - packages/registry/**
 
 coverage:
   status:
@@ -24,3 +27,7 @@ coverage:
         target: 80%
         flags:
           - proto
+      registry:
+        target: 80%
+        flags:
+          - registry

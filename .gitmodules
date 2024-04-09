@@ -1,0 +1,6 @@
+[submodule "packages/registry/community-assetlist"]
+	path = packages/registry/community-assetlist
+	url = https://github.com/Sei-Public-Goods/sei-assetlist.git
+[submodule "packages/registry/chain-registry"]
+	path = packages/registry/chain-registry
+	url = https://github.com/sei-protocol/chain-registry.git

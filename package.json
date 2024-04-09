@@ -10,6 +10,7 @@
     "build:all": "nx run-many --target=build",
     "build:since": "nx affected --target=build",
     "prebuild": "yarn build:since",
+    "postinstall": "git submodule update --init --recursive",
     "docs": "npx typedoc",
     "lint:all": "nx run-many --target=lint",
     "lint:since": "nx affected --target=lint",
@@ -17,7 +18,7 @@
     "release": "changeset publish",
     "postrelease": "git push --follow-tags",
     "release:internal-evm": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal-evm && yarn changeset publish --no-git-tag --snapshot --tag internal-evm",
-    "test:all": "nx run-many --target=test",
+    "test:all": "nx run-many --target=test --skip-nx-cache",
     "test:since": "nx affected --target=test",
     "test:coverage": "nx test --all --coverage --skip-nx-cache"
   },
@@ -64,4 +65,3 @@
     "wagmi": "^2.5.17"
   }
 }
-

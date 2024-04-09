@@ -1,13 +1,13 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src"],
+  "include": ["./src/**/*"],
   "compilerOptions": {
     "outDir": "./dist/types",
+    "rootDir": "./src",
   },
   "typedocOptions": {
     "readme": "./README.md",
-    "name": "cosmjs",
+    "name": "registry",
     "entryPoints": ["src/index.ts"]
   }
 }
-
