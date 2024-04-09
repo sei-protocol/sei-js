@@ -31,11 +31,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
-  "peerDependencies": {
+  "dependencies": {
     "ethers": "^6.0.0",
-    "viem": "2.x"
+    "viem": "^2.x"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^29.5.5",
     "ethers": "^6.11.1",
