@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.0.3
+
+### Patch Changes
+
+- 7d9b382: Moved peer dependencies to standard dependencies to avoid needing multiple packages installed
+
 ## 1.0.2
 
 ### Patch Changes
