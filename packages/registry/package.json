@@ -2,9 +2,9 @@
   "name": "@sei-js/registry",
   "version": "1.0.0",
   "description": "TypeScript library for Sei chain constants and assets",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/cjs/src/index.js",
+  "module": "./dist/esm/src/index.js",
+  "types": "./dist/types/src/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
@@ -24,7 +24,8 @@
   "keywords": [
     "sei",
     "javascript",
-    "typescript"
+    "typescript",
+    "registry"
   ],
   "repository": "git@github.com:sei-protocol/sei-js.git",
   "license": "MIT",
@@ -37,9 +38,9 @@
   "devDependencies": {},
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "import": "./dist/esm/src/index.js",
+      "require": "./dist/cjs/src/index.js",
+      "types": "./dist/types/src/index.d.ts"
     }
   }
 }
