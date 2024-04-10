@@ -1,9 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./chain-registry/**/*", "./community-assetlist/**/*"],
   "compilerOptions": {
     "outDir": "./dist/types",
-    "rootDir": "./src",
+    "rootDir": "./",
   },
   "typedocOptions": {
     "readme": "./README.md",
