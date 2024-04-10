@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/registry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript library for Sei chain constants and assets",
   "main": "./dist/cjs/src/index.js",
   "module": "./dist/esm/src/index.js",
