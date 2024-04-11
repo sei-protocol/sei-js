@@ -1,5 +1,6 @@
 import { StdSignDoc } from '@cosmjs/amino';
 import { serializeSignDoc } from '@cosmjs/amino/build/signdoc';
+import { cosmos } from '@sei-js/proto';
 import { SignDoc } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
 
 /**
@@ -9,8 +10,8 @@ import { SignDoc } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
  * @category Utils
  */
 export function serializeDirectSignDoc(signDoc: SignDoc): Uint8Array {
-	return SignDoc.encode(
-		SignDoc.fromPartial({
+	return cosmos.tx.v1beta1.SignDoc.encode(
+		cosmos.tx.v1beta1.SignDoc.fromPartial({
 			accountNumber: signDoc.accountNumber,
 			authInfoBytes: signDoc.authInfoBytes,
 			bodyBytes: signDoc.bodyBytes,
