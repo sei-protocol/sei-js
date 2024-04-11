@@ -15,7 +15,7 @@ import {
 	QueryModuleAccountsResponseSDKType,
 	QueryParamsRequest,
 	QueryParamsResponseSDKType
-} from '@sei-js/proto/types/cosmos/auth/v1beta1/query';
+} from '@sei-js/proto/dist/types/codegen/cosmos/auth/v1beta1/query';
 
 import {
 	QueryBalanceRequest,
@@ -36,7 +36,7 @@ import {
 	QueryDenomsMetadataResponseSDKType,
 	QueryDenomOwnersRequest,
 	QueryDenomOwnersResponseSDKType
-} from '@sei-js/proto/types/cosmos/bank/v1beta1/query';
+} from '@sei-js/proto/dist/types/codegen/cosmos/bank/v1beta1/query';
 
 import {
 	QueryParamsRequest as QueryDistributionParamsRequest,
@@ -57,7 +57,7 @@ import {
 	QueryDelegatorWithdrawAddressResponseSDKType,
 	QueryCommunityPoolRequest,
 	QueryCommunityPoolResponseSDKType
-} from '@sei-js/proto/types/cosmos/distribution/v1beta1/query';
+} from '@sei-js/proto/dist/types/codegen/cosmos/distribution/v1beta1/query';
 
 import {
 	QueryProposalRequest,
@@ -76,7 +76,7 @@ import {
 	QueryDepositsResponseSDKType,
 	QueryTallyResultRequest,
 	QueryTallyResultResponseSDKType
-} from '@sei-js/proto/types/cosmos/gov/v1beta1/query';
+} from '@sei-js/proto/dist/types/codegen/cosmos/gov/v1beta1/query';
 
 import {
 	QueryValidatorsRequest,
@@ -107,7 +107,7 @@ import {
 	QueryPoolResponseSDKType,
 	QueryParamsRequest as QueryStakingParamsRequest,
 	QueryParamsResponseSDKType as QueryStakingParamsResponseSDKType
-} from '@sei-js/proto/types/cosmos/staking/v1beta1/query';
+} from '@sei-js/proto/dist/types/codegen/cosmos/staking/v1beta1/query';
 
 import {
 	GetTxRequest,
@@ -116,7 +116,7 @@ import {
 	GetTxsEventResponseSDKType,
 	GetBlockWithTxsRequest,
 	GetBlockWithTxsResponseSDKType
-} from '@sei-js/proto/types/cosmos/tx/v1beta1/service';
+} from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/service';
 
 import {
 	QueryCurrentPlanRequest,
@@ -129,7 +129,7 @@ import {
 	QueryModuleVersionsResponseSDKType,
 	QueryAuthorityRequest,
 	QueryAuthorityResponseSDKType
-} from '@sei-js/proto/types/cosmos/upgrade/v1beta1/query';
+} from '@sei-js/proto/dist/types/codegen/cosmos/upgrade/v1beta1/query';
 
 import {
 	QueryParamsRequest as QueryDexParamsRequest,
@@ -166,14 +166,14 @@ import {
 	QueryGetHistoricalPricesResponseSDKType,
 	QueryGetMarketSummaryRequest,
 	QueryGetMarketSummaryResponseSDKType
-} from '@sei-js/proto/types/dex/query';
+} from '@sei-js/proto/dist/types/codegen/dex/query';
 
 import {
 	QueryParamsRequest as QueryMintParamsRequest,
 	QueryParamsResponseSDKType as QueryMintParamsResponseSDKType,
 	QueryMinterRequest,
 	QueryMinterResponseSDKType
-} from '@sei-js/proto/types/mint/v1beta1/query';
+} from '@sei-js/proto/dist/types/codegen/mint/v1beta1/query';
 
 import {
 	QueryParamsRequest as QueryTokenFactoryParamsRequest,
@@ -182,7 +182,7 @@ import {
 	QueryDenomAuthorityMetadataResponseSDKType,
 	QueryDenomsFromCreatorRequest,
 	QueryDenomsFromCreatorResponseSDKType
-} from '@sei-js/proto/types/tokenfactory/query';
+} from '@sei-js/proto/dist/types/codegen/tokenfactory/query';
 
 import {
 	QueryExchangeRateRequest,
@@ -205,14 +205,14 @@ import {
 	QuerySlashWindowResponseSDKType,
 	QueryParamsRequest as QueryOracleParamsRequest,
 	QueryParamsResponseSDKType as QueryOracleParamsResponseSDKType
-} from '@sei-js/proto/types/oracle/query';
+} from '@sei-js/proto/dist/types/codegen/oracle/query';
 
 import {
 	QueryEpochRequest,
 	QueryEpochResponseSDKType,
 	QueryParamsRequest as QueryEpochParamsRequest,
 	QueryParamsResponseSDKType as QueryEpochParamsResponseSDKType
-} from '@sei-js/proto/types/epoch/query';
+} from '@sei-js/proto/dist/types/codegen/epoch/query';
 
 /**
  * A typescript interface for the default Cosmos query client for use in the LCD client.

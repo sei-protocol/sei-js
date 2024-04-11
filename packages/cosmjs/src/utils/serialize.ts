@@ -1,6 +1,6 @@
 import { StdSignDoc } from '@cosmjs/amino';
 import { serializeSignDoc } from '@cosmjs/amino/build/signdoc';
-import { SignDoc } from '@sei-js/proto/types/cosmos/tx/v1beta1/tx';
+import { SignDoc } from '@sei-js/proto/dist/types/codegen/cosmos/tx/v1beta1/tx';
 
 /**
  * Serializes the given signDoc object.

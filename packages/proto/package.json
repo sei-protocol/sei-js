@@ -71,7 +71,6 @@
       "import": "./dist/esm/codegen/index.js",
       "require": "./dist/cjs/codegen/index.js",
       "types": "./dist/types/codegen/index.d.ts"
-    },
-    "./types/*": "./dist/types/codegen/*"
+    }
   }
 }

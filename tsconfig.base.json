@@ -15,13 +15,9 @@
 
     "baseUrl": "./",
     "paths": {
-      "@sei-js/proto/types/*": ["packages/proto/dist/types/codegen/*"],
       "@sei-js/proto/*": ["packages/proto/dist/esm/codegen/*", "packages/proto/dist/cjs/codegen/*"],
-      "@sei-js/cosmjs/types/*": ["packages/cosmjs/dist/types/*"],
       "@sei-js/cosmjs/*": ["packages/cosmjs/dist/esm/*", "packages/cosmjs/dist/cjs/*"],
-      "@sei-js/evm/types/*": ["packages/evm/dist/types/*"],
       "@sei-js/evm/*": ["packages/evm/dist/esm/*", "packages/evm/dist/cjs/*"],
-      "@sei-js/registry/types/*": ["packages/registry/dist/types/*"],
       "@sei-js/registry/*": ["packages/registry/dist/esm/*", "packages/registry/dist/cjs/*"]
     }
   },

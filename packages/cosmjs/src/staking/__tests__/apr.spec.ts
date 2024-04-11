@@ -1,6 +1,5 @@
 import { getUpcomingMintTokens } from '../apr';
 import moment from 'moment';
-// @ts-ignore
 import { ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/mint/v1beta1/mint';
 
 const releaseSchedule: ScheduledTokenReleaseSDKType[] = [

@@ -1,6 +1,6 @@
 import moment, { Moment } from 'moment';
-import { PoolSDKType } from '@sei-js/proto/types/cosmos/staking/v1beta1/staking';
-import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/types/mint/v1beta1/mint';
+import { PoolSDKType } from '@sei-js/proto/dist/types/codegen/cosmos/staking/v1beta1/staking';
+import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/mint/v1beta1/mint';
 import { SeiLCDQueryClient } from '../core';
 
 /**
