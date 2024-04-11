@@ -1,5 +1,11 @@
 # @sei-js/cosmjs
 
+## 1.0.5
+
+### Patch Changes
+
+- 1e05604: Fixed broken import from @sei-js/proto
+
 ## 1.0.4
 
 ### Patch Changes
