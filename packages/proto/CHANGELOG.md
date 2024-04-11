@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.5
+
+### Patch Changes
+
+- de2da4b: Removed the path alias from @sei-js/proto for types in favor of static path
+
 ## 4.0.4
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @sei-js/cosmjs
 
+## 1.0.4
+
+### Patch Changes
+
+- de2da4b: Removed the path alias from @sei-js/proto for types in favor of static path
+- Updated dependencies [de2da4b]
+  - @sei-js/proto@4.0.5
+
 ## 1.0.3
 
 ### Patch Changes
