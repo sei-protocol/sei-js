@@ -1,4 +1,4 @@
-import { CosmWasmClient, SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
+import { CosmWasmClient, HttpEndpoint, SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
 import { OfflineSigner } from '@cosmjs/proto-signing';
 import { createSeiAminoTypes, createSeiRegistry } from './stargateClient';
 
@@ -33,7 +33,7 @@ import { createSeiAminoTypes, createSeiRegistry } from './stargateClient';
  * @returns A CosmWasmClient used to interact with the Sei chain.
  * @category Clients
  */
-export const getCosmWasmClient = async (rpcEndpoint: string): Promise<CosmWasmClient> => {
+export const getCosmWasmClient = async (rpcEndpoint: string | HttpEndpoint): Promise<CosmWasmClient> => {
 	return CosmWasmClient.connect(rpcEndpoint);
 };
 
@@ -72,7 +72,7 @@ export const getCosmWasmClient = async (rpcEndpoint: string): Promise<CosmWasmCl
  * @category Clients
  */
 export const getSigningCosmWasmClient = async (
-	rpcEndpoint: string,
+	rpcEndpoint: string | HttpEndpoint,
 	signer: OfflineSigner,
 	options: SigningCosmWasmClientOptions = {}
 ): Promise<SigningCosmWasmClient> => {
@@ -81,6 +81,7 @@ export const getSigningCosmWasmClient = async (
 	return SigningCosmWasmClient.connectWithSigner(rpcEndpoint, signer, {
 		registry,
 		aminoTypes,
+		broadcastPollIntervalMs: options.broadcastPollIntervalMs || 400,
 		...options
 	});
 };

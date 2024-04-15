@@ -8,6 +8,7 @@ import {
 	seiprotocolProtoRegistry,
 	seiprotocolAminoConverters
 } from '@sei-js/proto';
+import { HttpEndpoint } from '@cosmjs/cosmwasm-stargate';
 
 /**
  * Creates a Registry object that maps CosmWasm and Sei protobuf type identifiers to their actual implementations.
@@ -115,7 +116,7 @@ export const createSeiAminoTypes = (): AminoTypes => {
  * @returns A StargateClient object used to interact with the Sei chain.
  * @category Clients
  */
-export const getStargateClient = async (rpcEndpoint: string, options: StargateClientOptions = {}): Promise<StargateClient> => {
+export const getStargateClient = async (rpcEndpoint: string | HttpEndpoint, options: StargateClientOptions = {}): Promise<StargateClient> => {
 	return StargateClient.connect(rpcEndpoint, options);
 };
 
@@ -193,7 +194,7 @@ export const getStargateClient = async (rpcEndpoint: string, options: StargateCl
  * @category Clients
  */
 export const getSigningStargateClient = async (
-	rpcEndpoint: string,
+	rpcEndpoint: string | HttpEndpoint,
 	signer: OfflineSigner,
 	options: SigningStargateClientOptions = {}
 ): Promise<SigningStargateClient> => {
@@ -202,6 +203,7 @@ export const getSigningStargateClient = async (
 	return SigningStargateClient.connectWithSigner(rpcEndpoint, signer, {
 		registry,
 		aminoTypes,
+		broadcastPollIntervalMs: options.broadcastPollIntervalMs || 400,
 		...options
 	});
 };
