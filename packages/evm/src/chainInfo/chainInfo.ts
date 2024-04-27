@@ -9,6 +9,6 @@ export const SeiChainInfo = {
 	},
 	testnet: {
 		chainId: 713715,
-		defaultRpc: 'https://evm-rpc-atlantic-2.sei-apis.com'
+		defaultRpc: 'https://evm-rpc-testnet.sei-apis.com/'
 	}
 };

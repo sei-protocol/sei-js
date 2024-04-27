@@ -46,7 +46,7 @@ export type StakingPrecompileContract = ethers.Contract & StakingPrecompileFunct
  * @example
  * Wagmi: Use the `useWriteContract` hook to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useContractFunction } from '@wagmi/core';
  *
  * // Make sure your component is wrapped in a WagmiProvider
@@ -57,7 +57,7 @@ export type StakingPrecompileContract = ethers.Contract & StakingPrecompileFunct
  *
  * writeContract({
  *   abi: STAKING_PRECOMPILE_ABI,
- *   address: ARCTIC_1_STAKING_PRECOMPILE_ADDRESS,
+ *   address: STAKING_PRECOMPILE_ADDRESS,
  *   functionName: 'delegate',
  *   args: ['0xVALIDATOR_ADDRESS', parseSei(1)]
  * });
@@ -68,20 +68,20 @@ export type StakingPrecompileContract = ethers.Contract & StakingPrecompileFunct
  * @example
  * ethers v6: Use the `ethers` library and precompiles to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, StakingPrecompileContract } from '@sei-js/evm';
+ * import { STAKING_PRECOMPILE_ADDRESS, StakingPrecompileContract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const contract = getStakingPrecompileEthersV6Contract(ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, signer);
+ * const contract = getStakingPrecompileEthersV6Contract(STAKING_PRECOMPILE_ADDRESS, signer);
  * *
  * const response = await contract.connect().delegate('0xVALIDATOR_ADDRESS', parseSei(1));
  * ```
  *
  * @category Cosmos Interoperability
  */
-export const ARCTIC_1_STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001005';
+export const STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001005';
 
 /**
  * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
@@ -89,7 +89,7 @@ export const ARCTIC_1_STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000
  * @example
  * Wagmi: Use the `useWriteContract` hook to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useContractFunction } from '@wagmi/core';
  *
  * // Make sure your component is wrapped in a WagmiProvider
@@ -100,7 +100,7 @@ export const ARCTIC_1_STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000
  *
  * writeContract({
  *   abi: STAKING_PRECOMPILE_ABI,
- *   address: ARCTIC_1_STAKING_PRECOMPILE_ADDRESS,
+ *   address: STAKING_PRECOMPILE_ADDRESS,
  *   functionName: 'delegate',
  *   args: ['0xVALIDATOR_ADDRESS', parseSei(1)]
  * });
@@ -110,13 +110,13 @@ export const ARCTIC_1_STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000
  *
  * @example
  * ```tsx
- * import { ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, StakingPrecompileContract } from '@sei-js/evm';
+ * import { STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, StakingPrecompileContract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const contract = new ethers.Contract(ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, signer) as StakingPrecompileContract;
+ * const contract = new ethers.Contract(STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, signer) as StakingPrecompileContract;
  *
  * const response = await contract.connect().delegate('0xVALIDATOR_ADDRESS', parseSei(1));
  * ```
@@ -158,7 +158,7 @@ export const STAKING_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
+ * import { STAKING_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -166,7 +166,7 @@ export const STAKING_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
 
- * const contract = getStakingPrecompileEthersV6Contract(ARCTIC_1_STAKING_PRECOMPILE_ADDRESS, signer);
+ * const contract = getStakingPrecompileEthersV6Contract(STAKING_PRECOMPILE_ADDRESS, signer);
  *
  * const response = await contract.connect().delegate('0xVALIDATOR_ADDRESS', parseSei(1));
  * ```

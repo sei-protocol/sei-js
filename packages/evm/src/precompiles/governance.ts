@@ -35,11 +35,11 @@ export type GovernancePrecompileContract = ethers.Contract & GovernancePrecompil
  * @example
  * Wagmi
  * ```tsx
- * import { ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  **
  * const depositResponse = useContractFunction(
- *   ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS,
+ *   GOVERNANCE_PRECOMPILE_ADDRESS,
  *   GOVERNANCE_PRECOMPILE_ABI,
  *   'deposit'
  * );
@@ -48,13 +48,13 @@ export type GovernancePrecompileContract = ethers.Contract & GovernancePrecompil
  * @example
  * ethers v6
  * ```tsx
- * import { getGovernancePrecompileEthersV6Contract, ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
+ * import { getGovernancePrecompileEthersV6Contract, GOVERNANCE_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const governancePrecompileContract = getGovernancePrecompileEthersV6Contract(ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, signer);
+ * const governancePrecompileContract = getGovernancePrecompileEthersV6Contract(GOVERNANCE_PRECOMPILE_ADDRESS, signer);
  *
  * //Surround with try/catch for detailed errors
  * const depositResponse = await governancePrecompileContract.connect(signer).deposit('1', { value: parseSei(1) });
@@ -62,7 +62,7 @@ export type GovernancePrecompileContract = ethers.Contract & GovernancePrecompil
  *
  * @category Cosmos Interoperability
  * */
-export const ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001006';
+export const GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001006';
 
 /**
  * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
@@ -70,11 +70,11 @@ export const ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000
  * @example
  * Wagmi
  * ```tsx
- * import { ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useContractFunction } from '@wagmi/core';
  *
  * const depositResponse = useContractFunction(
- *   ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS,
+ *   GOVERNANCE_PRECOMPILE_ADDRESS,
  *   GOVERNANCE_PRECOMPILE_ABI,
  *   'deposit'
  * );
@@ -83,13 +83,13 @@ export const ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000
  * @example
  * ethers v6
  * ```tsx
- * import { getGovernancePrecompileEthersV6Contract, ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, parseSei } from '@sei-js/evm';
+ * import { getGovernancePrecompileEthersV6Contract, GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, parseSei } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const governancePrecompileContract = new ethers.Contract(ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, signer) as GovernancePrecompileContract;
+ * const governancePrecompileContract = new ethers.Contract(GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, signer) as GovernancePrecompileContract;
  *
  * const depositResponse = await governancePrecompileContract.connect().deposit('PROPOSAL_ID', { value: parseSei(1) });
  * ```
@@ -121,13 +121,13 @@ export const GOVERNANCE_PRECOMPILE_ABI: Abi = [
  * @example
  * ethers v6
  * ```tsx
- * import { getGovernancePrecompileEthersV6Contract, ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
+ * import { getGovernancePrecompileEthersV6Contract, GOVERNANCE_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const governancePrecompileContract = getGovernancePrecompileEthersV6Contract(ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS, signer);
+ * const governancePrecompileContract = getGovernancePrecompileEthersV6Contract(GOVERNANCE_PRECOMPILE_ADDRESS, signer);
  *
  * //Surround with try/catch for detailed errors
  * const depositResponse = await governancePrecompileContract.connect(signer).deposit('1', { value: parseSei(1) });

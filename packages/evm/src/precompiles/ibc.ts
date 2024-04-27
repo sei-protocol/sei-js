@@ -35,30 +35,30 @@ export type IbcPrecompileContract = ethers.Contract & IbcPrecompileFunctions;
  * @example
  * Wagmi: Use the `useReadContract` hook to transfer funds from the associated address to another Cosmos waller on a different chain.
  * ```tsx
- * import { ARCTIC_1_IBC_PRECOMPILE_ADDRESS, IBC_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { IBC_PRECOMPILE_ADDRESS, IBC_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
- * const isSuccessful = useReadContract({ abi: IBC_PRECOMPILE_ABI, address: ARCTIC_1_IBC_PRECOMPILE_ADDRESS, functionName: 'transfer', args: [COSMOS_ADDRESS, PORT, ... ] });
+ * const isSuccessful = useReadContract({ abi: IBC_PRECOMPILE_ABI, address: IBC_PRECOMPILE_ADDRESS, functionName: 'transfer', args: [COSMOS_ADDRESS, PORT, ... ] });
  * ```
  *
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(ARCTIC_1_IBC_PRECOMPILE_ADDRESS, signer);
+ * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
  *
  * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n);
  * ```
  *
  * @category Cosmos Interoperability
  */
-export const ARCTIC_1_IBC_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001009';
+export const IBC_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001009';
 
 /**
  * The ABI for the IBC precompile contract.
@@ -66,23 +66,23 @@ export const ARCTIC_1_IBC_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000
  * @example
  * Wagmi: Use the `useReadContract` hook to transfer funds from the associated address to another Cosmos waller on a different chain.
  * ```tsx
- * import { ARCTIC_1_IBC_PRECOMPILE_ADDRESS, IBC_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { IBC_PRECOMPILE_ADDRESS, IBC_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
- * const isSuccessful = useReadContract({ abi: IBC_PRECOMPILE_ABI, address: ARCTIC_1_IBC_PRECOMPILE_ADDRESS, functionName: 'transfer', args: [COSMOS_ADDRESS, PORT, ... ] });
+ * const isSuccessful = useReadContract({ abi: IBC_PRECOMPILE_ABI, address: IBC_PRECOMPILE_ADDRESS, functionName: 'transfer', args: [COSMOS_ADDRESS, PORT, ... ] });
  * ```
  *
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(ARCTIC_1_IBC_PRECOMPILE_ADDRESS, signer);
+ * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
  *
  * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n);
  * ```
@@ -113,13 +113,13 @@ export const IBC_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { ARCTIC_1_IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(ARCTIC_1_IBC_PRECOMPILE_ADDRESS, signer);
+ * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
  * const cosmosAddress = 'cosmos1...';
  *
  * const bool = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n);
