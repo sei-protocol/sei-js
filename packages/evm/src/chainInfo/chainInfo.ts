@@ -6,5 +6,9 @@ export const SeiChainInfo = {
 	devnet: {
 		chainId: 713715,
 		defaultRpc: 'https://evm-rpc-arctic-1.sei-apis.com'
+	},
+	testnet: {
+		chainId: 713715,
+		defaultRpc: 'https://evm-rpc-atlantic-2.sei-apis.com'
 	}
 };
