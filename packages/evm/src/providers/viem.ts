@@ -110,8 +110,8 @@ export const ATLANTIC_2_VIEM_CHAIN: Chain = {
 		ibcPrecompile: { address: ARCTIC_1_IBC_PRECOMPILE_ADDRESS }
 	},
 	fees: undefined,
-	id: SeiChainInfo.devnet.chainId,
-	name: 'arctic-1',
+	id: SeiChainInfo.testnet.chainId,
+	name: 'atlantic-2',
 	nativeCurrency: {
 		name: 'usei',
 		decimals: 18,
@@ -122,6 +122,6 @@ export const ATLANTIC_2_VIEM_CHAIN: Chain = {
 			http: [SeiChainInfo.devnet.defaultRpc]
 		}
 	},
-	sourceId: SeiChainInfo.devnet.chainId,
+	sourceId: SeiChainInfo.testnet.chainId,
 	testnet: true
 };
