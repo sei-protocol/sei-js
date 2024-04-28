@@ -119,7 +119,7 @@ export const ATLANTIC_2_VIEM_CHAIN: Chain = {
 	},
 	rpcUrls: {
 		default: {
-			http: [SeiChainInfo.devnet.defaultRpc]
+			http: [SeiChainInfo.testnet.defaultRpc]
 		}
 	},
 	sourceId: SeiChainInfo.testnet.chainId,
