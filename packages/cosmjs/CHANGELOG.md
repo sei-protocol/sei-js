@@ -1,5 +1,11 @@
 # @sei-js/cosmjs
 
+## 1.0.6
+
+### Patch Changes
+
+- ecc4007: Cosmjs Query Clients: Added default poll timeout interval, allow passing HttpEndpoint to getting signing CosmJS clients
+
 ## 1.0.5
 
 ### Patch Changes
