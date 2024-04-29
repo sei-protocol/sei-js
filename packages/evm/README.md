@@ -43,7 +43,7 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
 ### Connection with ethers v6
 The 'ethers' package is a popular library for interacting with the Ethereum blockchain. This package provides a helper function for creating an ethers provider that is connected to the Sei EVM.
 ```tsx
-import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+import { ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
 import { ethers } from 'ethers';
 
 const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -51,7 +51,7 @@ const signer = await provider.getSigner();
 
 const accounts = await provider.send('eth_requestAccounts', []);
 
-const contract = getAddressPrecompileEthersV6Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, signer);
+const contract = getAddressPrecompileEthersV6Contract(ADDRESS_PRECOMPILE_ADDRESS, signer);
 
 const cosmosAddress = await contract.getSeiAddr(accounts[0]);
 ```
@@ -112,8 +112,8 @@ The Address precompile contract enables the retrieval of associated EVM addresse
 | [`getEvmAddr`](/sei-js/docs/interfaces/evm.AddressPrecompileFunctions.html#getEvmAddr) | `addr: ` `string` | `{ response: string }` | Retrieves the associated EVM address for a given Cosmos address. |
 | [`getSeiAddr`](/sei-js/docs/interfaces/evm.AddressPrecompileFunctions.html#getSeiAddr) | `addr: ` `string` | `{ response: string }` | Retrieves the associated Cosmos address for a given EVM address. |
 
-#### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS.html)
+#### Precompile Address
+0x0000000000000000000000000000000000001004
 
 <br>
 <br>
@@ -134,7 +134,7 @@ The Bank precompile contract provides functionalities for managing balances, sup
 | [`sendNative`](/sei-js/docs/interfaces/evm.BankPrecompileFunctions.html#sendNative) | `toNativeAddress: ` `string`, `value: ` `string`                                          | `{ success: boolean }` | Sends native tokens to a specified address.                                |
 
 #### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_BANK_PRECOMPILE_ADDRESS.html)
+0x0000000000000000000000000000000000001001
 
 <br>
 <br>
@@ -151,7 +151,7 @@ The Distribution precompile contract facilitates operations related to rewards w
 | [`withdrawDelegationRewards`](/sei-js/docs/interfaces/evm.DistributionPrecompileFunctions.html#withdrawDelegationRewards) | `validator: ` `string`       | `{ success: boolean }` | Withdraws delegation rewards for a given validator. |
 
 #### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS.html)
+0x0000000000000000000000000000000000001007
 
 <br>
 <br>
@@ -167,7 +167,7 @@ The Governance precompile contract supports actions to deposit funds into propos
 | [`vote`](/sei-js/docs/interfaces/evm.GovernancePrecompileFunctions.html#vote)       | `proposalID: ` `string`, `option: ` `string` | `{ success: boolean }` | Votes on a governance proposal.            |
 
 #### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_GOVERNANCE_PRECOMPILE_ADDRESS.html)
+0x0000000000000000000000000000000000001006
 
 <br>
 <br>
@@ -184,7 +184,7 @@ The JSON precompile contract facilitates interoperability between the EVM and Co
 | [`extractAsUint256`](/sei-js/docs/interfaces/evm.JSONPrecompileFunctions.html#extractAsUint256)     | `input: ` `string`, `key: ` `string` | `{ response: string }`   | Extracts data as a uint256 from the input using the specified key.       |
 
 #### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_JSON_PRECOMPILE_ADDRESS.html)
+- [arctic-1](/sei-js/docs/variables/evm.JSON_PRECOMPILE_ADDRESS.html)
 
 <br>
 <br>
@@ -202,7 +202,7 @@ The Staking precompile contract provides functions for delegation, re-delegation
 | [`undelegate`](/sei-js/docs/interfaces/evm.StakingPrecompileFunctions.html#undelegate) | `valAddress: ` `string`, `amount: ` `string`                          | `{ success: boolean }` | Undelegates tokens from the specified validator.                           |
 
 #### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_STAKING_PRECOMPILE_ADDRESS.html)
+0x0000000000000000000000000000000000001005
 
 <br>
 <br>
@@ -219,7 +219,8 @@ The WASM precompile contract facilitates execution, instantiation, and querying 
 | [`query`](/sei-js/docs/interfaces/evm.WasmPrecompileFunctions.html#query)             | `contractAddress: ` `string`, `req: ` `Uint8Array`                                                        | `{ response: Uint8Array }`                   | Queries the specified contract with the provided request.                 |
 
 #### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_WASM_PRECOMPILE_ADDRESS.html)
+0x0000000000000000000000000000000000001002
+
 
 <br>
 <br>
@@ -234,4 +235,5 @@ The IBC precompile contract facilitates messages exchange between Sei and other 
 | [`transfer`](/sei-js/docs/interfaces/evm.IbcPrecompileFunctions.html#transfer) | `toAddress: ` `string`, `port: ` `string`, `channel: ` `string`, `denom: ` `string`, `amount: ` `ethers.BigNumberish`, `revisionNumber: ` `BigInt`, `revisionHeight: ` `BigInt`, `timeoutTimestamp: ` `BigInt` | `{ success: boolean }` | Transfers tokens from the caller's address to another on a different (IBC compatible) chain. |
 
 #### Precompile Addresses
-- [arctic-1](/sei-js/docs/variables/evm.ARCTIC_1_IBC_PRECOMPILE_ADDRESS.html)
+0x0000000000000000000000000000000000001009
+

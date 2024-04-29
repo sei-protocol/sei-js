@@ -74,7 +74,7 @@ export type BankPrecompileContract = ethers.Contract & BankPrecompileFunctions;
  * @example
  * Wagmi: Use the `useReadContract` hook to read the balance of the connected account.
  * ```tsx
- * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
@@ -82,7 +82,7 @@ export type BankPrecompileContract = ethers.Contract & BankPrecompileFunctions;
  *
  *  const { data } = useReadContract({
  *    abi: BANK_PRECOMPILE_ABI,
- *    address: ARCTIC_1_BANK_PRECOMPILE_ADDRESS,
+ *    address: BANK_PRECOMPILE_ADDRESS,
  *    functionName: 'balance',
  *    args: [address, 'usei']
  *  });
@@ -93,7 +93,7 @@ export type BankPrecompileContract = ethers.Contract & BankPrecompileFunctions;
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the balance of the connected account.
  * ```tsx
- * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -101,14 +101,14 @@ export type BankPrecompileContract = ethers.Contract & BankPrecompileFunctions;
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const bankPrecompileContract = getBankPrecompileEthersV6Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, signer);
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(BANK_PRECOMPILE_ADDRESS, signer);
  *
  * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
  * ```
  *
  * @category Cosmos Interoperability
  */
-export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001001';
+export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001001';
 
 /**
  * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
@@ -116,7 +116,7 @@ export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000
  * @example
  * Wagmi: Use the `useReadContract` hook to read the balance of the connected account.
  * ```tsx
- * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
@@ -124,7 +124,7 @@ export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000
  *
  *  const { data } = useReadContract({
  *    abi: BANK_PRECOMPILE_ABI,
- *    address: ARCTIC_1_BANK_PRECOMPILE_ADDRESS,
+ *    address: BANK_PRECOMPILE_ADDRESS,
  *    functionName: 'balance',
  *    args: [address, 'usei']
  *  });
@@ -135,7 +135,7 @@ export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the balance of the connected account.
  * ```tsx
- * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, BankPrecompileContract } from '@sei-js/evm';
+ * import { BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, BankPrecompileContract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -143,7 +143,7 @@ export const ARCTIC_1_BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const bankPrecompileContract = new ethers.Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, signer) as BankPrecompileContract;
+ * const bankPrecompileContract = new ethers.Contract(BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, signer) as BankPrecompileContract;
  *
  * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
  * ```
@@ -215,7 +215,7 @@ export const BANK_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { ARCTIC_1_BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -223,7 +223,7 @@ export const BANK_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const bankPrecompileContract = getBankPrecompileEthersV6Contract(ARCTIC_1_BANK_PRECOMPILE_ADDRESS, signer);
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(BANK_PRECOMPILE_ADDRESS, signer);
  *
  * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
  * ```

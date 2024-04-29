@@ -34,7 +34,7 @@ export type DistributionPrecompileContract = ethers.Contract & DistributionPreco
  * @example
  * Wagmi: Use the `useWriteContract` hook to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useContractFunction } from '@wagmi/core';
  *
  * // Make sure your component is wrapped in a WagmiProvider
@@ -45,7 +45,7 @@ export type DistributionPrecompileContract = ethers.Contract & DistributionPreco
  * // Wherever you want to call the contract function
  * writeContract({
  *   abi: DISTRIBUTION_PRECOMPILE_ABI,
- *   address: ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS,
+ *   address: DISTRIBUTION_PRECOMPILE_ADDRESS,
  *   functionName: 'setWithdrawAddress',
  *   args: [accounts[0]]
  * });
@@ -56,20 +56,20 @@ export type DistributionPrecompileContract = ethers.Contract & DistributionPreco
  * @example
  * ethers v6: Use the `ethers` library and precompiles to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const contract = getDistributionPrecompileEthersV6Contract(ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS, signer);
+ * const contract = getDistributionPrecompileEthersV6Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, signer);
  *
  * const response = await contract.setWithdrawAddress('0xADDRESS');
  * ```
 
  * @category Cosmos Interoperability
  */
-export const ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001007';
+export const DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001007';
 
 /**
  * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
@@ -77,7 +77,7 @@ export const ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000
  * @example
  * Wagmi: Use the `useWriteContract` hook to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useContractFunction } from '@wagmi/core';
  *
  * // Make sure your component is wrapped in a WagmiProvider
@@ -88,7 +88,7 @@ export const ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000
  *
  * writeContract({
  *   abi: DISTRIBUTION_PRECOMPILE_ABI,
- *   address: ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS,
+ *   address: DISTRIBUTION_PRECOMPILE_ADDRESS,
  *   functionName: 'setWithdrawAddress',
  *   args: [accounts[0]]
  * });
@@ -99,13 +99,13 @@ export const ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000
  * @example
  * ethers v6: Use the `ethers` library and precompiles to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI, DistributionPrecompileContract } from '@sei-js/evm';
+ * import { DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI, DistributionPrecompileContract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const contract = new ethers.Contract(ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI, signer) as DistributionPrecompileContract;
+ * const contract = new ethers.Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI, signer) as DistributionPrecompileContract;
  *
  * const response = await contract.setWithdrawAddress('0xADDRESS');
  * ```
@@ -135,13 +135,13 @@ export const DISTRIBUTION_PRECOMPILE_ABI: Abi = [
  * @example
  * ethers v6: Use the `ethers` library and precompiles to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { getDistributionPrecompileEthersV6Contract, ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { getDistributionPrecompileEthersV6Contract, DISTRIBUTION_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const contract = getDistributionPrecompileEthersV6Contract(ARCTIC_1_DISTRIBUTION_PRECOMPILE_ADDRESS, signer);
+ * const contract = getDistributionPrecompileEthersV6Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, signer);
  *
  * const response = await contract.setWithdrawAddress('0xADDRESS');
  * ```

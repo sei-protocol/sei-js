@@ -46,32 +46,32 @@ export type JSONPrecompileContract = ethers.Contract & JSONPrecompileFunctions;
  * @example
  * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
  * const { address } = useAccount();
  *
- * const extractedBytes = useReadContract({ abi: JSON_PRECOMPILE_ABI, address: ARCTIC_1_JSON_PRECOMPILE_ADDRESS, functionName: 'extractAsBytes', args: ['0xINPUT', 'KEY'] });
+ * const extractedBytes = useReadContract({ abi: JSON_PRECOMPILE_ABI, address: JSON_PRECOMPILE_ADDRESS, functionName: 'extractAsBytes', args: ['0xINPUT', 'KEY'] });
  * ```
  *
  * @example
  * ethers v6
  * ```tsx
- * import { ARCTIC_1_JSON_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { JSON_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  **
- * const jsonPrecompileContract = getJSONPrecompileEthersV6Contract(ARCTIC_1_JSON_PRECOMPILE_ADDRESS, signer);
+ * const jsonPrecompileContract = getJSONPrecompileEthersV6Contract(JSON_PRECOMPILE_ADDRESS, signer);
  *
  * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
  * ```
  *
  * @category Cosmos Interoperability
  */
-export const ARCTIC_1_JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001003';
+export const JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001003';
 
 /**
  * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
@@ -79,25 +79,25 @@ export const ARCTIC_1_JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000
  * @example
  * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
  * const { address } = useAccount();
  *
- * const extractedBytes = useReadContract({ abi: JSON_PRECOMPILE_ABI, address: ARCTIC_1_JSON_PRECOMPILE_ADDRESS, functionName: 'extractAsBytes', args: ['0xINPUT', 'KEY'] });
+ * const extractedBytes = useReadContract({ abi: JSON_PRECOMPILE_ABI, address: JSON_PRECOMPILE_ADDRESS, functionName: 'extractAsBytes', args: ['0xINPUT', 'KEY'] });
  * ```
  *
  * @example
  * ethers v6
  * ```tsx
- * import { ARCTIC_1_JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, JSONPrecompileContract } from '@sei-js/evm';
+ * import { JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, JSONPrecompileContract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  **
- * const jsonPrecompileContract = new ethers.Contract(ARCTIC_1_JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, signer) as JSONPrecompileContract;
+ * const jsonPrecompileContract = new ethers.Contract(JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, signer) as JSONPrecompileContract;
  *
  * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
  * ```
@@ -142,7 +142,7 @@ export const JSON_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { ARCTIC_1_JSON_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { JSON_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -150,7 +150,7 @@ export const JSON_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const jsonPrecompileContract = getJSONPrecompileEthersV6Contract(ARCTIC_1_JSON_PRECOMPILE_ADDRESS, signer);
+ * const jsonPrecompileContract = getJSONPrecompileEthersV6Contract(JSON_PRECOMPILE_ADDRESS, signer);
  *
  * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
  * ```

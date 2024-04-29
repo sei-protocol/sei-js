@@ -34,19 +34,19 @@ export type AddressPrecompileContract = ethers.Contract & AddressPrecompileFunct
  * @example
  * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
  * const { address } = useAccount();
  *
- * const associatedSeiAddress = useReadContract({ abi: ADDRESS_PRECOMPILE_ABI, address: ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, functionName: 'getSeiAddr', args: [address] });
+ * const associatedSeiAddress = useReadContract({ abi: ADDRESS_PRECOMPILE_ABI, address: ADDRESS_PRECOMPILE_ADDRESS, functionName: 'getSeiAddr', args: [address] });
  * ```
  *
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -54,14 +54,14 @@ export type AddressPrecompileContract = ethers.Contract & AddressPrecompileFunct
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, signer);
+ * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ADDRESS_PRECOMPILE_ADDRESS, signer);
  *
  * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
  * ```
  *
  * @category Cosmos Interoperability
  */
-export const ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001004';
+export const ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001004';
 
 /**
  * The ABI for the precompile contract which can be used for interoperability between the EVM and Cosmos.
@@ -70,19 +70,19 @@ export const ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000
  * @example
  * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI } from '@sei-js/evm';
  * import { useReadContract } from 'wagmi';
  *
  * // Make sure your component is wrapped in a WagmiProvider
  * const { address } = useAccount();
  *
- * const associatedSeiAddress = useReadContract({ abi: ADDRESS_PRECOMPILE_ABI, address: ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, functionName: 'getSeiAddr', args: [address] });
+ * const associatedSeiAddress = useReadContract({ abi: ADDRESS_PRECOMPILE_ABI, address: ADDRESS_PRECOMPILE_ADDRESS, functionName: 'getSeiAddr', args: [address] });
  * ```
  *
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, AddressPrecompileContract } from '@sei-js/evm';
+ * import { ADDRESS_PRECOMPILE_ADDRESS, AddressPrecompileContract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -90,7 +90,7 @@ export const ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const addressPrecompileContract = new ethers.Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI, signer) as AddressPrecompileContract;
+ * const addressPrecompileContract = new ethers.Contract(ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI, signer) as AddressPrecompileContract;
  *
  * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
  * ```
@@ -121,7 +121,7 @@ export const ADDRESS_PRECOMPILE_ABI: Abi = [
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -129,7 +129,7 @@ export const ADDRESS_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ARCTIC_1_ADDRESS_PRECOMPILE_ADDRESS, signer);
+ * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ADDRESS_PRECOMPILE_ADDRESS, signer);
  *
  * const associatedSeiAddress = await addressPrecompileContract.connect().getSeiAddr(accounts[0]);
  * ```
