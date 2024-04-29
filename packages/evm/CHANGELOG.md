@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.0.4
+
+### Patch Changes
+
+- d79f2a1: Update with Atlantic-2 chain info
+
 ## 1.0.3
 
 ### Patch Changes
