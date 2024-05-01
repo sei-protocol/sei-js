@@ -55,9 +55,9 @@ export const ARCTIC_1_VIEM_CHAIN: Chain = {
 	id: SeiChainInfo.devnet.chainId,
 	name: 'arctic-1',
 	nativeCurrency: {
-		name: 'usei',
+		name: 'Sei',
 		decimals: 18,
-		symbol: 'USEI'
+		symbol: 'SEI'
 	},
 	rpcUrls: {
 		default: {
@@ -113,9 +113,9 @@ export const ATLANTIC_2_VIEM_CHAIN: Chain = {
 	id: SeiChainInfo.testnet.chainId,
 	name: 'atlantic-2',
 	nativeCurrency: {
-		name: 'usei',
+		name: 'Sei',
 		decimals: 18,
-		symbol: 'USEI'
+		symbol: 'SEI'
 	},
 	rpcUrls: {
 		default: {
