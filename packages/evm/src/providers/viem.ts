@@ -53,7 +53,7 @@ export const ARCTIC_1_VIEM_CHAIN: Chain = {
 	},
 	fees: undefined,
 	id: SeiChainInfo.devnet.chainId,
-	name: 'arctic-1',
+	name: 'Sei Devnet',
 	nativeCurrency: {
 		name: 'Sei',
 		decimals: 18,
@@ -111,7 +111,7 @@ export const ATLANTIC_2_VIEM_CHAIN: Chain = {
 	},
 	fees: undefined,
 	id: SeiChainInfo.testnet.chainId,
-	name: 'atlantic-2',
+	name: 'Sei Testnet',
 	nativeCurrency: {
 		name: 'Sei',
 		decimals: 18,
