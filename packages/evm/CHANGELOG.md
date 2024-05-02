@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.0.5
+
+### Patch Changes
+
+- 4dfa9f6: Update name and symbol of Sei viem chain
+
 ## 1.0.4
 
 ### Patch Changes
