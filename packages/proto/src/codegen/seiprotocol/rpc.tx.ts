@@ -20,6 +20,7 @@ export const createRPCMsgClient = async ({ rpc }: { rpc: Rpc }) => ({
 	seiprotocol: {
 		seichain: {
 			dex: new (await import('../dex/tx.rpc.msg')).MsgClientImpl(rpc),
+			evm: new (await import('../evm/tx.rpc.msg')).MsgClientImpl(rpc),
 			oracle: new (await import('../oracle/tx.rpc.msg')).MsgClientImpl(rpc),
 			tokenfactory: new (await import('../tokenfactory/tx.rpc.msg')).MsgClientImpl(rpc)
 		}

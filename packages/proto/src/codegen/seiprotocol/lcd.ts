@@ -49,6 +49,9 @@ export const createLCDClient = async ({ restEndpoint }: { restEndpoint: string }
 				epoch: new (await import('../epoch/query.lcd')).LCDQueryClient({
 					requestClient
 				}),
+				evm: new (await import('../evm/query.lcd')).LCDQueryClient({
+					requestClient
+				}),
 				mint: new (await import('../mint/v1beta1/query.lcd')).LCDQueryClient({
 					requestClient
 				}),
