@@ -21,6 +21,18 @@ export interface IbcPrecompileFunctions {
 	transfer(toAddress: string, port: string, channel: string, denom: string, amount: ethers.BigNumberish,
 					 revisionNumber: BigInt, revisionHeight: BigInt, timeoutTimestamp: BigInt): Promise<{ success: boolean }>;
 
+  /**
+   * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
+   * Calculates the timeout height/timestamp based on the current block timestamp.
+   * @param toAddress The recipient's address on the other chain
+   * @param port IBC port in source chain (e.g. 'transfer')
+   * @param channel IBC channel in source chain (e.g. 'channel-0')
+   * @param denom The denomination of the tokens to send
+   * @param amount The amount of tokens to send
+   */
+  transferWithDefaultTimeout(toAddress: string, port: string, channel: string, denom: string,
+                             amount: ethers.BigNumberish): Promise<{ success: boolean }>;
+
 }
 
 /**
@@ -103,9 +115,23 @@ export const IBC_PRECOMPILE_ABI: Abi = [
 		],
 		name: 'transfer',
 		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
-		stateMutability: 'view',
+		stateMutability: 'payable',
 		type: 'function'
-	}
+	},
+  {
+    inputs: [
+      { internalType: 'string', name: 'toAddress', type: 'string' },
+      { internalType: 'string', name: 'port', type: 'string' },
+      { internalType: 'string', name: 'channel', type: 'string' },
+      { internalType: 'string', name: 'denom', type: 'string' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'transferWithDefaultTimeout',
+    outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
+    stateMutability: 'payable',
+    type: 'function'
+  },
+
 ];
 
 /**
