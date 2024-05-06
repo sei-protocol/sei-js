@@ -7,9 +7,9 @@ import {
 	GOVERNANCE_PRECOMPILE_ADDRESS,
 	JSON_PRECOMPILE_ADDRESS,
 	STAKING_PRECOMPILE_ADDRESS,
-	WASM_PRECOMPILE_ADDRESS
+	WASM_PRECOMPILE_ADDRESS,
+  IBC_PRECOMPILE_ADDRESS
 } from '../precompiles';
-import { IBC_PRECOMPILE_ADDRESS } from '../precompiles/ibc';
 
 /**
  * Creates and returns a Viem Chain with the default arctic-1 configs and precompile contracts added.
