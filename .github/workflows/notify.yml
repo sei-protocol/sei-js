@@ -1,0 +1,30 @@
+# runs if /packages/registry/** is updated and the release workflow completes successfully
+name: Release Package
+
+on:
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
+  push:
+    paths:
+      - 'packages/registry/**'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Delay for 90 seconds to allow NPM package to propagate
+        run: sleep 90
+
+      - name: Update registry API
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: workflow_completed
+          client-payload: '{"workflow_run_id": "${{ github.event.workflow_run.id }}"}'
