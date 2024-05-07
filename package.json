@@ -17,7 +17,7 @@
     "prerelease": "yarn build:all",
     "release": "changeset publish",
     "postrelease": "git push --follow-tags",
-    "release:internal-evm": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal-evm && yarn changeset publish --no-git-tag --snapshot --tag internal-evm",
+    "release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
     "test:all": "nx run-many --target=test --skip-nx-cache",
     "test:since": "nx affected --target=test",
     "test:coverage": "nx test --all --coverage --skip-nx-cache"
