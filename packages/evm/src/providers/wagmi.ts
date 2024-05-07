@@ -1,6 +1,5 @@
-import { Chain, createClient } from 'viem';
-import { createConfig, http, CreateConnectorFn, Config } from 'wagmi';
-import { injected } from '@wagmi/connectors';
+import { Chain, createClient, http } from 'viem';
+import { Config, createConfig, CreateConnectorFn, injected } from '@wagmi/core';
 
 /**
  * Creates and returns a Wagmi config for the passed in Viem chain. This config includes the injected connector for MetaMask and Compass. If you need to add additional parameters it is recommended that you extend the object returned from this function.
