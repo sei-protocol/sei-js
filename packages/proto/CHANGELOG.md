@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.6
+
+### Patch Changes
+
+- 2acf2d2: Added Eth and EVM proto files to @sei-js/proto
+
 ## 4.0.5
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @sei-js/evm
 
+## 1.0.6
+
+### Patch Changes
+
+- 62d37d3: Add missing ibc epxort statement
+- 4a934b7: IBC precompile transfer with default timeout height/timestamp
+
 ## 1.0.5
 
 ### Patch Changes
