@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.7
+
+### Patch Changes
+
+- b838b4c: Added new precompiles for pointer, pointerview, and oracle. Added feegrant to @sei-js/proto
+
 ## 4.0.6
 
 ### Patch Changes
