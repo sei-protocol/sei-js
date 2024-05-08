@@ -113,6 +113,24 @@ export const WASM_PRECOMPILE_ABI: Abi = [
 	},
 	{
 		inputs: [
+			{
+				components: [
+					{ internalType: 'string', name: 'contractAddress', type: 'string' },
+					{ internalType: 'bytes', name: 'msg', type: 'bytes' },
+					{ internalType: 'bytes', name: 'coins', type: 'bytes' }
+				],
+				internalType: 'struct IWasmd.ExecuteMsg[]',
+				name: 'executeMsgs',
+				type: 'tuple[]'
+			}
+		],
+		name: 'execute_batch',
+		outputs: [{ internalType: 'bytes[]', name: 'responses', type: 'bytes[]' }],
+		stateMutability: 'payable',
+		type: 'function'
+	},
+	{
+		inputs: [
 			{ internalType: 'uint64', name: 'codeID', type: 'uint64' },
 			{ internalType: 'string', name: 'admin', type: 'string' },
 			{ internalType: 'bytes', name: 'msg', type: 'bytes' },
