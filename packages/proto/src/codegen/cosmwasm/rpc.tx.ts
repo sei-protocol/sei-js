@@ -7,6 +7,9 @@ export const createRPCMsgClient = async ({ rpc }: { rpc: Rpc }) => ({
 		distribution: {
 			v1beta1: new (await import('../cosmos/distribution/v1beta1/tx.rpc.msg')).MsgClientImpl(rpc)
 		},
+		feegrant: {
+			v1beta1: new (await import('../cosmos/feegrant/v1beta1/tx.rpc.msg')).MsgClientImpl(rpc)
+		},
 		gov: {
 			v1beta1: new (await import('../cosmos/gov/v1beta1/tx.rpc.msg')).MsgClientImpl(rpc)
 		},

@@ -152,6 +152,23 @@ export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
  */
 export const BANK_PRECOMPILE_ABI: Abi = [
 	{
+		inputs: [{ internalType: 'address', name: 'acc', type: 'address' }],
+		name: 'all_balances',
+		outputs: [
+			{
+				components: [
+					{ internalType: 'uint256', name: 'amount', type: 'uint256' },
+					{ internalType: 'string', name: 'denom', type: 'string' }
+				],
+				internalType: 'struct IBank.Coin[]',
+				name: 'response',
+				type: 'tuple[]'
+			}
+		],
+		stateMutability: 'view',
+		type: 'function'
+	},
+	{
 		inputs: [
 			{ internalType: 'address', name: 'acc', type: 'address' },
 			{ internalType: 'string', name: 'denom', type: 'string' }
@@ -188,6 +205,13 @@ export const BANK_PRECOMPILE_ABI: Abi = [
 		type: 'function'
 	},
 	{
+		inputs: [{ internalType: 'string', name: 'toNativeAddress', type: 'string' }],
+		name: 'sendNative',
+		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
+		stateMutability: 'payable',
+		type: 'function'
+	},
+	{
 		inputs: [{ internalType: 'string', name: 'denom', type: 'string' }],
 		name: 'supply',
 		outputs: [{ internalType: 'uint256', name: 'response', type: 'uint256' }],
@@ -199,13 +223,6 @@ export const BANK_PRECOMPILE_ABI: Abi = [
 		name: 'symbol',
 		outputs: [{ internalType: 'string', name: 'response', type: 'string' }],
 		stateMutability: 'view',
-		type: 'function'
-	},
-	{
-		inputs: [{ internalType: 'string', name: 'toNativeAddress', type: 'string' }],
-		name: 'sendNative',
-		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
-		stateMutability: 'payable',
 		type: 'function'
 	}
 ];

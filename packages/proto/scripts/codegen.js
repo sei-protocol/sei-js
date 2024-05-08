@@ -30,7 +30,6 @@ telescope({
 					'cosmos.capability.v1beta1',
 					'cosmos.crisis.v1beta1',
 					'cosmos.evidence.v1beta1',
-					'cosmos.feegrant.v1beta1',
 					'cosmos.genutil.v1beta1',
 					'cosmos.gov.v1',
 					'cosmos.group.v1',

@@ -20,6 +20,11 @@ export const createLCDClient = async ({ restEndpoint }: { restEndpoint: string }
 					requestClient
 				})
 			},
+			feegrant: {
+				v1beta1: new (await import('../cosmos/feegrant/v1beta1/query.lcd')).LCDQueryClient({
+					requestClient
+				})
+			},
 			gov: {
 				v1beta1: new (await import('../cosmos/gov/v1beta1/query.lcd')).LCDQueryClient({
 					requestClient
