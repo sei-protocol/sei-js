@@ -137,7 +137,7 @@ export interface ABCIMessageLogProtoMsg {
 }
 /** ABCIMessageLog defines a structure containing an indexed tx ABCI message log. */
 export interface ABCIMessageLogAmino {
-  msg_index: number;
+  msg_index?: number;
   log?: string;
   /**
    * Events contains a slice of Event objects that were emitted during some
@@ -251,10 +251,7 @@ export interface Result {
   /**
    * Data is any data returned from message or handler execution. It MUST be
    * length prefixed in order to separate data from multiple message executions.
-   * Deprecated. This field is still populated, but prefer msg_response instead
-   * because it also contains the Msg response typeURL.
    */
-  /** @deprecated */
   data: Uint8Array;
   /** Log contains the log information from message or handler execution. */
   log: string;
@@ -263,12 +260,6 @@ export interface Result {
    * or handler execution.
    */
   events: Event[];
-  /**
-   * msg_responses contains the Msg handler responses type packed in Anys.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
-  msgResponses: Any[];
 }
 export interface ResultProtoMsg {
   typeUrl: "/cosmos.base.abci.v1beta1.Result";
@@ -279,10 +270,7 @@ export interface ResultAmino {
   /**
    * Data is any data returned from message or handler execution. It MUST be
    * length prefixed in order to separate data from multiple message executions.
-   * Deprecated. This field is still populated, but prefer msg_response instead
-   * because it also contains the Msg response typeURL.
    */
-  /** @deprecated */
   data?: string;
   /** Log contains the log information from message or handler execution. */
   log?: string;
@@ -291,12 +279,6 @@ export interface ResultAmino {
    * or handler execution.
    */
   events?: EventAmino[];
-  /**
-   * msg_responses contains the Msg handler responses type packed in Anys.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
-  msg_responses?: AnyAmino[];
 }
 export interface ResultAminoMsg {
   type: "cosmos-sdk/Result";
@@ -304,11 +286,9 @@ export interface ResultAminoMsg {
 }
 /** Result is the union of ResponseFormat and ResponseCheckTx. */
 export interface ResultSDKType {
-  /** @deprecated */
   data: Uint8Array;
   log: string;
   events: EventSDKType[];
-  msg_responses: AnySDKType[];
 }
 /**
  * SimulationResponse defines the response generated when a transaction is
@@ -346,7 +326,6 @@ export interface SimulationResponseSDKType {
  * MsgData defines the data returned in a Result object during message
  * execution.
  */
-/** @deprecated */
 export interface MsgData {
   msgType: string;
   data: Uint8Array;
@@ -359,7 +338,6 @@ export interface MsgDataProtoMsg {
  * MsgData defines the data returned in a Result object during message
  * execution.
  */
-/** @deprecated */
 export interface MsgDataAmino {
   msg_type?: string;
   data?: string;
@@ -372,7 +350,6 @@ export interface MsgDataAminoMsg {
  * MsgData defines the data returned in a Result object during message
  * execution.
  */
-/** @deprecated */
 export interface MsgDataSDKType {
   msg_type: string;
   data: Uint8Array;
@@ -382,15 +359,7 @@ export interface MsgDataSDKType {
  * for each message.
  */
 export interface TxMsgData {
-  /** data field is deprecated and not populated. */
-  /** @deprecated */
   data: MsgData[];
-  /**
-   * msg_responses contains the Msg handler responses packed into Anys.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
-  msgResponses: Any[];
 }
 export interface TxMsgDataProtoMsg {
   typeUrl: "/cosmos.base.abci.v1beta1.TxMsgData";
@@ -401,15 +370,7 @@ export interface TxMsgDataProtoMsg {
  * for each message.
  */
 export interface TxMsgDataAmino {
-  /** data field is deprecated and not populated. */
-  /** @deprecated */
   data?: MsgDataAmino[];
-  /**
-   * msg_responses contains the Msg handler responses packed into Anys.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
-  msg_responses?: AnyAmino[];
 }
 export interface TxMsgDataAminoMsg {
   type: "cosmos-sdk/TxMsgData";
@@ -420,9 +381,7 @@ export interface TxMsgDataAminoMsg {
  * for each message.
  */
 export interface TxMsgDataSDKType {
-  /** @deprecated */
   data: MsgDataSDKType[];
-  msg_responses: AnySDKType[];
 }
 /** SearchTxsResult defines a structure for querying txs pageable */
 export interface SearchTxsResult {
@@ -446,13 +405,13 @@ export interface SearchTxsResultProtoMsg {
 /** SearchTxsResult defines a structure for querying txs pageable */
 export interface SearchTxsResultAmino {
   /** Count of all txs */
-  total_count?: string;
+  total_count: string;
   /** Count of txs in current page */
   count?: string;
   /** Index of current page, start from 1 */
-  page_number?: string;
+  page_number: string;
   /** Count of total pages */
-  page_total?: string;
+  page_total: string;
   /** Max count txs per page */
   limit?: string;
   /** List of txs in current page */
@@ -752,7 +711,7 @@ export const ABCIMessageLog = {
   },
   toAmino(message: ABCIMessageLog): ABCIMessageLogAmino {
     const obj: any = {};
-    obj.msg_index = message.msgIndex ?? 0;
+    obj.msg_index = message.msgIndex === 0 ? undefined : message.msgIndex;
     obj.log = message.log === "" ? undefined : message.log;
     if (message.events) {
       obj.events = message.events.map(e => e ? StringEvent.toAmino(e) : undefined);
@@ -1032,8 +991,7 @@ function createBaseResult(): Result {
   return {
     data: new Uint8Array(),
     log: "",
-    events: [],
-    msgResponses: []
+    events: []
   };
 }
 export const Result = {
@@ -1047,9 +1005,6 @@ export const Result = {
     }
     for (const v of message.events) {
       Event.encode(v!, writer.uint32(26).fork()).ldelim();
-    }
-    for (const v of message.msgResponses) {
-      Any.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -1069,9 +1024,6 @@ export const Result = {
         case 3:
           message.events.push(Event.decode(reader, reader.uint32()));
           break;
-        case 4:
-          message.msgResponses.push(Any.decode(reader, reader.uint32()));
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1084,7 +1036,6 @@ export const Result = {
     message.data = object.data ?? new Uint8Array();
     message.log = object.log ?? "";
     message.events = object.events?.map(e => Event.fromPartial(e)) || [];
-    message.msgResponses = object.msgResponses?.map(e => Any.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: ResultAmino): Result {
@@ -1096,7 +1047,6 @@ export const Result = {
       message.log = object.log;
     }
     message.events = object.events?.map(e => Event.fromAmino(e)) || [];
-    message.msgResponses = object.msg_responses?.map(e => Any.fromAmino(e)) || [];
     return message;
   },
   toAmino(message: Result): ResultAmino {
@@ -1107,11 +1057,6 @@ export const Result = {
       obj.events = message.events.map(e => e ? Event.toAmino(e) : undefined);
     } else {
       obj.events = message.events;
-    }
-    if (message.msgResponses) {
-      obj.msg_responses = message.msgResponses.map(e => e ? Any.toAmino(e) : undefined);
-    } else {
-      obj.msg_responses = message.msgResponses;
     }
     return obj;
   },
@@ -1301,8 +1246,7 @@ export const MsgData = {
 };
 function createBaseTxMsgData(): TxMsgData {
   return {
-    data: [],
-    msgResponses: []
+    data: []
   };
 }
 export const TxMsgData = {
@@ -1310,9 +1254,6 @@ export const TxMsgData = {
   encode(message: TxMsgData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.data) {
       MsgData.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    for (const v of message.msgResponses) {
-      Any.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -1326,9 +1267,6 @@ export const TxMsgData = {
         case 1:
           message.data.push(MsgData.decode(reader, reader.uint32()));
           break;
-        case 2:
-          message.msgResponses.push(Any.decode(reader, reader.uint32()));
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1339,13 +1277,11 @@ export const TxMsgData = {
   fromPartial(object: Partial<TxMsgData>): TxMsgData {
     const message = createBaseTxMsgData();
     message.data = object.data?.map(e => MsgData.fromPartial(e)) || [];
-    message.msgResponses = object.msgResponses?.map(e => Any.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: TxMsgDataAmino): TxMsgData {
     const message = createBaseTxMsgData();
     message.data = object.data?.map(e => MsgData.fromAmino(e)) || [];
-    message.msgResponses = object.msg_responses?.map(e => Any.fromAmino(e)) || [];
     return message;
   },
   toAmino(message: TxMsgData): TxMsgDataAmino {
@@ -1354,11 +1290,6 @@ export const TxMsgData = {
       obj.data = message.data.map(e => e ? MsgData.toAmino(e) : undefined);
     } else {
       obj.data = message.data;
-    }
-    if (message.msgResponses) {
-      obj.msg_responses = message.msgResponses.map(e => e ? Any.toAmino(e) : undefined);
-    } else {
-      obj.msg_responses = message.msgResponses;
     }
     return obj;
   },
@@ -1481,10 +1412,10 @@ export const SearchTxsResult = {
   },
   toAmino(message: SearchTxsResult): SearchTxsResultAmino {
     const obj: any = {};
-    obj.total_count = message.totalCount !== BigInt(0) ? message.totalCount.toString() : undefined;
+    obj.total_count = message.totalCount ? message.totalCount.toString() : "0";
     obj.count = message.count !== BigInt(0) ? message.count.toString() : undefined;
-    obj.page_number = message.pageNumber !== BigInt(0) ? message.pageNumber.toString() : undefined;
-    obj.page_total = message.pageTotal !== BigInt(0) ? message.pageTotal.toString() : undefined;
+    obj.page_number = message.pageNumber ? message.pageNumber.toString() : "0";
+    obj.page_total = message.pageTotal ? message.pageTotal.toString() : "0";
     obj.limit = message.limit !== BigInt(0) ? message.limit.toString() : undefined;
     if (message.txs) {
       obj.txs = message.txs.map(e => e ? TxResponse.toAmino(e) : undefined);

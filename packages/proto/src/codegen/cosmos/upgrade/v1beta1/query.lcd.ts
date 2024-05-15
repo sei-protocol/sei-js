@@ -1,5 +1,5 @@
 import { LCDClient } from "@cosmology/lcd";
-import { QueryCurrentPlanRequest, QueryCurrentPlanResponseSDKType, QueryAppliedPlanRequest, QueryAppliedPlanResponseSDKType, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponseSDKType, QueryModuleVersionsRequest, QueryModuleVersionsResponseSDKType, QueryAuthorityRequest, QueryAuthorityResponseSDKType } from "./query";
+import { QueryCurrentPlanRequest, QueryCurrentPlanResponseSDKType, QueryAppliedPlanRequest, QueryAppliedPlanResponseSDKType, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponseSDKType, QueryModuleVersionsRequest, QueryModuleVersionsResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -12,7 +12,6 @@ export class LCDQueryClient {
     this.appliedPlan = this.appliedPlan.bind(this);
     this.upgradedConsensusState = this.upgradedConsensusState.bind(this);
     this.moduleVersions = this.moduleVersions.bind(this);
-    this.authority = this.authority.bind(this);
   }
   /* CurrentPlan queries the current upgrade plan. */
   async currentPlan(_params: QueryCurrentPlanRequest = {}): Promise<QueryCurrentPlanResponseSDKType> {
@@ -46,10 +45,5 @@ export class LCDQueryClient {
     }
     const endpoint = `cosmos/upgrade/v1beta1/module_versions`;
     return await this.req.get<QueryModuleVersionsResponseSDKType>(endpoint, options);
-  }
-  /* Returns the account with authority to conduct upgrades */
-  async authority(_params: QueryAuthorityRequest = {}): Promise<QueryAuthorityResponseSDKType> {
-    const endpoint = `cosmos/upgrade/v1beta1/authority`;
-    return await this.req.get<QueryAuthorityResponseSDKType>(endpoint);
   }
 }

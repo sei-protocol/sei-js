@@ -10,7 +10,7 @@ export interface MsgGrantAllowance {
   granter: string;
   /** grantee is the address of the user being granted an allowance of another user's funds. */
   grantee: string;
-  /** allowance can be any of basic, periodic, allowed fee allowance. */
+  /** allowance can be any of basic and filtered fee allowance. */
   allowance?: BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any | undefined;
 }
 export interface MsgGrantAllowanceProtoMsg {
@@ -18,7 +18,7 @@ export interface MsgGrantAllowanceProtoMsg {
   value: Uint8Array;
 }
 export type MsgGrantAllowanceEncoded = Omit<MsgGrantAllowance, "allowance"> & {
-  /** allowance can be any of basic, periodic, allowed fee allowance. */allowance?: BasicAllowanceProtoMsg | PeriodicAllowanceProtoMsg | AllowedMsgAllowanceProtoMsg | AnyProtoMsg | undefined;
+  /** allowance can be any of basic and filtered fee allowance. */allowance?: BasicAllowanceProtoMsg | PeriodicAllowanceProtoMsg | AllowedMsgAllowanceProtoMsg | AnyProtoMsg | undefined;
 };
 /**
  * MsgGrantAllowance adds permission for Grantee to spend up to Allowance
@@ -29,7 +29,7 @@ export interface MsgGrantAllowanceAmino {
   granter?: string;
   /** grantee is the address of the user being granted an allowance of another user's funds. */
   grantee?: string;
-  /** allowance can be any of basic, periodic, allowed fee allowance. */
+  /** allowance can be any of basic and filtered fee allowance. */
   allowance?: AnyAmino | undefined;
 }
 export interface MsgGrantAllowanceAminoMsg {
@@ -135,7 +135,7 @@ export const MsgGrantAllowance = {
           message.grantee = reader.string();
           break;
         case 3:
-          message.allowance = (Cosmos_feegrantFeeAllowanceI_InterfaceDecoder(reader) as Any);
+          message.allowance = (FeeAllowanceI_InterfaceDecoder(reader) as Any);
           break;
         default:
           reader.skipType(tag & 7);
@@ -160,7 +160,7 @@ export const MsgGrantAllowance = {
       message.grantee = object.grantee;
     }
     if (object.allowance !== undefined && object.allowance !== null) {
-      message.allowance = Cosmos_feegrantFeeAllowanceI_FromAmino(object.allowance);
+      message.allowance = FeeAllowanceI_FromAmino(object.allowance);
     }
     return message;
   },
@@ -168,7 +168,7 @@ export const MsgGrantAllowance = {
     const obj: any = {};
     obj.granter = message.granter === "" ? undefined : message.granter;
     obj.grantee = message.grantee === "" ? undefined : message.grantee;
-    obj.allowance = message.allowance ? Cosmos_feegrantFeeAllowanceI_ToAmino((message.allowance as Any)) : undefined;
+    obj.allowance = message.allowance ? FeeAllowanceI_ToAmino((message.allowance as Any)) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgGrantAllowanceAminoMsg): MsgGrantAllowance {
@@ -386,7 +386,7 @@ export const MsgRevokeAllowanceResponse = {
     };
   }
 };
-export const Cosmos_feegrantFeeAllowanceI_InterfaceDecoder = (input: BinaryReader | Uint8Array): BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any => {
+export const FeeAllowanceI_InterfaceDecoder = (input: BinaryReader | Uint8Array): BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any => {
   const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
   const data = Any.decode(reader, reader.uint32());
   switch (data.typeUrl) {
@@ -400,7 +400,7 @@ export const Cosmos_feegrantFeeAllowanceI_InterfaceDecoder = (input: BinaryReade
       return data;
   }
 };
-export const Cosmos_feegrantFeeAllowanceI_FromAmino = (content: AnyAmino): Any => {
+export const FeeAllowanceI_FromAmino = (content: AnyAmino): Any => {
   switch (content.type) {
     case "cosmos-sdk/BasicAllowance":
       return Any.fromPartial({
@@ -421,7 +421,7 @@ export const Cosmos_feegrantFeeAllowanceI_FromAmino = (content: AnyAmino): Any =
       return Any.fromAmino(content);
   }
 };
-export const Cosmos_feegrantFeeAllowanceI_ToAmino = (content: Any) => {
+export const FeeAllowanceI_ToAmino = (content: Any) => {
   switch (content.typeUrl) {
     case "/cosmos.feegrant.v1beta1.BasicAllowance":
       return {

@@ -78,6 +78,7 @@ export interface Params {
   txSizeCostPerByte: bigint;
   sigVerifyCostEd25519: bigint;
   sigVerifyCostSecp256k1: bigint;
+  disableSeqnoCheck: boolean;
 }
 export interface ParamsProtoMsg {
   typeUrl: "/cosmos.auth.v1beta1.Params";
@@ -90,6 +91,7 @@ export interface ParamsAmino {
   tx_size_cost_per_byte?: string;
   sig_verify_cost_ed25519?: string;
   sig_verify_cost_secp256k1?: string;
+  disable_seqno_check?: boolean;
 }
 export interface ParamsAminoMsg {
   type: "cosmos-sdk/Params";
@@ -102,6 +104,7 @@ export interface ParamsSDKType {
   tx_size_cost_per_byte: bigint;
   sig_verify_cost_ed25519: bigint;
   sig_verify_cost_secp256k1: bigint;
+  disable_seqno_check: boolean;
 }
 function createBaseBaseAccount(): BaseAccount {
   return {
@@ -311,7 +314,8 @@ function createBaseParams(): Params {
     txSigLimit: BigInt(0),
     txSizeCostPerByte: BigInt(0),
     sigVerifyCostEd25519: BigInt(0),
-    sigVerifyCostSecp256k1: BigInt(0)
+    sigVerifyCostSecp256k1: BigInt(0),
+    disableSeqnoCheck: false
   };
 }
 export const Params = {
@@ -331,6 +335,9 @@ export const Params = {
     }
     if (message.sigVerifyCostSecp256k1 !== BigInt(0)) {
       writer.uint32(40).uint64(message.sigVerifyCostSecp256k1);
+    }
+    if (message.disableSeqnoCheck === true) {
+      writer.uint32(48).bool(message.disableSeqnoCheck);
     }
     return writer;
   },
@@ -356,6 +363,9 @@ export const Params = {
         case 5:
           message.sigVerifyCostSecp256k1 = reader.uint64();
           break;
+        case 6:
+          message.disableSeqnoCheck = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -370,6 +380,7 @@ export const Params = {
     message.txSizeCostPerByte = object.txSizeCostPerByte !== undefined && object.txSizeCostPerByte !== null ? BigInt(object.txSizeCostPerByte.toString()) : BigInt(0);
     message.sigVerifyCostEd25519 = object.sigVerifyCostEd25519 !== undefined && object.sigVerifyCostEd25519 !== null ? BigInt(object.sigVerifyCostEd25519.toString()) : BigInt(0);
     message.sigVerifyCostSecp256k1 = object.sigVerifyCostSecp256k1 !== undefined && object.sigVerifyCostSecp256k1 !== null ? BigInt(object.sigVerifyCostSecp256k1.toString()) : BigInt(0);
+    message.disableSeqnoCheck = object.disableSeqnoCheck ?? false;
     return message;
   },
   fromAmino(object: ParamsAmino): Params {
@@ -389,6 +400,9 @@ export const Params = {
     if (object.sig_verify_cost_secp256k1 !== undefined && object.sig_verify_cost_secp256k1 !== null) {
       message.sigVerifyCostSecp256k1 = BigInt(object.sig_verify_cost_secp256k1);
     }
+    if (object.disable_seqno_check !== undefined && object.disable_seqno_check !== null) {
+      message.disableSeqnoCheck = object.disable_seqno_check;
+    }
     return message;
   },
   toAmino(message: Params): ParamsAmino {
@@ -398,6 +412,7 @@ export const Params = {
     obj.tx_size_cost_per_byte = message.txSizeCostPerByte !== BigInt(0) ? message.txSizeCostPerByte.toString() : undefined;
     obj.sig_verify_cost_ed25519 = message.sigVerifyCostEd25519 !== BigInt(0) ? message.sigVerifyCostEd25519.toString() : undefined;
     obj.sig_verify_cost_secp256k1 = message.sigVerifyCostSecp256k1 !== BigInt(0) ? message.sigVerifyCostSecp256k1.toString() : undefined;
+    obj.disable_seqno_check = message.disableSeqnoCheck === false ? undefined : message.disableSeqnoCheck;
     return obj;
   },
   fromAminoMsg(object: ParamsAminoMsg): Params {

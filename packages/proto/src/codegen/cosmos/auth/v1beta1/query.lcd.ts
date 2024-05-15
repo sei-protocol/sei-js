@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryAccountsRequest, QueryAccountsResponseSDKType, QueryAccountRequest, QueryAccountResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryModuleAccountsRequest, QueryModuleAccountsResponseSDKType, Bech32PrefixRequest, Bech32PrefixResponseSDKType, AddressBytesToStringRequest, AddressBytesToStringResponseSDKType, AddressStringToBytesRequest, AddressStringToBytesResponseSDKType } from "./query";
+import { QueryAccountsRequest, QueryAccountsResponseSDKType, QueryAccountRequest, QueryAccountResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryNextAccountNumberRequest, QueryNextAccountNumberResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -12,10 +12,7 @@ export class LCDQueryClient {
     this.accounts = this.accounts.bind(this);
     this.account = this.account.bind(this);
     this.params = this.params.bind(this);
-    this.moduleAccounts = this.moduleAccounts.bind(this);
-    this.bech32Prefix = this.bech32Prefix.bind(this);
-    this.addressBytesToString = this.addressBytesToString.bind(this);
-    this.addressStringToBytes = this.addressStringToBytes.bind(this);
+    this.nextAccountNumber = this.nextAccountNumber.bind(this);
   }
   /* Accounts returns all the existing accounts
   
@@ -42,24 +39,9 @@ export class LCDQueryClient {
     const endpoint = `cosmos/auth/v1beta1/params`;
     return await this.req.get<QueryParamsResponseSDKType>(endpoint);
   }
-  /* ModuleAccounts returns all the existing module accounts. */
-  async moduleAccounts(_params: QueryModuleAccountsRequest = {}): Promise<QueryModuleAccountsResponseSDKType> {
-    const endpoint = `cosmos/auth/v1beta1/module_accounts`;
-    return await this.req.get<QueryModuleAccountsResponseSDKType>(endpoint);
-  }
-  /* Bech32 queries bech32Prefix */
-  async bech32Prefix(_params: Bech32PrefixRequest = {}): Promise<Bech32PrefixResponseSDKType> {
-    const endpoint = `cosmos/auth/v1beta1/bech32`;
-    return await this.req.get<Bech32PrefixResponseSDKType>(endpoint);
-  }
-  /* AddressBytesToString converts Account Address bytes to string */
-  async addressBytesToString(params: AddressBytesToStringRequest): Promise<AddressBytesToStringResponseSDKType> {
-    const endpoint = `cosmos/auth/v1beta1/bech32/${params.addressBytes}`;
-    return await this.req.get<AddressBytesToStringResponseSDKType>(endpoint);
-  }
-  /* AddressStringToBytes converts Address string to bytes */
-  async addressStringToBytes(params: AddressStringToBytesRequest): Promise<AddressStringToBytesResponseSDKType> {
-    const endpoint = `cosmos/auth/v1beta1/bech32/${params.addressString}`;
-    return await this.req.get<AddressStringToBytesResponseSDKType>(endpoint);
+  /* NextAccountNumber queries the next account number assigned */
+  async nextAccountNumber(_params: QueryNextAccountNumberRequest = {}): Promise<QueryNextAccountNumberResponseSDKType> {
+    const endpoint = `cosmos/auth/v1beta1/nextaccountnumber`;
+    return await this.req.get<QueryNextAccountNumberResponseSDKType>(endpoint);
   }
 }
