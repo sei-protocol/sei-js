@@ -1,7 +1,6 @@
 import moment, { Moment } from 'moment';
 import { PoolSDKType } from '@sei-js/proto/dist/types/codegen/cosmos/staking/v1beta1/staking';
 import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/mint/v1beta1/mint';
-import { SeiLCDQueryClient } from '../core';
 
 /**
  * Calculates the estimated staking APR based on the upcoming token release schedule and the current number of bonded tokens.
@@ -10,7 +9,7 @@ import { SeiLCDQueryClient } from '../core';
  * @returns The estimated APR percentage.
  * @category Staking
  */
-export async function estimateStakingAPR(queryClient: SeiLCDQueryClient): Promise<number> {
+export async function estimateStakingAPR(queryClient: any): Promise<number> {
 	// Query number of bonded tokens
 	const pool = await getPool(queryClient);
 	const bondedTokens = Number(pool?.bonded_tokens);
@@ -36,7 +35,7 @@ export async function estimateStakingAPR(queryClient: SeiLCDQueryClient): Promis
  * @returns An object with information about the amount of bonded and non-bonded tokens in the staking pool.
  * @category Staking
  */
-export async function getPool(queryClient: SeiLCDQueryClient): Promise<PoolSDKType | undefined> {
+export async function getPool(queryClient: any): Promise<PoolSDKType | undefined> {
 	try {
 		const result = await queryClient.cosmos.staking.v1beta1.pool({});
 		return result.pool;
@@ -51,7 +50,7 @@ export async function getPool(queryClient: SeiLCDQueryClient): Promise<PoolSDKTy
  * @returns An object with information about the mint schedule and token denom.
  * @category Staking
  */
-export async function getMintParams(queryClient: SeiLCDQueryClient): Promise<ParamsSDKType | undefined> {
+export async function getMintParams(queryClient: any): Promise<ParamsSDKType | undefined> {
 	try {
 		const result = await queryClient.seiprotocol.seichain.mint.params({});
 		return result.params;

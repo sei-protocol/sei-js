@@ -662,6 +662,10 @@ export interface Params {
   bondDenom: string;
   /** min_commission_rate is the chain-wide minimum commission rate that a validator can charge their delegators */
   minCommissionRate: string;
+  /** max_voting_power_ratio defines the maximal allowable voting power ratio delegated to a validator. */
+  maxVotingPowerRatio: string;
+  /** max_voting_power_enforcement_threshold defines the minimal bonded voting power of the max voting power ratio enforcement */
+  maxVotingPowerEnforcementThreshold: string;
 }
 export interface ParamsProtoMsg {
   typeUrl: "/cosmos.staking.v1beta1.Params";
@@ -681,6 +685,10 @@ export interface ParamsAmino {
   bond_denom?: string;
   /** min_commission_rate is the chain-wide minimum commission rate that a validator can charge their delegators */
   min_commission_rate?: string;
+  /** max_voting_power_ratio defines the maximal allowable voting power ratio delegated to a validator. */
+  max_voting_power_ratio: string;
+  /** max_voting_power_enforcement_threshold defines the minimal bonded voting power of the max voting power ratio enforcement */
+  max_voting_power_enforcement_threshold: string;
 }
 export interface ParamsAminoMsg {
   type: "cosmos-sdk/Params";
@@ -694,6 +702,8 @@ export interface ParamsSDKType {
   historical_entries: number;
   bond_denom: string;
   min_commission_rate: string;
+  max_voting_power_ratio: string;
+  max_voting_power_enforcement_threshold: string;
 }
 /**
  * DelegationResponse is equivalent to Delegation except that it contains a
@@ -2291,7 +2301,9 @@ function createBaseParams(): Params {
     maxEntries: 0,
     historicalEntries: 0,
     bondDenom: "",
-    minCommissionRate: ""
+    minCommissionRate: "",
+    maxVotingPowerRatio: "",
+    maxVotingPowerEnforcementThreshold: ""
   };
 }
 export const Params = {
@@ -2314,6 +2326,12 @@ export const Params = {
     }
     if (message.minCommissionRate !== "") {
       writer.uint32(50).string(Decimal.fromUserInput(message.minCommissionRate, 18).atomics);
+    }
+    if (message.maxVotingPowerRatio !== "") {
+      writer.uint32(58).string(Decimal.fromUserInput(message.maxVotingPowerRatio, 18).atomics);
+    }
+    if (message.maxVotingPowerEnforcementThreshold !== "") {
+      writer.uint32(66).string(message.maxVotingPowerEnforcementThreshold);
     }
     return writer;
   },
@@ -2342,6 +2360,12 @@ export const Params = {
         case 6:
           message.minCommissionRate = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
+        case 7:
+          message.maxVotingPowerRatio = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 8:
+          message.maxVotingPowerEnforcementThreshold = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -2357,6 +2381,8 @@ export const Params = {
     message.historicalEntries = object.historicalEntries ?? 0;
     message.bondDenom = object.bondDenom ?? "";
     message.minCommissionRate = object.minCommissionRate ?? "";
+    message.maxVotingPowerRatio = object.maxVotingPowerRatio ?? "";
+    message.maxVotingPowerEnforcementThreshold = object.maxVotingPowerEnforcementThreshold ?? "";
     return message;
   },
   fromAmino(object: ParamsAmino): Params {
@@ -2379,6 +2405,12 @@ export const Params = {
     if (object.min_commission_rate !== undefined && object.min_commission_rate !== null) {
       message.minCommissionRate = object.min_commission_rate;
     }
+    if (object.max_voting_power_ratio !== undefined && object.max_voting_power_ratio !== null) {
+      message.maxVotingPowerRatio = object.max_voting_power_ratio;
+    }
+    if (object.max_voting_power_enforcement_threshold !== undefined && object.max_voting_power_enforcement_threshold !== null) {
+      message.maxVotingPowerEnforcementThreshold = object.max_voting_power_enforcement_threshold;
+    }
     return message;
   },
   toAmino(message: Params): ParamsAmino {
@@ -2389,6 +2421,8 @@ export const Params = {
     obj.historical_entries = message.historicalEntries === 0 ? undefined : message.historicalEntries;
     obj.bond_denom = message.bondDenom === "" ? undefined : message.bondDenom;
     obj.min_commission_rate = message.minCommissionRate === "" ? undefined : message.minCommissionRate;
+    obj.max_voting_power_ratio = message.maxVotingPowerRatio ?? "";
+    obj.max_voting_power_enforcement_threshold = message.maxVotingPowerEnforcementThreshold ?? "";
     return obj;
   },
   fromAminoMsg(object: ParamsAminoMsg): Params {

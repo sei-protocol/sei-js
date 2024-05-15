@@ -126,7 +126,7 @@ export interface PeriodicAllowanceSDKType {
 /** AllowedMsgAllowance creates allowance only for specified message types. */
 export interface AllowedMsgAllowance {
   $typeUrl?: "/cosmos.feegrant.v1beta1.AllowedMsgAllowance";
-  /** allowance can be any of basic and periodic fee allowance. */
+  /** allowance can be any of basic and filtered fee allowance. */
   allowance?: BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any | undefined;
   /** allowed_messages are the messages for which the grantee has the access. */
   allowedMessages: string[];
@@ -136,11 +136,11 @@ export interface AllowedMsgAllowanceProtoMsg {
   value: Uint8Array;
 }
 export type AllowedMsgAllowanceEncoded = Omit<AllowedMsgAllowance, "allowance"> & {
-  /** allowance can be any of basic and periodic fee allowance. */allowance?: BasicAllowanceProtoMsg | PeriodicAllowanceProtoMsg | AllowedMsgAllowanceProtoMsg | AnyProtoMsg | undefined;
+  /** allowance can be any of basic and filtered fee allowance. */allowance?: BasicAllowanceProtoMsg | PeriodicAllowanceProtoMsg | AllowedMsgAllowanceProtoMsg | AnyProtoMsg | undefined;
 };
 /** AllowedMsgAllowance creates allowance only for specified message types. */
 export interface AllowedMsgAllowanceAmino {
-  /** allowance can be any of basic and periodic fee allowance. */
+  /** allowance can be any of basic and filtered fee allowance. */
   allowance?: AnyAmino | undefined;
   /** allowed_messages are the messages for which the grantee has the access. */
   allowed_messages?: string[];
@@ -161,7 +161,7 @@ export interface Grant {
   granter: string;
   /** grantee is the address of the user being granted an allowance of another user's funds. */
   grantee: string;
-  /** allowance can be any of basic, periodic, allowed fee allowance. */
+  /** allowance can be any of basic and filtered fee allowance. */
   allowance?: BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any | undefined;
 }
 export interface GrantProtoMsg {
@@ -169,7 +169,7 @@ export interface GrantProtoMsg {
   value: Uint8Array;
 }
 export type GrantEncoded = Omit<Grant, "allowance"> & {
-  /** allowance can be any of basic, periodic, allowed fee allowance. */allowance?: BasicAllowanceProtoMsg | PeriodicAllowanceProtoMsg | AllowedMsgAllowanceProtoMsg | AnyProtoMsg | undefined;
+  /** allowance can be any of basic and filtered fee allowance. */allowance?: BasicAllowanceProtoMsg | PeriodicAllowanceProtoMsg | AllowedMsgAllowanceProtoMsg | AnyProtoMsg | undefined;
 };
 /** Grant is stored in the KVStore to record a grant with full context */
 export interface GrantAmino {
@@ -177,7 +177,7 @@ export interface GrantAmino {
   granter?: string;
   /** grantee is the address of the user being granted an allowance of another user's funds. */
   grantee?: string;
-  /** allowance can be any of basic, periodic, allowed fee allowance. */
+  /** allowance can be any of basic and filtered fee allowance. */
   allowance?: AnyAmino | undefined;
 }
 export interface GrantAminoMsg {
@@ -422,7 +422,7 @@ export const AllowedMsgAllowance = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.allowance = (Cosmos_feegrantFeeAllowanceI_InterfaceDecoder(reader) as Any);
+          message.allowance = (FeeAllowanceI_InterfaceDecoder(reader) as Any);
           break;
         case 2:
           message.allowedMessages.push(reader.string());
@@ -443,14 +443,14 @@ export const AllowedMsgAllowance = {
   fromAmino(object: AllowedMsgAllowanceAmino): AllowedMsgAllowance {
     const message = createBaseAllowedMsgAllowance();
     if (object.allowance !== undefined && object.allowance !== null) {
-      message.allowance = Cosmos_feegrantFeeAllowanceI_FromAmino(object.allowance);
+      message.allowance = FeeAllowanceI_FromAmino(object.allowance);
     }
     message.allowedMessages = object.allowed_messages?.map(e => e) || [];
     return message;
   },
   toAmino(message: AllowedMsgAllowance): AllowedMsgAllowanceAmino {
     const obj: any = {};
-    obj.allowance = message.allowance ? Cosmos_feegrantFeeAllowanceI_ToAmino((message.allowance as Any)) : undefined;
+    obj.allowance = message.allowance ? FeeAllowanceI_ToAmino((message.allowance as Any)) : undefined;
     if (message.allowedMessages) {
       obj.allowed_messages = message.allowedMessages.map(e => e);
     } else {
@@ -515,7 +515,7 @@ export const Grant = {
           message.grantee = reader.string();
           break;
         case 3:
-          message.allowance = (Cosmos_feegrantFeeAllowanceI_InterfaceDecoder(reader) as Any);
+          message.allowance = (FeeAllowanceI_InterfaceDecoder(reader) as Any);
           break;
         default:
           reader.skipType(tag & 7);
@@ -540,7 +540,7 @@ export const Grant = {
       message.grantee = object.grantee;
     }
     if (object.allowance !== undefined && object.allowance !== null) {
-      message.allowance = Cosmos_feegrantFeeAllowanceI_FromAmino(object.allowance);
+      message.allowance = FeeAllowanceI_FromAmino(object.allowance);
     }
     return message;
   },
@@ -548,7 +548,7 @@ export const Grant = {
     const obj: any = {};
     obj.granter = message.granter === "" ? undefined : message.granter;
     obj.grantee = message.grantee === "" ? undefined : message.grantee;
-    obj.allowance = message.allowance ? Cosmos_feegrantFeeAllowanceI_ToAmino((message.allowance as Any)) : undefined;
+    obj.allowance = message.allowance ? FeeAllowanceI_ToAmino((message.allowance as Any)) : undefined;
     return obj;
   },
   fromAminoMsg(object: GrantAminoMsg): Grant {
@@ -573,7 +573,7 @@ export const Grant = {
     };
   }
 };
-export const Cosmos_feegrantFeeAllowanceI_InterfaceDecoder = (input: BinaryReader | Uint8Array): BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any => {
+export const FeeAllowanceI_InterfaceDecoder = (input: BinaryReader | Uint8Array): BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any => {
   const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
   const data = Any.decode(reader, reader.uint32());
   switch (data.typeUrl) {
@@ -587,7 +587,7 @@ export const Cosmos_feegrantFeeAllowanceI_InterfaceDecoder = (input: BinaryReade
       return data;
   }
 };
-export const Cosmos_feegrantFeeAllowanceI_FromAmino = (content: AnyAmino): Any => {
+export const FeeAllowanceI_FromAmino = (content: AnyAmino): Any => {
   switch (content.type) {
     case "cosmos-sdk/BasicAllowance":
       return Any.fromPartial({
@@ -608,7 +608,7 @@ export const Cosmos_feegrantFeeAllowanceI_FromAmino = (content: AnyAmino): Any =
       return Any.fromAmino(content);
   }
 };
-export const Cosmos_feegrantFeeAllowanceI_ToAmino = (content: Any) => {
+export const FeeAllowanceI_ToAmino = (content: Any) => {
   switch (content.typeUrl) {
     case "/cosmos.feegrant.v1beta1.BasicAllowance":
       return {

@@ -1,6 +1,9 @@
 import { Rpc } from '../helpers';
 export const createRPCMsgClient = async ({ rpc }: { rpc: Rpc }) => ({
 	cosmos: {
+		accesscontrol_x: {
+			v1beta1: new (await import('../cosmos/accesscontrol_x/tx.rpc.msg')).MsgClientImpl(rpc)
+		},
 		bank: {
 			v1beta1: new (await import('../cosmos/bank/v1beta1/tx.rpc.msg')).MsgClientImpl(rpc)
 		},

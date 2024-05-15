@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryBalanceRequest, QueryBalanceResponseSDKType, QueryAllBalancesRequest, QueryAllBalancesResponseSDKType, QuerySpendableBalancesRequest, QuerySpendableBalancesResponseSDKType, QueryTotalSupplyRequest, QueryTotalSupplyResponseSDKType, QuerySupplyOfRequest, QuerySupplyOfResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomMetadataRequest, QueryDenomMetadataResponseSDKType, QueryDenomsMetadataRequest, QueryDenomsMetadataResponseSDKType, QueryDenomOwnersRequest, QueryDenomOwnersResponseSDKType } from "./query";
+import { QueryBalanceRequest, QueryBalanceResponseSDKType, QueryAllBalancesRequest, QueryAllBalancesResponseSDKType, QuerySpendableBalancesRequest, QuerySpendableBalancesResponseSDKType, QueryTotalSupplyRequest, QueryTotalSupplyResponseSDKType, QuerySupplyOfRequest, QuerySupplyOfResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomMetadataRequest, QueryDenomMetadataResponseSDKType, QueryDenomsMetadataRequest, QueryDenomsMetadataResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -17,7 +17,6 @@ export class LCDQueryClient {
     this.params = this.params.bind(this);
     this.denomMetadata = this.denomMetadata.bind(this);
     this.denomsMetadata = this.denomsMetadata.bind(this);
-    this.denomOwners = this.denomOwners.bind(this);
   }
   /* Balance queries the balance of a single coin for a single account. */
   async balance(params: QueryBalanceRequest): Promise<QueryBalanceResponseSDKType> {
@@ -68,14 +67,8 @@ export class LCDQueryClient {
   }
   /* SupplyOf queries the supply of a single coin. */
   async supplyOf(params: QuerySupplyOfRequest): Promise<QuerySupplyOfResponseSDKType> {
-    const options: any = {
-      params: {}
-    };
-    if (typeof params?.denom !== "undefined") {
-      options.params.denom = params.denom;
-    }
-    const endpoint = `cosmos/bank/v1beta1/supply/by_denom`;
-    return await this.req.get<QuerySupplyOfResponseSDKType>(endpoint, options);
+    const endpoint = `cosmos/bank/v1beta1/supply/${params.denom}`;
+    return await this.req.get<QuerySupplyOfResponseSDKType>(endpoint);
   }
   /* Params queries the parameters of x/bank module. */
   async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
@@ -87,8 +80,7 @@ export class LCDQueryClient {
     const endpoint = `cosmos/bank/v1beta1/denoms_metadata/${params.denom}`;
     return await this.req.get<QueryDenomMetadataResponseSDKType>(endpoint);
   }
-  /* DenomsMetadata queries the client metadata for all registered coin
-   denominations. */
+  /* DenomsMetadata queries the client metadata for all registered coin denominations. */
   async denomsMetadata(params: QueryDenomsMetadataRequest = {
     pagination: undefined
   }): Promise<QueryDenomsMetadataResponseSDKType> {
@@ -100,17 +92,5 @@ export class LCDQueryClient {
     }
     const endpoint = `cosmos/bank/v1beta1/denoms_metadata`;
     return await this.req.get<QueryDenomsMetadataResponseSDKType>(endpoint, options);
-  }
-  /* DenomOwners queries for all account addresses that own a particular token
-   denomination. */
-  async denomOwners(params: QueryDenomOwnersRequest): Promise<QueryDenomOwnersResponseSDKType> {
-    const options: any = {
-      params: {}
-    };
-    if (typeof params?.pagination !== "undefined") {
-      setPaginationParams(options, params.pagination);
-    }
-    const endpoint = `cosmos/bank/v1beta1/denom_owners/${params.denom}`;
-    return await this.req.get<QueryDenomOwnersResponseSDKType>(endpoint, options);
   }
 }
