@@ -1,5 +1,13 @@
 # @sei-js/cosmjs
 
+## 1.0.7
+
+### Patch Changes
+
+- a8eb844: Temporary update (downgrade) the proto files to match the proto files in the sei-cosmos-sdk fork to fix broken queries
+- Updated dependencies [a8eb844]
+  - @sei-js/proto@4.0.8
+
 ## 1.0.6
 
 ### Patch Changes
