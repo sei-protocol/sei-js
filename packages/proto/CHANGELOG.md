@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.8
+
+### Patch Changes
+
+- a8eb844: Temporary update (downgrade) the proto files to match the proto files in the sei-cosmos-sdk fork to fix broken queries
+
 ## 4.0.7
 
 ### Patch Changes

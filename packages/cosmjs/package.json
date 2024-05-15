@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/cosmjs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "TypeScript library for CosmJS interactions on the Sei blockchain",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -50,7 +50,7 @@
     "sha.js": "^2.4.11",
     "styled-components": "^6.1.1",
     "xstream": "^11.14.0",
-    "@sei-js/proto": "^4.0.5"
+    "@sei-js/proto": "^4.0.8"
   },
   "peerDependencies": {},
   "devDependencies": {
