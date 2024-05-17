@@ -8,18 +8,19 @@ import { Abi } from 'viem';
  */
 export interface IbcPrecompileFunctions {
 	/**
-	 * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
-	 * @param toAddress The recipient's address on the other chain
-	 * @param port IBC port in source chain (e.g. 'transfer')
-	 * @param channel IBC channel in source chain (e.g. 'channel-0')
-	 * @param denom The denomination of the tokens to send
-	 * @param amount The amount of tokens to send
-	 * @param revisionNumber The revision number of the source chain
-	 * @param revisionHeight The revision height of the source chain
-	 * @param timeoutTimestamp The timeout timestamp of the source chain
-	 */
+   * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
+   * @param toAddress The recipient's address on the other chain
+   * @param port IBC port in source chain (e.g. 'transfer')
+   * @param channel IBC channel in source chain (e.g. 'channel-0')
+   * @param denom The denomination of the tokens to send
+   * @param amount The amount of tokens to send
+   * @param revisionNumber The revision number of the source chain
+   * @param revisionHeight The revision height of the source chain
+   * @param timeoutTimestamp The timeout timestamp of the source chain
+   * @param memo The memo to include in the transaction, if no memo is needed, pass an empty string
+   */
 	transfer(toAddress: string, port: string, channel: string, denom: string, amount: ethers.BigNumberish,
-					 revisionNumber: BigInt, revisionHeight: BigInt, timeoutTimestamp: BigInt): Promise<{ success: boolean }>;
+					 revisionNumber: BigInt, revisionHeight: BigInt, timeoutTimestamp: BigInt, memo: string): Promise<{ success: boolean }>;
 
   /**
    * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
@@ -29,9 +30,10 @@ export interface IbcPrecompileFunctions {
    * @param channel IBC channel in source chain (e.g. 'channel-0')
    * @param denom The denomination of the tokens to send
    * @param amount The amount of tokens to send
+   * @param memo The memo to include in the transaction, if no memo is needed, pass an empty string
    */
   transferWithDefaultTimeout(toAddress: string, port: string, channel: string, denom: string,
-                             amount: ethers.BigNumberish): Promise<{ success: boolean }>;
+                             amount: ethers.BigNumberish, memo: string): Promise<{ success: boolean }>;
 
 }
 
@@ -65,7 +67,7 @@ export type IbcPrecompileContract = ethers.Contract & IbcPrecompileFunctions;
  *
  * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
  *
- * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n);
+ * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n, 'memo');
  * ```
  *
  * @category Cosmos Interoperability
@@ -96,7 +98,7 @@ export const IBC_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000000000000
  *
  * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
  *
- * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n);
+ * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n, 'memo');
  * ```
  *
  * @category Cosmos Interoperability
@@ -111,7 +113,8 @@ export const IBC_PRECOMPILE_ABI: Abi = [
 			{ internalType: 'uint256', name: 'amount', type: 'uint256' },
 			{ internalType: 'uint64', name: 'revisionNumber', type: 'uint64' },
 			{ internalType: 'uint64', name: 'revisionHeight', type: 'uint64' },
-			{ internalType: 'uint64', name: 'timeoutTimestamp', type: 'uint64' }
+			{ internalType: 'uint64', name: 'timeoutTimestamp', type: 'uint64' },
+      { internalType: 'string', name: 'memo', type: 'string' },
 		],
 		name: 'transfer',
 		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
@@ -125,6 +128,7 @@ export const IBC_PRECOMPILE_ABI: Abi = [
       { internalType: 'string', name: 'channel', type: 'string' },
       { internalType: 'string', name: 'denom', type: 'string' },
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'string', name: 'memo', type: 'string' },
     ],
     name: 'transferWithDefaultTimeout',
     outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
@@ -148,7 +152,7 @@ export const IBC_PRECOMPILE_ABI: Abi = [
  * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
  * const cosmosAddress = 'cosmos1...';
  *
- * const bool = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n);
+ * const bool = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n, 'memo');
  * ```
  *
  * @param precompileAddress The 0X address of the precompile contract.
