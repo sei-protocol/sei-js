@@ -483,13 +483,13 @@
 </thead>
 <tbody><tr>
 <td><a href="/sei-js/docs/interfaces/evm.IbcPrecompileFunctions.html#transfer"><code>transfer</code></a></td>
-<td><code>toAddress: </code> <code>string</code>, <code>port: </code> <code>string</code>, <code>channel: </code> <code>string</code>, <code>denom: </code> <code>string</code>, <code>amount: </code> <code>ethers.BigNumberish</code>, <code>revisionNumber: </code> <code>BigInt</code>, <code>revisionHeight: </code> <code>BigInt</code>, <code>timeoutTimestamp: </code> <code>BigInt</code></td>
+<td><code>toAddress: </code> <code>string</code>, <code>port: </code> <code>string</code>, <code>channel: </code> <code>string</code>, <code>denom: </code> <code>string</code>, <code>amount: </code> <code>ethers.BigNumberish</code>, <code>revisionNumber: </code> <code>BigInt</code>, <code>revisionHeight: </code> <code>BigInt</code>, <code>timeoutTimestamp: </code> <code>BigInt</code>,  <code>memo: </code> <code>String</code></td>
 <td><code>{ success: boolean }</code></td>
 <td>Transfers tokens from the caller&#39;s address to another on a different (IBC compatible) chain.</td>
 </tr>
 <tr>
 <td><a href="/sei-js/docs/interfaces/evm.IbcPrecompileFunctions.html#transferWithDefaultTimeout"><code>transferWithDefaultTimeout</code></a></td>
-<td><code>toAddress: </code> <code>string</code>, <code>port: </code> <code>string</code>, <code>channel: </code> <code>string</code>, <code>denom: </code> <code>string</code>, <code>amount: </code> <code>ethers.BigNumberish</code></td>
+<td><code>toAddress: </code> <code>string</code>, <code>port: </code> <code>string</code>, <code>channel: </code> <code>string</code>, <code>denom: </code> <code>string</code>, <code>amount: </code> <code>ethers.BigNumberish</code>,  <code>memo: </code> <code>String</code></td>
 <td><code>{ success: boolean }</code></td>
 <td>Transfers tokens from the caller&#39;s address to another on a different (IBC compatible) chain. Calculates default timeout height as opposed to <code>transfer</code> function</td>
 </tr>
