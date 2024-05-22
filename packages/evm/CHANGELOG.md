@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.1.0
+
+### Minor Changes
+
+- 3873d2e: adding memo support for IBC precompile
+
 ## 1.0.7
 
 ### Patch Changes
