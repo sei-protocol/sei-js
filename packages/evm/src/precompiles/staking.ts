@@ -122,7 +122,7 @@ export const STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000
  * ```
  * @category Cosmos Interoperability
  */
-export const STAKING_PRECOMPILE_ABI: Abi = [
+export const STAKING_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [{ internalType: 'string', name: 'valAddress', type: 'string' }],
 		name: 'delegate',
@@ -158,7 +158,7 @@ export const STAKING_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { STAKING_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
+ * import { getStakingPrecompileEthersV6Contract, parseSei } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -166,15 +166,14 @@ export const STAKING_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
 
- * const contract = getStakingPrecompileEthersV6Contract(STAKING_PRECOMPILE_ADDRESS, signer);
+ * const contract = getStakingPrecompileEthersV6Contract(signer);
  *
  * const response = await contract.connect().delegate('0xVALIDATOR_ADDRESS', parseSei(1));
  * ```
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getStakingPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): StakingPrecompileContract => {
-	return new ethers.Contract(precompileAddress, STAKING_PRECOMPILE_ABI as InterfaceAbi, runner) as StakingPrecompileContract;
+export const getStakingPrecompileEthersV6Contract = (runner: ContractRunner): StakingPrecompileContract => {
+	return new ethers.Contract(STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, runner) as StakingPrecompileContract;
 };

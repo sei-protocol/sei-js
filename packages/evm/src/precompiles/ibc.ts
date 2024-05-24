@@ -8,33 +8,47 @@ import { Abi } from 'viem';
  */
 export interface IbcPrecompileFunctions {
 	/**
-   * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
-   * @param toAddress The recipient's address on the other chain
-   * @param port IBC port in source chain (e.g. 'transfer')
-   * @param channel IBC channel in source chain (e.g. 'channel-0')
-   * @param denom The denomination of the tokens to send
-   * @param amount The amount of tokens to send
-   * @param revisionNumber The revision number of the source chain
-   * @param revisionHeight The revision height of the source chain
-   * @param timeoutTimestamp The timeout timestamp of the source chain
-   * @param memo The memo to include in the transaction, if no memo is needed, pass an empty string
-   */
-	transfer(toAddress: string, port: string, channel: string, denom: string, amount: ethers.BigNumberish,
-					 revisionNumber: BigInt, revisionHeight: BigInt, timeoutTimestamp: BigInt, memo: string): Promise<{ success: boolean }>;
+	 * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
+	 * @param toAddress The recipient's address on the other chain
+	 * @param port IBC port in source chain (e.g. 'transfer')
+	 * @param channel IBC channel in source chain (e.g. 'channel-0')
+	 * @param denom The denomination of the tokens to send
+	 * @param amount The amount of tokens to send
+	 * @param revisionNumber The revision number of the source chain
+	 * @param revisionHeight The revision height of the source chain
+	 * @param timeoutTimestamp The timeout timestamp of the source chain
+	 * @param memo The memo to include in the transaction, if no memo is needed, pass an empty string
+	 */
+	transfer(
+		toAddress: string,
+		port: string,
+		channel: string,
+		denom: string,
+		amount: ethers.BigNumberish,
+		revisionNumber: BigInt,
+		revisionHeight: BigInt,
+		timeoutTimestamp: BigInt,
+		memo: string
+	): Promise<{ success: boolean }>;
 
-  /**
-   * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
-   * Calculates the timeout height/timestamp based on the current block timestamp.
-   * @param toAddress The recipient's address on the other chain
-   * @param port IBC port in source chain (e.g. 'transfer')
-   * @param channel IBC channel in source chain (e.g. 'channel-0')
-   * @param denom The denomination of the tokens to send
-   * @param amount The amount of tokens to send
-   * @param memo The memo to include in the transaction, if no memo is needed, pass an empty string
-   */
-  transferWithDefaultTimeout(toAddress: string, port: string, channel: string, denom: string,
-                             amount: ethers.BigNumberish, memo: string): Promise<{ success: boolean }>;
-
+	/**
+	 * Transfers tokens from the caller's address to another on a different (IBC compatible) chain.
+	 * Calculates the timeout height/timestamp based on the current block timestamp.
+	 * @param toAddress The recipient's address on the other chain
+	 * @param port IBC port in source chain (e.g. 'transfer')
+	 * @param channel IBC channel in source chain (e.g. 'channel-0')
+	 * @param denom The denomination of the tokens to send
+	 * @param amount The amount of tokens to send
+	 * @param memo The memo to include in the transaction, if no memo is needed, pass an empty string
+	 */
+	transferWithDefaultTimeout(
+		toAddress: string,
+		port: string,
+		channel: string,
+		denom: string,
+		amount: ethers.BigNumberish,
+		memo: string
+	): Promise<{ success: boolean }>;
 }
 
 /**
@@ -103,7 +117,7 @@ export const IBC_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const IBC_PRECOMPILE_ABI: Abi = [
+export const IBC_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [
 			{ internalType: 'string', name: 'toAddress', type: 'string' },
@@ -114,28 +128,27 @@ export const IBC_PRECOMPILE_ABI: Abi = [
 			{ internalType: 'uint64', name: 'revisionNumber', type: 'uint64' },
 			{ internalType: 'uint64', name: 'revisionHeight', type: 'uint64' },
 			{ internalType: 'uint64', name: 'timeoutTimestamp', type: 'uint64' },
-      { internalType: 'string', name: 'memo', type: 'string' },
+			{ internalType: 'string', name: 'memo', type: 'string' }
 		],
 		name: 'transfer',
 		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
 		stateMutability: 'payable',
 		type: 'function'
 	},
-  {
-    inputs: [
-      { internalType: 'string', name: 'toAddress', type: 'string' },
-      { internalType: 'string', name: 'port', type: 'string' },
-      { internalType: 'string', name: 'channel', type: 'string' },
-      { internalType: 'string', name: 'denom', type: 'string' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-      { internalType: 'string', name: 'memo', type: 'string' },
-    ],
-    name: 'transferWithDefaultTimeout',
-    outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
-    stateMutability: 'payable',
-    type: 'function'
-  },
-
+	{
+		inputs: [
+			{ internalType: 'string', name: 'toAddress', type: 'string' },
+			{ internalType: 'string', name: 'port', type: 'string' },
+			{ internalType: 'string', name: 'channel', type: 'string' },
+			{ internalType: 'string', name: 'denom', type: 'string' },
+			{ internalType: 'uint256', name: 'amount', type: 'uint256' },
+			{ internalType: 'string', name: 'memo', type: 'string' }
+		],
+		name: 'transferWithDefaultTimeout',
+		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
+		stateMutability: 'payable',
+		type: 'function'
+	}
 ];
 
 /**
@@ -143,23 +156,22 @@ export const IBC_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { getIbcPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
+ * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(signer);
  * const cosmosAddress = 'cosmos1...';
  *
  * const bool = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n, 'memo');
  * ```
  *
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getIbcPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): IbcPrecompileContract => {
-	return new ethers.Contract(precompileAddress, IBC_PRECOMPILE_ABI as InterfaceAbi, runner) as IbcPrecompileContract;
+export const getIbcPrecompileEthersV6Contract = (runner: ContractRunner): IbcPrecompileContract => {
+	return new ethers.Contract(IBC_PRECOMPILE_ADDRESS, IBC_PRECOMPILE_ABI, runner) as IbcPrecompileContract;
 };

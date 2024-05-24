@@ -150,7 +150,7 @@ export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const BANK_PRECOMPILE_ABI: Abi = [
+export const BANK_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [{ internalType: 'address', name: 'acc', type: 'address' }],
 		name: 'all_balances',
@@ -232,7 +232,7 @@ export const BANK_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { getBankPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -240,16 +240,15 @@ export const BANK_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const bankPrecompileContract = getBankPrecompileEthersV6Contract(BANK_PRECOMPILE_ADDRESS, signer);
+ * const bankPrecompileContract = getBankPrecompileEthersV6Contract(signer);
  *
  * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
  * ```
  *
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getBankPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): BankPrecompileContract => {
-	return new ethers.Contract(precompileAddress, BANK_PRECOMPILE_ABI as InterfaceAbi, runner) as BankPrecompileContract;
+export const getBankPrecompileEthersV6Contract = (runner: ContractRunner): BankPrecompileContract => {
+	return new ethers.Contract(BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, runner) as BankPrecompileContract;
 };

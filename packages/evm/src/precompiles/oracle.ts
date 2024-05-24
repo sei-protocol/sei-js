@@ -117,7 +117,7 @@ export const ORACLE_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const ORACLE_PRECOMPILE_ABI: Abi = [
+export const ORACLE_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [],
 		name: 'getExchangeRates',
@@ -169,23 +169,22 @@ export const ORACLE_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { ORACLE_PRECOMPILE_ADDRESS, getOraclePrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getOraclePrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const oraclePrecompileContract = getOraclePrecompileEthersV6Contract(ORACLE_PRECOMPILE_ADDRESS, signer);
+ * const oraclePrecompileContract = getOraclePrecompileEthersV6Contract(signer);
  *
  * const exchangeRates = await oraclePrecompileContract.getExchangeRates();
  * console.log(exchangeRates);
  * ```
  *
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getOraclePrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): OraclePrecompileContract => {
-	return new ethers.Contract(precompileAddress, ORACLE_PRECOMPILE_ABI as InterfaceAbi, runner) as OraclePrecompileContract;
+export const getOraclePrecompileEthersV6Contract = (runner: ContractRunner): OraclePrecompileContract => {
+	return new ethers.Contract(ORACLE_PRECOMPILE_ADDRESS, ORACLE_PRECOMPILE_ABI, runner) as OraclePrecompileContract;
 };

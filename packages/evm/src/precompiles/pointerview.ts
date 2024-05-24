@@ -113,7 +113,7 @@ export const POINTERVIEW_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const POINTERVIEW_PRECOMPILE_ABI: Abi = [
+export const POINTERVIEW_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [{ internalType: 'string', name: 'cwAddr', type: 'string' }],
 		name: 'getCW20Pointer',
@@ -154,23 +154,22 @@ export const POINTERVIEW_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { POINTERVIEW_PRECOMPILE_ADDRESS, getPointerviewPrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getPointerviewPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const pointerviewPrecompileContract = getPointerviewPrecompileEthersV6Contract(POINTERVIEW_PRECOMPILE_ADDRESS, signer);
+ * const pointerviewPrecompileContract = getPointerviewPrecompileEthersV6Contract(signer);
  *
  * const pointer = await pointerviewPrecompileContract.getCW20Pointer('CW20_CONTRACT_ADDRESS');
  * console.log(pointer);
  * ```
  *
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getPointerviewPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): PointerviewPrecompileContract => {
-	return new ethers.Contract(precompileAddress, POINTERVIEW_PRECOMPILE_ABI as InterfaceAbi, runner) as PointerviewPrecompileContract;
+export const getPointerviewPrecompileEthersV6Contract = (runner: ContractRunner): PointerviewPrecompileContract => {
+	return new ethers.Contract(POINTERVIEW_PRECOMPILE_ADDRESS, POINTERVIEW_PRECOMPILE_ABI, runner) as PointerviewPrecompileContract;
 };

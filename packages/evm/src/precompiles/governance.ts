@@ -95,7 +95,7 @@ export const GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000
  * ```
  * @category Cosmos Interoperability
  * */
-export const GOVERNANCE_PRECOMPILE_ABI: Abi = [
+export const GOVERNANCE_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [{ internalType: 'uint64', name: 'proposalID', type: 'uint64' }],
 		name: 'deposit',
@@ -121,22 +121,21 @@ export const GOVERNANCE_PRECOMPILE_ABI: Abi = [
  * @example
  * ethers v6
  * ```tsx
- * import { getGovernancePrecompileEthersV6Contract, GOVERNANCE_PRECOMPILE_ADDRESS, parseSei } from '@sei-js/evm';
+ * import { getGovernancePrecompileEthersV6Contract, parseSei } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const governancePrecompileContract = getGovernancePrecompileEthersV6Contract(GOVERNANCE_PRECOMPILE_ADDRESS, signer);
+ * const governancePrecompileContract = getGovernancePrecompileEthersV6Contract(signer);
  *
  * //Surround with try/catch for detailed errors
  * const depositResponse = await governancePrecompileContract.connect(signer).deposit('1', { value: parseSei(1) });
  * ```
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getGovernancePrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner) => {
-	return new ethers.Contract(precompileAddress, GOVERNANCE_PRECOMPILE_ABI as InterfaceAbi, runner) as GovernancePrecompileContract;
+export const getGovernancePrecompileEthersV6Contract = (runner: ContractRunner) => {
+	return new ethers.Contract(GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, runner) as GovernancePrecompileContract;
 };
