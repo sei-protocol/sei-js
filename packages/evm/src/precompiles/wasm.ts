@@ -1,5 +1,5 @@
 import { ContractRunner, ethers, InterfaceAbi } from 'ethers';
-import { Abi, parseAbi } from 'viem';
+import { Abi } from 'viem';
 /**
  * Represents the functions available in the WASM precompile contract,
  * facilitating interoperability between the EVM and Cosmos.
