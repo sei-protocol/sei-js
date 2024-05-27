@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.1.1
+
+### Patch Changes
+
+- cbb2a4d: Add pacific-1 EVM chain config
+
 ## 1.1.0
 
 ### Minor Changes
