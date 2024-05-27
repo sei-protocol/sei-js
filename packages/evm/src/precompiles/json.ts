@@ -104,7 +104,7 @@ export const JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const JSON_PRECOMPILE_ABI: Abi = [
+export const JSON_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [
 			{ internalType: 'bytes', name: 'input', type: 'bytes' },
@@ -142,7 +142,7 @@ export const JSON_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { JSON_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { getJSONPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -150,15 +150,14 @@ export const JSON_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const jsonPrecompileContract = getJSONPrecompileEthersV6Contract(JSON_PRECOMPILE_ADDRESS, signer);
+ * const jsonPrecompileContract = getJSONPrecompileEthersV6Contract(signer);
  *
  * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
  * ```
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getJSONPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): JSONPrecompileContract => {
-	return new ethers.Contract(precompileAddress, JSON_PRECOMPILE_ABI as InterfaceAbi, runner) as JSONPrecompileContract;
+export const getJSONPrecompileEthersV6Contract = (runner: ContractRunner): JSONPrecompileContract => {
+	return new ethers.Contract(JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, runner) as JSONPrecompileContract;
 };

@@ -97,7 +97,7 @@ export const ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const ADDRESS_PRECOMPILE_ABI: Abi = [
+export const ADDRESS_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [{ internalType: 'string', name: 'addr', type: 'string' }],
 		name: 'getEvmAddr',
@@ -121,7 +121,7 @@ export const ADDRESS_PRECOMPILE_ABI: Abi = [
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { ADDRESS_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { getAddressPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -129,15 +129,14 @@ export const ADDRESS_PRECOMPILE_ABI: Abi = [
  *
  * const accounts = await provider.send('eth_requestAccounts', []);
  *
- * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(ADDRESS_PRECOMPILE_ADDRESS, signer);
+ * const addressPrecompileContract = getAddressPrecompileEthersV6Contract(signer);
  *
  * const associatedSeiAddress = await addressPrecompileContract.connect().getSeiAddr(accounts[0]);
  * ```
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the ADDRESS precompile contract.
  * @category Cosmos Interoperability
  */
-export function getAddressPrecompileEthersV6Contract(precompileAddress: `0x${string}`, runner: ContractRunner): AddressPrecompileContract {
-	return new ethers.Contract(precompileAddress, ADDRESS_PRECOMPILE_ABI as InterfaceAbi, runner) as AddressPrecompileContract;
+export function getAddressPrecompileEthersV6Contract(runner: ContractRunner): AddressPrecompileContract {
+	return new ethers.Contract(ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI, runner) as AddressPrecompileContract;
 }

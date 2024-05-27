@@ -115,7 +115,7 @@ export const POINTER_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const POINTER_PRECOMPILE_ABI: Abi = [
+export const POINTER_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [{ internalType: 'string', name: 'cwAddr', type: 'string' }],
 		name: 'addCW20Pointer',
@@ -144,23 +144,22 @@ export const POINTER_PRECOMPILE_ABI: Abi = [
  *
  * @example
  * ```tsx
- * import { POINTER_PRECOMPILE_ADDRESS, getPointerPrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getPointerPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const pointerPrecompileContract = getPointerPrecompileEthersV6Contract(POINTER_PRECOMPILE_ADDRESS, signer);
+ * const pointerPrecompileContract = getPointerPrecompileEthersV6Contract(signer);
  *
  * const tx = await pointerPrecompileContract.addCW20Pointer('CW20_CONTRACT_ADDRESS', { value: ethers.utils.parseEther('0.01') });
  * console.log(tx);
  * ```
  *
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getPointerPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): PointerPrecompileContract => {
-	return new ethers.Contract(precompileAddress, POINTER_PRECOMPILE_ABI as InterfaceAbi, runner) as PointerPrecompileContract;
+export const getPointerPrecompileEthersV6Contract = (runner: ContractRunner): PointerPrecompileContract => {
+	return new ethers.Contract(POINTER_PRECOMPILE_ADDRESS, POINTER_PRECOMPILE_ABI, runner) as PointerPrecompileContract;
 };

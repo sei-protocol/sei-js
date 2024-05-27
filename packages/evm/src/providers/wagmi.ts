@@ -32,18 +32,6 @@ export const getBaseSeiWagmiConfig = (chains: [Chain], additionalConnectors: Cre
 		client({ chain }) {
 			return createClient({ chain, transport: http() });
 		},
-		connectors: [
-			...additionalConnectors,
-			injected({ target: 'metaMask' }),
-			// TODO: Add fin here
-			injected({
-				target: {
-					id: 'compassWalletProvider',
-					name: 'Compass',
-					provider: window['compassEvm'],
-					icon: 'https://lh3.googleusercontent.com/zMrH9Wrqlv5BG0w28woqEnopKhXBdSvpLhs-nHYft9BcAvseloVTZDfTJu97cGjWVFUKZ4dM12Y-lyvipJOlcbcAtQ=s120'
-				}
-			})
-		]
+		connectors: [...additionalConnectors, injected({ target: 'metaMask' })]
 	});
 };

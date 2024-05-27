@@ -99,7 +99,7 @@ export const WASM_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const WASM_PRECOMPILE_ABI: Abi = [
+export const WASM_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [
 			{ internalType: 'string', name: 'contractAddress', type: 'string' },
@@ -163,22 +163,21 @@ export const WASM_PRECOMPILE_ABI: Abi = [
  * @example
  * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
  * ```tsx
- * import { WASM_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { getWasmPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
  *
- * const wasmPrecompileContract = getWasmPrecompileEthersV6Contract(WASM_PRECOMPILE_ADDRESS, signer);
+ * const wasmPrecompileContract = getWasmPrecompileEthersV6Contract(signer);
  *
  * const queryResponse = await addressPrecompileContract.connect().query(CONTRACT_ADDRESS, REQUEST);
  * ```
  *
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getWasmPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner) => {
-	return new ethers.Contract(precompileAddress, WASM_PRECOMPILE_ABI as InterfaceAbi, runner) as WasmPrecompileContract;
+export const getWasmPrecompileEthersV6Contract = (runner: ContractRunner) => {
+	return new ethers.Contract(WASM_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI, runner) as WasmPrecompileContract;
 };

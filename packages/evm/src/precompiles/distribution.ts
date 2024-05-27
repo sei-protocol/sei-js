@@ -112,7 +112,7 @@ export const DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const DISTRIBUTION_PRECOMPILE_ABI: Abi = [
+export const DISTRIBUTION_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	{
 		inputs: [{ internalType: 'address', name: 'withdrawAddr', type: 'address' }],
 		name: 'setWithdrawAddress',
@@ -135,21 +135,20 @@ export const DISTRIBUTION_PRECOMPILE_ABI: Abi = [
  * @example
  * ethers v6: Use the `ethers` library and precompiles to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { getDistributionPrecompileEthersV6Contract, DISTRIBUTION_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { getDistributionPrecompileEthersV6Contract } from '@sei-js/evm';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
  *
- * const contract = getDistributionPrecompileEthersV6Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, signer);
+ * const contract = getDistributionPrecompileEthersV6Contract(signer);
  *
  * const response = await contract.setWithdrawAddress('0xADDRESS');
  * ```
- * @param precompileAddress The 0X address of the precompile contract.
  * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance allowing interaction with the precompile contract.
  * @category Cosmos Interoperability
  */
-export const getDistributionPrecompileEthersV6Contract = (precompileAddress: `0x${string}`, runner: ContractRunner): DistributionPrecompileContract => {
-	return new ethers.Contract(precompileAddress, DISTRIBUTION_PRECOMPILE_ABI as InterfaceAbi, runner) as DistributionPrecompileContract;
+export const getDistributionPrecompileEthersV6Contract = (runner: ContractRunner): DistributionPrecompileContract => {
+	return new ethers.Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI, runner) as DistributionPrecompileContract;
 };
