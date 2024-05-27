@@ -1,5 +1,5 @@
 import { ContractRunner, ethers, InterfaceAbi } from 'ethers';
-import { Abi } from 'viem';
+import { Abi, parseAbi } from 'viem';
 /**
  * Represents the functions available in the WASM precompile contract,
  * facilitating interoperability between the EVM and Cosmos.
@@ -99,7 +99,7 @@ export const WASM_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const WASM_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const WASM_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [
 			{ internalType: 'string', name: 'contractAddress', type: 'string' },
@@ -157,6 +157,8 @@ export const WASM_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 	}
 ];
 
+export const ETHERS_WASM_PRECOMPILE_ABI = WASM_PRECOMPILE_ABI as ethers.InterfaceAbi;
+
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
  *
@@ -179,5 +181,5 @@ export const WASM_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getWasmPrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new ethers.Contract(WASM_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI, runner) as WasmPrecompileContract;
+	return new ethers.Contract(WASM_PRECOMPILE_ADDRESS, ETHERS_WASM_PRECOMPILE_ABI, runner) as WasmPrecompileContract;
 };

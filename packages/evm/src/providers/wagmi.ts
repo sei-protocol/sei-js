@@ -2,6 +2,23 @@ import { Chain, createClient, http } from 'viem';
 import { Config, createConfig, CreateConnectorFn, injected } from '@wagmi/core';
 
 /**
+ * The default wallet connectors used in `getBaseSeiWagmiConfig`.
+ * @category Wagmi
+ */
+const DEFAULT_WALLETS: CreateConnectorFn[] = [
+	injected({
+		target: {
+			id: 'compassWalletProvider',
+			name: 'Compass',
+			provider: window['compassEvm'],
+			icon: 'https://cdn.sei.io/sei-app/wallets/compass-icon.png'
+		}
+	}),
+	injected({ target: 'metaMask' }),
+	injected({ target: 'coinbaseWallet' })
+];
+
+/**
  * Creates and returns a Wagmi config for the passed in Viem chain. This config includes the injected connector for MetaMask and Compass. If you need to add additional parameters it is recommended that you extend the object returned from this function.
  *
  * @example
@@ -23,15 +40,16 @@ import { Config, createConfig, CreateConnectorFn, injected } from '@wagmi/core';
  * ```
  * @returns Helper function to create a wagmi config given a Viem Chain.
  * @param chains - An array of Chains from 'viem'.
- * @param additionalConnectors - A list of additional connectors to add to the Wagmi config for other wallets
+ * @param connectors - A list of connectors to add to the Wagmi config for wallets
  * @category Wagmi
  */
-export const getBaseSeiWagmiConfig = (chains: [Chain], additionalConnectors: CreateConnectorFn[] = []): Config => {
+export const getBaseSeiWagmiConfig = (chains: [Chain], connectors: CreateConnectorFn[] = DEFAULT_WALLETS): Config => {
 	return createConfig({
 		chains: chains,
 		client({ chain }) {
 			return createClient({ chain, transport: http() });
 		},
-		connectors: [...additionalConnectors, injected({ target: 'metaMask' })]
+		multiInjectedProviderDiscovery: false,
+		connectors
 	});
 };

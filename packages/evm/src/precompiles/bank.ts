@@ -111,7 +111,7 @@ export type BankPrecompileContract = ethers.Contract & BankPrecompileFunctions;
 export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001001';
 
 /**
- * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ * The ABI for the bank precompile contract, which can be used for interoperability between the EVM and Cosmos.
  *
  * @example
  * Wagmi: Use the `useReadContract` hook to read the balance of the connected account.
@@ -132,25 +132,9 @@ export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
  *  console.log({ balance: data.balance });
  * ```
  *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to read the balance of the connected account.
- * ```tsx
- * import { BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, BankPrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const accounts = await provider.send('eth_requestAccounts', []);
- *
- * const bankPrecompileContract = new ethers.Contract(BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, signer) as BankPrecompileContract;
- *
- * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
- * ```
- *
  * @category Cosmos Interoperability
  */
-export const BANK_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const BANK_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [{ internalType: 'address', name: 'acc', type: 'address' }],
 		name: 'all_balances',
@@ -228,6 +212,30 @@ export const BANK_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 ];
 
 /**
+ * The ABI for the bank precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * ethers v6: Use the `ethers` library and precompiles to read the balance of the connected account.
+ * ```tsx
+ * import { BANK_PRECOMPILE_ADDRESS, ETHERS_BANK_PRECOMPILE_ABI, BankPrecompileContract } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const bankPrecompileContract = new ethers.Contract(BANK_PRECOMPILE_ADDRESS, ETHERS_BANK_PRECOMPILE_ABI, signer) as BankPrecompileContract;
+ *
+ * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
+ * ```
+ *
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_BANK_PRECOMPILE_ABI = BANK_PRECOMPILE_ABI as ethers.InterfaceAbi;
+
+/**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
  *
  * @example
@@ -250,5 +258,5 @@ export const BANK_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getBankPrecompileEthersV6Contract = (runner: ContractRunner): BankPrecompileContract => {
-	return new ethers.Contract(BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, runner) as BankPrecompileContract;
+	return new ethers.Contract(BANK_PRECOMPILE_ADDRESS, ETHERS_BANK_PRECOMPILE_ABI, runner) as BankPrecompileContract;
 };

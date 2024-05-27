@@ -84,7 +84,7 @@ export type StakingPrecompileContract = ethers.Contract & StakingPrecompileFunct
 export const STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001005';
 
 /**
- * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ * The ABI for the staking precompile contract, which can be used for interoperability between the EVM and Cosmos.
  *
  * @example
  * Wagmi: Use the `useWriteContract` hook to set the withdrawal address for rewards for the connected account.
@@ -108,21 +108,9 @@ export const STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000
  * console.log({ hash, isConfirming, isConfirmed });
  * ```
  *
- * @example
- * ```tsx
- * import { STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, StakingPrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(); // or any other provider
- * const signer = provider.getSigner();
- *
- * const contract = new ethers.Contract(STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, signer) as StakingPrecompileContract;
- *
- * const response = await contract.connect().delegate('0xVALIDATOR_ADDRESS', parseSei(1));
- * ```
  * @category Cosmos Interoperability
  */
-export const STAKING_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const STAKING_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [{ internalType: 'string', name: 'valAddress', type: 'string' }],
 		name: 'delegate',
@@ -154,6 +142,26 @@ export const STAKING_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 ];
 
 /**
+ * The ABI for the staking precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * ```tsx
+ * import { STAKING_PRECOMPILE_ADDRESS, ETHERS_STAKING_PRECOMPILE_ABI, StakingPrecompileContract } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(); // or any other provider
+ * const signer = provider.getSigner();
+ *
+ * const contract = new ethers.Contract(STAKING_PRECOMPILE_ADDRESS, ETHERS_STAKING_PRECOMPILE_ABI, signer) as StakingPrecompileContract;
+ *
+ * const response = await contract.connect().delegate('0xVALIDATOR_ADDRESS', parseSei(1));
+ * ```
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_STAKING_PRECOMPILE_ABI = STAKING_PRECOMPILE_ABI as ethers.InterfaceAbi;
+
+/**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
  *
  * @example
@@ -175,5 +183,5 @@ export const STAKING_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getStakingPrecompileEthersV6Contract = (runner: ContractRunner): StakingPrecompileContract => {
-	return new ethers.Contract(STAKING_PRECOMPILE_ADDRESS, STAKING_PRECOMPILE_ABI, runner) as StakingPrecompileContract;
+	return new ethers.Contract(STAKING_PRECOMPILE_ADDRESS, ETHERS_STAKING_PRECOMPILE_ABI, runner) as StakingPrecompileContract;
 };

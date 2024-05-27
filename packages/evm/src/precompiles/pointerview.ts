@@ -77,7 +77,7 @@ export type PointerviewPrecompileContract = ethers.Contract & PointerviewPrecomp
 export const POINTERVIEW_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000000000000000000000000100A';
 
 /**
- * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ * The ABI for the pointerview precompile contract, which can be used for interoperability between the EVM and Cosmos.
  *
  * @example
  * Wagmi: Use the `useReadContract` hook to read the pointer of a CW20 contract.
@@ -113,7 +113,7 @@ export const POINTERVIEW_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const POINTERVIEW_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const POINTERVIEW_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [{ internalType: 'string', name: 'cwAddr', type: 'string' }],
 		name: 'getCW20Pointer',
@@ -150,6 +150,28 @@ export const POINTERVIEW_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 ];
 
 /**
+ * The ABI for the pointerview precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * ethers v6: Use the `ethers` library and precompiles to read the pointer of a CW20 contract.
+ * ```tsx
+ * import { POINTERVIEW_PRECOMPILE_ADDRESS, ETHERS_POINTERVIEW_PRECOMPILE_ABI, PointerviewPrecompileContract } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
+ * const signer = await provider.getSigner();
+ *
+ * const pointerviewPrecompileContract = new ethers.Contract(POINTERVIEW_PRECOMPILE_ADDRESS, ETHERS_POINTERVIEW_PRECOMPILE_ABI, signer) as PointerviewPrecompileContract;
+ *
+ * const pointer = await pointerviewPrecompileContract.getCW20Pointer('CW20_CONTRACT_ADDRESS');
+ * console.log(pointer);
+ * ```
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_POINTERVIEW_PRECOMPILE_ABI = POINTERVIEW_PRECOMPILE_ABI as ethers.InterfaceAbi;
+
+/**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
  *
  * @example
@@ -171,5 +193,5 @@ export const POINTERVIEW_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getPointerviewPrecompileEthersV6Contract = (runner: ContractRunner): PointerviewPrecompileContract => {
-	return new ethers.Contract(POINTERVIEW_PRECOMPILE_ADDRESS, POINTERVIEW_PRECOMPILE_ABI, runner) as PointerviewPrecompileContract;
+	return new ethers.Contract(POINTERVIEW_PRECOMPILE_ADDRESS, ETHERS_POINTERVIEW_PRECOMPILE_ABI, runner) as PointerviewPrecompileContract;
 };
