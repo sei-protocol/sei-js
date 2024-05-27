@@ -159,7 +159,7 @@ export const STAKING_PRECOMPILE_ABI: Abi = [
  *
  * @category Cosmos Interoperability
  */
-export const ETHERS_STAKING_PRECOMPILE_ABI = STAKING_PRECOMPILE_ABI as ethers.InterfaceAbi;
+export const ETHERS_STAKING_PRECOMPILE_ABI = STAKING_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.

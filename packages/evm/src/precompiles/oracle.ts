@@ -169,7 +169,7 @@ export const ORACLE_PRECOMPILE_ABI: Abi = [
  *
  * @category Cosmos Interoperability
  */
-export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as ethers.InterfaceAbi;
+export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.

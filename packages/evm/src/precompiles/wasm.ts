@@ -157,7 +157,7 @@ export const WASM_PRECOMPILE_ABI: Abi = [
 	}
 ];
 
-export const ETHERS_WASM_PRECOMPILE_ABI = WASM_PRECOMPILE_ABI as ethers.InterfaceAbi;
+export const ETHERS_WASM_PRECOMPILE_ABI = WASM_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
