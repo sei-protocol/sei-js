@@ -74,7 +74,7 @@ export type JSONPrecompileContract = ethers.Contract & JSONPrecompileFunctions;
 export const JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001003';
 
 /**
- * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ * The ABI for the JSON precompile contract, which can be used for interoperability between the EVM and Cosmos.
  *
  * @example
  * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
@@ -88,23 +88,9 @@ export const JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
  * const extractedBytes = useReadContract({ abi: JSON_PRECOMPILE_ABI, address: JSON_PRECOMPILE_ADDRESS, functionName: 'extractAsBytes', args: ['0xINPUT', 'KEY'] });
  * ```
  *
- * @example
- * ethers v6
- * ```tsx
- * import { JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, JSONPrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- **
- * const jsonPrecompileContract = new ethers.Contract(JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, signer) as JSONPrecompileContract;
- *
- * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
- * ```
- *
  * @category Cosmos Interoperability
  */
-export const JSON_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const JSON_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [
 			{ internalType: 'bytes', name: 'input', type: 'bytes' },
@@ -138,6 +124,27 @@ export const JSON_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 ];
 
 /**
+ * The ABI for the JSON precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * ethers v6
+ * ```tsx
+ * import { JSON_PRECOMPILE_ADDRESS, ETHERS_JSON_PRECOMPILE_ABI, JSONPrecompileContract } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
+ * const signer = await provider.getSigner();
+ **
+ * const jsonPrecompileContract = new ethers.Contract(JSON_PRECOMPILE_ADDRESS, ETHERS_JSON_PRECOMPILE_ABI, signer) as JSONPrecompileContract;
+ *
+ * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
+ * ```
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_JSON_PRECOMPILE_ABI = JSON_PRECOMPILE_ABI as InterfaceAbi;
+
+/**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
  *
  * @example
@@ -159,5 +166,5 @@ export const JSON_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getJSONPrecompileEthersV6Contract = (runner: ContractRunner): JSONPrecompileContract => {
-	return new ethers.Contract(JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI, runner) as JSONPrecompileContract;
+	return new ethers.Contract(JSON_PRECOMPILE_ADDRESS, ETHERS_JSON_PRECOMPILE_ABI, runner) as JSONPrecompileContract;
 };

@@ -4,5 +4,8 @@ export * from './distribution';
 export * from './governance';
 export * from './ibc';
 export * from './json';
+export * from './oracle';
+export * from './pointer';
+export * from './pointerview';
 export * from './staking';
 export * from './wasm';

@@ -64,7 +64,7 @@ export type AddressPrecompileContract = ethers.Contract & AddressPrecompileFunct
 export const ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001004';
 
 /**
- * The ABI for the precompile contract which can be used for interoperability between the EVM and Cosmos.
+ * The ABI for the address precompile contract which can be used for interoperability between the EVM and Cosmos.
  * It can be used to get the associated EVM address for a given Cosmos address and vice versa.
  *
  * @example
@@ -79,25 +79,9 @@ export const ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000
  * const associatedSeiAddress = useReadContract({ abi: ADDRESS_PRECOMPILE_ABI, address: ADDRESS_PRECOMPILE_ADDRESS, functionName: 'getSeiAddr', args: [address] });
  * ```
  *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { ADDRESS_PRECOMPILE_ADDRESS, AddressPrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const accounts = await provider.send('eth_requestAccounts', []);
- *
- * const addressPrecompileContract = new ethers.Contract(ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI, signer) as AddressPrecompileContract;
- *
- * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
- * ```
- *
  * @category Cosmos Interoperability
  */
-export const ADDRESS_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const ADDRESS_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [{ internalType: 'string', name: 'addr', type: 'string' }],
 		name: 'getEvmAddr',
@@ -113,6 +97,30 @@ export const ADDRESS_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 		type: 'function'
 	}
 ];
+
+/**
+ * The ABI for the address precompile contract which can be used for interoperability between the EVM and Cosmos.
+ * It can be used to get the associated EVM address for a given Cosmos address and vice versa.
+ *
+ * @example
+ * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
+ * ```tsx
+ * import { ADDRESS_PRECOMPILE_ADDRESS, AddressPrecompileContract, ETHERS_ADDRESS_PRECOMPILE_ABI } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
+ * const signer = await provider.getSigner();
+ *
+ * const accounts = await provider.send('eth_requestAccounts', []);
+ *
+ * const addressPrecompileContract = new ethers.Contract(ADDRESS_PRECOMPILE_ADDRESS, ETHERS_ADDRESS_PRECOMPILE_ABI, signer) as AddressPrecompileContract;
+ *
+ * const associatedSeiAddress = await addressPrecompileContract.getSeiAddr(accounts[0]);
+ * ```
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_ADDRESS_PRECOMPILE_ABI = ADDRESS_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
@@ -138,5 +146,5 @@ export const ADDRESS_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export function getAddressPrecompileEthersV6Contract(runner: ContractRunner): AddressPrecompileContract {
-	return new ethers.Contract(ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI, runner) as AddressPrecompileContract;
+	return new ethers.Contract(ADDRESS_PRECOMPILE_ADDRESS, ETHERS_ADDRESS_PRECOMPILE_ABI, runner) as AddressPrecompileContract;
 }

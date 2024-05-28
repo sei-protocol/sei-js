@@ -101,23 +101,9 @@ export const IBC_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000000000000
  * const isSuccessful = useReadContract({ abi: IBC_PRECOMPILE_ABI, address: IBC_PRECOMPILE_ADDRESS, functionName: 'transfer', args: [COSMOS_ADDRESS, PORT, ... ] });
  * ```
  *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
- *
- * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n, 'memo');
- * ```
- *
  * @category Cosmos Interoperability
  */
-export const IBC_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const IBC_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [
 			{ internalType: 'string', name: 'toAddress', type: 'string' },
@@ -152,6 +138,27 @@ export const IBC_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 ];
 
 /**
+ * The ABI for the IBC precompile contract.
+ *
+ * @example
+ * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
+ * ```tsx
+ * import { IBC_PRECOMPILE_ADDRESS } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
+ * const signer = await provider.getSigner();
+ *
+ * const ibcPrecompileContract = getIbcPrecompileEthersV6Contract(IBC_PRECOMPILE_ADDRESS, signer);
+ *
+ * const queryResponse = await ibcPrecompileContract.transfer(cosmosAddress, 'transfer', 'channel-0', 'usei', 100, 1n, 1n, 1n, 'memo');
+ * ```
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_IBC_PRECOMPILE_ABI = IBC_PRECOMPILE_ABI as InterfaceAbi;
+
+/**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
  *
  * @example
@@ -173,5 +180,5 @@ export const IBC_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getIbcPrecompileEthersV6Contract = (runner: ContractRunner): IbcPrecompileContract => {
-	return new ethers.Contract(IBC_PRECOMPILE_ADDRESS, IBC_PRECOMPILE_ABI, runner) as IbcPrecompileContract;
+	return new ethers.Contract(IBC_PRECOMPILE_ADDRESS, ETHERS_IBC_PRECOMPILE_ABI, runner) as IbcPrecompileContract;
 };

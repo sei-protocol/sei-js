@@ -115,7 +115,7 @@ export const POINTER_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000
  *
  * @category Cosmos Interoperability
  */
-export const POINTER_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const POINTER_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [{ internalType: 'string', name: 'cwAddr', type: 'string' }],
 		name: 'addCW20Pointer',
@@ -140,6 +140,28 @@ export const POINTER_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 ];
 
 /**
+ * The ABI for the Pointer precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * ethers v6: Use the `ethers` library and precompiles to add a CW20 pointer.
+ * ```tsx
+ * import { POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, PointerPrecompileContract } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
+ * const signer = await provider.getSigner();
+ *
+ * const pointerPrecompileContract = new ethers.Contract(POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, signer) as PointerPrecompileContract;
+ *
+ * const tx = await pointerPrecompileContract.addCW20Pointer('CW20_CONTRACT_ADDRESS', { value: ethers.utils.parseEther('0.01') });
+ * console.log(tx);
+ * ```
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_POINTER_PRECOMPILE_ABI = POINTER_PRECOMPILE_ABI as InterfaceAbi;
+
+/**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
  *
  * @example
@@ -161,5 +183,5 @@ export const POINTER_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getPointerPrecompileEthersV6Contract = (runner: ContractRunner): PointerPrecompileContract => {
-	return new ethers.Contract(POINTER_PRECOMPILE_ADDRESS, POINTER_PRECOMPILE_ABI, runner) as PointerPrecompileContract;
+	return new ethers.Contract(POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, runner) as PointerPrecompileContract;
 };

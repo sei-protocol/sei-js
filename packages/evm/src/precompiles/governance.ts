@@ -65,7 +65,7 @@ export type GovernancePrecompileContract = ethers.Contract & GovernancePrecompil
 export const GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001006';
 
 /**
- * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ * The ABI for the governance precompile contract, which can be used for interoperability between the EVM and Cosmos.
  *
  * @example
  * Wagmi
@@ -80,22 +80,9 @@ export const GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000
  * );
  * ```
  *
- * @example
- * ethers v6
- * ```tsx
- * import { getGovernancePrecompileEthersV6Contract, GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, parseSei } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(); // or any other provider
- * const signer = provider.getSigner();
- *
- * const governancePrecompileContract = new ethers.Contract(GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, signer) as GovernancePrecompileContract;
- *
- * const depositResponse = await governancePrecompileContract.connect().deposit('PROPOSAL_ID', { value: parseSei(1) });
- * ```
  * @category Cosmos Interoperability
  * */
-export const GOVERNANCE_PRECOMPILE_ABI: Abi & InterfaceAbi = [
+export const GOVERNANCE_PRECOMPILE_ABI: Abi = [
 	{
 		inputs: [{ internalType: 'uint64', name: 'proposalID', type: 'uint64' }],
 		name: 'deposit',
@@ -114,6 +101,27 @@ export const GOVERNANCE_PRECOMPILE_ABI: Abi & InterfaceAbi = [
 		type: 'function'
 	}
 ];
+
+/**
+ * The ABI for the governance precompile contract, which can be used for interoperability between the EVM and Cosmos.
+ *
+ * @example
+ * ethers v6
+ * ```tsx
+ * import { getGovernancePrecompileEthersV6Contract, GOVERNANCE_PRECOMPILE_ADDRESS, ETHERS_GOVERNANCE_PRECOMPILE_ABI, parseSei } from '@sei-js/evm';
+ * import { ethers } from 'ethers';
+ *
+ * const provider = new ethers.BrowserProvider(); // or any other provider
+ * const signer = provider.getSigner();
+ *
+ * const governancePrecompileContract = new ethers.Contract(GOVERNANCE_PRECOMPILE_ADDRESS, ETHERS_GOVERNANCE_PRECOMPILE_ABI, signer) as GovernancePrecompileContract;
+ *
+ * const depositResponse = await governancePrecompileContract.connect().deposit('PROPOSAL_ID', { value: parseSei(1) });
+ * ```
+ *
+ * @category Cosmos Interoperability
+ */
+export const ETHERS_GOVERNANCE_PRECOMPILE_ABI = GOVERNANCE_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
  * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
@@ -137,5 +145,5 @@ export const GOVERNANCE_PRECOMPILE_ABI: Abi & InterfaceAbi = [
  * @category Cosmos Interoperability
  */
 export const getGovernancePrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new ethers.Contract(GOVERNANCE_PRECOMPILE_ADDRESS, GOVERNANCE_PRECOMPILE_ABI, runner) as GovernancePrecompileContract;
+	return new ethers.Contract(GOVERNANCE_PRECOMPILE_ADDRESS, ETHERS_GOVERNANCE_PRECOMPILE_ABI, runner) as GovernancePrecompileContract;
 };
