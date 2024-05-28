@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.1.2
+
+### Patch Changes
+
+- 93ea230: Add wallets and ABI types fixes
+
 ## 1.1.1
 
 ### Patch Changes
