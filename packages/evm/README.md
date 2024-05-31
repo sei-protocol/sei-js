@@ -145,10 +145,11 @@ The Distribution precompile contract facilitates operations related to rewards w
 
 #### Functions
 
-| Function Name                                                                                                             | Input Parameters             | Return Value           | Description                                         |
-|---------------------------------------------------------------------------------------------------------------------------|------------------------------|------------------------|-----------------------------------------------------|
-| [`setWithdrawAddress`](/sei-js/docs/interfaces/evm.DistributionPrecompileFunctions.html#setWithdrawAddress)               | `withdrawAddress: ` `string` | `{ success: boolean }` | Sets the withdrawal address for rewards.            |
+| Function Name                                                                                    | Input Parameters             | Return Value           | Description                                         |
+|--------------------------------------------------------------------------------------------------|------------------------------|------------------------|-----------------------------------------------------|
+| [`setWithdrawAddress`](/sei-js/docs/interfaces/evm.DistributionPrecompileFunctions.html#setWithdrawAddress) | `withdrawAddress: ` `string` | `{ success: boolean }` | Sets the withdrawal address for rewards.            |
 | [`withdrawDelegationRewards`](/sei-js/docs/interfaces/evm.DistributionPrecompileFunctions.html#withdrawDelegationRewards) | `validator: ` `string`       | `{ success: boolean }` | Withdraws delegation rewards for a given validator. |
+| [`withdrawMultipleDelegationRewards`](/sei-js/docs/interfaces/evm.DistributionPrecompileFunctions.html#withdrawMultipleDelegationRewards) | `validators: ` `string[]`    | `{ success: boolean }` | Withdraws delegation rewards for given validators.  |
 
 #### Precompile Addresses
 0x0000000000000000000000000000000000001007
