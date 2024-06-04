@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.2.0
+
+### Minor Changes
+
+- 2d0ab5e: add withdrawMultipleDelegationRewards method to distribution precompile
+
 ## 1.1.2
 
 ### Patch Changes
