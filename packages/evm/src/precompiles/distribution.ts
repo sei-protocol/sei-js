@@ -21,6 +21,13 @@ export interface DistributionPrecompileFunctions {
 	 * @category Cosmos Interoperability
 	 */
 	withdrawDelegationRewards(validator: string): Promise<{ success: boolean }>;
+  /**
+   * Withdraws delegation rewards for a given validators.
+   * @param validators The validators for which to withdraw delegation rewards.
+   * @returns A Promise resolving to an object indicating the success of the transaction.
+   * @category Cosmos Interoperability
+   */
+  withdrawMultipleDelegationRewards(validators: string[]): Promise<{ success: boolean }>;
 }
 
 /** Represents the typed contract instance for the DISTRIBUTION precompile contract.
@@ -112,7 +119,14 @@ export const DISTRIBUTION_PRECOMPILE_ABI: Abi = [
 		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
 		stateMutability: 'nonpayable',
 		type: 'function'
-	}
+	},
+  {
+    inputs: [{ internalType: 'string[]', name: 'validators', type: 'string[]' }],
+    name: 'withdrawMultipleDelegationRewards',
+    outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
 ];
 
 /**
