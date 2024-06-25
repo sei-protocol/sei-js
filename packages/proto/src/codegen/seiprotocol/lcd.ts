@@ -15,6 +15,11 @@ export const createLCDClient = async ({ restEndpoint }: { restEndpoint: string }
 					requestClient
 				})
 			},
+			authz: {
+				v1beta1: new (await import('../cosmos/authz/v1beta1/query.lcd')).LCDQueryClient({
+					requestClient
+				})
+			},
 			bank: {
 				v1beta1: new (await import('../cosmos/bank/v1beta1/query.lcd')).LCDQueryClient({
 					requestClient
@@ -25,6 +30,11 @@ export const createLCDClient = async ({ restEndpoint }: { restEndpoint: string }
 					requestClient
 				})
 			},
+			evidence: {
+				v1beta1: new (await import('../cosmos/evidence/v1beta1/query.lcd')).LCDQueryClient({
+					requestClient
+				})
+			},
 			feegrant: {
 				v1beta1: new (await import('../cosmos/feegrant/v1beta1/query.lcd')).LCDQueryClient({
 					requestClient
@@ -32,6 +42,11 @@ export const createLCDClient = async ({ restEndpoint }: { restEndpoint: string }
 			},
 			gov: {
 				v1beta1: new (await import('../cosmos/gov/v1beta1/query.lcd')).LCDQueryClient({
+					requestClient
+				})
+			},
+			slashing: {
+				v1beta1: new (await import('../cosmos/slashing/v1beta1/query.lcd')).LCDQueryClient({
 					requestClient
 				})
 			},
@@ -53,9 +68,6 @@ export const createLCDClient = async ({ restEndpoint }: { restEndpoint: string }
 		},
 		seiprotocol: {
 			seichain: {
-				dex: new (await import('../dex/query.lcd')).LCDQueryClient({
-					requestClient
-				}),
 				epoch: new (await import('../epoch/query.lcd')).LCDQueryClient({
 					requestClient
 				}),

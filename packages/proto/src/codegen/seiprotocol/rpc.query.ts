@@ -11,17 +11,26 @@ export const createRPCQueryClient = async ({ rpcEndpoint }: { rpcEndpoint: strin
 			auth: {
 				v1beta1: (await import('../cosmos/auth/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
 			},
+			authz: {
+				v1beta1: (await import('../cosmos/authz/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
+			},
 			bank: {
 				v1beta1: (await import('../cosmos/bank/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
 			},
 			distribution: {
 				v1beta1: (await import('../cosmos/distribution/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
 			},
+			evidence: {
+				v1beta1: (await import('../cosmos/evidence/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
+			},
 			feegrant: {
 				v1beta1: (await import('../cosmos/feegrant/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
 			},
 			gov: {
 				v1beta1: (await import('../cosmos/gov/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
+			},
+			slashing: {
+				v1beta1: (await import('../cosmos/slashing/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
 			},
 			staking: {
 				v1beta1: (await import('../cosmos/staking/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
@@ -35,7 +44,6 @@ export const createRPCQueryClient = async ({ rpcEndpoint }: { rpcEndpoint: strin
 		},
 		seiprotocol: {
 			seichain: {
-				dex: (await import('../dex/query.rpc.Query')).createRpcQueryExtension(client),
 				epoch: (await import('../epoch/query.rpc.Query')).createRpcQueryExtension(client),
 				evm: (await import('../evm/query.rpc.Query')).createRpcQueryExtension(client),
 				mint: (await import('../mint/v1beta1/query.rpc.Query')).createRpcQueryExtension(client),

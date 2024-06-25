@@ -21,7 +21,6 @@ telescope({
 					'cosmos.app.v1alpha1',
 					'cosmos.app.v1beta1',
 					'cosmos.autocli.v1',
-					'cosmos.authz.v1beta1',
 					'cosmos.base.kv.v1beta1',
 					'cosmos.base.reflection.v1beta1',
 					'cosmos.base.snapshots.v1beta1',
@@ -29,7 +28,6 @@ telescope({
 					'cosmos.base.tendermint.v1beta1',
 					'cosmos.capability.v1beta1',
 					'cosmos.crisis.v1beta1',
-					'cosmos.evidence.v1beta1',
 					'cosmos.genutil.v1beta1',
 					'cosmos.gov.v1',
 					'cosmos.group.v1',
@@ -40,11 +38,8 @@ telescope({
 					'cosmos.orm.v1',
 					'cosmos.orm.v1alpha1',
 					'cosmos.params.v1beta1',
-					'cosmos.slashing.v1beta1',
 					'cosmos.vesting.v1beta1',
-					'google.api',
-					'ibc.core.port.v1',
-					'ibc.core.types.v1'
+					'google.api'
 				]
 			},
 			enableRegistryLoader: true,
