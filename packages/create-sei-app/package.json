@@ -1,10 +1,10 @@
 {
-  "name": "@sei-js/cli",
+  "name": "@sei-js/create-sei-app",
   "version": "0.0.0-internal-evm-20240625234009",
   "module": "dist/main.js",
   "type": "module",
   "bin": {
-    "cli": "./dist/main.js"
+    "create-sei-app": "./dist/main.js"
   },
   "scripts": {
     "build": "tsc",

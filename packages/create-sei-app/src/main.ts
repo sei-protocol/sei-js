@@ -93,7 +93,7 @@ async function runWizard(): Promise<string> {
 	}
 
 	const templateName = `${appFramework}-${appConnectionType}-template`;
-	const templatePath = path.join('templates', templateName)
+	const templatePath = path.join('./templates', templateName)
 	const dst = path.join('.', dAppName)
 	await fs.cp(templatePath,  dst, {recursive: true}, (e) => console.log(e))
 
