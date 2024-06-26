@@ -15,11 +15,6 @@ div {
   box-sizing: border-box;
 }
 
-.app-logo {
-  width: 8rem;
-  height: 8rem;
-}
-
 .app-container {
   height: 100%;
   width: 100%;

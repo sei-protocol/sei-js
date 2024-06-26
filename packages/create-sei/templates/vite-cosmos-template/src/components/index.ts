@@ -1,4 +1,4 @@
-export * from './Homepage'
-export * from './WalletConnectButton'
+export * from './Homepage/Homepage'
+export * from './WalletConnectButton/WalletConnectButton'
 export * from './Web3Provider'
-export * from './Examples'
+export * from './Homepage/Examples'

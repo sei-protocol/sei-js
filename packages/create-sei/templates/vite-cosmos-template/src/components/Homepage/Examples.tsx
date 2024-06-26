@@ -1,6 +1,6 @@
 import { getCosmWasmClient, getQueryClient, getSigningCosmWasmClient, getStargateClient } from "@sei-js/cosmjs";
 import { useState } from "react";
-import { defaultUrls, selectedChain } from "../constants";
+import { defaultUrls, selectedChain } from "../../constants";
 import { useChain } from "@cosmos-kit/react";
 import styles from './Components.module.css'
 
@@ -51,7 +51,6 @@ function Examples({ chainId }: ExampleProps) {
         if (!address) {
             return undefined
         }
-        console.log(defaultUrls);
         const queryClient = await getStargateClient(defaultUrls[chainId].rpc);
         const useiBalance = await queryClient.getBalance(address, 'usei');
         const seiBalance = Number(useiBalance.amount) / 1000000

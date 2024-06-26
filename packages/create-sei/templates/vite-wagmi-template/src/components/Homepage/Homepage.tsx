@@ -1,7 +1,8 @@
-import './Homepage.css'
 import React from 'react';
+import styles from './Components.module.css'
 import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Examples from './Examples';
 
 type HelpItem = {
 	title: string;
@@ -10,9 +11,9 @@ type HelpItem = {
 };
 
 const renderHelpItem = ({ title, description, link }: HelpItem) => (
-	<a href={link} target='_blank' rel='noopener noreferrer' className='help-item'>
-		<h2 className='help-title'>{title}</h2>
-		<p className='help-description'>{description}</p>
+	<a href={link} target='_blank' rel='noopener noreferrer' className={styles.helpItem}>
+		<h2 className={styles.helpTitle}>{title}</h2>
+		<p className={styles.helpDescription}>{description}</p>
 	</a>
 );
 
@@ -43,20 +44,21 @@ function Homepage() {
 	const { isConnected, address } = useAccount();
 
 	return (
-      <div className='main-content'>
-        <img src='https://cdn.sei.io/sei-app/sei-icon.png' alt='Sei Logo' className='app-logo' />
-        <h1 className='welcome-heading'>Welcome to Sei</h1>
-        <div className='wallet-info-container'>
+      <div className={styles.mainContent}>
+        <img src='https://cdn.sei.io/sei-app/sei-icon.png' alt='Sei Logo' className={styles.appLogo} />
+        <h1 className={styles.welcomeHeading}>Welcome to Sei</h1>
+        <div className={styles.walletInfoContainer}>
 			{ isConnected ? 
-				<div className='wallet-address-container'>
-					<p className='wallet-address-label'>Wallet Address</p>
-					<strong className='wallet-address'>{address || '---'}</strong>
+				<div className={styles.walletAddressContainer}>
+					<p className={styles.walletAddressLabel}>Wallet Address</p>
+					<strong className={styles.walletAddressLabel}>{address || '---'}</strong>
 				</div> :
           		<ConnectButton showBalance={false} />	
 			}
         </div>
-        <p className='edit-message'>
-          Get started by editing <code className='edit-code'>src/App.tsx</code>
+		<Examples />
+        <p className={styles.editMessage}>
+          Get started by editing <code className={styles.editCode}>src/App.tsx</code>
         </p>
         {helpItems.map((item, index) => (
           <React.Fragment key={index}>{renderHelpItem(item)}</React.Fragment>

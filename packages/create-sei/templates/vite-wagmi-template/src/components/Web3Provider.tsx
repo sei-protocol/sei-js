@@ -1,12 +1,12 @@
-import { RainbowKitProvider, connectorsForWallets, lightTheme, midnightTheme } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider, connectorsForWallets, lightTheme } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
 import { Buffer } from 'buffer';
 import { ReactNode, useMemo } from 'react';
 import { WagmiProvider, createConfig, http } from 'wagmi';
 
 import '@rainbow-me/rainbowkit/styles.css';
-import { ATLANTIC_2_VIEM_CHAIN } from '@sei-js/evm';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { selectedChain } from '../constants';
 
 const queryClient = new QueryClient();
 
@@ -32,7 +32,7 @@ function Web3Provider({ children }: Web3ProviderProps) {
 	if (typeof window !== 'undefined') {
 		window.Buffer = window.Buffer ?? Buffer;
 	}
-	const chainConfig = ATLANTIC_2_VIEM_CHAIN;
+	const chainConfig = selectedChain;
 	const config = useMemo(
 		() =>
 			createConfig({

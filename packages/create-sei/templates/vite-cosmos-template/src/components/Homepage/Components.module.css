@@ -23,17 +23,6 @@
     margin-bottom: 2rem;
 }
 
-.walletConnectButton {
-    padding: 1rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    border-radius: 1rem;
-    font-size: 16px;
-    color: white;
-    background-color: #7e1914;
-    border-color: black;
-}
-
 .walletInfoContainer,
 .connectButtonContainer {
     display: flex;
@@ -69,6 +58,7 @@
 
 .walletAddressLabel {
     margin: 0;
+    align-self: center;
 }
 
 .walletAddress {
@@ -87,6 +77,7 @@
     width: 100%;
     text-align: center;
     border-color: black;
+    min-width: 20rem;
 }
 
 .exampleButton {

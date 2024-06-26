@@ -5,7 +5,7 @@ import styles from './Components.module.css'
 import { useChain } from '@cosmos-kit/react';
 import "@interchain-ui/react/styles";
 import Examples from './Examples';
-import { selectedChain } from '../constants';
+import { selectedChain } from '../../constants';
 
 type HelpItem = {
 	title: string;

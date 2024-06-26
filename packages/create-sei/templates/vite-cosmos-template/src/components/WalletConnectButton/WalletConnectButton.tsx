@@ -1,7 +1,7 @@
 import { useChain } from "@cosmos-kit/react";
 
 import { ATLANTIC_2_SEI_COSMOS_KIT_CHAIN, truncateSeiAddress } from "@sei-js/cosmjs";
-import styles from './Components.module.css'
+import styles from './WalletConnectButton.module.css'
 
 export function WalletConnectButton() {
   const {
