@@ -3,7 +3,6 @@
 import React from 'react';
 import styles from './Components.module.css'
 import { useChain } from '@cosmos-kit/react';
-import "@interchain-ui/react/styles";
 import Examples from './Examples';
 import { selectedChain } from '../../constants';
 

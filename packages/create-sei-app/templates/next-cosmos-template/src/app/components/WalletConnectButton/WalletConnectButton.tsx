@@ -1,6 +1,7 @@
 import { useChain } from "@cosmos-kit/react";
 
 import { truncateSeiAddress } from "@sei-js/cosmjs";
+import "@interchain-ui/react/styles";
 import styles from './WalletConnectButton.module.css'
 import { selectedChain } from "@/app/constants";
 
