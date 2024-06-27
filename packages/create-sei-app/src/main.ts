@@ -4,6 +4,12 @@ import boxen from 'boxen';
 
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 // Print welcome message
 console.log(
@@ -93,8 +99,8 @@ async function runWizard(): Promise<string> {
 	}
 
 	const templateName = `${appFramework}-${appConnectionType}-template`;
-	const templatePath = path.join('./templates', templateName)
-	const dst = path.join('.', dAppName)
+	const templatePath = path.join(__dirname, 'templates', templateName)
+	const dst = path.join(process.cwd(), dAppName)
 	await fs.cp(templatePath,  dst, {recursive: true}, (e) => console.log(e))
 
 	return 'Project setup complete!';

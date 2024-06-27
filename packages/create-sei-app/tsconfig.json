@@ -21,12 +21,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src",
-    "templates"
   ],
 }
