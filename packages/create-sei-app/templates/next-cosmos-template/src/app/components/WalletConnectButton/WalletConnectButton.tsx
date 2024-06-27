@@ -1,7 +1,8 @@
 import { useChain } from "@cosmos-kit/react";
 
-import { ATLANTIC_2_SEI_COSMOS_KIT_CHAIN, truncateSeiAddress } from "@sei-js/cosmjs";
+import { truncateSeiAddress } from "@sei-js/cosmjs";
 import styles from './WalletConnectButton.module.css'
+import { selectedChain } from "@/app/constants";
 
 export function WalletConnectButton() {
   const {
@@ -9,7 +10,7 @@ export function WalletConnectButton() {
     address,
     connect,
     openView,
-  } = useChain(ATLANTIC_2_SEI_COSMOS_KIT_CHAIN.chain_name);
+  } = useChain(selectedChain.chain_name);
 
   const truncatedSeiAddr = address ? truncateSeiAddress(address) : ""
 
