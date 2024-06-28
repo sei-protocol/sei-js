@@ -44,26 +44,26 @@ function Homepage() {
 	const { isConnected, address } = useAccount();
 
 	return (
-      <div className={styles.mainContent}>
-        <img src='https://cdn.sei.io/sei-app/sei-icon.png' alt='Sei Logo' className={styles.appLogo} />
-        <h1 className={styles.welcomeHeading}>Welcome to Sei</h1>
-        <div className={styles.walletInfoContainer}>
-			{ isConnected ? 
-				<div className={styles.walletAddressContainer}>
-					<p className={styles.walletAddressLabel}>Wallet Address</p>
-					<strong className={styles.walletAddressLabel}>{address || '---'}</strong>
-				</div> :
-          		<ConnectButton showBalance={false} />	
-			}
-        </div>
-		<Examples />
-        <p className={styles.editMessage}>
-          Get started by editing <code className={styles.editCode}>src/App.tsx</code>
-        </p>
-        {helpItems.map((item, index) => (
-          <React.Fragment key={index}>{renderHelpItem(item)}</React.Fragment>
-        ))}
-      </div>
+		<div className={styles.mainContent}>
+			<img src='https://cdn.sei.io/sei-app/sei-icon.png' alt='Sei Logo' className={styles.appLogo} />
+			<h1 className={styles.welcomeHeading}>Welcome to Sei</h1>
+			<div className={styles.walletInfoContainer}>
+				{isConnected ?
+					<div className={styles.walletAddressContainer}>
+						<p className={styles.walletAddressLabel}>Wallet Address</p>
+						<strong className={styles.walletAddressLabel}>{address || '---'}</strong>
+					</div> :
+					<ConnectButton showBalance={false} />
+				}
+			</div>
+			<Examples />
+			<p className={styles.editMessage}>
+				Get started by editing <code className={styles.editCode}>src/App.tsx</code>
+			</p>
+			{helpItems.map((item, index) => (
+				<React.Fragment key={index}>{renderHelpItem(item)}</React.Fragment>
+			))}
+		</div>
 	);
 }
 

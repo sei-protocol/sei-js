@@ -12,16 +12,16 @@ function Examples() {
     const [count, setCount] = useState(0)
     const publicClient = usePublicClient();
 
-	const { isConnected, address } = useAccount();
-	const { writeContractAsync } = useWriteContract();
+    const { isConnected, address } = useAccount();
+    const { writeContractAsync } = useWriteContract();
 
     const formatLargeSeiNumber = (num: string, decimals: number): string => {
-		if (num.length > 10) {
-			return (Number(num) / 1000000 / 1000000000).toLocaleString(navigator.language, { minimumFractionDigits: decimals, maximumFractionDigits: decimals}) + ' B';
-		} else {
-			return (Number(num) / 1000000).toLocaleString(navigator.language);
-		}
-	};
+        if (num.length > 10) {
+            return (Number(num) / 1000000 / 1000000000).toLocaleString(navigator.language, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + ' B';
+        } else {
+            return (Number(num) / 1000000).toLocaleString(navigator.language);
+        }
+    };
 
     // Example of using precompiles to query native Sei modules.
     const getBankSupply = async () => {
@@ -36,7 +36,7 @@ function Examples() {
             args: ['usei']
         }
         try {
-            const response = await publicClient?.readContract(params) as BigInt;
+            const response = await publicClient?.readContract(params) as bigint;
             const supply = formatLargeSeiNumber(response.toString(), 1)
             setSupply(supply);
         } catch (e) {
@@ -49,13 +49,13 @@ function Examples() {
             isConnected ?
                 <div className={styles.exampleContainer}>
                     <b className={styles.walletAddressLabel}>Total Supply</b>
-                    <p>Example of using the <br/>
+                    <p>Example of using the <br />
                         <a className={styles.link}
-                        href="https://www.docs.sei.io/dev-interoperability/precompiles/bank"
-                        target="_blank">
+                            href="https://www.docs.sei.io/dev-interoperability/precompiles/bank"
+                            target="_blank">
                             Bank Precompile
                         </a>
-                    <br/> to query native Sei modules.</p>
+                        <br /> to query native Sei modules.</p>
                     <button className={styles.exampleButton} onClick={getBankSupply}>Get Sei Supply</button>
                     <div className={styles.row}>
                         <p>Total Supply</p>
@@ -70,7 +70,7 @@ function Examples() {
         if (!address || !publicClient) {
             return undefined
         }
-        const weiBalance = await publicClient.getBalance({address});
+        const weiBalance = await publicClient.getBalance({ address });
         const seiBalance = formatEther(weiBalance)
         setBalance(seiBalance);
     }
@@ -80,14 +80,14 @@ function Examples() {
             isConnected ?
                 <div className={styles.exampleContainer}>
                     <b className={styles.walletAddressLabel}>Wallet Balance</b>
-                    <p>Example of using the <br/>
-                    <a
-                        className={styles.link}
-                        href="https://viem.sh/docs/clients/public.html"
-                        target="_blank">
+                    <p>Example of using the <br />
+                        <a
+                            className={styles.link}
+                            href="https://viem.sh/docs/clients/public.html"
+                            target="_blank">
                             Viem Public Client
-                    </a>
-                    <br/> to query the chain directly.</p>
+                        </a>
+                        <br /> to query the chain directly.</p>
                     <button className={styles.exampleButton} onClick={getBalanceWagmi}>Get Balance</button>
                     <div className={styles.row}>
                         <p>Wallet Balance</p>
@@ -129,10 +129,10 @@ function Examples() {
         if (!address || !publicClient) {
             return;
         }
-        
+
         const COUNTER_CONTRACT_ADDRESS =
             "sei14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9sh9m79m";
-        
+
         const execMsg = toHex(JSON.stringify({ increment: {} }));
         const coins = toHex('[]')
         const params = {
@@ -145,10 +145,10 @@ function Examples() {
         }
 
         try {
-		    const estimatedGas = await publicClient.estimateContractGas(params);
+            const estimatedGas = await publicClient.estimateContractGas(params);
 
             // Call smart contract execute msg
-            await writeContractAsync({ ...params, gas: estimatedGas});
+            await writeContractAsync({ ...params, gas: estimatedGas });
 
             await fetchCount();
 
@@ -160,26 +160,26 @@ function Examples() {
     const counterContractExample = () => {
         return (
             isConnected ?
-            <div className={styles.exampleContainer}>
-                <b className={styles.walletAddressLabel}>Counter Smart Contract</b>
-                <p>Example of using <br/>
-                <a
-                    className={styles.link}
-                    href="https://www.docs.sei.io/dev-interoperability/precompiles/cosmwasm"
-                    target="_blank">
-                        WASM Precompile
-                    </a>
-                <br/> to interact with a CosmWasm smart contract. </p>
-                <div className={styles.row}>
-                    <button className={styles.exampleButton} onClick={fetchCount}>Fetch Count</button>
-                    <button className={styles.exampleButton} onClick={incrementCounter}>Increment Counter</button>
-                </div>
-                <div className={styles.row}>
-                    <p>Counter</p>
-                    <strong className={styles.walletAddressLabel}>{count || '---'}</strong>
-                </div>
-            </div> :
-            <></>
+                <div className={styles.exampleContainer}>
+                    <b className={styles.walletAddressLabel}>Counter Smart Contract</b>
+                    <p>Example of using <br />
+                        <a
+                            className={styles.link}
+                            href="https://www.docs.sei.io/dev-interoperability/precompiles/cosmwasm"
+                            target="_blank">
+                            WASM Precompile
+                        </a>
+                        <br /> to interact with a CosmWasm smart contract. </p>
+                    <div className={styles.row}>
+                        <button className={styles.exampleButton} onClick={fetchCount}>Fetch Count</button>
+                        <button className={styles.exampleButton} onClick={incrementCounter}>Increment Counter</button>
+                    </div>
+                    <div className={styles.row}>
+                        <p>Counter</p>
+                        <strong className={styles.walletAddressLabel}>{count || '---'}</strong>
+                    </div>
+                </div> :
+                <></>
         )
     }
 
