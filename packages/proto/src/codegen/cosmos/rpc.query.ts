@@ -17,6 +17,11 @@ export const createRPCQueryClient = async ({ rpcEndpoint }: { rpcEndpoint: strin
 			bank: {
 				v1beta1: (await import('./bank/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
 			},
+			base: {
+				tendermint: {
+					v1beta1: (await import('./base/tendermint/v1beta1/query.rpc.Service')).createRpcQueryExtension(client)
+				}
+			},
 			distribution: {
 				v1beta1: (await import('./distribution/v1beta1/query.rpc.Query')).createRpcQueryExtension(client)
 			},

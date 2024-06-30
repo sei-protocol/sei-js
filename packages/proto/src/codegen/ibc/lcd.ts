@@ -25,6 +25,13 @@ export const createLCDClient = async ({ restEndpoint }: { restEndpoint: string }
 					requestClient
 				})
 			},
+			base: {
+				tendermint: {
+					v1beta1: new (await import('../cosmos/base/tendermint/v1beta1/query.lcd')).LCDQueryClient({
+						requestClient
+					})
+				}
+			},
 			distribution: {
 				v1beta1: new (await import('../cosmos/distribution/v1beta1/query.lcd')).LCDQueryClient({
 					requestClient
