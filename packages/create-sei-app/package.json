@@ -2,6 +2,7 @@
   "name": "@sei-js/create-sei-app",
   "version": "1.0.0",
   "module": "dist/main.js",
+  "main": "dist/main.js",
   "type": "module",
   "bin": {
     "create-sei-app": "./dist/main.js"
