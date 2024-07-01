@@ -51,6 +51,7 @@
     "jest-in-case": "^1.0.2",
     "long": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
+    "ts-node": "^10.9.2",
     "tsc-watch": "^6.2.0"
   },
   "dependencies": {
