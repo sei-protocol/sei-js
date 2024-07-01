@@ -1,11 +1,10 @@
 {
   "name": "@sei-js/create-sei-app",
-  "version": "1.0.0",
+  "version": "0.0.0-internal-20240701161539",
   "module": "dist/main.js",
-  "main": "dist/main.js",
   "type": "module",
   "bin": {
-    "create-sei-app": "./dist/main.js"
+    "generate": "./dist/main.js"
   },
   "scripts": {
     "build": "tsc && cp -r ./templates ./dist/templates",
