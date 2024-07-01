@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.9
+
+### Patch Changes
+
+- f9cce3e: Added cosmos/authz, cosmos/slashing, cosmos/evidence, and cosmwasm/wasm for consistency with REST API and "sei-chain" repo, Removed cosmos/capability, cosmos/crisis, cosmos/group, cosmos/genutil, cosmos/nft, sei-protocol/dex
+
 ## 4.0.8
 
 ### Patch Changes
