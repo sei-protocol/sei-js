@@ -35,6 +35,11 @@ This component provides an interface to connect your wallet to the application. 
 
 To customize the wallet connect button or connection logic, you can modify the `src/app/components/WalletConnectButton.tsx` component.
 
+### Changing the Chain
+This application connects to the arctic-1 devnet by default
+
+To change the chain the app connects to, edit the `selectedChain` variable in the `chain.ts` file in `src/app/constants`
+
 ## Learn More
 
 ### Next.js

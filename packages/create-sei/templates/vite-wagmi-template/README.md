@@ -12,17 +12,19 @@ Currently, two official plugins are available:
 ## Repository Basics
 This repository includes basic features that allow you to connect to a wallet and use the wallet to interact with the chain.
 
-Additionally, basic examples and links to documentation are provided on the example homepage in `src/app/components/Homepage`.
+Additionally, basic examples and links to documentation are provided on the example homepage in `src/components/Homepage`.
 
 ### Web3 Provider
-This component is a Sei specific wrapper around CosmosKit Provider that should wrap the application. Wrapping the application in this provider will enable it to access hooks in CosmosKit. These hooks are enable connection to a wallet and interaction with the chain.
+This component is a Sei specific wrapper around a Wagmi Provider that should wrap the application. Wrapping the application in this provider will enable it to access hooks in Wagmi. These hooks are enable connection to a wallet and interaction with the chain.
 
-To change the list of supported wallets, as well as connection configurations you can modify the `src/app/components/Web3Provider.tsx` component.
+In addition, this app uses [RainbowKit](https://www.rainbowkit.com/docs/wallet-button) which provides wallet connect functionality out of the box.
 
-### Wallet Connect Button
-This component provides an interface to connect your wallet to the application. It utilizies CosmosKit's hooks and modal.
+To change the list of supported wallets, as well as connection configurations you can modify the `src/components/Web3Provider.tsx` component.
 
-To customize the wallet connect button or connection logic, you can modify the `src/app/components/WalletConnectButton.tsx` component.
+### Changing the Chain
+This application connects to the arctic-1 devnet by default
+
+To change the chain the app connects to, edit the `selectedChain` variable in the `chain.ts` file in `src/app/constants`
 
 ## Expanding the ESLint configuration
 

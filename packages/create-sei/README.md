@@ -8,6 +8,13 @@ You can use either:
 
 to scaffold your project.
 
+## Getting Started
+1. Install dependencies by running `yarn` or `npm`
+
+2. Install this package globally by running `npm install -g @sei-js/create-sei`
+
+3. Run `create-sei` and follow the prompts
+
 ## EVM Applications (Reccommended)
 Building on our EVM (Ethereum Virtual Machine) is the easiest way to get your dApp kick started on Sei! The mature EVM ecosystem provides many tools out of the box to help developers build faster, including deploying smart contracts and other helpful connection libraries.
 
