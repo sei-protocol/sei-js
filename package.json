@@ -13,7 +13,7 @@
     "postinstall": "yarn update-submodules",
     "update-submodules": "git submodule update --init --recursive",
     "docs": "npx typedoc",
-    "lint:all": "nx run-many --target=lint",
+    "lint:all": "nx run-many --target=lint --exclude=template-*",
     "lint:since": "nx affected --target=lint",
     "prerelease": "yarn build:all",
     "release": "changeset publish",
