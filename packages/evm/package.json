@@ -1,48 +1,60 @@
 {
-  "name": "@sei-js/evm",
-  "version": "1.2.0",
-  "description": "TypeScript library for EVM interactions on the Sei blockchain",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
-  "sideEffects": false,
-  "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
-    "build:cjs": "tsc --outDir dist/cjs --module commonjs",
-    "build:esm": "tsc --outDir dist/esm --module esnext",
-    "build:types": "tsc --project ./tsconfig.declaration.json",
-    "build:prettier": "prettier --write 'dist/**/*.js'",
-    "docs": "typedoc --out docs",
-    "test": "jest",
-    "lint": "eslint --ext .ts"
-  },
-  "homepage": "https://github.com/sei-protocol/sei-js#readme",
-  "keywords": [
-    "sei",
-    "javascript",
-    "typescript",
-    "node",
-    "evm"
-  ],
-  "repository": "git@github.com:sei-protocol/sei-js.git",
-  "license": "MIT",
-  "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "ethers": "^6.0.0",
-    "viem": "^2.0.0",
-    "@wagmi/core": "^2.9.1"
-  },
-  "peerDependencies": {},
-  "devDependencies": {},
-  "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
-    }
-  }
+	"name": "@sei-js/evm",
+	"version": "1.2.0",
+	"description": "TypeScript library for EVM interactions on the Sei blockchain",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/types/index.d.ts",
+	"sideEffects": false,
+	"scripts": {
+		"prebuild": "rimraf dist",
+		"build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
+		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
+		"build:esm": "tsc --outDir dist/esm --module esnext",
+		"build:types": "tsc --project ./tsconfig.declaration.json",
+		"build:prettier": "prettier --write 'dist/**/*.js'",
+		"docs": "typedoc --out docs",
+		"test": "jest",
+		"lint": "eslint --ext .ts"
+	},
+	"homepage": "https://github.com/sei-protocol/sei-js#readme",
+	"keywords": [
+		"sei",
+		"javascript",
+		"typescript",
+		"node",
+		"evm"
+	],
+	"repository": "git@github.com:sei-protocol/sei-js.git",
+	"license": "MIT",
+	"private": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"dependencies": {},
+	"peerDependencies": {
+		"ethers": "^6.0.0",
+		"viem": "2.x"
+	},
+	"devDependencies": {
+		"ethers": "^6.0.0",
+		"viem": "2.x"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/esm/index.js",
+			"require": "./dist/cjs/index.js",
+			"types": "./dist/types/index.d.ts"
+		},
+		"./ethers": {
+			"import": "./dist/esm/ethers/index.js",
+			"require": "./dist/cjs/ethers/index.js",
+			"types": "./dist/types/ethers/index.d.ts"
+		},
+		"./viem": {
+			"import": "./dist/esm/viem/index.js",
+			"require": "./dist/cjs/viem/index.js",
+			"types": "./dist/types/viem/index.d.ts"
+		}
+	}
 }
