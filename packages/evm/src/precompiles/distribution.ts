@@ -1,13 +1,11 @@
 /**
- * The address of the Distribution precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
+ * The address of the Distribution precompile contract.
  * @category Cosmos Interoperability
  */
 export const DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001007';
 
 /**
- * The ABI for the distribution precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
+ * The ABI for the Distribution precompile contract.
  * @category Cosmos Interoperability
  */
 export const DISTRIBUTION_PRECOMPILE_ABI = [

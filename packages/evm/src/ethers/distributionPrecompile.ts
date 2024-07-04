@@ -2,8 +2,7 @@ import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
 import { DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '../precompiles';
 
 /**
- * Represents the functions available in the Distribution precompile contract,
- * facilitating interoperability between the EVM and Cosmos.
+ * Represents the functions available in the Distribution precompile contract.
  * @category Cosmos Interoperability
  */
 export interface DistributionPrecompileFunctions {
@@ -30,39 +29,25 @@ export interface DistributionPrecompileFunctions {
 	withdrawMultipleDelegationRewards(validators: string[]): Promise<{ success: boolean }>;
 }
 
-/** Represents the typed contract instance for the DISTRIBUTION precompile contract.
+/**
+ * Type for the Distribution precompile contract, combining the base Contract and DistributionPrecompileFunctions.
  * @category Cosmos Interoperability
- * */
+ */
 export type DistributionPrecompileContract = Contract & DistributionPrecompileFunctions;
 
 /**
- * The ABI for the distribution precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to set the withdrawal address for rewards for the connected account.
- * ```tsx
- * import { DISTRIBUTION_PRECOMPILE_ADDRESS, ETHERS_DISTRIBUTION_PRECOMPILE_ABI, DistributionPrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(); // or any other provider
- * const signer = provider.getSigner();
- *
- * const contract = new ethers.Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, ETHERS_DISTRIBUTION_PRECOMPILE_ABI, signer) as DistributionPrecompileContract;
- *
- * const response = await contract.setWithdrawAddress('0xADDRESS');
- * ```
- *
+ * The ABI for the Distribution precompile contract, used to create an Ethers contract.
  * @category Cosmos Interoperability
  */
 export const ETHERS_DISTRIBUTION_PRECOMPILE_ABI = DISTRIBUTION_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
- * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
+ * Creates and returns a typed Ethers v6 contract instance for the Distribution precompile contract.
+ * This contract is used for interoperability between the EVM and Cosmos.
  *
  * @example
- * ethers v6: Use the `ethers` library and precompiles to set the withdrawal address for rewards for the connected account.
  * ```tsx
- * import { getDistributionPrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getDistributionPrecompileEthersV6Contract } from '@sei-js/evm/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
@@ -71,9 +56,11 @@ export const ETHERS_DISTRIBUTION_PRECOMPILE_ABI = DISTRIBUTION_PRECOMPILE_ABI as
  * const contract = getDistributionPrecompileEthersV6Contract(signer);
  *
  * const response = await contract.setWithdrawAddress('0xADDRESS');
+ * console.log('Response:', response);
  * ```
- * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
- * @returns The typed contract instance allowing interaction with the precompile contract.
+ *
+ * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
+ * @returns The typed contract instance for interacting with the Distribution precompile contract.
  * @category Cosmos Interoperability
  */
 export const getDistributionPrecompileEthersV6Contract = (runner: ContractRunner): DistributionPrecompileContract => {

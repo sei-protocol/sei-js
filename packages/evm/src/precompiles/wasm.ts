@@ -1,61 +1,11 @@
 /**
- * The address of the WASM precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { WASM_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI } from '@sei-js/evm';
- * import { useReadContract } from 'wagmi';
- *
- * // Make sure your component is wrapped in a WagmiProvider
- * const associatedSeiAddress = useReadContract({ abi: WASM_PRECOMPILE_ABI, address: WASM_PRECOMPILE_ADDRESS, functionName: 'query', args: [CW_CONTRACT_ADDRESS, REQUEST] });
- * ```
- *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { WASM_PRECOMPILE_ADDRESS } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const wasmPrecompileContract = getWasmPrecompileEthersV6Contract(WASM_PRECOMPILE_ADDRESS, signer);
- *
- * const queryResponse = await addressPrecompileContract.connect().query(CW_CONTRACT_ADDRESS, REQUEST);
- * ```
- *
+ * The address of the Wasm precompile contract.
  * @category Cosmos Interoperability
  */
 export const WASM_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001002';
 
 /**
- * The ABI for the precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { WASM_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI } from '@sei-js/evm';
- * import { useReadContract } from 'wagmi';
- *
- * // Make sure your component is wrapped in a WagmiProvider
- * const associatedSeiAddress = useReadContract({ abi: WASM_PRECOMPILE_ABI, address: WASM_PRECOMPILE_ADDRESS, functionName: 'query', args: [CW_CONTRACT_ADDRESS, REQUEST] });
- * ```
- *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { WASM_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI, WasmPrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const wasmPrecompileContract = new ethers.Contract(WASM_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI, signer) as WasmPrecompileContract;
- *
- * const queryResponse = await addressPrecompileContract.connect().query(CW_CONTRACT_ADDRESS, REQUEST);
- * ```
- *
+ * The ABI for the Wasm precompile contract.
  * @category Cosmos Interoperability
  */
 export const WASM_PRECOMPILE_ABI = [

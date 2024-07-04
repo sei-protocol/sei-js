@@ -2,8 +2,7 @@ import { BigNumberish, Contract, ContractRunner, InterfaceAbi } from 'ethers';
 import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
- * Represents the functions available in the Bank precompile contract,
- * facilitating interoperability between the EVM and Cosmos.
+ * Represents the functions available in the Bank precompile contract.
  * @category Cosmos Interoperability
  */
 export interface BankPrecompileFunctions {
@@ -63,24 +62,25 @@ export interface BankPrecompileFunctions {
 	sendNative(toNativeAddress: string, value: BigNumberish): Promise<{ success: boolean }>;
 }
 
-/** Represents the typed contract instance for the BANK precompile contract.
+/**
+ * Type for the Bank precompile contract, combining the base Contract and BankPrecompileFunctions.
  * @category Cosmos Interoperability
  * */
 export type BankPrecompileContract = Contract & BankPrecompileFunctions;
 
 /**
- * The Ethers ABI for the bank precompile contract.
- *
+ * The ABI for the Bank precompile contract, used to create an Ethers contract.
  * @category Cosmos Interoperability
  */
 export const ETHERS_BANK_PRECOMPILE_ABI = BANK_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
- * Creates and returns an Ethers contract instance with the provided signer.
+ * Creates and returns a typed Ethers v6 contract instance for the Bank precompile contract.
+ * This contract is used for interoperability between the EVM and Cosmos.
  *
  * @example
  * ```tsx
- * import { getBankPrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getBankPrecompileEthersV6Contract } from '@sei-js/evm/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -91,12 +91,13 @@ export const ETHERS_BANK_PRECOMPILE_ABI = BANK_PRECOMPILE_ABI as InterfaceAbi;
  * const bankPrecompileContract = getBankPrecompileEthersV6Contract(signer);
  *
  * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
+ * console.log('Balance:', balance);
  * ```
  *
- * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
- * @returns The typed contract instance allowing interaction with the precompile contract.
+ * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
+ * @returns The typed contract instance for interacting with the Bank precompile contract.
  * @category Cosmos Interoperability
  */
 export const getBankPrecompileEthersV6Contract = (runner: ContractRunner): BankPrecompileContract => {
-	return new Contract(BANK_PRECOMPILE_ADDRESS, ETHERS_BANK_PRECOMPILE_ABI, runner) as BankPrecompileContract;
+	return new Contract(BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, runner) as BankPrecompileContract;
 };

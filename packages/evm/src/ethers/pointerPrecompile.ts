@@ -2,8 +2,7 @@ import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
 import { POINTER_PRECOMPILE_ABI, POINTER_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
- * Represents the functions available in the Pointer precompile contract,
- * facilitating interoperability between the EVM and Cosmos for tokens.
+ * Represents the functions available in the Pointer precompile contract.
  * @category Cosmos Interoperability
  */
 export interface PointerPrecompileFunctions {
@@ -32,39 +31,25 @@ export interface PointerPrecompileFunctions {
 	addNativePointer(token: string): Promise<string>;
 }
 
-/** Represents the typed contract instance for the Pointer precompile contract.
+/**
+ * Type for the Pointer precompile contract, combining the base Contract and PointerPrecompileFunctions.
  * @category Cosmos Interoperability
  */
 export type PointerPrecompileContract = Contract & PointerPrecompileFunctions;
 
 /**
- * The ABI for the Pointer precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to add a CW20 pointer.
- * ```tsx
- * import { POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, PointerPrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const pointerPrecompileContract = new ethers.Contract(POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, signer) as PointerPrecompileContract;
- *
- * const tx = await pointerPrecompileContract.addCW20Pointer('CW20_CONTRACT_ADDRESS', { value: ethers.utils.parseEther('0.01') });
- * console.log(tx);
- * ```
- *
+ * The ABI for the Pointer precompile contract, used to create an Ethers contract.
  * @category Cosmos Interoperability
  */
 export const ETHERS_POINTER_PRECOMPILE_ABI = POINTER_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
- * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
+ * Creates and returns a typed Ethers v6 contract instance for the Pointer precompile contract.
+ * This contract is used for interoperability between the EVM and Cosmos.
  *
  * @example
  * ```tsx
- * import { getPointerPrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getPointerPrecompileEthersV6Contract } from '@sei-js/evm/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -73,11 +58,11 @@ export const ETHERS_POINTER_PRECOMPILE_ABI = POINTER_PRECOMPILE_ABI as Interface
  * const pointerPrecompileContract = getPointerPrecompileEthersV6Contract(signer);
  *
  * const tx = await pointerPrecompileContract.addCW20Pointer('CW20_CONTRACT_ADDRESS', { value: ethers.utils.parseEther('0.01') });
- * console.log(tx);
+ * console.log('Transaction:', tx);
  * ```
  *
- * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
- * @returns The typed contract instance allowing interaction with the precompile contract.
+ * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
+ * @returns The typed contract instance for interacting with the Pointer precompile contract.
  * @category Cosmos Interoperability
  */
 export const getPointerPrecompileEthersV6Contract = (runner: ContractRunner): PointerPrecompileContract => {

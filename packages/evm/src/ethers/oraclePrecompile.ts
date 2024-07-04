@@ -2,8 +2,7 @@ import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
 import { ORACLE_PRECOMPILE_ABI, ORACLE_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
- * Represents the functions available in the Oracle precompile contract,
- * facilitating interoperability between the EVM and Cosmos.
+ * Represents the functions available in the Oracle precompile contract.
  * @category Cosmos Interoperability
  */
 export interface OraclePrecompileFunctions {
@@ -38,39 +37,25 @@ export interface OraclePrecompileFunctions {
 	>;
 }
 
-/** Represents the typed contract instance for the Oracle precompile contract.
+/**
+ * Type for the Oracle precompile contract, combining the base Contract and OraclePrecompileFunctions.
  * @category Cosmos Interoperability
  */
 export type OraclePrecompileContract = Contract & OraclePrecompileFunctions;
 
 /**
- * The ABI for the Oracle precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to read the exchange rates.
- * ```tsx
- * import { ORACLE_PRECOMPILE_ADDRESS, ETHERS_ORACLE_PRECOMPILE_ABI, OraclePrecompileContract } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const oraclePrecompileContract = new ethers.Contract(ORACLE_PRECOMPILE_ADDRESS, ETHERS_ORACLE_PRECOMPILE_ABI, signer) as OraclePrecompileContract;
- *
- * const exchangeRates = await oraclePrecompileContract.getExchangeRates();
- * console.log(exchangeRates);
- * ```
- *
+ * The ABI for the Oracle precompile contract, used to create an Ethers contract.
  * @category Cosmos Interoperability
  */
 export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as InterfaceAbi;
 
 /**
- * Creates and returns an ethers v6 contract instance with the provided signer, for use in interoperability between the EVM and Cosmos.
+ * Creates and returns a typed Ethers v6 contract instance for the Oracle precompile contract.
+ * This contract is used for interoperability between the EVM and Cosmos.
  *
  * @example
  * ```tsx
- * import { getOraclePrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getOraclePrecompileEthersV6Contract } from '@sei-js/evm/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
@@ -79,11 +64,11 @@ export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as InterfaceAb
  * const oraclePrecompileContract = getOraclePrecompileEthersV6Contract(signer);
  *
  * const exchangeRates = await oraclePrecompileContract.getExchangeRates();
- * console.log(exchangeRates);
+ * console.log('Exchange Rates:', exchangeRates);
  * ```
  *
- * @param runner a [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
- * @returns The typed contract instance allowing interaction with the precompile contract.
+ * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
+ * @returns The typed contract instance for interacting with the Oracle precompile contract.
  * @category Cosmos Interoperability
  */
 export const getOraclePrecompileEthersV6Contract = (runner: ContractRunner): OraclePrecompileContract => {

@@ -1,67 +1,11 @@
 /**
- * The address of the Bank precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * Wagmi: Use the `useReadContract` hook to read the balance of the connected account.
- * ```tsx
- * import { BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI } from '@sei-js/evm';
- * import { useReadContract } from 'wagmi';
- *
- * // Make sure your component is wrapped in a WagmiProvider
- * const { address } = useAccount();
- *
- *  const { data } = useReadContract({
- *    abi: BANK_PRECOMPILE_ABI,
- *    address: BANK_PRECOMPILE_ADDRESS,
- *    functionName: 'balance',
- *    args: [address, 'usei']
- *  });
- *
- *  console.log({ balance: data.balance });
- * ```
- *
- * @example
- * ethers v6: Use the `ethers` library and precompiles to read the balance of the connected account.
- * ```tsx
- * import { BANK_PRECOMPILE_ADDRESS } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- *
- * const accounts = await provider.send('eth_requestAccounts', []);
- *
- * const bankPrecompileContract = getBankPrecompileEthersV6Contract(BANK_PRECOMPILE_ADDRESS, signer);
- *
- * const balance = await bankPrecompileContract.balance(accounts[0], 'usei');
- * ```
- *
+ * The address of the Bank precompile contract.
  * @category Cosmos Interoperability
  */
 export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001001';
 
 /**
- * The ABI for the bank precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * Wagmi: Use the `useReadContract` hook to read the balance of the connected account.
- * ```tsx
- * import { BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI } from '@sei-js/evm';
- * import { useReadContract } from 'wagmi';
- *
- * // Make sure your component is wrapped in a WagmiProvider
- * const { address } = useAccount();
- *
- *  const { data } = useReadContract({
- *    abi: BANK_PRECOMPILE_ABI,
- *    address: BANK_PRECOMPILE_ADDRESS,
- *    functionName: 'balance',
- *    args: [address, 'usei']
- *  });
- *
- *  console.log({ balance: data.balance });
- * ```
- *
+ * The ABI for the Bank precompile contract.
  * @category Cosmos Interoperability
  */
 export const BANK_PRECOMPILE_ABI = [
