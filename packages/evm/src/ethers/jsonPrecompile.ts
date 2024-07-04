@@ -1,5 +1,5 @@
-import { ContractRunner, ethers, InterfaceAbi } from 'ethers';
-import { Abi } from 'viem';
+import { BigNumberish, Contract, ContractRunner, InterfaceAbi } from 'ethers';
+import { JSON_PRECOMPILE_ABI, JSON_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
  * Represents the functions available in the JSON precompile contract,
@@ -32,96 +32,13 @@ export interface JSONPrecompileFunctions {
 	 * @returns A Promise resolving to an object containing the extracted uint256.
 	 * @category Cosmos Interoperability
 	 */
-	extractAsUint256(input: string, key: string): Promise<{ response: ethers.BigNumberish }>;
+	extractAsUint256(input: string, key: string): Promise<{ response: BigNumberish }>;
 }
 
 /** Represents the typed contract instance for the JSON precompile contract.
  * @category Cosmos Interoperability
  */
-export type JSONPrecompileContract = ethers.Contract & JSONPrecompileFunctions;
-
-/**
- * The address of the JSON precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI } from '@sei-js/evm';
- * import { useReadContract } from 'wagmi';
- *
- * // Make sure your component is wrapped in a WagmiProvider
- * const { address } = useAccount();
- *
- * const extractedBytes = useReadContract({ abi: JSON_PRECOMPILE_ABI, address: JSON_PRECOMPILE_ADDRESS, functionName: 'extractAsBytes', args: ['0xINPUT', 'KEY'] });
- * ```
- *
- * @example
- * ethers v6
- * ```tsx
- * import { JSON_PRECOMPILE_ADDRESS } from '@sei-js/evm';
- * import { ethers } from 'ethers';
- *
- * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
- * const signer = await provider.getSigner();
- **
- * const jsonPrecompileContract = getJSONPrecompileEthersV6Contract(JSON_PRECOMPILE_ADDRESS, signer);
- *
- * const response = await jsonPrecompileContract.connect().extractAsBytes('0xINPUT', 'KEY');
- * ```
- *
- * @category Cosmos Interoperability
- */
-export const JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001003';
-
-/**
- * The ABI for the JSON precompile contract, which can be used for interoperability between the EVM and Cosmos.
- *
- * @example
- * Wagmi: Use the `useReadContract` hook to read the associated Cosmos address for the connected account.
- * ```tsx
- * import { JSON_PRECOMPILE_ADDRESS, JSON_PRECOMPILE_ABI } from '@sei-js/evm';
- * import { useReadContract } from 'wagmi';
- *
- * // Make sure your component is wrapped in a WagmiProvider
- * const { address } = useAccount();
- *
- * const extractedBytes = useReadContract({ abi: JSON_PRECOMPILE_ABI, address: JSON_PRECOMPILE_ADDRESS, functionName: 'extractAsBytes', args: ['0xINPUT', 'KEY'] });
- * ```
- *
- * @category Cosmos Interoperability
- */
-export const JSON_PRECOMPILE_ABI: Abi = [
-	{
-		inputs: [
-			{ internalType: 'bytes', name: 'input', type: 'bytes' },
-			{ internalType: 'string', name: 'key', type: 'string' }
-		],
-		name: 'extractAsBytes',
-		outputs: [{ internalType: 'bytes', name: 'response', type: 'bytes' }],
-		stateMutability: 'view',
-		type: 'function'
-	},
-	{
-		inputs: [
-			{ internalType: 'bytes', name: 'input', type: 'bytes' },
-			{ internalType: 'string', name: 'key', type: 'string' }
-		],
-		name: 'extractAsBytesList',
-		outputs: [{ internalType: 'bytes[]', name: 'response', type: 'bytes[]' }],
-		stateMutability: 'view',
-		type: 'function'
-	},
-	{
-		inputs: [
-			{ internalType: 'bytes', name: 'input', type: 'bytes' },
-			{ internalType: 'string', name: 'key', type: 'string' }
-		],
-		name: 'extractAsUint256',
-		outputs: [{ internalType: 'uint256', name: 'response', type: 'uint256' }],
-		stateMutability: 'view',
-		type: 'function'
-	}
-];
+export type JSONPrecompileContract = Contract & JSONPrecompileFunctions;
 
 /**
  * The ABI for the JSON precompile contract, which can be used for interoperability between the EVM and Cosmos.
@@ -166,5 +83,5 @@ export const ETHERS_JSON_PRECOMPILE_ABI = JSON_PRECOMPILE_ABI as InterfaceAbi;
  * @category Cosmos Interoperability
  */
 export const getJSONPrecompileEthersV6Contract = (runner: ContractRunner): JSONPrecompileContract => {
-	return new ethers.Contract(JSON_PRECOMPILE_ADDRESS, ETHERS_JSON_PRECOMPILE_ABI, runner) as JSONPrecompileContract;
+	return new Contract(JSON_PRECOMPILE_ADDRESS, ETHERS_JSON_PRECOMPILE_ABI, runner) as JSONPrecompileContract;
 };
