@@ -14,7 +14,7 @@
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"build:prettier": "prettier --write 'dist/**/*.js'",
 		"docs": "typedoc --out docs",
-		"test": "jest",
+		"test": "jest --passWithNoTests",
 		"lint": "eslint --ext .ts"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
