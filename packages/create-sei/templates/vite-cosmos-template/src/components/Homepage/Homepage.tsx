@@ -1,5 +1,4 @@
 import './Homepage.css'
-import { useChain } from '@cosmos-kit/react';
 import Examples from './Examples';
 import { selectedChain } from '../../constants';
 import { WalletConnectButton } from '..';

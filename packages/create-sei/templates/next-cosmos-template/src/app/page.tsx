@@ -1,6 +1,6 @@
 'use client';
 
-import styles from "./page.module.css";
+import './index.css'
 import Homepage from "./components/Homepage/Homepage";
 import Web3Provider from "./components/Web3Provider";
 import { WalletConnectButton } from "./components/WalletConnectButton/WalletConnectButton";
@@ -8,12 +8,10 @@ import { WalletConnectButton } from "./components/WalletConnectButton/WalletConn
 export default function Home() {  
   return (
     <Web3Provider>
-      <div className={styles.header}>
-				<WalletConnectButton/>
-			</div>
-      <div className={styles.appContainer}>
-        <Homepage/>
+      <div className="header">
+        <WalletConnectButton/>
       </div>
+      <Homepage/>
     </Web3Provider>
   );
 }

@@ -2,8 +2,8 @@ import { getCosmWasmClient, getQueryClient, getSigningCosmWasmClient, getStargat
 import { useState } from "react";
 import { defaultUrls, selectedChain } from "../../constants";
 import { useChain } from "@cosmos-kit/react";
-import styles from './Components.module.css'
 
+import './Homepage.css'
 type ExampleProps = {
     chainId: string
 }
@@ -13,7 +13,7 @@ function Examples({ chainId }: ExampleProps) {
     const [pool, setPool] = useState({ bonded_tokens: 0, not_bonded_tokens: 0 });
     const [count, setCount] = useState(0)
 
-    const { address, isWalletConnected, getOfflineSignerAmino } = useChain(selectedChain.chain_name);
+    const { address, getOfflineSignerAmino } = useChain(selectedChain.chain_name);
 
     // Example of using the query client to query Sei modules
     const getStakingPool = async () => {
@@ -21,29 +21,32 @@ function Examples({ chainId }: ExampleProps) {
         const result = await queryClient.cosmos.staking.v1beta1.pool({});
         setPool(result.pool)
     }
-
+    
     const getStakingPoolExample = () => {
         return (
-            isWalletConnected ?
-                <div className={styles.exampleContainer}>
-                    <b className={styles.walletAddressLabel}>Staking Pool</b>
-                    <p>Example of using the <br/>
-                        <a className={styles.link}
+            <div className="card">
+                <div className="card-header">
+                    <p className="card__title">Staking Pool</p>
+                    <small className="card__description">
+                        <a 
                         href="https://sei-protocol.github.io/sei-js/functions/cosmjs.getQueryClient.html"
-                        target="_blank">
-                            Sei QueryClient
-                        </a>
-                    <br/> to query the chain directly.</p>
-                    <button className={styles.exampleButton} onClick={getStakingPool}>Get Staking Pool</button>
-                    <div className={styles.row}>
-                        <p>Bonded Tokens</p>
-                        <strong className={styles.walletAddressLabel}>{pool.bonded_tokens || '---'}</strong>
-                        <br />
-                        <p>Unbonded Tokens</p>
-                        <strong className={styles.walletAddressLabel}>{pool.not_bonded_tokens || '---'}</strong>
+                        target="_blank">Sei QueryClient</a> query example
+                    </small>
+                </div>
+                <div className="card-body">
+                    <div className="content-background space-between">
+                        <small>Bonded Tokens</small>
+                        <p>{pool ? pool.bonded_tokens : '---'} SEI</p>
                     </div>
-                </div> :
-                <></>
+                    <div className="content-background space-between">
+                        <small>Unbonded Tokens</small>
+                        <p>{pool ? pool.not_bonded_tokens : '---'} SEI</p>
+                    </div>
+                </div>
+                <div className="card-footer">
+                    <button onClick={getStakingPool}>Fetch Staking Data</button>
+                </div>
+            </div>
         )
     }
 
@@ -51,7 +54,6 @@ function Examples({ chainId }: ExampleProps) {
         if (!address) {
             return undefined
         }
-        console.log(defaultUrls);
         const queryClient = await getStargateClient(defaultUrls[chainId].rpc);
         const useiBalance = await queryClient.getBalance(address, 'usei');
         const seiBalance = Number(useiBalance.amount) / 1000000
@@ -60,24 +62,25 @@ function Examples({ chainId }: ExampleProps) {
 
     const getBalanceExample = () => {
         return (
-            isWalletConnected ?
-                <div className={styles.exampleContainer}>
-                    <b className={styles.walletAddressLabel}>Wallet Balance</b>
-                    <p>Example of using the <br/>
-                    <a
-                        className={styles.link}
+            <div className="card">
+                <div className="card-header">
+                    <p className="card__title">Wallet Balance</p>
+                    <small className="card__description">
+                        <a 
                         href="https://cosmos.github.io/cosmjs/latest/stargate/classes/StargateClient.html"
-                        target="_blank">
-                            Stargate Client
-                    </a>
-                    <br/> to query the chain directly.</p>
-                    <button className={styles.exampleButton} onClick={getBalanceStargate}>Get Balance</button>
-                    <div className={styles.row}>
-                        <p>Wallet Balance</p>
-                        <strong className={styles.walletAddressLabel}>{balance || '---'}</strong>
+                        target="_blank">Stargate Client</a> query example
+                    </small>
+                </div>
+                <div className="card-body">
+                    <div className="content-background space-between">
+                        <small>SEI</small>
+                        <p>{balance ? balance : '---' } SEI</p>
                     </div>
-                </div> :
-                <></>
+                </div>
+                <div className="card-footer">
+                    <button onClick={getBalanceStargate}>Fetch balance</button>
+                </div>
+            </div>
         )
     }
 
@@ -131,32 +134,39 @@ function Examples({ chainId }: ExampleProps) {
 
     const counterContractExample = () => {
         return (
-            isWalletConnected ?
-            <div className={styles.exampleContainer}>
-                <b className={styles.walletAddressLabel}>Counter Smart Contract</b>
-                <p>Example of using <br/>
-                <a
-                    className={styles.link}
-                    href="https://cosmos.github.io/cosmjs/latest/stargate/classes/SigningCosmWasmClient.html"
-                    target="_blank">
-                        CosmWasm Clients
-                    </a>
-                <br/> to interact with a smart contract. </p>
-                <div className={styles.row}>
-                    <button className={styles.exampleButton} onClick={fetchCount}>Fetch Count</button>
-                    <button className={styles.exampleButton} onClick={incrementCounter}>Increment Counter</button>
+            <div className="card">
+                <div className="card-header">
+                    <p className="card__title">Smart contract interaction</p>
+                    <small>
+                        <a
+                        href="https://cosmos.github.io/cosmjs/latest/stargate/classes/SigningCosmWasmClient.html"
+                        target="_blank">
+                            CosmWasm Clients
+                        </a> example of smart
+                        contract interaction
+                    </small>
                 </div>
-                <div className={styles.row}>
-                    <p>Counter</p>
-                    <strong className={styles.walletAddressLabel}>{count || '---'}</strong>
+                <div className="card-body">
+                    <div className="content-background space-between">
+                        <small>Count</small>
+                        <p>{count}</p>
+                        <button
+                            className="small outline"
+                            onClick={incrementCounter}
+                        >
+                            Increase
+                        </button>
+                    </div>
                 </div>
-            </div> :
-            <></>
+                <div className="card-footer">
+                    <button onClick={fetchCount}>Fetch count</button>
+                </div>
+            </div>
         )
     }
 
     return (
-        <div className={styles.row}>
+        <div className="grid">
             {getBalanceExample()}
             {getStakingPoolExample()}
             {counterContractExample()}
