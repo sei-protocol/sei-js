@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ReadContractParameters, formatEther, fromHex, parseEther, toHex } from "viem";
 import { useAccount, usePublicClient, useWriteContract } from "wagmi";
 
-import "./App.css";
+import "./Homepage.css";
 
 function Examples() {
     const [balance, setBalance] = useState('')

@@ -3,6 +3,7 @@
 import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Examples from './Examples';
+import "./Homepage.css"
 
 type HelpItem = {
 	title: string;
@@ -84,6 +85,7 @@ function Homepage() {
 
 	return (
       <div className="container">
+		<img src="sei-logotype.svg" className="logo" alt="SEI logotype" />
 		<div className="card intro">
             <div className="card-header">
               <p className="card__title">Wallet address</p>
