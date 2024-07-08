@@ -3,7 +3,6 @@ import { useChain } from "@cosmos-kit/react";
 import "@interchain-ui/react/styles";
 
 import { truncateSeiAddress } from "@sei-js/cosmjs";
-import styles from './WalletConnectButton.module.css'
 import { selectedChain } from "../../constants";
 
 export function WalletConnectButton() {
@@ -18,7 +17,7 @@ export function WalletConnectButton() {
 
   return (
     <button
-      className={styles.walletConnectButton}
+      className="primary"
       onClick={isWalletConnected ? openView : connect}
     >
       {isWalletConnected ? truncateSeiAddress(truncatedSeiAddr) : "Connect"}

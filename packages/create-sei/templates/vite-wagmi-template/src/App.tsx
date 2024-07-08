@@ -7,14 +7,14 @@ function App() {
 	return (
     <>
       <div className="header">
-      <ConnectButton 
-          showBalance={{
-          smallScreen: false,
-          largeScreen: true,
-          }}
-        />
-    </div>
-    <Homepage/>
+        <ConnectButton 
+            showBalance={{
+            smallScreen: false,
+            largeScreen: true,
+            }}
+          />
+      </div>
+      <Homepage/>
     </>
 	);
 }

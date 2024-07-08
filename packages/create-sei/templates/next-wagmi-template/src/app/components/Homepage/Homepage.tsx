@@ -96,7 +96,7 @@ function Homepage() {
         </div>
 		<Examples />
         <div className="get-started">
-          Get started by editing <code>src/App.tsx</code>
+          Get started by editing <code>src/app/page.tsx</code>
         </div>
 		<div className="grid docs">
 			{helpItems.map((item, index) => (renderHelpItem(item)))}

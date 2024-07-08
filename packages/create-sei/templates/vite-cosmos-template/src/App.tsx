@@ -1,15 +1,15 @@
-import './App.css'
+import './index.css'
 import { WalletConnectButton, Homepage } from './components'
 
 function App() {
 
   return (
-    <div className='app-container'>
-      <div className='header'>
+    <>
+      <div className="header">
         <WalletConnectButton/>
       </div>
       <Homepage/>
-    </div>
+    </>
   )
 }
 

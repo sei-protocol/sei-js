@@ -106,26 +106,26 @@ function Examples() {
         )
     }
     
-        // Example of using precompiles to query native Sei modules.
-        const getBankSupply = async () => {
-            if (!publicClient) {
-                return;
-            }
-    
-            const params: ReadContractParameters = {
-                address: BANK_PRECOMPILE_ADDRESS,
-                abi: BANK_PRECOMPILE_ABI,
-                functionName: 'supply',
-                args: ['usei']
-            }
-            try {
-                const response = await publicClient?.readContract(params) as BigInt;
-                const supply = formatLargeSeiNumber(response.toString(), 1)
-                setSupply(supply);
-            } catch (e) {
-                console.log(e);
-            }
+    // Example of using precompiles to query native Sei modules.
+    const getBankSupply = async () => {
+        if (!publicClient) {
+            return;
         }
+
+        const params: ReadContractParameters = {
+            address: BANK_PRECOMPILE_ADDRESS,
+            abi: BANK_PRECOMPILE_ABI,
+            functionName: 'supply',
+            args: ['usei']
+        }
+        try {
+            const response = await publicClient?.readContract(params) as BigInt;
+            const supply = formatLargeSeiNumber(response.toString(), 1)
+            setSupply(supply);
+        } catch (e) {
+            console.log(e);
+        }
+    }
         
     const getBankSupplyExample = () => {
         return (
