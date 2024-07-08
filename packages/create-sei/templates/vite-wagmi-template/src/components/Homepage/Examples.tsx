@@ -1,68 +1,75 @@
-import { useState } from "react";
-import styles from './Components.module.css'
-import { useAccount, useWriteContract } from "wagmi";
-import { usePublicClient } from "wagmi";
-import { formatEther, fromHex, parseEther, toHex } from "viem";
 import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI, WASM_PRECOMPILE_ADDRESS } from "@sei-js/evm";
-import { ReadContractParameters } from "wagmi/actions";
+import { useState } from "react";
+import { ReadContractParameters, formatEther, fromHex, parseEther, toHex } from "viem";
+import { useAccount, usePublicClient, useWriteContract } from "wagmi";
+
+import "./Homepage.css";
 
 function Examples() {
     const [balance, setBalance] = useState('')
     const [supply, setSupply] = useState('');
     const [count, setCount] = useState(0)
-    const publicClient = usePublicClient();
 
-    const { isConnected, address } = useAccount();
-    const { writeContractAsync } = useWriteContract();
+    const publicClient = usePublicClient();
+    const { address } = useAccount();
+	const { writeContractAsync } = useWriteContract();
 
     const formatLargeSeiNumber = (num: string, decimals: number): string => {
-        if (num.length > 10) {
-            return (Number(num) / 1000000 / 1000000000).toLocaleString(navigator.language, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + ' B';
-        } else {
-            return (Number(num) / 1000000).toLocaleString(navigator.language);
-        }
-    };
+		if (num.length > 10) {
+			return (Number(num) / 1000000 / 1000000000).toLocaleString(navigator.language, { minimumFractionDigits: decimals, maximumFractionDigits: decimals}) + ' B';
+		} else {
+			return (Number(num) / 1000000).toLocaleString(navigator.language);
+		}
+	};
 
-    // Example of using precompiles to query native Sei modules.
-    const getBankSupply = async () => {
-        if (!publicClient) {
-            return;
-        }
-
-        const params: ReadContractParameters = {
-            address: BANK_PRECOMPILE_ADDRESS,
-            abi: BANK_PRECOMPILE_ABI,
-            functionName: 'supply',
-            args: ['usei']
-        }
+    const copyToClipboard = (text: string) => {
         try {
-            const response = await publicClient?.readContract(params) as bigint;
-            const supply = formatLargeSeiNumber(response.toString(), 1)
-            setSupply(supply);
-        } catch (e) {
-            console.log(e);
+          navigator.clipboard.writeText(text);
+        } catch (err) {
+          console.error("Failed to copy text: ", err);
+        } finally {
+          alert("Copied to clipboard!");
         }
-    }
+      }
 
-    const getBankSupplyExample = () => {
+    const getAddressExample = () => {
         return (
-            isConnected ?
-                <div className={styles.exampleContainer}>
-                    <b className={styles.walletAddressLabel}>Total Supply</b>
-                    <p>Example of using the <br />
-                        <a className={styles.link}
-                            href="https://www.docs.sei.io/dev-interoperability/precompiles/bank"
-                            target="_blank">
-                            Bank Precompile
-                        </a>
-                        <br /> to query native Sei modules.</p>
-                    <button className={styles.exampleButton} onClick={getBankSupply}>Get Sei Supply</button>
-                    <div className={styles.row}>
-                        <p>Total Supply</p>
-                        <strong className={styles.walletAddressLabel}>{supply || '---'}</strong>
+            <div className="card">
+                <div className="card-header">
+                    <p className="card__title">Wallet address</p>
+                    <small className="card__description">
+                        <a 
+                        href="https://viem.sh/docs/clients/public.html"
+                        target="_blank">Viem Public Client</a> query example
+                    </small>
+                </div>
+                <div className="card-body">
+                    <div className="content-background space-between">
+                        {
+                            address ?
+                            <div> 
+                                <p className="card-footer">
+                                    {address}
+                                </p>
+                            </div> :
+                            <a> --- </a>
+                        }
+
+                        <button
+                            className="small outline"
+                            onClick={() =>
+                                copyToClipboard(
+                                    address as string
+                                )
+                            }
+                        >
+                            Copy
+                        </button>
                     </div>
-                </div> :
-                <></>
+                </div>
+                <div className="card-footer">
+                </div>
+            </div>
         )
     }
 
@@ -70,31 +77,79 @@ function Examples() {
         if (!address || !publicClient) {
             return undefined
         }
-        const weiBalance = await publicClient.getBalance({ address });
+        const weiBalance = await publicClient.getBalance({address});
         const seiBalance = formatEther(weiBalance)
         setBalance(seiBalance);
     }
-
+    
     const getBalanceExample = () => {
         return (
-            isConnected ?
-                <div className={styles.exampleContainer}>
-                    <b className={styles.walletAddressLabel}>Wallet Balance</b>
-                    <p>Example of using the <br />
-                        <a
-                            className={styles.link}
-                            href="https://viem.sh/docs/clients/public.html"
-                            target="_blank">
-                            Viem Public Client
-                        </a>
-                        <br /> to query the chain directly.</p>
-                    <button className={styles.exampleButton} onClick={getBalanceWagmi}>Get Balance</button>
-                    <div className={styles.row}>
-                        <p>Wallet Balance</p>
-                        <strong className={styles.walletAddressLabel}>{balance || '---'}</strong>
+            <div className="card">
+                <div className="card-header">
+                    <p className="card__title">Wallet balance</p>
+                    <small className="card__description">
+                        <a 
+                        href="https://viem.sh/docs/clients/public.html"
+                        target="_blank">Viem Public Client</a> query example
+                    </small>
+                </div>
+                <div className="card-body">
+                    <div className="content-background space-between">
+                        <small>SEI</small>
+                        <p>{balance ? balance : '---' } SEI</p>
                     </div>
-                </div> :
-                <></>
+                </div>
+                <div className="card-footer">
+                    <button onClick={getBalanceWagmi}>Fetch balance</button>
+                </div>
+            </div>
+        )
+    }
+    
+        // Example of using precompiles to query native Sei modules.
+        const getBankSupply = async () => {
+            if (!publicClient) {
+                return;
+            }
+    
+            const params: ReadContractParameters = {
+                address: BANK_PRECOMPILE_ADDRESS,
+                abi: BANK_PRECOMPILE_ABI,
+                functionName: 'supply',
+                args: ['usei']
+            }
+            try {
+                const response = await publicClient?.readContract(params) as BigInt;
+                const supply = formatLargeSeiNumber(response.toString(), 1)
+                setSupply(supply);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        
+    const getBankSupplyExample = () => {
+        return (
+            <div className="card">
+                <div className="card-header">
+                    <p className="card__title">Total Sei supply</p>
+                    <small className="card__description">
+                        <a
+                        href="https://www.docs.sei.io/dev-interoperability/precompiles/bank"
+                        target="_blank"> Bank precompile
+                        </a> example for querying native Sei
+                        modules
+                    </small>
+                </div>
+                <div className="card-body">
+                    <div className="content-background space-between">
+                        <small>SEI</small>
+                        <p>{supply}</p>
+                    </div>
+                </div>
+                <div className="card-footer">
+                    <button onClick={getBankSupply}>Fetch supply</button>
+                </div>
+            </div>
         )
     }
 
@@ -129,10 +184,10 @@ function Examples() {
         if (!address || !publicClient) {
             return;
         }
-
+        
         const COUNTER_CONTRACT_ADDRESS =
             "sei14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9sh9m79m";
-
+        
         const execMsg = toHex(JSON.stringify({ increment: {} }));
         const coins = toHex('[]')
         const params = {
@@ -145,11 +200,13 @@ function Examples() {
         }
 
         try {
-            const estimatedGas = await publicClient.estimateContractGas(params);
+		    const estimatedGas = await publicClient.estimateContractGas(params);
 
             // Call smart contract execute msg
-            await writeContractAsync({ ...params, gas: estimatedGas });
+            const result = await writeContractAsync({ ...params, gas: estimatedGas});
 
+            // Wait for 1 block to confirm transaction
+            setTimeout(() => {}, 400);
             await fetchCount();
 
         } catch (error) {
@@ -159,35 +216,52 @@ function Examples() {
 
     const counterContractExample = () => {
         return (
-            isConnected ?
-                <div className={styles.exampleContainer}>
-                    <b className={styles.walletAddressLabel}>Counter Smart Contract</b>
-                    <p>Example of using <br />
+            <div className="card">
+                <div className="card-header">
+                    <p className="card__title">Smart contract interaction</p>
+                    <small>
                         <a
-                            className={styles.link}
-                            href="https://www.docs.sei.io/dev-interoperability/precompiles/cosmwasm"
-                            target="_blank">
+                        href="https://www.docs.sei.io/dev-interoperability/precompiles/cosmwasm"
+                        target="_blank">
                             WASM Precompile
-                        </a>
-                        <br /> to interact with a CosmWasm smart contract. </p>
-                    <div className={styles.row}>
-                        <button className={styles.exampleButton} onClick={fetchCount}>Fetch Count</button>
-                        <button className={styles.exampleButton} onClick={incrementCounter}>Increment Counter</button>
+                        </a> example of CosmWasm smart
+                        contract interaction
+                    </small>
+                </div>
+                <div className="card-body">
+                    <div className="content-background space-between">
+                        <small>Count</small>
+                        <p>{count}</p>
+                        <button
+                            className="small outline"
+                            onClick={incrementCounter}
+                        >
+                            Increase
+                        </button>
                     </div>
-                    <div className={styles.row}>
-                        <p>Counter</p>
-                        <strong className={styles.walletAddressLabel}>{count || '---'}</strong>
-                    </div>
-                </div> :
-                <></>
+                </div>
+                <div className="card-footer">
+                    <button onClick={fetchCount}>Fetch count</button>
+                </div>
+            </div>
         )
     }
-
+    
     return (
-        <div className={styles.row}>
-            {getBalanceExample()}
-            {getBankSupplyExample()}
-            {counterContractExample()}
+        <div className="container">
+            <div className="grid">
+                {/* First card */}
+                {getAddressExample()}
+
+                {/* Second card */}
+                {getBalanceExample()}
+
+                {/* Third card */}
+                {getBankSupplyExample()}
+
+                {/* Fourth card */}
+                {counterContractExample()}
+            </div>
         </div>
     )
 }
