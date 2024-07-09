@@ -2,31 +2,6 @@ import { ContractRunner, Contract, InterfaceAbi } from 'ethers';
 import { ADDRESS_PRECOMPILE_ABI, ADDRESS_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
- * Represents the functions available in the Address precompile contract.
- * @category Cosmos Interoperability
- */
-export interface AddressPrecompileFunctions {
-	/**
-	 * Retrieves the associated EVM address for a given Cosmos address.
-	 * @param addr The Cosmos address for which to retrieve the associated EVM address.
-	 * @returns A Promise that resolves to the associated EVM address.
-	 */
-	getEvmAddr(addr: string): Promise<string>;
-	/**
-	 * Retrieves the associated Cosmos address for a given EVM address.
-	 * @param addr The EVM address for which to retrieve the associated Cosmos address.
-	 * @returns A Promise that resolves to the associated Cosmos address.
-	 */
-	getSeiAddr(addr: string): Promise<string>;
-}
-
-/**
- * Type for the Address precompile contract, combining the base Contract and AddressPrecompileFunctions.
- * @category Cosmos Interoperability
- */
-type AddressPrecompileContract = Contract & AddressPrecompileFunctions;
-
-/**
  * The ABI for the Address precompile contract, used to create an Ethers contract.
  * @category Cosmos Interoperability
  */
@@ -55,6 +30,6 @@ export const ETHERS_ADDRESS_PRECOMPILE_ABI = ADDRESS_PRECOMPILE_ABI as Interface
  * @returns The typed contract instance for interacting with the precompile contract.
  * @category Cosmos Interoperability
  */
-export function getAddressPrecompileEthersV6Contract(runner: ContractRunner): AddressPrecompileContract {
-	return new Contract(ADDRESS_PRECOMPILE_ADDRESS, ETHERS_ADDRESS_PRECOMPILE_ABI, runner) as AddressPrecompileContract;
+export function getAddressPrecompileEthersV6Contract(runner: ContractRunner) {
+	return new Contract(ADDRESS_PRECOMPILE_ADDRESS, ETHERS_ADDRESS_PRECOMPILE_ABI, runner);
 }

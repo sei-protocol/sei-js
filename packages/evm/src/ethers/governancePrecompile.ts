@@ -1,33 +1,5 @@
-import { BigNumberish, Contract, ContractRunner, InterfaceAbi } from 'ethers';
+import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
 import { GOVERNANCE_PRECOMPILE_ABI, GOVERNANCE_PRECOMPILE_ADDRESS } from '../precompiles';
-
-/**
- * Represents the functions available in the Governance precompile contract.
- * @category Cosmos Interoperability
- */
-export interface GovernancePrecompileFunctions {
-	/**
-	 * Deposits funds into a governance proposal.
-	 * @param proposalID The ID of the proposal to deposit funds into.
-	 * @returns A Promise resolving to an object indicating the success of the transaction.
-	 * @category Cosmos Interoperability
-	 */
-	deposit(proposalID: BigNumberish): Promise<{ success: boolean }>;
-	/**
-	 * Votes on a governance proposal.
-	 * @param proposalID The ID of the proposal to vote on.
-	 * @param option The option to vote for.
-	 * @returns A Promise resolving to an object indicating the success of the transaction.
-	 * @category Cosmos Interoperability
-	 */
-	vote(proposalID: BigNumberish, option: BigNumberish): Promise<{ success: boolean }>;
-}
-
-/**
- * Type for the Governance precompile contract, combining the base Contract and GovernancePrecompileFunctions.
- * @category Cosmos Interoperability
- */
-export type GovernancePrecompileContract = Contract & GovernancePrecompileFunctions;
 
 /**
  * The ABI for the Governance precompile contract, used to create an Ethers contract.
@@ -58,6 +30,6 @@ export const ETHERS_GOVERNANCE_PRECOMPILE_ABI = GOVERNANCE_PRECOMPILE_ABI as Int
  * @returns The typed contract instance for interacting with the Governance precompile contract.
  * @category Cosmos Interoperability
  */
-export const getGovernancePrecompileEthersV6Contract = (runner: ContractRunner): GovernancePrecompileContract => {
-	return new Contract(GOVERNANCE_PRECOMPILE_ADDRESS, ETHERS_GOVERNANCE_PRECOMPILE_ABI, runner) as GovernancePrecompileContract;
+export const getGovernancePrecompileEthersV6Contract = (runner: ContractRunner) => {
+	return new Contract(GOVERNANCE_PRECOMPILE_ADDRESS, ETHERS_GOVERNANCE_PRECOMPILE_ABI, runner);
 };

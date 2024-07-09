@@ -2,42 +2,6 @@ import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
 import { POINTER_PRECOMPILE_ABI, POINTER_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
- * Represents the functions available in the Pointer precompile contract.
- * @category Cosmos Interoperability
- */
-export interface PointerPrecompileFunctions {
-	/**
-	 * Adds a CW20 pointer for the contract.
-	 * @param cwAddr The CW20 contract address to add.
-	 * @returns A Promise resolving to the Ethereum address of the pointer.
-	 * @category Cosmos Interoperability
-	 */
-	addCW20Pointer(cwAddr: string): Promise<string>;
-
-	/**
-	 * Adds a CW721 pointer for the contract.
-	 * @param cwAddr The CW721 contract address to add.
-	 * @returns A Promise resolving to the Ethereum address of the pointer.
-	 * @category Cosmos Interoperability
-	 */
-	addCW721Pointer(cwAddr: string): Promise<string>;
-
-	/**
-	 * Adds a native pointer for the contract.
-	 * @param token The native token to add.
-	 * @returns A Promise resolving to the Ethereum address of the pointer.
-	 * @category Cosmos Interoperability
-	 */
-	addNativePointer(token: string): Promise<string>;
-}
-
-/**
- * Type for the Pointer precompile contract, combining the base Contract and PointerPrecompileFunctions.
- * @category Cosmos Interoperability
- */
-export type PointerPrecompileContract = Contract & PointerPrecompileFunctions;
-
-/**
  * The ABI for the Pointer precompile contract, used to create an Ethers contract.
  * @category Cosmos Interoperability
  */
@@ -65,6 +29,6 @@ export const ETHERS_POINTER_PRECOMPILE_ABI = POINTER_PRECOMPILE_ABI as Interface
  * @returns The typed contract instance for interacting with the Pointer precompile contract.
  * @category Cosmos Interoperability
  */
-export const getPointerPrecompileEthersV6Contract = (runner: ContractRunner): PointerPrecompileContract => {
-	return new Contract(POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, runner) as PointerPrecompileContract;
+export const getPointerPrecompileEthersV6Contract = (runner: ContractRunner) => {
+	return new Contract(POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, runner);
 };
