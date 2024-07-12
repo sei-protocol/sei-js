@@ -6,7 +6,7 @@ export interface QueryGrantsRequest {
   granter: string;
   grantee: string;
   /** Optional, msg_type_url, when set, will query only grants matching given msg type. */
-  msgTypeUrl: string;
+  msgTypeUrl?: string;
   /** pagination defines an pagination for the request. */
   pagination?: PageRequest | undefined;
 }
@@ -31,7 +31,7 @@ export interface QueryGrantsRequestAminoMsg {
 export interface QueryGrantsRequestSDKType {
   granter: string;
   grantee: string;
-  msg_type_url: string;
+  msg_type_url?: string;
   pagination?: PageRequestSDKType | undefined;
 }
 /** QueryGrantsResponse is the response type for the Query/Authorizations RPC method. */
@@ -169,7 +169,7 @@ function createBaseQueryGrantsRequest(): QueryGrantsRequest {
   return {
     granter: "",
     grantee: "",
-    msgTypeUrl: "",
+    msgTypeUrl: undefined,
     pagination: undefined
   };
 }
@@ -182,7 +182,7 @@ export const QueryGrantsRequest = {
     if (message.grantee !== "") {
       writer.uint32(18).string(message.grantee);
     }
-    if (message.msgTypeUrl !== "") {
+    if (message.msgTypeUrl !== undefined) {
       writer.uint32(26).string(message.msgTypeUrl);
     }
     if (message.pagination !== undefined) {
@@ -220,7 +220,7 @@ export const QueryGrantsRequest = {
     const message = createBaseQueryGrantsRequest();
     message.granter = object.granter ?? "";
     message.grantee = object.grantee ?? "";
-    message.msgTypeUrl = object.msgTypeUrl ?? "";
+    message.msgTypeUrl = object.msgTypeUrl ?? undefined;
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   },
@@ -244,7 +244,7 @@ export const QueryGrantsRequest = {
     const obj: any = {};
     obj.granter = message.granter === "" ? undefined : message.granter;
     obj.grantee = message.grantee === "" ? undefined : message.grantee;
-    obj.msg_type_url = message.msgTypeUrl === "" ? undefined : message.msgTypeUrl;
+    obj.msg_type_url = message.msgTypeUrl === null ? undefined : message.msgTypeUrl;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
