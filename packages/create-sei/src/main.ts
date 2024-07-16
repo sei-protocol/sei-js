@@ -76,7 +76,7 @@ const promptEVMLibrary = async () => {
 
 //TODO (P2): Add ability to pass in flags to skip prompts using commander
 
-async function runWizard(): Promise<string> {
+async function runWizard(): Promise<void> {
 
 	const { dAppName } = await inquirer.prompt([
 		{
@@ -90,8 +90,6 @@ async function runWizard(): Promise<string> {
 		}
 	]);
 
-	console.log(dAppName)
-
 	const appFramework = await promptFramework();
 	let appConnectionType = await promptRpcIntegrations();
 	if (appConnectionType == RPCIntegrationType.EVM) {
@@ -101,13 +99,17 @@ async function runWizard(): Promise<string> {
 	const templateName = `${appFramework}-${appConnectionType}-template`;
 	const templatePath = path.join(__dirname, 'templates', templateName)
 	const dst = path.join(process.cwd(), dAppName)
-	await fs.cp(templatePath,  dst, {recursive: true}, (e) => console.log(e))
+	await fs.promises.cp(templatePath,  dst, {recursive: true})
 
-	return 'Project setup complete!';
+	console.log('Project setup complete!\n');
+	console.log(`To start your app, run: \n > cd ${dAppName} \n > yarn \n > yarn dev\n`);
 }
 
-try {
-	runWizard().then(console.log);
-} catch (error) {
-	console.error('An error occurred:', error);
-}
+(async () => {
+	try {
+		await runWizard()
+	} catch (error) {
+		console.error('An error occurred:', error);
+	}
+})();
+

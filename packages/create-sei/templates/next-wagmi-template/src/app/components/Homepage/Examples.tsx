@@ -1,3 +1,5 @@
+'use client';
+
 import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS, WASM_PRECOMPILE_ABI, WASM_PRECOMPILE_ADDRESS } from "@sei-js/evm";
 import { useState } from "react";
 import { ReadContractParameters, formatEther, fromHex, parseEther, toHex } from "viem";
@@ -52,7 +54,7 @@ function Examples() {
                                     {address}
                                 </p>
                             </div> :
-                            <a> --- </a>
+                            <p> --- </p>
                         }
 
                         <button

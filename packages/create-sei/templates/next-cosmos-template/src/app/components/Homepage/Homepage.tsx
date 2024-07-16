@@ -95,7 +95,13 @@ export function Homepage() {
 				Get started by editing <code>src/app/page.tsx</code>
 			</div>
 			<div className="grid docs">
-				{helpItems.map((item, index) => (renderHelpItem(item)))}
+				{
+					helpItems.map((item, _) => (
+						<div key={item.title}>
+							{renderHelpItem(item)}
+						</div>
+					))
+				}
 			</div>
 		</div>
 	);
