@@ -35,6 +35,8 @@ This repository includes basic features that allow you to connect to a wallet an
 
 Additionally, basic examples and links to documentation are provided on the example homepage in `src/components/Homepage`.
 
+This repository uses helper methods from [@sei-js/evm/viem](https://github.com/sei-protocol/sei-js/tree/main/packages/evm/src/viem)
+
 ### Web3 Provider
 This component is a Sei specific wrapper around a Wagmi Provider that should wrap the application. Wrapping the application in this provider will enable it to access hooks in Wagmi. These hooks are enable connection to a wallet and interaction with the chain.
 
@@ -43,7 +45,7 @@ In addition, this app uses [RainbowKit](https://www.rainbowkit.com/docs/wallet-b
 To change the list of supported wallets, as well as connection configurations you can modify the `src/components/Web3Provider.tsx` component.
 
 ### Changing the Chain
-This application connects to the arctic-1 devnet by default
+This application connects to the arctic-1 devnet by default, using chain configurations uploaded to viem.
 
 To change the chain the app connects to, edit the `selectedChain` variable in the `chain.ts` file in `src/app/constants`
 

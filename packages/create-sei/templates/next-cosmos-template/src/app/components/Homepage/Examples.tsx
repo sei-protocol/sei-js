@@ -139,7 +139,7 @@ function Examples({ chainId }: ExampleProps) {
                     <p className="card__title">Smart contract interaction</p>
                     <small>
                         <a
-                        href="https://cosmos.github.io/cosmjs/latest/stargate/classes/SigningCosmWasmClient.html"
+                        href="https://cosmos.github.io/cosmjs/latest/cosmwasm-stargate/classes/SigningCosmWasmClient.html"
                         target="_blank">
                             CosmWasm Clients
                         </a> example of smart

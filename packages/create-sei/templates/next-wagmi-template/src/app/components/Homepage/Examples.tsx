@@ -205,7 +205,7 @@ function Examples() {
 		    const estimatedGas = await publicClient.estimateContractGas(params);
 
             // Call smart contract execute msg
-            const result = await writeContractAsync({ ...params, gas: estimatedGas});
+            await writeContractAsync({ ...params, gas: estimatedGas});
 
             // Wait for 1 block to confirm transaction
             setTimeout(() => {}, 400);

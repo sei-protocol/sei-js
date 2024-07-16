@@ -1,13 +1,12 @@
 'use client';
 
-import { RainbowKitProvider, connectorsForWallets, lightTheme, midnightTheme } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider, connectorsForWallets, lightTheme } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
 import { Buffer } from 'buffer';
 import { ReactNode, useMemo } from 'react';
 import { WagmiProvider, createConfig, http } from 'wagmi';
 
 import '@rainbow-me/rainbowkit/styles.css';
-import { ATLANTIC_2_VIEM_CHAIN } from '@sei-js/evm';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { selectedChain } from '../constants';
 

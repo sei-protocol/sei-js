@@ -19,6 +19,7 @@ SeiJS consists of smaller NPM packages within the @sei-js namespace. For more de
 | [@sei-js/evm](packages/evm)        | Typescript library containing helper functions for interacting with the EVM on Sei.                                                                                                                    |
 | [@sei-js/proto](packages/proto)    | TypeScript library for Sei protobuf generated using [Telescope](https://github.com/osmosis-labs/telescope)                                                                                             |
 | [@sei-js/registry](packages/proto) | TypeScript library exporting constants from the [Sei chain-registry](https://github.com/sei-protocol/chain-registry) and the [community asset list](https://github.com/Sei-Public-Goods/sei-assetlist) |
+| [@sei-js/create-sei](packages/create-sei) | CLI Tool used to quickly spin up Sei Projects and dApps in either the cosmos or EVM ecosystem |
 
 ## Development
 To build all packages and docs, run `yarn install` then `yarn build:all`

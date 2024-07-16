@@ -1,4 +1,3 @@
-import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Examples from './Examples';
 import "./Homepage.css"
@@ -98,7 +97,7 @@ function Homepage() {
           Get started by editing <code>src/App.tsx</code>
         </div>
 		<div className="grid docs">
-			{helpItems.map((item, index) => (renderHelpItem(item)))}
+			{helpItems.map((item, _) => (renderHelpItem(item)))}
 		</div>
       </div>
 	);
