@@ -1,5 +1,11 @@
 # @sei-js/create-sei-app
 
+## 0.0.0-internal-20240717003256
+
+### Major Changes
+
+- First version
+
 ## 0.0.0-internal-20240716075531
 
 ### Major Changes
