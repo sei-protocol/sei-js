@@ -185,9 +185,9 @@ program
 	.command('app')
 	.description('Create a new SEI dApp')
 	.option('-n, --name <name>', `Specify the name of your dApp. Name must be a valid package name.`)
-	.option('-f, --framework <framework>', `Specify the app framework to use ${Object.values(FrontendScaffolding)}`)
-	.option('-e, --ecosystem <ecosystem>', `Specify the ecosystem to use ${Object.values(RPCIntegrationType)}`)
-	.option('-l, --library <library>', `Specify the EVM library to use ${Object.values(EVMLibrary)}. Only used if ecosystem chosen is 'EVM'`)
+	.option('-f, --framework <framework>', `Specify the app framework to use: [${Object.values(FrontendScaffolding).join(', ')}]`)
+	.option('-e, --ecosystem <ecosystem>', `Specify the ecosystem to use: [${Object.values(RPCIntegrationType).join(', ')}]`)
+	.option('-l, --library <library>', `Specify the EVM library to use: [${Object.values(EVMLibrary).join(', ')}]. Only used if ecosystem chosen is 'EVM'`)
 	.action(async (options: WizardOptions) => {
 		try {
 			await runWizard(options);
