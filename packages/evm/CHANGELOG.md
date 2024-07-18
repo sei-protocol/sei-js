@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.3.0
+
+### Minor Changes
+
+- c2a0a4e: Refactored EVM package so that viem and ethers are now peer dependencies.
+
 ## 1.2.0
 
 ### Minor Changes
