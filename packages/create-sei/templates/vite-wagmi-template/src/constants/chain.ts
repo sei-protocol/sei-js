@@ -1,5 +1,6 @@
-import { ARCTIC_1_VIEM_CHAIN } from '@sei-js/evm';
+import { seiDevnet } from 'viem/chains';
 
 // Set your selected chain here
-// To point to mainnet, use PACIFIC_1_VIEM_CHAIN
-export const selectedChain = ARCTIC_1_VIEM_CHAIN
+// To point to mainnet, use sei.
+// To point to testnet, use seiTestnet.
+export const selectedChain = seiDevnet

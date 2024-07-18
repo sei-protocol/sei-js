@@ -34,7 +34,7 @@ function Examples() {
         }
       }
 
-    const getAddressExample = () => {
+    const renderAddressExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -84,7 +84,7 @@ function Examples() {
         setBalance(seiBalance);
     }
     
-    const getBalanceExample = () => {
+    const renderBalanceExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -121,7 +121,7 @@ function Examples() {
             args: ['usei']
         }
         try {
-            const response = await publicClient?.readContract(params) as BigInt;
+            const response = await publicClient.readContract(params) as BigInt;
             const supply = formatLargeSeiNumber(response.toString(), 1)
             setSupply(supply);
         } catch (e) {
@@ -129,7 +129,7 @@ function Examples() {
         }
     }
         
-    const getBankSupplyExample = () => {
+    const renderBankSupplyExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -216,7 +216,7 @@ function Examples() {
         }
     };
 
-    const counterContractExample = () => {
+    const renderCounterContractExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -253,16 +253,16 @@ function Examples() {
         <div className="container">
             <div className="grid">
                 {/* First card */}
-                {getAddressExample()}
+                {renderAddressExample()}
 
                 {/* Second card */}
-                {getBalanceExample()}
+                {renderBalanceExample()}
 
                 {/* Third card */}
-                {getBankSupplyExample()}
+                {renderBankSupplyExample()}
 
                 {/* Fourth card */}
-                {counterContractExample()}
+                {renderCounterContractExample()}
             </div>
         </div>
     )

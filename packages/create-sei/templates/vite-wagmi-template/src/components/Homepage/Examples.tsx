@@ -32,7 +32,7 @@ function Examples() {
         }
       }
 
-    const getAddressExample = () => {
+    const renderAddressExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -82,7 +82,7 @@ function Examples() {
         setBalance(seiBalance);
     }
     
-    const getBalanceExample = () => {
+    const renderBalanceExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -106,28 +106,28 @@ function Examples() {
         )
     }
     
-        // Example of using precompiles to query native Sei modules.
-        const getBankSupply = async () => {
-            if (!publicClient) {
-                return;
-            }
-    
-            const params: ReadContractParameters = {
-                address: BANK_PRECOMPILE_ADDRESS,
-                abi: BANK_PRECOMPILE_ABI,
-                functionName: 'supply',
-                args: ['usei']
-            }
-            try {
-                const response = await publicClient?.readContract(params) as BigInt;
-                const supply = formatLargeSeiNumber(response.toString(), 1)
-                setSupply(supply);
-            } catch (e) {
-                console.log(e);
-            }
+    // Example of using precompiles to query native Sei modules.
+    const getBankSupply = async () => {
+        if (!publicClient) {
+            return;
         }
+
+        const params: ReadContractParameters = {
+            address: BANK_PRECOMPILE_ADDRESS,
+            abi: BANK_PRECOMPILE_ABI,
+            functionName: 'supply',
+            args: ['usei']
+        }
+        try {
+            const response = await publicClient.readContract(params) as BigInt;
+            const supply = formatLargeSeiNumber(response.toString(), 1)
+            setSupply(supply);
+        } catch (e) {
+            console.log(e);
+        }
+    }
         
-    const getBankSupplyExample = () => {
+    const renderBankSupplyExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -214,7 +214,7 @@ function Examples() {
         }
     };
 
-    const counterContractExample = () => {
+    const renderCounterContractExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -251,16 +251,16 @@ function Examples() {
         <div className="container">
             <div className="grid">
                 {/* First card */}
-                {getAddressExample()}
+                {renderAddressExample()}
 
                 {/* Second card */}
-                {getBalanceExample()}
+                {renderBalanceExample()}
 
                 {/* Third card */}
-                {getBankSupplyExample()}
+                {renderBankSupplyExample()}
 
                 {/* Fourth card */}
-                {counterContractExample()}
+                {renderCounterContractExample()}
             </div>
         </div>
     )

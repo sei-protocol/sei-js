@@ -1215,11 +1215,6 @@ abitype@0.9.8:
   resolved "https://registry.yarnpkg.com/abitype/-/abitype-0.9.8.tgz#1f120b6b717459deafd213dfbf3a3dd1bf10ae8c"
   integrity sha512-puLifILdm+8sjyss4S+fsUN09obiT1g2YW6CtcQF+QDzxR0euzgEB29MZujC6zMk2a6SVmtttq1fc6+YFA7WYQ==
 
-abitype@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/abitype/-/abitype-1.0.4.tgz#a817ff44860e8a84e9a37ed22aa9b738dbb51dba"
-  integrity sha512-UivtYZOGJGE8rsrM/N5vdRkUpqEZVmuTumfTuolm7m/6O09wprd958rx8kUBwVAAAhQDveGAgD0GJdBuR8s6tw==
-
 abitype@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/abitype/-/abitype-1.0.5.tgz#29d0daa3eea867ca90f7e4123144c1d1270774b6"
@@ -4580,16 +4575,16 @@ viem@^2.0.0:
     ws "8.17.1"
 
 viem@^2.15.1:
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-2.16.0.tgz#646b7a872bc734de210e577f4b3630ffdc110b6d"
-  integrity sha512-qXakKfshaDOiQFgb3MgROKDa4bfr095GMUqrD2WN6UMdzH7WtlAYJ65vnrpoXpny9jXAyNoirEJeBBUF9KFNIQ==
+  version "2.17.5"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-2.17.5.tgz#9610378e22ff478cd6857a14aea1311d43699fa4"
+  integrity sha512-m0QIKQF1uqTFWAYNeAdhNUBFMaIs0Mwhu2VmZuXmBMkzJ0IL0ViblLH13JRwbDnOaY82KYzNhCARmfnLBWVdkA==
   dependencies:
     "@adraffy/ens-normalize" "1.10.0"
-    "@noble/curves" "1.2.0"
-    "@noble/hashes" "1.3.2"
-    "@scure/bip32" "1.3.2"
-    "@scure/bip39" "1.2.1"
-    abitype "1.0.4"
+    "@noble/curves" "1.4.0"
+    "@noble/hashes" "1.4.0"
+    "@scure/bip32" "1.4.0"
+    "@scure/bip39" "1.3.0"
+    abitype "1.0.5"
     isows "1.0.4"
     ws "8.17.1"
 

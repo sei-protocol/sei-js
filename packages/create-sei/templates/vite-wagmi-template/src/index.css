@@ -107,6 +107,7 @@ button {
   background-color: #cec9c1;
   cursor: pointer;
   transition: all 0.25s ease;
+  color: black
 }
 button:hover {
   background-color: #b5afa7;
@@ -120,7 +121,6 @@ button:disabled {
 
 button.primary {
   background-color: var(--primary-color);
-  color: #fff;
 }
 button.outline {
   background-color: transparent;
@@ -133,7 +133,7 @@ button.primary:hover {
 
 button.secondary {
   background-color: #000;
-  color: #fff;
+  color: black;
 }
 
 button.secondary:hover {

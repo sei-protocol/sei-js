@@ -107,6 +107,7 @@ button {
   background-color: #cec9c1;
   cursor: pointer;
   transition: all 0.25s ease;
+  color: black;
 }
 button:hover {
   background-color: #b5afa7;

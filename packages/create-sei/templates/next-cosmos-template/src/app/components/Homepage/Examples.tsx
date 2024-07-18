@@ -22,7 +22,7 @@ function Examples({ chainId }: ExampleProps) {
         setPool(result.pool)
     }
     
-    const getStakingPoolExample = () => {
+    const renderStakingPoolExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -60,7 +60,7 @@ function Examples({ chainId }: ExampleProps) {
         setBalance(seiBalance);
     }
 
-    const getBalanceExample = () => {
+    const renderBalanceExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -132,7 +132,7 @@ function Examples({ chainId }: ExampleProps) {
         }
     };
 
-    const counterContractExample = () => {
+    const renderCounterContractExample = () => {
         return (
             <div className="card">
                 <div className="card-header">
@@ -167,9 +167,9 @@ function Examples({ chainId }: ExampleProps) {
 
     return (
         <div className="grid">
-            {getBalanceExample()}
-            {getStakingPoolExample()}
-            {counterContractExample()}
+            {renderBalanceExample()}
+            {renderStakingPoolExample()}
+            {renderCounterContractExample()}
         </div>
     )
 }
