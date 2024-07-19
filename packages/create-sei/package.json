@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/create-sei",
-  "version": "0.0.0-internal-20240718212746",
+  "version": "0.0.0",
   "module": "dist/main.js",
   "type": "module",
   "bin": {
