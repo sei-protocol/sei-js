@@ -1,6 +1,6 @@
 {
   "name": "@sei-js/proto",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "TypeScript library for Sei protobuf files generated using Telescope",
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
@@ -51,6 +51,7 @@
     "jest-in-case": "^1.0.2",
     "long": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
+    "ts-node": "^10.9.2",
     "tsc-watch": "^6.2.0"
   },
   "dependencies": {
