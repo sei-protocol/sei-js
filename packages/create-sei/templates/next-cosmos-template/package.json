@@ -1,0 +1,31 @@
+{
+  "name": "template-next-cosmos-sei-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@cosmos-kit/react": "^2.17.0",
+    "@interchain-ui/react": "1.23.21",
+    "@interchain-ui/react-no-ssr": "^0.1.4",
+    "@sei-js/cosmjs": "^1.0.7",
+    "@tanstack/react-query": "^5.45.1",
+    "chain-registry": "^1.63.5",
+    "cosmos-kit": "^2.18.0",
+    "next": "14.2.4",
+    "pino-pretty": "^11.2.1",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint-config-next": "14.2.4",
+    "typescript": "^5"
+  }
+}
