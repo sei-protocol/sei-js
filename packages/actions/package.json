@@ -1,0 +1,43 @@
+{
+  "name": "@sei-js/actions",
+  "version": "1.0.0",
+  "description": "TypeScript library for the actions standard on Sei",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc --project tsconfig.json && yarn build:prettier",
+    "build:prettier": "prettier --write 'dist/**/*.js'",
+    "docs": "typedoc --out docs",
+    "test": "jest",
+    "lint": "eslint --ext .ts"
+  },
+  "homepage": "https://github.com/sei-protocol/sei-js#readme",
+  "keywords": [
+    "sei",
+    "javascript",
+    "typescript",
+    "registry"
+  ],
+  "repository": "git@github.com:sei-protocol/sei-js.git",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "peerDependencies": {},
+  "devDependencies": {},
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}
