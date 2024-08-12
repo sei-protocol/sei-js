@@ -344,6 +344,12 @@
 <td><code>{ success: boolean }</code></td>
 <td>Withdraws delegation rewards for given validators.</td>
 </tr>
+<tr>
+<td><a href="/sei-js/docs/interfaces/evm.DistributionPrecompileFunctions.html#rewards"><code>rewards</code></a></td>
+<td><code>delegatorAddress: </code> <code>address</code></td>
+<td><code>{ rewards: Rewards }</code></td>
+<td>Queries rewards available for a given delegator address. Rewards are usually returned as decimals. To calculate the actual amount, divide the amount by decimals.</td>
+</tr>
 </tbody></table>
 <a id="md:precompile-addresses-1" class="tsd-anchor"></a><h4><a href="#md:precompile-addresses-1">Precompile Addresses</a></h4><p>0x0000000000000000000000000000000000001007</p>
 <br>
@@ -438,6 +444,12 @@
 <td><code>valAddress: </code> <code>string</code>, <code>amount: </code> <code>string</code></td>
 <td><code>{ success: boolean }</code></td>
 <td>Undelegates tokens from the specified validator.</td>
+</tr>
+<tr>
+<td><a href="/sei-js/docs/interfaces/evm.StakingPrecompileFunctions.html#delegation"><code>delegation</code></a></td>
+<td><code>delegator</code>: <code>address</code>, <code>valAddress: </code> <code>string</code></td>
+<td><code>{ delegation: Delegation }</code></td>
+<td>Queries delegation by delegator and validator address. Shares in DelegationDetails are usually returned as decimals. To calculate the actual amount, divide the shares by decimals.</td>
 </tr>
 </tbody></table>
 <a id="md:precompile-addresses-4" class="tsd-anchor"></a><h4><a href="#md:precompile-addresses-4">Precompile Addresses</a></h4><p>0x0000000000000000000000000000000000001005</p>
