@@ -24,18 +24,57 @@ import {Int53} from "@cosmjs/math";
 import {SignMode} from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import {SeiApp} from "@zondax/ledger-sei";
 
+/**
+ * Creates a transport and app instance
+ */
 export const createTransportAndApp = async () => {
   const transport = await Transport.create();
   const app = new SeiApp(transport);
   return {transport, app};
 };
 
+/**
+ * Get the EVM and Cosmos addresses from the Ledger device
+ * @param app Ledger Sei app instance
+ * @param path hd derivation path (e.g. "m/44'/60'/0'/0/0")
+ */
 export const getAddresses = async (app: SeiApp, path: string) => {
   const evmAddress = await app.getEVMAddress(path);
   const nativeAddress = await app.getCosmosAddress(path);
   return {evmAddress, nativeAddress};
 };
 
+/**
+ * Create a sign doc for a Cosmos transaction.
+ *
+ * Example usage:
+ *
+ *   const aminoMsg: AminoMsg = {
+ *     type: "cosmos-sdk/MsgDelegate",
+ *     value: {
+ *       delegator_address: nativeAddress.address,
+ *       validator_address: validatorAddress,
+ *       amount: coin("1000", "usei"),
+ *     },
+ *   };
+ *
+ *   const fee: StdFee = {
+ *     amount: [{denom: "usei", amount: "20000"}],
+ *     gas: "200000",
+ *   };
+ *
+ *   const chainId = "atlantic-2";
+ *   const memo = "Delegation";
+ *   const account = await client.getAccount(nativeAddress.address);
+ *
+ *   const signDoc = createSignDoc(aminoMsg, fee, chainId, memo, account);
+ *
+ * @param aminoMsg amino message
+ * @param fee transaction fee
+ * @param chainId chain id
+ * @param memo transaction memo
+ * @param account account
+ */
 export const createSignDoc = (aminoMsg: AminoMsg, fee: StdFee, chainId: string, memo: string, account: Account) => {
   return makeSignDoc(
     [aminoMsg],
@@ -47,6 +86,15 @@ export const createSignDoc = (aminoMsg: AminoMsg, fee: StdFee, chainId: string, 
   );
 };
 
+/**
+ * Sign and broadcast a Cosmos transaction
+ *
+ * @param app Ledger Sei app instance
+ * @param path hd derivation path (e.g. "m/44'/60'/0'/0/0")
+ * @param signDoc sign doc
+ * @param client Stargate client
+ * @param nativeAddress native Sei address
+ */
 export const signAndBroadcast = async (app: SeiApp, path: string, signDoc: StdSignDoc, client: StargateClient, nativeAddress: {
   address: string,
   pubKey: string
