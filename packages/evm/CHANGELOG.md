@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.4.0
+
+### Minor Changes
+
+- 35c62d0: Adding new functions to distribution and staking precompiles
+
 ## 1.3.0
 
 ### Minor Changes
