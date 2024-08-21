@@ -16,7 +16,7 @@ import {
 import {
   createTransportAndApp,
   getAddresses,
-  LedgerOfflineAminoSigner
+  SeiLedgerOfflineAminoSigner
 } from "@sei-js/ledger";
 
 const testApp = async () => {
@@ -27,7 +27,7 @@ const testApp = async () => {
 
   const {app} = await createTransportAndApp();
   const {nativeAddress} = await getAddresses(app, path);
-  const ledgerSigner = new LedgerOfflineAminoSigner(app, path)
+  const ledgerSigner = new SeiLedgerOfflineAminoSigner(app, path)
   const signingStargateClient = await SigningStargateClient.connectWithSigner(rpcUrl, ledgerSigner)
 
   const msgDelegate = {
