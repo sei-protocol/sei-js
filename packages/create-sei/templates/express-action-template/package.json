@@ -1,5 +1,5 @@
 {
-  "name": "express-action-template",
+  "name": "template-express-action",
   "version": "1.0.0",
   "description": "An Express boilerplate for a Sei action API written in Typescript",
   "repository": "sei-protocol/sei-js",
