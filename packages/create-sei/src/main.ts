@@ -23,8 +23,7 @@ const printWelcomeMessage = () => {
 			borderColor: '#932C23'
 		})
 	);
-}
-
+};
 
 enum FrontendScaffolding {
 	Vite = 'vite',
@@ -40,15 +39,19 @@ export enum EVMLibrary {
 	Wagmi = 'wagmi'
 }
 
-interface WizardOptions {
+interface AppWizardOptions {
 	name?: string;
 	framework?: FrontendScaffolding;
 	ecosystem?: RPCIntegrationType;
 	library?: EVMLibrary;
 }
 
+interface ActionsWizardOptions {
+	name?: string;
+}
+
 const promptFramework = async () => {
-	const {appFramework} = await inquirer.prompt([
+	const { appFramework } = await inquirer.prompt([
 		{
 			type: 'list',
 			name: 'appFramework',
@@ -58,10 +61,10 @@ const promptFramework = async () => {
 	]);
 
 	return appFramework;
-}
+};
 
 const promptRpcIntegrations = async () => {
-	const {rpcIntegrationType} = await inquirer.prompt([
+	const { rpcIntegrationType } = await inquirer.prompt([
 		{
 			type: 'list',
 			name: 'rpcIntegrationType',
@@ -74,7 +77,7 @@ const promptRpcIntegrations = async () => {
 };
 
 const promptEVMLibrary = async () => {
-	const {evmLibrary} = await inquirer.prompt([
+	const { evmLibrary } = await inquirer.prompt([
 		{
 			type: 'list',
 			name: 'evmLibrary',
@@ -86,24 +89,24 @@ const promptEVMLibrary = async () => {
 	return evmLibrary;
 };
 
-function isValidDirectoryName(dirName) {
+function isValidDirectoryName(dirName: string) {
 	const illegalRe = /[<>:"/\\|?*\x00-\x1F]/g;
 	const windowsReservedRe = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])$/i;
 	const trailingRe = /[. ]+$/;
 	const validNpmPackageRe = /^(?:@[a-z0-9-*~][a-z0-9-*._~]*)?[a-z0-9-~][a-z0-9-._~]*$/;
-  
+
 	if (typeof dirName !== 'string' || dirName.length === 0) {
-	  return false;
+		return false;
 	}
-  
+
 	if (illegalRe.test(dirName) || windowsReservedRe.test(dirName) || trailingRe.test(dirName) || !validNpmPackageRe.test(dirName)) {
-	  return false;
+		return false;
 	}
-  
+
 	return true;
 }
 
-const validateOptions = (options: WizardOptions): boolean => {
+const validateAppOptions = (options: AppWizardOptions): boolean => {
 	let valid = true;
 
 	if (options.name) {
@@ -138,20 +141,19 @@ const validateOptions = (options: WizardOptions): boolean => {
 	}
 
 	return valid;
-}
+};
 
-async function runWizard(options: WizardOptions): Promise<void> {
-	if (!validateOptions(options)) {
+async function runAppWizard(options: AppWizardOptions): Promise<void> {
+	if (!validateAppOptions(options)) {
 		return;
 	}
-	
+
 	printWelcomeMessage();
 
-	let dAppName = '';
+	let dAppName: string;
 	if (options.name) {
-		dAppName = options.name
-	}
-	else {
+		dAppName = options.name;
+	} else {
 		const promptResult = await inquirer.prompt([
 			{
 				type: 'input',
@@ -163,22 +165,69 @@ async function runWizard(options: WizardOptions): Promise<void> {
 			}
 		]);
 
-		dAppName = promptResult.dAppName
-	}	
+		dAppName = promptResult.dAppName;
+	}
 
-	const appFramework = options.framework || await promptFramework();
-	let appConnectionType = options.ecosystem || await promptRpcIntegrations();
+	const appFramework = options.framework || (await promptFramework());
+	let appConnectionType = options.ecosystem || (await promptRpcIntegrations());
 	if (appConnectionType == RPCIntegrationType.EVM) {
-		appConnectionType = options.library || await promptEVMLibrary();
+		appConnectionType = options.library || (await promptEVMLibrary());
 	}
 
 	const templateName = `${appFramework}-${appConnectionType}-template`;
-	const templatePath = path.join(__dirname, 'templates', templateName)
-	const dst = path.join(process.cwd(), dAppName)
-	await fs.promises.cp(templatePath,  dst, {recursive: true})
+	const templatePath = path.join(__dirname, 'templates', templateName);
+	const dst = path.join(process.cwd(), dAppName);
+	await fs.promises.cp(templatePath, dst, { recursive: true });
 
 	console.log(`Project setup complete! Using template ${templateName}\n`);
 	console.log(`To start your app, run: \n > cd ${dAppName} \n > yarn \n > yarn dev\n`);
+}
+
+const validateActionsOptions = (options: ActionsWizardOptions): boolean => {
+	let valid = true;
+
+	if (options.name) {
+		if (!isValidDirectoryName(options.name)) {
+			console.log('Invalid package name. Please use a valid npm package name.');
+			valid = false;
+		}
+	}
+
+	return valid;
+};
+
+async function runActionsWizard(options: ActionsWizardOptions): Promise<void> {
+	if (!validateActionsOptions(options)) {
+		return;
+	}
+
+	printWelcomeMessage();
+
+	let dAppName: string;
+	if (options.name) {
+		dAppName = options.name;
+	} else {
+		const promptResult = await inquirer.prompt([
+			{
+				type: 'input',
+				name: 'dAppName',
+				message: 'What is your dApp (project) name?',
+				validate: (input: string) => {
+					return isValidDirectoryName(input) || 'Invalid package name. Please use a valid npm package name.';
+				}
+			}
+		]);
+
+		dAppName = promptResult.dAppName;
+	}
+
+	const templateName = `express-action-template`;
+	const templatePath = path.join(__dirname, 'templates', templateName);
+	const dst = path.join(process.cwd(), dAppName);
+	await fs.promises.cp(templatePath, dst, { recursive: true });
+
+	console.log(`Project setup complete! Using template ${templateName}\n`);
+	console.log(`To start your app, run: \n > cd ${dAppName} \n and read the README.md file for the project.\n`);
 }
 
 program
@@ -188,13 +237,24 @@ program
 	.option('-f, --framework <framework>', `Specify the app framework to use: [${Object.values(FrontendScaffolding).join(', ')}]`)
 	.option('-e, --ecosystem <ecosystem>', `Specify the ecosystem to use: [${Object.values(RPCIntegrationType).join(', ')}]`)
 	.option('-l, --library <library>', `Specify the EVM library to use: [${Object.values(EVMLibrary).join(', ')}]. Only used if ecosystem chosen is 'EVM'`)
-	.action(async (options: WizardOptions) => {
+	.action(async (options: AppWizardOptions) => {
 		try {
-			await runWizard(options);
+			await runAppWizard(options);
+		} catch (error) {
+			console.error('An error occurred:', error);
+		}
+	});
+
+program
+	.command('action-api')
+	.description('Create a new SEI action API')
+	.option('-n, --name <name>', `Specify the name of your API project. Name must be a valid package name.`)
+	.action(async (options: ActionsWizardOptions) => {
+		try {
+			await runActionsWizard(options);
 		} catch (error) {
 			console.error('An error occurred:', error);
 		}
 	});
 
 program.parse(process.argv);
-

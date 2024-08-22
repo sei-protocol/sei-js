@@ -7,7 +7,7 @@
     "create-sei": "./dist/main.js"
   },
   "scripts": {
-    "build": "tsc && cp -r ./templates ./dist/templates",
+    "build": "tsc && rm -rf ./dist/templates && cp -r ./templates ./dist/templates",
     "dev": "node --loader ts-node/esm src/main.ts",
     "lint": "eslint --ext .ts"
   },
