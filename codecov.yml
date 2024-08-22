@@ -11,7 +11,12 @@ flags:
   registry:
     paths:
       - packages/registry/**
-
+  create-sei:
+    paths:
+      - packages/create-sei/**
+  actions:
+    paths:
+      - packages/actions/**
 coverage:
   status:
     project:
@@ -31,3 +36,11 @@ coverage:
         target: 80%
         flags:
           - registry
+      create-sei:
+        target: 80%
+        flags:
+          - create-sei
+      actions:
+        target: 80%
+        flags:
+          - actions
