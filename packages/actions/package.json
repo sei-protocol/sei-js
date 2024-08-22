@@ -30,7 +30,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@ethersproject/abstract-provider": "^5.7.0"
+  },
   "peerDependencies": {},
   "devDependencies": {},
   "exports": {

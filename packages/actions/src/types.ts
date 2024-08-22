@@ -1,3 +1,5 @@
+import type { TransactionRequest } from '@ethersproject/abstract-provider';
+
 // Define the type for the actions.json file at the root of a domain
 export interface SeiActionsJSON {
 	rules: Array<{
@@ -21,9 +23,11 @@ export interface GetSeiActionResponse {
 export interface SeiActionConfig {
 	label: string;
 	href: string;
+	chainType: 'EVM' | 'COSMOS';
 	parameters?: Array<{
 		name: string;
 		label: string;
+		required?: boolean;
 	}>;
 }
 
@@ -35,6 +39,6 @@ export interface PostSeiActionRequest {
 
 // Define the type for the POST response for a given action
 export interface PostSeiActionResponse {
-	transaction: unknown;
+	transaction: TransactionRequest | never;
 	message?: string;
 }
