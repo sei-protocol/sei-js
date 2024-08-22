@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 
 export const donate: Router = express.Router();
 
-donate.get("/", (req: Request, res: Response) => {
+donate.get("/", (_req: Request, res: Response) => {
   const response: GetSeiActionResponse = {
     icon: "https://rhinostake.com/_next/image?url=%2Fimg%2Flogo-footer.png&w=384&q=75",
     label: "Donate SEI",

@@ -2,11 +2,10 @@ import type { GetSeiActionResponse, PostSeiActionRequest, PostSeiActionResponse 
 import { cosmos } from "@sei-js/proto";
 import express, { type Request, type Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { app } from "../../server";
 
 export const staking: Router = express.Router();
 
-staking.get("/", (req, res) => {
+staking.get("/", (_req, res) => {
   const response: GetSeiActionResponse = {
     icon: "https://rhinostake.com/_next/image?url=%2Fimg%2Flogo-footer.png&w=384&q=75",
     label: "Stake SEI",
