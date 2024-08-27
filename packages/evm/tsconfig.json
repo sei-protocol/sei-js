@@ -2,7 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "include": ["src"],
   "compilerOptions": {
-    "outDir": "./dist/types"
+    "outDir": "./dist/types",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "typedocOptions": {
     "readme": "./README.md",
