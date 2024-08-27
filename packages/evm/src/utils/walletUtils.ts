@@ -2,7 +2,11 @@ import { sha256 } from '@noble/hashes/sha256';
 import { ripemd160 } from '@noble/hashes/ripemd160';
 import { keccak_256 } from '@noble/hashes/sha3';
 import { secp256k1 } from '@noble/curves/secp256k1';
-import { encode, decode, toWords } from 'bech32';
+import { bech32 } from 'bech32'; // Note the import statement
+const encode = bech32.encode;
+const decode = bech32.decode;
+const toWords = bech32.toWords;
+
 
 export interface AddressSet {
   seiAddress: string;
