@@ -77,6 +77,56 @@ const amount = parseSei('1000000');
 console.log(amount); // 1000000000000000000
 ```
 
+### Wallet Utilities
+
+The package provides a set of wallet utilities for generating and validating Sei and EVM addresses.
+
+#### `generateAddressesFromPrivateKey`
+Generates both Sei and EVM addresses from a given private key.
+
+```ts
+import { generateAddressesFromPrivateKey } from '@sei-js/evm';
+
+const privateKey = '1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
+const { seiAddress, evmAddress } = generateAddressesFromPrivateKey(privateKey);
+
+console.log('Sei Address:', seiAddress);
+console.log('EVM Address:', evmAddress);
+```
+
+#### `deriveAddressesFromPublicKey`
+Derives both Sei and EVM addresses from a given public key.
+
+```ts
+import { deriveAddressesFromPublicKey } from '@sei-js/evm';
+
+const publicKey = new Uint8Array([/* ... */]); // Compressed public key
+const { seiAddress, evmAddress } = deriveAddressesFromPublicKey(publicKey);
+
+console.log('Sei Address:', seiAddress);
+console.log('EVM Address:', evmAddress);
+```
+
+#### `isValidSeiAddress`
+Validates a Sei address.
+
+```ts
+import { isValidSeiAddress } from '@sei-js/evm';
+
+const isValid = isValidSeiAddress('sei1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5z5tpwp');
+console.log('Is valid Sei address:', isValid);
+```
+
+#### `isValidEvmAddress`
+Validates an EVM address.
+
+```ts
+import { isValidEvmAddress } from '@sei-js/evm';
+
+const isValid = isValidEvmAddress('0x742d35Cc6634C0532925a3b844Bc454e4438f44e');
+console.log('Is valid EVM address:', isValid);
+```
+
 <br>
 <br>
 
