@@ -7,14 +7,15 @@ describe('GetSeiActionResponse', () => {
 			label: 'Test Label',
 			title: 'Test Title',
 			description: 'Test Description',
+			transactionType: 'EVM',
 			links: {
 				actions: [
 					{
 						label: 'Test Action',
 						href: '/api/test-action',
-						chainType: 'EVM',
 						parameters: [
 							{
+								type: 'text',
 								name: 'param1',
 								label: 'Param 1',
 								required: true
@@ -26,6 +27,6 @@ describe('GetSeiActionResponse', () => {
 		};
 
 		expect(response).toHaveProperty('icon', 'https://example.com/icon.png');
-		expect(response.links.actions[0].chainType).toBe('EVM');
+		expect(response.links.transactionType).toBe('EVM');
 	});
 });

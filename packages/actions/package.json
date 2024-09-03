@@ -13,7 +13,6 @@
     "prebuild": "rimraf dist",
     "build": "tsc --project tsconfig.json && yarn build:prettier",
     "build:prettier": "prettier --write 'dist/**/*.js'",
-    "docs": "typedoc --out docs",
     "test": "jest",
     "lint": "eslint --ext .ts"
   },
@@ -26,9 +25,8 @@
   ],
   "repository": "git@github.com:sei-protocol/sei-js.git",
   "license": "MIT",
-  "private": false,
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.7.0"
