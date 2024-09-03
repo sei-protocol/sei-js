@@ -1,7 +1,6 @@
 {
   "name": "sei-js",
   "version": "2.0.0",
-  "private": true,
   "license": "MIT",
   "workspaces": [
     "packages/*"
