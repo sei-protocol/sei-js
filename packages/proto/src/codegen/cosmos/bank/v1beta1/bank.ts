@@ -269,6 +269,7 @@ export interface MetadataSDKType {
   name: string;
   symbol: string;
 }
+/** AllowList represents a list of allowed addresses to transact the denom. */
 export interface AllowList {
   addresses: string[];
 }
@@ -276,6 +277,7 @@ export interface AllowListProtoMsg {
   typeUrl: "/cosmos.bank.v1beta1.AllowList";
   value: Uint8Array;
 }
+/** AllowList represents a list of allowed addresses to transact the denom. */
 export interface AllowListAmino {
   addresses?: string[];
 }
@@ -283,6 +285,7 @@ export interface AllowListAminoMsg {
   type: "cosmos-sdk/AllowList";
   value: AllowListAmino;
 }
+/** AllowList represents a list of allowed addresses to transact the denom. */
 export interface AllowListSDKType {
   addresses: string[];
 }

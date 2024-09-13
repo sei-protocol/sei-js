@@ -95,6 +95,7 @@ message Metadata {
   string symbol = 6;
 }
 
+// AllowList represents a list of allowed addresses to transact the denom.
 message AllowList {
   option (gogoproto.equal) = true;
 
