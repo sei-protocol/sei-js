@@ -284,6 +284,45 @@ export interface MsgSetDenomMetadataResponseAminoMsg {
  * MsgSetDenomMetadata message.
  */
 export interface MsgSetDenomMetadataResponseSDKType {}
+/** MsgUpdateDenom is the sdk.Msg allowing an admin to update the denom */
+export interface MsgUpdateDenom {
+	sender: string;
+	/** subdenom can be up to 44 "alphanumeric" characters long. */
+	subdenom: string;
+}
+export interface MsgUpdateDenomProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom';
+	value: Uint8Array;
+}
+/** MsgUpdateDenom is the sdk.Msg allowing an admin to update the denom */
+export interface MsgUpdateDenomAmino {
+	sender?: string;
+	/** subdenom can be up to 44 "alphanumeric" characters long. */
+	subdenom?: string;
+}
+export interface MsgUpdateDenomAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom';
+	value: MsgUpdateDenomAmino;
+}
+/** MsgUpdateDenom is the sdk.Msg allowing an admin to update the denom */
+export interface MsgUpdateDenomSDKType {
+	sender: string;
+	subdenom: string;
+}
+/** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
+export interface MsgUpdateDenomResponse {}
+export interface MsgUpdateDenomResponseProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse';
+	value: Uint8Array;
+}
+/** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
+export interface MsgUpdateDenomResponseAmino {}
+export interface MsgUpdateDenomResponseAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse';
+	value: MsgUpdateDenomResponseAmino;
+}
+/** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
+export interface MsgUpdateDenomResponseSDKType {}
 function createBaseMsgCreateDenom(): MsgCreateDenom {
 	return {
 		sender: '',
@@ -931,6 +970,131 @@ export const MsgSetDenomMetadataResponse = {
 		return {
 			typeUrl: '/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse',
 			value: MsgSetDenomMetadataResponse.encode(message).finish()
+		};
+	}
+};
+function createBaseMsgUpdateDenom(): MsgUpdateDenom {
+	return {
+		sender: '',
+		subdenom: ''
+	};
+}
+export const MsgUpdateDenom = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+	encode(message: MsgUpdateDenom, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		if (message.sender !== '') {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.subdenom !== '') {
+			writer.uint32(18).string(message.subdenom);
+		}
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenom {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgUpdateDenom();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					message.sender = reader.string();
+					break;
+				case 2:
+					message.subdenom = reader.string();
+					break;
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(object: Partial<MsgUpdateDenom>): MsgUpdateDenom {
+		const message = createBaseMsgUpdateDenom();
+		message.sender = object.sender ?? '';
+		message.subdenom = object.subdenom ?? '';
+		return message;
+	},
+	fromAmino(object: MsgUpdateDenomAmino): MsgUpdateDenom {
+		const message = createBaseMsgUpdateDenom();
+		if (object.sender !== undefined && object.sender !== null) {
+			message.sender = object.sender;
+		}
+		if (object.subdenom !== undefined && object.subdenom !== null) {
+			message.subdenom = object.subdenom;
+		}
+		return message;
+	},
+	toAmino(message: MsgUpdateDenom): MsgUpdateDenomAmino {
+		const obj: any = {};
+		obj.sender = message.sender === '' ? undefined : message.sender;
+		obj.subdenom = message.subdenom === '' ? undefined : message.subdenom;
+		return obj;
+	},
+	fromAminoMsg(object: MsgUpdateDenomAminoMsg): MsgUpdateDenom {
+		return MsgUpdateDenom.fromAmino(object.value);
+	},
+	fromProtoMsg(message: MsgUpdateDenomProtoMsg): MsgUpdateDenom {
+		return MsgUpdateDenom.decode(message.value);
+	},
+	toProto(message: MsgUpdateDenom): Uint8Array {
+		return MsgUpdateDenom.encode(message).finish();
+	},
+	toProtoMsg(message: MsgUpdateDenom): MsgUpdateDenomProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+			value: MsgUpdateDenom.encode(message).finish()
+		};
+	}
+};
+function createBaseMsgUpdateDenomResponse(): MsgUpdateDenomResponse {
+	return {};
+}
+export const MsgUpdateDenomResponse = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse',
+	encode(_: MsgUpdateDenomResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenomResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgUpdateDenomResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(_: Partial<MsgUpdateDenomResponse>): MsgUpdateDenomResponse {
+		const message = createBaseMsgUpdateDenomResponse();
+		return message;
+	},
+	fromAmino(_: MsgUpdateDenomResponseAmino): MsgUpdateDenomResponse {
+		const message = createBaseMsgUpdateDenomResponse();
+		return message;
+	},
+	toAmino(_: MsgUpdateDenomResponse): MsgUpdateDenomResponseAmino {
+		const obj: any = {};
+		return obj;
+	},
+	fromAminoMsg(object: MsgUpdateDenomResponseAminoMsg): MsgUpdateDenomResponse {
+		return MsgUpdateDenomResponse.fromAmino(object.value);
+	},
+	fromProtoMsg(message: MsgUpdateDenomResponseProtoMsg): MsgUpdateDenomResponse {
+		return MsgUpdateDenomResponse.decode(message.value);
+	},
+	toProto(message: MsgUpdateDenomResponse): Uint8Array {
+		return MsgUpdateDenomResponse.encode(message).finish();
+	},
+	toProtoMsg(message: MsgUpdateDenomResponse): MsgUpdateDenomResponseProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse',
+			value: MsgUpdateDenomResponse.encode(message).finish()
 		};
 	}
 };
