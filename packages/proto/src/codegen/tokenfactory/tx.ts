@@ -1,5 +1,5 @@
+import { AllowList, AllowListAmino, AllowListSDKType, Metadata, MetadataAmino, MetadataSDKType } from '../cosmos/bank/v1beta1/bank';
 import { Coin, CoinAmino, CoinSDKType } from '../cosmos/base/v1beta1/coin';
-import { Metadata, MetadataAmino, MetadataSDKType } from '../cosmos/bank/v1beta1/bank';
 import { BinaryReader, BinaryWriter } from '../binary';
 /**
  * MsgCreateDenom defines the message structure for the CreateDenom gRPC service
@@ -16,6 +16,7 @@ export interface MsgCreateDenom {
 	sender: string;
 	/** subdenom can be up to 44 "alphanumeric" characters long. */
 	subdenom: string;
+	allowList?: AllowList | undefined;
 }
 export interface MsgCreateDenomProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom';
@@ -36,6 +37,7 @@ export interface MsgCreateDenomAmino {
 	sender?: string;
 	/** subdenom can be up to 44 "alphanumeric" characters long. */
 	subdenom?: string;
+	allow_list?: AllowListAmino | undefined;
 }
 export interface MsgCreateDenomAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom';
@@ -55,6 +57,7 @@ export interface MsgCreateDenomAminoMsg {
 export interface MsgCreateDenomSDKType {
 	sender: string;
 	subdenom: string;
+	allow_list?: AllowListSDKType | undefined;
 }
 /**
  * MsgCreateDenomResponse is the return value of MsgCreateDenom
@@ -289,6 +292,7 @@ export interface MsgUpdateDenom {
 	sender: string;
 	/** subdenom can be up to 44 "alphanumeric" characters long. */
 	subdenom: string;
+	allowList?: AllowList | undefined;
 }
 export interface MsgUpdateDenomProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom';
@@ -299,6 +303,7 @@ export interface MsgUpdateDenomAmino {
 	sender?: string;
 	/** subdenom can be up to 44 "alphanumeric" characters long. */
 	subdenom?: string;
+	allow_list?: AllowListAmino | undefined;
 }
 export interface MsgUpdateDenomAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom';
@@ -308,6 +313,7 @@ export interface MsgUpdateDenomAminoMsg {
 export interface MsgUpdateDenomSDKType {
 	sender: string;
 	subdenom: string;
+	allow_list?: AllowListSDKType | undefined;
 }
 /** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
 export interface MsgUpdateDenomResponse {}
@@ -326,7 +332,8 @@ export interface MsgUpdateDenomResponseSDKType {}
 function createBaseMsgCreateDenom(): MsgCreateDenom {
 	return {
 		sender: '',
-		subdenom: ''
+		subdenom: '',
+		allowList: undefined
 	};
 }
 export const MsgCreateDenom = {
@@ -337,6 +344,9 @@ export const MsgCreateDenom = {
 		}
 		if (message.subdenom !== '') {
 			writer.uint32(18).string(message.subdenom);
+		}
+		if (message.allowList !== undefined) {
+			AllowList.encode(message.allowList, writer.uint32(26).fork()).ldelim();
 		}
 		return writer;
 	},
@@ -353,6 +363,9 @@ export const MsgCreateDenom = {
 				case 2:
 					message.subdenom = reader.string();
 					break;
+				case 3:
+					message.allowList = AllowList.decode(reader, reader.uint32());
+					break;
 				default:
 					reader.skipType(tag & 7);
 					break;
@@ -364,6 +377,7 @@ export const MsgCreateDenom = {
 		const message = createBaseMsgCreateDenom();
 		message.sender = object.sender ?? '';
 		message.subdenom = object.subdenom ?? '';
+		message.allowList = object.allowList !== undefined && object.allowList !== null ? AllowList.fromPartial(object.allowList) : undefined;
 		return message;
 	},
 	fromAmino(object: MsgCreateDenomAmino): MsgCreateDenom {
@@ -374,12 +388,16 @@ export const MsgCreateDenom = {
 		if (object.subdenom !== undefined && object.subdenom !== null) {
 			message.subdenom = object.subdenom;
 		}
+		if (object.allow_list !== undefined && object.allow_list !== null) {
+			message.allowList = AllowList.fromAmino(object.allow_list);
+		}
 		return message;
 	},
 	toAmino(message: MsgCreateDenom): MsgCreateDenomAmino {
 		const obj: any = {};
 		obj.sender = message.sender === '' ? undefined : message.sender;
 		obj.subdenom = message.subdenom === '' ? undefined : message.subdenom;
+		obj.allow_list = message.allowList ? AllowList.toAmino(message.allowList) : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: MsgCreateDenomAminoMsg): MsgCreateDenom {
@@ -976,7 +994,8 @@ export const MsgSetDenomMetadataResponse = {
 function createBaseMsgUpdateDenom(): MsgUpdateDenom {
 	return {
 		sender: '',
-		subdenom: ''
+		subdenom: '',
+		allowList: undefined
 	};
 }
 export const MsgUpdateDenom = {
@@ -987,6 +1006,9 @@ export const MsgUpdateDenom = {
 		}
 		if (message.subdenom !== '') {
 			writer.uint32(18).string(message.subdenom);
+		}
+		if (message.allowList !== undefined) {
+			AllowList.encode(message.allowList, writer.uint32(26).fork()).ldelim();
 		}
 		return writer;
 	},
@@ -1003,6 +1025,9 @@ export const MsgUpdateDenom = {
 				case 2:
 					message.subdenom = reader.string();
 					break;
+				case 3:
+					message.allowList = AllowList.decode(reader, reader.uint32());
+					break;
 				default:
 					reader.skipType(tag & 7);
 					break;
@@ -1014,6 +1039,7 @@ export const MsgUpdateDenom = {
 		const message = createBaseMsgUpdateDenom();
 		message.sender = object.sender ?? '';
 		message.subdenom = object.subdenom ?? '';
+		message.allowList = object.allowList !== undefined && object.allowList !== null ? AllowList.fromPartial(object.allowList) : undefined;
 		return message;
 	},
 	fromAmino(object: MsgUpdateDenomAmino): MsgUpdateDenom {
@@ -1024,12 +1050,16 @@ export const MsgUpdateDenom = {
 		if (object.subdenom !== undefined && object.subdenom !== null) {
 			message.subdenom = object.subdenom;
 		}
+		if (object.allow_list !== undefined && object.allow_list !== null) {
+			message.allowList = AllowList.fromAmino(object.allow_list);
+		}
 		return message;
 	},
 	toAmino(message: MsgUpdateDenom): MsgUpdateDenomAmino {
 		const obj: any = {};
 		obj.sender = message.sender === '' ? undefined : message.sender;
 		obj.subdenom = message.subdenom === '' ? undefined : message.subdenom;
+		obj.allow_list = message.allowList ? AllowList.toAmino(message.allowList) : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: MsgUpdateDenomAminoMsg): MsgUpdateDenom {

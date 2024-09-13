@@ -269,6 +269,23 @@ export interface MetadataSDKType {
   name: string;
   symbol: string;
 }
+export interface AllowList {
+  addresses: string[];
+}
+export interface AllowListProtoMsg {
+  typeUrl: "/cosmos.bank.v1beta1.AllowList";
+  value: Uint8Array;
+}
+export interface AllowListAmino {
+  addresses?: string[];
+}
+export interface AllowListAminoMsg {
+  type: "cosmos-sdk/AllowList";
+  value: AllowListAmino;
+}
+export interface AllowListSDKType {
+  addresses: string[];
+}
 function createBaseParams(): Params {
   return {
     sendEnabled: [],
@@ -894,6 +911,77 @@ export const Metadata = {
     return {
       typeUrl: "/cosmos.bank.v1beta1.Metadata",
       value: Metadata.encode(message).finish()
+    };
+  }
+};
+function createBaseAllowList(): AllowList {
+  return {
+    addresses: []
+  };
+}
+export const AllowList = {
+  typeUrl: "/cosmos.bank.v1beta1.AllowList",
+  encode(message: AllowList, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    for (const v of message.addresses) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): AllowList {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAllowList();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.addresses.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<AllowList>): AllowList {
+    const message = createBaseAllowList();
+    message.addresses = object.addresses?.map(e => e) || [];
+    return message;
+  },
+  fromAmino(object: AllowListAmino): AllowList {
+    const message = createBaseAllowList();
+    message.addresses = object.addresses?.map(e => e) || [];
+    return message;
+  },
+  toAmino(message: AllowList): AllowListAmino {
+    const obj: any = {};
+    if (message.addresses) {
+      obj.addresses = message.addresses.map(e => e);
+    } else {
+      obj.addresses = message.addresses;
+    }
+    return obj;
+  },
+  fromAminoMsg(object: AllowListAminoMsg): AllowList {
+    return AllowList.fromAmino(object.value);
+  },
+  toAminoMsg(message: AllowList): AllowListAminoMsg {
+    return {
+      type: "cosmos-sdk/AllowList",
+      value: AllowList.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: AllowListProtoMsg): AllowList {
+    return AllowList.decode(message.value);
+  },
+  toProto(message: AllowList): Uint8Array {
+    return AllowList.encode(message).finish();
+  },
+  toProtoMsg(message: AllowList): AllowListProtoMsg {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.AllowList",
+      value: AllowList.encode(message).finish()
     };
   }
 };

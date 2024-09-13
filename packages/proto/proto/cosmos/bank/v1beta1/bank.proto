@@ -94,3 +94,9 @@ message Metadata {
   // Since: cosmos-sdk 0.43
   string symbol = 6;
 }
+
+message AllowList {
+  option (gogoproto.equal) = true;
+
+  repeated string addresses = 1 [ (gogoproto.moretags) = "yaml:\"addresses\"" ];
+}
