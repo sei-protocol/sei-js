@@ -111,6 +111,9 @@ The Address precompile contract enables the retrieval of associated EVM addresse
 |----------------------------------------------------------------------------------------|-------------------|------------------------|------------------------------------------------------------------|
 | [`getEvmAddr`](/sei-js/docs/interfaces/evm.AddressPrecompileFunctions.html#getEvmAddr) | `addr: ` `string` | `{ response: string }` | Retrieves the associated EVM address for a given Cosmos address. |
 | [`getSeiAddr`](/sei-js/docs/interfaces/evm.AddressPrecompileFunctions.html#getSeiAddr) | `addr: ` `string` | `{ response: string }` | Retrieves the associated Cosmos address for a given EVM address. |
+| [`associate`](/sei-js/docs/interfaces/evm.AddressPrecompileFunctions.html#associate)   | `v: ` `string`, `r: ` `string`, `s: ` `string`, `customMessage: ` `string` | `{ response: string }` | Associates an EVM address with it's corresponding Sei Native address on chain using a signature. |
+| [`associatePubKey`](/sei-js/docs/interfaces/evm.AddressPrecompileFunctions.html#associatePubKey)   | `pubKeyHex: ` `string` | `{ response: string }` | Associates an EVM address with it's corresponding Cosmos address on chain using the Hex-Encoded compressed pubkey (excluding the '0x'). |
+
 
 #### Precompile Address
 0x0000000000000000000000000000000000001004
