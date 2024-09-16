@@ -5,7 +5,6 @@
   "author": "besated <bryan@seinetwork.io>",
   "homepage": "https://github.com/sei-protocol/js-proto#readme",
   "license": "MIT",
-  "private": false,
   "publishConfig": {
     "access": "public"
   },

@@ -29,13 +29,9 @@
   ],
   "repository": "git@github.com:sei-protocol/sei-js.git",
   "license": "MIT",
-  "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
-  "peerDependencies": {},
-  "devDependencies": {},
   "exports": {
     ".": {
       "import": "./dist/esm/src/index.js",

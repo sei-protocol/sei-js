@@ -27,11 +27,9 @@
 	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
-	"private": false,
 	"publishConfig": {
 		"access": "public"
 	},
-	"dependencies": {},
 	"peerDependencies": {
 		"ethers": "^6.0.0",
 		"viem": "2.x"
