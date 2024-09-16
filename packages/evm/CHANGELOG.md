@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.4.1
+
+### Patch Changes
+
+- a56dc3c: Update addr precompiles
+
 ## 1.4.0
 
 ### Minor Changes
