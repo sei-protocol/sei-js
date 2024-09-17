@@ -1,4 +1,14 @@
-import { Params, ParamsAmino, ParamsSDKType, Metadata, MetadataAmino, MetadataSDKType } from '../cosmos/bank/v1beta1/bank';
+import {
+	Params,
+	ParamsAmino,
+	ParamsSDKType,
+	Metadata,
+	MetadataAmino,
+	MetadataSDKType,
+	AllowList,
+	AllowListAmino,
+	AllowListSDKType
+} from '../cosmos/bank/v1beta1/bank';
 import { DenomAuthorityMetadata, DenomAuthorityMetadataAmino, DenomAuthorityMetadataSDKType } from './authorityMetadata';
 import { BinaryReader, BinaryWriter } from '../binary';
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
@@ -205,6 +215,59 @@ export interface QueryDenomMetadataResponseAminoMsg {
  */
 export interface QueryDenomMetadataResponseSDKType {
 	metadata: MetadataSDKType | undefined;
+}
+/** QueryDenomAllowListRequest is the request type for the DenomAllowList gRPC method */
+export interface QueryDenomAllowListRequest {
+	/** denom is the coin denom to query the allowlist for. */
+	denom: string;
+}
+export interface QueryDenomAllowListRequestProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest';
+	value: Uint8Array;
+}
+/** QueryDenomAllowListRequest is the request type for the DenomAllowList gRPC method */
+export interface QueryDenomAllowListRequestAmino {
+	/** denom is the coin denom to query the allowlist for. */
+	denom?: string;
+}
+export interface QueryDenomAllowListRequestAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest';
+	value: QueryDenomAllowListRequestAmino;
+}
+/** QueryDenomAllowListRequest is the request type for the DenomAllowList gRPC method */
+export interface QueryDenomAllowListRequestSDKType {
+	denom: string;
+}
+/**
+ * QueryDenomAllowListResponse is the response type for the DenomAllowList gRPC
+ * method.
+ */
+export interface QueryDenomAllowListResponse {
+	/** allow_list provides addresses allowed for the requested token. */
+	allowList: AllowList | undefined;
+}
+export interface QueryDenomAllowListResponseProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse';
+	value: Uint8Array;
+}
+/**
+ * QueryDenomAllowListResponse is the response type for the DenomAllowList gRPC
+ * method.
+ */
+export interface QueryDenomAllowListResponseAmino {
+	/** allow_list provides addresses allowed for the requested token. */
+	allow_list?: AllowListAmino | undefined;
+}
+export interface QueryDenomAllowListResponseAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse';
+	value: QueryDenomAllowListResponseAmino;
+}
+/**
+ * QueryDenomAllowListResponse is the response type for the DenomAllowList gRPC
+ * method.
+ */
+export interface QueryDenomAllowListResponseSDKType {
+	allow_list: AllowListSDKType | undefined;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
 	return {};
@@ -697,6 +760,132 @@ export const QueryDenomMetadataResponse = {
 		return {
 			typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse',
 			value: QueryDenomMetadataResponse.encode(message).finish()
+		};
+	}
+};
+function createBaseQueryDenomAllowListRequest(): QueryDenomAllowListRequest {
+	return {
+		denom: ''
+	};
+}
+export const QueryDenomAllowListRequest = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest',
+	encode(message: QueryDenomAllowListRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		if (message.denom !== '') {
+			writer.uint32(10).string(message.denom);
+		}
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAllowListRequest {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomAllowListRequest();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					message.denom = reader.string();
+					break;
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(object: Partial<QueryDenomAllowListRequest>): QueryDenomAllowListRequest {
+		const message = createBaseQueryDenomAllowListRequest();
+		message.denom = object.denom ?? '';
+		return message;
+	},
+	fromAmino(object: QueryDenomAllowListRequestAmino): QueryDenomAllowListRequest {
+		const message = createBaseQueryDenomAllowListRequest();
+		if (object.denom !== undefined && object.denom !== null) {
+			message.denom = object.denom;
+		}
+		return message;
+	},
+	toAmino(message: QueryDenomAllowListRequest): QueryDenomAllowListRequestAmino {
+		const obj: any = {};
+		obj.denom = message.denom === '' ? undefined : message.denom;
+		return obj;
+	},
+	fromAminoMsg(object: QueryDenomAllowListRequestAminoMsg): QueryDenomAllowListRequest {
+		return QueryDenomAllowListRequest.fromAmino(object.value);
+	},
+	fromProtoMsg(message: QueryDenomAllowListRequestProtoMsg): QueryDenomAllowListRequest {
+		return QueryDenomAllowListRequest.decode(message.value);
+	},
+	toProto(message: QueryDenomAllowListRequest): Uint8Array {
+		return QueryDenomAllowListRequest.encode(message).finish();
+	},
+	toProtoMsg(message: QueryDenomAllowListRequest): QueryDenomAllowListRequestProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest',
+			value: QueryDenomAllowListRequest.encode(message).finish()
+		};
+	}
+};
+function createBaseQueryDenomAllowListResponse(): QueryDenomAllowListResponse {
+	return {
+		allowList: AllowList.fromPartial({})
+	};
+}
+export const QueryDenomAllowListResponse = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse',
+	encode(message: QueryDenomAllowListResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		if (message.allowList !== undefined) {
+			AllowList.encode(message.allowList, writer.uint32(10).fork()).ldelim();
+		}
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAllowListResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomAllowListResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					message.allowList = AllowList.decode(reader, reader.uint32());
+					break;
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(object: Partial<QueryDenomAllowListResponse>): QueryDenomAllowListResponse {
+		const message = createBaseQueryDenomAllowListResponse();
+		message.allowList = object.allowList !== undefined && object.allowList !== null ? AllowList.fromPartial(object.allowList) : undefined;
+		return message;
+	},
+	fromAmino(object: QueryDenomAllowListResponseAmino): QueryDenomAllowListResponse {
+		const message = createBaseQueryDenomAllowListResponse();
+		if (object.allow_list !== undefined && object.allow_list !== null) {
+			message.allowList = AllowList.fromAmino(object.allow_list);
+		}
+		return message;
+	},
+	toAmino(message: QueryDenomAllowListResponse): QueryDenomAllowListResponseAmino {
+		const obj: any = {};
+		obj.allow_list = message.allowList ? AllowList.toAmino(message.allowList) : undefined;
+		return obj;
+	},
+	fromAminoMsg(object: QueryDenomAllowListResponseAminoMsg): QueryDenomAllowListResponse {
+		return QueryDenomAllowListResponse.fromAmino(object.value);
+	},
+	fromProtoMsg(message: QueryDenomAllowListResponseProtoMsg): QueryDenomAllowListResponse {
+		return QueryDenomAllowListResponse.decode(message.value);
+	},
+	toProto(message: QueryDenomAllowListResponse): Uint8Array {
+		return QueryDenomAllowListResponse.encode(message).finish();
+	},
+	toProtoMsg(message: QueryDenomAllowListResponse): QueryDenomAllowListResponseProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse',
+			value: QueryDenomAllowListResponse.encode(message).finish()
 		};
 	}
 };

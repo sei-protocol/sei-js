@@ -1,9 +1,14 @@
-import { MsgCreateDenom, MsgMint, MsgBurn, MsgChangeAdmin, MsgSetDenomMetadata } from './tx';
+import { MsgCreateDenom, MsgUpdateDenom, MsgMint, MsgBurn, MsgChangeAdmin, MsgSetDenomMetadata } from './tx';
 export const AminoConverter = {
 	'/seiprotocol.seichain.tokenfactory.MsgCreateDenom': {
 		aminoType: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom',
 		toAmino: MsgCreateDenom.toAmino,
 		fromAmino: MsgCreateDenom.fromAmino
+	},
+	'/seiprotocol.seichain.tokenfactory.MsgUpdateDenom': {
+		aminoType: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+		toAmino: MsgUpdateDenom.toAmino,
+		fromAmino: MsgUpdateDenom.fromAmino
 	},
 	'/seiprotocol.seichain.tokenfactory.MsgMint': {
 		aminoType: '/seiprotocol.seichain.tokenfactory.MsgMint',

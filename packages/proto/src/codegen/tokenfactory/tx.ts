@@ -1,5 +1,5 @@
+import { AllowList, AllowListAmino, AllowListSDKType, Metadata, MetadataAmino, MetadataSDKType } from '../cosmos/bank/v1beta1/bank';
 import { Coin, CoinAmino, CoinSDKType } from '../cosmos/base/v1beta1/coin';
-import { Metadata, MetadataAmino, MetadataSDKType } from '../cosmos/bank/v1beta1/bank';
 import { BinaryReader, BinaryWriter } from '../binary';
 /**
  * MsgCreateDenom defines the message structure for the CreateDenom gRPC service
@@ -16,6 +16,7 @@ export interface MsgCreateDenom {
 	sender: string;
 	/** subdenom can be up to 44 "alphanumeric" characters long. */
 	subdenom: string;
+	allowList?: AllowList | undefined;
 }
 export interface MsgCreateDenomProtoMsg {
 	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom';
@@ -36,6 +37,7 @@ export interface MsgCreateDenomAmino {
 	sender?: string;
 	/** subdenom can be up to 44 "alphanumeric" characters long. */
 	subdenom?: string;
+	allow_list?: AllowListAmino | undefined;
 }
 export interface MsgCreateDenomAminoMsg {
 	type: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom';
@@ -55,6 +57,7 @@ export interface MsgCreateDenomAminoMsg {
 export interface MsgCreateDenomSDKType {
 	sender: string;
 	subdenom: string;
+	allow_list?: AllowListSDKType | undefined;
 }
 /**
  * MsgCreateDenomResponse is the return value of MsgCreateDenom
@@ -284,10 +287,53 @@ export interface MsgSetDenomMetadataResponseAminoMsg {
  * MsgSetDenomMetadata message.
  */
 export interface MsgSetDenomMetadataResponseSDKType {}
+/** MsgUpdateDenom is the sdk.Msg allowing an admin to update the denom */
+export interface MsgUpdateDenom {
+	sender: string;
+	/** subdenom can be up to 44 "alphanumeric" characters long. */
+	subdenom: string;
+	allowList?: AllowList | undefined;
+}
+export interface MsgUpdateDenomProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom';
+	value: Uint8Array;
+}
+/** MsgUpdateDenom is the sdk.Msg allowing an admin to update the denom */
+export interface MsgUpdateDenomAmino {
+	sender?: string;
+	/** subdenom can be up to 44 "alphanumeric" characters long. */
+	subdenom?: string;
+	allow_list?: AllowListAmino | undefined;
+}
+export interface MsgUpdateDenomAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom';
+	value: MsgUpdateDenomAmino;
+}
+/** MsgUpdateDenom is the sdk.Msg allowing an admin to update the denom */
+export interface MsgUpdateDenomSDKType {
+	sender: string;
+	subdenom: string;
+	allow_list?: AllowListSDKType | undefined;
+}
+/** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
+export interface MsgUpdateDenomResponse {}
+export interface MsgUpdateDenomResponseProtoMsg {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse';
+	value: Uint8Array;
+}
+/** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
+export interface MsgUpdateDenomResponseAmino {}
+export interface MsgUpdateDenomResponseAminoMsg {
+	type: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse';
+	value: MsgUpdateDenomResponseAmino;
+}
+/** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
+export interface MsgUpdateDenomResponseSDKType {}
 function createBaseMsgCreateDenom(): MsgCreateDenom {
 	return {
 		sender: '',
-		subdenom: ''
+		subdenom: '',
+		allowList: undefined
 	};
 }
 export const MsgCreateDenom = {
@@ -298,6 +344,9 @@ export const MsgCreateDenom = {
 		}
 		if (message.subdenom !== '') {
 			writer.uint32(18).string(message.subdenom);
+		}
+		if (message.allowList !== undefined) {
+			AllowList.encode(message.allowList, writer.uint32(26).fork()).ldelim();
 		}
 		return writer;
 	},
@@ -314,6 +363,9 @@ export const MsgCreateDenom = {
 				case 2:
 					message.subdenom = reader.string();
 					break;
+				case 3:
+					message.allowList = AllowList.decode(reader, reader.uint32());
+					break;
 				default:
 					reader.skipType(tag & 7);
 					break;
@@ -325,6 +377,7 @@ export const MsgCreateDenom = {
 		const message = createBaseMsgCreateDenom();
 		message.sender = object.sender ?? '';
 		message.subdenom = object.subdenom ?? '';
+		message.allowList = object.allowList !== undefined && object.allowList !== null ? AllowList.fromPartial(object.allowList) : undefined;
 		return message;
 	},
 	fromAmino(object: MsgCreateDenomAmino): MsgCreateDenom {
@@ -335,12 +388,16 @@ export const MsgCreateDenom = {
 		if (object.subdenom !== undefined && object.subdenom !== null) {
 			message.subdenom = object.subdenom;
 		}
+		if (object.allow_list !== undefined && object.allow_list !== null) {
+			message.allowList = AllowList.fromAmino(object.allow_list);
+		}
 		return message;
 	},
 	toAmino(message: MsgCreateDenom): MsgCreateDenomAmino {
 		const obj: any = {};
 		obj.sender = message.sender === '' ? undefined : message.sender;
 		obj.subdenom = message.subdenom === '' ? undefined : message.subdenom;
+		obj.allow_list = message.allowList ? AllowList.toAmino(message.allowList) : undefined;
 		return obj;
 	},
 	fromAminoMsg(object: MsgCreateDenomAminoMsg): MsgCreateDenom {
@@ -931,6 +988,143 @@ export const MsgSetDenomMetadataResponse = {
 		return {
 			typeUrl: '/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse',
 			value: MsgSetDenomMetadataResponse.encode(message).finish()
+		};
+	}
+};
+function createBaseMsgUpdateDenom(): MsgUpdateDenom {
+	return {
+		sender: '',
+		subdenom: '',
+		allowList: undefined
+	};
+}
+export const MsgUpdateDenom = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+	encode(message: MsgUpdateDenom, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		if (message.sender !== '') {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.subdenom !== '') {
+			writer.uint32(18).string(message.subdenom);
+		}
+		if (message.allowList !== undefined) {
+			AllowList.encode(message.allowList, writer.uint32(26).fork()).ldelim();
+		}
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenom {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgUpdateDenom();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					message.sender = reader.string();
+					break;
+				case 2:
+					message.subdenom = reader.string();
+					break;
+				case 3:
+					message.allowList = AllowList.decode(reader, reader.uint32());
+					break;
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(object: Partial<MsgUpdateDenom>): MsgUpdateDenom {
+		const message = createBaseMsgUpdateDenom();
+		message.sender = object.sender ?? '';
+		message.subdenom = object.subdenom ?? '';
+		message.allowList = object.allowList !== undefined && object.allowList !== null ? AllowList.fromPartial(object.allowList) : undefined;
+		return message;
+	},
+	fromAmino(object: MsgUpdateDenomAmino): MsgUpdateDenom {
+		const message = createBaseMsgUpdateDenom();
+		if (object.sender !== undefined && object.sender !== null) {
+			message.sender = object.sender;
+		}
+		if (object.subdenom !== undefined && object.subdenom !== null) {
+			message.subdenom = object.subdenom;
+		}
+		if (object.allow_list !== undefined && object.allow_list !== null) {
+			message.allowList = AllowList.fromAmino(object.allow_list);
+		}
+		return message;
+	},
+	toAmino(message: MsgUpdateDenom): MsgUpdateDenomAmino {
+		const obj: any = {};
+		obj.sender = message.sender === '' ? undefined : message.sender;
+		obj.subdenom = message.subdenom === '' ? undefined : message.subdenom;
+		obj.allow_list = message.allowList ? AllowList.toAmino(message.allowList) : undefined;
+		return obj;
+	},
+	fromAminoMsg(object: MsgUpdateDenomAminoMsg): MsgUpdateDenom {
+		return MsgUpdateDenom.fromAmino(object.value);
+	},
+	fromProtoMsg(message: MsgUpdateDenomProtoMsg): MsgUpdateDenom {
+		return MsgUpdateDenom.decode(message.value);
+	},
+	toProto(message: MsgUpdateDenom): Uint8Array {
+		return MsgUpdateDenom.encode(message).finish();
+	},
+	toProtoMsg(message: MsgUpdateDenom): MsgUpdateDenomProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+			value: MsgUpdateDenom.encode(message).finish()
+		};
+	}
+};
+function createBaseMsgUpdateDenomResponse(): MsgUpdateDenomResponse {
+	return {};
+}
+export const MsgUpdateDenomResponse = {
+	typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse',
+	encode(_: MsgUpdateDenomResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+		return writer;
+	},
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenomResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgUpdateDenomResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				default:
+					reader.skipType(tag & 7);
+					break;
+			}
+		}
+		return message;
+	},
+	fromPartial(_: Partial<MsgUpdateDenomResponse>): MsgUpdateDenomResponse {
+		const message = createBaseMsgUpdateDenomResponse();
+		return message;
+	},
+	fromAmino(_: MsgUpdateDenomResponseAmino): MsgUpdateDenomResponse {
+		const message = createBaseMsgUpdateDenomResponse();
+		return message;
+	},
+	toAmino(_: MsgUpdateDenomResponse): MsgUpdateDenomResponseAmino {
+		const obj: any = {};
+		return obj;
+	},
+	fromAminoMsg(object: MsgUpdateDenomResponseAminoMsg): MsgUpdateDenomResponse {
+		return MsgUpdateDenomResponse.fromAmino(object.value);
+	},
+	fromProtoMsg(message: MsgUpdateDenomResponseProtoMsg): MsgUpdateDenomResponse {
+		return MsgUpdateDenomResponse.decode(message.value);
+	},
+	toProto(message: MsgUpdateDenomResponse): Uint8Array {
+		return MsgUpdateDenomResponse.encode(message).finish();
+	},
+	toProtoMsg(message: MsgUpdateDenomResponse): MsgUpdateDenomResponseProtoMsg {
+		return {
+			typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse',
+			value: MsgUpdateDenomResponse.encode(message).finish()
 		};
 	}
 };

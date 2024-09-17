@@ -3,6 +3,8 @@ import { BinaryReader } from '../binary';
 import {
 	MsgCreateDenom,
 	MsgCreateDenomResponse,
+	MsgUpdateDenom,
+	MsgUpdateDenomResponse,
 	MsgMint,
 	MsgMintResponse,
 	MsgBurn,
@@ -15,6 +17,7 @@ import {
 /** Msg defines the tokefactory module's gRPC message service. */
 export interface Msg {
 	createDenom(request: MsgCreateDenom): Promise<MsgCreateDenomResponse>;
+	updateDenom(request: MsgUpdateDenom): Promise<MsgUpdateDenomResponse>;
 	mint(request: MsgMint): Promise<MsgMintResponse>;
 	burn(request: MsgBurn): Promise<MsgBurnResponse>;
 	changeAdmin(request: MsgChangeAdmin): Promise<MsgChangeAdminResponse>;
@@ -25,6 +28,7 @@ export class MsgClientImpl implements Msg {
 	constructor(rpc: TxRpc) {
 		this.rpc = rpc;
 		this.createDenom = this.createDenom.bind(this);
+		this.updateDenom = this.updateDenom.bind(this);
 		this.mint = this.mint.bind(this);
 		this.burn = this.burn.bind(this);
 		this.changeAdmin = this.changeAdmin.bind(this);
@@ -34,6 +38,11 @@ export class MsgClientImpl implements Msg {
 		const data = MsgCreateDenom.encode(request).finish();
 		const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Msg', 'CreateDenom', data);
 		return promise.then((data) => MsgCreateDenomResponse.decode(new BinaryReader(data)));
+	}
+	updateDenom(request: MsgUpdateDenom): Promise<MsgUpdateDenomResponse> {
+		const data = MsgUpdateDenom.encode(request).finish();
+		const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Msg', 'UpdateDenom', data);
+		return promise.then((data) => MsgUpdateDenomResponse.decode(new BinaryReader(data)));
 	}
 	mint(request: MsgMint): Promise<MsgMintResponse> {
 		const data = MsgMint.encode(request).finish();
