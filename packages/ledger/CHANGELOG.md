@@ -1,5 +1,11 @@
 # @sei-js/ledger
 
+## 0.0.0-internal-20240916142742
+
+### Patch Changes
+
+- Updated dependency libraries, added a few typescript types to responses
+
 ## 1.1.0
 
 ### Minor Changes
