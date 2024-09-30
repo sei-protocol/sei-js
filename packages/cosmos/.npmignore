@@ -1,0 +1,15 @@
+node_modules
+scripts/
+gen/
+public/
+
+.gitkeep
+jest.config.ts
+tsconfig.json
+
+yarn-error.log
+
+.eslintignore
+eslintrc.json
+
+biome.json

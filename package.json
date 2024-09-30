@@ -24,6 +24,7 @@
     "test:coverage": "nx test --all --coverage --skip-nx-cache"
   },
   "dependencies": {
+    "@biomejs/biome": "^1.9.2",
     "@changesets/cli": "^2.26.0",
     "axios": "^1.6.0",
     "glob": "^10.3.10",
