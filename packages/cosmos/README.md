@@ -196,4 +196,8 @@ if (result.code === 0) {
 The `@sei-js/cosmos/` package provides a REST client for the Sei chain. It is built on top of `@cosmjs/rest` and provides a more user-friendly interface for interacting with the Sei chain. It supports all Sei cosmos RPC endpoints and provides a more user-friendly interface for querying a Sei chain.
 
 ## Development
-This package is generated using buf.build. To regenerate the types, run `yarn generate` which builds the types from proto files with the buf build `ts-proto` plugin. From there, typescript is used in a postprocessing script to extract the necessary types and perform any formatting required.
+
+### Pre-requisites
+- Buf installed on your machine. https://buf.build/docs/installation
+
+This package is generated using buf.build. To regenerate the types, run `yarn generate` which builds the types from proto files with the buf build `ts-proto` and `protoc-gen-grpc-gateway-ts` plugins. From there, typescript is used in a postprocessing script to extract the necessary types and perform any formatting required.
