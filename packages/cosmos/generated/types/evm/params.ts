@@ -25,6 +25,7 @@ export interface Params {
 	deliver_tx_hook_wasm_gas_limit: number;
 	max_dynamic_base_fee_upward_adjustment: string;
 	max_dynamic_base_fee_downward_adjustment: string;
+	target_gas_used_per_block: number;
 }
 
 export interface ParamsPreV580 {

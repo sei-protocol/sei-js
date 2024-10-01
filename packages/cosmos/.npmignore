@@ -2,6 +2,7 @@ node_modules
 scripts/
 gen/
 public/
+bin/
 
 .gitkeep
 jest.config.ts

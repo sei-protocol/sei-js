@@ -34,6 +34,9 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 		if (message.max_dynamic_base_fee_downward_adjustment !== "") {
 			writer.uint32(90).string(message.max_dynamic_base_fee_downward_adjustment);
 		}
+		if (message.target_gas_used_per_block !== 0) {
+			writer.uint32(96).uint64(message.target_gas_used_per_block);
+		}
 		return writer;
 	},
 
@@ -93,6 +96,13 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 
 					message.max_dynamic_base_fee_downward_adjustment = reader.string();
 					continue;
+				case 12:
+					if (tag !== 96) {
+						break;
+					}
+
+					message.target_gas_used_per_block = longToNumber(reader.uint64());
+					continue;
 			}
 			if ((tag & 7) === 4 || tag === 0) {
 				break;
@@ -117,6 +127,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 			max_dynamic_base_fee_downward_adjustment: isSet(object.max_dynamic_base_fee_downward_adjustment)
 				? globalThis.String(object.max_dynamic_base_fee_downward_adjustment)
 				: "",
+			target_gas_used_per_block: isSet(object.target_gas_used_per_block) ? globalThis.Number(object.target_gas_used_per_block) : 0,
 		};
 	},
 
@@ -143,6 +154,9 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 		if (message.max_dynamic_base_fee_downward_adjustment !== "") {
 			obj.max_dynamic_base_fee_downward_adjustment = message.max_dynamic_base_fee_downward_adjustment;
 		}
+		if (message.target_gas_used_per_block !== 0) {
+			obj.target_gas_used_per_block = Math.round(message.target_gas_used_per_block);
+		}
 		return obj;
 	},
 
@@ -158,6 +172,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 		message.deliver_tx_hook_wasm_gas_limit = object.deliver_tx_hook_wasm_gas_limit ?? 0;
 		message.max_dynamic_base_fee_upward_adjustment = object.max_dynamic_base_fee_upward_adjustment ?? "";
 		message.max_dynamic_base_fee_downward_adjustment = object.max_dynamic_base_fee_downward_adjustment ?? "";
+		message.target_gas_used_per_block = object.target_gas_used_per_block ?? 0;
 		return message;
 	},
 };
@@ -275,6 +290,7 @@ function createBaseParams(): Params {
 		deliver_tx_hook_wasm_gas_limit: 0,
 		max_dynamic_base_fee_upward_adjustment: "",
 		max_dynamic_base_fee_downward_adjustment: "",
+		target_gas_used_per_block: 0,
 	};
 }
 
