@@ -7,18 +7,18 @@ import { Epoch } from "./epoch";
 import { Params } from "./params";
 
 import type {
-	QueryEpochRequest as QueryEpochRequestType,
-	QueryEpochResponse as QueryEpochResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
+	QueryEpochRequest as QueryEpochRequest_type,
+	QueryEpochResponse as QueryEpochResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
 } from "../../types/epoch";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryEpochRequest extends QueryEpochRequestType {}
-interface QueryEpochResponse extends QueryEpochResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryEpochRequest extends QueryEpochRequest_type {}
+export interface QueryEpochResponse extends QueryEpochResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.seichain.epoch.QueryParamsRequest"> = {
 	$type: "seiprotocol.seichain.epoch.QueryParamsRequest" as const,

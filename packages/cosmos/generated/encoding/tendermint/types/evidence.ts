@@ -9,18 +9,18 @@ import { LightBlock, Vote } from "./types";
 import { Validator } from "./validator";
 
 import type {
-	DuplicateVoteEvidence as DuplicateVoteEvidenceType,
-	EvidenceList as EvidenceListType,
-	Evidence as EvidenceType,
-	LightClientAttackEvidence as LightClientAttackEvidenceType,
+	DuplicateVoteEvidence as DuplicateVoteEvidence_type,
+	EvidenceList as EvidenceList_type,
+	Evidence as Evidence_type,
+	LightClientAttackEvidence as LightClientAttackEvidence_type,
 } from "../../../types/tendermint/types";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Evidence extends EvidenceType {}
-interface DuplicateVoteEvidence extends DuplicateVoteEvidenceType {}
-interface LightClientAttackEvidence extends LightClientAttackEvidenceType {}
-interface EvidenceList extends EvidenceListType {}
+export interface Evidence extends Evidence_type {}
+export interface DuplicateVoteEvidence extends DuplicateVoteEvidence_type {}
+export interface LightClientAttackEvidence extends LightClientAttackEvidence_type {}
+export interface EvidenceList extends EvidenceList_type {}
 
 export const Evidence: MessageFns<Evidence, "tendermint.types.Evidence"> = {
 	$type: "tendermint.types.Evidence" as const,

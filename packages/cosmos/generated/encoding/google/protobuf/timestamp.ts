@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Timestamp as TimestampType } from "../../../types/google/protobuf";
+import type { Timestamp as Timestamp_type } from "../../../types/google/protobuf";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Timestamp extends TimestampType {}
+export interface Timestamp extends Timestamp_type {}
 
 export const Timestamp: MessageFns<Timestamp, "google.protobuf.Timestamp"> = {
 	$type: "google.protobuf.Timestamp" as const,

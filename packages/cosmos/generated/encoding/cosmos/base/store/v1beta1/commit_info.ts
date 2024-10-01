@@ -2,13 +2,13 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { CommitID as CommitIDType, CommitInfo as CommitInfoType, StoreInfo as StoreInfoType } from "../../../../../types/cosmos/base/store/v1beta1";
+import type { CommitID as CommitID_type, CommitInfo as CommitInfo_type, StoreInfo as StoreInfo_type } from "../../../../../types/cosmos/base/store/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface CommitInfo extends CommitInfoType {}
-interface StoreInfo extends StoreInfoType {}
-interface CommitID extends CommitIDType {}
+export interface CommitInfo extends CommitInfo_type {}
+export interface StoreInfo extends StoreInfo_type {}
+export interface CommitID extends CommitID_type {}
 
 export const CommitInfo: MessageFns<CommitInfo, "cosmos.base.store.v1beta1.CommitInfo"> = {
 	$type: "cosmos.base.store.v1beta1.CommitInfo" as const,

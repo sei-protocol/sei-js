@@ -4,11 +4,11 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Timestamp } from "../../../google/protobuf/timestamp";
 
-import type { Equivocation as EquivocationType } from "../../../../types/cosmos/evidence/v1beta1";
+import type { Equivocation as Equivocation_type } from "../../../../types/cosmos/evidence/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Equivocation extends EquivocationType {}
+export interface Equivocation extends Equivocation_type {}
 
 export const Equivocation: MessageFns<Equivocation, "cosmos.evidence.v1beta1.Equivocation"> = {
 	$type: "cosmos.evidence.v1beta1.Equivocation" as const,

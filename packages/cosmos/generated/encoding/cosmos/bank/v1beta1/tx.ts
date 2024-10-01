@@ -7,18 +7,18 @@ import { Coin } from "../../base/v1beta1/coin";
 import { Input, Output } from "./bank";
 
 import type {
-	MsgMultiSendResponse as MsgMultiSendResponseType,
-	MsgMultiSend as MsgMultiSendType,
-	MsgSendResponse as MsgSendResponseType,
-	MsgSend as MsgSendType,
+	MsgMultiSendResponse as MsgMultiSendResponse_type,
+	MsgMultiSend as MsgMultiSend_type,
+	MsgSendResponse as MsgSendResponse_type,
+	MsgSend as MsgSend_type,
 } from "../../../../types/cosmos/bank/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgSend extends MsgSendType {}
-interface MsgSendResponse extends MsgSendResponseType {}
-interface MsgMultiSend extends MsgMultiSendType {}
-interface MsgMultiSendResponse extends MsgMultiSendResponseType {}
+export interface MsgSend extends MsgSend_type {}
+export interface MsgSendResponse extends MsgSendResponse_type {}
+export interface MsgMultiSend extends MsgMultiSend_type {}
+export interface MsgMultiSendResponse extends MsgMultiSendResponse_type {}
 
 export const MsgSend: MessageFns<MsgSend, "cosmos.bank.v1beta1.MsgSend"> = {
 	$type: "cosmos.bank.v1beta1.MsgSend" as const,

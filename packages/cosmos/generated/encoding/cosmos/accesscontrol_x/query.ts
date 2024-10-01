@@ -7,30 +7,30 @@ import { MessageDependencyMapping, WasmDependencyMapping } from "../accesscontro
 import { Params } from "./genesis";
 
 import type {
-	ListResourceDependencyMappingRequest as ListResourceDependencyMappingRequestType,
-	ListResourceDependencyMappingResponse as ListResourceDependencyMappingResponseType,
-	ListWasmDependencyMappingRequest as ListWasmDependencyMappingRequestType,
-	ListWasmDependencyMappingResponse as ListWasmDependencyMappingResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
-	ResourceDependencyMappingFromMessageKeyRequest as ResourceDependencyMappingFromMessageKeyRequestType,
-	ResourceDependencyMappingFromMessageKeyResponse as ResourceDependencyMappingFromMessageKeyResponseType,
-	WasmDependencyMappingRequest as WasmDependencyMappingRequestType,
-	WasmDependencyMappingResponse as WasmDependencyMappingResponseType,
+	ListResourceDependencyMappingRequest as ListResourceDependencyMappingRequest_type,
+	ListResourceDependencyMappingResponse as ListResourceDependencyMappingResponse_type,
+	ListWasmDependencyMappingRequest as ListWasmDependencyMappingRequest_type,
+	ListWasmDependencyMappingResponse as ListWasmDependencyMappingResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
+	ResourceDependencyMappingFromMessageKeyRequest as ResourceDependencyMappingFromMessageKeyRequest_type,
+	ResourceDependencyMappingFromMessageKeyResponse as ResourceDependencyMappingFromMessageKeyResponse_type,
+	WasmDependencyMappingRequest as WasmDependencyMappingRequest_type,
+	WasmDependencyMappingResponse as WasmDependencyMappingResponse_type,
 } from "../../../types/cosmos/accesscontrol_x";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface ResourceDependencyMappingFromMessageKeyRequest extends ResourceDependencyMappingFromMessageKeyRequestType {}
-interface ResourceDependencyMappingFromMessageKeyResponse extends ResourceDependencyMappingFromMessageKeyResponseType {}
-interface WasmDependencyMappingRequest extends WasmDependencyMappingRequestType {}
-interface WasmDependencyMappingResponse extends WasmDependencyMappingResponseType {}
-interface ListResourceDependencyMappingRequest extends ListResourceDependencyMappingRequestType {}
-interface ListResourceDependencyMappingResponse extends ListResourceDependencyMappingResponseType {}
-interface ListWasmDependencyMappingRequest extends ListWasmDependencyMappingRequestType {}
-interface ListWasmDependencyMappingResponse extends ListWasmDependencyMappingResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface ResourceDependencyMappingFromMessageKeyRequest extends ResourceDependencyMappingFromMessageKeyRequest_type {}
+export interface ResourceDependencyMappingFromMessageKeyResponse extends ResourceDependencyMappingFromMessageKeyResponse_type {}
+export interface WasmDependencyMappingRequest extends WasmDependencyMappingRequest_type {}
+export interface WasmDependencyMappingResponse extends WasmDependencyMappingResponse_type {}
+export interface ListResourceDependencyMappingRequest extends ListResourceDependencyMappingRequest_type {}
+export interface ListResourceDependencyMappingResponse extends ListResourceDependencyMappingResponse_type {}
+export interface ListWasmDependencyMappingRequest extends ListWasmDependencyMappingRequest_type {}
+export interface ListWasmDependencyMappingResponse extends ListWasmDependencyMappingResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.accesscontrol_x.v1beta1.QueryParamsRequest"> = {
 	$type: "cosmos.accesscontrol_x.v1beta1.QueryParamsRequest" as const,

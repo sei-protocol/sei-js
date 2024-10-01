@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { CompactBitArray as CompactBitArrayType, MultiSignature as MultiSignatureType } from "../../../../../types/cosmos/crypto/multisig/v1beta1";
+import type { CompactBitArray as CompactBitArray_type, MultiSignature as MultiSignature_type } from "../../../../../types/cosmos/crypto/multisig/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface MultiSignature extends MultiSignatureType {}
-interface CompactBitArray extends CompactBitArrayType {}
+export interface MultiSignature extends MultiSignature_type {}
+export interface CompactBitArray extends CompactBitArray_type {}
 
 export const MultiSignature: MessageFns<MultiSignature, "cosmos.crypto.multisig.v1beta1.MultiSignature"> = {
 	$type: "cosmos.crypto.multisig.v1beta1.MultiSignature" as const,

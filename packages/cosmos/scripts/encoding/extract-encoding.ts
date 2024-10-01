@@ -93,14 +93,14 @@ export const extractEncoding = async (sourceFilePath: string, destinationFilePat
 			const relativePathToTypes = `${getRelativePathToEncodingRoot(relativePath)}..`;
 
 			const importStatement = `import type { ${Array.from(typesToCopy)
-				.map((type) => `${type} as ${type}Type`)
+				.map((type) => `${type} as ${type}_type`)
 				.join(", ")} } from "${relativePathToTypes}/types/${path}";`;
 			importsToCopy.push(importStatement);
 
 			// Create the interface declarations for each type. This is necessary to fix a TypeScript error.
 			interfaceDeclarations.push(
 				Array.from(typesToCopy)
-					.map((type) => `interface ${type} extends ${type}Type {}`)
+					.map((type) => `export interface ${type} extends ${type}_type {}`)
 					.join("\n"),
 			);
 		}
@@ -116,7 +116,7 @@ export const extractEncoding = async (sourceFilePath: string, destinationFilePat
 
 		// Add the import from "common.ts" for the common types if any are found
 		if (typesToImport.size > 0) {
-			const relativePathToCommon = `${getRelativePathToEncodingRoot(relativePath)}common.ts`;
+			const relativePathToCommon = `${getRelativePathToEncodingRoot(relativePath)}common`;
 
 			const commonImportStatement = `import { ${Array.from(typesToImport).join(", ")} } from "${relativePathToCommon}";`;
 			importsToCopy.push(commonImportStatement);

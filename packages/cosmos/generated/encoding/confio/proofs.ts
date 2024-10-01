@@ -3,38 +3,38 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	BatchEntry as BatchEntryType,
-	BatchProof as BatchProofType,
-	CommitmentProof as CommitmentProofType,
-	CompressedBatchEntry as CompressedBatchEntryType,
-	CompressedBatchProof as CompressedBatchProofType,
-	CompressedExistenceProof as CompressedExistenceProofType,
-	CompressedNonExistenceProof as CompressedNonExistenceProofType,
-	ExistenceProof as ExistenceProofType,
-	InnerOp as InnerOpType,
-	InnerSpec as InnerSpecType,
-	LeafOp as LeafOpType,
-	NonExistenceProof as NonExistenceProofType,
-	ProofSpec as ProofSpecType,
+	BatchEntry as BatchEntry_type,
+	BatchProof as BatchProof_type,
+	CommitmentProof as CommitmentProof_type,
+	CompressedBatchEntry as CompressedBatchEntry_type,
+	CompressedBatchProof as CompressedBatchProof_type,
+	CompressedExistenceProof as CompressedExistenceProof_type,
+	CompressedNonExistenceProof as CompressedNonExistenceProof_type,
+	ExistenceProof as ExistenceProof_type,
+	InnerOp as InnerOp_type,
+	InnerSpec as InnerSpec_type,
+	LeafOp as LeafOp_type,
+	NonExistenceProof as NonExistenceProof_type,
+	ProofSpec as ProofSpec_type,
 } from "../../types/confio";
 
 import { HashOp, LengthOp } from "../../types/confio";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface ExistenceProof extends ExistenceProofType {}
-interface NonExistenceProof extends NonExistenceProofType {}
-interface CommitmentProof extends CommitmentProofType {}
-interface LeafOp extends LeafOpType {}
-interface InnerOp extends InnerOpType {}
-interface ProofSpec extends ProofSpecType {}
-interface InnerSpec extends InnerSpecType {}
-interface BatchProof extends BatchProofType {}
-interface BatchEntry extends BatchEntryType {}
-interface CompressedBatchProof extends CompressedBatchProofType {}
-interface CompressedBatchEntry extends CompressedBatchEntryType {}
-interface CompressedExistenceProof extends CompressedExistenceProofType {}
-interface CompressedNonExistenceProof extends CompressedNonExistenceProofType {}
+export interface ExistenceProof extends ExistenceProof_type {}
+export interface NonExistenceProof extends NonExistenceProof_type {}
+export interface CommitmentProof extends CommitmentProof_type {}
+export interface LeafOp extends LeafOp_type {}
+export interface InnerOp extends InnerOp_type {}
+export interface ProofSpec extends ProofSpec_type {}
+export interface InnerSpec extends InnerSpec_type {}
+export interface BatchProof extends BatchProof_type {}
+export interface BatchEntry extends BatchEntry_type {}
+export interface CompressedBatchProof extends CompressedBatchProof_type {}
+export interface CompressedBatchEntry extends CompressedBatchEntry_type {}
+export interface CompressedExistenceProof extends CompressedExistenceProof_type {}
+export interface CompressedNonExistenceProof extends CompressedNonExistenceProof_type {}
 
 export const ExistenceProof: MessageFns<ExistenceProof, "ics23.ExistenceProof"> = {
 	$type: "ics23.ExistenceProof" as const,

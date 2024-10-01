@@ -13,40 +13,40 @@ import { BlockID } from "../../../../tendermint/types/types";
 import { PageRequest, PageResponse } from "../../query/v1beta1/pagination";
 
 import type {
-	GetBlockByHeightRequest as GetBlockByHeightRequestType,
-	GetBlockByHeightResponse as GetBlockByHeightResponseType,
-	GetLatestBlockRequest as GetLatestBlockRequestType,
-	GetLatestBlockResponse as GetLatestBlockResponseType,
-	GetLatestValidatorSetRequest as GetLatestValidatorSetRequestType,
-	GetLatestValidatorSetResponse as GetLatestValidatorSetResponseType,
-	GetNodeInfoRequest as GetNodeInfoRequestType,
-	GetNodeInfoResponse as GetNodeInfoResponseType,
-	GetSyncingRequest as GetSyncingRequestType,
-	GetSyncingResponse as GetSyncingResponseType,
-	GetValidatorSetByHeightRequest as GetValidatorSetByHeightRequestType,
-	GetValidatorSetByHeightResponse as GetValidatorSetByHeightResponseType,
-	Module as ModuleType,
-	Validator as ValidatorType,
-	VersionInfo as VersionInfoType,
+	GetBlockByHeightRequest as GetBlockByHeightRequest_type,
+	GetBlockByHeightResponse as GetBlockByHeightResponse_type,
+	GetLatestBlockRequest as GetLatestBlockRequest_type,
+	GetLatestBlockResponse as GetLatestBlockResponse_type,
+	GetLatestValidatorSetRequest as GetLatestValidatorSetRequest_type,
+	GetLatestValidatorSetResponse as GetLatestValidatorSetResponse_type,
+	GetNodeInfoRequest as GetNodeInfoRequest_type,
+	GetNodeInfoResponse as GetNodeInfoResponse_type,
+	GetSyncingRequest as GetSyncingRequest_type,
+	GetSyncingResponse as GetSyncingResponse_type,
+	GetValidatorSetByHeightRequest as GetValidatorSetByHeightRequest_type,
+	GetValidatorSetByHeightResponse as GetValidatorSetByHeightResponse_type,
+	Module as Module_type,
+	Validator as Validator_type,
+	VersionInfo as VersionInfo_type,
 } from "../../../../../types/cosmos/base/tendermint/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface GetValidatorSetByHeightRequest extends GetValidatorSetByHeightRequestType {}
-interface GetValidatorSetByHeightResponse extends GetValidatorSetByHeightResponseType {}
-interface GetLatestValidatorSetRequest extends GetLatestValidatorSetRequestType {}
-interface GetLatestValidatorSetResponse extends GetLatestValidatorSetResponseType {}
-interface Validator extends ValidatorType {}
-interface GetBlockByHeightRequest extends GetBlockByHeightRequestType {}
-interface GetBlockByHeightResponse extends GetBlockByHeightResponseType {}
-interface GetLatestBlockRequest extends GetLatestBlockRequestType {}
-interface GetLatestBlockResponse extends GetLatestBlockResponseType {}
-interface GetSyncingRequest extends GetSyncingRequestType {}
-interface GetSyncingResponse extends GetSyncingResponseType {}
-interface GetNodeInfoRequest extends GetNodeInfoRequestType {}
-interface GetNodeInfoResponse extends GetNodeInfoResponseType {}
-interface VersionInfo extends VersionInfoType {}
-interface Module extends ModuleType {}
+export interface GetValidatorSetByHeightRequest extends GetValidatorSetByHeightRequest_type {}
+export interface GetValidatorSetByHeightResponse extends GetValidatorSetByHeightResponse_type {}
+export interface GetLatestValidatorSetRequest extends GetLatestValidatorSetRequest_type {}
+export interface GetLatestValidatorSetResponse extends GetLatestValidatorSetResponse_type {}
+export interface Validator extends Validator_type {}
+export interface GetBlockByHeightRequest extends GetBlockByHeightRequest_type {}
+export interface GetBlockByHeightResponse extends GetBlockByHeightResponse_type {}
+export interface GetLatestBlockRequest extends GetLatestBlockRequest_type {}
+export interface GetLatestBlockResponse extends GetLatestBlockResponse_type {}
+export interface GetSyncingRequest extends GetSyncingRequest_type {}
+export interface GetSyncingResponse extends GetSyncingResponse_type {}
+export interface GetNodeInfoRequest extends GetNodeInfoRequest_type {}
+export interface GetNodeInfoResponse extends GetNodeInfoResponse_type {}
+export interface VersionInfo extends VersionInfo_type {}
+export interface Module extends Module_type {}
 
 export const GetValidatorSetByHeightRequest: MessageFns<GetValidatorSetByHeightRequest, "cosmos.base.tendermint.v1beta1.GetValidatorSetByHeightRequest"> = {
 	$type: "cosmos.base.tendermint.v1beta1.GetValidatorSetByHeightRequest" as const,

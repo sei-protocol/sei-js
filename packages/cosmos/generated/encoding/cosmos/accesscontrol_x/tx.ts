@@ -3,16 +3,16 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { WasmDependencyMapping } from "../accesscontrol/accesscontrol";
 
 import type {
-	MsgRegisterWasmDependencyResponse as MsgRegisterWasmDependencyResponseType,
-	MsgRegisterWasmDependency as MsgRegisterWasmDependencyType,
-	RegisterWasmDependencyJSONFile as RegisterWasmDependencyJSONFileType,
+	MsgRegisterWasmDependencyResponse as MsgRegisterWasmDependencyResponse_type,
+	MsgRegisterWasmDependency as MsgRegisterWasmDependency_type,
+	RegisterWasmDependencyJSONFile as RegisterWasmDependencyJSONFile_type,
 } from "../../../types/cosmos/accesscontrol_x";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface RegisterWasmDependencyJSONFile extends RegisterWasmDependencyJSONFileType {}
-interface MsgRegisterWasmDependency extends MsgRegisterWasmDependencyType {}
-interface MsgRegisterWasmDependencyResponse extends MsgRegisterWasmDependencyResponseType {}
+export interface RegisterWasmDependencyJSONFile extends RegisterWasmDependencyJSONFile_type {}
+export interface MsgRegisterWasmDependency extends MsgRegisterWasmDependency_type {}
+export interface MsgRegisterWasmDependencyResponse extends MsgRegisterWasmDependencyResponse_type {}
 
 export const RegisterWasmDependencyJSONFile: MessageFns<RegisterWasmDependencyJSONFile, "cosmos.accesscontrol_x.v1beta1.RegisterWasmDependencyJSONFile"> = {
 	$type: "cosmos.accesscontrol_x.v1beta1.RegisterWasmDependencyJSONFile" as const,

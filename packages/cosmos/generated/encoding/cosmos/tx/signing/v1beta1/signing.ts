@@ -7,22 +7,22 @@ import { Any } from "../../../../google/protobuf/any";
 import { CompactBitArray } from "../../../crypto/multisig/v1beta1/multisig";
 
 import type {
-	SignatureDescriptorDataMulti as SignatureDescriptorDataMultiType,
-	SignatureDescriptorDataSingle as SignatureDescriptorDataSingleType,
-	SignatureDescriptorData as SignatureDescriptorDataType,
-	SignatureDescriptor as SignatureDescriptorType,
-	SignatureDescriptors as SignatureDescriptorsType,
+	SignatureDescriptorDataMulti as SignatureDescriptorDataMulti_type,
+	SignatureDescriptorDataSingle as SignatureDescriptorDataSingle_type,
+	SignatureDescriptorData as SignatureDescriptorData_type,
+	SignatureDescriptor as SignatureDescriptor_type,
+	SignatureDescriptors as SignatureDescriptors_type,
 } from "../../../../../types/cosmos/tx/signing/v1beta1";
 
 import { SignMode } from "../../../../../types/cosmos/tx/signing/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface SignatureDescriptors extends SignatureDescriptorsType {}
-interface SignatureDescriptor extends SignatureDescriptorType {}
-interface SignatureDescriptorData extends SignatureDescriptorDataType {}
-interface SignatureDescriptorDataSingle extends SignatureDescriptorDataSingleType {}
-interface SignatureDescriptorDataMulti extends SignatureDescriptorDataMultiType {}
+export interface SignatureDescriptors extends SignatureDescriptors_type {}
+export interface SignatureDescriptor extends SignatureDescriptor_type {}
+export interface SignatureDescriptorData extends SignatureDescriptorData_type {}
+export interface SignatureDescriptorDataSingle extends SignatureDescriptorDataSingle_type {}
+export interface SignatureDescriptorDataMulti extends SignatureDescriptorDataMulti_type {}
 
 export const SignatureDescriptors: MessageFns<SignatureDescriptors, "cosmos.tx.signing.v1beta1.SignatureDescriptors"> = {
 	$type: "cosmos.tx.signing.v1beta1.SignatureDescriptors" as const,

@@ -7,18 +7,18 @@ import { Any } from "../../../google/protobuf/any";
 import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 
 import type {
-	QueryAllEvidenceRequest as QueryAllEvidenceRequestType,
-	QueryAllEvidenceResponse as QueryAllEvidenceResponseType,
-	QueryEvidenceRequest as QueryEvidenceRequestType,
-	QueryEvidenceResponse as QueryEvidenceResponseType,
+	QueryAllEvidenceRequest as QueryAllEvidenceRequest_type,
+	QueryAllEvidenceResponse as QueryAllEvidenceResponse_type,
+	QueryEvidenceRequest as QueryEvidenceRequest_type,
+	QueryEvidenceResponse as QueryEvidenceResponse_type,
 } from "../../../../types/cosmos/evidence/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryEvidenceRequest extends QueryEvidenceRequestType {}
-interface QueryEvidenceResponse extends QueryEvidenceResponseType {}
-interface QueryAllEvidenceRequest extends QueryAllEvidenceRequestType {}
-interface QueryAllEvidenceResponse extends QueryAllEvidenceResponseType {}
+export interface QueryEvidenceRequest extends QueryEvidenceRequest_type {}
+export interface QueryEvidenceResponse extends QueryEvidenceResponse_type {}
+export interface QueryAllEvidenceRequest extends QueryAllEvidenceRequest_type {}
+export interface QueryAllEvidenceResponse extends QueryAllEvidenceResponse_type {}
 
 export const QueryEvidenceRequest: MessageFns<QueryEvidenceRequest, "cosmos.evidence.v1beta1.QueryEvidenceRequest"> = {
 	$type: "cosmos.evidence.v1beta1.QueryEvidenceRequest" as const,

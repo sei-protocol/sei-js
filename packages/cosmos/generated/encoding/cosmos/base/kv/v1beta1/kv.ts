@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Pair as PairType, Pairs as PairsType } from "../../../../../types/cosmos/base/kv/v1beta1";
+import type { Pair as Pair_type, Pairs as Pairs_type } from "../../../../../types/cosmos/base/kv/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface Pairs extends PairsType {}
-interface Pair extends PairType {}
+export interface Pairs extends Pairs_type {}
+export interface Pair extends Pair_type {}
 
 export const Pairs: MessageFns<Pairs, "cosmos.base.kv.v1beta1.Pairs"> = {
 	$type: "cosmos.base.kv.v1beta1.Pairs" as const,

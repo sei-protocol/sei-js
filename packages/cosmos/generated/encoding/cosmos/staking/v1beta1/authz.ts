@@ -5,16 +5,16 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	StakeAuthorization as StakeAuthorizationType,
-	StakeAuthorizationValidators as StakeAuthorizationValidatorsType,
+	StakeAuthorizationValidators as StakeAuthorizationValidators_type,
+	StakeAuthorization as StakeAuthorization_type,
 } from "../../../../types/cosmos/staking/v1beta1";
 
 import { AuthorizationType } from "../../../../types/cosmos/staking/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface StakeAuthorization extends StakeAuthorizationType {}
-interface StakeAuthorizationValidators extends StakeAuthorizationValidatorsType {}
+export interface StakeAuthorization extends StakeAuthorization_type {}
+export interface StakeAuthorizationValidators extends StakeAuthorizationValidators_type {}
 
 export const StakeAuthorization: MessageFns<StakeAuthorization, "cosmos.staking.v1beta1.StakeAuthorization"> = {
 	$type: "cosmos.staking.v1beta1.StakeAuthorization" as const,

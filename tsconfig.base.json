@@ -23,7 +23,6 @@
   },
   "exclude": [
     "node_modules",
-    "packages/cosmos/generated/*",
     "dist",
     "**/*.spec.ts",
     "**/*.test.ts",

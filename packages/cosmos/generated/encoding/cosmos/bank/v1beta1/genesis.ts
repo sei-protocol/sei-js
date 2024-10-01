@@ -6,13 +6,13 @@ import { Coin } from "../../base/v1beta1/coin";
 
 import { Metadata, Params } from "./bank";
 
-import type { Balance as BalanceType, GenesisState as GenesisStateType, WeiBalance as WeiBalanceType } from "../../../../types/cosmos/bank/v1beta1";
+import type { Balance as Balance_type, GenesisState as GenesisState_type, WeiBalance as WeiBalance_type } from "../../../../types/cosmos/bank/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GenesisState extends GenesisStateType {}
-interface Balance extends BalanceType {}
-interface WeiBalance extends WeiBalanceType {}
+export interface GenesisState extends GenesisState_type {}
+export interface Balance extends Balance_type {}
+export interface WeiBalance extends WeiBalance_type {}
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.bank.v1beta1.GenesisState"> = {
 	$type: "cosmos.bank.v1beta1.GenesisState" as const,

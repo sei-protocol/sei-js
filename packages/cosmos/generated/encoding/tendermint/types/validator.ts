@@ -4,13 +4,13 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { PublicKey } from "../crypto/keys";
 
-import type { SimpleValidator as SimpleValidatorType, ValidatorSet as ValidatorSetType, Validator as ValidatorType } from "../../../types/tendermint/types";
+import type { SimpleValidator as SimpleValidator_type, ValidatorSet as ValidatorSet_type, Validator as Validator_type } from "../../../types/tendermint/types";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface ValidatorSet extends ValidatorSetType {}
-interface Validator extends ValidatorType {}
-interface SimpleValidator extends SimpleValidatorType {}
+export interface ValidatorSet extends ValidatorSet_type {}
+export interface Validator extends Validator_type {}
+export interface SimpleValidator extends SimpleValidator_type {}
 
 export const ValidatorSet: MessageFns<ValidatorSet, "tendermint.types.ValidatorSet"> = {
 	$type: "tendermint.types.ValidatorSet" as const,

@@ -3,26 +3,26 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	MsgFundCommunityPoolResponse as MsgFundCommunityPoolResponseType,
-	MsgFundCommunityPool as MsgFundCommunityPoolType,
-	MsgSetWithdrawAddressResponse as MsgSetWithdrawAddressResponseType,
-	MsgSetWithdrawAddress as MsgSetWithdrawAddressType,
-	MsgWithdrawDelegatorRewardResponse as MsgWithdrawDelegatorRewardResponseType,
-	MsgWithdrawDelegatorReward as MsgWithdrawDelegatorRewardType,
-	MsgWithdrawValidatorCommissionResponse as MsgWithdrawValidatorCommissionResponseType,
-	MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommissionType,
+	MsgFundCommunityPoolResponse as MsgFundCommunityPoolResponse_type,
+	MsgFundCommunityPool as MsgFundCommunityPool_type,
+	MsgSetWithdrawAddressResponse as MsgSetWithdrawAddressResponse_type,
+	MsgSetWithdrawAddress as MsgSetWithdrawAddress_type,
+	MsgWithdrawDelegatorRewardResponse as MsgWithdrawDelegatorRewardResponse_type,
+	MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_type,
+	MsgWithdrawValidatorCommissionResponse as MsgWithdrawValidatorCommissionResponse_type,
+	MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_type,
 } from "../../../../types/cosmos/distribution/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgSetWithdrawAddress extends MsgSetWithdrawAddressType {}
-interface MsgSetWithdrawAddressResponse extends MsgSetWithdrawAddressResponseType {}
-interface MsgWithdrawDelegatorReward extends MsgWithdrawDelegatorRewardType {}
-interface MsgWithdrawDelegatorRewardResponse extends MsgWithdrawDelegatorRewardResponseType {}
-interface MsgWithdrawValidatorCommission extends MsgWithdrawValidatorCommissionType {}
-interface MsgWithdrawValidatorCommissionResponse extends MsgWithdrawValidatorCommissionResponseType {}
-interface MsgFundCommunityPool extends MsgFundCommunityPoolType {}
-interface MsgFundCommunityPoolResponse extends MsgFundCommunityPoolResponseType {}
+export interface MsgSetWithdrawAddress extends MsgSetWithdrawAddress_type {}
+export interface MsgSetWithdrawAddressResponse extends MsgSetWithdrawAddressResponse_type {}
+export interface MsgWithdrawDelegatorReward extends MsgWithdrawDelegatorReward_type {}
+export interface MsgWithdrawDelegatorRewardResponse extends MsgWithdrawDelegatorRewardResponse_type {}
+export interface MsgWithdrawValidatorCommission extends MsgWithdrawValidatorCommission_type {}
+export interface MsgWithdrawValidatorCommissionResponse extends MsgWithdrawValidatorCommissionResponse_type {}
+export interface MsgFundCommunityPool extends MsgFundCommunityPool_type {}
+export interface MsgFundCommunityPoolResponse extends MsgFundCommunityPoolResponse_type {}
 
 export const MsgSetWithdrawAddress: MessageFns<MsgSetWithdrawAddress, "cosmos.distribution.v1beta1.MsgSetWithdrawAddress"> = {
 	$type: "cosmos.distribution.v1beta1.MsgSetWithdrawAddress" as const,

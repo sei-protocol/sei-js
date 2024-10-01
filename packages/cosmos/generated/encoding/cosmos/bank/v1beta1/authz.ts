@@ -4,11 +4,11 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Coin } from "../../base/v1beta1/coin";
 
-import type { SendAuthorization as SendAuthorizationType } from "../../../../types/cosmos/bank/v1beta1";
+import type { SendAuthorization as SendAuthorization_type } from "../../../../types/cosmos/bank/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface SendAuthorization extends SendAuthorizationType {}
+export interface SendAuthorization extends SendAuthorization_type {}
 
 export const SendAuthorization: MessageFns<SendAuthorization, "cosmos.bank.v1beta1.SendAuthorization"> = {
 	$type: "cosmos.bank.v1beta1.SendAuthorization" as const,

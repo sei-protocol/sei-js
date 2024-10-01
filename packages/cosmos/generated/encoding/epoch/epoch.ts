@@ -6,11 +6,11 @@ import { Duration } from "../google/protobuf/duration";
 
 import { Timestamp } from "../google/protobuf/timestamp";
 
-import type { Epoch as EpochType } from "../../types/epoch";
+import type { Epoch as Epoch_type } from "../../types/epoch";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface Epoch extends EpochType {}
+export interface Epoch extends Epoch_type {}
 
 export const Epoch: MessageFns<Epoch, "seiprotocol.seichain.epoch.Epoch"> = {
 	$type: "seiprotocol.seichain.epoch.Epoch" as const,

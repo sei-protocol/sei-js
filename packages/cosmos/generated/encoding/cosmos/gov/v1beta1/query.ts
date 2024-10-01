@@ -7,42 +7,42 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Deposit, DepositParams, Proposal, TallyParams, TallyResult, Vote, VotingParams, proposalStatusFromJSON, proposalStatusToJSON } from "./gov";
 
 import type {
-	QueryDepositRequest as QueryDepositRequestType,
-	QueryDepositResponse as QueryDepositResponseType,
-	QueryDepositsRequest as QueryDepositsRequestType,
-	QueryDepositsResponse as QueryDepositsResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
-	QueryProposalRequest as QueryProposalRequestType,
-	QueryProposalResponse as QueryProposalResponseType,
-	QueryProposalsRequest as QueryProposalsRequestType,
-	QueryProposalsResponse as QueryProposalsResponseType,
-	QueryTallyResultRequest as QueryTallyResultRequestType,
-	QueryTallyResultResponse as QueryTallyResultResponseType,
-	QueryVoteRequest as QueryVoteRequestType,
-	QueryVoteResponse as QueryVoteResponseType,
-	QueryVotesRequest as QueryVotesRequestType,
-	QueryVotesResponse as QueryVotesResponseType,
+	QueryDepositRequest as QueryDepositRequest_type,
+	QueryDepositResponse as QueryDepositResponse_type,
+	QueryDepositsRequest as QueryDepositsRequest_type,
+	QueryDepositsResponse as QueryDepositsResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
+	QueryProposalRequest as QueryProposalRequest_type,
+	QueryProposalResponse as QueryProposalResponse_type,
+	QueryProposalsRequest as QueryProposalsRequest_type,
+	QueryProposalsResponse as QueryProposalsResponse_type,
+	QueryTallyResultRequest as QueryTallyResultRequest_type,
+	QueryTallyResultResponse as QueryTallyResultResponse_type,
+	QueryVoteRequest as QueryVoteRequest_type,
+	QueryVoteResponse as QueryVoteResponse_type,
+	QueryVotesRequest as QueryVotesRequest_type,
+	QueryVotesResponse as QueryVotesResponse_type,
 } from "../../../../types/cosmos/gov/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryProposalRequest extends QueryProposalRequestType {}
-interface QueryProposalResponse extends QueryProposalResponseType {}
-interface QueryProposalsRequest extends QueryProposalsRequestType {}
-interface QueryProposalsResponse extends QueryProposalsResponseType {}
-interface QueryVoteRequest extends QueryVoteRequestType {}
-interface QueryVoteResponse extends QueryVoteResponseType {}
-interface QueryVotesRequest extends QueryVotesRequestType {}
-interface QueryVotesResponse extends QueryVotesResponseType {}
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryDepositRequest extends QueryDepositRequestType {}
-interface QueryDepositResponse extends QueryDepositResponseType {}
-interface QueryDepositsRequest extends QueryDepositsRequestType {}
-interface QueryDepositsResponse extends QueryDepositsResponseType {}
-interface QueryTallyResultRequest extends QueryTallyResultRequestType {}
-interface QueryTallyResultResponse extends QueryTallyResultResponseType {}
+export interface QueryProposalRequest extends QueryProposalRequest_type {}
+export interface QueryProposalResponse extends QueryProposalResponse_type {}
+export interface QueryProposalsRequest extends QueryProposalsRequest_type {}
+export interface QueryProposalsResponse extends QueryProposalsResponse_type {}
+export interface QueryVoteRequest extends QueryVoteRequest_type {}
+export interface QueryVoteResponse extends QueryVoteResponse_type {}
+export interface QueryVotesRequest extends QueryVotesRequest_type {}
+export interface QueryVotesResponse extends QueryVotesResponse_type {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryDepositRequest extends QueryDepositRequest_type {}
+export interface QueryDepositResponse extends QueryDepositResponse_type {}
+export interface QueryDepositsRequest extends QueryDepositsRequest_type {}
+export interface QueryDepositsResponse extends QueryDepositsResponse_type {}
+export interface QueryTallyResultRequest extends QueryTallyResultRequest_type {}
+export interface QueryTallyResultResponse extends QueryTallyResultResponse_type {}
 
 export const QueryProposalRequest: MessageFns<QueryProposalRequest, "cosmos.gov.v1beta1.QueryProposalRequest"> = {
 	$type: "cosmos.gov.v1beta1.QueryProposalRequest" as const,

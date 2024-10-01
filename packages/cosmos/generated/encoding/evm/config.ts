@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { ChainConfig as ChainConfigType } from "../../types/evm";
+import type { ChainConfig as ChainConfig_type } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface ChainConfig extends ChainConfigType {}
+export interface ChainConfig extends ChainConfig_type {}
 
 export const ChainConfig: MessageFns<ChainConfig, "seiprotocol.seichain.evm.ChainConfig"> = {
 	$type: "seiprotocol.seichain.evm.ChainConfig" as const,

@@ -4,11 +4,11 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Minter } from "./mint";
 
-import type { UpdateMinterProposal as UpdateMinterProposalType } from "../../../types/mint/v1beta1";
+import type { UpdateMinterProposal as UpdateMinterProposal_type } from "../../../types/mint/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface UpdateMinterProposal extends UpdateMinterProposalType {}
+export interface UpdateMinterProposal extends UpdateMinterProposal_type {}
 
 export const UpdateMinterProposal: MessageFns<UpdateMinterProposal, "seiprotocol.seichain.mint.UpdateMinterProposal"> = {
 	$type: "seiprotocol.seichain.mint.UpdateMinterProposal" as const,

@@ -7,16 +7,16 @@ import { Any } from "../../../google/protobuf/any";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 
 import type {
-	GenericAuthorization as GenericAuthorizationType,
-	GrantAuthorization as GrantAuthorizationType,
-	Grant as GrantType,
+	GenericAuthorization as GenericAuthorization_type,
+	GrantAuthorization as GrantAuthorization_type,
+	Grant as Grant_type,
 } from "../../../../types/cosmos/authz/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GenericAuthorization extends GenericAuthorizationType {}
-interface Grant extends GrantType {}
-interface GrantAuthorization extends GrantAuthorizationType {}
+export interface GenericAuthorization extends GenericAuthorization_type {}
+export interface Grant extends Grant_type {}
+export interface GrantAuthorization extends GrantAuthorization_type {}
 
 export const GenericAuthorization: MessageFns<GenericAuthorization, "cosmos.authz.v1beta1.GenericAuthorization"> = {
 	$type: "cosmos.authz.v1beta1.GenericAuthorization" as const,

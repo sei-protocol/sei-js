@@ -7,22 +7,22 @@ import { Any } from "../../../google/protobuf/any";
 import { Grant } from "./authz";
 
 import type {
-	MsgExecResponse as MsgExecResponseType,
-	MsgExec as MsgExecType,
-	MsgGrantResponse as MsgGrantResponseType,
-	MsgGrant as MsgGrantType,
-	MsgRevokeResponse as MsgRevokeResponseType,
-	MsgRevoke as MsgRevokeType,
+	MsgExecResponse as MsgExecResponse_type,
+	MsgExec as MsgExec_type,
+	MsgGrantResponse as MsgGrantResponse_type,
+	MsgGrant as MsgGrant_type,
+	MsgRevokeResponse as MsgRevokeResponse_type,
+	MsgRevoke as MsgRevoke_type,
 } from "../../../../types/cosmos/authz/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgGrant extends MsgGrantType {}
-interface MsgExecResponse extends MsgExecResponseType {}
-interface MsgExec extends MsgExecType {}
-interface MsgGrantResponse extends MsgGrantResponseType {}
-interface MsgRevoke extends MsgRevokeType {}
-interface MsgRevokeResponse extends MsgRevokeResponseType {}
+export interface MsgGrant extends MsgGrant_type {}
+export interface MsgExecResponse extends MsgExecResponse_type {}
+export interface MsgExec extends MsgExec_type {}
+export interface MsgGrantResponse extends MsgGrantResponse_type {}
+export interface MsgRevoke extends MsgRevoke_type {}
+export interface MsgRevokeResponse extends MsgRevokeResponse_type {}
 
 export const MsgGrant: MessageFns<MsgGrant, "cosmos.authz.v1beta1.MsgGrant"> = {
 	$type: "cosmos.authz.v1beta1.MsgGrant" as const,

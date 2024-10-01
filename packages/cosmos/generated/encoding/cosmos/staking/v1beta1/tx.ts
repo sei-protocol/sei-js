@@ -11,30 +11,30 @@ import { Coin } from "../../base/v1beta1/coin";
 import { CommissionRates, Description } from "./staking";
 
 import type {
-	MsgBeginRedelegateResponse as MsgBeginRedelegateResponseType,
-	MsgBeginRedelegate as MsgBeginRedelegateType,
-	MsgCreateValidatorResponse as MsgCreateValidatorResponseType,
-	MsgCreateValidator as MsgCreateValidatorType,
-	MsgDelegateResponse as MsgDelegateResponseType,
-	MsgDelegate as MsgDelegateType,
-	MsgEditValidatorResponse as MsgEditValidatorResponseType,
-	MsgEditValidator as MsgEditValidatorType,
-	MsgUndelegateResponse as MsgUndelegateResponseType,
-	MsgUndelegate as MsgUndelegateType,
+	MsgBeginRedelegateResponse as MsgBeginRedelegateResponse_type,
+	MsgBeginRedelegate as MsgBeginRedelegate_type,
+	MsgCreateValidatorResponse as MsgCreateValidatorResponse_type,
+	MsgCreateValidator as MsgCreateValidator_type,
+	MsgDelegateResponse as MsgDelegateResponse_type,
+	MsgDelegate as MsgDelegate_type,
+	MsgEditValidatorResponse as MsgEditValidatorResponse_type,
+	MsgEditValidator as MsgEditValidator_type,
+	MsgUndelegateResponse as MsgUndelegateResponse_type,
+	MsgUndelegate as MsgUndelegate_type,
 } from "../../../../types/cosmos/staking/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgCreateValidator extends MsgCreateValidatorType {}
-interface MsgCreateValidatorResponse extends MsgCreateValidatorResponseType {}
-interface MsgEditValidator extends MsgEditValidatorType {}
-interface MsgEditValidatorResponse extends MsgEditValidatorResponseType {}
-interface MsgDelegate extends MsgDelegateType {}
-interface MsgDelegateResponse extends MsgDelegateResponseType {}
-interface MsgBeginRedelegate extends MsgBeginRedelegateType {}
-interface MsgBeginRedelegateResponse extends MsgBeginRedelegateResponseType {}
-interface MsgUndelegate extends MsgUndelegateType {}
-interface MsgUndelegateResponse extends MsgUndelegateResponseType {}
+export interface MsgCreateValidator extends MsgCreateValidator_type {}
+export interface MsgCreateValidatorResponse extends MsgCreateValidatorResponse_type {}
+export interface MsgEditValidator extends MsgEditValidator_type {}
+export interface MsgEditValidatorResponse extends MsgEditValidatorResponse_type {}
+export interface MsgDelegate extends MsgDelegate_type {}
+export interface MsgDelegateResponse extends MsgDelegateResponse_type {}
+export interface MsgBeginRedelegate extends MsgBeginRedelegate_type {}
+export interface MsgBeginRedelegateResponse extends MsgBeginRedelegateResponse_type {}
+export interface MsgUndelegate extends MsgUndelegate_type {}
+export interface MsgUndelegateResponse extends MsgUndelegateResponse_type {}
 
 export const MsgCreateValidator: MessageFns<MsgCreateValidator, "cosmos.staking.v1beta1.MsgCreateValidator"> = {
 	$type: "cosmos.staking.v1beta1.MsgCreateValidator" as const,

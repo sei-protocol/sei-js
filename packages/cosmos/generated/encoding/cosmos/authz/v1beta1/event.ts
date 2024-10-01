@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { EventGrant as EventGrantType, EventRevoke as EventRevokeType } from "../../../../types/cosmos/authz/v1beta1";
+import type { EventGrant as EventGrant_type, EventRevoke as EventRevoke_type } from "../../../../types/cosmos/authz/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface EventGrant extends EventGrantType {}
-interface EventRevoke extends EventRevokeType {}
+export interface EventGrant extends EventGrant_type {}
+export interface EventRevoke extends EventRevoke_type {}
 
 export const EventGrant: MessageFns<EventGrant, "cosmos.authz.v1beta1.EventGrant"> = {
 	$type: "cosmos.authz.v1beta1.EventGrant" as const,

@@ -5,18 +5,18 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Any } from "../../../google/protobuf/any";
 
 import type {
-	MsgGrantAllowanceResponse as MsgGrantAllowanceResponseType,
-	MsgGrantAllowance as MsgGrantAllowanceType,
-	MsgRevokeAllowanceResponse as MsgRevokeAllowanceResponseType,
-	MsgRevokeAllowance as MsgRevokeAllowanceType,
+	MsgGrantAllowanceResponse as MsgGrantAllowanceResponse_type,
+	MsgGrantAllowance as MsgGrantAllowance_type,
+	MsgRevokeAllowanceResponse as MsgRevokeAllowanceResponse_type,
+	MsgRevokeAllowance as MsgRevokeAllowance_type,
 } from "../../../../types/cosmos/feegrant/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgGrantAllowance extends MsgGrantAllowanceType {}
-interface MsgGrantAllowanceResponse extends MsgGrantAllowanceResponseType {}
-interface MsgRevokeAllowance extends MsgRevokeAllowanceType {}
-interface MsgRevokeAllowanceResponse extends MsgRevokeAllowanceResponseType {}
+export interface MsgGrantAllowance extends MsgGrantAllowance_type {}
+export interface MsgGrantAllowanceResponse extends MsgGrantAllowanceResponse_type {}
+export interface MsgRevokeAllowance extends MsgRevokeAllowance_type {}
+export interface MsgRevokeAllowanceResponse extends MsgRevokeAllowanceResponse_type {}
 
 export const MsgGrantAllowance: MessageFns<MsgGrantAllowance, "cosmos.feegrant.v1beta1.MsgGrantAllowance"> = {
 	$type: "cosmos.feegrant.v1beta1.MsgGrantAllowance" as const,

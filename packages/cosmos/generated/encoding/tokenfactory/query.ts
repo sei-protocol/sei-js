@@ -7,30 +7,30 @@ import { DenomAuthorityMetadata } from "./authorityMetadata";
 import { Params } from "./params";
 
 import type {
-	QueryDenomAllowListRequest as QueryDenomAllowListRequestType,
-	QueryDenomAllowListResponse as QueryDenomAllowListResponseType,
-	QueryDenomAuthorityMetadataRequest as QueryDenomAuthorityMetadataRequestType,
-	QueryDenomAuthorityMetadataResponse as QueryDenomAuthorityMetadataResponseType,
-	QueryDenomMetadataRequest as QueryDenomMetadataRequestType,
-	QueryDenomMetadataResponse as QueryDenomMetadataResponseType,
-	QueryDenomsFromCreatorRequest as QueryDenomsFromCreatorRequestType,
-	QueryDenomsFromCreatorResponse as QueryDenomsFromCreatorResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
+	QueryDenomAllowListRequest as QueryDenomAllowListRequest_type,
+	QueryDenomAllowListResponse as QueryDenomAllowListResponse_type,
+	QueryDenomAuthorityMetadataRequest as QueryDenomAuthorityMetadataRequest_type,
+	QueryDenomAuthorityMetadataResponse as QueryDenomAuthorityMetadataResponse_type,
+	QueryDenomMetadataRequest as QueryDenomMetadataRequest_type,
+	QueryDenomMetadataResponse as QueryDenomMetadataResponse_type,
+	QueryDenomsFromCreatorRequest as QueryDenomsFromCreatorRequest_type,
+	QueryDenomsFromCreatorResponse as QueryDenomsFromCreatorResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
 } from "../../types/tokenfactory";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryDenomAuthorityMetadataRequest extends QueryDenomAuthorityMetadataRequestType {}
-interface QueryDenomAuthorityMetadataResponse extends QueryDenomAuthorityMetadataResponseType {}
-interface QueryDenomsFromCreatorRequest extends QueryDenomsFromCreatorRequestType {}
-interface QueryDenomsFromCreatorResponse extends QueryDenomsFromCreatorResponseType {}
-interface QueryDenomMetadataRequest extends QueryDenomMetadataRequestType {}
-interface QueryDenomMetadataResponse extends QueryDenomMetadataResponseType {}
-interface QueryDenomAllowListRequest extends QueryDenomAllowListRequestType {}
-interface QueryDenomAllowListResponse extends QueryDenomAllowListResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryDenomAuthorityMetadataRequest extends QueryDenomAuthorityMetadataRequest_type {}
+export interface QueryDenomAuthorityMetadataResponse extends QueryDenomAuthorityMetadataResponse_type {}
+export interface QueryDenomsFromCreatorRequest extends QueryDenomsFromCreatorRequest_type {}
+export interface QueryDenomsFromCreatorResponse extends QueryDenomsFromCreatorResponse_type {}
+export interface QueryDenomMetadataRequest extends QueryDenomMetadataRequest_type {}
+export interface QueryDenomMetadataResponse extends QueryDenomMetadataResponse_type {}
+export interface QueryDenomAllowListRequest extends QueryDenomAllowListRequest_type {}
+export interface QueryDenomAllowListResponse extends QueryDenomAllowListResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.seichain.tokenfactory.QueryParamsRequest"> = {
 	$type: "seiprotocol.seichain.tokenfactory.QueryParamsRequest" as const,

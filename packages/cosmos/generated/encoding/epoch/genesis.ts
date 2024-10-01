@@ -6,11 +6,11 @@ import { Epoch } from "./epoch";
 
 import { Params } from "./params";
 
-import type { GenesisState as GenesisStateType } from "../../types/epoch";
+import type { GenesisState as GenesisState_type } from "../../types/epoch";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface GenesisState extends GenesisStateType {}
+export interface GenesisState extends GenesisState_type {}
 
 export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.epoch.GenesisState"> = {
 	$type: "seiprotocol.seichain.epoch.GenesisState" as const,

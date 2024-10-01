@@ -3,22 +3,22 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	Minter as MinterType,
-	Params as ParamsType,
-	ScheduledTokenRelease as ScheduledTokenReleaseType,
-	Version2Minter as Version2MinterType,
-	Version2Params as Version2ParamsType,
-	Version2ScheduledTokenRelease as Version2ScheduledTokenReleaseType,
+	Minter as Minter_type,
+	Params as Params_type,
+	ScheduledTokenRelease as ScheduledTokenRelease_type,
+	Version2Minter as Version2Minter_type,
+	Version2Params as Version2Params_type,
+	Version2ScheduledTokenRelease as Version2ScheduledTokenRelease_type,
 } from "../../../types/mint/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Minter extends MinterType {}
-interface ScheduledTokenRelease extends ScheduledTokenReleaseType {}
-interface Params extends ParamsType {}
-interface Version2Minter extends Version2MinterType {}
-interface Version2ScheduledTokenRelease extends Version2ScheduledTokenReleaseType {}
-interface Version2Params extends Version2ParamsType {}
+export interface Minter extends Minter_type {}
+export interface ScheduledTokenRelease extends ScheduledTokenRelease_type {}
+export interface Params extends Params_type {}
+export interface Version2Minter extends Version2Minter_type {}
+export interface Version2ScheduledTokenRelease extends Version2ScheduledTokenRelease_type {}
+export interface Version2Params extends Version2Params_type {}
 
 export const Minter: MessageFns<Minter, "seiprotocol.seichain.mint.Minter"> = {
 	$type: "seiprotocol.seichain.mint.Minter" as const,

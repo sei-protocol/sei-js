@@ -4,12 +4,12 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { CapabilityOwners } from "./capability";
 
-import type { GenesisOwners as GenesisOwnersType, GenesisState as GenesisStateType } from "../../../../types/cosmos/capability/v1beta1";
+import type { GenesisOwners as GenesisOwners_type, GenesisState as GenesisState_type } from "../../../../types/cosmos/capability/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GenesisOwners extends GenesisOwnersType {}
-interface GenesisState extends GenesisStateType {}
+export interface GenesisOwners extends GenesisOwners_type {}
+export interface GenesisState extends GenesisState_type {}
 
 export const GenesisOwners: MessageFns<GenesisOwners, "cosmos.capability.v1beta1.GenesisOwners"> = {
 	$type: "cosmos.capability.v1beta1.GenesisOwners" as const,

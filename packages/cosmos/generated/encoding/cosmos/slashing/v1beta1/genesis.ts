@@ -11,24 +11,24 @@ import {
 } from "./slashing";
 
 import type {
-	GenesisStateLegacyMissingHeights as GenesisStateLegacyMissingHeightsType,
-	GenesisStateLegacyV43 as GenesisStateLegacyV43Type,
-	GenesisState as GenesisStateType,
-	MissedBlock as MissedBlockType,
-	SigningInfoLegacyMissedHeights as SigningInfoLegacyMissedHeightsType,
-	SigningInfo as SigningInfoType,
-	ValidatorMissedBlocks as ValidatorMissedBlocksType,
+	GenesisStateLegacyMissingHeights as GenesisStateLegacyMissingHeights_type,
+	GenesisStateLegacyV43 as GenesisStateLegacyV43_type,
+	GenesisState as GenesisState_type,
+	MissedBlock as MissedBlock_type,
+	SigningInfoLegacyMissedHeights as SigningInfoLegacyMissedHeights_type,
+	SigningInfo as SigningInfo_type,
+	ValidatorMissedBlocks as ValidatorMissedBlocks_type,
 } from "../../../../types/cosmos/slashing/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GenesisState extends GenesisStateType {}
-interface GenesisStateLegacyMissingHeights extends GenesisStateLegacyMissingHeightsType {}
-interface GenesisStateLegacyV43 extends GenesisStateLegacyV43Type {}
-interface SigningInfo extends SigningInfoType {}
-interface SigningInfoLegacyMissedHeights extends SigningInfoLegacyMissedHeightsType {}
-interface ValidatorMissedBlocks extends ValidatorMissedBlocksType {}
-interface MissedBlock extends MissedBlockType {}
+export interface GenesisState extends GenesisState_type {}
+export interface GenesisStateLegacyMissingHeights extends GenesisStateLegacyMissingHeights_type {}
+export interface GenesisStateLegacyV43 extends GenesisStateLegacyV43_type {}
+export interface SigningInfo extends SigningInfo_type {}
+export interface SigningInfoLegacyMissedHeights extends SigningInfoLegacyMissedHeights_type {}
+export interface ValidatorMissedBlocks extends ValidatorMissedBlocks_type {}
+export interface MissedBlock extends MissedBlock_type {}
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.slashing.v1beta1.GenesisState"> = {
 	$type: "cosmos.slashing.v1beta1.GenesisState" as const,

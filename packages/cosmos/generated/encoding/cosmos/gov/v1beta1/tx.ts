@@ -9,26 +9,26 @@ import { Coin } from "../../base/v1beta1/coin";
 import { WeightedVoteOption, voteOptionFromJSON, voteOptionToJSON } from "./gov";
 
 import type {
-	MsgDepositResponse as MsgDepositResponseType,
-	MsgDeposit as MsgDepositType,
-	MsgSubmitProposalResponse as MsgSubmitProposalResponseType,
-	MsgSubmitProposal as MsgSubmitProposalType,
-	MsgVoteResponse as MsgVoteResponseType,
-	MsgVote as MsgVoteType,
-	MsgVoteWeightedResponse as MsgVoteWeightedResponseType,
-	MsgVoteWeighted as MsgVoteWeightedType,
+	MsgDepositResponse as MsgDepositResponse_type,
+	MsgDeposit as MsgDeposit_type,
+	MsgSubmitProposalResponse as MsgSubmitProposalResponse_type,
+	MsgSubmitProposal as MsgSubmitProposal_type,
+	MsgVoteResponse as MsgVoteResponse_type,
+	MsgVoteWeightedResponse as MsgVoteWeightedResponse_type,
+	MsgVoteWeighted as MsgVoteWeighted_type,
+	MsgVote as MsgVote_type,
 } from "../../../../types/cosmos/gov/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgSubmitProposal extends MsgSubmitProposalType {}
-interface MsgSubmitProposalResponse extends MsgSubmitProposalResponseType {}
-interface MsgVote extends MsgVoteType {}
-interface MsgVoteResponse extends MsgVoteResponseType {}
-interface MsgVoteWeighted extends MsgVoteWeightedType {}
-interface MsgVoteWeightedResponse extends MsgVoteWeightedResponseType {}
-interface MsgDeposit extends MsgDepositType {}
-interface MsgDepositResponse extends MsgDepositResponseType {}
+export interface MsgSubmitProposal extends MsgSubmitProposal_type {}
+export interface MsgSubmitProposalResponse extends MsgSubmitProposalResponse_type {}
+export interface MsgVote extends MsgVote_type {}
+export interface MsgVoteResponse extends MsgVoteResponse_type {}
+export interface MsgVoteWeighted extends MsgVoteWeighted_type {}
+export interface MsgVoteWeightedResponse extends MsgVoteWeightedResponse_type {}
+export interface MsgDeposit extends MsgDeposit_type {}
+export interface MsgDepositResponse extends MsgDepositResponse_type {}
 
 export const MsgSubmitProposal: MessageFns<MsgSubmitProposal, "cosmos.gov.v1beta1.MsgSubmitProposal"> = {
 	$type: "cosmos.gov.v1beta1.MsgSubmitProposal" as const,

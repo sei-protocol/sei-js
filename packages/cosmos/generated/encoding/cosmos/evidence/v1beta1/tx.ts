@@ -5,14 +5,14 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Any } from "../../../google/protobuf/any";
 
 import type {
-	MsgSubmitEvidenceResponse as MsgSubmitEvidenceResponseType,
-	MsgSubmitEvidence as MsgSubmitEvidenceType,
+	MsgSubmitEvidenceResponse as MsgSubmitEvidenceResponse_type,
+	MsgSubmitEvidence as MsgSubmitEvidence_type,
 } from "../../../../types/cosmos/evidence/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgSubmitEvidence extends MsgSubmitEvidenceType {}
-interface MsgSubmitEvidenceResponse extends MsgSubmitEvidenceResponseType {}
+export interface MsgSubmitEvidence extends MsgSubmitEvidence_type {}
+export interface MsgSubmitEvidenceResponse extends MsgSubmitEvidenceResponse_type {}
 
 export const MsgSubmitEvidence: MessageFns<MsgSubmitEvidence, "cosmos.evidence.v1beta1.MsgSubmitEvidence"> = {
 	$type: "cosmos.evidence.v1beta1.MsgSubmitEvidence" as const,

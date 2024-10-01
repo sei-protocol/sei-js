@@ -5,20 +5,20 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Timestamp } from "../../google/protobuf/timestamp";
 
 import type {
-	NodeInfoOther as NodeInfoOtherType,
-	NodeInfo as NodeInfoType,
-	PeerAddressInfo as PeerAddressInfoType,
-	PeerInfo as PeerInfoType,
-	ProtocolVersion as ProtocolVersionType,
+	NodeInfoOther as NodeInfoOther_type,
+	NodeInfo as NodeInfo_type,
+	PeerAddressInfo as PeerAddressInfo_type,
+	PeerInfo as PeerInfo_type,
+	ProtocolVersion as ProtocolVersion_type,
 } from "../../../types/tendermint/p2p";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface ProtocolVersion extends ProtocolVersionType {}
-interface NodeInfo extends NodeInfoType {}
-interface NodeInfoOther extends NodeInfoOtherType {}
-interface PeerInfo extends PeerInfoType {}
-interface PeerAddressInfo extends PeerAddressInfoType {}
+export interface ProtocolVersion extends ProtocolVersion_type {}
+export interface NodeInfo extends NodeInfo_type {}
+export interface NodeInfoOther extends NodeInfoOther_type {}
+export interface PeerInfo extends PeerInfo_type {}
+export interface PeerAddressInfo extends PeerAddressInfo_type {}
 
 export const ProtocolVersion: MessageFns<ProtocolVersion, "tendermint.p2p.ProtocolVersion"> = {
 	$type: "tendermint.p2p.ProtocolVersion" as const,

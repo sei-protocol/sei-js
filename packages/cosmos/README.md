@@ -4,17 +4,17 @@
 
 ## Installation
 
-`yarn add @sei-js/types`
+`yarn add @sei-js/cosmos`
 
 ## Features
 - Msg, Query, and enum types for all Sei modules
-- Works with `@sei-js/rest` and `@sei-js/encoding` and `@cosmjs/stargate`
+- Works with `@sei-js/cosmos/rest`, `@sei-js/cosmos/encoding`, `@sei-js/cosmjs` and `@cosmjs/stargate`
 
 ## Example Usage
 
 ### Ex.) Bank Send Tx Msg
 ```typescript
-import { MsgSend } from '@sei-js/types/cw/cosmos/bank/v1beta1';
+import { MsgSend } from '@sei-js/cosmos/types/cosmos/bank/v1beta1';
 
 const msgSend: MsgSend = {
   from_address: 'sei1hafptm4zxy5nw8rd2pxyg83c5ls2v62tstzuv2',
@@ -23,9 +23,9 @@ const msgSend: MsgSend = {
 };
 ```
 
-### Ex.) TokenFactory Tx Msgs
+### Ex.) TokenFactory Tx Msg's
 ```typescript
-import type { MsgCreateDenom, MsgMint } from "@sei-js/types/cw/tokenfactory";
+import type { MsgCreateDenom, MsgMint } from "@sei-js/cosmos/types/tokenfactory";
 
 const msgCreateDenom: MsgCreateDenom = {
   sender: accounts[0].address,
@@ -41,38 +41,29 @@ const msgMint: MsgMint = {
 }
 ```
 
-## Development
-This package is generated using buf.build. To regenerate the types, run `yarn generate` which builds the types from proto files with the buf build `ts-proto` plugin. From there, typescript is used in a postprocessing script to extract the necessary types and perform any formatting required.
-
 # @sei-js/cosmos/encoding
 
-The `@sei-js/encoding` package provides protobuf encoding/decoding, proto encoding type urls. It also contains amino converters and registries for @cosmjs/stargate clients.
-
-## Installation
-```bash
-yarn add @sei-js/encoding
-```
+The `@sei-js/coosmos/encoding` package provides protobuf encoding/decoding, proto encoding type urls. It also contains amino converters and registries for @cosmjs/stargate clients.
 
 ## Features
 
 - Protobuf encoding/decoding for Cosmos transactions
 - Aggregated message typeUrl registry for `@cosmjs/stargate` clients
 - Amino message converters for use with Ledger or legacy Cosmos signing
-- Uses official types from `@sei-js/types`
+- Uses official types from `@sei-js/cosmos/types`
 
 ## Usage
 
 ### Importing
 ```typescript
-// Import Msg and Query types
-import { MsgSend } from '@sei-js/encoding/cw/cosmos/bank/v1beta1';
-import { QueryValidatorsRequest } from '@sei-js/encoding/cw/cosmos/staking/v1beta1';
+// Import Encoder, then follow the path to the desired module
+import { Encoder } from '@sei-js/cosmos/encoding';
 
 // Import Amino converters for legacy Cosmos SDK support
-import { aminoConverters } from "@sei-js/encoding/cw/stargate";
+import { aminoConverters } from "@sei-js/cosmos/encoding/stargate";
 
 // Import typeUrl registry for Stargate clients
-import { seiProtoRegistry } from "@sei-js/encoding/cw/stargate";
+import { seiProtoRegistry } from "@sei-js/cosmos/encoding/stargate";
 ```
 
 ### Proto Encoding and Type Urls
@@ -80,16 +71,16 @@ import { seiProtoRegistry } from "@sei-js/encoding/cw/stargate";
 Cosmos gRPC transactions are encoded using protobuf. This library exports encoding and decoding classes for all valid Sei Msg types.
 
 ```typescript
-import { MsgSend } from '@sei-js/encoding/cw/cosmos/bank/v1beta1';
+import { Encoder } from '@sei-js/cosmos/encoding';
 
-const msgSend = new MsgSend({
+const msgSend = Encoder.cosmos.bank.v1beta1.MsgSend.fromPartial({
   from_address: 'sei1hafptm4zxy5nw8rd2pxyg83c5ls2v62tstzuv2',
   to_address: 'sei1v6459sl87jyfkvzmy6y8a6j2fj8k5r6x2n2l9',
   amount: [{ denom: 'usei', amount: '100' }]
 });
 
-const encoded = MsgSend.encode(msgSend).finish();
-const decoded = MsgSend.decode(encoded);
+const encoded = Encoder.cosmos.bank.v1beta1.MsgSend.encode(msgSend).finish();
+const decoded = Encoder.cosmos.bank.v1beta1.MsgSend.decode(encoded);
 
 const protoMsgSend = { typeUrl: `/${MsgSend.$type}`, value: encoded };
 ```
@@ -99,8 +90,8 @@ const protoMsgSend = { typeUrl: `/${MsgSend.$type}`, value: encoded };
 The package provides pre-built registries and amino converters for usage with `@cosmjs/stargate`. These can be used to set up Stargate clients to sign and broadcast Sei transactions.
 
 ```typescript
-import { MsgSend } from '@sei-js/encoding/cw/cosmos/bank/v1beta1';
-import { seiProtoRegistry } from "@sei-js/encoding/cw/stargate";
+import { Encoder } from '@sei-js/cosmos/encoding';
+import { seiProtoRegistry } from "@sei-js/cosmos/encoding/stargate";
 
 import {SigningStargateClient} from "@cosmjs/stargate";
 import {Registry} from "@cosmjs/proto-signing";
@@ -120,14 +111,14 @@ const stargateClient = await SigningStargateClient.connectWithSigner(
 );
 
 // Create a MsgSend object
-const msgSend = MsgSend.fromPartial({
+const msgSend = Encoder.cosmos.bank.v1beta1.MsgSend.fromPartial({
   from_address: accounts[0].address,
   to_address: "sei1v6459sl87jyfkvzmy6y8a6j2fj8k5r6x2n2l9",
   amount: [{ denom: "usei", amount: "10" }]
 });
 
 // Create a message object with the typeUrl and value. (For Stargate clients the value isn't encoded, but gRPC clients typically require it to be encoded)
-const message = { typeUrl: `/${MsgSend.$type}`, value: msgSend };
+const message = { typeUrl: `/${Encoder.cosmos.bank.v1beta1.MsgSend.$type}`, value: msgSend };
 
   
 const txResponse = await stargateClient.signAndBroadcast(accounts[0].address, [message], {
@@ -138,13 +129,13 @@ const txResponse = await stargateClient.signAndBroadcast(accounts[0].address, [m
 console.log(txResponse.transactionHash);
 ```
 
-### Interoperability with @sei-js/types
+### Interoperability with @sei-js/cosmos/types
 
-The `@sei-js/encoding` package is built to work seamlessly with the `@sei-js/types` package. You can use the types from `@sei-js/types` directly if needed. However, in most cases, you don't need to import `@sei-js/types` separately when using `@sei-js/encoding`, as the values returned from the encoding functions are already typed correctly.
+The `@sei-js/cosmos/encoding` package is built to work seamlessly with the `@sei-js/cosmos/types` package. You can use the types from `@sei-js/cosmos/types` directly if needed. However, in most cases, you don't need to import `@sei-js/cosmos/types` separately when using `@sei-js/cosmos/encoding`, as the values returned from the encoding functions are already typed correctly.
 ```typescript
-import { MsgSend } from '@sei-js/encoding/cw/cosmos/bank/v1beta1';
+import { Encoder } from '@sei-js/cosmos/encoding';
 
-const msgSend = MsgSend.fromPartial({
+const msgSend = Encoder.cosmos.bank.v1beta1.MsgSend.fromPartial({
   from_address: 'sei1hafptm4zxy5nw8rd2pxyg83c5ls2v62tstzuv2',
   to_address: 'sei1v6459sl87jyfkvzmy6y8a6j2fj8k5r6x2n2l9'
 });
@@ -156,9 +147,9 @@ const msgSend = MsgSend.fromPartial({
 ```typescript
 import {createTransportAndApp, SeiLedgerOfflineAminoSigner} from "@sei-js/ledger";
 
-import { MsgDelegate } from "@sei-js/encoding/cw/cosmos/staking/v1beta1";
+import { Encoder } from '@sei-js/cosmos/encoding';
 
-import { aminoConverters } from "@sei-js/encoding/cw/stargate";
+import { aminoConverters } from "@sei-js/cosmos/encoding/stargate";
 
 import { AminoTypes, SigningStargateClient, coin } from "@cosmjs/stargate";
 
@@ -182,13 +173,13 @@ const fee = {
   gas: "200000",
 };
 
-const msgDelegate = MsgDelegate.fromPartial({
+const msgDelegate = Encoder.cosmos.staking.v1beta1.MsgDelegate.fromPartial({
   delegator_address: cosmosAddressData.address,
   validator_address: validatorAddress,
   amount: coin(2000, "usei"),
 });
 
-const protoMessage = { typeUrl: `/${MsgDelegate.$type}`, value: msgDelegate };
+const protoMessage = { typeUrl: `/${Encoder.cosmos.staking.v1beta1.MsgDelegate.$type}`, value: msgDelegate };
 
 // This will automatically get converted to the correct amino type due to the aminoTypes registry passed to the SigningStargateClient
 const result = await signingStargateClient.signAndBroadcast(cosmosAddressData.address, [protoMessage], fee, memo)
@@ -202,4 +193,7 @@ if (result.code === 0) {
 
 # @sei-js/cosmos/rest
 
-The `@sei-js/rest` package provides a REST client for the Sei chain. It is built on top of `@cosmjs/rest` and provides a more user-friendly interface for interacting with the Sei chain. It supports all Sei cosmos RPC endpoints and provides a more user-friendly interface for querying a Sei chain.
+The `@sei-js/cosmos/` package provides a REST client for the Sei chain. It is built on top of `@cosmjs/rest` and provides a more user-friendly interface for interacting with the Sei chain. It supports all Sei cosmos RPC endpoints and provides a more user-friendly interface for querying a Sei chain.
+
+## Development
+This package is generated using buf.build. To regenerate the types, run `yarn generate` which builds the types from proto files with the buf build `ts-proto` plugin. From there, typescript is used in a postprocessing script to extract the necessary types and perform any formatting required.

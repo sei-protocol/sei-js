@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { MsgUnjailResponse as MsgUnjailResponseType, MsgUnjail as MsgUnjailType } from "../../../../types/cosmos/slashing/v1beta1";
+import type { MsgUnjailResponse as MsgUnjailResponse_type, MsgUnjail as MsgUnjail_type } from "../../../../types/cosmos/slashing/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgUnjail extends MsgUnjailType {}
-interface MsgUnjailResponse extends MsgUnjailResponseType {}
+export interface MsgUnjail extends MsgUnjail_type {}
+export interface MsgUnjailResponse extends MsgUnjailResponse_type {}
 
 export const MsgUnjail: MessageFns<MsgUnjail, "cosmos.slashing.v1beta1.MsgUnjail"> = {
 	$type: "cosmos.slashing.v1beta1.MsgUnjail" as const,

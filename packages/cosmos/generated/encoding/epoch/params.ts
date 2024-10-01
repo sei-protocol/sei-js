@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Params as ParamsType } from "../../types/epoch";
+import type { Params as Params_type } from "../../types/epoch";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface Params extends ParamsType {}
+export interface Params extends Params_type {}
 
 export const Params: MessageFns<Params, "seiprotocol.seichain.epoch.Params"> = {
 	$type: "seiprotocol.seichain.epoch.Params" as const,

@@ -5,26 +5,26 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	AllowList as AllowListType,
-	DenomUnit as DenomUnitType,
-	Input as InputType,
-	Metadata as MetadataType,
-	Output as OutputType,
-	Params as ParamsType,
-	SendEnabled as SendEnabledType,
-	Supply as SupplyType,
+	AllowList as AllowList_type,
+	DenomUnit as DenomUnit_type,
+	Input as Input_type,
+	Metadata as Metadata_type,
+	Output as Output_type,
+	Params as Params_type,
+	SendEnabled as SendEnabled_type,
+	Supply as Supply_type,
 } from "../../../../types/cosmos/bank/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Params extends ParamsType {}
-interface SendEnabled extends SendEnabledType {}
-interface Input extends InputType {}
-interface Output extends OutputType {}
-interface Supply extends SupplyType {}
-interface DenomUnit extends DenomUnitType {}
-interface Metadata extends MetadataType {}
-interface AllowList extends AllowListType {}
+export interface Params extends Params_type {}
+export interface SendEnabled extends SendEnabled_type {}
+export interface Input extends Input_type {}
+export interface Output extends Output_type {}
+export interface Supply extends Supply_type {}
+export interface DenomUnit extends DenomUnit_type {}
+export interface Metadata extends Metadata_type {}
+export interface AllowList extends AllowList_type {}
 
 export const Params: MessageFns<Params, "cosmos.bank.v1beta1.Params"> = {
 	$type: "cosmos.bank.v1beta1.Params" as const,

@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Minter as MinterType, Params as ParamsType } from "../../../../types/cosmos/mint/v1beta1";
+import type { Minter as Minter_type, Params as Params_type } from "../../../../types/cosmos/mint/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Minter extends MinterType {}
-interface Params extends ParamsType {}
+export interface Minter extends Minter_type {}
+export interface Params extends Params_type {}
 
 export const Minter: MessageFns<Minter, "cosmos.mint.v1beta1.Minter"> = {
 	$type: "cosmos.mint.v1beta1.Minter" as const,

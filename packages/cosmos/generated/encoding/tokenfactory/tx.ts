@@ -7,34 +7,34 @@ import { AllowList, Metadata } from "../cosmos/bank/v1beta1/bank";
 import { Coin } from "../cosmos/base/v1beta1/coin";
 
 import type {
-	MsgBurnResponse as MsgBurnResponseType,
-	MsgBurn as MsgBurnType,
-	MsgChangeAdminResponse as MsgChangeAdminResponseType,
-	MsgChangeAdmin as MsgChangeAdminType,
-	MsgCreateDenomResponse as MsgCreateDenomResponseType,
-	MsgCreateDenom as MsgCreateDenomType,
-	MsgMintResponse as MsgMintResponseType,
-	MsgMint as MsgMintType,
-	MsgSetDenomMetadataResponse as MsgSetDenomMetadataResponseType,
-	MsgSetDenomMetadata as MsgSetDenomMetadataType,
-	MsgUpdateDenomResponse as MsgUpdateDenomResponseType,
-	MsgUpdateDenom as MsgUpdateDenomType,
+	MsgBurnResponse as MsgBurnResponse_type,
+	MsgBurn as MsgBurn_type,
+	MsgChangeAdminResponse as MsgChangeAdminResponse_type,
+	MsgChangeAdmin as MsgChangeAdmin_type,
+	MsgCreateDenomResponse as MsgCreateDenomResponse_type,
+	MsgCreateDenom as MsgCreateDenom_type,
+	MsgMintResponse as MsgMintResponse_type,
+	MsgMint as MsgMint_type,
+	MsgSetDenomMetadataResponse as MsgSetDenomMetadataResponse_type,
+	MsgSetDenomMetadata as MsgSetDenomMetadata_type,
+	MsgUpdateDenomResponse as MsgUpdateDenomResponse_type,
+	MsgUpdateDenom as MsgUpdateDenom_type,
 } from "../../types/tokenfactory";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface MsgCreateDenom extends MsgCreateDenomType {}
-interface MsgCreateDenomResponse extends MsgCreateDenomResponseType {}
-interface MsgMint extends MsgMintType {}
-interface MsgMintResponse extends MsgMintResponseType {}
-interface MsgBurn extends MsgBurnType {}
-interface MsgBurnResponse extends MsgBurnResponseType {}
-interface MsgChangeAdmin extends MsgChangeAdminType {}
-interface MsgChangeAdminResponse extends MsgChangeAdminResponseType {}
-interface MsgSetDenomMetadata extends MsgSetDenomMetadataType {}
-interface MsgSetDenomMetadataResponse extends MsgSetDenomMetadataResponseType {}
-interface MsgUpdateDenom extends MsgUpdateDenomType {}
-interface MsgUpdateDenomResponse extends MsgUpdateDenomResponseType {}
+export interface MsgCreateDenom extends MsgCreateDenom_type {}
+export interface MsgCreateDenomResponse extends MsgCreateDenomResponse_type {}
+export interface MsgMint extends MsgMint_type {}
+export interface MsgMintResponse extends MsgMintResponse_type {}
+export interface MsgBurn extends MsgBurn_type {}
+export interface MsgBurnResponse extends MsgBurnResponse_type {}
+export interface MsgChangeAdmin extends MsgChangeAdmin_type {}
+export interface MsgChangeAdminResponse extends MsgChangeAdminResponse_type {}
+export interface MsgSetDenomMetadata extends MsgSetDenomMetadata_type {}
+export interface MsgSetDenomMetadataResponse extends MsgSetDenomMetadataResponse_type {}
+export interface MsgUpdateDenom extends MsgUpdateDenom_type {}
+export interface MsgUpdateDenomResponse extends MsgUpdateDenomResponse_type {}
 
 export const MsgCreateDenom: MessageFns<MsgCreateDenom, "seiprotocol.seichain.tokenfactory.MsgCreateDenom"> = {
 	$type: "seiprotocol.seichain.tokenfactory.MsgCreateDenom" as const,

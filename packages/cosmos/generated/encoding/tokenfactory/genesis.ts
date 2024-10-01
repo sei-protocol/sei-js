@@ -6,12 +6,12 @@ import { DenomAuthorityMetadata } from "./authorityMetadata";
 
 import { Params } from "./params";
 
-import type { GenesisDenom as GenesisDenomType, GenesisState as GenesisStateType } from "../../types/tokenfactory";
+import type { GenesisDenom as GenesisDenom_type, GenesisState as GenesisState_type } from "../../types/tokenfactory";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface GenesisState extends GenesisStateType {}
-interface GenesisDenom extends GenesisDenomType {}
+export interface GenesisState extends GenesisState_type {}
+export interface GenesisDenom extends GenesisDenom_type {}
 
 export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.tokenfactory.GenesisState"> = {
 	$type: "seiprotocol.seichain.tokenfactory.GenesisState" as const,

@@ -7,22 +7,22 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Grant } from "./feegrant";
 
 import type {
-	QueryAllowanceRequest as QueryAllowanceRequestType,
-	QueryAllowanceResponse as QueryAllowanceResponseType,
-	QueryAllowancesByGranterRequest as QueryAllowancesByGranterRequestType,
-	QueryAllowancesByGranterResponse as QueryAllowancesByGranterResponseType,
-	QueryAllowancesRequest as QueryAllowancesRequestType,
-	QueryAllowancesResponse as QueryAllowancesResponseType,
+	QueryAllowanceRequest as QueryAllowanceRequest_type,
+	QueryAllowanceResponse as QueryAllowanceResponse_type,
+	QueryAllowancesByGranterRequest as QueryAllowancesByGranterRequest_type,
+	QueryAllowancesByGranterResponse as QueryAllowancesByGranterResponse_type,
+	QueryAllowancesRequest as QueryAllowancesRequest_type,
+	QueryAllowancesResponse as QueryAllowancesResponse_type,
 } from "../../../../types/cosmos/feegrant/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryAllowanceRequest extends QueryAllowanceRequestType {}
-interface QueryAllowanceResponse extends QueryAllowanceResponseType {}
-interface QueryAllowancesRequest extends QueryAllowancesRequestType {}
-interface QueryAllowancesResponse extends QueryAllowancesResponseType {}
-interface QueryAllowancesByGranterRequest extends QueryAllowancesByGranterRequestType {}
-interface QueryAllowancesByGranterResponse extends QueryAllowancesByGranterResponseType {}
+export interface QueryAllowanceRequest extends QueryAllowanceRequest_type {}
+export interface QueryAllowanceResponse extends QueryAllowanceResponse_type {}
+export interface QueryAllowancesRequest extends QueryAllowancesRequest_type {}
+export interface QueryAllowancesResponse extends QueryAllowancesResponse_type {}
+export interface QueryAllowancesByGranterRequest extends QueryAllowancesByGranterRequest_type {}
+export interface QueryAllowancesByGranterResponse extends QueryAllowancesByGranterResponse_type {}
 
 export const QueryAllowanceRequest: MessageFns<QueryAllowanceRequest, "cosmos.feegrant.v1beta1.QueryAllowanceRequest"> = {
 	$type: "cosmos.feegrant.v1beta1.QueryAllowanceRequest" as const,

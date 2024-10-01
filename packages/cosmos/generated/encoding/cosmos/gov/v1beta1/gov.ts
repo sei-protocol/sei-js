@@ -11,30 +11,30 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	DepositParams as DepositParamsType,
-	Deposit as DepositType,
-	Proposal as ProposalType,
-	TallyParams as TallyParamsType,
-	TallyResult as TallyResultType,
-	TextProposal as TextProposalType,
-	Vote as VoteType,
-	VotingParams as VotingParamsType,
-	WeightedVoteOption as WeightedVoteOptionType,
+	DepositParams as DepositParams_type,
+	Deposit as Deposit_type,
+	Proposal as Proposal_type,
+	TallyParams as TallyParams_type,
+	TallyResult as TallyResult_type,
+	TextProposal as TextProposal_type,
+	Vote as Vote_type,
+	VotingParams as VotingParams_type,
+	WeightedVoteOption as WeightedVoteOption_type,
 } from "../../../../types/cosmos/gov/v1beta1";
 
 import { ProposalStatus, VoteOption } from "../../../../types/cosmos/gov/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface WeightedVoteOption extends WeightedVoteOptionType {}
-interface TextProposal extends TextProposalType {}
-interface Deposit extends DepositType {}
-interface Proposal extends ProposalType {}
-interface TallyResult extends TallyResultType {}
-interface Vote extends VoteType {}
-interface DepositParams extends DepositParamsType {}
-interface VotingParams extends VotingParamsType {}
-interface TallyParams extends TallyParamsType {}
+export interface WeightedVoteOption extends WeightedVoteOption_type {}
+export interface TextProposal extends TextProposal_type {}
+export interface Deposit extends Deposit_type {}
+export interface Proposal extends Proposal_type {}
+export interface TallyResult extends TallyResult_type {}
+export interface Vote extends Vote_type {}
+export interface DepositParams extends DepositParams_type {}
+export interface VotingParams extends VotingParams_type {}
+export interface TallyParams extends TallyParams_type {}
 
 export const WeightedVoteOption: MessageFns<WeightedVoteOption, "cosmos.gov.v1beta1.WeightedVoteOption"> = {
 	$type: "cosmos.gov.v1beta1.WeightedVoteOption" as const,

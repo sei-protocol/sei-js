@@ -4,11 +4,11 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Minter, Params } from "./mint";
 
-import type { GenesisState as GenesisStateType } from "../../../types/mint/v1beta1";
+import type { GenesisState as GenesisState_type } from "../../../types/mint/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface GenesisState extends GenesisStateType {}
+export interface GenesisState extends GenesisState_type {}
 
 export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.mint.GenesisState"> = {
 	$type: "seiprotocol.seichain.mint.GenesisState" as const,

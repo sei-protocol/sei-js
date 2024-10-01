@@ -9,46 +9,46 @@ import { DecCoin } from "../../base/v1beta1/coin";
 import { DelegationDelegatorReward, Params, ValidatorAccumulatedCommission, ValidatorOutstandingRewards, ValidatorSlashEvent } from "./distribution";
 
 import type {
-	QueryCommunityPoolRequest as QueryCommunityPoolRequestType,
-	QueryCommunityPoolResponse as QueryCommunityPoolResponseType,
-	QueryDelegationRewardsRequest as QueryDelegationRewardsRequestType,
-	QueryDelegationRewardsResponse as QueryDelegationRewardsResponseType,
-	QueryDelegationTotalRewardsRequest as QueryDelegationTotalRewardsRequestType,
-	QueryDelegationTotalRewardsResponse as QueryDelegationTotalRewardsResponseType,
-	QueryDelegatorValidatorsRequest as QueryDelegatorValidatorsRequestType,
-	QueryDelegatorValidatorsResponse as QueryDelegatorValidatorsResponseType,
-	QueryDelegatorWithdrawAddressRequest as QueryDelegatorWithdrawAddressRequestType,
-	QueryDelegatorWithdrawAddressResponse as QueryDelegatorWithdrawAddressResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
-	QueryValidatorCommissionRequest as QueryValidatorCommissionRequestType,
-	QueryValidatorCommissionResponse as QueryValidatorCommissionResponseType,
-	QueryValidatorOutstandingRewardsRequest as QueryValidatorOutstandingRewardsRequestType,
-	QueryValidatorOutstandingRewardsResponse as QueryValidatorOutstandingRewardsResponseType,
-	QueryValidatorSlashesRequest as QueryValidatorSlashesRequestType,
-	QueryValidatorSlashesResponse as QueryValidatorSlashesResponseType,
+	QueryCommunityPoolRequest as QueryCommunityPoolRequest_type,
+	QueryCommunityPoolResponse as QueryCommunityPoolResponse_type,
+	QueryDelegationRewardsRequest as QueryDelegationRewardsRequest_type,
+	QueryDelegationRewardsResponse as QueryDelegationRewardsResponse_type,
+	QueryDelegationTotalRewardsRequest as QueryDelegationTotalRewardsRequest_type,
+	QueryDelegationTotalRewardsResponse as QueryDelegationTotalRewardsResponse_type,
+	QueryDelegatorValidatorsRequest as QueryDelegatorValidatorsRequest_type,
+	QueryDelegatorValidatorsResponse as QueryDelegatorValidatorsResponse_type,
+	QueryDelegatorWithdrawAddressRequest as QueryDelegatorWithdrawAddressRequest_type,
+	QueryDelegatorWithdrawAddressResponse as QueryDelegatorWithdrawAddressResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
+	QueryValidatorCommissionRequest as QueryValidatorCommissionRequest_type,
+	QueryValidatorCommissionResponse as QueryValidatorCommissionResponse_type,
+	QueryValidatorOutstandingRewardsRequest as QueryValidatorOutstandingRewardsRequest_type,
+	QueryValidatorOutstandingRewardsResponse as QueryValidatorOutstandingRewardsResponse_type,
+	QueryValidatorSlashesRequest as QueryValidatorSlashesRequest_type,
+	QueryValidatorSlashesResponse as QueryValidatorSlashesResponse_type,
 } from "../../../../types/cosmos/distribution/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryValidatorOutstandingRewardsRequest extends QueryValidatorOutstandingRewardsRequestType {}
-interface QueryValidatorOutstandingRewardsResponse extends QueryValidatorOutstandingRewardsResponseType {}
-interface QueryValidatorCommissionRequest extends QueryValidatorCommissionRequestType {}
-interface QueryValidatorCommissionResponse extends QueryValidatorCommissionResponseType {}
-interface QueryValidatorSlashesRequest extends QueryValidatorSlashesRequestType {}
-interface QueryValidatorSlashesResponse extends QueryValidatorSlashesResponseType {}
-interface QueryDelegationRewardsRequest extends QueryDelegationRewardsRequestType {}
-interface QueryDelegationRewardsResponse extends QueryDelegationRewardsResponseType {}
-interface QueryDelegationTotalRewardsRequest extends QueryDelegationTotalRewardsRequestType {}
-interface QueryDelegationTotalRewardsResponse extends QueryDelegationTotalRewardsResponseType {}
-interface QueryDelegatorValidatorsRequest extends QueryDelegatorValidatorsRequestType {}
-interface QueryDelegatorValidatorsResponse extends QueryDelegatorValidatorsResponseType {}
-interface QueryDelegatorWithdrawAddressRequest extends QueryDelegatorWithdrawAddressRequestType {}
-interface QueryDelegatorWithdrawAddressResponse extends QueryDelegatorWithdrawAddressResponseType {}
-interface QueryCommunityPoolRequest extends QueryCommunityPoolRequestType {}
-interface QueryCommunityPoolResponse extends QueryCommunityPoolResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryValidatorOutstandingRewardsRequest extends QueryValidatorOutstandingRewardsRequest_type {}
+export interface QueryValidatorOutstandingRewardsResponse extends QueryValidatorOutstandingRewardsResponse_type {}
+export interface QueryValidatorCommissionRequest extends QueryValidatorCommissionRequest_type {}
+export interface QueryValidatorCommissionResponse extends QueryValidatorCommissionResponse_type {}
+export interface QueryValidatorSlashesRequest extends QueryValidatorSlashesRequest_type {}
+export interface QueryValidatorSlashesResponse extends QueryValidatorSlashesResponse_type {}
+export interface QueryDelegationRewardsRequest extends QueryDelegationRewardsRequest_type {}
+export interface QueryDelegationRewardsResponse extends QueryDelegationRewardsResponse_type {}
+export interface QueryDelegationTotalRewardsRequest extends QueryDelegationTotalRewardsRequest_type {}
+export interface QueryDelegationTotalRewardsResponse extends QueryDelegationTotalRewardsResponse_type {}
+export interface QueryDelegatorValidatorsRequest extends QueryDelegatorValidatorsRequest_type {}
+export interface QueryDelegatorValidatorsResponse extends QueryDelegatorValidatorsResponse_type {}
+export interface QueryDelegatorWithdrawAddressRequest extends QueryDelegatorWithdrawAddressRequest_type {}
+export interface QueryDelegatorWithdrawAddressResponse extends QueryDelegatorWithdrawAddressResponse_type {}
+export interface QueryCommunityPoolRequest extends QueryCommunityPoolRequest_type {}
+export interface QueryCommunityPoolResponse extends QueryCommunityPoolResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.distribution.v1beta1.QueryParamsRequest"> = {
 	$type: "cosmos.distribution.v1beta1.QueryParamsRequest" as const,

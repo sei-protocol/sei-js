@@ -7,18 +7,18 @@ import { Any } from "../../../google/protobuf/any";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 
 import type {
-	CancelSoftwareUpgradeProposal as CancelSoftwareUpgradeProposalType,
-	ModuleVersion as ModuleVersionType,
-	Plan as PlanType,
-	SoftwareUpgradeProposal as SoftwareUpgradeProposalType,
+	CancelSoftwareUpgradeProposal as CancelSoftwareUpgradeProposal_type,
+	ModuleVersion as ModuleVersion_type,
+	Plan as Plan_type,
+	SoftwareUpgradeProposal as SoftwareUpgradeProposal_type,
 } from "../../../../types/cosmos/upgrade/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Plan extends PlanType {}
-interface SoftwareUpgradeProposal extends SoftwareUpgradeProposalType {}
-interface CancelSoftwareUpgradeProposal extends CancelSoftwareUpgradeProposalType {}
-interface ModuleVersion extends ModuleVersionType {}
+export interface Plan extends Plan_type {}
+export interface SoftwareUpgradeProposal extends SoftwareUpgradeProposal_type {}
+export interface CancelSoftwareUpgradeProposal extends CancelSoftwareUpgradeProposal_type {}
+export interface ModuleVersion extends ModuleVersion_type {}
 
 export const Plan: MessageFns<Plan, "cosmos.upgrade.v1beta1.Plan"> = {
 	$type: "cosmos.upgrade.v1beta1.Plan" as const,

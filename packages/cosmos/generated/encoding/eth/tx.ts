@@ -3,26 +3,26 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	AccessListTx as AccessListTxType,
-	AccessTuple as AccessTupleType,
-	AssociateTx as AssociateTxType,
-	BlobTxSidecar as BlobTxSidecarType,
-	BlobTx as BlobTxType,
-	DynamicFeeTx as DynamicFeeTxType,
-	ExtensionOptionsEthereumTx as ExtensionOptionsEthereumTxType,
-	LegacyTx as LegacyTxType,
+	AccessListTx as AccessListTx_type,
+	AccessTuple as AccessTuple_type,
+	AssociateTx as AssociateTx_type,
+	BlobTxSidecar as BlobTxSidecar_type,
+	BlobTx as BlobTx_type,
+	DynamicFeeTx as DynamicFeeTx_type,
+	ExtensionOptionsEthereumTx as ExtensionOptionsEthereumTx_type,
+	LegacyTx as LegacyTx_type,
 } from "../../types/eth";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface AccessTuple extends AccessTupleType {}
-interface AssociateTx extends AssociateTxType {}
-interface LegacyTx extends LegacyTxType {}
-interface AccessListTx extends AccessListTxType {}
-interface DynamicFeeTx extends DynamicFeeTxType {}
-interface BlobTx extends BlobTxType {}
-interface BlobTxSidecar extends BlobTxSidecarType {}
-interface ExtensionOptionsEthereumTx extends ExtensionOptionsEthereumTxType {}
+export interface AccessTuple extends AccessTuple_type {}
+export interface AssociateTx extends AssociateTx_type {}
+export interface LegacyTx extends LegacyTx_type {}
+export interface AccessListTx extends AccessListTx_type {}
+export interface DynamicFeeTx extends DynamicFeeTx_type {}
+export interface BlobTx extends BlobTx_type {}
+export interface BlobTxSidecar extends BlobTxSidecar_type {}
+export interface ExtensionOptionsEthereumTx extends ExtensionOptionsEthereumTx_type {}
 
 export const AccessTuple: MessageFns<AccessTuple, "seiprotocol.seichain.eth.AccessTuple"> = {
 	$type: "seiprotocol.seichain.eth.AccessTuple" as const,

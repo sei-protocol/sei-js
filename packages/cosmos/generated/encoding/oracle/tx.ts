@@ -1,18 +1,18 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	MsgAggregateExchangeRateVoteResponse as MsgAggregateExchangeRateVoteResponseType,
-	MsgAggregateExchangeRateVote as MsgAggregateExchangeRateVoteType,
-	MsgDelegateFeedConsentResponse as MsgDelegateFeedConsentResponseType,
-	MsgDelegateFeedConsent as MsgDelegateFeedConsentType,
+	MsgAggregateExchangeRateVoteResponse as MsgAggregateExchangeRateVoteResponse_type,
+	MsgAggregateExchangeRateVote as MsgAggregateExchangeRateVote_type,
+	MsgDelegateFeedConsentResponse as MsgDelegateFeedConsentResponse_type,
+	MsgDelegateFeedConsent as MsgDelegateFeedConsent_type,
 } from "../../types/oracle";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface MsgAggregateExchangeRateVote extends MsgAggregateExchangeRateVoteType {}
-interface MsgAggregateExchangeRateVoteResponse extends MsgAggregateExchangeRateVoteResponseType {}
-interface MsgDelegateFeedConsent extends MsgDelegateFeedConsentType {}
-interface MsgDelegateFeedConsentResponse extends MsgDelegateFeedConsentResponseType {}
+export interface MsgAggregateExchangeRateVote extends MsgAggregateExchangeRateVote_type {}
+export interface MsgAggregateExchangeRateVoteResponse extends MsgAggregateExchangeRateVoteResponse_type {}
+export interface MsgDelegateFeedConsent extends MsgDelegateFeedConsent_type {}
+export interface MsgDelegateFeedConsentResponse extends MsgDelegateFeedConsentResponse_type {}
 
 export const MsgAggregateExchangeRateVote: MessageFns<MsgAggregateExchangeRateVote, "seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote"> = {
 	$type: "seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote" as const,

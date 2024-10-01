@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { App as AppType, Consensus as ConsensusType } from "../../../types/tendermint/version";
+import type { App as App_type, Consensus as Consensus_type } from "../../../types/tendermint/version";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface App extends AppType {}
-interface Consensus extends ConsensusType {}
+export interface App extends App_type {}
+export interface Consensus extends Consensus_type {}
 
 export const App: MessageFns<App, "tendermint.version.App"> = {
 	$type: "tendermint.version.App" as const,

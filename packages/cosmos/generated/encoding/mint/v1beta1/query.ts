@@ -5,18 +5,18 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Params } from "./mint";
 
 import type {
-	QueryMinterRequest as QueryMinterRequestType,
-	QueryMinterResponse as QueryMinterResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
+	QueryMinterRequest as QueryMinterRequest_type,
+	QueryMinterResponse as QueryMinterResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
 } from "../../../types/mint/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryMinterRequest extends QueryMinterRequestType {}
-interface QueryMinterResponse extends QueryMinterResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryMinterRequest extends QueryMinterRequest_type {}
+export interface QueryMinterResponse extends QueryMinterResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.seichain.mint.QueryParamsRequest"> = {
 	$type: "seiprotocol.seichain.mint.QueryParamsRequest" as const,

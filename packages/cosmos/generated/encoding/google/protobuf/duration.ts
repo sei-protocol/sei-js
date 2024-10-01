@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Duration as DurationType } from "../../../types/google/protobuf";
+import type { Duration as Duration_type } from "../../../types/google/protobuf";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Duration extends DurationType {}
+export interface Duration extends Duration_type {}
 
 export const Duration: MessageFns<Duration, "google.protobuf.Duration"> = {
 	$type: "google.protobuf.Duration" as const,

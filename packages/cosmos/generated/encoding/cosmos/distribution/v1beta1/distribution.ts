@@ -5,34 +5,34 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Coin, DecCoin } from "../../base/v1beta1/coin";
 
 import type {
-	CommunityPoolSpendProposal as CommunityPoolSpendProposalType,
-	CommunityPoolSpendProposalWithDeposit as CommunityPoolSpendProposalWithDepositType,
-	DelegationDelegatorReward as DelegationDelegatorRewardType,
-	DelegatorStartingInfo as DelegatorStartingInfoType,
-	FeePool as FeePoolType,
-	Params as ParamsType,
-	ValidatorAccumulatedCommission as ValidatorAccumulatedCommissionType,
-	ValidatorCurrentRewards as ValidatorCurrentRewardsType,
-	ValidatorHistoricalRewards as ValidatorHistoricalRewardsType,
-	ValidatorOutstandingRewards as ValidatorOutstandingRewardsType,
-	ValidatorSlashEvent as ValidatorSlashEventType,
-	ValidatorSlashEvents as ValidatorSlashEventsType,
+	CommunityPoolSpendProposalWithDeposit as CommunityPoolSpendProposalWithDeposit_type,
+	CommunityPoolSpendProposal as CommunityPoolSpendProposal_type,
+	DelegationDelegatorReward as DelegationDelegatorReward_type,
+	DelegatorStartingInfo as DelegatorStartingInfo_type,
+	FeePool as FeePool_type,
+	Params as Params_type,
+	ValidatorAccumulatedCommission as ValidatorAccumulatedCommission_type,
+	ValidatorCurrentRewards as ValidatorCurrentRewards_type,
+	ValidatorHistoricalRewards as ValidatorHistoricalRewards_type,
+	ValidatorOutstandingRewards as ValidatorOutstandingRewards_type,
+	ValidatorSlashEvent as ValidatorSlashEvent_type,
+	ValidatorSlashEvents as ValidatorSlashEvents_type,
 } from "../../../../types/cosmos/distribution/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Params extends ParamsType {}
-interface ValidatorHistoricalRewards extends ValidatorHistoricalRewardsType {}
-interface ValidatorCurrentRewards extends ValidatorCurrentRewardsType {}
-interface ValidatorAccumulatedCommission extends ValidatorAccumulatedCommissionType {}
-interface ValidatorOutstandingRewards extends ValidatorOutstandingRewardsType {}
-interface ValidatorSlashEvent extends ValidatorSlashEventType {}
-interface ValidatorSlashEvents extends ValidatorSlashEventsType {}
-interface FeePool extends FeePoolType {}
-interface CommunityPoolSpendProposal extends CommunityPoolSpendProposalType {}
-interface DelegatorStartingInfo extends DelegatorStartingInfoType {}
-interface DelegationDelegatorReward extends DelegationDelegatorRewardType {}
-interface CommunityPoolSpendProposalWithDeposit extends CommunityPoolSpendProposalWithDepositType {}
+export interface Params extends Params_type {}
+export interface ValidatorHistoricalRewards extends ValidatorHistoricalRewards_type {}
+export interface ValidatorCurrentRewards extends ValidatorCurrentRewards_type {}
+export interface ValidatorAccumulatedCommission extends ValidatorAccumulatedCommission_type {}
+export interface ValidatorOutstandingRewards extends ValidatorOutstandingRewards_type {}
+export interface ValidatorSlashEvent extends ValidatorSlashEvent_type {}
+export interface ValidatorSlashEvents extends ValidatorSlashEvents_type {}
+export interface FeePool extends FeePool_type {}
+export interface CommunityPoolSpendProposal extends CommunityPoolSpendProposal_type {}
+export interface DelegatorStartingInfo extends DelegatorStartingInfo_type {}
+export interface DelegationDelegatorReward extends DelegationDelegatorReward_type {}
+export interface CommunityPoolSpendProposalWithDeposit extends CommunityPoolSpendProposalWithDeposit_type {}
 
 export const Params: MessageFns<Params, "cosmos.distribution.v1beta1.Params"> = {
 	$type: "cosmos.distribution.v1beta1.Params" as const,

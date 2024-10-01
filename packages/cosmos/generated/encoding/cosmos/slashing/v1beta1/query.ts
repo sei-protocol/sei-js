@@ -7,22 +7,22 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Params, ValidatorSigningInfo } from "./slashing";
 
 import type {
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
-	QuerySigningInfoRequest as QuerySigningInfoRequestType,
-	QuerySigningInfoResponse as QuerySigningInfoResponseType,
-	QuerySigningInfosRequest as QuerySigningInfosRequestType,
-	QuerySigningInfosResponse as QuerySigningInfosResponseType,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
+	QuerySigningInfoRequest as QuerySigningInfoRequest_type,
+	QuerySigningInfoResponse as QuerySigningInfoResponse_type,
+	QuerySigningInfosRequest as QuerySigningInfosRequest_type,
+	QuerySigningInfosResponse as QuerySigningInfosResponse_type,
 } from "../../../../types/cosmos/slashing/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QuerySigningInfoRequest extends QuerySigningInfoRequestType {}
-interface QuerySigningInfoResponse extends QuerySigningInfoResponseType {}
-interface QuerySigningInfosRequest extends QuerySigningInfosRequestType {}
-interface QuerySigningInfosResponse extends QuerySigningInfosResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QuerySigningInfoRequest extends QuerySigningInfoRequest_type {}
+export interface QuerySigningInfoResponse extends QuerySigningInfoResponse_type {}
+export interface QuerySigningInfosRequest extends QuerySigningInfosRequest_type {}
+export interface QuerySigningInfosResponse extends QuerySigningInfosResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.slashing.v1beta1.QueryParamsRequest"> = {
 	$type: "cosmos.slashing.v1beta1.QueryParamsRequest" as const,

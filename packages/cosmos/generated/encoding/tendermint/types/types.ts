@@ -11,42 +11,42 @@ import { Consensus } from "../version/types";
 import { ValidatorSet } from "./validator";
 
 import type {
-	BlockID as BlockIDType,
-	BlockMeta as BlockMetaType,
-	CommitSig as CommitSigType,
-	Commit as CommitType,
-	Data as DataType,
-	ExtendedCommitSig as ExtendedCommitSigType,
-	ExtendedCommit as ExtendedCommitType,
-	Header as HeaderType,
-	LightBlock as LightBlockType,
-	PartSetHeader as PartSetHeaderType,
-	Part as PartType,
-	Proposal as ProposalType,
-	SignedHeader as SignedHeaderType,
-	TxProof as TxProofType,
-	Vote as VoteType,
+	BlockID as BlockID_type,
+	BlockMeta as BlockMeta_type,
+	CommitSig as CommitSig_type,
+	Commit as Commit_type,
+	Data as Data_type,
+	ExtendedCommitSig as ExtendedCommitSig_type,
+	ExtendedCommit as ExtendedCommit_type,
+	Header as Header_type,
+	LightBlock as LightBlock_type,
+	PartSetHeader as PartSetHeader_type,
+	Part as Part_type,
+	Proposal as Proposal_type,
+	SignedHeader as SignedHeader_type,
+	TxProof as TxProof_type,
+	Vote as Vote_type,
 } from "../../../types/tendermint/types";
 
 import { BlockIDFlag, SignedMsgType } from "../../../types/tendermint/types";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface PartSetHeader extends PartSetHeaderType {}
-interface Part extends PartType {}
-interface BlockID extends BlockIDType {}
-interface Header extends HeaderType {}
-interface Data extends DataType {}
-interface Vote extends VoteType {}
-interface Commit extends CommitType {}
-interface CommitSig extends CommitSigType {}
-interface ExtendedCommit extends ExtendedCommitType {}
-interface ExtendedCommitSig extends ExtendedCommitSigType {}
-interface Proposal extends ProposalType {}
-interface SignedHeader extends SignedHeaderType {}
-interface LightBlock extends LightBlockType {}
-interface BlockMeta extends BlockMetaType {}
-interface TxProof extends TxProofType {}
+export interface PartSetHeader extends PartSetHeader_type {}
+export interface Part extends Part_type {}
+export interface BlockID extends BlockID_type {}
+export interface Header extends Header_type {}
+export interface Data extends Data_type {}
+export interface Vote extends Vote_type {}
+export interface Commit extends Commit_type {}
+export interface CommitSig extends CommitSig_type {}
+export interface ExtendedCommit extends ExtendedCommit_type {}
+export interface ExtendedCommitSig extends ExtendedCommitSig_type {}
+export interface Proposal extends Proposal_type {}
+export interface SignedHeader extends SignedHeader_type {}
+export interface LightBlock extends LightBlock_type {}
+export interface BlockMeta extends BlockMeta_type {}
+export interface TxProof extends TxProof_type {}
 
 export const PartSetHeader: MessageFns<PartSetHeader, "tendermint.types.PartSetHeader"> = {
 	$type: "tendermint.types.PartSetHeader" as const,

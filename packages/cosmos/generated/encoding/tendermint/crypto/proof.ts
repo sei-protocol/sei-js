@@ -3,20 +3,20 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	DominoOp as DominoOpType,
-	ProofOp as ProofOpType,
-	ProofOps as ProofOpsType,
-	Proof as ProofType,
-	ValueOp as ValueOpType,
+	DominoOp as DominoOp_type,
+	ProofOp as ProofOp_type,
+	ProofOps as ProofOps_type,
+	Proof as Proof_type,
+	ValueOp as ValueOp_type,
 } from "../../../types/tendermint/crypto";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Proof extends ProofType {}
-interface ValueOp extends ValueOpType {}
-interface DominoOp extends DominoOpType {}
-interface ProofOp extends ProofOpType {}
-interface ProofOps extends ProofOpsType {}
+export interface Proof extends Proof_type {}
+export interface ValueOp extends ValueOp_type {}
+export interface DominoOp extends DominoOp_type {}
+export interface ProofOp extends ProofOp_type {}
+export interface ProofOps extends ProofOps_type {}
 
 export const Proof: MessageFns<Proof, "tendermint.crypto.Proof"> = {
 	$type: "tendermint.crypto.Proof" as const,

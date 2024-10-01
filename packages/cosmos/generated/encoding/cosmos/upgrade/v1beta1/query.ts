@@ -3,26 +3,26 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { ModuleVersion, Plan } from "./upgrade";
 
 import type {
-	QueryAppliedPlanRequest as QueryAppliedPlanRequestType,
-	QueryAppliedPlanResponse as QueryAppliedPlanResponseType,
-	QueryCurrentPlanRequest as QueryCurrentPlanRequestType,
-	QueryCurrentPlanResponse as QueryCurrentPlanResponseType,
-	QueryModuleVersionsRequest as QueryModuleVersionsRequestType,
-	QueryModuleVersionsResponse as QueryModuleVersionsResponseType,
-	QueryUpgradedConsensusStateRequest as QueryUpgradedConsensusStateRequestType,
-	QueryUpgradedConsensusStateResponse as QueryUpgradedConsensusStateResponseType,
+	QueryAppliedPlanRequest as QueryAppliedPlanRequest_type,
+	QueryAppliedPlanResponse as QueryAppliedPlanResponse_type,
+	QueryCurrentPlanRequest as QueryCurrentPlanRequest_type,
+	QueryCurrentPlanResponse as QueryCurrentPlanResponse_type,
+	QueryModuleVersionsRequest as QueryModuleVersionsRequest_type,
+	QueryModuleVersionsResponse as QueryModuleVersionsResponse_type,
+	QueryUpgradedConsensusStateRequest as QueryUpgradedConsensusStateRequest_type,
+	QueryUpgradedConsensusStateResponse as QueryUpgradedConsensusStateResponse_type,
 } from "../../../../types/cosmos/upgrade/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryCurrentPlanRequest extends QueryCurrentPlanRequestType {}
-interface QueryCurrentPlanResponse extends QueryCurrentPlanResponseType {}
-interface QueryAppliedPlanRequest extends QueryAppliedPlanRequestType {}
-interface QueryAppliedPlanResponse extends QueryAppliedPlanResponseType {}
-interface QueryUpgradedConsensusStateRequest extends QueryUpgradedConsensusStateRequestType {}
-interface QueryUpgradedConsensusStateResponse extends QueryUpgradedConsensusStateResponseType {}
-interface QueryModuleVersionsRequest extends QueryModuleVersionsRequestType {}
-interface QueryModuleVersionsResponse extends QueryModuleVersionsResponseType {}
+export interface QueryCurrentPlanRequest extends QueryCurrentPlanRequest_type {}
+export interface QueryCurrentPlanResponse extends QueryCurrentPlanResponse_type {}
+export interface QueryAppliedPlanRequest extends QueryAppliedPlanRequest_type {}
+export interface QueryAppliedPlanResponse extends QueryAppliedPlanResponse_type {}
+export interface QueryUpgradedConsensusStateRequest extends QueryUpgradedConsensusStateRequest_type {}
+export interface QueryUpgradedConsensusStateResponse extends QueryUpgradedConsensusStateResponse_type {}
+export interface QueryModuleVersionsRequest extends QueryModuleVersionsRequest_type {}
+export interface QueryModuleVersionsResponse extends QueryModuleVersionsResponse_type {}
 
 export const QueryCurrentPlanRequest: MessageFns<QueryCurrentPlanRequest, "cosmos.upgrade.v1beta1.QueryCurrentPlanRequest"> = {
 	$type: "cosmos.upgrade.v1beta1.QueryCurrentPlanRequest" as const,

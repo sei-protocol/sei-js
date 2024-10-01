@@ -1,22 +1,22 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	AddCWERC20PointerProposal as AddCWERC20PointerProposalType,
-	AddCWERC721PointerProposal as AddCWERC721PointerProposalType,
-	AddERCCW20PointerProposal as AddERCCW20PointerProposalType,
-	AddERCCW721PointerProposal as AddERCCW721PointerProposalType,
-	AddERCNativePointerProposal as AddERCNativePointerProposalType,
-	AddERCNativePointerProposalV2 as AddERCNativePointerProposalV2Type,
+	AddCWERC20PointerProposal as AddCWERC20PointerProposal_type,
+	AddCWERC721PointerProposal as AddCWERC721PointerProposal_type,
+	AddERCCW20PointerProposal as AddERCCW20PointerProposal_type,
+	AddERCCW721PointerProposal as AddERCCW721PointerProposal_type,
+	AddERCNativePointerProposalV2 as AddERCNativePointerProposalV2_type,
+	AddERCNativePointerProposal as AddERCNativePointerProposal_type,
 } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface AddERCNativePointerProposal extends AddERCNativePointerProposalType {}
-interface AddERCCW20PointerProposal extends AddERCCW20PointerProposalType {}
-interface AddERCCW721PointerProposal extends AddERCCW721PointerProposalType {}
-interface AddCWERC20PointerProposal extends AddCWERC20PointerProposalType {}
-interface AddCWERC721PointerProposal extends AddCWERC721PointerProposalType {}
-interface AddERCNativePointerProposalV2 extends AddERCNativePointerProposalV2Type {}
+export interface AddERCNativePointerProposal extends AddERCNativePointerProposal_type {}
+export interface AddERCCW20PointerProposal extends AddERCCW20PointerProposal_type {}
+export interface AddERCCW721PointerProposal extends AddERCCW721PointerProposal_type {}
+export interface AddCWERC20PointerProposal extends AddCWERC20PointerProposal_type {}
+export interface AddCWERC721PointerProposal extends AddCWERC721PointerProposal_type {}
+export interface AddERCNativePointerProposalV2 extends AddERCNativePointerProposalV2_type {}
 
 export const AddERCNativePointerProposal: MessageFns<AddERCNativePointerProposal, "seiprotocol.seichain.evm.AddERCNativePointerProposal"> = {
 	$type: "seiprotocol.seichain.evm.AddERCNativePointerProposal" as const,

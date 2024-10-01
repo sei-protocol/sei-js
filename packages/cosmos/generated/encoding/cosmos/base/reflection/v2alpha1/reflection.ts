@@ -3,62 +3,62 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	AppDescriptor as AppDescriptorType,
-	AuthnDescriptor as AuthnDescriptorType,
-	ChainDescriptor as ChainDescriptorType,
-	CodecDescriptor as CodecDescriptorType,
-	ConfigurationDescriptor as ConfigurationDescriptorType,
-	GetAuthnDescriptorRequest as GetAuthnDescriptorRequestType,
-	GetAuthnDescriptorResponse as GetAuthnDescriptorResponseType,
-	GetChainDescriptorRequest as GetChainDescriptorRequestType,
-	GetChainDescriptorResponse as GetChainDescriptorResponseType,
-	GetCodecDescriptorRequest as GetCodecDescriptorRequestType,
-	GetCodecDescriptorResponse as GetCodecDescriptorResponseType,
-	GetConfigurationDescriptorRequest as GetConfigurationDescriptorRequestType,
-	GetConfigurationDescriptorResponse as GetConfigurationDescriptorResponseType,
-	GetQueryServicesDescriptorRequest as GetQueryServicesDescriptorRequestType,
-	GetQueryServicesDescriptorResponse as GetQueryServicesDescriptorResponseType,
-	GetTxDescriptorRequest as GetTxDescriptorRequestType,
-	GetTxDescriptorResponse as GetTxDescriptorResponseType,
-	InterfaceAcceptingMessageDescriptor as InterfaceAcceptingMessageDescriptorType,
-	InterfaceDescriptor as InterfaceDescriptorType,
-	InterfaceImplementerDescriptor as InterfaceImplementerDescriptorType,
-	MsgDescriptor as MsgDescriptorType,
-	QueryMethodDescriptor as QueryMethodDescriptorType,
-	QueryServiceDescriptor as QueryServiceDescriptorType,
-	QueryServicesDescriptor as QueryServicesDescriptorType,
-	SigningModeDescriptor as SigningModeDescriptorType,
-	TxDescriptor as TxDescriptorType,
+	AppDescriptor as AppDescriptor_type,
+	AuthnDescriptor as AuthnDescriptor_type,
+	ChainDescriptor as ChainDescriptor_type,
+	CodecDescriptor as CodecDescriptor_type,
+	ConfigurationDescriptor as ConfigurationDescriptor_type,
+	GetAuthnDescriptorRequest as GetAuthnDescriptorRequest_type,
+	GetAuthnDescriptorResponse as GetAuthnDescriptorResponse_type,
+	GetChainDescriptorRequest as GetChainDescriptorRequest_type,
+	GetChainDescriptorResponse as GetChainDescriptorResponse_type,
+	GetCodecDescriptorRequest as GetCodecDescriptorRequest_type,
+	GetCodecDescriptorResponse as GetCodecDescriptorResponse_type,
+	GetConfigurationDescriptorRequest as GetConfigurationDescriptorRequest_type,
+	GetConfigurationDescriptorResponse as GetConfigurationDescriptorResponse_type,
+	GetQueryServicesDescriptorRequest as GetQueryServicesDescriptorRequest_type,
+	GetQueryServicesDescriptorResponse as GetQueryServicesDescriptorResponse_type,
+	GetTxDescriptorRequest as GetTxDescriptorRequest_type,
+	GetTxDescriptorResponse as GetTxDescriptorResponse_type,
+	InterfaceAcceptingMessageDescriptor as InterfaceAcceptingMessageDescriptor_type,
+	InterfaceDescriptor as InterfaceDescriptor_type,
+	InterfaceImplementerDescriptor as InterfaceImplementerDescriptor_type,
+	MsgDescriptor as MsgDescriptor_type,
+	QueryMethodDescriptor as QueryMethodDescriptor_type,
+	QueryServiceDescriptor as QueryServiceDescriptor_type,
+	QueryServicesDescriptor as QueryServicesDescriptor_type,
+	SigningModeDescriptor as SigningModeDescriptor_type,
+	TxDescriptor as TxDescriptor_type,
 } from "../../../../../types/cosmos/base/reflection/v2alpha1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface AppDescriptor extends AppDescriptorType {}
-interface TxDescriptor extends TxDescriptorType {}
-interface AuthnDescriptor extends AuthnDescriptorType {}
-interface SigningModeDescriptor extends SigningModeDescriptorType {}
-interface ChainDescriptor extends ChainDescriptorType {}
-interface CodecDescriptor extends CodecDescriptorType {}
-interface InterfaceDescriptor extends InterfaceDescriptorType {}
-interface InterfaceImplementerDescriptor extends InterfaceImplementerDescriptorType {}
-interface InterfaceAcceptingMessageDescriptor extends InterfaceAcceptingMessageDescriptorType {}
-interface ConfigurationDescriptor extends ConfigurationDescriptorType {}
-interface MsgDescriptor extends MsgDescriptorType {}
-interface GetAuthnDescriptorRequest extends GetAuthnDescriptorRequestType {}
-interface GetAuthnDescriptorResponse extends GetAuthnDescriptorResponseType {}
-interface GetChainDescriptorRequest extends GetChainDescriptorRequestType {}
-interface GetChainDescriptorResponse extends GetChainDescriptorResponseType {}
-interface GetCodecDescriptorRequest extends GetCodecDescriptorRequestType {}
-interface GetCodecDescriptorResponse extends GetCodecDescriptorResponseType {}
-interface GetConfigurationDescriptorRequest extends GetConfigurationDescriptorRequestType {}
-interface GetConfigurationDescriptorResponse extends GetConfigurationDescriptorResponseType {}
-interface GetQueryServicesDescriptorRequest extends GetQueryServicesDescriptorRequestType {}
-interface GetQueryServicesDescriptorResponse extends GetQueryServicesDescriptorResponseType {}
-interface GetTxDescriptorRequest extends GetTxDescriptorRequestType {}
-interface GetTxDescriptorResponse extends GetTxDescriptorResponseType {}
-interface QueryServicesDescriptor extends QueryServicesDescriptorType {}
-interface QueryServiceDescriptor extends QueryServiceDescriptorType {}
-interface QueryMethodDescriptor extends QueryMethodDescriptorType {}
+export interface AppDescriptor extends AppDescriptor_type {}
+export interface TxDescriptor extends TxDescriptor_type {}
+export interface AuthnDescriptor extends AuthnDescriptor_type {}
+export interface SigningModeDescriptor extends SigningModeDescriptor_type {}
+export interface ChainDescriptor extends ChainDescriptor_type {}
+export interface CodecDescriptor extends CodecDescriptor_type {}
+export interface InterfaceDescriptor extends InterfaceDescriptor_type {}
+export interface InterfaceImplementerDescriptor extends InterfaceImplementerDescriptor_type {}
+export interface InterfaceAcceptingMessageDescriptor extends InterfaceAcceptingMessageDescriptor_type {}
+export interface ConfigurationDescriptor extends ConfigurationDescriptor_type {}
+export interface MsgDescriptor extends MsgDescriptor_type {}
+export interface GetAuthnDescriptorRequest extends GetAuthnDescriptorRequest_type {}
+export interface GetAuthnDescriptorResponse extends GetAuthnDescriptorResponse_type {}
+export interface GetChainDescriptorRequest extends GetChainDescriptorRequest_type {}
+export interface GetChainDescriptorResponse extends GetChainDescriptorResponse_type {}
+export interface GetCodecDescriptorRequest extends GetCodecDescriptorRequest_type {}
+export interface GetCodecDescriptorResponse extends GetCodecDescriptorResponse_type {}
+export interface GetConfigurationDescriptorRequest extends GetConfigurationDescriptorRequest_type {}
+export interface GetConfigurationDescriptorResponse extends GetConfigurationDescriptorResponse_type {}
+export interface GetQueryServicesDescriptorRequest extends GetQueryServicesDescriptorRequest_type {}
+export interface GetQueryServicesDescriptorResponse extends GetQueryServicesDescriptorResponse_type {}
+export interface GetTxDescriptorRequest extends GetTxDescriptorRequest_type {}
+export interface GetTxDescriptorResponse extends GetTxDescriptorResponse_type {}
+export interface QueryServicesDescriptor extends QueryServicesDescriptor_type {}
+export interface QueryServiceDescriptor extends QueryServiceDescriptor_type {}
+export interface QueryMethodDescriptor extends QueryMethodDescriptor_type {}
 
 export const AppDescriptor: MessageFns<AppDescriptor, "cosmos.base.reflection.v2alpha1.AppDescriptor"> = {
 	$type: "cosmos.base.reflection.v2alpha1.AppDescriptor" as const,

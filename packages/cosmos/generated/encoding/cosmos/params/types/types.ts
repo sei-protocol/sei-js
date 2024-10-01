@@ -5,16 +5,16 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { DecCoin } from "../../base/v1beta1/coin";
 
 import type {
-	CosmosGasParams as CosmosGasParamsType,
-	FeesParams as FeesParamsType,
-	GenesisState as GenesisStateType,
+	CosmosGasParams as CosmosGasParams_type,
+	FeesParams as FeesParams_type,
+	GenesisState as GenesisState_type,
 } from "../../../../types/cosmos/params/types";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface FeesParams extends FeesParamsType {}
-interface CosmosGasParams extends CosmosGasParamsType {}
-interface GenesisState extends GenesisStateType {}
+export interface FeesParams extends FeesParams_type {}
+export interface CosmosGasParams extends CosmosGasParams_type {}
+export interface GenesisState extends GenesisState_type {}
 
 export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParams"> = {
 	$type: "cosmos.params.v1beta1.FeesParams" as const,

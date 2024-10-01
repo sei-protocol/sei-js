@@ -3,14 +3,14 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	MsgCreateVestingAccountResponse as MsgCreateVestingAccountResponseType,
-	MsgCreateVestingAccount as MsgCreateVestingAccountType,
+	MsgCreateVestingAccountResponse as MsgCreateVestingAccountResponse_type,
+	MsgCreateVestingAccount as MsgCreateVestingAccount_type,
 } from "../../../../types/cosmos/vesting/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgCreateVestingAccount extends MsgCreateVestingAccountType {}
-interface MsgCreateVestingAccountResponse extends MsgCreateVestingAccountResponseType {}
+export interface MsgCreateVestingAccount extends MsgCreateVestingAccount_type {}
+export interface MsgCreateVestingAccountResponse extends MsgCreateVestingAccountResponse_type {}
 
 export const MsgCreateVestingAccount: MessageFns<MsgCreateVestingAccount, "cosmos.vesting.v1beta1.MsgCreateVestingAccount"> = {
 	$type: "cosmos.vesting.v1beta1.MsgCreateVestingAccount" as const,

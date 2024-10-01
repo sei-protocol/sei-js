@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Any as AnyType } from "../../../types/google/protobuf";
+import type { Any as Any_type } from "../../../types/google/protobuf";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Any extends AnyType {}
+export interface Any extends Any_type {}
 
 export const Any: MessageFns<Any, "google.protobuf.Any"> = {
 	$type: "google.protobuf.Any" as const,

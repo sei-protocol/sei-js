@@ -9,26 +9,26 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Params } from "./auth";
 
 import type {
-	QueryAccountRequest as QueryAccountRequestType,
-	QueryAccountResponse as QueryAccountResponseType,
-	QueryAccountsRequest as QueryAccountsRequestType,
-	QueryAccountsResponse as QueryAccountsResponseType,
-	QueryNextAccountNumberRequest as QueryNextAccountNumberRequestType,
-	QueryNextAccountNumberResponse as QueryNextAccountNumberResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
+	QueryAccountRequest as QueryAccountRequest_type,
+	QueryAccountResponse as QueryAccountResponse_type,
+	QueryAccountsRequest as QueryAccountsRequest_type,
+	QueryAccountsResponse as QueryAccountsResponse_type,
+	QueryNextAccountNumberRequest as QueryNextAccountNumberRequest_type,
+	QueryNextAccountNumberResponse as QueryNextAccountNumberResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
 } from "../../../../types/cosmos/auth/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryAccountsRequest extends QueryAccountsRequestType {}
-interface QueryAccountsResponse extends QueryAccountsResponseType {}
-interface QueryAccountRequest extends QueryAccountRequestType {}
-interface QueryAccountResponse extends QueryAccountResponseType {}
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryNextAccountNumberRequest extends QueryNextAccountNumberRequestType {}
-interface QueryNextAccountNumberResponse extends QueryNextAccountNumberResponseType {}
+export interface QueryAccountsRequest extends QueryAccountsRequest_type {}
+export interface QueryAccountsResponse extends QueryAccountsResponse_type {}
+export interface QueryAccountRequest extends QueryAccountRequest_type {}
+export interface QueryAccountResponse extends QueryAccountResponse_type {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryNextAccountNumberRequest extends QueryNextAccountNumberRequest_type {}
+export interface QueryNextAccountNumberResponse extends QueryNextAccountNumberResponse_type {}
 
 export const QueryAccountsRequest: MessageFns<QueryAccountsRequest, "cosmos.auth.v1beta1.QueryAccountsRequest"> = {
 	$type: "cosmos.auth.v1beta1.QueryAccountsRequest" as const,

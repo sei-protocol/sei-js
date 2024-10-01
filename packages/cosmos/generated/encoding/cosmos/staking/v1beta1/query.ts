@@ -7,66 +7,66 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { DelegationResponse, HistoricalInfo, Params, Pool, RedelegationResponse, UnbondingDelegation, Validator } from "./staking";
 
 import type {
-	QueryDelegationRequest as QueryDelegationRequestType,
-	QueryDelegationResponse as QueryDelegationResponseType,
-	QueryDelegatorDelegationsRequest as QueryDelegatorDelegationsRequestType,
-	QueryDelegatorDelegationsResponse as QueryDelegatorDelegationsResponseType,
-	QueryDelegatorUnbondingDelegationsRequest as QueryDelegatorUnbondingDelegationsRequestType,
-	QueryDelegatorUnbondingDelegationsResponse as QueryDelegatorUnbondingDelegationsResponseType,
-	QueryDelegatorValidatorRequest as QueryDelegatorValidatorRequestType,
-	QueryDelegatorValidatorResponse as QueryDelegatorValidatorResponseType,
-	QueryDelegatorValidatorsRequest as QueryDelegatorValidatorsRequestType,
-	QueryDelegatorValidatorsResponse as QueryDelegatorValidatorsResponseType,
-	QueryHistoricalInfoRequest as QueryHistoricalInfoRequestType,
-	QueryHistoricalInfoResponse as QueryHistoricalInfoResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
-	QueryPoolRequest as QueryPoolRequestType,
-	QueryPoolResponse as QueryPoolResponseType,
-	QueryRedelegationsRequest as QueryRedelegationsRequestType,
-	QueryRedelegationsResponse as QueryRedelegationsResponseType,
-	QueryUnbondingDelegationRequest as QueryUnbondingDelegationRequestType,
-	QueryUnbondingDelegationResponse as QueryUnbondingDelegationResponseType,
-	QueryValidatorDelegationsRequest as QueryValidatorDelegationsRequestType,
-	QueryValidatorDelegationsResponse as QueryValidatorDelegationsResponseType,
-	QueryValidatorRequest as QueryValidatorRequestType,
-	QueryValidatorResponse as QueryValidatorResponseType,
-	QueryValidatorUnbondingDelegationsRequest as QueryValidatorUnbondingDelegationsRequestType,
-	QueryValidatorUnbondingDelegationsResponse as QueryValidatorUnbondingDelegationsResponseType,
-	QueryValidatorsRequest as QueryValidatorsRequestType,
-	QueryValidatorsResponse as QueryValidatorsResponseType,
+	QueryDelegationRequest as QueryDelegationRequest_type,
+	QueryDelegationResponse as QueryDelegationResponse_type,
+	QueryDelegatorDelegationsRequest as QueryDelegatorDelegationsRequest_type,
+	QueryDelegatorDelegationsResponse as QueryDelegatorDelegationsResponse_type,
+	QueryDelegatorUnbondingDelegationsRequest as QueryDelegatorUnbondingDelegationsRequest_type,
+	QueryDelegatorUnbondingDelegationsResponse as QueryDelegatorUnbondingDelegationsResponse_type,
+	QueryDelegatorValidatorRequest as QueryDelegatorValidatorRequest_type,
+	QueryDelegatorValidatorResponse as QueryDelegatorValidatorResponse_type,
+	QueryDelegatorValidatorsRequest as QueryDelegatorValidatorsRequest_type,
+	QueryDelegatorValidatorsResponse as QueryDelegatorValidatorsResponse_type,
+	QueryHistoricalInfoRequest as QueryHistoricalInfoRequest_type,
+	QueryHistoricalInfoResponse as QueryHistoricalInfoResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
+	QueryPoolRequest as QueryPoolRequest_type,
+	QueryPoolResponse as QueryPoolResponse_type,
+	QueryRedelegationsRequest as QueryRedelegationsRequest_type,
+	QueryRedelegationsResponse as QueryRedelegationsResponse_type,
+	QueryUnbondingDelegationRequest as QueryUnbondingDelegationRequest_type,
+	QueryUnbondingDelegationResponse as QueryUnbondingDelegationResponse_type,
+	QueryValidatorDelegationsRequest as QueryValidatorDelegationsRequest_type,
+	QueryValidatorDelegationsResponse as QueryValidatorDelegationsResponse_type,
+	QueryValidatorRequest as QueryValidatorRequest_type,
+	QueryValidatorResponse as QueryValidatorResponse_type,
+	QueryValidatorUnbondingDelegationsRequest as QueryValidatorUnbondingDelegationsRequest_type,
+	QueryValidatorUnbondingDelegationsResponse as QueryValidatorUnbondingDelegationsResponse_type,
+	QueryValidatorsRequest as QueryValidatorsRequest_type,
+	QueryValidatorsResponse as QueryValidatorsResponse_type,
 } from "../../../../types/cosmos/staking/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryValidatorsRequest extends QueryValidatorsRequestType {}
-interface QueryValidatorsResponse extends QueryValidatorsResponseType {}
-interface QueryValidatorRequest extends QueryValidatorRequestType {}
-interface QueryValidatorResponse extends QueryValidatorResponseType {}
-interface QueryValidatorDelegationsRequest extends QueryValidatorDelegationsRequestType {}
-interface QueryValidatorDelegationsResponse extends QueryValidatorDelegationsResponseType {}
-interface QueryValidatorUnbondingDelegationsRequest extends QueryValidatorUnbondingDelegationsRequestType {}
-interface QueryValidatorUnbondingDelegationsResponse extends QueryValidatorUnbondingDelegationsResponseType {}
-interface QueryDelegationRequest extends QueryDelegationRequestType {}
-interface QueryDelegationResponse extends QueryDelegationResponseType {}
-interface QueryUnbondingDelegationRequest extends QueryUnbondingDelegationRequestType {}
-interface QueryUnbondingDelegationResponse extends QueryUnbondingDelegationResponseType {}
-interface QueryDelegatorDelegationsRequest extends QueryDelegatorDelegationsRequestType {}
-interface QueryDelegatorDelegationsResponse extends QueryDelegatorDelegationsResponseType {}
-interface QueryDelegatorUnbondingDelegationsRequest extends QueryDelegatorUnbondingDelegationsRequestType {}
-interface QueryDelegatorUnbondingDelegationsResponse extends QueryDelegatorUnbondingDelegationsResponseType {}
-interface QueryRedelegationsRequest extends QueryRedelegationsRequestType {}
-interface QueryRedelegationsResponse extends QueryRedelegationsResponseType {}
-interface QueryDelegatorValidatorsRequest extends QueryDelegatorValidatorsRequestType {}
-interface QueryDelegatorValidatorsResponse extends QueryDelegatorValidatorsResponseType {}
-interface QueryDelegatorValidatorRequest extends QueryDelegatorValidatorRequestType {}
-interface QueryDelegatorValidatorResponse extends QueryDelegatorValidatorResponseType {}
-interface QueryHistoricalInfoRequest extends QueryHistoricalInfoRequestType {}
-interface QueryHistoricalInfoResponse extends QueryHistoricalInfoResponseType {}
-interface QueryPoolRequest extends QueryPoolRequestType {}
-interface QueryPoolResponse extends QueryPoolResponseType {}
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
+export interface QueryValidatorsRequest extends QueryValidatorsRequest_type {}
+export interface QueryValidatorsResponse extends QueryValidatorsResponse_type {}
+export interface QueryValidatorRequest extends QueryValidatorRequest_type {}
+export interface QueryValidatorResponse extends QueryValidatorResponse_type {}
+export interface QueryValidatorDelegationsRequest extends QueryValidatorDelegationsRequest_type {}
+export interface QueryValidatorDelegationsResponse extends QueryValidatorDelegationsResponse_type {}
+export interface QueryValidatorUnbondingDelegationsRequest extends QueryValidatorUnbondingDelegationsRequest_type {}
+export interface QueryValidatorUnbondingDelegationsResponse extends QueryValidatorUnbondingDelegationsResponse_type {}
+export interface QueryDelegationRequest extends QueryDelegationRequest_type {}
+export interface QueryDelegationResponse extends QueryDelegationResponse_type {}
+export interface QueryUnbondingDelegationRequest extends QueryUnbondingDelegationRequest_type {}
+export interface QueryUnbondingDelegationResponse extends QueryUnbondingDelegationResponse_type {}
+export interface QueryDelegatorDelegationsRequest extends QueryDelegatorDelegationsRequest_type {}
+export interface QueryDelegatorDelegationsResponse extends QueryDelegatorDelegationsResponse_type {}
+export interface QueryDelegatorUnbondingDelegationsRequest extends QueryDelegatorUnbondingDelegationsRequest_type {}
+export interface QueryDelegatorUnbondingDelegationsResponse extends QueryDelegatorUnbondingDelegationsResponse_type {}
+export interface QueryRedelegationsRequest extends QueryRedelegationsRequest_type {}
+export interface QueryRedelegationsResponse extends QueryRedelegationsResponse_type {}
+export interface QueryDelegatorValidatorsRequest extends QueryDelegatorValidatorsRequest_type {}
+export interface QueryDelegatorValidatorsResponse extends QueryDelegatorValidatorsResponse_type {}
+export interface QueryDelegatorValidatorRequest extends QueryDelegatorValidatorRequest_type {}
+export interface QueryDelegatorValidatorResponse extends QueryDelegatorValidatorResponse_type {}
+export interface QueryHistoricalInfoRequest extends QueryHistoricalInfoRequest_type {}
+export interface QueryHistoricalInfoResponse extends QueryHistoricalInfoResponse_type {}
+export interface QueryPoolRequest extends QueryPoolRequest_type {}
+export interface QueryPoolResponse extends QueryPoolResponse_type {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
 
 export const QueryValidatorsRequest: MessageFns<QueryValidatorsRequest, "cosmos.staking.v1beta1.QueryValidatorsRequest"> = {
 	$type: "cosmos.staking.v1beta1.QueryValidatorsRequest" as const,

@@ -2,13 +2,17 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { CapabilityOwners as CapabilityOwnersType, Capability as CapabilityType, Owner as OwnerType } from "../../../../types/cosmos/capability/v1beta1";
+import type {
+	CapabilityOwners as CapabilityOwners_type,
+	Capability as Capability_type,
+	Owner as Owner_type,
+} from "../../../../types/cosmos/capability/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Capability extends CapabilityType {}
-interface Owner extends OwnerType {}
-interface CapabilityOwners extends CapabilityOwnersType {}
+export interface Capability extends Capability_type {}
+export interface Owner extends Owner_type {}
+export interface CapabilityOwners extends CapabilityOwners_type {}
 
 export const Capability: MessageFns<Capability, "cosmos.capability.v1beta1.Capability"> = {
 	$type: "cosmos.capability.v1beta1.Capability" as const,

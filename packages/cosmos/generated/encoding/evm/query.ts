@@ -5,34 +5,34 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { pointerTypeFromJSON, pointerTypeToJSON } from "./enums";
 
 import type {
-	QueryEVMAddressBySeiAddressRequest as QueryEVMAddressBySeiAddressRequestType,
-	QueryEVMAddressBySeiAddressResponse as QueryEVMAddressBySeiAddressResponseType,
-	QueryPointeeRequest as QueryPointeeRequestType,
-	QueryPointeeResponse as QueryPointeeResponseType,
-	QueryPointerRequest as QueryPointerRequestType,
-	QueryPointerResponse as QueryPointerResponseType,
-	QueryPointerVersionRequest as QueryPointerVersionRequestType,
-	QueryPointerVersionResponse as QueryPointerVersionResponseType,
-	QuerySeiAddressByEVMAddressRequest as QuerySeiAddressByEVMAddressRequestType,
-	QuerySeiAddressByEVMAddressResponse as QuerySeiAddressByEVMAddressResponseType,
-	QueryStaticCallRequest as QueryStaticCallRequestType,
-	QueryStaticCallResponse as QueryStaticCallResponseType,
+	QueryEVMAddressBySeiAddressRequest as QueryEVMAddressBySeiAddressRequest_type,
+	QueryEVMAddressBySeiAddressResponse as QueryEVMAddressBySeiAddressResponse_type,
+	QueryPointeeRequest as QueryPointeeRequest_type,
+	QueryPointeeResponse as QueryPointeeResponse_type,
+	QueryPointerRequest as QueryPointerRequest_type,
+	QueryPointerResponse as QueryPointerResponse_type,
+	QueryPointerVersionRequest as QueryPointerVersionRequest_type,
+	QueryPointerVersionResponse as QueryPointerVersionResponse_type,
+	QuerySeiAddressByEVMAddressRequest as QuerySeiAddressByEVMAddressRequest_type,
+	QuerySeiAddressByEVMAddressResponse as QuerySeiAddressByEVMAddressResponse_type,
+	QueryStaticCallRequest as QueryStaticCallRequest_type,
+	QueryStaticCallResponse as QueryStaticCallResponse_type,
 } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface QuerySeiAddressByEVMAddressRequest extends QuerySeiAddressByEVMAddressRequestType {}
-interface QuerySeiAddressByEVMAddressResponse extends QuerySeiAddressByEVMAddressResponseType {}
-interface QueryEVMAddressBySeiAddressRequest extends QueryEVMAddressBySeiAddressRequestType {}
-interface QueryEVMAddressBySeiAddressResponse extends QueryEVMAddressBySeiAddressResponseType {}
-interface QueryStaticCallRequest extends QueryStaticCallRequestType {}
-interface QueryStaticCallResponse extends QueryStaticCallResponseType {}
-interface QueryPointerRequest extends QueryPointerRequestType {}
-interface QueryPointerResponse extends QueryPointerResponseType {}
-interface QueryPointerVersionRequest extends QueryPointerVersionRequestType {}
-interface QueryPointerVersionResponse extends QueryPointerVersionResponseType {}
-interface QueryPointeeRequest extends QueryPointeeRequestType {}
-interface QueryPointeeResponse extends QueryPointeeResponseType {}
+export interface QuerySeiAddressByEVMAddressRequest extends QuerySeiAddressByEVMAddressRequest_type {}
+export interface QuerySeiAddressByEVMAddressResponse extends QuerySeiAddressByEVMAddressResponse_type {}
+export interface QueryEVMAddressBySeiAddressRequest extends QueryEVMAddressBySeiAddressRequest_type {}
+export interface QueryEVMAddressBySeiAddressResponse extends QueryEVMAddressBySeiAddressResponse_type {}
+export interface QueryStaticCallRequest extends QueryStaticCallRequest_type {}
+export interface QueryStaticCallResponse extends QueryStaticCallResponse_type {}
+export interface QueryPointerRequest extends QueryPointerRequest_type {}
+export interface QueryPointerResponse extends QueryPointerResponse_type {}
+export interface QueryPointerVersionRequest extends QueryPointerVersionRequest_type {}
+export interface QueryPointerVersionResponse extends QueryPointerVersionResponse_type {}
+export interface QueryPointeeRequest extends QueryPointeeRequest_type {}
+export interface QueryPointeeResponse extends QueryPointeeResponse_type {}
 
 export const QuerySeiAddressByEVMAddressRequest: MessageFns<QuerySeiAddressByEVMAddressRequest, "seiprotocol.seichain.evm.QuerySeiAddressByEVMAddressRequest"> =
 	{

@@ -4,11 +4,11 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Deposit, DepositParams, Proposal, TallyParams, Vote, VotingParams } from "./gov";
 
-import type { GenesisState as GenesisStateType } from "../../../../types/cosmos/gov/v1beta1";
+import type { GenesisState as GenesisState_type } from "../../../../types/cosmos/gov/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GenesisState extends GenesisStateType {}
+export interface GenesisState extends GenesisState_type {}
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.gov.v1beta1.GenesisState"> = {
 	$type: "cosmos.gov.v1beta1.GenesisState" as const,

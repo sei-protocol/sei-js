@@ -7,22 +7,22 @@ import { BaseAccount } from "../../auth/v1beta1/auth";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	BaseVestingAccount as BaseVestingAccountType,
-	ContinuousVestingAccount as ContinuousVestingAccountType,
-	DelayedVestingAccount as DelayedVestingAccountType,
-	Period as PeriodType,
-	PeriodicVestingAccount as PeriodicVestingAccountType,
-	PermanentLockedAccount as PermanentLockedAccountType,
+	BaseVestingAccount as BaseVestingAccount_type,
+	ContinuousVestingAccount as ContinuousVestingAccount_type,
+	DelayedVestingAccount as DelayedVestingAccount_type,
+	Period as Period_type,
+	PeriodicVestingAccount as PeriodicVestingAccount_type,
+	PermanentLockedAccount as PermanentLockedAccount_type,
 } from "../../../../types/cosmos/vesting/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface BaseVestingAccount extends BaseVestingAccountType {}
-interface ContinuousVestingAccount extends ContinuousVestingAccountType {}
-interface DelayedVestingAccount extends DelayedVestingAccountType {}
-interface Period extends PeriodType {}
-interface PeriodicVestingAccount extends PeriodicVestingAccountType {}
-interface PermanentLockedAccount extends PermanentLockedAccountType {}
+export interface BaseVestingAccount extends BaseVestingAccount_type {}
+export interface ContinuousVestingAccount extends ContinuousVestingAccount_type {}
+export interface DelayedVestingAccount extends DelayedVestingAccount_type {}
+export interface Period extends Period_type {}
+export interface PeriodicVestingAccount extends PeriodicVestingAccount_type {}
+export interface PermanentLockedAccount extends PermanentLockedAccount_type {}
 
 export const BaseVestingAccount: MessageFns<BaseVestingAccount, "cosmos.vesting.v1beta1.BaseVestingAccount"> = {
 	$type: "cosmos.vesting.v1beta1.BaseVestingAccount" as const,

@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { ParamChange as ParamChangeType, ParameterChangeProposal as ParameterChangeProposalType } from "../../../../types/cosmos/params/v1beta1";
+import type { ParamChange as ParamChange_type, ParameterChangeProposal as ParameterChangeProposal_type } from "../../../../types/cosmos/params/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface ParameterChangeProposal extends ParameterChangeProposalType {}
-interface ParamChange extends ParamChangeType {}
+export interface ParameterChangeProposal extends ParameterChangeProposal_type {}
+export interface ParamChange extends ParamChange_type {}
 
 export const ParameterChangeProposal: MessageFns<ParameterChangeProposal, "cosmos.params.v1beta1.ParameterChangeProposal"> = {
 	$type: "cosmos.params.v1beta1.ParameterChangeProposal" as const,

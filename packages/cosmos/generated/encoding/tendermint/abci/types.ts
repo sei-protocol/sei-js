@@ -11,54 +11,55 @@ import { ProofOps } from "../crypto/proof";
 import { ConsensusParams } from "../types/params";
 
 import type {
-	CommitInfo as CommitInfoType,
-	EventAttribute as EventAttributeType,
-	Event as EventType,
-	ExecTxResult as ExecTxResultType,
-	ExtendedCommitInfo as ExtendedCommitInfoType,
-	ExtendedVoteInfo as ExtendedVoteInfoType,
-	RequestApplySnapshotChunk as RequestApplySnapshotChunkType,
-	RequestCheckTx as RequestCheckTxType,
-	RequestCommit as RequestCommitType,
-	RequestEcho as RequestEchoType,
-	RequestExtendVote as RequestExtendVoteType,
-	RequestFinalizeBlock as RequestFinalizeBlockType,
-	RequestFlush as RequestFlushType,
-	RequestInfo as RequestInfoType,
-	RequestInitChain as RequestInitChainType,
-	RequestListSnapshots as RequestListSnapshotsType,
-	RequestLoadSnapshotChunk as RequestLoadSnapshotChunkType,
-	RequestOfferSnapshot as RequestOfferSnapshotType,
-	RequestPrepareProposal as RequestPrepareProposalType,
-	RequestProcessProposal as RequestProcessProposalType,
-	RequestQuery as RequestQueryType,
-	Request as RequestType,
-	RequestVerifyVoteExtension as RequestVerifyVoteExtensionType,
-	ResponseApplySnapshotChunk as ResponseApplySnapshotChunkType,
-	ResponseCheckTx as ResponseCheckTxType,
-	ResponseCommit as ResponseCommitType,
-	ResponseDeliverTx as ResponseDeliverTxType,
-	ResponseEcho as ResponseEchoType,
-	ResponseException as ResponseExceptionType,
-	ResponseExtendVote as ResponseExtendVoteType,
-	ResponseFinalizeBlock as ResponseFinalizeBlockType,
-	ResponseFlush as ResponseFlushType,
-	ResponseInfo as ResponseInfoType,
-	ResponseInitChain as ResponseInitChainType,
-	ResponseListSnapshots as ResponseListSnapshotsType,
-	ResponseLoadSnapshotChunk as ResponseLoadSnapshotChunkType,
-	ResponseOfferSnapshot as ResponseOfferSnapshotType,
-	ResponsePrepareProposal as ResponsePrepareProposalType,
-	ResponseProcessProposal as ResponseProcessProposalType,
-	ResponseQuery as ResponseQueryType,
-	Response as ResponseType,
-	ResponseVerifyVoteExtension as ResponseVerifyVoteExtensionType,
-	Snapshot as SnapshotType,
-	TxRecord as TxRecordType,
-	TxResult as TxResultType,
-	Validator as ValidatorType,
-	ValidatorUpdate as ValidatorUpdateType,
-	VoteInfo as VoteInfoType,
+	CommitInfo as CommitInfo_type,
+	EventAttribute as EventAttribute_type,
+	Event as Event_type,
+	ExecTxResult as ExecTxResult_type,
+	ExtendedCommitInfo as ExtendedCommitInfo_type,
+	ExtendedVoteInfo as ExtendedVoteInfo_type,
+	Misbehavior as Misbehavior_type,
+	RequestApplySnapshotChunk as RequestApplySnapshotChunk_type,
+	RequestCheckTx as RequestCheckTx_type,
+	RequestCommit as RequestCommit_type,
+	RequestEcho as RequestEcho_type,
+	RequestExtendVote as RequestExtendVote_type,
+	RequestFinalizeBlock as RequestFinalizeBlock_type,
+	RequestFlush as RequestFlush_type,
+	RequestInfo as RequestInfo_type,
+	RequestInitChain as RequestInitChain_type,
+	RequestListSnapshots as RequestListSnapshots_type,
+	RequestLoadSnapshotChunk as RequestLoadSnapshotChunk_type,
+	RequestOfferSnapshot as RequestOfferSnapshot_type,
+	RequestPrepareProposal as RequestPrepareProposal_type,
+	RequestProcessProposal as RequestProcessProposal_type,
+	RequestQuery as RequestQuery_type,
+	RequestVerifyVoteExtension as RequestVerifyVoteExtension_type,
+	Request as Request_type,
+	ResponseApplySnapshotChunk as ResponseApplySnapshotChunk_type,
+	ResponseCheckTx as ResponseCheckTx_type,
+	ResponseCommit as ResponseCommit_type,
+	ResponseDeliverTx as ResponseDeliverTx_type,
+	ResponseEcho as ResponseEcho_type,
+	ResponseException as ResponseException_type,
+	ResponseExtendVote as ResponseExtendVote_type,
+	ResponseFinalizeBlock as ResponseFinalizeBlock_type,
+	ResponseFlush as ResponseFlush_type,
+	ResponseInfo as ResponseInfo_type,
+	ResponseInitChain as ResponseInitChain_type,
+	ResponseListSnapshots as ResponseListSnapshots_type,
+	ResponseLoadSnapshotChunk as ResponseLoadSnapshotChunk_type,
+	ResponseOfferSnapshot as ResponseOfferSnapshot_type,
+	ResponsePrepareProposal as ResponsePrepareProposal_type,
+	ResponseProcessProposal as ResponseProcessProposal_type,
+	ResponseQuery as ResponseQuery_type,
+	ResponseVerifyVoteExtension as ResponseVerifyVoteExtension_type,
+	Response as Response_type,
+	Snapshot as Snapshot_type,
+	TxRecord as TxRecord_type,
+	TxResult as TxResult_type,
+	ValidatorUpdate as ValidatorUpdate_type,
+	Validator as Validator_type,
+	VoteInfo as VoteInfo_type,
 } from "../../../types/tendermint/abci";
 
 import {
@@ -71,57 +72,57 @@ import {
 	TxRecordTxAction,
 } from "../../../types/tendermint/abci";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Request extends RequestType {}
-interface RequestEcho extends RequestEchoType {}
-interface RequestFlush extends RequestFlushType {}
-interface RequestInfo extends RequestInfoType {}
-interface RequestInitChain extends RequestInitChainType {}
-interface RequestQuery extends RequestQueryType {}
-interface RequestCheckTx extends RequestCheckTxType {}
-interface RequestCommit extends RequestCommitType {}
-interface RequestListSnapshots extends RequestListSnapshotsType {}
-interface RequestOfferSnapshot extends RequestOfferSnapshotType {}
-interface RequestLoadSnapshotChunk extends RequestLoadSnapshotChunkType {}
-interface RequestApplySnapshotChunk extends RequestApplySnapshotChunkType {}
-interface RequestPrepareProposal extends RequestPrepareProposalType {}
-interface RequestProcessProposal extends RequestProcessProposalType {}
-interface RequestExtendVote extends RequestExtendVoteType {}
-interface RequestVerifyVoteExtension extends RequestVerifyVoteExtensionType {}
-interface RequestFinalizeBlock extends RequestFinalizeBlockType {}
-interface Response extends ResponseType {}
-interface ResponseException extends ResponseExceptionType {}
-interface ResponseEcho extends ResponseEchoType {}
-interface ResponseFlush extends ResponseFlushType {}
-interface ResponseInfo extends ResponseInfoType {}
-interface ResponseInitChain extends ResponseInitChainType {}
-interface ResponseQuery extends ResponseQueryType {}
-interface ResponseCheckTx extends ResponseCheckTxType {}
-interface ResponseDeliverTx extends ResponseDeliverTxType {}
-interface ResponseCommit extends ResponseCommitType {}
-interface ResponseListSnapshots extends ResponseListSnapshotsType {}
-interface ResponseOfferSnapshot extends ResponseOfferSnapshotType {}
-interface ResponseLoadSnapshotChunk extends ResponseLoadSnapshotChunkType {}
-interface ResponseApplySnapshotChunk extends ResponseApplySnapshotChunkType {}
-interface ResponsePrepareProposal extends ResponsePrepareProposalType {}
-interface ResponseProcessProposal extends ResponseProcessProposalType {}
-interface ResponseExtendVote extends ResponseExtendVoteType {}
-interface ResponseVerifyVoteExtension extends ResponseVerifyVoteExtensionType {}
-interface ResponseFinalizeBlock extends ResponseFinalizeBlockType {}
-interface CommitInfo extends CommitInfoType {}
-interface ExtendedCommitInfo extends ExtendedCommitInfoType {}
-interface Event extends EventType {}
-interface EventAttribute extends EventAttributeType {}
-interface ExecTxResult extends ExecTxResultType {}
-interface TxResult extends TxResultType {}
-interface TxRecord extends TxRecordType {}
-interface Validator extends ValidatorType {}
-interface ValidatorUpdate extends ValidatorUpdateType {}
-interface VoteInfo extends VoteInfoType {}
-interface ExtendedVoteInfo extends ExtendedVoteInfoType {}
-interface Misbehavior extends MisbehaviorType {}
-interface Snapshot extends SnapshotType {}
+export interface Request extends Request_type {}
+export interface RequestEcho extends RequestEcho_type {}
+export interface RequestFlush extends RequestFlush_type {}
+export interface RequestInfo extends RequestInfo_type {}
+export interface RequestInitChain extends RequestInitChain_type {}
+export interface RequestQuery extends RequestQuery_type {}
+export interface RequestCheckTx extends RequestCheckTx_type {}
+export interface RequestCommit extends RequestCommit_type {}
+export interface RequestListSnapshots extends RequestListSnapshots_type {}
+export interface RequestOfferSnapshot extends RequestOfferSnapshot_type {}
+export interface RequestLoadSnapshotChunk extends RequestLoadSnapshotChunk_type {}
+export interface RequestApplySnapshotChunk extends RequestApplySnapshotChunk_type {}
+export interface RequestPrepareProposal extends RequestPrepareProposal_type {}
+export interface RequestProcessProposal extends RequestProcessProposal_type {}
+export interface RequestExtendVote extends RequestExtendVote_type {}
+export interface RequestVerifyVoteExtension extends RequestVerifyVoteExtension_type {}
+export interface RequestFinalizeBlock extends RequestFinalizeBlock_type {}
+export interface Response extends Response_type {}
+export interface ResponseException extends ResponseException_type {}
+export interface ResponseEcho extends ResponseEcho_type {}
+export interface ResponseFlush extends ResponseFlush_type {}
+export interface ResponseInfo extends ResponseInfo_type {}
+export interface ResponseInitChain extends ResponseInitChain_type {}
+export interface ResponseQuery extends ResponseQuery_type {}
+export interface ResponseCheckTx extends ResponseCheckTx_type {}
+export interface ResponseDeliverTx extends ResponseDeliverTx_type {}
+export interface ResponseCommit extends ResponseCommit_type {}
+export interface ResponseListSnapshots extends ResponseListSnapshots_type {}
+export interface ResponseOfferSnapshot extends ResponseOfferSnapshot_type {}
+export interface ResponseLoadSnapshotChunk extends ResponseLoadSnapshotChunk_type {}
+export interface ResponseApplySnapshotChunk extends ResponseApplySnapshotChunk_type {}
+export interface ResponsePrepareProposal extends ResponsePrepareProposal_type {}
+export interface ResponseProcessProposal extends ResponseProcessProposal_type {}
+export interface ResponseExtendVote extends ResponseExtendVote_type {}
+export interface ResponseVerifyVoteExtension extends ResponseVerifyVoteExtension_type {}
+export interface ResponseFinalizeBlock extends ResponseFinalizeBlock_type {}
+export interface CommitInfo extends CommitInfo_type {}
+export interface ExtendedCommitInfo extends ExtendedCommitInfo_type {}
+export interface Event extends Event_type {}
+export interface EventAttribute extends EventAttribute_type {}
+export interface ExecTxResult extends ExecTxResult_type {}
+export interface TxResult extends TxResult_type {}
+export interface TxRecord extends TxRecord_type {}
+export interface Validator extends Validator_type {}
+export interface ValidatorUpdate extends ValidatorUpdate_type {}
+export interface VoteInfo extends VoteInfo_type {}
+export interface ExtendedVoteInfo extends ExtendedVoteInfo_type {}
+export interface Misbehavior extends Misbehavior_type {}
+export interface Snapshot extends Snapshot_type {}
 
 export const Request: MessageFns<Request, "tendermint.abci.Request"> = {
 	$type: "tendermint.abci.Request" as const,

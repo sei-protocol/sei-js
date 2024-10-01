@@ -9,42 +9,42 @@ import { Coin } from "../../base/v1beta1/coin";
 import { Metadata, Params } from "./bank";
 
 import type {
-	QueryAllBalancesRequest as QueryAllBalancesRequestType,
-	QueryAllBalancesResponse as QueryAllBalancesResponseType,
-	QueryBalanceRequest as QueryBalanceRequestType,
-	QueryBalanceResponse as QueryBalanceResponseType,
-	QueryDenomMetadataRequest as QueryDenomMetadataRequestType,
-	QueryDenomMetadataResponse as QueryDenomMetadataResponseType,
-	QueryDenomsMetadataRequest as QueryDenomsMetadataRequestType,
-	QueryDenomsMetadataResponse as QueryDenomsMetadataResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
-	QuerySpendableBalancesRequest as QuerySpendableBalancesRequestType,
-	QuerySpendableBalancesResponse as QuerySpendableBalancesResponseType,
-	QuerySupplyOfRequest as QuerySupplyOfRequestType,
-	QuerySupplyOfResponse as QuerySupplyOfResponseType,
-	QueryTotalSupplyRequest as QueryTotalSupplyRequestType,
-	QueryTotalSupplyResponse as QueryTotalSupplyResponseType,
+	QueryAllBalancesRequest as QueryAllBalancesRequest_type,
+	QueryAllBalancesResponse as QueryAllBalancesResponse_type,
+	QueryBalanceRequest as QueryBalanceRequest_type,
+	QueryBalanceResponse as QueryBalanceResponse_type,
+	QueryDenomMetadataRequest as QueryDenomMetadataRequest_type,
+	QueryDenomMetadataResponse as QueryDenomMetadataResponse_type,
+	QueryDenomsMetadataRequest as QueryDenomsMetadataRequest_type,
+	QueryDenomsMetadataResponse as QueryDenomsMetadataResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
+	QuerySpendableBalancesRequest as QuerySpendableBalancesRequest_type,
+	QuerySpendableBalancesResponse as QuerySpendableBalancesResponse_type,
+	QuerySupplyOfRequest as QuerySupplyOfRequest_type,
+	QuerySupplyOfResponse as QuerySupplyOfResponse_type,
+	QueryTotalSupplyRequest as QueryTotalSupplyRequest_type,
+	QueryTotalSupplyResponse as QueryTotalSupplyResponse_type,
 } from "../../../../types/cosmos/bank/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryBalanceRequest extends QueryBalanceRequestType {}
-interface QueryBalanceResponse extends QueryBalanceResponseType {}
-interface QueryAllBalancesRequest extends QueryAllBalancesRequestType {}
-interface QueryAllBalancesResponse extends QueryAllBalancesResponseType {}
-interface QuerySpendableBalancesRequest extends QuerySpendableBalancesRequestType {}
-interface QuerySpendableBalancesResponse extends QuerySpendableBalancesResponseType {}
-interface QueryTotalSupplyRequest extends QueryTotalSupplyRequestType {}
-interface QueryTotalSupplyResponse extends QueryTotalSupplyResponseType {}
-interface QuerySupplyOfRequest extends QuerySupplyOfRequestType {}
-interface QuerySupplyOfResponse extends QuerySupplyOfResponseType {}
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryDenomsMetadataRequest extends QueryDenomsMetadataRequestType {}
-interface QueryDenomsMetadataResponse extends QueryDenomsMetadataResponseType {}
-interface QueryDenomMetadataRequest extends QueryDenomMetadataRequestType {}
-interface QueryDenomMetadataResponse extends QueryDenomMetadataResponseType {}
+export interface QueryBalanceRequest extends QueryBalanceRequest_type {}
+export interface QueryBalanceResponse extends QueryBalanceResponse_type {}
+export interface QueryAllBalancesRequest extends QueryAllBalancesRequest_type {}
+export interface QueryAllBalancesResponse extends QueryAllBalancesResponse_type {}
+export interface QuerySpendableBalancesRequest extends QuerySpendableBalancesRequest_type {}
+export interface QuerySpendableBalancesResponse extends QuerySpendableBalancesResponse_type {}
+export interface QueryTotalSupplyRequest extends QueryTotalSupplyRequest_type {}
+export interface QueryTotalSupplyResponse extends QueryTotalSupplyResponse_type {}
+export interface QuerySupplyOfRequest extends QuerySupplyOfRequest_type {}
+export interface QuerySupplyOfResponse extends QuerySupplyOfResponse_type {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryDenomsMetadataRequest extends QueryDenomsMetadataRequest_type {}
+export interface QueryDenomsMetadataResponse extends QueryDenomsMetadataResponse_type {}
+export interface QueryDenomMetadataRequest extends QueryDenomMetadataRequest_type {}
+export interface QueryDenomMetadataResponse extends QueryDenomMetadataResponse_type {}
 
 export const QueryBalanceRequest: MessageFns<QueryBalanceRequest, "cosmos.bank.v1beta1.QueryBalanceRequest"> = {
 	$type: "cosmos.bank.v1beta1.QueryBalanceRequest" as const,

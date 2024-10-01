@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { PageRequest as PageRequestType, PageResponse as PageResponseType } from "../../../../../types/cosmos/base/query/v1beta1";
+import type { PageRequest as PageRequest_type, PageResponse as PageResponse_type } from "../../../../../types/cosmos/base/query/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface PageRequest extends PageRequestType {}
-interface PageResponse extends PageResponseType {}
+export interface PageRequest extends PageRequest_type {}
+export interface PageResponse extends PageResponse_type {}
 
 export const PageRequest: MessageFns<PageRequest, "cosmos.base.query.v1beta1.PageRequest"> = {
 	$type: "cosmos.base.query.v1beta1.PageRequest" as const,

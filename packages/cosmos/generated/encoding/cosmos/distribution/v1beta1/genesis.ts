@@ -15,26 +15,26 @@ import {
 } from "./distribution";
 
 import type {
-	DelegatorStartingInfoRecord as DelegatorStartingInfoRecordType,
-	DelegatorWithdrawInfo as DelegatorWithdrawInfoType,
-	GenesisState as GenesisStateType,
-	ValidatorAccumulatedCommissionRecord as ValidatorAccumulatedCommissionRecordType,
-	ValidatorCurrentRewardsRecord as ValidatorCurrentRewardsRecordType,
-	ValidatorHistoricalRewardsRecord as ValidatorHistoricalRewardsRecordType,
-	ValidatorOutstandingRewardsRecord as ValidatorOutstandingRewardsRecordType,
-	ValidatorSlashEventRecord as ValidatorSlashEventRecordType,
+	DelegatorStartingInfoRecord as DelegatorStartingInfoRecord_type,
+	DelegatorWithdrawInfo as DelegatorWithdrawInfo_type,
+	GenesisState as GenesisState_type,
+	ValidatorAccumulatedCommissionRecord as ValidatorAccumulatedCommissionRecord_type,
+	ValidatorCurrentRewardsRecord as ValidatorCurrentRewardsRecord_type,
+	ValidatorHistoricalRewardsRecord as ValidatorHistoricalRewardsRecord_type,
+	ValidatorOutstandingRewardsRecord as ValidatorOutstandingRewardsRecord_type,
+	ValidatorSlashEventRecord as ValidatorSlashEventRecord_type,
 } from "../../../../types/cosmos/distribution/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface DelegatorWithdrawInfo extends DelegatorWithdrawInfoType {}
-interface ValidatorOutstandingRewardsRecord extends ValidatorOutstandingRewardsRecordType {}
-interface ValidatorAccumulatedCommissionRecord extends ValidatorAccumulatedCommissionRecordType {}
-interface ValidatorHistoricalRewardsRecord extends ValidatorHistoricalRewardsRecordType {}
-interface ValidatorCurrentRewardsRecord extends ValidatorCurrentRewardsRecordType {}
-interface DelegatorStartingInfoRecord extends DelegatorStartingInfoRecordType {}
-interface ValidatorSlashEventRecord extends ValidatorSlashEventRecordType {}
-interface GenesisState extends GenesisStateType {}
+export interface DelegatorWithdrawInfo extends DelegatorWithdrawInfo_type {}
+export interface ValidatorOutstandingRewardsRecord extends ValidatorOutstandingRewardsRecord_type {}
+export interface ValidatorAccumulatedCommissionRecord extends ValidatorAccumulatedCommissionRecord_type {}
+export interface ValidatorHistoricalRewardsRecord extends ValidatorHistoricalRewardsRecord_type {}
+export interface ValidatorCurrentRewardsRecord extends ValidatorCurrentRewardsRecord_type {}
+export interface DelegatorStartingInfoRecord extends DelegatorStartingInfoRecord_type {}
+export interface ValidatorSlashEventRecord extends ValidatorSlashEventRecord_type {}
+export interface GenesisState extends GenesisState_type {}
 
 export const DelegatorWithdrawInfo: MessageFns<DelegatorWithdrawInfo, "cosmos.distribution.v1beta1.DelegatorWithdrawInfo"> = {
 	$type: "cosmos.distribution.v1beta1.DelegatorWithdrawInfo" as const,

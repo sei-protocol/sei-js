@@ -11,38 +11,38 @@ import { pointerTypeFromJSON, pointerTypeToJSON } from "./enums";
 import { Log } from "./receipt";
 
 import type {
-	MsgAssociateContractAddressResponse as MsgAssociateContractAddressResponseType,
-	MsgAssociateContractAddress as MsgAssociateContractAddressType,
-	MsgAssociateResponse as MsgAssociateResponseType,
-	MsgAssociate as MsgAssociateType,
-	MsgEVMTransactionResponse as MsgEVMTransactionResponseType,
-	MsgEVMTransaction as MsgEVMTransactionType,
-	MsgInternalEVMCallResponse as MsgInternalEVMCallResponseType,
-	MsgInternalEVMCall as MsgInternalEVMCallType,
-	MsgInternalEVMDelegateCallResponse as MsgInternalEVMDelegateCallResponseType,
-	MsgInternalEVMDelegateCall as MsgInternalEVMDelegateCallType,
-	MsgRegisterPointerResponse as MsgRegisterPointerResponseType,
-	MsgRegisterPointer as MsgRegisterPointerType,
-	MsgSendResponse as MsgSendResponseType,
-	MsgSend as MsgSendType,
+	MsgAssociateContractAddressResponse as MsgAssociateContractAddressResponse_type,
+	MsgAssociateContractAddress as MsgAssociateContractAddress_type,
+	MsgAssociateResponse as MsgAssociateResponse_type,
+	MsgAssociate as MsgAssociate_type,
+	MsgEVMTransactionResponse as MsgEVMTransactionResponse_type,
+	MsgEVMTransaction as MsgEVMTransaction_type,
+	MsgInternalEVMCallResponse as MsgInternalEVMCallResponse_type,
+	MsgInternalEVMCall as MsgInternalEVMCall_type,
+	MsgInternalEVMDelegateCallResponse as MsgInternalEVMDelegateCallResponse_type,
+	MsgInternalEVMDelegateCall as MsgInternalEVMDelegateCall_type,
+	MsgRegisterPointerResponse as MsgRegisterPointerResponse_type,
+	MsgRegisterPointer as MsgRegisterPointer_type,
+	MsgSendResponse as MsgSendResponse_type,
+	MsgSend as MsgSend_type,
 } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface MsgEVMTransaction extends MsgEVMTransactionType {}
-interface MsgEVMTransactionResponse extends MsgEVMTransactionResponseType {}
-interface MsgInternalEVMCall extends MsgInternalEVMCallType {}
-interface MsgInternalEVMCallResponse extends MsgInternalEVMCallResponseType {}
-interface MsgInternalEVMDelegateCall extends MsgInternalEVMDelegateCallType {}
-interface MsgInternalEVMDelegateCallResponse extends MsgInternalEVMDelegateCallResponseType {}
-interface MsgSend extends MsgSendType {}
-interface MsgSendResponse extends MsgSendResponseType {}
-interface MsgRegisterPointer extends MsgRegisterPointerType {}
-interface MsgRegisterPointerResponse extends MsgRegisterPointerResponseType {}
-interface MsgAssociateContractAddress extends MsgAssociateContractAddressType {}
-interface MsgAssociateContractAddressResponse extends MsgAssociateContractAddressResponseType {}
-interface MsgAssociate extends MsgAssociateType {}
-interface MsgAssociateResponse extends MsgAssociateResponseType {}
+export interface MsgEVMTransaction extends MsgEVMTransaction_type {}
+export interface MsgEVMTransactionResponse extends MsgEVMTransactionResponse_type {}
+export interface MsgInternalEVMCall extends MsgInternalEVMCall_type {}
+export interface MsgInternalEVMCallResponse extends MsgInternalEVMCallResponse_type {}
+export interface MsgInternalEVMDelegateCall extends MsgInternalEVMDelegateCall_type {}
+export interface MsgInternalEVMDelegateCallResponse extends MsgInternalEVMDelegateCallResponse_type {}
+export interface MsgSend extends MsgSend_type {}
+export interface MsgSendResponse extends MsgSendResponse_type {}
+export interface MsgRegisterPointer extends MsgRegisterPointer_type {}
+export interface MsgRegisterPointerResponse extends MsgRegisterPointerResponse_type {}
+export interface MsgAssociateContractAddress extends MsgAssociateContractAddress_type {}
+export interface MsgAssociateContractAddressResponse extends MsgAssociateContractAddressResponse_type {}
+export interface MsgAssociate extends MsgAssociate_type {}
+export interface MsgAssociateResponse extends MsgAssociateResponse_type {}
 
 export const MsgEVMTransaction: MessageFns<MsgEVMTransaction, "seiprotocol.seichain.evm.MsgEVMTransaction"> = {
 	$type: "seiprotocol.seichain.evm.MsgEVMTransaction" as const,

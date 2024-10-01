@@ -3,24 +3,24 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	Metadata as MetadataType,
-	SnapshotExtensionMeta as SnapshotExtensionMetaType,
-	SnapshotExtensionPayload as SnapshotExtensionPayloadType,
-	SnapshotIAVLItem as SnapshotIAVLItemType,
-	SnapshotItem as SnapshotItemType,
-	SnapshotStoreItem as SnapshotStoreItemType,
-	Snapshot as SnapshotType,
+	Metadata as Metadata_type,
+	SnapshotExtensionMeta as SnapshotExtensionMeta_type,
+	SnapshotExtensionPayload as SnapshotExtensionPayload_type,
+	SnapshotIAVLItem as SnapshotIAVLItem_type,
+	SnapshotItem as SnapshotItem_type,
+	SnapshotStoreItem as SnapshotStoreItem_type,
+	Snapshot as Snapshot_type,
 } from "../../../../../types/cosmos/base/snapshots/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface Snapshot extends SnapshotType {}
-interface Metadata extends MetadataType {}
-interface SnapshotItem extends SnapshotItemType {}
-interface SnapshotStoreItem extends SnapshotStoreItemType {}
-interface SnapshotIAVLItem extends SnapshotIAVLItemType {}
-interface SnapshotExtensionMeta extends SnapshotExtensionMetaType {}
-interface SnapshotExtensionPayload extends SnapshotExtensionPayloadType {}
+export interface Snapshot extends Snapshot_type {}
+export interface Metadata extends Metadata_type {}
+export interface SnapshotItem extends SnapshotItem_type {}
+export interface SnapshotStoreItem extends SnapshotStoreItem_type {}
+export interface SnapshotIAVLItem extends SnapshotIAVLItem_type {}
+export interface SnapshotExtensionMeta extends SnapshotExtensionMeta_type {}
+export interface SnapshotExtensionPayload extends SnapshotExtensionPayload_type {}
 
 export const Snapshot: MessageFns<Snapshot, "cosmos.base.snapshots.v1beta1.Snapshot"> = {
 	$type: "cosmos.base.snapshots.v1beta1.Snapshot" as const,

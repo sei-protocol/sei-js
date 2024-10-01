@@ -5,22 +5,22 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Params } from "./mint";
 
 import type {
-	QueryAnnualProvisionsRequest as QueryAnnualProvisionsRequestType,
-	QueryAnnualProvisionsResponse as QueryAnnualProvisionsResponseType,
-	QueryInflationRequest as QueryInflationRequestType,
-	QueryInflationResponse as QueryInflationResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
+	QueryAnnualProvisionsRequest as QueryAnnualProvisionsRequest_type,
+	QueryAnnualProvisionsResponse as QueryAnnualProvisionsResponse_type,
+	QueryInflationRequest as QueryInflationRequest_type,
+	QueryInflationResponse as QueryInflationResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
 } from "../../../../types/cosmos/mint/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
-interface QueryInflationRequest extends QueryInflationRequestType {}
-interface QueryInflationResponse extends QueryInflationResponseType {}
-interface QueryAnnualProvisionsRequest extends QueryAnnualProvisionsRequestType {}
-interface QueryAnnualProvisionsResponse extends QueryAnnualProvisionsResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
+export interface QueryInflationRequest extends QueryInflationRequest_type {}
+export interface QueryInflationResponse extends QueryInflationResponse_type {}
+export interface QueryAnnualProvisionsRequest extends QueryAnnualProvisionsRequest_type {}
+export interface QueryAnnualProvisionsResponse extends QueryAnnualProvisionsResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.mint.v1beta1.QueryParamsRequest"> = {
 	$type: "cosmos.mint.v1beta1.QueryParamsRequest" as const,

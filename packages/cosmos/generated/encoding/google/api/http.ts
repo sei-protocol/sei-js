@@ -2,13 +2,13 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { CustomHttpPattern as CustomHttpPatternType, HttpRule as HttpRuleType, Http as HttpType } from "../../../types/google/api";
+import type { CustomHttpPattern as CustomHttpPattern_type, HttpRule as HttpRule_type, Http as Http_type } from "../../../types/google/api";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Http extends HttpType {}
-interface HttpRule extends HttpRuleType {}
-interface CustomHttpPattern extends CustomHttpPatternType {}
+export interface Http extends Http_type {}
+export interface HttpRule extends HttpRule_type {}
+export interface CustomHttpPattern extends CustomHttpPattern_type {}
 
 export const Http: MessageFns<Http, "google.api.Http"> = {
 	$type: "google.api.Http" as const,

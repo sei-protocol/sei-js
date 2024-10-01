@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { BitArray as BitArrayType } from "../../../../types/tendermint/libs/bits";
+import type { BitArray as BitArray_type } from "../../../../types/tendermint/libs/bits";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface BitArray extends BitArrayType {}
+export interface BitArray extends BitArray_type {}
 
 export const BitArray: MessageFns<BitArray, "tendermint.libs.bits.BitArray"> = {
 	$type: "tendermint.libs.bits.BitArray" as const,

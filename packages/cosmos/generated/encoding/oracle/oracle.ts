@@ -3,28 +3,28 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	AggregateExchangeRateVote as AggregateExchangeRateVoteType,
-	Denom as DenomType,
-	ExchangeRateTuple as ExchangeRateTupleType,
-	OracleExchangeRate as OracleExchangeRateType,
-	OracleTwap as OracleTwapType,
-	Params as ParamsType,
-	PriceSnapshotItem as PriceSnapshotItemType,
-	PriceSnapshot as PriceSnapshotType,
-	VotePenaltyCounter as VotePenaltyCounterType,
+	AggregateExchangeRateVote as AggregateExchangeRateVote_type,
+	Denom as Denom_type,
+	ExchangeRateTuple as ExchangeRateTuple_type,
+	OracleExchangeRate as OracleExchangeRate_type,
+	OracleTwap as OracleTwap_type,
+	Params as Params_type,
+	PriceSnapshotItem as PriceSnapshotItem_type,
+	PriceSnapshot as PriceSnapshot_type,
+	VotePenaltyCounter as VotePenaltyCounter_type,
 } from "../../types/oracle";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface Params extends ParamsType {}
-interface Denom extends DenomType {}
-interface AggregateExchangeRateVote extends AggregateExchangeRateVoteType {}
-interface ExchangeRateTuple extends ExchangeRateTupleType {}
-interface OracleExchangeRate extends OracleExchangeRateType {}
-interface PriceSnapshotItem extends PriceSnapshotItemType {}
-interface PriceSnapshot extends PriceSnapshotType {}
-interface OracleTwap extends OracleTwapType {}
-interface VotePenaltyCounter extends VotePenaltyCounterType {}
+export interface Params extends Params_type {}
+export interface Denom extends Denom_type {}
+export interface AggregateExchangeRateVote extends AggregateExchangeRateVote_type {}
+export interface ExchangeRateTuple extends ExchangeRateTuple_type {}
+export interface OracleExchangeRate extends OracleExchangeRate_type {}
+export interface PriceSnapshotItem extends PriceSnapshotItem_type {}
+export interface PriceSnapshot extends PriceSnapshot_type {}
+export interface OracleTwap extends OracleTwap_type {}
+export interface VotePenaltyCounter extends VotePenaltyCounter_type {}
 
 export const Params: MessageFns<Params, "seiprotocol.seichain.oracle.Params"> = {
 	$type: "seiprotocol.seichain.oracle.Params" as const,

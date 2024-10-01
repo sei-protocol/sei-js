@@ -6,11 +6,11 @@ import { EvidenceList } from "./evidence";
 
 import { Commit, Data, Header } from "./types";
 
-import type { Block as BlockType } from "../../../types/tendermint/types";
+import type { Block as Block_type } from "../../../types/tendermint/types";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface Block extends BlockType {}
+export interface Block extends Block_type {}
 
 export const Block: MessageFns<Block, "tendermint.types.Block"> = {
 	$type: "tendermint.types.Block" as const,

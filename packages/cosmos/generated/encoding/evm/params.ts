@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { ParamsPreV580 as ParamsPreV580Type, Params as ParamsType } from "../../types/evm";
+import type { ParamsPreV580 as ParamsPreV580_type, Params as Params_type } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface Params extends ParamsType {}
-interface ParamsPreV580 extends ParamsPreV580Type {}
+export interface Params extends Params_type {}
+export interface ParamsPreV580 extends ParamsPreV580_type {}
 
 export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 	$type: "seiprotocol.seichain.evm.Params" as const,

@@ -3,38 +3,39 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	DescriptorProtoExtensionRange as DescriptorProtoExtensionRangeType,
-	DescriptorProtoReservedRange as DescriptorProtoReservedRangeType,
-	DescriptorProto as DescriptorProtoType,
-	EnumDescriptorProtoEnumReservedRange as EnumDescriptorProtoEnumReservedRangeType,
-	EnumDescriptorProto as EnumDescriptorProtoType,
-	EnumOptions as EnumOptionsType,
-	EnumValueDescriptorProto as EnumValueDescriptorProtoType,
-	EnumValueOptions as EnumValueOptionsType,
-	ExtensionRangeOptionsDeclaration as ExtensionRangeOptionsDeclarationType,
-	ExtensionRangeOptions as ExtensionRangeOptionsType,
-	FeatureSetDefaultsFeatureSetEditionDefault as FeatureSetDefaultsFeatureSetEditionDefaultType,
-	FeatureSetDefaults as FeatureSetDefaultsType,
-	FeatureSet as FeatureSetType,
-	FieldOptionsEditionDefault as FieldOptionsEditionDefaultType,
-	FieldOptionsFeatureSupport as FieldOptionsFeatureSupportType,
-	FieldOptions as FieldOptionsType,
-	FileDescriptorProto as FileDescriptorProtoType,
-	FileDescriptorSet as FileDescriptorSetType,
-	FileOptions as FileOptionsType,
-	GeneratedCodeInfoAnnotation as GeneratedCodeInfoAnnotationType,
-	GeneratedCodeInfo as GeneratedCodeInfoType,
-	MessageOptions as MessageOptionsType,
-	MethodDescriptorProto as MethodDescriptorProtoType,
-	MethodOptions as MethodOptionsType,
-	OneofDescriptorProto as OneofDescriptorProtoType,
-	OneofOptions as OneofOptionsType,
-	ServiceDescriptorProto as ServiceDescriptorProtoType,
-	ServiceOptions as ServiceOptionsType,
-	SourceCodeInfoLocation as SourceCodeInfoLocationType,
-	SourceCodeInfo as SourceCodeInfoType,
-	UninterpretedOptionNamePart as UninterpretedOptionNamePartType,
-	UninterpretedOption as UninterpretedOptionType,
+	DescriptorProtoExtensionRange as DescriptorProtoExtensionRange_type,
+	DescriptorProtoReservedRange as DescriptorProtoReservedRange_type,
+	DescriptorProto as DescriptorProto_type,
+	EnumDescriptorProtoEnumReservedRange as EnumDescriptorProtoEnumReservedRange_type,
+	EnumDescriptorProto as EnumDescriptorProto_type,
+	EnumOptions as EnumOptions_type,
+	EnumValueDescriptorProto as EnumValueDescriptorProto_type,
+	EnumValueOptions as EnumValueOptions_type,
+	ExtensionRangeOptionsDeclaration as ExtensionRangeOptionsDeclaration_type,
+	ExtensionRangeOptions as ExtensionRangeOptions_type,
+	FeatureSetDefaultsFeatureSetEditionDefault as FeatureSetDefaultsFeatureSetEditionDefault_type,
+	FeatureSetDefaults as FeatureSetDefaults_type,
+	FeatureSet as FeatureSet_type,
+	FieldDescriptorProto as FieldDescriptorProto_type,
+	FieldOptionsEditionDefault as FieldOptionsEditionDefault_type,
+	FieldOptionsFeatureSupport as FieldOptionsFeatureSupport_type,
+	FieldOptions as FieldOptions_type,
+	FileDescriptorProto as FileDescriptorProto_type,
+	FileDescriptorSet as FileDescriptorSet_type,
+	FileOptions as FileOptions_type,
+	GeneratedCodeInfoAnnotation as GeneratedCodeInfoAnnotation_type,
+	GeneratedCodeInfo as GeneratedCodeInfo_type,
+	MessageOptions as MessageOptions_type,
+	MethodDescriptorProto as MethodDescriptorProto_type,
+	MethodOptions as MethodOptions_type,
+	OneofDescriptorProto as OneofDescriptorProto_type,
+	OneofOptions as OneofOptions_type,
+	ServiceDescriptorProto as ServiceDescriptorProto_type,
+	ServiceOptions as ServiceOptions_type,
+	SourceCodeInfoLocation as SourceCodeInfoLocation_type,
+	SourceCodeInfo as SourceCodeInfo_type,
+	UninterpretedOptionNamePart as UninterpretedOptionNamePart_type,
+	UninterpretedOption as UninterpretedOption_type,
 } from "../../../types/google/protobuf";
 
 import {
@@ -57,41 +58,41 @@ import {
 	MethodOptionsIdempotencyLevel,
 } from "../../../types/google/protobuf";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface FileDescriptorSet extends FileDescriptorSetType {}
-interface FileDescriptorProto extends FileDescriptorProtoType {}
-interface DescriptorProto extends DescriptorProtoType {}
-interface DescriptorProtoExtensionRange extends DescriptorProtoExtensionRangeType {}
-interface DescriptorProtoReservedRange extends DescriptorProtoReservedRangeType {}
-interface ExtensionRangeOptions extends ExtensionRangeOptionsType {}
-interface ExtensionRangeOptionsDeclaration extends ExtensionRangeOptionsDeclarationType {}
-interface FieldDescriptorProto extends FieldDescriptorProtoType {}
-interface OneofDescriptorProto extends OneofDescriptorProtoType {}
-interface EnumDescriptorProto extends EnumDescriptorProtoType {}
-interface EnumDescriptorProtoEnumReservedRange extends EnumDescriptorProtoEnumReservedRangeType {}
-interface EnumValueDescriptorProto extends EnumValueDescriptorProtoType {}
-interface ServiceDescriptorProto extends ServiceDescriptorProtoType {}
-interface MethodDescriptorProto extends MethodDescriptorProtoType {}
-interface FileOptions extends FileOptionsType {}
-interface MessageOptions extends MessageOptionsType {}
-interface FieldOptions extends FieldOptionsType {}
-interface FieldOptionsEditionDefault extends FieldOptionsEditionDefaultType {}
-interface FieldOptionsFeatureSupport extends FieldOptionsFeatureSupportType {}
-interface OneofOptions extends OneofOptionsType {}
-interface EnumOptions extends EnumOptionsType {}
-interface EnumValueOptions extends EnumValueOptionsType {}
-interface ServiceOptions extends ServiceOptionsType {}
-interface MethodOptions extends MethodOptionsType {}
-interface UninterpretedOption extends UninterpretedOptionType {}
-interface UninterpretedOptionNamePart extends UninterpretedOptionNamePartType {}
-interface FeatureSet extends FeatureSetType {}
-interface FeatureSetDefaults extends FeatureSetDefaultsType {}
-interface FeatureSetDefaultsFeatureSetEditionDefault extends FeatureSetDefaultsFeatureSetEditionDefaultType {}
-interface SourceCodeInfo extends SourceCodeInfoType {}
-interface SourceCodeInfoLocation extends SourceCodeInfoLocationType {}
-interface GeneratedCodeInfo extends GeneratedCodeInfoType {}
-interface GeneratedCodeInfoAnnotation extends GeneratedCodeInfoAnnotationType {}
+export interface FileDescriptorSet extends FileDescriptorSet_type {}
+export interface FileDescriptorProto extends FileDescriptorProto_type {}
+export interface DescriptorProto extends DescriptorProto_type {}
+export interface DescriptorProtoExtensionRange extends DescriptorProtoExtensionRange_type {}
+export interface DescriptorProtoReservedRange extends DescriptorProtoReservedRange_type {}
+export interface ExtensionRangeOptions extends ExtensionRangeOptions_type {}
+export interface ExtensionRangeOptionsDeclaration extends ExtensionRangeOptionsDeclaration_type {}
+export interface FieldDescriptorProto extends FieldDescriptorProto_type {}
+export interface OneofDescriptorProto extends OneofDescriptorProto_type {}
+export interface EnumDescriptorProto extends EnumDescriptorProto_type {}
+export interface EnumDescriptorProtoEnumReservedRange extends EnumDescriptorProtoEnumReservedRange_type {}
+export interface EnumValueDescriptorProto extends EnumValueDescriptorProto_type {}
+export interface ServiceDescriptorProto extends ServiceDescriptorProto_type {}
+export interface MethodDescriptorProto extends MethodDescriptorProto_type {}
+export interface FileOptions extends FileOptions_type {}
+export interface MessageOptions extends MessageOptions_type {}
+export interface FieldOptions extends FieldOptions_type {}
+export interface FieldOptionsEditionDefault extends FieldOptionsEditionDefault_type {}
+export interface FieldOptionsFeatureSupport extends FieldOptionsFeatureSupport_type {}
+export interface OneofOptions extends OneofOptions_type {}
+export interface EnumOptions extends EnumOptions_type {}
+export interface EnumValueOptions extends EnumValueOptions_type {}
+export interface ServiceOptions extends ServiceOptions_type {}
+export interface MethodOptions extends MethodOptions_type {}
+export interface UninterpretedOption extends UninterpretedOption_type {}
+export interface UninterpretedOptionNamePart extends UninterpretedOptionNamePart_type {}
+export interface FeatureSet extends FeatureSet_type {}
+export interface FeatureSetDefaults extends FeatureSetDefaults_type {}
+export interface FeatureSetDefaultsFeatureSetEditionDefault extends FeatureSetDefaultsFeatureSetEditionDefault_type {}
+export interface SourceCodeInfo extends SourceCodeInfo_type {}
+export interface SourceCodeInfoLocation extends SourceCodeInfoLocation_type {}
+export interface GeneratedCodeInfo extends GeneratedCodeInfo_type {}
+export interface GeneratedCodeInfoAnnotation extends GeneratedCodeInfoAnnotation_type {}
 
 export const FileDescriptorSet: MessageFns<FileDescriptorSet, "google.protobuf.FileDescriptorSet"> = {
 	$type: "google.protobuf.FileDescriptorSet" as const,

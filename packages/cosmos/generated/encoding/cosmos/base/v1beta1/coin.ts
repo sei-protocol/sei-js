@@ -2,14 +2,14 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Coin as CoinType, DecCoin as DecCoinType, DecProto as DecProtoType, IntProto as IntProtoType } from "../../../../types/cosmos/base/v1beta1";
+import type { Coin as Coin_type, DecCoin as DecCoin_type, DecProto as DecProto_type, IntProto as IntProto_type } from "../../../../types/cosmos/base/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Coin extends CoinType {}
-interface DecCoin extends DecCoinType {}
-interface IntProto extends IntProtoType {}
-interface DecProto extends DecProtoType {}
+export interface Coin extends Coin_type {}
+export interface DecCoin extends DecCoin_type {}
+export interface IntProto extends IntProto_type {}
+export interface DecProto extends DecProto_type {}
 
 export const Coin: MessageFns<Coin, "cosmos.base.v1beta1.Coin"> = {
 	$type: "cosmos.base.v1beta1.Coin" as const,

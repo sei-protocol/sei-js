@@ -4,12 +4,12 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Delegation, Params, Redelegation, UnbondingDelegation, Validator } from "./staking";
 
-import type { GenesisState as GenesisStateType, LastValidatorPower as LastValidatorPowerType } from "../../../../types/cosmos/staking/v1beta1";
+import type { GenesisState as GenesisState_type, LastValidatorPower as LastValidatorPower_type } from "../../../../types/cosmos/staking/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GenesisState extends GenesisStateType {}
-interface LastValidatorPower extends LastValidatorPowerType {}
+export interface GenesisState extends GenesisState_type {}
+export interface LastValidatorPower extends LastValidatorPower_type {}
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.staking.v1beta1.GenesisState"> = {
 	$type: "cosmos.staking.v1beta1.GenesisState" as const,

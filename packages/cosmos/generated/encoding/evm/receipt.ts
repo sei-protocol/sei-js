@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { Log as LogType, Receipt as ReceiptType } from "../../types/evm";
+import type { Log as Log_type, Receipt as Receipt_type } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface Log extends LogType {}
-interface Receipt extends ReceiptType {}
+export interface Log extends Log_type {}
+export interface Receipt extends Receipt_type {}
 
 export const Log: MessageFns<Log, "seiprotocol.seichain.evm.Log"> = {
 	$type: "seiprotocol.seichain.evm.Log" as const,

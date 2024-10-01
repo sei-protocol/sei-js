@@ -6,11 +6,11 @@ import { Any } from "../../../google/protobuf/any";
 
 import { Params } from "./auth";
 
-import type { GenesisState as GenesisStateType } from "../../../../types/cosmos/auth/v1beta1";
+import type { GenesisState as GenesisState_type } from "../../../../types/cosmos/auth/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GenesisState extends GenesisStateType {}
+export interface GenesisState extends GenesisState_type {}
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.auth.v1beta1.GenesisState"> = {
 	$type: "cosmos.auth.v1beta1.GenesisState" as const,

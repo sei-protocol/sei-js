@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { PubKey as PubKeyType } from "../../../../types/cosmos/crypto/sr25519";
+import type { PubKey as PubKey_type } from "../../../../types/cosmos/crypto/sr25519";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface PubKey extends PubKeyType {}
+export interface PubKey extends PubKey_type {}
 
 export const PubKey: MessageFns<PubKey, "cosmos.crypto.sr25519.PubKey"> = {
 	$type: "cosmos.crypto.sr25519.PubKey" as const,

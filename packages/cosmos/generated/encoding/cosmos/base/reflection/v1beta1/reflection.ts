@@ -1,18 +1,18 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	ListAllInterfacesRequest as ListAllInterfacesRequestType,
-	ListAllInterfacesResponse as ListAllInterfacesResponseType,
-	ListImplementationsRequest as ListImplementationsRequestType,
-	ListImplementationsResponse as ListImplementationsResponseType,
+	ListAllInterfacesRequest as ListAllInterfacesRequest_type,
+	ListAllInterfacesResponse as ListAllInterfacesResponse_type,
+	ListImplementationsRequest as ListImplementationsRequest_type,
+	ListImplementationsResponse as ListImplementationsResponse_type,
 } from "../../../../../types/cosmos/base/reflection/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface ListAllInterfacesRequest extends ListAllInterfacesRequestType {}
-interface ListAllInterfacesResponse extends ListAllInterfacesResponseType {}
-interface ListImplementationsRequest extends ListImplementationsRequestType {}
-interface ListImplementationsResponse extends ListImplementationsResponseType {}
+export interface ListAllInterfacesRequest extends ListAllInterfacesRequest_type {}
+export interface ListAllInterfacesResponse extends ListAllInterfacesResponse_type {}
+export interface ListImplementationsRequest extends ListImplementationsRequest_type {}
+export interface ListImplementationsResponse extends ListImplementationsResponse_type {}
 
 export const ListAllInterfacesRequest: MessageFns<ListAllInterfacesRequest, "cosmos.base.reflection.v1beta1.ListAllInterfacesRequest"> = {
 	$type: "cosmos.base.reflection.v1beta1.ListAllInterfacesRequest" as const,

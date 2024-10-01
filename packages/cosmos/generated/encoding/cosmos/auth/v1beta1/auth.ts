@@ -4,13 +4,13 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Any } from "../../../google/protobuf/any";
 
-import type { BaseAccount as BaseAccountType, ModuleAccount as ModuleAccountType, Params as ParamsType } from "../../../../types/cosmos/auth/v1beta1";
+import type { BaseAccount as BaseAccount_type, ModuleAccount as ModuleAccount_type, Params as Params_type } from "../../../../types/cosmos/auth/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface BaseAccount extends BaseAccountType {}
-interface ModuleAccount extends ModuleAccountType {}
-interface Params extends ParamsType {}
+export interface BaseAccount extends BaseAccount_type {}
+export interface ModuleAccount extends ModuleAccount_type {}
+export interface Params extends Params_type {}
 
 export const BaseAccount: MessageFns<BaseAccount, "cosmos.auth.v1beta1.BaseAccount"> = {
 	$type: "cosmos.auth.v1beta1.BaseAccount" as const,

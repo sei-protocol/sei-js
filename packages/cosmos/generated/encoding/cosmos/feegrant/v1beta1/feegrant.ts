@@ -11,18 +11,18 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	AllowedMsgAllowance as AllowedMsgAllowanceType,
-	BasicAllowance as BasicAllowanceType,
-	Grant as GrantType,
-	PeriodicAllowance as PeriodicAllowanceType,
+	AllowedMsgAllowance as AllowedMsgAllowance_type,
+	BasicAllowance as BasicAllowance_type,
+	Grant as Grant_type,
+	PeriodicAllowance as PeriodicAllowance_type,
 } from "../../../../types/cosmos/feegrant/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface BasicAllowance extends BasicAllowanceType {}
-interface PeriodicAllowance extends PeriodicAllowanceType {}
-interface AllowedMsgAllowance extends AllowedMsgAllowanceType {}
-interface Grant extends GrantType {}
+export interface BasicAllowance extends BasicAllowance_type {}
+export interface PeriodicAllowance extends PeriodicAllowance_type {}
+export interface AllowedMsgAllowance extends AllowedMsgAllowance_type {}
+export interface Grant extends Grant_type {}
 
 export const BasicAllowance: MessageFns<BasicAllowance, "cosmos.feegrant.v1beta1.BasicAllowance"> = {
 	$type: "cosmos.feegrant.v1beta1.BasicAllowance" as const,

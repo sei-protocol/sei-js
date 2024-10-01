@@ -4,11 +4,11 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Any } from "../protobuf/any";
 
-import type { HttpBody as HttpBodyType } from "../../../types/google/api";
+import type { HttpBody as HttpBody_type } from "../../../types/google/api";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface HttpBody extends HttpBodyType {}
+export interface HttpBody extends HttpBody_type {}
 
 export const HttpBody: MessageFns<HttpBody, "google.api.HttpBody"> = {
 	$type: "google.api.HttpBody" as const,

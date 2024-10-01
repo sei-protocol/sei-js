@@ -7,22 +7,22 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Grant, GrantAuthorization } from "./authz";
 
 import type {
-	QueryGranteeGrantsRequest as QueryGranteeGrantsRequestType,
-	QueryGranteeGrantsResponse as QueryGranteeGrantsResponseType,
-	QueryGranterGrantsRequest as QueryGranterGrantsRequestType,
-	QueryGranterGrantsResponse as QueryGranterGrantsResponseType,
-	QueryGrantsRequest as QueryGrantsRequestType,
-	QueryGrantsResponse as QueryGrantsResponseType,
+	QueryGranteeGrantsRequest as QueryGranteeGrantsRequest_type,
+	QueryGranteeGrantsResponse as QueryGranteeGrantsResponse_type,
+	QueryGranterGrantsRequest as QueryGranterGrantsRequest_type,
+	QueryGranterGrantsResponse as QueryGranterGrantsResponse_type,
+	QueryGrantsRequest as QueryGrantsRequest_type,
+	QueryGrantsResponse as QueryGrantsResponse_type,
 } from "../../../../types/cosmos/authz/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryGrantsRequest extends QueryGrantsRequestType {}
-interface QueryGrantsResponse extends QueryGrantsResponseType {}
-interface QueryGranterGrantsRequest extends QueryGranterGrantsRequestType {}
-interface QueryGranterGrantsResponse extends QueryGranterGrantsResponseType {}
-interface QueryGranteeGrantsRequest extends QueryGranteeGrantsRequestType {}
-interface QueryGranteeGrantsResponse extends QueryGranteeGrantsResponseType {}
+export interface QueryGrantsRequest extends QueryGrantsRequest_type {}
+export interface QueryGrantsResponse extends QueryGrantsResponse_type {}
+export interface QueryGranterGrantsRequest extends QueryGranterGrantsRequest_type {}
+export interface QueryGranterGrantsResponse extends QueryGranterGrantsResponse_type {}
+export interface QueryGranteeGrantsRequest extends QueryGranteeGrantsRequest_type {}
+export interface QueryGranteeGrantsResponse extends QueryGranteeGrantsResponse_type {}
 
 export const QueryGrantsRequest: MessageFns<QueryGrantsRequest, "cosmos.authz.v1beta1.QueryGrantsRequest"> = {
 	$type: "cosmos.authz.v1beta1.QueryGrantsRequest" as const,

@@ -4,13 +4,13 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { AggregateExchangeRateVote, ExchangeRateTuple, Params, PriceSnapshot, VotePenaltyCounter } from "./oracle";
 
-import type { FeederDelegation as FeederDelegationType, GenesisState as GenesisStateType, PenaltyCounter as PenaltyCounterType } from "../../types/oracle";
+import type { FeederDelegation as FeederDelegation_type, GenesisState as GenesisState_type, PenaltyCounter as PenaltyCounter_type } from "../../types/oracle";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface GenesisState extends GenesisStateType {}
-interface FeederDelegation extends FeederDelegationType {}
-interface PenaltyCounter extends PenaltyCounterType {}
+export interface GenesisState extends GenesisState_type {}
+export interface FeederDelegation extends FeederDelegation_type {}
+export interface PenaltyCounter extends PenaltyCounter_type {}
 
 export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.oracle.GenesisState"> = {
 	$type: "seiprotocol.seichain.oracle.GenesisState" as const,

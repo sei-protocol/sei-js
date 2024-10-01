@@ -4,12 +4,12 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { MessageDependencyMapping, WasmDependencyMapping } from "../accesscontrol/accesscontrol";
 
-import type { GenesisState as GenesisStateType, Params as ParamsType } from "../../../types/cosmos/accesscontrol_x";
+import type { GenesisState as GenesisState_type, Params as Params_type } from "../../../types/cosmos/accesscontrol_x";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface GenesisState extends GenesisStateType {}
-interface Params extends ParamsType {}
+export interface GenesisState extends GenesisState_type {}
+export interface Params extends Params_type {}
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.accesscontrol_x.v1beta1.GenesisState"> = {
 	$type: "cosmos.accesscontrol_x.v1beta1.GenesisState" as const,

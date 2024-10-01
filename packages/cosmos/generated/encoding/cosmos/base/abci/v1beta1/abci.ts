@@ -7,30 +7,30 @@ import { Any } from "../../../../google/protobuf/any";
 import { Event } from "../../../../tendermint/abci/types";
 
 import type {
-	ABCIMessageLog as ABCIMessageLogType,
-	Attribute as AttributeType,
-	GasInfo as GasInfoType,
-	MsgData as MsgDataType,
-	Result as ResultType,
-	SearchTxsResult as SearchTxsResultType,
-	SimulationResponse as SimulationResponseType,
-	StringEvent as StringEventType,
-	TxMsgData as TxMsgDataType,
-	TxResponse as TxResponseType,
+	ABCIMessageLog as ABCIMessageLog_type,
+	Attribute as Attribute_type,
+	GasInfo as GasInfo_type,
+	MsgData as MsgData_type,
+	Result as Result_type,
+	SearchTxsResult as SearchTxsResult_type,
+	SimulationResponse as SimulationResponse_type,
+	StringEvent as StringEvent_type,
+	TxMsgData as TxMsgData_type,
+	TxResponse as TxResponse_type,
 } from "../../../../../types/cosmos/base/abci/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface TxResponse extends TxResponseType {}
-interface ABCIMessageLog extends ABCIMessageLogType {}
-interface StringEvent extends StringEventType {}
-interface Attribute extends AttributeType {}
-interface GasInfo extends GasInfoType {}
-interface Result extends ResultType {}
-interface SimulationResponse extends SimulationResponseType {}
-interface MsgData extends MsgDataType {}
-interface TxMsgData extends TxMsgDataType {}
-interface SearchTxsResult extends SearchTxsResultType {}
+export interface TxResponse extends TxResponse_type {}
+export interface ABCIMessageLog extends ABCIMessageLog_type {}
+export interface StringEvent extends StringEvent_type {}
+export interface Attribute extends Attribute_type {}
+export interface GasInfo extends GasInfo_type {}
+export interface Result extends Result_type {}
+export interface SimulationResponse extends SimulationResponse_type {}
+export interface MsgData extends MsgData_type {}
+export interface TxMsgData extends TxMsgData_type {}
+export interface SearchTxsResult extends SearchTxsResult_type {}
 
 export const TxResponse: MessageFns<TxResponse, "cosmos.base.abci.v1beta1.TxResponse"> = {
 	$type: "cosmos.base.abci.v1beta1.TxResponse" as const,

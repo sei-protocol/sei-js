@@ -4,12 +4,12 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { ParamChange } from "./params";
 
-import type { QueryParamsRequest as QueryParamsRequestType, QueryParamsResponse as QueryParamsResponseType } from "../../../../types/cosmos/params/v1beta1";
+import type { QueryParamsRequest as QueryParamsRequest_type, QueryParamsResponse as QueryParamsResponse_type } from "../../../../types/cosmos/params/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.params.v1beta1.QueryParamsRequest"> = {
 	$type: "cosmos.params.v1beta1.QueryParamsRequest" as const,

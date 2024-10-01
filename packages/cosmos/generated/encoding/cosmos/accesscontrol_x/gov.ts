@@ -3,20 +3,20 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { MessageDependencyMapping, WasmDependencyMapping } from "../accesscontrol/accesscontrol";
 
 import type {
-	MsgUpdateResourceDependencyMappingProposalJsonFile as MsgUpdateResourceDependencyMappingProposalJsonFileType,
-	MsgUpdateResourceDependencyMappingProposalResponse as MsgUpdateResourceDependencyMappingProposalResponseType,
-	MsgUpdateResourceDependencyMappingProposal as MsgUpdateResourceDependencyMappingProposalType,
-	MsgUpdateWasmDependencyMappingProposalJsonFile as MsgUpdateWasmDependencyMappingProposalJsonFileType,
-	MsgUpdateWasmDependencyMappingProposal as MsgUpdateWasmDependencyMappingProposalType,
+	MsgUpdateResourceDependencyMappingProposalJsonFile as MsgUpdateResourceDependencyMappingProposalJsonFile_type,
+	MsgUpdateResourceDependencyMappingProposalResponse as MsgUpdateResourceDependencyMappingProposalResponse_type,
+	MsgUpdateResourceDependencyMappingProposal as MsgUpdateResourceDependencyMappingProposal_type,
+	MsgUpdateWasmDependencyMappingProposalJsonFile as MsgUpdateWasmDependencyMappingProposalJsonFile_type,
+	MsgUpdateWasmDependencyMappingProposal as MsgUpdateWasmDependencyMappingProposal_type,
 } from "../../../types/cosmos/accesscontrol_x";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface MsgUpdateResourceDependencyMappingProposal extends MsgUpdateResourceDependencyMappingProposalType {}
-interface MsgUpdateResourceDependencyMappingProposalJsonFile extends MsgUpdateResourceDependencyMappingProposalJsonFileType {}
-interface MsgUpdateResourceDependencyMappingProposalResponse extends MsgUpdateResourceDependencyMappingProposalResponseType {}
-interface MsgUpdateWasmDependencyMappingProposal extends MsgUpdateWasmDependencyMappingProposalType {}
-interface MsgUpdateWasmDependencyMappingProposalJsonFile extends MsgUpdateWasmDependencyMappingProposalJsonFileType {}
+export interface MsgUpdateResourceDependencyMappingProposal extends MsgUpdateResourceDependencyMappingProposal_type {}
+export interface MsgUpdateResourceDependencyMappingProposalJsonFile extends MsgUpdateResourceDependencyMappingProposalJsonFile_type {}
+export interface MsgUpdateResourceDependencyMappingProposalResponse extends MsgUpdateResourceDependencyMappingProposalResponse_type {}
+export interface MsgUpdateWasmDependencyMappingProposal extends MsgUpdateWasmDependencyMappingProposal_type {}
+export interface MsgUpdateWasmDependencyMappingProposalJsonFile extends MsgUpdateWasmDependencyMappingProposalJsonFile_type {}
 
 export const MsgUpdateResourceDependencyMappingProposal: MessageFns<
 	MsgUpdateResourceDependencyMappingProposal,

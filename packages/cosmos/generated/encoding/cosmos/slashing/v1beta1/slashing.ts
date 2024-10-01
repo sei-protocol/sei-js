@@ -7,20 +7,20 @@ import { Duration } from "../../../google/protobuf/duration";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 
 import type {
-	Params as ParamsType,
-	ValidatorMissedBlockArrayLegacyMissedHeights as ValidatorMissedBlockArrayLegacyMissedHeightsType,
-	ValidatorMissedBlockArray as ValidatorMissedBlockArrayType,
-	ValidatorSigningInfoLegacyMissedHeights as ValidatorSigningInfoLegacyMissedHeightsType,
-	ValidatorSigningInfo as ValidatorSigningInfoType,
+	Params as Params_type,
+	ValidatorMissedBlockArrayLegacyMissedHeights as ValidatorMissedBlockArrayLegacyMissedHeights_type,
+	ValidatorMissedBlockArray as ValidatorMissedBlockArray_type,
+	ValidatorSigningInfoLegacyMissedHeights as ValidatorSigningInfoLegacyMissedHeights_type,
+	ValidatorSigningInfo as ValidatorSigningInfo_type,
 } from "../../../../types/cosmos/slashing/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface ValidatorSigningInfoLegacyMissedHeights extends ValidatorSigningInfoLegacyMissedHeightsType {}
-interface ValidatorSigningInfo extends ValidatorSigningInfoType {}
-interface ValidatorMissedBlockArrayLegacyMissedHeights extends ValidatorMissedBlockArrayLegacyMissedHeightsType {}
-interface ValidatorMissedBlockArray extends ValidatorMissedBlockArrayType {}
-interface Params extends ParamsType {}
+export interface ValidatorSigningInfoLegacyMissedHeights extends ValidatorSigningInfoLegacyMissedHeights_type {}
+export interface ValidatorSigningInfo extends ValidatorSigningInfo_type {}
+export interface ValidatorMissedBlockArrayLegacyMissedHeights extends ValidatorMissedBlockArrayLegacyMissedHeights_type {}
+export interface ValidatorMissedBlockArray extends ValidatorMissedBlockArray_type {}
+export interface Params extends Params_type {}
 
 export const ValidatorSigningInfoLegacyMissedHeights: MessageFns<
 	ValidatorSigningInfoLegacyMissedHeights,

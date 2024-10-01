@@ -1,10 +1,10 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { DenomAuthorityMetadata as DenomAuthorityMetadataType } from "../../types/tokenfactory";
+import type { DenomAuthorityMetadata as DenomAuthorityMetadata_type } from "../../types/tokenfactory";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface DenomAuthorityMetadata extends DenomAuthorityMetadataType {}
+export interface DenomAuthorityMetadata extends DenomAuthorityMetadata_type {}
 
 export const DenomAuthorityMetadata: MessageFns<DenomAuthorityMetadata, "seiprotocol.seichain.tokenfactory.DenomAuthorityMetadata"> = {
 	$type: "seiprotocol.seichain.tokenfactory.DenomAuthorityMetadata" as const,

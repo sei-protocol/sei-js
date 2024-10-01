@@ -5,22 +5,22 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Params } from "./params";
 
 import type {
-	AddressAssociation as AddressAssociationType,
-	Code as CodeType,
-	ContractState as ContractStateType,
-	GenesisState as GenesisStateType,
-	Nonce as NonceType,
-	Serialized as SerializedType,
+	AddressAssociation as AddressAssociation_type,
+	Code as Code_type,
+	ContractState as ContractState_type,
+	GenesisState as GenesisState_type,
+	Nonce as Nonce_type,
+	Serialized as Serialized_type,
 } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface AddressAssociation extends AddressAssociationType {}
-interface Code extends CodeType {}
-interface ContractState extends ContractStateType {}
-interface Nonce extends NonceType {}
-interface Serialized extends SerializedType {}
-interface GenesisState extends GenesisStateType {}
+export interface AddressAssociation extends AddressAssociation_type {}
+export interface Code extends Code_type {}
+export interface ContractState extends ContractState_type {}
+export interface Nonce extends Nonce_type {}
+export interface Serialized extends Serialized_type {}
+export interface GenesisState extends GenesisState_type {}
 
 export const AddressAssociation: MessageFns<AddressAssociation, "seiprotocol.seichain.evm.AddressAssociation"> = {
 	$type: "seiprotocol.seichain.evm.AddressAssociation" as const,

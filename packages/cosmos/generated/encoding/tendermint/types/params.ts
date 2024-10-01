@@ -5,28 +5,28 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Duration } from "../../google/protobuf/duration";
 
 import type {
-	ABCIParams as ABCIParamsType,
-	BlockParams as BlockParamsType,
-	ConsensusParams as ConsensusParamsType,
-	EvidenceParams as EvidenceParamsType,
-	HashedParams as HashedParamsType,
-	SynchronyParams as SynchronyParamsType,
-	TimeoutParams as TimeoutParamsType,
-	ValidatorParams as ValidatorParamsType,
-	VersionParams as VersionParamsType,
+	ABCIParams as ABCIParams_type,
+	BlockParams as BlockParams_type,
+	ConsensusParams as ConsensusParams_type,
+	EvidenceParams as EvidenceParams_type,
+	HashedParams as HashedParams_type,
+	SynchronyParams as SynchronyParams_type,
+	TimeoutParams as TimeoutParams_type,
+	ValidatorParams as ValidatorParams_type,
+	VersionParams as VersionParams_type,
 } from "../../../types/tendermint/types";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface ConsensusParams extends ConsensusParamsType {}
-interface BlockParams extends BlockParamsType {}
-interface EvidenceParams extends EvidenceParamsType {}
-interface ValidatorParams extends ValidatorParamsType {}
-interface VersionParams extends VersionParamsType {}
-interface HashedParams extends HashedParamsType {}
-interface SynchronyParams extends SynchronyParamsType {}
-interface TimeoutParams extends TimeoutParamsType {}
-interface ABCIParams extends ABCIParamsType {}
+export interface ConsensusParams extends ConsensusParams_type {}
+export interface BlockParams extends BlockParams_type {}
+export interface EvidenceParams extends EvidenceParams_type {}
+export interface ValidatorParams extends ValidatorParams_type {}
+export interface VersionParams extends VersionParams_type {}
+export interface HashedParams extends HashedParams_type {}
+export interface SynchronyParams extends SynchronyParams_type {}
+export interface TimeoutParams extends TimeoutParams_type {}
+export interface ABCIParams extends ABCIParams_type {}
 
 export const ConsensusParams: MessageFns<ConsensusParams, "tendermint.types.ConsensusParams"> = {
 	$type: "tendermint.types.ConsensusParams" as const,

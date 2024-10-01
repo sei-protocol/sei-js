@@ -5,14 +5,14 @@ import { AccessOperation } from "./accesscontrol";
 import { accessOperationSelectorTypeFromJSON, accessOperationSelectorTypeToJSON } from "./constants";
 
 import type {
-	LegacyAccessOperationWithSelector as LegacyAccessOperationWithSelectorType,
-	LegacyWasmDependencyMapping as LegacyWasmDependencyMappingType,
+	LegacyAccessOperationWithSelector as LegacyAccessOperationWithSelector_type,
+	LegacyWasmDependencyMapping as LegacyWasmDependencyMapping_type,
 } from "../../../types/cosmos/accesscontrol";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface LegacyAccessOperationWithSelector extends LegacyAccessOperationWithSelectorType {}
-interface LegacyWasmDependencyMapping extends LegacyWasmDependencyMappingType {}
+export interface LegacyAccessOperationWithSelector extends LegacyAccessOperationWithSelector_type {}
+export interface LegacyWasmDependencyMapping extends LegacyWasmDependencyMapping_type {}
 
 export const LegacyAccessOperationWithSelector: MessageFns<
 	LegacyAccessOperationWithSelector,

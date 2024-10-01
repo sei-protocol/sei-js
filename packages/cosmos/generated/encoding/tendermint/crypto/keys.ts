@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { PublicKey as PublicKeyType } from "../../../types/tendermint/crypto";
+import type { PublicKey as PublicKey_type } from "../../../types/tendermint/crypto";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface PublicKey extends PublicKeyType {}
+export interface PublicKey extends PublicKey_type {}
 
 export const PublicKey: MessageFns<PublicKey, "tendermint.crypto.PublicKey"> = {
 	$type: "tendermint.crypto.PublicKey" as const,

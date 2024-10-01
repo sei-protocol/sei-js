@@ -14,24 +14,24 @@ import {
 } from "./constants";
 
 import type {
-	AccessOperation as AccessOperationType,
-	MessageDependencyMapping as MessageDependencyMappingType,
-	WasmAccessOperation as WasmAccessOperationType,
-	WasmAccessOperations as WasmAccessOperationsType,
-	WasmContractReference as WasmContractReferenceType,
-	WasmContractReferences as WasmContractReferencesType,
-	WasmDependencyMapping as WasmDependencyMappingType,
+	AccessOperation as AccessOperation_type,
+	MessageDependencyMapping as MessageDependencyMapping_type,
+	WasmAccessOperation as WasmAccessOperation_type,
+	WasmAccessOperations as WasmAccessOperations_type,
+	WasmContractReference as WasmContractReference_type,
+	WasmContractReferences as WasmContractReferences_type,
+	WasmDependencyMapping as WasmDependencyMapping_type,
 } from "../../../types/cosmos/accesscontrol";
 
-import type { DeepPartial, Exact, MessageFns } from "../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../common";
 
-interface AccessOperation extends AccessOperationType {}
-interface WasmAccessOperation extends WasmAccessOperationType {}
-interface WasmContractReference extends WasmContractReferenceType {}
-interface WasmContractReferences extends WasmContractReferencesType {}
-interface WasmAccessOperations extends WasmAccessOperationsType {}
-interface MessageDependencyMapping extends MessageDependencyMappingType {}
-interface WasmDependencyMapping extends WasmDependencyMappingType {}
+export interface AccessOperation extends AccessOperation_type {}
+export interface WasmAccessOperation extends WasmAccessOperation_type {}
+export interface WasmContractReference extends WasmContractReference_type {}
+export interface WasmContractReferences extends WasmContractReferences_type {}
+export interface WasmAccessOperations extends WasmAccessOperations_type {}
+export interface MessageDependencyMapping extends MessageDependencyMapping_type {}
+export interface WasmDependencyMapping extends WasmDependencyMapping_type {}
 
 export const AccessOperation: MessageFns<AccessOperation, "cosmos.accesscontrol.v1beta1.AccessOperation"> = {
 	$type: "cosmos.accesscontrol.v1beta1.AccessOperation" as const,

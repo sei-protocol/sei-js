@@ -2,11 +2,11 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { StoreKVPair as StoreKVPairType } from "../../../../../types/cosmos/base/store/v1beta1";
+import type { StoreKVPair as StoreKVPair_type } from "../../../../../types/cosmos/base/store/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../../common";
 
-interface StoreKVPair extends StoreKVPairType {}
+export interface StoreKVPair extends StoreKVPair_type {}
 
 export const StoreKVPair: MessageFns<StoreKVPair, "cosmos.base.store.v1beta1.StoreKVPair"> = {
 	$type: "cosmos.base.store.v1beta1.StoreKVPair" as const,

@@ -4,11 +4,11 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Any } from "../../../google/protobuf/any";
 
-import type { LegacyAminoPubKey as LegacyAminoPubKeyType } from "../../../../types/cosmos/crypto/multisig";
+import type { LegacyAminoPubKey as LegacyAminoPubKey_type } from "../../../../types/cosmos/crypto/multisig";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface LegacyAminoPubKey extends LegacyAminoPubKeyType {}
+export interface LegacyAminoPubKey extends LegacyAminoPubKey_type {}
 
 export const LegacyAminoPubKey: MessageFns<LegacyAminoPubKey, "cosmos.crypto.multisig.LegacyAminoPubKey"> = {
 	$type: "cosmos.crypto.multisig.LegacyAminoPubKey" as const,

@@ -3,14 +3,14 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
-	MsgVerifyInvariantResponse as MsgVerifyInvariantResponseType,
-	MsgVerifyInvariant as MsgVerifyInvariantType,
+	MsgVerifyInvariantResponse as MsgVerifyInvariantResponse_type,
+	MsgVerifyInvariant as MsgVerifyInvariant_type,
 } from "../../../../types/cosmos/crisis/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface MsgVerifyInvariant extends MsgVerifyInvariantType {}
-interface MsgVerifyInvariantResponse extends MsgVerifyInvariantResponseType {}
+export interface MsgVerifyInvariant extends MsgVerifyInvariant_type {}
+export interface MsgVerifyInvariantResponse extends MsgVerifyInvariantResponse_type {}
 
 export const MsgVerifyInvariant: MessageFns<MsgVerifyInvariant, "cosmos.crisis.v1beta1.MsgVerifyInvariant"> = {
 	$type: "cosmos.crisis.v1beta1.MsgVerifyInvariant" as const,

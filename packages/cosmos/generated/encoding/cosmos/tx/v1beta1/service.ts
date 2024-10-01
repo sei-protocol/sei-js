@@ -13,32 +13,32 @@ import { PageRequest, PageResponse } from "../../base/query/v1beta1/pagination";
 import { Tx } from "./tx";
 
 import type {
-	BroadcastTxRequest as BroadcastTxRequestType,
-	BroadcastTxResponse as BroadcastTxResponseType,
-	GetBlockWithTxsRequest as GetBlockWithTxsRequestType,
-	GetBlockWithTxsResponse as GetBlockWithTxsResponseType,
-	GetTxRequest as GetTxRequestType,
-	GetTxResponse as GetTxResponseType,
-	GetTxsEventRequest as GetTxsEventRequestType,
-	GetTxsEventResponse as GetTxsEventResponseType,
-	SimulateRequest as SimulateRequestType,
-	SimulateResponse as SimulateResponseType,
+	BroadcastTxRequest as BroadcastTxRequest_type,
+	BroadcastTxResponse as BroadcastTxResponse_type,
+	GetBlockWithTxsRequest as GetBlockWithTxsRequest_type,
+	GetBlockWithTxsResponse as GetBlockWithTxsResponse_type,
+	GetTxRequest as GetTxRequest_type,
+	GetTxResponse as GetTxResponse_type,
+	GetTxsEventRequest as GetTxsEventRequest_type,
+	GetTxsEventResponse as GetTxsEventResponse_type,
+	SimulateRequest as SimulateRequest_type,
+	SimulateResponse as SimulateResponse_type,
 } from "../../../../types/cosmos/tx/v1beta1";
 
 import { BroadcastMode, OrderBy } from "../../../../types/cosmos/tx/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface GetTxsEventRequest extends GetTxsEventRequestType {}
-interface GetTxsEventResponse extends GetTxsEventResponseType {}
-interface BroadcastTxRequest extends BroadcastTxRequestType {}
-interface BroadcastTxResponse extends BroadcastTxResponseType {}
-interface SimulateRequest extends SimulateRequestType {}
-interface SimulateResponse extends SimulateResponseType {}
-interface GetTxRequest extends GetTxRequestType {}
-interface GetTxResponse extends GetTxResponseType {}
-interface GetBlockWithTxsRequest extends GetBlockWithTxsRequestType {}
-interface GetBlockWithTxsResponse extends GetBlockWithTxsResponseType {}
+export interface GetTxsEventRequest extends GetTxsEventRequest_type {}
+export interface GetTxsEventResponse extends GetTxsEventResponse_type {}
+export interface BroadcastTxRequest extends BroadcastTxRequest_type {}
+export interface BroadcastTxResponse extends BroadcastTxResponse_type {}
+export interface SimulateRequest extends SimulateRequest_type {}
+export interface SimulateResponse extends SimulateResponse_type {}
+export interface GetTxRequest extends GetTxRequest_type {}
+export interface GetTxResponse extends GetTxResponse_type {}
+export interface GetBlockWithTxsRequest extends GetBlockWithTxsRequest_type {}
+export interface GetBlockWithTxsResponse extends GetBlockWithTxsResponse_type {}
 
 export const GetTxsEventRequest: MessageFns<GetTxsEventRequest, "cosmos.tx.v1beta1.GetTxsEventRequest"> = {
 	$type: "cosmos.tx.v1beta1.GetTxsEventRequest" as const,

@@ -2,12 +2,12 @@ import type { GeneratedType } from "@cosmjs/proto-signing";
 
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-import type { DeferredInfo as DeferredInfoType, Whitelist as WhitelistType } from "../../types/evm";
+import type { DeferredInfo as DeferredInfo_type, Whitelist as Whitelist_type } from "../../types/evm";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface Whitelist extends WhitelistType {}
-interface DeferredInfo extends DeferredInfoType {}
+export interface Whitelist extends Whitelist_type {}
+export interface DeferredInfo extends DeferredInfo_type {}
 
 export const Whitelist: MessageFns<Whitelist, "seiprotocol.seichain.evm.Whitelist"> = {
 	$type: "seiprotocol.seichain.evm.Whitelist" as const,

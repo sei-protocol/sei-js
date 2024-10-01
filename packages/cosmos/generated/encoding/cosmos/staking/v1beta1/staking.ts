@@ -13,52 +13,52 @@ import { Header } from "../../../tendermint/types/types";
 import { Coin } from "../../base/v1beta1/coin";
 
 import type {
-	CommissionRates as CommissionRatesType,
-	Commission as CommissionType,
-	DVPair as DVPairType,
-	DVPairs as DVPairsType,
-	DVVTriplet as DVVTripletType,
-	DVVTriplets as DVVTripletsType,
-	DelegationResponse as DelegationResponseType,
-	Delegation as DelegationType,
-	Description as DescriptionType,
-	HistoricalInfo as HistoricalInfoType,
-	Params as ParamsType,
-	Pool as PoolType,
-	RedelegationEntryResponse as RedelegationEntryResponseType,
-	RedelegationEntry as RedelegationEntryType,
-	RedelegationResponse as RedelegationResponseType,
-	Redelegation as RedelegationType,
-	UnbondingDelegationEntry as UnbondingDelegationEntryType,
-	UnbondingDelegation as UnbondingDelegationType,
-	ValAddresses as ValAddressesType,
-	Validator as ValidatorType,
+	CommissionRates as CommissionRates_type,
+	Commission as Commission_type,
+	DVPair as DVPair_type,
+	DVPairs as DVPairs_type,
+	DVVTriplet as DVVTriplet_type,
+	DVVTriplets as DVVTriplets_type,
+	DelegationResponse as DelegationResponse_type,
+	Delegation as Delegation_type,
+	Description as Description_type,
+	HistoricalInfo as HistoricalInfo_type,
+	Params as Params_type,
+	Pool as Pool_type,
+	RedelegationEntryResponse as RedelegationEntryResponse_type,
+	RedelegationEntry as RedelegationEntry_type,
+	RedelegationResponse as RedelegationResponse_type,
+	Redelegation as Redelegation_type,
+	UnbondingDelegationEntry as UnbondingDelegationEntry_type,
+	UnbondingDelegation as UnbondingDelegation_type,
+	ValAddresses as ValAddresses_type,
+	Validator as Validator_type,
 } from "../../../../types/cosmos/staking/v1beta1";
 
 import { BondStatus } from "../../../../types/cosmos/staking/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface HistoricalInfo extends HistoricalInfoType {}
-interface CommissionRates extends CommissionRatesType {}
-interface Commission extends CommissionType {}
-interface Description extends DescriptionType {}
-interface Validator extends ValidatorType {}
-interface ValAddresses extends ValAddressesType {}
-interface DVPair extends DVPairType {}
-interface DVPairs extends DVPairsType {}
-interface DVVTriplet extends DVVTripletType {}
-interface DVVTriplets extends DVVTripletsType {}
-interface Delegation extends DelegationType {}
-interface UnbondingDelegation extends UnbondingDelegationType {}
-interface UnbondingDelegationEntry extends UnbondingDelegationEntryType {}
-interface RedelegationEntry extends RedelegationEntryType {}
-interface Redelegation extends RedelegationType {}
-interface Params extends ParamsType {}
-interface DelegationResponse extends DelegationResponseType {}
-interface RedelegationEntryResponse extends RedelegationEntryResponseType {}
-interface RedelegationResponse extends RedelegationResponseType {}
-interface Pool extends PoolType {}
+export interface HistoricalInfo extends HistoricalInfo_type {}
+export interface CommissionRates extends CommissionRates_type {}
+export interface Commission extends Commission_type {}
+export interface Description extends Description_type {}
+export interface Validator extends Validator_type {}
+export interface ValAddresses extends ValAddresses_type {}
+export interface DVPair extends DVPair_type {}
+export interface DVPairs extends DVPairs_type {}
+export interface DVVTriplet extends DVVTriplet_type {}
+export interface DVVTriplets extends DVVTriplets_type {}
+export interface Delegation extends Delegation_type {}
+export interface UnbondingDelegation extends UnbondingDelegation_type {}
+export interface UnbondingDelegationEntry extends UnbondingDelegationEntry_type {}
+export interface RedelegationEntry extends RedelegationEntry_type {}
+export interface Redelegation extends Redelegation_type {}
+export interface Params extends Params_type {}
+export interface DelegationResponse extends DelegationResponse_type {}
+export interface RedelegationEntryResponse extends RedelegationEntryResponse_type {}
+export interface RedelegationResponse extends RedelegationResponse_type {}
+export interface Pool extends Pool_type {}
 
 export const HistoricalInfo: MessageFns<HistoricalInfo, "cosmos.staking.v1beta1.HistoricalInfo"> = {
 	$type: "cosmos.staking.v1beta1.HistoricalInfo" as const,

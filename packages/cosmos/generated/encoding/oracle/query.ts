@@ -5,52 +5,52 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { OracleExchangeRate, OracleTwap, Params, PriceSnapshot, VotePenaltyCounter } from "./oracle";
 
 import type {
-	DenomOracleExchangeRatePair as DenomOracleExchangeRatePairType,
-	QueryActivesRequest as QueryActivesRequestType,
-	QueryActivesResponse as QueryActivesResponseType,
-	QueryExchangeRateRequest as QueryExchangeRateRequestType,
-	QueryExchangeRateResponse as QueryExchangeRateResponseType,
-	QueryExchangeRatesRequest as QueryExchangeRatesRequestType,
-	QueryExchangeRatesResponse as QueryExchangeRatesResponseType,
-	QueryFeederDelegationRequest as QueryFeederDelegationRequestType,
-	QueryFeederDelegationResponse as QueryFeederDelegationResponseType,
-	QueryParamsRequest as QueryParamsRequestType,
-	QueryParamsResponse as QueryParamsResponseType,
-	QueryPriceSnapshotHistoryRequest as QueryPriceSnapshotHistoryRequestType,
-	QueryPriceSnapshotHistoryResponse as QueryPriceSnapshotHistoryResponseType,
-	QuerySlashWindowRequest as QuerySlashWindowRequestType,
-	QuerySlashWindowResponse as QuerySlashWindowResponseType,
-	QueryTwapsRequest as QueryTwapsRequestType,
-	QueryTwapsResponse as QueryTwapsResponseType,
-	QueryVotePenaltyCounterRequest as QueryVotePenaltyCounterRequestType,
-	QueryVotePenaltyCounterResponse as QueryVotePenaltyCounterResponseType,
-	QueryVoteTargetsRequest as QueryVoteTargetsRequestType,
-	QueryVoteTargetsResponse as QueryVoteTargetsResponseType,
+	DenomOracleExchangeRatePair as DenomOracleExchangeRatePair_type,
+	QueryActivesRequest as QueryActivesRequest_type,
+	QueryActivesResponse as QueryActivesResponse_type,
+	QueryExchangeRateRequest as QueryExchangeRateRequest_type,
+	QueryExchangeRateResponse as QueryExchangeRateResponse_type,
+	QueryExchangeRatesRequest as QueryExchangeRatesRequest_type,
+	QueryExchangeRatesResponse as QueryExchangeRatesResponse_type,
+	QueryFeederDelegationRequest as QueryFeederDelegationRequest_type,
+	QueryFeederDelegationResponse as QueryFeederDelegationResponse_type,
+	QueryParamsRequest as QueryParamsRequest_type,
+	QueryParamsResponse as QueryParamsResponse_type,
+	QueryPriceSnapshotHistoryRequest as QueryPriceSnapshotHistoryRequest_type,
+	QueryPriceSnapshotHistoryResponse as QueryPriceSnapshotHistoryResponse_type,
+	QuerySlashWindowRequest as QuerySlashWindowRequest_type,
+	QuerySlashWindowResponse as QuerySlashWindowResponse_type,
+	QueryTwapsRequest as QueryTwapsRequest_type,
+	QueryTwapsResponse as QueryTwapsResponse_type,
+	QueryVotePenaltyCounterRequest as QueryVotePenaltyCounterRequest_type,
+	QueryVotePenaltyCounterResponse as QueryVotePenaltyCounterResponse_type,
+	QueryVoteTargetsRequest as QueryVoteTargetsRequest_type,
+	QueryVoteTargetsResponse as QueryVoteTargetsResponse_type,
 } from "../../types/oracle";
 
-import type { DeepPartial, Exact, MessageFns } from "../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../common";
 
-interface QueryExchangeRateRequest extends QueryExchangeRateRequestType {}
-interface QueryExchangeRateResponse extends QueryExchangeRateResponseType {}
-interface QueryExchangeRatesRequest extends QueryExchangeRatesRequestType {}
-interface DenomOracleExchangeRatePair extends DenomOracleExchangeRatePairType {}
-interface QueryExchangeRatesResponse extends QueryExchangeRatesResponseType {}
-interface QueryActivesRequest extends QueryActivesRequestType {}
-interface QueryActivesResponse extends QueryActivesResponseType {}
-interface QueryVoteTargetsRequest extends QueryVoteTargetsRequestType {}
-interface QueryVoteTargetsResponse extends QueryVoteTargetsResponseType {}
-interface QueryPriceSnapshotHistoryRequest extends QueryPriceSnapshotHistoryRequestType {}
-interface QueryPriceSnapshotHistoryResponse extends QueryPriceSnapshotHistoryResponseType {}
-interface QueryTwapsRequest extends QueryTwapsRequestType {}
-interface QueryTwapsResponse extends QueryTwapsResponseType {}
-interface QueryFeederDelegationRequest extends QueryFeederDelegationRequestType {}
-interface QueryFeederDelegationResponse extends QueryFeederDelegationResponseType {}
-interface QueryVotePenaltyCounterRequest extends QueryVotePenaltyCounterRequestType {}
-interface QueryVotePenaltyCounterResponse extends QueryVotePenaltyCounterResponseType {}
-interface QuerySlashWindowRequest extends QuerySlashWindowRequestType {}
-interface QuerySlashWindowResponse extends QuerySlashWindowResponseType {}
-interface QueryParamsRequest extends QueryParamsRequestType {}
-interface QueryParamsResponse extends QueryParamsResponseType {}
+export interface QueryExchangeRateRequest extends QueryExchangeRateRequest_type {}
+export interface QueryExchangeRateResponse extends QueryExchangeRateResponse_type {}
+export interface QueryExchangeRatesRequest extends QueryExchangeRatesRequest_type {}
+export interface DenomOracleExchangeRatePair extends DenomOracleExchangeRatePair_type {}
+export interface QueryExchangeRatesResponse extends QueryExchangeRatesResponse_type {}
+export interface QueryActivesRequest extends QueryActivesRequest_type {}
+export interface QueryActivesResponse extends QueryActivesResponse_type {}
+export interface QueryVoteTargetsRequest extends QueryVoteTargetsRequest_type {}
+export interface QueryVoteTargetsResponse extends QueryVoteTargetsResponse_type {}
+export interface QueryPriceSnapshotHistoryRequest extends QueryPriceSnapshotHistoryRequest_type {}
+export interface QueryPriceSnapshotHistoryResponse extends QueryPriceSnapshotHistoryResponse_type {}
+export interface QueryTwapsRequest extends QueryTwapsRequest_type {}
+export interface QueryTwapsResponse extends QueryTwapsResponse_type {}
+export interface QueryFeederDelegationRequest extends QueryFeederDelegationRequest_type {}
+export interface QueryFeederDelegationResponse extends QueryFeederDelegationResponse_type {}
+export interface QueryVotePenaltyCounterRequest extends QueryVotePenaltyCounterRequest_type {}
+export interface QueryVotePenaltyCounterResponse extends QueryVotePenaltyCounterResponse_type {}
+export interface QuerySlashWindowRequest extends QuerySlashWindowRequest_type {}
+export interface QuerySlashWindowResponse extends QuerySlashWindowResponse_type {}
+export interface QueryParamsRequest extends QueryParamsRequest_type {}
+export interface QueryParamsResponse extends QueryParamsResponse_type {}
 
 export const QueryExchangeRateRequest: MessageFns<QueryExchangeRateRequest, "seiprotocol.seichain.oracle.QueryExchangeRateRequest"> = {
 	$type: "seiprotocol.seichain.oracle.QueryExchangeRateRequest" as const,

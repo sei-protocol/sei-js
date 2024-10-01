@@ -11,30 +11,30 @@ import { CompactBitArray } from "../../crypto/multisig/v1beta1/multisig";
 import { signModeFromJSON, signModeToJSON } from "../signing/v1beta1/signing";
 
 import type {
-	AuthInfo as AuthInfoType,
-	Fee as FeeType,
-	ModeInfoMulti as ModeInfoMultiType,
-	ModeInfoSingle as ModeInfoSingleType,
-	ModeInfo as ModeInfoType,
-	SignDoc as SignDocType,
-	SignerInfo as SignerInfoType,
-	TxBody as TxBodyType,
-	TxRaw as TxRawType,
-	Tx as TxType,
+	AuthInfo as AuthInfo_type,
+	Fee as Fee_type,
+	ModeInfoMulti as ModeInfoMulti_type,
+	ModeInfoSingle as ModeInfoSingle_type,
+	ModeInfo as ModeInfo_type,
+	SignDoc as SignDoc_type,
+	SignerInfo as SignerInfo_type,
+	TxBody as TxBody_type,
+	TxRaw as TxRaw_type,
+	Tx as Tx_type,
 } from "../../../../types/cosmos/tx/v1beta1";
 
-import type { DeepPartial, Exact, MessageFns } from "../../../common.ts";
+import type { DeepPartial, Exact, MessageFns } from "../../../common";
 
-interface Tx extends TxType {}
-interface TxRaw extends TxRawType {}
-interface SignDoc extends SignDocType {}
-interface TxBody extends TxBodyType {}
-interface AuthInfo extends AuthInfoType {}
-interface SignerInfo extends SignerInfoType {}
-interface ModeInfo extends ModeInfoType {}
-interface ModeInfoSingle extends ModeInfoSingleType {}
-interface ModeInfoMulti extends ModeInfoMultiType {}
-interface Fee extends FeeType {}
+export interface Tx extends Tx_type {}
+export interface TxRaw extends TxRaw_type {}
+export interface SignDoc extends SignDoc_type {}
+export interface TxBody extends TxBody_type {}
+export interface AuthInfo extends AuthInfo_type {}
+export interface SignerInfo extends SignerInfo_type {}
+export interface ModeInfo extends ModeInfo_type {}
+export interface ModeInfoSingle extends ModeInfoSingle_type {}
+export interface ModeInfoMulti extends ModeInfoMulti_type {}
+export interface Fee extends Fee_type {}
 
 export const Tx: MessageFns<Tx, "cosmos.tx.v1beta1.Tx"> = {
 	$type: "cosmos.tx.v1beta1.Tx" as const,
