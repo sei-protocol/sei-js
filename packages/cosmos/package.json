@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
 	"sideEffects": false,
-	"files": ["build"],
+	"files": ["generated"],
 	"scripts": {
 		"prebuild": "rimraf generated && rimraf gen",
 		"build": "yarn generate:all && yarn extract-libraries",
@@ -12,7 +12,8 @@
 		"generate:all": "yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party",
 		"generate-sei-cosmos": "buf generate buf.build/sei-protocol/cosmos-sdk",
 		"generate-sei-chain": "buf generate buf.build/sei-protocol/sei-chain",
-		"generate-third-party": "buf generate buf.build/sei-protocol/third-party"
+		"generate-third-party": "buf generate buf.build/sei-protocol/third-party",
+		"lint": "echo 'No linting configured for this package'"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": ["sei", "typescript", "types", "enums", "interfaces"],
