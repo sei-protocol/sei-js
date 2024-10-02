@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export * from './authz';
 export * from './bank';
 export * from './genesis';

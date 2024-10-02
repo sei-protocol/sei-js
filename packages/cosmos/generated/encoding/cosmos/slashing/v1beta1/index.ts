@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export * from './genesis';
 export * from './query';
 export * from './slashing';

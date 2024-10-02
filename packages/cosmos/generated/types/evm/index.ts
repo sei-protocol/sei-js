@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export * from './config';
 export * from './enums';
 export * from './genesis';
