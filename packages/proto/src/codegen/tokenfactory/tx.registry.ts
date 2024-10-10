@@ -1,8 +1,9 @@
 import { TelescopeGeneratedType } from '../types';
 import { Registry } from '@cosmjs/proto-signing';
-import { MsgCreateDenom, MsgMint, MsgBurn, MsgChangeAdmin, MsgSetDenomMetadata } from './tx';
+import { MsgCreateDenom, MsgUpdateDenom, MsgMint, MsgBurn, MsgChangeAdmin, MsgSetDenomMetadata } from './tx';
 export const registry: ReadonlyArray<[string, TelescopeGeneratedType<any, any, any>]> = [
 	['/seiprotocol.seichain.tokenfactory.MsgCreateDenom', MsgCreateDenom],
+	['/seiprotocol.seichain.tokenfactory.MsgUpdateDenom', MsgUpdateDenom],
 	['/seiprotocol.seichain.tokenfactory.MsgMint', MsgMint],
 	['/seiprotocol.seichain.tokenfactory.MsgBurn', MsgBurn],
 	['/seiprotocol.seichain.tokenfactory.MsgChangeAdmin', MsgChangeAdmin],
@@ -19,6 +20,12 @@ export const MessageComposer = {
 			return {
 				typeUrl: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom',
 				value: MsgCreateDenom.encode(value).finish()
+			};
+		},
+		updateDenom(value: MsgUpdateDenom) {
+			return {
+				typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+				value: MsgUpdateDenom.encode(value).finish()
 			};
 		},
 		mint(value: MsgMint) {
@@ -53,6 +60,12 @@ export const MessageComposer = {
 				value
 			};
 		},
+		updateDenom(value: MsgUpdateDenom) {
+			return {
+				typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+				value
+			};
+		},
 		mint(value: MsgMint) {
 			return {
 				typeUrl: '/seiprotocol.seichain.tokenfactory.MsgMint',
@@ -83,6 +96,12 @@ export const MessageComposer = {
 			return {
 				typeUrl: '/seiprotocol.seichain.tokenfactory.MsgCreateDenom',
 				value: MsgCreateDenom.fromPartial(value)
+			};
+		},
+		updateDenom(value: MsgUpdateDenom) {
+			return {
+				typeUrl: '/seiprotocol.seichain.tokenfactory.MsgUpdateDenom',
+				value: MsgUpdateDenom.fromPartial(value)
 			};
 		},
 		mint(value: MsgMint) {

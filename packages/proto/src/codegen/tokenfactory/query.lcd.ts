@@ -7,7 +7,9 @@ import {
 	QueryDenomMetadataRequest,
 	QueryDenomMetadataResponseSDKType,
 	QueryDenomsFromCreatorRequest,
-	QueryDenomsFromCreatorResponseSDKType
+	QueryDenomsFromCreatorResponseSDKType,
+	QueryDenomAllowListRequest,
+	QueryDenomAllowListResponseSDKType
 } from './query';
 export class LCDQueryClient {
 	req: LCDClient;
@@ -17,6 +19,7 @@ export class LCDQueryClient {
 		this.denomAuthorityMetadata = this.denomAuthorityMetadata.bind(this);
 		this.denomMetadata = this.denomMetadata.bind(this);
 		this.denomsFromCreator = this.denomsFromCreator.bind(this);
+		this.denomAllowList = this.denomAllowList.bind(this);
 	}
 	/* Params defines a gRPC query method that returns the tokenfactory module's
    parameters. */
@@ -47,5 +50,16 @@ export class LCDQueryClient {
 	async denomsFromCreator(params: QueryDenomsFromCreatorRequest): Promise<QueryDenomsFromCreatorResponseSDKType> {
 		const endpoint = `sei-protocol/seichain/tokenfactory/denoms_from_creator/${params.creator}`;
 		return await this.req.get<QueryDenomsFromCreatorResponseSDKType>(endpoint);
+	}
+	/* DenomAllowList defines a gRPC query method for fetching the denom allow list */
+	async denomAllowList(params: QueryDenomAllowListRequest): Promise<QueryDenomAllowListResponseSDKType> {
+		const options: any = {
+			params: {}
+		};
+		if (typeof params?.denom !== 'undefined') {
+			options.params.denom = params.denom;
+		}
+		const endpoint = `sei-protocol/seichain/tokenfactory/denoms/allow_list`;
+		return await this.req.get<QueryDenomAllowListResponseSDKType>(endpoint, options);
 	}
 }

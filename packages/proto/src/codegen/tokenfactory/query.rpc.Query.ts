@@ -9,7 +9,9 @@ import {
 	QueryDenomMetadataRequest,
 	QueryDenomMetadataResponse,
 	QueryDenomsFromCreatorRequest,
-	QueryDenomsFromCreatorResponse
+	QueryDenomsFromCreatorResponse,
+	QueryDenomAllowListRequest,
+	QueryDenomAllowListResponse
 } from './query';
 /** Query defines the gRPC querier service. */
 export interface Query {
@@ -33,6 +35,8 @@ export interface Query {
 	 * denominations created by a specific admin/creator.
 	 */
 	denomsFromCreator(request: QueryDenomsFromCreatorRequest): Promise<QueryDenomsFromCreatorResponse>;
+	/** DenomAllowList defines a gRPC query method for fetching the denom allow list */
+	denomAllowList(request: QueryDenomAllowListRequest): Promise<QueryDenomAllowListResponse>;
 }
 export class QueryClientImpl implements Query {
 	private readonly rpc: TxRpc;
@@ -42,6 +46,7 @@ export class QueryClientImpl implements Query {
 		this.denomAuthorityMetadata = this.denomAuthorityMetadata.bind(this);
 		this.denomMetadata = this.denomMetadata.bind(this);
 		this.denomsFromCreator = this.denomsFromCreator.bind(this);
+		this.denomAllowList = this.denomAllowList.bind(this);
 	}
 	params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
 		const data = QueryParamsRequest.encode(request).finish();
@@ -63,6 +68,11 @@ export class QueryClientImpl implements Query {
 		const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'DenomsFromCreator', data);
 		return promise.then((data) => QueryDenomsFromCreatorResponse.decode(new BinaryReader(data)));
 	}
+	denomAllowList(request: QueryDenomAllowListRequest): Promise<QueryDenomAllowListResponse> {
+		const data = QueryDenomAllowListRequest.encode(request).finish();
+		const promise = this.rpc.request('seiprotocol.seichain.tokenfactory.Query', 'DenomAllowList', data);
+		return promise.then((data) => QueryDenomAllowListResponse.decode(new BinaryReader(data)));
+	}
 }
 export const createRpcQueryExtension = (base: QueryClient) => {
 	const rpc = createProtobufRpcClient(base);
@@ -79,6 +89,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
 		},
 		denomsFromCreator(request: QueryDenomsFromCreatorRequest): Promise<QueryDenomsFromCreatorResponse> {
 			return queryService.denomsFromCreator(request);
+		},
+		denomAllowList(request: QueryDenomAllowListRequest): Promise<QueryDenomAllowListResponse> {
+			return queryService.denomAllowList(request);
 		}
 	};
 };
