@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.0
+
+### Minor Changes
+
+- efe151c: New gRPC methods to fetch token allow list
+
 ## 4.0.9
 
 ### Patch Changes
