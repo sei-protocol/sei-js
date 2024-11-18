@@ -348,13 +348,13 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.Params": {
-		aminoType: "seiprotocol.seichain.evm.Params",
+		aminoType: "evm/Params",
 		toAmino: (message: Params) => ({ ...message }),
 		fromAmino: (object: Params) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.ParamsPreV580": {
-		aminoType: "seiprotocol.seichain.evm.ParamsPreV580",
+		aminoType: "evm/ParamsPreV580",
 		toAmino: (message: ParamsPreV580) => ({ ...message }),
 		fromAmino: (object: ParamsPreV580) => ({ ...object }),
 	},

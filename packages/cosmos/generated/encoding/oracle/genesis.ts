@@ -322,19 +322,19 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.oracle.GenesisState": {
-		aminoType: "seiprotocol.seichain.oracle.GenesisState",
+		aminoType: "oracle/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
 		fromAmino: (object: GenesisState) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.FeederDelegation": {
-		aminoType: "seiprotocol.seichain.oracle.FeederDelegation",
+		aminoType: "oracle/FeederDelegation",
 		toAmino: (message: FeederDelegation) => ({ ...message }),
 		fromAmino: (object: FeederDelegation) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.PenaltyCounter": {
-		aminoType: "seiprotocol.seichain.oracle.PenaltyCounter",
+		aminoType: "oracle/PenaltyCounter",
 		toAmino: (message: PenaltyCounter) => ({ ...message }),
 		fromAmino: (object: PenaltyCounter) => ({ ...object }),
 	},

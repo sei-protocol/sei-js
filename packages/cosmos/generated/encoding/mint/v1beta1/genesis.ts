@@ -92,7 +92,7 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [["/seiprotocol.seichain.mint.GenesisState", GenesisState as never]];
 export const aminoConverters = {
 	"/seiprotocol.seichain.mint.GenesisState": {
-		aminoType: "seiprotocol.seichain.mint.GenesisState",
+		aminoType: "mint/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
 		fromAmino: (object: GenesisState) => ({ ...object }),
 	},

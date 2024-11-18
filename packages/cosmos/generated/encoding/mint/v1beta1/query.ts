@@ -364,25 +364,25 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.mint.QueryParamsRequest": {
-		aminoType: "seiprotocol.seichain.mint.QueryParamsRequest",
+		aminoType: "mint/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
 		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.mint.QueryParamsResponse": {
-		aminoType: "seiprotocol.seichain.mint.QueryParamsResponse",
+		aminoType: "mint/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
 		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.mint.QueryMinterRequest": {
-		aminoType: "seiprotocol.seichain.mint.QueryMinterRequest",
+		aminoType: "mint/QueryMinterRequest",
 		toAmino: (message: QueryMinterRequest) => ({ ...message }),
 		fromAmino: (object: QueryMinterRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.mint.QueryMinterResponse": {
-		aminoType: "seiprotocol.seichain.mint.QueryMinterResponse",
+		aminoType: "mint/QueryMinterResponse",
 		toAmino: (message: QueryMinterResponse) => ({ ...message }),
 		fromAmino: (object: QueryMinterResponse) => ({ ...object }),
 	},

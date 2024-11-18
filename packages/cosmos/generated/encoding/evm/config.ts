@@ -116,7 +116,7 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [["/seiprotocol.seichain.evm.ChainConfig", ChainConfig as never]];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.ChainConfig": {
-		aminoType: "seiprotocol.seichain.evm.ChainConfig",
+		aminoType: "evm/ChainConfig",
 		toAmino: (message: ChainConfig) => ({ ...message }),
 		fromAmino: (object: ChainConfig) => ({ ...object }),
 	},

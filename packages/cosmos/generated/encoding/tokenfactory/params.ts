@@ -55,7 +55,7 @@ function createBaseParams(): Params {
 export const registry: Array<[string, GeneratedType]> = [["/seiprotocol.seichain.tokenfactory.Params", Params as never]];
 export const aminoConverters = {
 	"/seiprotocol.seichain.tokenfactory.Params": {
-		aminoType: "seiprotocol.seichain.tokenfactory.Params",
+		aminoType: "tokenfactory/Params",
 		toAmino: (message: Params) => ({ ...message }),
 		fromAmino: (object: Params) => ({ ...object }),
 	},

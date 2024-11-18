@@ -835,43 +835,43 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.tokenfactory.MsgCreateDenom": {
-		aminoType: "seiprotocol.seichain.tokenfactory.MsgCreateDenom",
+		aminoType: "tokenfactory/MsgCreateDenom",
 		toAmino: (message: MsgCreateDenom) => ({ ...message }),
 		fromAmino: (object: MsgCreateDenom) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgMint": {
-		aminoType: "seiprotocol.seichain.tokenfactory.MsgMint",
+		aminoType: "tokenfactory/MsgMint",
 		toAmino: (message: MsgMint) => ({ ...message }),
 		fromAmino: (object: MsgMint) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgMintResponse": {
-		aminoType: "seiprotocol.seichain.tokenfactory.MsgMintResponse",
+		aminoType: "tokenfactory/MsgMintResponse",
 		toAmino: (message: MsgMintResponse) => ({ ...message }),
 		fromAmino: (object: MsgMintResponse) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgBurn": {
-		aminoType: "seiprotocol.seichain.tokenfactory.MsgBurn",
+		aminoType: "tokenfactory/MsgBurn",
 		toAmino: (message: MsgBurn) => ({ ...message }),
 		fromAmino: (object: MsgBurn) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgBurnResponse": {
-		aminoType: "seiprotocol.seichain.tokenfactory.MsgBurnResponse",
+		aminoType: "tokenfactory/MsgBurnResponse",
 		toAmino: (message: MsgBurnResponse) => ({ ...message }),
 		fromAmino: (object: MsgBurnResponse) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgChangeAdmin": {
-		aminoType: "seiprotocol.seichain.tokenfactory.MsgChangeAdmin",
+		aminoType: "tokenfactory/MsgChangeAdmin",
 		toAmino: (message: MsgChangeAdmin) => ({ ...message }),
 		fromAmino: (object: MsgChangeAdmin) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgUpdateDenom": {
-		aminoType: "seiprotocol.seichain.tokenfactory.MsgUpdateDenom",
+		aminoType: "tokenfactory/MsgUpdateDenom",
 		toAmino: (message: MsgUpdateDenom) => ({ ...message }),
 		fromAmino: (object: MsgUpdateDenom) => ({ ...object }),
 	},

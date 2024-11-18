@@ -619,37 +619,37 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.AddressAssociation": {
-		aminoType: "seiprotocol.seichain.evm.AddressAssociation",
+		aminoType: "evm/AddressAssociation",
 		toAmino: (message: AddressAssociation) => ({ ...message }),
 		fromAmino: (object: AddressAssociation) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.Code": {
-		aminoType: "seiprotocol.seichain.evm.Code",
+		aminoType: "evm/Code",
 		toAmino: (message: Code) => ({ ...message }),
 		fromAmino: (object: Code) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.ContractState": {
-		aminoType: "seiprotocol.seichain.evm.ContractState",
+		aminoType: "evm/ContractState",
 		toAmino: (message: ContractState) => ({ ...message }),
 		fromAmino: (object: ContractState) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.Nonce": {
-		aminoType: "seiprotocol.seichain.evm.Nonce",
+		aminoType: "evm/Nonce",
 		toAmino: (message: Nonce) => ({ ...message }),
 		fromAmino: (object: Nonce) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.Serialized": {
-		aminoType: "seiprotocol.seichain.evm.Serialized",
+		aminoType: "evm/Serialized",
 		toAmino: (message: Serialized) => ({ ...message }),
 		fromAmino: (object: Serialized) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.GenesisState": {
-		aminoType: "seiprotocol.seichain.evm.GenesisState",
+		aminoType: "evm/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
 		fromAmino: (object: GenesisState) => ({ ...object }),
 	},

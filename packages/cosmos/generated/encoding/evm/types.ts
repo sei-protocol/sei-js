@@ -225,13 +225,13 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.Whitelist": {
-		aminoType: "seiprotocol.seichain.evm.Whitelist",
+		aminoType: "evm/Whitelist",
 		toAmino: (message: Whitelist) => ({ ...message }),
 		fromAmino: (object: Whitelist) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.DeferredInfo": {
-		aminoType: "seiprotocol.seichain.evm.DeferredInfo",
+		aminoType: "evm/DeferredInfo",
 		toAmino: (message: DeferredInfo) => ({ ...message }),
 		fromAmino: (object: DeferredInfo) => ({ ...object }),
 	},

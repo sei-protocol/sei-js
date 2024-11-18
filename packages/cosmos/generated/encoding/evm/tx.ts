@@ -1140,43 +1140,43 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.MsgEVMTransaction": {
-		aminoType: "seiprotocol.seichain.evm.MsgEVMTransaction",
+		aminoType: "evm/MsgEVMTransaction",
 		toAmino: (message: MsgEVMTransaction) => ({ ...message }),
 		fromAmino: (object: MsgEVMTransaction) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.MsgInternalEVMCall": {
-		aminoType: "seiprotocol.seichain.evm.MsgInternalEVMCall",
+		aminoType: "evm/MsgInternalEVMCall",
 		toAmino: (message: MsgInternalEVMCall) => ({ ...message }),
 		fromAmino: (object: MsgInternalEVMCall) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.MsgSend": {
-		aminoType: "seiprotocol.seichain.evm.MsgSend",
+		aminoType: "evm/MsgSend",
 		toAmino: (message: MsgSend) => ({ ...message }),
 		fromAmino: (object: MsgSend) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.MsgSendResponse": {
-		aminoType: "seiprotocol.seichain.evm.MsgSendResponse",
+		aminoType: "evm/MsgSendResponse",
 		toAmino: (message: MsgSendResponse) => ({ ...message }),
 		fromAmino: (object: MsgSendResponse) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.MsgRegisterPointer": {
-		aminoType: "seiprotocol.seichain.evm.MsgRegisterPointer",
+		aminoType: "evm/MsgRegisterPointer",
 		toAmino: (message: MsgRegisterPointer) => ({ ...message }),
 		fromAmino: (object: MsgRegisterPointer) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.MsgAssociate": {
-		aminoType: "seiprotocol.seichain.evm.MsgAssociate",
+		aminoType: "evm/MsgAssociate",
 		toAmino: (message: MsgAssociate) => ({ ...message }),
 		fromAmino: (object: MsgAssociate) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.MsgAssociateResponse": {
-		aminoType: "seiprotocol.seichain.evm.MsgAssociateResponse",
+		aminoType: "evm/MsgAssociateResponse",
 		toAmino: (message: MsgAssociateResponse) => ({ ...message }),
 		fromAmino: (object: MsgAssociateResponse) => ({ ...object }),
 	},

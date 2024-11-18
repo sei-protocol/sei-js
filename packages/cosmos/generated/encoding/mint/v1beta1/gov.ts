@@ -107,7 +107,7 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [["/seiprotocol.seichain.mint.UpdateMinterProposal", UpdateMinterProposal as never]];
 export const aminoConverters = {
 	"/seiprotocol.seichain.mint.UpdateMinterProposal": {
-		aminoType: "seiprotocol.seichain.mint.UpdateMinterProposal",
+		aminoType: "mint/UpdateMinterProposal",
 		toAmino: (message: UpdateMinterProposal) => ({ ...message }),
 		fromAmino: (object: UpdateMinterProposal) => ({ ...object }),
 	},

@@ -446,13 +446,13 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.Log": {
-		aminoType: "seiprotocol.seichain.evm.Log",
+		aminoType: "evm/Log",
 		toAmino: (message: Log) => ({ ...message }),
 		fromAmino: (object: Log) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.Receipt": {
-		aminoType: "seiprotocol.seichain.evm.Receipt",
+		aminoType: "evm/Receipt",
 		toAmino: (message: Receipt) => ({ ...message }),
 		fromAmino: (object: Receipt) => ({ ...object }),
 	},

@@ -178,7 +178,7 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [["/seiprotocol.seichain.epoch.Epoch", Epoch as never]];
 export const aminoConverters = {
 	"/seiprotocol.seichain.epoch.Epoch": {
-		aminoType: "seiprotocol.seichain.epoch.Epoch",
+		aminoType: "epoch/Epoch",
 		toAmino: (message: Epoch) => ({ ...message }),
 		fromAmino: (object: Epoch) => ({ ...object }),
 	},

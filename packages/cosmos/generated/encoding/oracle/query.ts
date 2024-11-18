@@ -1273,31 +1273,31 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.oracle.QueryActivesRequest": {
-		aminoType: "seiprotocol.seichain.oracle.QueryActivesRequest",
+		aminoType: "oracle/QueryActivesRequest",
 		toAmino: (message: QueryActivesRequest) => ({ ...message }),
 		fromAmino: (object: QueryActivesRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.QueryTwapsRequest": {
-		aminoType: "seiprotocol.seichain.oracle.QueryTwapsRequest",
+		aminoType: "oracle/QueryTwapsRequest",
 		toAmino: (message: QueryTwapsRequest) => ({ ...message }),
 		fromAmino: (object: QueryTwapsRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.QueryTwapsResponse": {
-		aminoType: "seiprotocol.seichain.oracle.QueryTwapsResponse",
+		aminoType: "oracle/QueryTwapsResponse",
 		toAmino: (message: QueryTwapsResponse) => ({ ...message }),
 		fromAmino: (object: QueryTwapsResponse) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.QueryParamsRequest": {
-		aminoType: "seiprotocol.seichain.oracle.QueryParamsRequest",
+		aminoType: "oracle/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
 		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.QueryParamsResponse": {
-		aminoType: "seiprotocol.seichain.oracle.QueryParamsResponse",
+		aminoType: "oracle/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
 		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
 	},

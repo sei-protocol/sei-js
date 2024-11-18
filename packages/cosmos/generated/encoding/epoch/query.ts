@@ -239,25 +239,25 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.epoch.QueryParamsRequest": {
-		aminoType: "seiprotocol.seichain.epoch.QueryParamsRequest",
+		aminoType: "epoch/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
 		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.epoch.QueryParamsResponse": {
-		aminoType: "seiprotocol.seichain.epoch.QueryParamsResponse",
+		aminoType: "epoch/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
 		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.epoch.QueryEpochRequest": {
-		aminoType: "seiprotocol.seichain.epoch.QueryEpochRequest",
+		aminoType: "epoch/QueryEpochRequest",
 		toAmino: (message: QueryEpochRequest) => ({ ...message }),
 		fromAmino: (object: QueryEpochRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.epoch.QueryEpochResponse": {
-		aminoType: "seiprotocol.seichain.epoch.QueryEpochResponse",
+		aminoType: "epoch/QueryEpochResponse",
 		toAmino: (message: QueryEpochResponse) => ({ ...message }),
 		fromAmino: (object: QueryEpochResponse) => ({ ...object }),
 	},

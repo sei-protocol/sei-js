@@ -34,11 +34,9 @@ import * as cosmos_tx_signing_v1beta1 from "./cosmos/tx/signing/v1beta1/index";
 import * as cosmos_tx_v1beta1 from "./cosmos/tx/v1beta1/index";
 import * as cosmos_upgrade_v1beta1 from "./cosmos/upgrade/v1beta1/index";
 import * as cosmos_vesting_v1beta1 from "./cosmos/vesting/v1beta1/index";
-import * as cosmos_proto from "./cosmos_proto/index";
 import * as epoch from "./epoch/index";
 import * as eth from "./eth/index";
 import * as evm from "./evm/index";
-import * as gogoproto from "./gogoproto/index";
 import * as google_api from "./google/api/index";
 import * as google_protobuf from "./google/protobuf/index";
 import * as mint_v1beta1 from "./mint/v1beta1/index";
@@ -91,11 +89,9 @@ export const Encoder = {
 		upgrade: { v1beta1: cosmos_upgrade_v1beta1 },
 		vesting: { v1beta1: cosmos_vesting_v1beta1 },
 	},
-	cosmos_proto: cosmos_proto,
 	epoch: epoch,
 	eth: eth,
 	evm: evm,
-	gogoproto: gogoproto,
 	google: { api: google_api, protobuf: google_protobuf },
 	mint: { v1beta1: mint_v1beta1 },
 	oracle: oracle,

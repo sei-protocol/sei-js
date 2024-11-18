@@ -1332,43 +1332,43 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.eth.AccessTuple": {
-		aminoType: "seiprotocol.seichain.eth.AccessTuple",
+		aminoType: "eth/AccessTuple",
 		toAmino: (message: AccessTuple) => ({ ...message }),
 		fromAmino: (object: AccessTuple) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.eth.AssociateTx": {
-		aminoType: "seiprotocol.seichain.eth.AssociateTx",
+		aminoType: "eth/AssociateTx",
 		toAmino: (message: AssociateTx) => ({ ...message }),
 		fromAmino: (object: AssociateTx) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.eth.LegacyTx": {
-		aminoType: "seiprotocol.seichain.eth.LegacyTx",
+		aminoType: "eth/LegacyTx",
 		toAmino: (message: LegacyTx) => ({ ...message }),
 		fromAmino: (object: LegacyTx) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.eth.AccessListTx": {
-		aminoType: "seiprotocol.seichain.eth.AccessListTx",
+		aminoType: "eth/AccessListTx",
 		toAmino: (message: AccessListTx) => ({ ...message }),
 		fromAmino: (object: AccessListTx) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.eth.DynamicFeeTx": {
-		aminoType: "seiprotocol.seichain.eth.DynamicFeeTx",
+		aminoType: "eth/DynamicFeeTx",
 		toAmino: (message: DynamicFeeTx) => ({ ...message }),
 		fromAmino: (object: DynamicFeeTx) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.eth.BlobTx": {
-		aminoType: "seiprotocol.seichain.eth.BlobTx",
+		aminoType: "eth/BlobTx",
 		toAmino: (message: BlobTx) => ({ ...message }),
 		fromAmino: (object: BlobTx) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.eth.BlobTxSidecar": {
-		aminoType: "seiprotocol.seichain.eth.BlobTxSidecar",
+		aminoType: "eth/BlobTxSidecar",
 		toAmino: (message: BlobTxSidecar) => ({ ...message }),
 		fromAmino: (object: BlobTxSidecar) => ({ ...object }),
 	},

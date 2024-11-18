@@ -963,25 +963,25 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.QueryPointerRequest": {
-		aminoType: "seiprotocol.seichain.evm.QueryPointerRequest",
+		aminoType: "evm/QueryPointerRequest",
 		toAmino: (message: QueryPointerRequest) => ({ ...message }),
 		fromAmino: (object: QueryPointerRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.QueryPointerResponse": {
-		aminoType: "seiprotocol.seichain.evm.QueryPointerResponse",
+		aminoType: "evm/QueryPointerResponse",
 		toAmino: (message: QueryPointerResponse) => ({ ...message }),
 		fromAmino: (object: QueryPointerResponse) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.QueryPointeeRequest": {
-		aminoType: "seiprotocol.seichain.evm.QueryPointeeRequest",
+		aminoType: "evm/QueryPointeeRequest",
 		toAmino: (message: QueryPointeeRequest) => ({ ...message }),
 		fromAmino: (object: QueryPointeeRequest) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.evm.QueryPointeeResponse": {
-		aminoType: "seiprotocol.seichain.evm.QueryPointeeResponse",
+		aminoType: "evm/QueryPointeeResponse",
 		toAmino: (message: QueryPointeeResponse) => ({ ...message }),
 		fromAmino: (object: QueryPointeeResponse) => ({ ...object }),
 	},

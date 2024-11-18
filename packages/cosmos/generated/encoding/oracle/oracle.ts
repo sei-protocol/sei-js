@@ -870,49 +870,49 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.oracle.Params": {
-		aminoType: "seiprotocol.seichain.oracle.Params",
+		aminoType: "oracle/Params",
 		toAmino: (message: Params) => ({ ...message }),
 		fromAmino: (object: Params) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.Denom": {
-		aminoType: "seiprotocol.seichain.oracle.Denom",
+		aminoType: "oracle/Denom",
 		toAmino: (message: Denom) => ({ ...message }),
 		fromAmino: (object: Denom) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.ExchangeRateTuple": {
-		aminoType: "seiprotocol.seichain.oracle.ExchangeRateTuple",
+		aminoType: "oracle/ExchangeRateTuple",
 		toAmino: (message: ExchangeRateTuple) => ({ ...message }),
 		fromAmino: (object: ExchangeRateTuple) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.OracleExchangeRate": {
-		aminoType: "seiprotocol.seichain.oracle.OracleExchangeRate",
+		aminoType: "oracle/OracleExchangeRate",
 		toAmino: (message: OracleExchangeRate) => ({ ...message }),
 		fromAmino: (object: OracleExchangeRate) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.PriceSnapshotItem": {
-		aminoType: "seiprotocol.seichain.oracle.PriceSnapshotItem",
+		aminoType: "oracle/PriceSnapshotItem",
 		toAmino: (message: PriceSnapshotItem) => ({ ...message }),
 		fromAmino: (object: PriceSnapshotItem) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.PriceSnapshot": {
-		aminoType: "seiprotocol.seichain.oracle.PriceSnapshot",
+		aminoType: "oracle/PriceSnapshot",
 		toAmino: (message: PriceSnapshot) => ({ ...message }),
 		fromAmino: (object: PriceSnapshot) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.OracleTwap": {
-		aminoType: "seiprotocol.seichain.oracle.OracleTwap",
+		aminoType: "oracle/OracleTwap",
 		toAmino: (message: OracleTwap) => ({ ...message }),
 		fromAmino: (object: OracleTwap) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.oracle.VotePenaltyCounter": {
-		aminoType: "seiprotocol.seichain.oracle.VotePenaltyCounter",
+		aminoType: "oracle/VotePenaltyCounter",
 		toAmino: (message: VotePenaltyCounter) => ({ ...message }),
 		fromAmino: (object: VotePenaltyCounter) => ({ ...object }),
 	},

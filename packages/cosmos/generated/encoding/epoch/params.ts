@@ -55,7 +55,7 @@ function createBaseParams(): Params {
 export const registry: Array<[string, GeneratedType]> = [["/seiprotocol.seichain.epoch.Params", Params as never]];
 export const aminoConverters = {
 	"/seiprotocol.seichain.epoch.Params": {
-		aminoType: "seiprotocol.seichain.epoch.Params",
+		aminoType: "epoch/Params",
 		toAmino: (message: Params) => ({ ...message }),
 		fromAmino: (object: Params) => ({ ...object }),
 	},

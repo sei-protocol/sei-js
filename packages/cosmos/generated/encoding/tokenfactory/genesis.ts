@@ -175,13 +175,13 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.tokenfactory.GenesisState": {
-		aminoType: "seiprotocol.seichain.tokenfactory.GenesisState",
+		aminoType: "tokenfactory/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
 		fromAmino: (object: GenesisState) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.tokenfactory.GenesisDenom": {
-		aminoType: "seiprotocol.seichain.tokenfactory.GenesisDenom",
+		aminoType: "tokenfactory/GenesisDenom",
 		toAmino: (message: GenesisDenom) => ({ ...message }),
 		fromAmino: (object: GenesisDenom) => ({ ...object }),
 	},

@@ -646,25 +646,25 @@ export const registry: Array<[string, GeneratedType]> = [
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.mint.Minter": {
-		aminoType: "seiprotocol.seichain.mint.Minter",
+		aminoType: "mint/Minter",
 		toAmino: (message: Minter) => ({ ...message }),
 		fromAmino: (object: Minter) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.mint.Params": {
-		aminoType: "seiprotocol.seichain.mint.Params",
+		aminoType: "mint/Params",
 		toAmino: (message: Params) => ({ ...message }),
 		fromAmino: (object: Params) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.mint.Version2Minter": {
-		aminoType: "seiprotocol.seichain.mint.Version2Minter",
+		aminoType: "mint/Version2Minter",
 		toAmino: (message: Version2Minter) => ({ ...message }),
 		fromAmino: (object: Version2Minter) => ({ ...object }),
 	},
 
 	"/seiprotocol.seichain.mint.Version2Params": {
-		aminoType: "seiprotocol.seichain.mint.Version2Params",
+		aminoType: "mint/Version2Params",
 		toAmino: (message: Version2Params) => ({ ...message }),
 		fromAmino: (object: Version2Params) => ({ ...object }),
 	},
