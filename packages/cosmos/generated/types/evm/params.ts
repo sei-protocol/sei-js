@@ -26,6 +26,7 @@ export interface Params {
 	max_dynamic_base_fee_upward_adjustment: string;
 	max_dynamic_base_fee_downward_adjustment: string;
 	target_gas_used_per_block: number;
+	maximum_fee_per_gas: string;
 }
 
 export interface ParamsPreV580 {

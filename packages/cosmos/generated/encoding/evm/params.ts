@@ -37,6 +37,9 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 		if (message.target_gas_used_per_block !== 0) {
 			writer.uint32(96).uint64(message.target_gas_used_per_block);
 		}
+		if (message.maximum_fee_per_gas !== "") {
+			writer.uint32(106).string(message.maximum_fee_per_gas);
+		}
 		return writer;
 	},
 
@@ -103,6 +106,13 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 
 					message.target_gas_used_per_block = longToNumber(reader.uint64());
 					continue;
+				case 13:
+					if (tag !== 106) {
+						break;
+					}
+
+					message.maximum_fee_per_gas = reader.string();
+					continue;
 			}
 			if ((tag & 7) === 4 || tag === 0) {
 				break;
@@ -128,6 +138,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 				? globalThis.String(object.max_dynamic_base_fee_downward_adjustment)
 				: "",
 			target_gas_used_per_block: isSet(object.target_gas_used_per_block) ? globalThis.Number(object.target_gas_used_per_block) : 0,
+			maximum_fee_per_gas: isSet(object.maximum_fee_per_gas) ? globalThis.String(object.maximum_fee_per_gas) : "",
 		};
 	},
 
@@ -157,6 +168,9 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 		if (message.target_gas_used_per_block !== 0) {
 			obj.target_gas_used_per_block = Math.round(message.target_gas_used_per_block);
 		}
+		if (message.maximum_fee_per_gas !== "") {
+			obj.maximum_fee_per_gas = message.maximum_fee_per_gas;
+		}
 		return obj;
 	},
 
@@ -173,6 +187,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 		message.max_dynamic_base_fee_upward_adjustment = object.max_dynamic_base_fee_upward_adjustment ?? "";
 		message.max_dynamic_base_fee_downward_adjustment = object.max_dynamic_base_fee_downward_adjustment ?? "";
 		message.target_gas_used_per_block = object.target_gas_used_per_block ?? 0;
+		message.maximum_fee_per_gas = object.maximum_fee_per_gas ?? "";
 		return message;
 	},
 };
@@ -291,6 +306,7 @@ function createBaseParams(): Params {
 		max_dynamic_base_fee_upward_adjustment: "",
 		max_dynamic_base_fee_downward_adjustment: "",
 		target_gas_used_per_block: 0,
+		maximum_fee_per_gas: "",
 	};
 }
 
