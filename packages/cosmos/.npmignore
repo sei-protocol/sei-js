@@ -1,6 +1,6 @@
 node_modules
 scripts/
-gen/
+generated/
 public/
 bin/
 
