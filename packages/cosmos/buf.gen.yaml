@@ -1,0 +1,17 @@
+version: v2
+managed:
+  enabled: true
+plugins:
+  - local: ./bin/protoc-gen-grpc-gateway-ts
+    out: ./gen/grpc-gateway
+    opt:
+      - use_proto_names=true
+  - remote: buf.build/community/stephenh-ts-proto:v2.2.0
+    out: ./gen/ts-proto
+    opt:
+      - esModuleInterop=true
+      - useOptionals=messages
+      - outputServices=false
+      - useSnakeTypeName=false
+      - snakeToCamel=false
+      - outputTypeAnnotations=static-only

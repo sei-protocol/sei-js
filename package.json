@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build:all": "nx run-many --target=build",
+    "build:all": "nx run-many --target=build --all",
     "build:since": "nx affected --target=build",
     "prebuild": "yarn build:since",
     "postinstall": "yarn update-submodules",
@@ -24,6 +24,7 @@
     "test:coverage": "nx test --all --coverage --skip-nx-cache"
   },
   "dependencies": {
+    "@biomejs/biome": "^1.9.2",
     "@changesets/cli": "^2.26.0",
     "axios": "^1.6.0",
     "glob": "^10.3.10",

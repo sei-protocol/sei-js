@@ -1,0 +1,62 @@
+{
+	"name": "@sei-js/cosmos",
+	"version": "0.1.0",
+	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
+	"sideEffects": false,
+	"files": ["dist"],
+	"scripts": {
+		"precompile": "rimraf dist",
+		"compile": "yarn compile:cjs && yarn compile:esm && yarn compile:declarations",
+		"prebuild": "rimraf generated && rimraf gen",
+		"build": "yarn generate:all && yarn extract-libraries && yarn compile",
+		"postbuild": "rimraf gen",
+		"compile:cjs": "tsc --outDir dist/cjs --module commonjs --project ./tsconfig.json",
+		"compile:esm": "tsc --outDir dist/esm --module esnext --project ./tsconfig.json",
+		"compile:declarations": "tsc --project ./tsconfig.declaration.json",
+		"extract-libraries": "tsx scripts/index.ts",
+		"generate:all": "yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party",
+		"generate-sei-cosmos": "buf generate buf.build/sei-protocol/cosmos-sdk",
+		"generate-sei-chain": "buf generate buf.build/sei-protocol/sei-chain",
+		"generate-third-party": "buf generate buf.build/sei-protocol/third-party",
+		"lint": "echo 'No linting configured for this package'"
+	},
+	"homepage": "https://github.com/sei-protocol/sei-js#readme",
+	"keywords": ["sei", "typescript", "types", "enums", "interfaces"],
+	"repository": "git@github.com:sei-protocol/sei-js.git",
+	"license": "MIT",
+	"private": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"peerDependencies": {},
+	"dependencies": {
+		"@bufbuild/protobuf": "^2.1.0",
+		"@cosmjs/proto-signing": "^0.32.4",
+		"@cosmjs/stargate": "^0.32.4"
+	},
+	"devDependencies": {
+		"tsx": "^4.19.1"
+	},
+	"exports": {
+		"./types/*": {
+			"import": "./dist/types/types/*/index.js",
+			"require": "./dist/types/types/*/index.js",
+			"types": "./dist/types/types/*/index.js"
+		},
+		"./rest": {
+			"import": "./dist/esm/rest/index.js",
+			"require": "./dist/cjs/rest/index.js",
+			"types": "./dist/types/rest/index.d.ts"
+		},
+		"./encoding": {
+			"import": "./dist/esm/encoding/index.js",
+			"require": "./dist/cjs/encoding/index.js",
+			"types": "./dist/types/encoding/index.d.ts"
+		},
+		"./encoding/stargate": {
+			"import": "./dist/esm/encoding/stargate.js",
+			"require": "./dist/cjs/encoding/stargate.js",
+			"types": "./dist/types/encoding/stargate.d.ts"
+		}
+	}
+}
