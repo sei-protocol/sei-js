@@ -13,6 +13,8 @@ jobs:
           node-version: 18
       - uses: browser-actions/setup-chrome@v1
       - run: chrome --version
+      - run: git fetch --unshallow
+      - run: git pull
       - run: yarn
       - run: yarn lint:all
       - run: yarn build:all
