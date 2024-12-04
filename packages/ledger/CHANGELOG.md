@@ -1,5 +1,11 @@
 # @sei-js/ledger
 
+## 1.1.1
+
+### Patch Changes
+
+- 590bbcf: Update library versions
+
 ## 1.1.0
 
 ### Minor Changes
