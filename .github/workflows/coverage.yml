@@ -26,6 +26,15 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
       - run: chrome --version
 
+      - name: Install buf
+        run: |
+          # Download the buf binary
+          curl -sSL https://github.com/bufbuild/buf/releases/download/v1.27.1/buf-Linux-x86_64 -o /usr/local/bin/buf
+          # Make it executable
+          chmod +x /usr/local/bin/buf
+          # Verify installation
+          buf --version
+
       - name: Install dependencies
         run: yarn install
 
