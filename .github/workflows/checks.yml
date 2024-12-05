@@ -18,6 +18,8 @@ jobs:
           curl -sSL https://github.com/bufbuild/buf/releases/download/v1.47.2/buf-Linux-x86_64 -o /usr/local/bin/buf
           chmod +x /usr/local/bin/buf
           buf --version
+      - name: Ensure local plugins are executable
+        run: chmod +x ./bin/protoc-gen-grpc-gateway-ts
       - name: Authenticate buf
         run: echo $BUF_TOKEN | buf registry login --token-stdin
         env:
