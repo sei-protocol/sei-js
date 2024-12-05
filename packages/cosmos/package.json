@@ -15,9 +15,9 @@
 		"compile:declarations": "tsc --project ./tsconfig.declaration.json",
 		"extract-libraries": "tsx scripts/index.ts",
 		"generate:all": "yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party",
-		"generate-sei-cosmos": "buf generate --template buf.gen.yaml buf.build/sei-protocol/cosmos-sdk",
-		"generate-sei-chain": "buf generate --template buf.gen.yaml buf.build/sei-protocol/sei-chain",
-		"generate-third-party": "buf generate --template buf.gen.yaml buf.build/sei-protocol/third-party",
+		"generate-sei-cosmos": "buf generate --template buf.gen.yaml --verbose buf.build/sei-protocol/cosmos-sdk",
+		"generate-sei-chain": "buf generate --template buf.gen.yaml --verbose buf.build/sei-protocol/sei-chain",
+		"generate-third-party": "buf generate --template buf.gen.yaml --verbose buf.build/sei-protocol/third-party",
 		"lint": "echo 'No linting configured for this package'"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
