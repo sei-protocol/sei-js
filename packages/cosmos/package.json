@@ -3,9 +3,7 @@
 	"version": "1.0.0",
 	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
 	"sideEffects": false,
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
 		"precompile": "rimraf dist",
 		"compile": "yarn compile:cjs && yarn compile:esm && yarn compile:declarations",
@@ -17,19 +15,13 @@
 		"compile:declarations": "tsc --project ./tsconfig.declaration.json",
 		"extract-libraries": "tsx scripts/index.ts",
 		"generate:all": "yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party",
-		"generate-sei-cosmos": "buf generate buf.build/sei-protocol/cosmos-sdk",
-		"generate-sei-chain": "buf generate buf.build/sei-protocol/sei-chain",
-		"generate-third-party": "buf generate buf.build/sei-protocol/third-party",
+		"generate-sei-cosmos": "buf generate --template buf.gen.yaml buf.build/sei-protocol/cosmos-sdk",
+		"generate-sei-chain": "buf generate --template buf.gen.yaml buf.build/sei-protocol/sei-chain",
+		"generate-third-party": "buf generate --template buf.gen.yaml buf.build/sei-protocol/third-party",
 		"lint": "echo 'No linting configured for this package'"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": [
-		"sei",
-		"typescript",
-		"types",
-		"enums",
-		"interfaces"
-	],
+	"keywords": ["sei", "typescript", "types", "enums", "interfaces"],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"private": false,
