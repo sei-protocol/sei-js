@@ -30,12 +30,16 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch the full history instead of a shallow clone
       - name: Setup Node.js 18.x
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      - name: Install buf
+        run: |
+          curl -sSL https://github.com/bufbuild/buf/releases/download/v1.47.2/buf-Linux-x86_64 -o /usr/local/bin/buf
+          chmod +x /usr/local/bin/buf
+          buf --version
 
       - name: Install Dependencies
         run: yarn
