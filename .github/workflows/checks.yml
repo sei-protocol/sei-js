@@ -19,7 +19,7 @@ jobs:
           chmod +x /usr/local/bin/buf
           buf --version
       - name: Ensure local plugins are executable
-        run: chmod +x ./bin/protoc-gen-grpc-gateway-ts
+        run: ls -l && chmod +x ./packages/cosmos/bin/protoc-gen-grpc-gateway-ts
       - name: Authenticate buf
         run: echo $BUF_TOKEN | buf registry login --token-stdin
         env:
