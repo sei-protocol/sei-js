@@ -18,6 +18,8 @@ jobs:
           curl -sSL https://github.com/bufbuild/buf/releases/download/v1.47.2/buf-Linux-x86_64 -o /usr/local/bin/buf
           chmod +x /usr/local/bin/buf
           buf --version
+      - name: List files
+        run: ls -R
       - run: yarn
       - run: yarn lint:all
       - run: yarn build:all
