@@ -18,7 +18,8 @@
 		"generate-sei-chain": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/sei-chain",
 		"generate-third-party": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/third-party",
 		"preextract-libraries": "rimraf library",
-		"extract-libraries": "tsx scripts/index.ts"
+		"extract-libraries": "tsx scripts/index.ts",
+		"lint": "echo 'No linting configured for this package'"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": ["sei", "typescript", "types", "enums", "interfaces"],
