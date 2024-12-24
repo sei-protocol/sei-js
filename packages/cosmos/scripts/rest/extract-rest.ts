@@ -26,7 +26,7 @@ export const extractRESTClient = async (sourceFilePath: string, destinationFileP
 
 		// Instead of importing all types from the proto-generated file, we import from the generated types directory
 		if (typeNames.size > 0) {
-			const restImportPath = path.relative(path.dirname(destinationFilePath), path.join("generated/types", relativePath));
+			const restImportPath = path.relative(path.dirname(destinationFilePath), path.join("library/types", relativePath));
 			const importStatement = `import { ${Array.from(typeNames).join(", ")} } from "${restImportPath}";`;
 			extractedImports.add(importStatement);
 		}

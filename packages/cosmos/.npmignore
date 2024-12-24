@@ -1,12 +1,14 @@
 node_modules
 scripts/
-generated/
+library/
+protoc/
 public/
 bin/
 
 .gitkeep
 jest.config.ts
 tsconfig.json
+tsconfig.*.json
 
 yarn-error.log
 
@@ -14,3 +16,4 @@ yarn-error.log
 eslintrc.json
 
 biome.json
+buf.*.yaml

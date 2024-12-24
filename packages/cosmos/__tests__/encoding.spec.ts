@@ -1,4 +1,4 @@
-import { Encoder } from "../generated/encoding";
+import { Encoder } from "../library/encoding";
 
 describe("Encoder", () => {
 	it("should correctly encode and decode a MsgSend message", () => {

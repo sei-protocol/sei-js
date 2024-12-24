@@ -91,7 +91,7 @@ const createFile = async (
 export const buildCombinedProtoRegistryAndAminoConverters = async (): Promise<void> => {
 	console.log("Building combined proto registry and amino converters...");
 
-	const rootDir = "./generated/encoding";
+	const rootDir = "./library/encoding";
 	const registries: string[] = [];
 	const aminoConverters: string[] = [];
 
