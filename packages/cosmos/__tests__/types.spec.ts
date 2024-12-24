@@ -1,5 +1,5 @@
-import type { MsgSend } from "../generated/types/cosmos/bank/v1beta1";
-import type { Coin } from "../generated/types/cosmos/base/v1beta1";
+import type { MsgSend } from "../library/types/cosmos/bank/v1beta1";
+import type { Coin } from "../library/types/cosmos/base/v1beta1";
 
 describe("MsgSend Type Validation", () => {
 	it("should create a valid MsgSend object", () => {

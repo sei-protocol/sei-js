@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build:all": "nx run-many --target=build --all",
+    "build:all": "nx run-many --target=build",
     "build:since": "nx affected --target=build",
     "prebuild": "yarn build:since",
     "postinstall": "yarn update-submodules",

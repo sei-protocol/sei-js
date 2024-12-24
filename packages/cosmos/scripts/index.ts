@@ -10,12 +10,12 @@ import { extractRESTClient } from "./rest/extract-rest";
 import { extractTypes } from "./types/extract-types";
 
 // Define paths as constants for reuse and easy updates
-const GRPC_TS_DIR = "./gen/grpc-gateway";
-const TS_PROTO_DIR = "./gen/ts-proto";
-const TYPES_OUTPUT_DIR = "./generated/types";
-const REST_OUTPUT_DIR = "./generated/rest";
-const ENCODING_OUTPUT_DIR = "./generated/encoding";
-const FETCH_FILE = "./public/rest/fetch.ts";
+const GRPC_TS_DIR = "./protoc/grpc-gateway";
+const TS_PROTO_DIR = "./protoc/ts-proto";
+const TYPES_OUTPUT_DIR = "./library/types";
+const REST_OUTPUT_DIR = "./library/rest";
+const ENCODING_OUTPUT_DIR = "./library/encoding";
+const COMMON_FETCH_FILE = "./public/rest/fetch.ts";
 const ENCODING_FILES = ["./public/encoding/common.ts", "./public/encoding/stargate.ts"];
 
 // Extracts only types from the proto generated TypeScript files in the input directory
@@ -29,7 +29,8 @@ async function processGrpcGatewayFiles(): Promise<void> {
 			const restDestination = path.join(REST_OUTPUT_DIR, relativePath);
 			await extractRESTClient(tsFile, restDestination, relativePath);
 		}
-		await fs.copyFile(FETCH_FILE, `${REST_OUTPUT_DIR}/fetch.ts`);
+		await fs.mkdir(REST_OUTPUT_DIR, { recursive: true });
+		await fs.copyFile(COMMON_FETCH_FILE, `${REST_OUTPUT_DIR}/fetch.ts`);
 		await generateQueryIndexFile(REST_OUTPUT_DIR);
 	} catch (error) {
 		console.error("Error processing gRPC gateway files:", error);

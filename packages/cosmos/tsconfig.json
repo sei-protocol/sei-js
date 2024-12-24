@@ -1,7 +1,7 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"include": ["./generated/encoding", "./generated/rest"],
-	"exclude": ["./generated/types"],
+	"include": ["./library/encoding", "./library/rest"],
+	"exclude": ["./library/types"],
 	"compilerOptions": {
 		"outDir": "./dist"
 	}
