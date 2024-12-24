@@ -21,12 +21,6 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install buf
-        run: |
-          curl -sSL https://github.com/bufbuild/buf/releases/download/v1.47.2/buf-Linux-x86_64 -o /usr/local/bin/buf
-          chmod +x /usr/local/bin/buf
-          buf --version
-
       - name: Install Dependencies
         run: yarn
 
