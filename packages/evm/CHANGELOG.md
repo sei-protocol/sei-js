@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 1.4.2
+
+### Patch Changes
+
+- 1554931: Added a new export to connect to a local chain (seid) with viem
+
 ## 1.4.1
 
 ### Patch Changes
