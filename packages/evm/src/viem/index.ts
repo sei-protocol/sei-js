@@ -9,3 +9,5 @@ export * from './pointerPrecompile';
 export * from './pointerviewPrecompile';
 export * from './stakingPrecompile';
 export * from './wasmPrecompile';
+
+export * from './chain';
