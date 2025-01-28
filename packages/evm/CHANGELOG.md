@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 2.0.0
+
+### Major Changes
+
+- 747340b: Refactored exports in package.json for a more consistent experience across all node version and module resolution strategies
+
 ## 1.4.2
 
 ### Patch Changes
