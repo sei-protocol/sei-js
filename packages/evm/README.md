@@ -5,7 +5,7 @@ Typescript library containing helper functions for interacting with the EVM on S
 ## Installation
 
 ```bash
-yarn add @sei-js/evm
+yarn add @sei-js/evm ethers viem
 ```
 
 <br>
