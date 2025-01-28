@@ -31,7 +31,11 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"dependencies": {
+  "peerDependencies": {
+    "ethers": "^6.0.0",
+    "viem": "2.x"
+  },
+	"devDependencies": {
 		"ethers": "^6.0.0",
 		"viem": "2.x"
 	}
