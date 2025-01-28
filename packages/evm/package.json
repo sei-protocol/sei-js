@@ -31,30 +31,8 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"dependencies": {},
-	"peerDependencies": {
+	"dependencies": {
 		"ethers": "^6.0.0",
 		"viem": "2.x"
-	},
-	"devDependencies": {
-		"ethers": "^6.0.0",
-		"viem": "2.x"
-	},
-	"exports": {
-		".": {
-			"import": "./dist/esm/index.js",
-			"require": "./dist/cjs/index.js",
-			"types": "./dist/types/index.d.ts"
-		},
-		"./ethers": {
-			"import": "./dist/esm/ethers/index.js",
-			"require": "./dist/cjs/ethers/index.js",
-			"types": "./dist/types/ethers/index.d.ts"
-		},
-		"./viem": {
-			"import": "./dist/esm/viem/index.js",
-			"require": "./dist/cjs/viem/index.js",
-			"types": "./dist/types/viem/index.d.ts"
-		}
 	}
 }
