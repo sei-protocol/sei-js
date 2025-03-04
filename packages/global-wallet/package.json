@@ -1,8 +1,7 @@
 {
-  "name": "sei-global-wallet",
-  "author": "Sei Labs",
-  "description": "Sei Global Wallet",
-  "version": "0.0.9",
+  "name": "@sei-js/global-wallet",
+  "description": "Library to support Dynamic Global Wallet",
+  "version": "0.0.1",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
