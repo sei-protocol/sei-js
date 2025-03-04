@@ -1,6 +1,6 @@
 export const config = {
   // Wallet name will be seen as the Wallet name
-  walletName: "Sei Global Wallet",
+  walletName: "Global Wallet",
   // Wallet icon will be seen as the Wallet icon
   walletIcon: "https://cdn.prod.website-files.com/65cb43fecf24523357feada3/65cb43fecf24523357feade4_sei-favicon.png",
   // URL of your wallet domain (e.g. https://dynamic.example.com)
