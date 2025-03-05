@@ -2202,62 +2202,62 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dynamic-labs/assert-package-version@4.8.2":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/assert-package-version/-/assert-package-version-4.8.2.tgz#6c4457944a446c71cb346bedf8549e4b70933830"
-  integrity sha512-0T5T9UhtvPYYzrKtJXZkLGnk4KUIzIqZcb0IrQdH/1ppx6dwzqKIGRfTOOvdAbgUXOXDnDL5XhaS/6U3PGfK+g==
+"@dynamic-labs/assert-package-version@4.8.3":
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/assert-package-version/-/assert-package-version-4.8.3.tgz#21baa866503c5ff9e670c1f47f5430d2c2489858"
+  integrity sha512-Ub7/FRIEJFD3HC6oz4dS0beGJB18AlV+NRiuLmCN2I+z92htZFc6m1jHUJhq3/cj6IWWmuYz1rRK8tHHaTQoog==
   dependencies:
-    "@dynamic-labs/logger" "4.8.2"
+    "@dynamic-labs/logger" "4.8.3"
 
-"@dynamic-labs/global-wallet-client@^4.4.3":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/global-wallet-client/-/global-wallet-client-4.8.2.tgz#15b1cd3b0ed1d0f6327b45a0973e9e27a1b9a1bc"
-  integrity sha512-fNCGftI/eLpbB8eGwyAsOEY9lBRRKxxtInTWa2fLCrUetmzPYq1qJVDD/iy1IJjgskGznEsL9/htRAeCC/ehug==
+"@dynamic-labs/global-wallet-client@^4.8.3":
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/global-wallet-client/-/global-wallet-client-4.8.3.tgz#28585f11a50ca6bc480397df70769fb301499916"
+  integrity sha512-QVNmxiby04ItNsEpcoidtR5/++ewyJF+b+n9aLXOX6KQxmuSanbktLsFOzTtjPR/KWhGeE/5puFLNTTbdadMWg==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.8.2"
-    "@dynamic-labs/logger" "4.8.2"
-    "@dynamic-labs/store" "4.8.2"
-    "@dynamic-labs/types" "4.8.2"
-    "@dynamic-labs/utils" "4.8.2"
+    "@dynamic-labs/assert-package-version" "4.8.3"
+    "@dynamic-labs/logger" "4.8.3"
+    "@dynamic-labs/store" "4.8.3"
+    "@dynamic-labs/types" "4.8.3"
+    "@dynamic-labs/utils" "4.8.3"
     eventemitter3 "5.0.1"
 
-"@dynamic-labs/logger@4.8.2":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/logger/-/logger-4.8.2.tgz#ee734466ab962b0f0c74c94b5a0a6b85877b77bf"
-  integrity sha512-iLCkFW60Wd6Le76v3wUvzEbxZH+cy9m3ZdgKmvVI+o5HYGrPZw31s5a30JP8ALStAAU1/5QBLklcRfmoLOZEBg==
+"@dynamic-labs/logger@4.8.3":
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/logger/-/logger-4.8.3.tgz#7bc4e24b77bb0e6cc1f2a8d05df7080b34a7e326"
+  integrity sha512-X7HKG/u1EVOKAYp5MiJkOBWFf2qC+5wP61r+i8rgPw5I1fUTG2mV2hrc63QEO8VtTcvqGsTqz2djwu64vegzFg==
   dependencies:
     eventemitter3 "5.0.1"
 
-"@dynamic-labs/sdk-api-core@0.0.633":
-  version "0.0.633"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/sdk-api-core/-/sdk-api-core-0.0.633.tgz#cce39de0f71d922f8640f6f5114c70f08354738b"
-  integrity sha512-ZXUzS3rjDwyXw12lJas+Dzcag1FC0c0egWBIrUK0n0McRGazrXQ6GqFzuxkizIHOq2V4XHWwQ0wGJC5zQSXSSQ==
+"@dynamic-labs/sdk-api-core@0.0.638":
+  version "0.0.638"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/sdk-api-core/-/sdk-api-core-0.0.638.tgz#08a183332110258ad08b6ff5a8162a09e2f06079"
+  integrity sha512-mSvOZCxqr//3GHK0Ycw2XCNGthIyFDqGnOWltkkKhKQ0LWOdZLfMisAuyfTQwEnOBAwTCjYpAQsH4isDTmZXzA==
 
-"@dynamic-labs/store@4.8.2":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/store/-/store-4.8.2.tgz#e4169c9cc0138074cf77a26141548e2f9bc6c722"
-  integrity sha512-56dUUlOji5WjcP1bLTyFY8MJiuiXp8RX/Fh7jWuOfTWJqGvcYqvEdpiW863GrvtDo0Pb10yH4D6vx3HyaaQRBA==
+"@dynamic-labs/store@4.8.3":
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/store/-/store-4.8.3.tgz#e3e725153e0b77c1e2716b303553748e71f6db8b"
+  integrity sha512-zRRVeUxC2k8K9dE5CMff2H2T/1OFUKBM6Y2IH5HgaaFPBUBHjE8hEWYBZVIa8JOb+nIfFQElSvWJ7KkwChORBQ==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.8.2"
-    "@dynamic-labs/logger" "4.8.2"
+    "@dynamic-labs/assert-package-version" "4.8.3"
+    "@dynamic-labs/logger" "4.8.3"
 
-"@dynamic-labs/types@4.8.2":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/types/-/types-4.8.2.tgz#2a7e5fcdae2899cee3a6dfc55383b60eb0ec2384"
-  integrity sha512-iH0IUCJk6p9OXdy3MHd7bNYQceZXK36XoGd8wvn48vF1isJ96Hysx1yYgvZEw/hmgdxDyqmiT97cjbBgqjlDyg==
+"@dynamic-labs/types@4.8.3":
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/types/-/types-4.8.3.tgz#33233e1683546d7aa68ef4dfca205a49654051ea"
+  integrity sha512-M8FrDQJyo4BQ+AcmgkvyYH3frqcqvQ0FxuVesETv9RtwxqbUnUo71wTEPBCYnq1FzxM4XKQjIVdtJMXZ+3wkLw==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.8.2"
-    "@dynamic-labs/sdk-api-core" "0.0.633"
+    "@dynamic-labs/assert-package-version" "4.8.3"
+    "@dynamic-labs/sdk-api-core" "0.0.638"
 
-"@dynamic-labs/utils@4.8.2":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/utils/-/utils-4.8.2.tgz#f7c6eb23f2f9486354c04d35c565c9970959d412"
-  integrity sha512-zJBVALVCXKEtRaHGWGkt17gxXpzjOL88NBLxNrUx7eWRXMP5V03Zwi95xK5+sFsSOXd/BwVSvLXjoUtTtJAHJA==
+"@dynamic-labs/utils@4.8.3":
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/utils/-/utils-4.8.3.tgz#b213533c61b247b8811544dede597703b323b2d5"
+  integrity sha512-AhitQvOpR90BVpLq92Ip8x7sHVJZZ0sm5jnpDn8NUJzDWvZ3AxvU+nuwz10npS5T8lbj7WACbNgDOHhiEqUieQ==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.8.2"
-    "@dynamic-labs/logger" "4.8.2"
-    "@dynamic-labs/sdk-api-core" "0.0.633"
-    "@dynamic-labs/types" "4.8.2"
+    "@dynamic-labs/assert-package-version" "4.8.3"
+    "@dynamic-labs/logger" "4.8.3"
+    "@dynamic-labs/sdk-api-core" "0.0.638"
+    "@dynamic-labs/types" "4.8.3"
     buffer "6.0.3"
     eventemitter3 "5.0.1"
     tldts "6.0.16"
