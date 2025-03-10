@@ -1,23 +1,23 @@
-# Global Wallet Package
+# Sei Account Package
 
 This repository provides [Dynamic Global Wallet](https://docs.dynamic.xyz/global-wallets/overview) support for Sei.
 
 ## Getting Started
 
-1.**Install Global Wallet Package**
+1.**Install Sei Account Package**
 
 ```bash
-npm install @sei-js/global-wallet
+npm install @sei-js/sei-account
 ```
 
-2.**Importing the Global Wallet**
+2.**Importing the Sei Account**
 To use this wallet with any wallet provider that supports the EIP-6963 standard, you need to import the wallet package in your project.
  
 ```javascript
- import "@sei-js/global-wallet/eip6963";
+ import "@sei-js/sei-account/eip6963";
  ```
 
-3.**Use Global Wallet**
+3.**Use Sei Account**
    Your wallet is now ready to use within the project.
 
 ---
