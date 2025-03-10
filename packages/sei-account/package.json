@@ -1,6 +1,6 @@
 {
-  "name": "@sei-js/global-wallet",
-  "description": "Library to support Dynamic Global Wallet",
+  "name": "@sei-js/sei-account",
+  "description": "Sei Account is a library to support Dynamic Global Wallet",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/cjs/index.js",
