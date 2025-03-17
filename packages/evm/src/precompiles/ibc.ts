@@ -23,7 +23,7 @@ export const IBC_PRECOMPILE_ABI = [
 		],
 		name: 'transfer',
 		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
-		stateMutability: 'payable',
+		stateMutability: 'nonpayable',
 		type: 'function'
 	},
 	{
@@ -37,7 +37,8 @@ export const IBC_PRECOMPILE_ABI = [
 		],
 		name: 'transferWithDefaultTimeout',
 		outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
-		stateMutability: 'payable',
+		stateMutability: 'nonpayable',
 		type: 'function'
 	}
+
 ] as const;
