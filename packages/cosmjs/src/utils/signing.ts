@@ -139,6 +139,7 @@ function verifyADR36Amino(signer: string, data: string | Uint8Array, pubKey: Uin
 }
 
 /**
+ * Verifies a StdSignature object against the given signer address and expected message.
  * @category Utils
  */
 export const verifyArbitrary = async (signerAddress: string, expectedMessage: string, signatureToVerify: StdSignature): Promise<boolean> => {
