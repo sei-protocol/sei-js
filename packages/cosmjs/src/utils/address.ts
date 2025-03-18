@@ -3,6 +3,23 @@ import { sha256 } from './hash';
 import { ripemd160 } from '@cosmjs/crypto';
 import { toBech32 } from './bech32';
 import { fromBech32 } from '@cosmjs/encoding';
+import { secp256k1 } from '@noble/curves/secp256k1';
+
+/**
+ * Derives and returns the address from a given private key.
+ * @param privateKeyHex A hex (0x) string of the private key of an account.
+ * @returns The corresponding address for the given private key.
+ * @category Utils
+ */
+export const deriveAddressesFromPrivateKey = (privateKeyHex: string) => {
+	const privateKey = Uint8Array.from(Buffer.from(privateKeyHex.padStart(64, '0'), 'hex'));
+	if (privateKey.length !== 32) {
+		throw new Error('Private key must be 32 bytes long.');
+	}
+
+	const publicKey = secp256k1.getPublicKey(privateKey, true);
+	return compressedPubKeyToAddress(publicKey);
+};
 
 /**
  * Creates a hex encoded ECC KeyPair given a public key.

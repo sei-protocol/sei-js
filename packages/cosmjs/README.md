@@ -12,6 +12,7 @@ The `@sei-js/cosmjs` package contains helper functions for wallet connection, tr
 - [Signing Client](#signing-client)
 - [Utils](#utils)
   - [Address](#address)
+    - [`deriveAddressesFromPrivateKey`](#pubkeytokeypair)
     - [`pubKeyToKeyPair`](#pubkeytokeypair)
     - [`pubKeyToBytes`](#pubkeytobytes)
     - [`compressedPubKeyToAddress`](#compressedpubkeytoaddress)
@@ -163,6 +164,21 @@ const signingClient = await getSigningStargateClient(RPC_URL, offlineSigner, { r
 ## Utils
 
 ### Address
+
+#### `deriveAddressesFromPrivateKey`
+Derives and returns an address for the given private key.
+
+- **Parameters:**
+  - `privateKeyHex` (`0x{string}`): A hex-encoded private key string.
+
+- **Returns:** `stringr` - An address from the given private key.
+
+- **Usage:**
+```tsx
+import { deriveAddressesFromPrivateKey } from '@sei-js/cosmjs';
+
+const seiAddress = deriveAddressesFromPrivateKey(PRIVATE_KEY);
+```
 
 #### `pubKeyToKeyPair`
 Creates a hex-encoded ECC KeyPair given a public key.
