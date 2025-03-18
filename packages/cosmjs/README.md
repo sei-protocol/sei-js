@@ -1,6 +1,42 @@
 # @sei-js/cosmjs
 
-The `@sei-js/cosmjs` package contains helper functions for wallet connection, transaction signing, and RPC querying using cosmjs.
+The `@sei-js/cosmjs` package contains helper functions for wallet connection, transaction signing, RPC querying, and more for those using cosmjs. 
+
+## Table of Contents
+- [Installation](#installation)
+- [Wallets](#wallets)
+  - [Generating or Restoring a Wallet](#generating-or-restoring-a-wallet)
+  - [Cosmos Kit Configs](#cosmos-kit)
+  - [Chain Suggestion](#chain-suggestion)
+- [Query Client](#query-client)
+- [Signing Client](#signing-client)
+- [Utils](#utils)
+  - [Address](#address)
+    - [`pubKeyToKeyPair`](#pubkeytokeypair)
+    - [`pubKeyToBytes`](#pubkeytobytes)
+    - [`compressedPubKeyToAddress`](#compressedpubkeytoaddress)
+    - [`getAddressHashFromPubKey`](#getaddresshashfrompubkey)
+    - [`verifyDigest32`](#verifydigest32)
+    - [`isValidSeiCosmosAddress`](#isvalidseicosmosaddress)
+    - [`truncateSeiAddress`](#truncateseiaddress)
+  - [Bech32](#bech32)
+    - [`toBech32`](#tobech32)
+  - [Hash](#hash)
+    - [`sha256`](#sha256)
+  - [Serialize](#serialize)
+    - [`serializeDirectSignDoc`](#serializedirectsigndoc)
+    - [`serializeAminoSignDoc`](#serializeaminosigndoc)
+  - [Signing](#signing)
+    - [`makeADR36AminoSignDoc`](#makeadr36aminosigndoc)
+    - [`verifyArbitrary`](#verifyarbitrary)
+  - [Common Examples](#common-examples)
+    - [Transfer tokens (Bank send)](#transfer-tokens-bank-send)
+    - [IBC Transfer](#ibc-transfer)
+    - [Querying Smart Contracts](#querying-smart-contracts)
+    - [Executing Smart Contracts](#executing-smart-contracts)
+    - [Address Validation](#address-validation)
+    - [Arbitrary String Signing and Verification](#arbitrary-string-signing-and-verification)
+    - [Multi-Sig Signing and Broadcasting](#multi-sig-signing-and-broadcasting)
 
 ## Introduction to development on Sei
 When first developing an application on Sei, you must first choose which RPC interface you want to use. This package is designed to work with cosmjs and the Cosmos ecosystem. If you would like to use EVM RPC, you should use the [`@sei-js/evm`](/sei-js/docs/modules/evm.html) package.
@@ -18,12 +54,8 @@ CosmJS is a JavaScript/TypeScript library for building applications on the Cosmo
 yarn add @sei-js/cosmjs
 ```
 
-## Wallet Connection
+## Wallets
 In order to sign and broadcast transactions, you must first connect to a wallet. This package contains helper functions to connect to the Sei wallet extension, or to create a wallet from a seed phrase.
-
-### Cosmos Kit
-Cosmos Kit is a helpful library for connecting to various Sei wallet extensions. It is recommended to use this library and to take advantage of all the useful hooks, utilities, and UI components it provides. For more information, see the [Cosmos Kit documentation](https://docs.cosmoskit.com/)
-
 
 ### Connecting directly to a wallet extension
 If you prefer to manage wallet connections manually, you can use the native interface of the wallet extension to connect to a wallet. [See the Compass documentation](https://docs.leapwallet.io/cosmos/sei-dapps/connect-to-compass) for more information on how to connect to a wallet extension.
@@ -44,19 +76,48 @@ console.log('restored mnemonic', restoredWallet.mnemonic);
 //Both the above functions have optional parameters for selecting a certain account index in a given wallet
 ```
 
-## Common Use Cases
+### Cosmos Kit
+Cosmos Kit is a helpful library for connecting to various Sei wallet extensions. It is recommended to use this library and to take advantage of all the useful hooks, utilities, and UI components it provides. For more information, see the [Cosmos Kit documentation](https://docs.hyperweb.io/cosmos-kit/get-started)
 
-### Querying a Module
-When querying a Sei chain it is helpful to use a query client from @sei-js in order to have the correct registry and amino types. It is recommended that you do not use common web2 request libraries (fetch, axios, request) as they will not have typed query and response types.
+#### Importing CosmosKit Configs
+```tsx
+import { COSMOS_KIT_ASSET_LIST, PACIFIC_1_SEI_COSMOS_KIT_CHAIN, ATLANTIC_2_SEI_COSMOS_KIT_CHAIN, ARCTIC_1_SEI_COSMOS_KIT_CHAIN } from '@sei-js/cosmjs'
+import { wallets } from '@cosmos-kit/keplr';
 
-#### Usage
+function CosmosApp() {
+  return (
+    <ChainProvider
+      chains={[PACIFIC_1_SEI_COSMOS_KIT_CHAIN, ATLANTIC_2_SEI_COSMOS_KIT_CHAIN, ARCTIC_1_SEI_COSMOS_KIT_CHAIN]}
+      assetLists={[COSMOS_KIT_ASSET_LIST]}
+      wallets={wallets} // whatever wallets you prefer
+    >
+    <YourWalletRelatedComponents />
+    </ChainProvider>
+  );
+}
+```
+
+### Chain Suggestion
+If you are using a generic wallet like Keplr, you can suggest a chain to the user by using the `suggestChain` function. This will prompt the user to add the chain to their wallet.
+```tsx
+import { getChainSuggest } from '@sei-js/cosmjs';
+
+const chainSuggest = getChainSuggest();
+await window.keplr.suggestChain(chainSuggest); // See the Keplr API docs for more information on chain suggestion.
+
+```
+
+## Query Client
+When querying a Sei chain it is helpful to use a query client from @sei-js in order to have the correct registry and amino types. It is recommended that you do not use common web2 request libraries (fetch, axios, request) as they will not have typed query and response types. In order to use a query client, you need a REST API endpoint, from a Sei RPC provider.
+
+### Usage
 ```tsx
 import { getQueryClient } from '@sei-js/cosmjs';
 
 const queryClient = await getQueryClient(REST_URL);
 
-// Getting the market summary from the Sei dex module
-const dexMarketSummary = await queryClient.seiprotocol.seichain.dex.getMarketSummary(params);
+// Getting the market summary from the Sei tokenfactory
+const tokenFactoryParams = await queryClient.seiprotocol.seichain.tokenFactory.params();
 
 // Query the bank balance of a given address
 const balances = await queryClient.cosmos.bank.v1beta1.allBalances({ address });
@@ -66,10 +127,10 @@ const txInfo = await queryClient.cosmos.tx.v1beta1.getTx({ hash });
 ```
 
 
-### Signing Transactions
-@sei-js contains helper functions to get a SigningStargateClient with default Sei protocol registry and amino types.
+## Signing Client
+@sei-js contains helper functions to get a SigningStargateClient with default Sei protocol registry and amino types. In order to interact with this, you need a Sei RPC URL from a provider.
 
-#### Getting a Signing Client
+### Getting a Signing Client
 ```tsx
 import { getSigningStargateClient } from '@sei-js/cosmjs';
 
@@ -99,11 +160,249 @@ const registry = new Registry([
 const signingClient = await getSigningStargateClient(RPC_URL, offlineSigner, { registry });
 ```
 
-### Common Transactions
+## Utils
+
+### Address
+
+#### `pubKeyToKeyPair`
+Creates a hex-encoded ECC KeyPair given a public key.
+
+- **Parameters:**
+  - `pubKey` (`Uint8Array`): A byte array representing a public key.
+
+- **Returns:** `EllipticCurve.KeyPair` - A hex-encoded ECC KeyPair.
+
+- **Usage:**
+```tsx
+import { pubKeyToKeyPair } from '@sei-js/cosmjs';
+
+const keyPair = pubKeyToKeyPair(new Uint8Array([/* public key bytes */]));
+console.log(keyPair);
+```
+
+#### `pubKeyToBytes`
+Converts the given public key to a bytestring.
+
+- **Parameters:**
+  - `pubKey` (`Uint8Array`): The public key to convert.
+  - `uncompressed?` (`boolean`): Whether the public key should be uncompressed.
+
+- **Returns:** `Uint8Array` - The converted public key as a byte array.
+
+- **Usage:**
+```tsx
+import { pubKeyToBytes } from '@sei-js/cosmjs';
+
+const bytes = pubKeyToBytes(new Uint8Array([/* public key bytes */]));
+console.log(bytes);
+```
+
+#### `compressedPubKeyToAddress`
+Gets the corresponding address from a byte array representing a compressed public key.
+
+- **Parameters:**
+  - `publicKey` (`Uint8Array`): A byte array representing a compressed public key.
+
+- **Returns:** `string` - The corresponding Bech32 address.
+
+- **Usage:**
+```tsx
+import { compressedPubKeyToAddress } from '@sei-js/cosmjs';
+
+const address = compressedPubKeyToAddress(new Uint8Array([/* public key bytes */]));
+console.log(address);
+```
+
+#### `getAddressHashFromPubKey`
+Gets the corresponding SHA-256 hashed address for a given compressed public key.
+
+- **Parameters:**
+  - `compressedPublicKey` (`Uint8Array`): A byte array representing a compressed public key.
+
+- **Returns:** `Uint8Array` - The hashed address.
+
+- **Usage:**
+```tsx
+import { getAddressHashFromPubKey } from '@sei-js/cosmjs';
+
+const hashedAddress = getAddressHashFromPubKey(new Uint8Array([/* compressed public key */]));
+console.log(hashedAddress);
+```
+
+#### `verifyDigest32`
+Verifies a digest signed with a private key using the corresponding public key.
+
+- **Parameters:**
+  - `digest` (`Uint8Array`): The digest to verify.
+  - `signature` (`Uint8Array`): The digital signature.
+  - `pubKey` (`Uint8Array`): The public key of the signer.
+
+- **Returns:** `boolean` - `true` if the digest is verified.
+
+- **Usage:**
+```tsx
+import { verifyDigest32 } from '@sei-js/cosmjs';
+
+const isValid = verifyDigest32(new Uint8Array([/* digest */]), new Uint8Array([/* signature */]), new Uint8Array([/* public key */]));
+console.log(isValid);
+```
+
+#### `isValidSeiCosmosAddress`
+Checks if a given string is a valid Sei address.
+
+- **Parameters:**
+  - `address` (`string`): The address to verify.
+
+- **Returns:** `boolean` - `true` if the address is valid.
+
+- **Usage:**
+```tsx
+import { isValidSeiCosmosAddress } from '@sei-js/cosmjs';
+
+const isValid = isValidSeiCosmosAddress('sei123...');
+console.log(isValid);
+```
+
+#### `truncateSeiAddress`
+Shortens a Sei address to display it in the format `sei...xxxxx`, where `xxxxx` is the last five characters of the address.
+
+- **Parameters:**
+  - `address` (`string`): The address to truncate.
+
+- **Returns:** `string` - The truncated address.
+
+- **Usage:**
+```tsx
+import { truncateSeiAddress } from '@sei-js/cosmjs';
+
+const truncated = truncateSeiAddress('sei123456789abcdefghijk');
+console.log(truncated);
+```
+
+### Bech32
+
+#### `toBech32`
+Converts a given address to Bech32 format.
+
+- **Parameters:**
+  - `address` (`Uint8Array`): The address to convert.
+
+- **Returns:** `string` - The Bech32 formatted address.
+
+- **Usage:**
+```tsx
+import { toBech32 } from '@sei-js/cosmjs';
+
+const bech32Address = toBech32(new Uint8Array([/* address bytes */]));
+console.log(bech32Address);
+```
+
+### Hash
+
+#### `sha256`
+Returns the SHA-256 encoded hash of the given data.
+
+- **Parameters:**
+  - `data` (`Uint8Array`): The data to encode.
+
+- **Returns:** `Uint8Array` - The SHA-256 encoded hash.
+
+- **Usage:**
+```tsx
+import { sha256 } from '@sei-js/cosmjs';
+
+const hash = sha256(new Uint8Array([/* data */]));
+console.log(hash);
+```
+
+### Serialize
+
+#### `serializeDirectSignDoc`
+Serializes the given signDoc object.
+
+- **Parameters:**
+  - `signDoc` (`SignDoc`): The SignDoc object to be serialized.
+
+- **Returns:** `Uint8Array` - The serialized SignDoc.
+
+- **Usage:**
+```tsx
+import { serializeDirectSignDoc } from '@sei-js/cosmjs';
+
+const serialized = serializeDirectSignDoc({ /* SignDoc object */ });
+console.log(serialized);
+```
+
+#### `serializeAminoSignDoc`
+Serializes the given StdSignDoc object.
+
+- **Parameters:**
+  - `signDoc` (`StdSignDoc`): The StdSignDoc object to be serialized.
+
+- **Returns:** `Uint8Array` - The serialized StdSignDoc.
+
+- **Usage:**
+```tsx
+import { serializeAminoSignDoc } from '@sei-js/cosmjs';
+
+const serialized = serializeAminoSignDoc({ /* StdSignDoc object */ });
+console.log(serialized);
+```
+
+### Signing
+
+#### `makeADR36AminoSignDoc`
+Creates a StdSignDoc for an [ADR-36](https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md) object.
+
+- **Parameters:**
+  - `signer` (`string`): The address of the signer.
+  - `data` (`string | Uint8Array`): The payload to be signed.
+
+- **Returns:** `StdSignDoc` - A valid ADR-36 StdSignDoc.
+
+- **Usage:**
+```tsx
+import { makeADR36AminoSignDoc } from '@sei-js/cosmjs';
+
+const signDoc = makeADR36AminoSignDoc('sei123...', 'Hello, Sei!');
+console.log(signDoc);
+```
+
+#### `verifyArbitrary`
+Verifies a StdSignature object against the given signer address and expected message.
+
+- **Parameters:**
+  - `signerAddress` (`string`): The signer's address.
+  - `expectedMessage` (`string`): The expected message that was signed.
+  - `signatureToVerify` (`StdSignature`): The StdSignature object to verify.
+
+- **Returns:** `Promise<boolean>` - `true` if the signature is valid.
+
+- **Usage:**
+```tsx
+import { verifyArbitrary } from '@sei-js/cosmjs';
+
+const isVerified = await verifyArbitrary('sei123...', 'Hello, Sei!', {
+  pub_key: { type: 'tendermint/PubKeySecp256k1', value: 'A1B2C3...' },
+  signature: 'D4E5F6...'
+});
+console.log(isVerified);
+```
+
+## Common Examples
 
 #### Transfer tokens (Bank send):
 ```tsx
 import { calculateFee } from '@cosmjs/stargate';
+import { getSigningStargateClient } from '@sei-js/cosmjs';
+
+// Don't forget to connect if using a wallet extension
+// or create a wallet from a mnemonic (See above)
+await window.compass.connect(chainId);
+
+const offlineSigner = await window.compass.getOfflineSigner(chainId);
+
+const signingClient = await getSigningStargateClient(RPC_URL, offlineSigner);
 
 const fee = calculateFee(100000, "0.1usei");
 const amount = { amount: SEND_AMOUNT, denom: TOKEN_DENOM };
@@ -114,6 +413,15 @@ const sendResponse = await signingClient.sendTokens(SENDER_ADDRESS, DESTINATION_
 #### IBC Transfer:
 ```tsx
 import { calculateFee } from '@cosmjs/stargate';
+import { getSigningStargateClient } from '@sei-js/cosmjs';
+
+// Don't forget to connect if using a wallet extension
+// or create a wallet from a mnemonic (See above)
+await window.compass.connect(chainId);
+
+const offlineSigner = await window.compass.getOfflineSigner(chainId);
+
+const signingClient = await getSigningStargateClient(RPC_URL, offlineSigner);
 
 const amount = { amount: SEND_AMOUNT, denom: TOKEN_DENOM };
 
@@ -162,6 +470,7 @@ This package contains helper functions to get a `SigningCosmWasmClient` with Sei
 ```tsx
 import { getSigningCosmWasmClient } from "@sei-js/cosmjs";
 
+const offlineSigner = await window.compass.getOfflineSigner(chainId);
 
 // Create a CosmWasmClient
 const signingCosmWasmClient = await getSigningCosmWasmClient(RPC_URL, offlineSigner);
@@ -172,6 +481,8 @@ Build the `executeMsg` according to the contracts specific specifications. Each 
 
 ```tsx
 import { getSigningCosmWasmClient } from "@sei-js/cosmjs";
+
+const offlineSigner = await window.compass.getOfflineSigner(chainId);
 
 // Create a CosmWasmClient
 const signingCosmWasmClient = await getSigningCosmWasmClient(RPC_URL, offlineSigner);
@@ -197,7 +508,10 @@ Sometimes it is necessary to prove account ownership without executing anything 
 ```tsx
 import { verifyArbitrary } from "@sei-js/cosmjs";
 
-const stdSignature = await window.compass.signArbitrary('atlantic-2', SEI_ADDRESS, "Message to sign"); // or FIN_WALLET, KEPLR_WALLET, LEAP_WALLET
+const SEI_ADDRESS = "sei1...";
+const message = "Message to sign";
+const stdSignature = await window.compass.signArbitrary('atlantic-2', SEI_ADDRESS, message); // or FIN_WALLET, KEPLR_WALLET, LEAP_WALLET
+const isValid = await verifyArbitrary(SEI_ADDRESS, message, stdSignature);
 ```
 
 ### Multi-Sig Signing and Broadcasting
