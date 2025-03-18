@@ -7,6 +7,7 @@
 import * as CosmosBaseV1beta1Coin from "../../base/v1beta1/coin.pb"
 export type FeesParams = {
   global_minimum_gas_prices?: CosmosBaseV1beta1Coin.DecCoin[]
+  allowed_fee_denoms?: string[]
 }
 
 export type CosmosGasParams = {

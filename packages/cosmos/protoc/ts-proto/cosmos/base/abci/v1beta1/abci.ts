@@ -95,6 +95,8 @@ export interface GasInfo {
   gas_wanted: number;
   /** GasUsed is the amount of gas actually consumed. */
   gas_used: number;
+  /** GasEstimate is the estimated gas used by the transaction. */
+  gas_estimate: number;
 }
 
 /** Result is the union of ResponseFormat and ResponseCheckTx. */
@@ -658,7 +660,7 @@ export const Attribute: MessageFns<Attribute, "cosmos.base.abci.v1beta1.Attribut
 };
 
 function createBaseGasInfo(): GasInfo {
-  return { gas_wanted: 0, gas_used: 0 };
+  return { gas_wanted: 0, gas_used: 0, gas_estimate: 0 };
 }
 
 export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = {
@@ -670,6 +672,9 @@ export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = 
     }
     if (message.gas_used !== 0) {
       writer.uint32(16).uint64(message.gas_used);
+    }
+    if (message.gas_estimate !== 0) {
+      writer.uint32(24).uint64(message.gas_estimate);
     }
     return writer;
   },
@@ -695,6 +700,13 @@ export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = 
 
           message.gas_used = longToNumber(reader.uint64());
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.gas_estimate = longToNumber(reader.uint64());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -708,6 +720,7 @@ export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = 
     return {
       gas_wanted: isSet(object.gas_wanted) ? globalThis.Number(object.gas_wanted) : 0,
       gas_used: isSet(object.gas_used) ? globalThis.Number(object.gas_used) : 0,
+      gas_estimate: isSet(object.gas_estimate) ? globalThis.Number(object.gas_estimate) : 0,
     };
   },
 
@@ -719,6 +732,9 @@ export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = 
     if (message.gas_used !== 0) {
       obj.gas_used = Math.round(message.gas_used);
     }
+    if (message.gas_estimate !== 0) {
+      obj.gas_estimate = Math.round(message.gas_estimate);
+    }
     return obj;
   },
 
@@ -729,6 +745,7 @@ export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = 
     const message = createBaseGasInfo();
     message.gas_wanted = object.gas_wanted ?? 0;
     message.gas_used = object.gas_used ?? 0;
+    message.gas_estimate = object.gas_estimate ?? 0;
     return message;
   },
 };

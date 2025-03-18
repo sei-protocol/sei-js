@@ -54,16 +54,6 @@
 			"require": "./dist/cjs/encoding/index.js",
 			"types": "./dist/types/encoding/index.d.ts"
 		},
-		"./encoding/amino": {
-			"import": "./dist/esm/encoding/amino.js",
-			"require": "./dist/cjs/encoding/amino.js",
-			"types": "./dist/types/encoding/amino.d.ts"
-		},
-		"./encoding/registry": {
-			"import": "./dist/esm/encoding/registry.js",
-			"require": "./dist/cjs/encoding/registry.js",
-			"types": "./dist/types/encoding/registry.d.ts"
-		},
 		"./encoding/stargate": {
 			"import": "./dist/esm/encoding/stargate.js",
 			"require": "./dist/cjs/encoding/stargate.js",

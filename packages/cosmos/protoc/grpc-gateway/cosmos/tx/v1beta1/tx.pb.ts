@@ -76,4 +76,5 @@ export type Fee = {
   gas_limit?: string
   payer?: string
   granter?: string
+  gas_estimate?: string
 }

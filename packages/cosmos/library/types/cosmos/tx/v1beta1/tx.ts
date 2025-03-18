@@ -177,4 +177,9 @@ export interface Fee {
 	 * not support fee grants, this will fail
 	 */
 	granter: string;
+	/**
+	 * gas_estimate is the estimated gas that will be used by the transaction. This can be used to pack blocks
+	 * tighter instead of just relying on the gas_limit.
+	 */
+	gas_estimate: number;
 }

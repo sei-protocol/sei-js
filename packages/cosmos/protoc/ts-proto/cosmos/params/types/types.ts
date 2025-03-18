@@ -13,6 +13,7 @@ export const protobufPackage = "cosmos.params.v1beta1";
 /** Defines fee params that are controlled through governance */
 export interface FeesParams {
   global_minimum_gas_prices: DecCoin[];
+  allowed_fee_denoms: string[];
 }
 
 export interface CosmosGasParams {
@@ -26,7 +27,7 @@ export interface GenesisState {
 }
 
 function createBaseFeesParams(): FeesParams {
-  return { global_minimum_gas_prices: [] };
+  return { global_minimum_gas_prices: [], allowed_fee_denoms: [] };
 }
 
 export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParams"> = {
@@ -35,6 +36,9 @@ export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParam
   encode(message: FeesParams, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.global_minimum_gas_prices) {
       DecCoin.encode(v!, writer.uint32(10).fork()).join();
+    }
+    for (const v of message.allowed_fee_denoms) {
+      writer.uint32(18).string(v!);
     }
     return writer;
   },
@@ -53,6 +57,13 @@ export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParam
 
           message.global_minimum_gas_prices.push(DecCoin.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.allowed_fee_denoms.push(reader.string());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -67,6 +78,9 @@ export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParam
       global_minimum_gas_prices: globalThis.Array.isArray(object?.global_minimum_gas_prices)
         ? object.global_minimum_gas_prices.map((e: any) => DecCoin.fromJSON(e))
         : [],
+      allowed_fee_denoms: globalThis.Array.isArray(object?.allowed_fee_denoms)
+        ? object.allowed_fee_denoms.map((e: any) => globalThis.String(e))
+        : [],
     };
   },
 
@@ -74,6 +88,9 @@ export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParam
     const obj: any = {};
     if (message.global_minimum_gas_prices?.length) {
       obj.global_minimum_gas_prices = message.global_minimum_gas_prices.map((e) => DecCoin.toJSON(e));
+    }
+    if (message.allowed_fee_denoms?.length) {
+      obj.allowed_fee_denoms = message.allowed_fee_denoms;
     }
     return obj;
   },
@@ -84,6 +101,7 @@ export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParam
   fromPartial<I extends Exact<DeepPartial<FeesParams>, I>>(object: I): FeesParams {
     const message = createBaseFeesParams();
     message.global_minimum_gas_prices = object.global_minimum_gas_prices?.map((e) => DecCoin.fromPartial(e)) || [];
+    message.allowed_fee_denoms = object.allowed_fee_denoms?.map((e) => e) || [];
     return message;
   },
 };

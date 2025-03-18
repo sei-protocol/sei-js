@@ -41,6 +41,7 @@ export type Attribute = {
 export type GasInfo = {
   gas_wanted?: string
   gas_used?: string
+  gas_estimate?: string
 }
 
 export type Result = {
