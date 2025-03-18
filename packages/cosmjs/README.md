@@ -64,17 +64,18 @@ If you prefer to manage wallet connections manually, you can use the native inte
 ### Generating or Restoring a Wallet
 In some circumstances it is necessary to generate a new wallet or to restore a wallet from a given seed phrase.
 ```tsx
-import { generateWallet, restoreWallet } from "@sei-js/cosmjs";
+import { getHdPath, generateWallet, restoreWallet } from "@sei-js/cosmjs";
+
+const cosmosHdPath = getHdPath(0, 118); // This is the default path for Sei wallets account index 0
+const evmHdPath = getHdPath(0, 60); // This is the default path for EVM wallets account index 0
 
 // 12 word mnemonic by default
-const generatedWallet = await generateWallet();
+const generatedWallet = await generateWallet(24, cosmosHdPath);
 console.log('generated mnemonic', generatedWallet.mnemonic);
 
-// or restore a wallet given a seed phrase
-const restoredWallet = await restoreWallet(SEED_PHRASE);
+// or restore a wallet given a seed phrase and coin type 60 HD path
+const restoredWallet = await restoreWallet(SEED_PHRASE, evmHdPath);
 console.log('restored mnemonic', restoredWallet.mnemonic);
-
-//Both the above functions have optional parameters for selecting a certain account index in a given wallet
 ```
 
 ### Cosmos Kit
