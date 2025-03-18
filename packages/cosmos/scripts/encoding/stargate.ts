@@ -1,35 +1,35 @@
-import fs from "node:fs";
-import path from "node:path";
-import ts from "typescript";
-import { findExportInFile, runBiomeFix, writeToFile } from "../common/utils";
+import fs from 'node:fs';
+import path from 'node:path';
+import ts from 'typescript';
+import { findExportInFile, runBiomeFix, writeToFile } from '../common/utils';
 
 // Configurations
 const REGISTRY_CONFIG = {
-	fileName: "proto.ts",
-	varName: "registry",
-	exportName: "seiProtoRegistry",
-	suffix: "_registry",
+	fileName: 'registry.ts',
+	varName: 'registry',
+	exportName: 'seiProtoRegistry',
+	suffix: '_registry'
 };
 
 const AMINO_CONFIG = {
-	fileName: "amino.ts",
-	varName: "aminoConverters",
-	exportName: "aminoConverters: AminoConverters",
-	suffix: "_amino",
+	fileName: 'amino.ts',
+	varName: 'aminoConverters',
+	exportName: 'aminoConverters: AminoConverters',
+	suffix: '_amino'
 };
 
 // Helper function to create a unique and descriptive alias
 const createAliasFromFilePath = (filePath: string, rootDir: string): string =>
 	path
 		.relative(rootDir, filePath)
-		.replace(/\\/g, "/")
-		.replace(/\.ts$/, "")
-		.replace(/[^a-zA-Z0-9]/g, "_");
+		.replace(/\\/g, '/')
+		.replace(/\.ts$/, '')
+		.replace(/[^a-zA-Z0-9]/g, '_');
 
 // Process TypeScript file to detect if it contains a specific export
 const processTsFile = async (filePath: string, varName: string, foundFiles: string[]): Promise<void> => {
 	try {
-		const fileContent = await fs.promises.readFile(filePath, "utf-8");
+		const fileContent = await fs.promises.readFile(filePath, 'utf-8');
 		const sourceFile = ts.createSourceFile(filePath, fileContent, ts.ScriptTarget.Latest, true);
 
 		if (findExportInFile(sourceFile, varName)) {
@@ -48,10 +48,10 @@ const iterateDirectoriesAndFindExports = async (dirPath: string, varName: string
 			const itemPath = path.join(dirPath, item.name);
 			if (item.isDirectory()) {
 				await iterateDirectoriesAndFindExports(itemPath, varName, foundFiles);
-			} else if (item.isFile() && item.name.endsWith(".ts")) {
+			} else if (item.isFile() && item.name.endsWith('.ts')) {
 				await processTsFile(itemPath, varName, foundFiles);
 			}
-		}),
+		})
 	);
 };
 
@@ -59,24 +59,24 @@ const iterateDirectoriesAndFindExports = async (dirPath: string, varName: string
 const createFile = async (
 	rootDir: string,
 	foundFiles: string[],
-	config: { fileName: string; varName: string; exportName: string; suffix: string },
+	config: { fileName: string; varName: string; exportName: string; suffix: string }
 ): Promise<void> => {
 	try {
 		if (foundFiles.length === 0) return;
 
-		const imports: string[] = config.varName === "aminoConverters" ? ["import { AminoConverters } from '@cosmjs/stargate';"] : [];
+		const imports: string[] = config.varName === 'aminoConverters' ? ["import { AminoConverters } from '@cosmjs/stargate';"] : [];
 		const arrayEntries: string[] = [];
 
 		foundFiles.forEach((filePath) => {
-			const importPath = path.relative(rootDir, filePath).replace(/\\/g, "/").replace(/\.ts$/, "");
+			const importPath = path.relative(rootDir, filePath).replace(/\\/g, '/').replace(/\.ts$/, '');
 			const alias = createAliasFromFilePath(filePath, rootDir) + config.suffix;
 			imports.push(`import { ${config.varName} as ${alias} } from './${importPath}';`);
 			arrayEntries.push(`...${alias}`);
 		});
 
-		let fileContent = `${imports.join("\n")}\n\nexport const ${config.exportName}  = [${arrayEntries.join(",")}];`;
-		if (config.varName === "aminoConverters") {
-			fileContent = `${imports.join("\n")}\n\nexport const ${config.exportName}  = {${arrayEntries.join(",")}};`;
+		let fileContent = `${imports.join('\n')}\n\nexport const ${config.exportName}  = [${arrayEntries.join(',')}];`;
+		if (config.varName === 'aminoConverters') {
+			fileContent = `${imports.join('\n')}\n\nexport const ${config.exportName}  = {${arrayEntries.join(',')}};`;
 		}
 		const outputFilePath = path.join(rootDir, config.fileName);
 		await writeToFile(outputFilePath, fileContent.trim());
@@ -89,9 +89,9 @@ const createFile = async (
 
 // Main function to orchestrate registry and amino converters generation
 export const buildCombinedProtoRegistryAndAminoConverters = async (): Promise<void> => {
-	console.log("Building combined proto registry and amino converters...");
+	console.log('Building combined proto registry and amino converters...');
 
-	const rootDir = "./library/encoding";
+	const rootDir = './library/encoding';
 	const registries: string[] = [];
 	const aminoConverters: string[] = [];
 

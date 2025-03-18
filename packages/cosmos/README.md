@@ -9,7 +9,7 @@ Install the package using Yarn: `yarn add @sei-js/cosmos`
 
 ### Exported Packages
 - [@sei-js/cosmos/types](#sei-jscosmostypes): TypeScript types for all modules and types.
-- [@sei-js/cosmos/encoding](#sei-jscosmosencoding): Protobuf encoding/decoding utilities.
+- [@sei-js/cosmos/encoding](#sei-jscosmosencoding): Protobuf encoding/decoding utilities, cosmjs stargate amino converters and registry types.
 - [@sei-js/cosmos/rest](#sei-jscosmosrest): REST client for querying Sei chain state through the Cosmos REST interface.
 
 ## `@sei-js/cosmos/types`
@@ -245,6 +245,26 @@ if (result.code === 0) {
 } else {
   console.error("Error broadcasting transaction:", result.rawLog);
 }
+```
+
+### CosmJS Amino Converters and Registry Types
+`@sei-js/cosmos/encoding/amino` `@sei-js/cosmos/encoding/registry` and export the necessary types and converters for usage with `@cosmjs/stargate`. These are used to set up the amino registry and types for signing clients.
+
+```typescript
+import { aminoConverters, seiProtoRegistry } from "@sei-js/cosmos/encoding/stargate";
+import { AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
+import { Registry } from "@cosmjs/proto-signing";
+
+const offlineSigner = await window.compass.getOfflineSigner
+
+const signingStargateClient = await SigningStargateClient.connectWithSigner(
+  "https://rpc-arctic-1.sei-apis.com",
+  offlineSigner,
+  {
+    aminoTypes: new AminoTypes(aminoConverters),
+    registry: new Registry(seiProtoRegistry),
+  },
+);
 ```
 
 ## `@sei-js/cosmos/rest`

@@ -70,6 +70,8 @@ export interface GasInfo {
 	gas_wanted: number;
 	/** GasUsed is the amount of gas actually consumed. */
 	gas_used: number;
+	/** GasEstimate is the estimated gas used by the transaction. */
+	gas_estimate: number;
 }
 
 export interface Result {

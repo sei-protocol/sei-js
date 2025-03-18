@@ -226,6 +226,11 @@ export interface Fee {
    * not support fee grants, this will fail
    */
   granter: string;
+  /**
+   * gas_estimate is the estimated gas that will be used by the transaction. This can be used to pack blocks
+   * tighter instead of just relying on the gas_limit.
+   */
+  gas_estimate: number;
 }
 
 function createBaseTx(): Tx {
@@ -1041,7 +1046,7 @@ export const ModeInfoMulti: MessageFns<ModeInfoMulti, "cosmos.tx.v1beta1.ModeInf
 };
 
 function createBaseFee(): Fee {
-  return { amount: [], gas_limit: 0, payer: "", granter: "" };
+  return { amount: [], gas_limit: 0, payer: "", granter: "", gas_estimate: 0 };
 }
 
 export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
@@ -1059,6 +1064,9 @@ export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
     }
     if (message.granter !== "") {
       writer.uint32(34).string(message.granter);
+    }
+    if (message.gas_estimate !== 0) {
+      writer.uint32(40).uint64(message.gas_estimate);
     }
     return writer;
   },
@@ -1098,6 +1106,13 @@ export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
 
           message.granter = reader.string();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.gas_estimate = longToNumber(reader.uint64());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1113,6 +1128,7 @@ export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
       gas_limit: isSet(object.gas_limit) ? globalThis.Number(object.gas_limit) : 0,
       payer: isSet(object.payer) ? globalThis.String(object.payer) : "",
       granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
+      gas_estimate: isSet(object.gas_estimate) ? globalThis.Number(object.gas_estimate) : 0,
     };
   },
 
@@ -1130,6 +1146,9 @@ export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
     if (message.granter !== "") {
       obj.granter = message.granter;
     }
+    if (message.gas_estimate !== 0) {
+      obj.gas_estimate = Math.round(message.gas_estimate);
+    }
     return obj;
   },
 
@@ -1142,6 +1161,7 @@ export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
     message.gas_limit = object.gas_limit ?? 0;
     message.payer = object.payer ?? "";
     message.granter = object.granter ?? "";
+    message.gas_estimate = object.gas_estimate ?? 0;
     return message;
   },
 };

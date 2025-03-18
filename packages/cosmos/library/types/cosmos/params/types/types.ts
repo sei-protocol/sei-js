@@ -2,6 +2,7 @@ import type { DecCoin } from "../../base/v1beta1/coin";
 
 export interface FeesParams {
 	global_minimum_gas_prices: DecCoin[];
+	allowed_fee_denoms: string[];
 }
 
 export interface CosmosGasParams {
