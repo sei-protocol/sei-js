@@ -1,6 +1,6 @@
 # Create Sei App
 
-This repository contains various templates for kick starting a Sei application out of the box, as well as a CLI (Command Line Interface) tool that can be used to create projects using the given templates.
+This repository contains various templates for kick-starting a Sei application out of the box, as well as a CLI (Command Line Interface) tool that can be used to create projects using the given templates.
 
 You can use either:
 - Next.js
@@ -8,15 +8,11 @@ You can use either:
 
 to scaffold your project.
 
-## Getting Started
-1. Install dependencies by running `yarn` or `npm`
+## Scaffold your project
+Simply run `npx @sei-js/create-sei app` to run the setup wizard and choose the template you want to use.
 
-2. Install this package globally by running `npm install -g @sei-js/create-sei`
-
-3. Run `create-sei` and follow the prompts
-
-## EVM Applications (Reccommended)
-Building on our EVM (Ethereum Virtual Machine) is the easiest way to get your dApp kick started on Sei! The mature EVM ecosystem provides many tools out of the box to help developers build faster, including deploying smart contracts and other helpful connection libraries.
+## EVM Applications (Recommended)
+Building on our EVM (Ethereum Virtual Machine) is the easiest way to get your dApp kick-started on Sei! The mature EVM ecosystem provides many tools out of the box to help developers build faster, including deploying smart contracts and other helpful connection libraries.
 
 This tool will offer multiple variants of EVM tooling, including
 - [Wagmi](https://wagmi.sh/core/getting-started) ([Viem](https://viem.sh/)): Recommended
@@ -24,7 +20,7 @@ This tool will offer multiple variants of EVM tooling, including
 
 Both variants use [@sei-js/evm](https://sei-protocol.github.io/sei-js/modules/evm.html)
 
-If you are new to Web3 development, we reccommend using Wagmi since it provides helpful hooks out of the box.
+If you are new to Web3 development, we recommend using Wagmi since it provides helpful hooks out of the box.
 
 ## Cosmos Applications
 Cosmos based Sei Applications interact with the CosmWasm VM on the chain. Use this if you are a seasoned CosmWasm developer, or if you intend to interact with CosmWasm Smart Contracts, as well as other chains in the Cosmos ecosystem.
