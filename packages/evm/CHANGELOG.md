@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 2.0.1
+
+### Patch Changes
+
+- ded69c2: Updates IBC precompile contract to be nonpayable
+
 ## 2.0.0
 
 ### Major Changes

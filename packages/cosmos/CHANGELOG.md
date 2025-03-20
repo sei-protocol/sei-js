@@ -1,5 +1,11 @@
 # @sei-js/cosmos
 
+## 1.0.1
+
+### Patch Changes
+
+- 4bb7c92: Export registry and amino types
+
 ## 1.0.0
 
 ### Major Changes
