@@ -12,6 +12,7 @@ The `@sei-js/cosmjs` package contains helper functions for wallet connection, tr
 - [Signing Client](#signing-client)
 - [Utils](#utils)
   - [Address](#address)
+    - [`deriveAddressesFromPrivateKey`](#pubkeytokeypair)
     - [`pubKeyToKeyPair`](#pubkeytokeypair)
     - [`pubKeyToBytes`](#pubkeytobytes)
     - [`compressedPubKeyToAddress`](#compressedpubkeytoaddress)
@@ -63,17 +64,18 @@ If you prefer to manage wallet connections manually, you can use the native inte
 ### Generating or Restoring a Wallet
 In some circumstances it is necessary to generate a new wallet or to restore a wallet from a given seed phrase.
 ```tsx
-import { generateWallet, restoreWallet } from "@sei-js/cosmjs";
+import { getHdPath, generateWallet, restoreWallet } from "@sei-js/cosmjs";
+
+const cosmosHdPath = getHdPath(0, 118); // This is the default path for Sei wallets account index 0
+const evmHdPath = getHdPath(0, 60); // This is the default path for EVM wallets account index 0
 
 // 12 word mnemonic by default
-const generatedWallet = await generateWallet();
+const generatedWallet = await generateWallet(24, cosmosHdPath);
 console.log('generated mnemonic', generatedWallet.mnemonic);
 
-// or restore a wallet given a seed phrase
-const restoredWallet = await restoreWallet(SEED_PHRASE);
+// or restore a wallet given a seed phrase and coin type 60 HD path
+const restoredWallet = await restoreWallet(SEED_PHRASE, evmHdPath);
 console.log('restored mnemonic', restoredWallet.mnemonic);
-
-//Both the above functions have optional parameters for selecting a certain account index in a given wallet
 ```
 
 ### Cosmos Kit
@@ -163,6 +165,21 @@ const signingClient = await getSigningStargateClient(RPC_URL, offlineSigner, { r
 ## Utils
 
 ### Address
+
+#### `deriveAddressesFromPrivateKey`
+Derives and returns an address for the given private key.
+
+- **Parameters:**
+  - `privateKeyHex` (`0x{string}`): A hex-encoded private key string.
+
+- **Returns:** `stringr` - An address from the given private key.
+
+- **Usage:**
+```tsx
+import { deriveAddressesFromPrivateKey } from '@sei-js/cosmjs';
+
+const seiAddress = deriveAddressesFromPrivateKey(PRIVATE_KEY);
+```
 
 #### `pubKeyToKeyPair`
 Creates a hex-encoded ECC KeyPair given a public key.

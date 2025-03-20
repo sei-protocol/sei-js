@@ -41,7 +41,7 @@ describe('Wallet functions', () => {
 		const mockWallet = {};
 		(DirectSecp256k1HdWallet.generate as jest.Mock).mockResolvedValue(mockWallet);
 
-		const wallet = await generateWallet(12, 0);
+		const wallet = await generateWallet(12, getHdPath(0));
 
 		expect(wallet).toBe(mockWallet);
 		expect(DirectSecp256k1HdWallet.generate).toHaveBeenCalledWith(12, {
@@ -54,7 +54,7 @@ describe('Wallet functions', () => {
 		const mockWallet = {};
 		(DirectSecp256k1HdWallet.generate as jest.Mock).mockResolvedValue(mockWallet);
 
-		const wallet = await generateWallet(12, 7);
+		const wallet = await generateWallet(12, getHdPath(7));
 
 		expect(wallet).toBe(mockWallet);
 		expect(DirectSecp256k1HdWallet.generate).toHaveBeenCalledWith(12, {
@@ -69,7 +69,7 @@ describe('Wallet functions', () => {
 
 		(DirectSecp256k1HdWallet.fromMnemonic as jest.Mock).mockResolvedValue(mockWallet);
 
-		const wallet = await restoreWallet(seedPhrase, 0);
+		const wallet = await restoreWallet(seedPhrase, getHdPath(0));
 
 		expect(wallet).toBe(mockWallet);
 		expect(DirectSecp256k1HdWallet.fromMnemonic).toHaveBeenCalledWith(seedPhrase, {
