@@ -1,5 +1,12 @@
 # @sei-js/cosmjs
 
+## 1.0.8
+
+### Patch Changes
+
+- f4c47e0: Updated README
+- 5edb30b: Adds a helper function for deriving an address from a given private key
+
 ## 1.0.7
 
 ### Patch Changes
