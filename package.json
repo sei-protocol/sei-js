@@ -63,5 +63,6 @@
     "typedoc": "^0.25.12",
     "typedoc-material-theme": "^1.0.2",
     "typescript": "5.4.4"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
