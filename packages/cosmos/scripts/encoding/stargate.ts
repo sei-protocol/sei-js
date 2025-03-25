@@ -64,11 +64,18 @@ const createFile = async (
 	try {
 		if (foundFiles.length === 0) return;
 
-		const imports: string[] = config.varName === 'aminoConverters' ? ["import { AminoConverters } from '@cosmjs/stargate';"] : [];
+		// Sort files alphabetically by their relative import path
+		const sortedFiles = [...foundFiles].sort((a, b) => {
+			const pathA = path.relative(rootDir, a).replace(/\\/g, "/");
+			const pathB = path.relative(rootDir, b).replace(/\\/g, "/");
+			return pathA.localeCompare(pathB);
+		});
+
+		const imports: string[] = config.varName === "aminoConverters" ? ["import { AminoConverters } from '@cosmjs/stargate';"] : [];
 		const arrayEntries: string[] = [];
 
-		foundFiles.forEach((filePath) => {
-			const importPath = path.relative(rootDir, filePath).replace(/\\/g, '/').replace(/\.ts$/, '');
+		sortedFiles.forEach((filePath) => {
+			const importPath = path.relative(rootDir, filePath).replace(/\\/g, "/").replace(/\.ts$/, "");
 			const alias = createAliasFromFilePath(filePath, rootDir) + config.suffix;
 			imports.push(`import { ${config.varName} as ${alias} } from './${importPath}';`);
 			arrayEntries.push(`...${alias}`);

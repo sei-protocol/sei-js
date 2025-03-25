@@ -64,7 +64,7 @@ export const generateEncoderIndexFile = async (rootDir: string): Promise<void> =
 		};
 
 		// Create the content of the index.ts file
-		const indexContent = `${importStatements.join("\n")}\n\nexport const Encoder = ${formatQuerierObject(constructedQuerier)};`;
+		const indexContent = `${importStatements.join("\n")}\n\nexport * from "./amino";\nexport * from "./registry";\n\nexport const Encoder = ${formatQuerierObject(constructedQuerier)};`;
 		const outputFilePath = path.join(rootDir, "index.ts");
 		await writeToFile(outputFilePath, indexContent);
 		await runBiomeFix(outputFilePath);
