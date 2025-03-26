@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.2.0
+
+### Minor Changes
+
+- 1c6c2f8: Rename to Sei Global Wallet
+
 ## 1.1.0
 
 ### Minor Changes
