@@ -1,0 +1,38 @@
+[2K[1G[2m$ rimraf generated && rimraf gen[22m
+[2K[1G[2m$ yarn generate:all && yarn extract-libraries[22m
+[2K[1G[2m$ yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party[22m
+[2K[1G[2m$ buf generate buf.build/sei-protocol/cosmos-sdk[22m
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+[2K[1G[2m$ buf generate buf.build/sei-protocol/sei-chain[22m
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+[2K[1G[2m$ buf generate buf.build/sei-protocol/third-party[22m
+[2K[1G[2m$ npx tsx scripts/index.ts[22m
+npm ERR! cb.apply is not a function
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /Users/carsonaberle/.npm/_logs/2024-10-01T22_22_36_945Z-debug.log
+Install for [ 'tsx@latest' ] failed with code 1
+[2K[1G[31merror[39m Command failed with exit code 1.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.
+[2K[1G[31merror[39m Command failed with exit code 1.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.

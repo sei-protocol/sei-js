@@ -1,0 +1,49 @@
+[2K[1G[2m$ rimraf gen && rimraf build[22m
+[2K[1G[2m$ yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party && yarn extract-types && yarn create-indexes[22m
+[2K[1G[2m$ buf generate buf.build/sei-protocol/cosmos-sdk[22m
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+[2K[1G[2m$ buf generate buf.build/sei-protocol/sei-chain[22m
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+[2K[1G[2m$ buf generate buf.build/sei-protocol/third-party[22m
+[2K[1G[2m$ npx tsx ./scripts/postprocess.ts[22m
+Finished generating the REST client library.
+[2K[1G[2m$ npx tsx ./scripts/create-indexes.ts[22m
+Generated index.ts in build/cosmos/accesscontrol_x
+Generated index.ts in build/cosmos/auth/v1beta1
+Generated index.ts in build/cosmos/authz/v1beta1
+Generated index.ts in build/cosmos/bank/v1beta1
+Generated index.ts in build/cosmos/distribution/v1beta1
+Generated index.ts in build/cosmos/evidence/v1beta1
+Generated index.ts in build/cosmos/feegrant/v1beta1
+Generated index.ts in build/cosmos/gov/v1beta1
+Generated index.ts in build/cosmos/mint/v1beta1
+Generated index.ts in build/cosmos/params/v1beta1
+Generated index.ts in build/cosmos/slashing/v1beta1
+Generated index.ts in build/cosmos/staking/v1beta1
+Generated index.ts in build/cosmos/upgrade/v1beta1
+Generated index.ts in build/epoch
+Generated index.ts in build/evm
+Generated index.ts in build/mint/v1beta1
+Generated index.ts in build/oracle
+Generated index.ts in build/tokenfactory
+[2K[1G[2m$ rimraf gen[22m

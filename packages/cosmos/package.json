@@ -33,11 +33,9 @@
 	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
-	"private": false,
 	"publishConfig": {
 		"access": "public"
 	},
-	"peerDependencies": {},
 	"dependencies": {
 		"@bufbuild/protobuf": "^2.1.0",
 		"@cosmjs/proto-signing": "^0.32.4",

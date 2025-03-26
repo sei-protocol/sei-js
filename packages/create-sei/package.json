@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "module": "dist/main.js",
   "type": "module",
-  "bin": {
-    "create-sei": "./dist/main.js"
-  },
+  "bin": "./dist/main.js",
   "scripts": {
     "build": "tsc && cp -r ./templates ./dist/templates",
     "dev": "node --loader ts-node/esm src/main.ts",

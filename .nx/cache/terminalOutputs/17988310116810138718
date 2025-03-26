@@ -1,0 +1,7 @@
+[2K[1G[2m$ rimraf gen && rimraf build[22m
+[2K[1G[2m$ yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party[22m
+[2K[1G[2m$ buf generate buf.build/sei-protocol/cosmos-sdk[22m
+[2K[1G[2m$ buf generate buf.build/sei-protocol/sei-chain[22m
+[2K[1G[2m$ buf generate buf.build/sei-protocol/third-party[22m
+[2K[1G[2m$ npx tsx ./scripts/postprocess.ts && rimraf gen[22m
+Processed 128 TypeScript files.
