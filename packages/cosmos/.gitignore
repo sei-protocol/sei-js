@@ -12,7 +12,4 @@ tsconfig.*.json
 
 yarn-error.log
 
-.eslintignore
-eslintrc.json
-
 buf.*.yaml

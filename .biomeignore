@@ -1,6 +1,0 @@
-# Add files here to ignore them from biome formatting
-
-/dist
-/coverage
-
-*/jest.config.ts

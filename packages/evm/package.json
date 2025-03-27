@@ -13,8 +13,7 @@
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"docs": "typedoc --out docs",
-		"test": "jest --passWithNoTests",
-		"lint": "eslint --ext .ts"
+		"test": "jest --passWithNoTests"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [
