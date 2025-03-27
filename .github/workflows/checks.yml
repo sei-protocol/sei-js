@@ -10,9 +10,19 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Fetch the full history instead of a shallow clone
+
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: yarn
-      - run: yarn test:all
-      - run: yarn build:all
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Yarn Install
+        run: yarn
+
+      - name: Test
+        run: yarn test:all
+
+      - name: Build All Packages
+        run: yarn build:all

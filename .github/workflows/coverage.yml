@@ -26,6 +26,9 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
       - run: chrome --version
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install dependencies
         run: yarn install
 
