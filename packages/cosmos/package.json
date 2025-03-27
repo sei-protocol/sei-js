@@ -1,9 +1,11 @@
 {
 	"name": "@sei-js/cosmos",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
 	"sideEffects": false,
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"prebuild": "rimraf dist",
 		"build": "yarn compile:all",
@@ -22,7 +24,13 @@
 		"lint": "echo 'No linting configured for this package'"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": ["sei", "typescript", "types", "enums", "interfaces"],
+	"keywords": [
+		"sei",
+		"typescript",
+		"types",
+		"enums",
+		"interfaces"
+	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"private": false,
