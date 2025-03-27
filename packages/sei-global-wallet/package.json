@@ -34,22 +34,22 @@
     "viem": "^2.7.12"
   },
   "peerDependenciesMeta": {
-    "viem": {
+    "@solana/wallet-standard-features": {
       "optional": true
     },
     "@solana/web3.js": {
       "optional": true
     },
-    "@solana/wallet-standard-features": {
+    "@wallet-standard/base": {
       "optional": true
     },
     "@wallet-standard/features": {
       "optional": true
     },
-    "@wallet-standard/base": {
+    "@wallet-standard/wallet": {
       "optional": true
     },
-    "@wallet-standard/wallet": {
+    "viem": {
       "optional": true
     }
   },
