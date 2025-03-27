@@ -3,34 +3,22 @@
 	"version": "1.0.1",
 	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
 	"sideEffects": false,
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
-		"prebuild": "rimraf dist",
-		"build": "yarn compile:all",
+		"build": "rimraf dist && yarn compile:all",
 		"compile:all": "yarn compile:cjs && yarn compile:esm && yarn compile:declarations",
 		"compile:cjs": "tsc --outDir dist/cjs --module commonjs --project ./tsconfig.json",
 		"compile:esm": "tsc --outDir dist/esm --module esnext --project ./tsconfig.json",
 		"compile:declarations": "tsc --project ./tsconfig.declaration.json",
-		"pregenerate": "rimraf protoc",
-		"generate": "yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party",
-		"postgenerate": "yarn extract-libraries",
+		"generate": "rimraf protoc && yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party && yarn extract-libraries",
 		"generate-sei-cosmos": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/cosmos-sdk",
 		"generate-sei-chain": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/sei-chain",
 		"generate-third-party": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/third-party",
-		"preextract-libraries": "rimraf library",
-		"extract-libraries": "tsx scripts/index.ts",
+		"extract-libraries": "rimraf library && tsx scripts/index.ts",
 		"lint": "echo 'No linting configured for this package'"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": [
-		"sei",
-		"typescript",
-		"types",
-		"enums",
-		"interfaces"
-	],
+	"keywords": ["sei", "typescript", "types", "enums", "interfaces"],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"publishConfig": {

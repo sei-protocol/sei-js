@@ -1,0 +1,15 @@
+{
+	"linter": {
+		"rules": {
+			"correctness": {
+				"noUnusedImports": "error"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"jsxQuoteStyle": "double"
+		}
+	}
+}

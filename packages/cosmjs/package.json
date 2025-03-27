@@ -1,67 +1,48 @@
 {
-  "name": "@sei-js/cosmjs",
-  "version": "1.0.8",
-  "description": "TypeScript library for CosmJS interactions on the Sei blockchain",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
-  "sideEffects": false,
-  "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
-    "build:cjs": "tsc --outDir dist/cjs --module commonjs",
-    "build:esm": "tsc --outDir dist/esm --module esnext",
-    "build:types": "tsc --project ./tsconfig.declaration.json",
-    "build:prettier": "prettier --write 'dist/**/*.js'",
-    "docs": "typedoc --out docs",
-    "test": "jest",
-    "lint": "eslint --ext .ts"
-  },
-  "homepage": "https://github.com/sei-protocol/sei-js#readme",
-  "keywords": [
-    "sei",
-    "javascript",
-    "typescript",
-    "react"
-  ],
-  "repository": "git@github.com:sei-protocol/sei-js.git",
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "@cosmjs/amino": "^0.29.5",
-    "@cosmjs/cosmwasm-stargate": "^0.29.5",
-    "@cosmjs/crypto": "^0.29.5",
-    "@cosmjs/encoding": "^0.32.3",
-    "@cosmjs/json-rpc": "^0.29.5",
-    "@cosmjs/math": "^0.29.5",
-    "@cosmjs/proto-signing": "^0.29.5",
-    "@cosmjs/stargate": "^0.29.5",
-    "@cosmjs/tendermint-rpc": "^0.29.5",
-    "@cosmjs/utils": "^0.29.5",
-    "@sei-js/proto": "^4.0.8",
-    "bech32": "^2.0.0",
-    "buffer": "^6.0.3",
-    "elliptic": "^6.5.4",
-    "moment": "^2.30.1",
-    "process": "^0.11.10",
-    "readonly-date": "^1.0.0",
-    "sha.js": "^2.4.11",
-    "styled-components": "^6.1.1",
-    "xstream": "^11.14.0"
-  },
-  "devDependencies": {
-    "@types/elliptic": "^6.4.18",
-    "@types/jest": "^29.5.5",
-    "@types/sha.js": "^2.4.4",
-    "prettier": "^3.0.3"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
-    }
-  }
+	"name": "@sei-js/cosmjs",
+	"version": "1.0.8",
+	"description": "TypeScript library for CosmJS interactions on the Sei blockchain",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/types/index.d.ts",
+	"sideEffects": false,
+	"scripts": {
+		"prebuild": "rimraf dist",
+		"build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
+		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
+		"build:esm": "tsc --outDir dist/esm --module esnext",
+		"build:types": "tsc --project ./tsconfig.declaration.json",
+		"build:prettier": "prettier --write 'dist/**/*.js'",
+		"docs": "typedoc --out docs",
+		"test": "jest",
+		"lint": "eslint --ext .ts"
+	},
+	"homepage": "https://github.com/sei-protocol/sei-js#readme",
+	"keywords": ["sei", "javascript", "typescript", "react"],
+	"repository": "git@github.com:sei-protocol/sei-js.git",
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
+	"dependencies": {
+		"@cosmjs/amino": "^0.29.5",
+		"@cosmjs/cosmwasm-stargate": "^0.29.5",
+		"@cosmjs/crypto": "^0.29.5",
+		"@cosmjs/encoding": "^0.32.3",
+		"@cosmjs/math": "^0.29.5",
+		"@cosmjs/proto-signing": "^0.29.5",
+		"@cosmjs/stargate": "^0.29.5",
+		"@cosmjs/tendermint-rpc": "^0.29.5",
+		"@sei-js/proto": "^4.0.8",
+		"bech32": "^2.0.0",
+		"elliptic": "^6.5.4",
+		"moment": "^2.30.1",
+		"sha.js": "^2.4.11"
+	},
+	"devDependencies": {
+		"@types/elliptic": "^6.4.18",
+		"@types/jest": "^29.5.5",
+		"@types/lunr": "^2",
+		"@types/sha.js": "^2.4.4"
+	}
 }
