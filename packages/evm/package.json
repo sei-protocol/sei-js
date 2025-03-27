@@ -17,7 +17,13 @@
 		"lint": "eslint --ext .ts"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": ["sei", "javascript", "typescript", "node", "evm"],
+	"keywords": [
+		"sei",
+		"javascript",
+		"typescript",
+		"node",
+		"evm"
+	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"publishConfig": {
