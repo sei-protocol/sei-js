@@ -78,10 +78,10 @@ The @sei-js/cosmos/encoding package provides utilities for encoding/decoding Sei
 import { Encoder } from '@sei-js/cosmos/encoding';
 
 // Import Amino converters for legacy Cosmos SDK support
-import { aminoConverters } from "@sei-js/cosmos/encoding/stargate";
+import { aminoConverters } from "@sei-js/cosmos/encoding";
 
-// Import typeUrl registry for Stargate clients
-import { seiProtoRegistry } from "@sei-js/cosmos/encoding/stargate";
+// Import typeUrl registry for cosmjs Stargate clients
+import { seiProtoRegistry } from "@sei-js/cosmos/encoding";
 ```
 
 ### Encoding/Decoding and getting type URLs.
@@ -114,9 +114,12 @@ const protoMsgSend = { typeUrl: `/${MsgSend.$type}`, value: encoded };
 
 The package provides pre-built registries and amino converters for usage with `@cosmjs/stargate`. These can be used to set up Stargate clients to sign and broadcast Sei transactions.
 
+> Check out the [@sei-js/cosmjs](https://www.npmjs.com/package/@sei-js/cosmjs) package for pre-built clients and helpful configs when using @cosmjs.
+
 ```typescript
 import { Encoder } from '@sei-js/cosmos/encoding';
-import { seiProtoRegistry } from "@sei-js/cosmos/encoding/stargate";
+import { seiProtoRegistry } from "@sei-js/cosmos/encoding";
+import { aminoConverters } from "@sei-js/cosmos/encoding";
 
 import {SigningStargateClient} from "@cosmjs/stargate";
 import {Registry} from "@cosmjs/proto-signing";
@@ -127,12 +130,16 @@ const accounts = await offlineSigner.getAccounts();
 
 // Create a @cosmjs/stargate registry with the Sei proto registry
 const registry = new Registry(seiProtoRegistry);
+const aminoTypes = new AminoTypes(aminoConverters);
 
 // Create a Stargate client with the registry and amino types
 const stargateClient = await SigningStargateClient.connectWithSigner(
   "https://rpc-arctic-1.sei-apis.com",
   offlineSigner,
-  { registry },
+  {
+    aminoTypes: new AminoTypes(aminoConverters),
+    registry: new Registry(seiProtoRegistry),
+  },
 );
 
 // Create a MsgSend object
@@ -205,7 +212,7 @@ import {createTransportAndApp, SeiLedgerOfflineAminoSigner} from "@sei-js/ledger
 
 import { Encoder } from '@sei-js/cosmos/encoding';
 
-import { aminoConverters } from "@sei-js/cosmos/encoding/stargate";
+import { aminoConverters } from "@sei-js/cosmos/encoding";
 
 import { AminoTypes, SigningStargateClient, coin } from "@cosmjs/stargate";
 
@@ -251,7 +258,7 @@ if (result.code === 0) {
 `@sei-js/cosmos/encoding/amino` `@sei-js/cosmos/encoding/registry` and export the necessary types and converters for usage with `@cosmjs/stargate`. These are used to set up the amino registry and types for signing clients.
 
 ```typescript
-import { aminoConverters, seiProtoRegistry } from "@sei-js/cosmos/encoding/stargate";
+import { aminoConverters, seiProtoRegistry } from "@sei-js/cosmos/encoding";
 import { AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
 import { Registry } from "@cosmjs/proto-signing";
 

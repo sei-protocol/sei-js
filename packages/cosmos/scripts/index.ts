@@ -16,7 +16,7 @@ const TYPES_OUTPUT_DIR = "./library/types";
 const REST_OUTPUT_DIR = "./library/rest";
 const ENCODING_OUTPUT_DIR = "./library/encoding";
 const COMMON_FETCH_FILE = "./public/rest/fetch.ts";
-const ENCODING_FILES = ["./public/encoding/common.ts", "./public/encoding/stargate.ts"];
+const ENCODING_FILES = ["./public/encoding/common.ts"];
 
 // Extracts only types from the proto generated TypeScript files in the input directory
 async function processGrpcGatewayFiles(): Promise<void> {
@@ -53,7 +53,7 @@ async function processEncodingFiles(): Promise<void> {
 
 		await createIndexesForDirectory(TYPES_OUTPUT_DIR);
 
-		// Copy static encoding files (common.ts, stargate.ts)
+		// Copy static encoding files (common.ts)
 		await Promise.all(ENCODING_FILES.map((file) => fs.copyFile(file, path.join(ENCODING_OUTPUT_DIR, path.basename(file)))));
 
 		await buildCombinedProtoRegistryAndAminoConverters();
