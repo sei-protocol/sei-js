@@ -33,7 +33,7 @@
 		"@cosmjs/proto-signing": "^0.29.5",
 		"@cosmjs/stargate": "^0.29.5",
 		"@cosmjs/tendermint-rpc": "^0.29.5",
-		"@sei-js/proto": "^4.0.8",
+		"@sei-js/proto": "^4.1.0",
 		"bech32": "^2.0.0",
 		"elliptic": "^6.5.4",
 		"moment": "^2.30.1",

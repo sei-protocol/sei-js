@@ -3,6 +3,11 @@
 		"rules": {
 			"correctness": {
 				"noUnusedImports": "error"
+			},
+			"complexity": {
+				"noStaticOnlyClass": "off",
+				"useLiteralKeys": "off",
+				"noBannedTypes": "off"
 			}
 		}
 	},
