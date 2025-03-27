@@ -49,6 +49,9 @@ import * as tendermint_types from "./tendermint/types/index";
 import * as tendermint_version from "./tendermint/version/index";
 import * as tokenfactory from "./tokenfactory/index";
 
+export * from "./amino";
+export * from "./registry";
+
 export const Encoder = {
 	confio: confio,
 	cosmos: {

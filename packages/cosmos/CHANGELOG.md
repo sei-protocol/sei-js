@@ -1,5 +1,11 @@
 # @sei-js/cosmos
 
+## 1.0.2
+
+### Patch Changes
+
+- a7b8530: updated export for stargate to now be imported directly from @sei-js/cosmos/encoding rather than @sei-js/cosmos/encoding/stargate
+
 ## 1.0.1
 
 ### Patch Changes

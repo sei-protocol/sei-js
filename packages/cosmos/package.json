@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/cosmos",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
 	"sideEffects": false,
 	"files": ["dist"],
@@ -47,11 +47,6 @@
 			"import": "./dist/esm/encoding/index.js",
 			"require": "./dist/cjs/encoding/index.js",
 			"types": "./dist/types/encoding/index.d.ts"
-		},
-		"./encoding/stargate": {
-			"import": "./dist/esm/encoding/stargate.js",
-			"require": "./dist/cjs/encoding/stargate.js",
-			"types": "./dist/types/encoding/stargate.d.ts"
 		}
 	}
 }
