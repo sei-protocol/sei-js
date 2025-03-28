@@ -1,0 +1,13 @@
+[2K[1G[2m$ jest[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/chain-info/__tests__/[22m[1mindex.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/ibc/__tests__/[22m[1mindex.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/wallets/__tests__/[22m[1mindex.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/gas/__tests__/[22m[1mindex.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/networks/__tests__/[22m[1mindex.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/tokens/__tests__/[22m[1mindex.spec.ts[22m
+
+[1mTest Suites: [22m[1m[32m6 passed[39m[22m, 6 total
+[1mTests:       [22m[1m[32m14 passed[39m[22m, 14 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2.477 s, estimated 3 s
+[2mRan all test suites[22m[2m.[22m

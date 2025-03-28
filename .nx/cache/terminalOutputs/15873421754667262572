@@ -1,0 +1,6 @@
+[2K[1G[2m$ rimraf dist[22m
+[2K[1G[2m$ yarn compile:all[22m
+[2K[1G[2m$ yarn compile:cjs && yarn compile:esm && yarn compile:declarations[22m
+[2K[1G[2m$ tsc --outDir dist/cjs --module commonjs --project ./tsconfig.json[22m
+[2K[1G[2m$ tsc --outDir dist/esm --module esnext --project ./tsconfig.json[22m
+[2K[1G[2m$ tsc --project ./tsconfig.declaration.json[22m

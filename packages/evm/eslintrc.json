@@ -1,3 +1,0 @@
-{
-  "extends": ["../../eslint.base.json", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
-}

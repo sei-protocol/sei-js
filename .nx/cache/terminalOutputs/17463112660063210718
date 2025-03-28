@@ -1,0 +1,81 @@
+[2K[1G[2m$ rimraf dist[22m
+[2K[1G[2m$ yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier[22m
+[2K[1G[2m$ tsc --project ./tsconfig.declaration.json[22m
+[2K[1G[2m$ tsc --outDir dist/cjs --module commonjs[22m
+[2K[1G[2m$ tsc --outDir dist/esm --module esnext[22m
+[2K[1G[2m$ prettier --write 'dist/**/*.js'[22m
+[[33mwarn[39m] [33mjsxBracketSameLine[39m is deprecated.
+dist/cjs/ethers/addressPrecompile.js 23ms
+dist/cjs/ethers/bankPrecompile.js 3ms
+dist/cjs/ethers/distributionPrecompile.js 2ms
+dist/cjs/ethers/governancePrecompile.js 2ms
+dist/cjs/ethers/ibcPrecompile.js 2ms
+dist/cjs/ethers/index.js 5ms
+dist/cjs/ethers/jsonPrecompile.js 2ms
+dist/cjs/ethers/oraclePrecompile.js 2ms
+dist/cjs/ethers/pointerPrecompile.js 2ms
+dist/cjs/ethers/pointerviewPrecompile.js 2ms
+dist/cjs/ethers/stakingPrecompile.js 2ms
+dist/cjs/ethers/wasmPrecompile.js 1ms
+dist/cjs/index.js 2ms
+dist/cjs/precompiles/address.js 3ms
+dist/cjs/precompiles/bank.js 4ms
+dist/cjs/precompiles/distribution.js 3ms
+dist/cjs/precompiles/governance.js 2ms
+dist/cjs/precompiles/ibc.js 3ms
+dist/cjs/precompiles/index.js 2ms
+dist/cjs/precompiles/json.js 2ms
+dist/cjs/precompiles/oracle.js 2ms
+dist/cjs/precompiles/pointer.js 1ms
+dist/cjs/precompiles/pointerview.js 2ms
+dist/cjs/precompiles/staking.js 3ms
+dist/cjs/precompiles/wasm.js 2ms
+dist/cjs/viem/addressPrecompile.js 1ms
+dist/cjs/viem/bankPrecompile.js 1ms
+dist/cjs/viem/distributionPrecompile.js 1ms
+dist/cjs/viem/governancePrecompile.js 1ms
+dist/cjs/viem/ibcPrecompile.js 0ms
+dist/cjs/viem/index.js 3ms
+dist/cjs/viem/jsonPrecompile.js 1ms
+dist/cjs/viem/oraclePrecompile.js 0ms
+dist/cjs/viem/pointerPrecompile.js 0ms
+dist/cjs/viem/pointerviewPrecompile.js 1ms
+dist/cjs/viem/stakingPrecompile.js 0ms
+dist/cjs/viem/wasmPrecompile.js 1ms
+dist/esm/ethers/addressPrecompile.js 1ms
+dist/esm/ethers/bankPrecompile.js 1ms
+dist/esm/ethers/distributionPrecompile.js 1ms
+dist/esm/ethers/governancePrecompile.js 0ms
+dist/esm/ethers/ibcPrecompile.js 1ms
+[90mdist/esm/ethers/index.js[39m 1ms (unchanged)
+dist/esm/ethers/jsonPrecompile.js 0ms
+dist/esm/ethers/oraclePrecompile.js 1ms
+dist/esm/ethers/pointerPrecompile.js 1ms
+dist/esm/ethers/pointerviewPrecompile.js 1ms
+dist/esm/ethers/stakingPrecompile.js 0ms
+dist/esm/ethers/wasmPrecompile.js 1ms
+[90mdist/esm/index.js[39m 0ms (unchanged)
+dist/esm/precompiles/address.js 1ms
+dist/esm/precompiles/bank.js 2ms
+dist/esm/precompiles/distribution.js 1ms
+dist/esm/precompiles/governance.js 1ms
+dist/esm/precompiles/ibc.js 2ms
+[90mdist/esm/precompiles/index.js[39m 1ms (unchanged)
+dist/esm/precompiles/json.js 1ms
+dist/esm/precompiles/oracle.js 1ms
+dist/esm/precompiles/pointer.js 1ms
+dist/esm/precompiles/pointerview.js 2ms
+dist/esm/precompiles/staking.js 2ms
+dist/esm/precompiles/wasm.js 2ms
+[90mdist/esm/viem/addressPrecompile.js[39m 0ms (unchanged)
+[90mdist/esm/viem/bankPrecompile.js[39m 0ms (unchanged)
+[90mdist/esm/viem/distributionPrecompile.js[39m 0ms (unchanged)
+[90mdist/esm/viem/governancePrecompile.js[39m 0ms (unchanged)
+[90mdist/esm/viem/ibcPrecompile.js[39m 0ms (unchanged)
+[90mdist/esm/viem/index.js[39m 0ms (unchanged)
+[90mdist/esm/viem/jsonPrecompile.js[39m 0ms (unchanged)
+[90mdist/esm/viem/oraclePrecompile.js[39m 1ms (unchanged)
+[90mdist/esm/viem/pointerPrecompile.js[39m 1ms (unchanged)
+[90mdist/esm/viem/pointerviewPrecompile.js[39m 1ms (unchanged)
+[90mdist/esm/viem/stakingPrecompile.js[39m 0ms (unchanged)
+[90mdist/esm/viem/wasmPrecompile.js[39m 1ms (unchanged)

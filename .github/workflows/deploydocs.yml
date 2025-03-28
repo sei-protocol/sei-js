@@ -37,6 +37,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install Dependencies
         run: yarn
 
@@ -47,7 +50,7 @@ jobs:
         run: yarn docs
 
       # Checks out the newly built docs artifact to the gh-pages branch of this repo
-      # Then, publishes to github actions.
+      # Then, publishes to GitHub actions.
       - name: Checkout gh-pages and Deploy to GitHub Pages
         id: deployment
         uses: crazy-max/ghaction-github-pages@v4

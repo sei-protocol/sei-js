@@ -1,0 +1,58 @@
+[2K[1G[2m$ rimraf gen && rimraf build[22m
+[2K[1G[2m$ yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party yarn extract-types && yarn create-indexes[22m
+[2K[1G[2m$ buf generate buf.build/sei-protocol/cosmos-sdk[22m
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+[2K[1G[2m$ buf generate buf.build/sei-protocol/sei-chain[22m
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+duplicate generated file name "fetch.pb.ts". Generation will continue without error here and drop the second occurrence of this file, but please raise an issue with the maintainer of the plugin.
+[2K[1G[2m$ buf generate buf.build/sei-protocol/third-party yarn extract-types[22m
+Usage:
+  buf generate <input> [flags]
+
+Flags:
+      --clean                  Prior to generation, delete the directories, jar files, or zip files that the plugins will write to. Allows cleaning of existing assets without having to call rm -rf
+      --config string          The buf.yaml file or data to use for configuration
+      --disable-symlinks       Do not follow symlinks when reading sources or configuration from the local filesystem
+                               By default, symlinks are followed in this CLI, but never followed on the Buf Schema Registry
+      --error-format string    The format for build errors, printed to stderr. Must be one of [text,json,msvs,junit,github-actions] (default "text")
+      --exclude-path strings   Exclude specific files or directories, e.g. "proto/a/a.proto", "proto/a"
+                               If specified multiple times, the union is taken
+  -h, --help                   help for generate
+      --include-imports        Also generate all imports except for Well-Known Types
+      --include-wkt            Also generate Well-Known Types. Cannot be set to true without setting --include-imports to true
+  -o, --output string          The base directory to generate to. This is prepended to the out directories in the generation template (default ".")
+      --path strings           Limit to specific files or directories, e.g. "proto/a/a.proto", "proto/a"
+                               If specified multiple times, the union is taken
+      --template string        The generation template file or data to use. Must be in either YAML or JSON format
+      --type strings           The types (package, message, enum, extension, service, method) that should be included in this image. When specified, the resulting image will only include descriptors to describe the requested types. Flag usage overrides buf.gen.yaml
+
+Global Flags:
+      --debug               Turn on debug logging
+      --log-format string   The log format [text,color,json] (default "color")
+      --timeout duration    The duration until timing out, setting it to zero means no timeout (default 2m0s)
+  -v, --verbose             Turn on verbose mode
+
+accepts at most 1 arg(s), received 3
+[2K[1G[31merror[39m Command failed with exit code 1.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.
+[2K[1G[31merror[39m Command failed with exit code 1.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.

@@ -1,33 +1,53 @@
 flags:
-  core:
+  cosmjs:
     paths:
       - packages/cosmjs/**
-  react:
+  cosmos:
     paths:
-      - packages/evm/**
-  proto:
+      - packages/cosmos/**
+  create-sei:
     paths:
-      - packages/proto/**
+      - packages/create-sei/**
+  evm:
+    paths:
+      - packages/registry/**
+  ledger:
+    paths:
+      - packages/ledger/**
   registry:
     paths:
       - packages/registry/**
-
+  sei-global-wallet:
+    paths:
+      - packages/sei-global-wallet/**
 coverage:
   status:
     project:
-      core:
+      cosmjs:
         target: 80%
         flags:
           - cosmjs
-      react:
+      cosmos:
+        target: 80%
+        flags:
+          - cosmos
+      create-sei:
+        target: 80%
+        flags:
+          - create-sei
+      evm:
         target: 80%
         flags:
           - evm
-      proto:
+      ledger:
         target: 80%
         flags:
-          - proto
+          - ledger
       registry:
         target: 80%
         flags:
           - registry
+      sei-global-wallet:
+        target: 80%
+        flags:
+          - sei-global-wallet

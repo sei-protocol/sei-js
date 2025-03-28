@@ -4,7 +4,6 @@
 packages/cosmjs/coverage
 packages/evm/coverage
 
-.nx/
 
 # compiled output
 dist
