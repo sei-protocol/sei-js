@@ -9,6 +9,7 @@ export const EIP6963Emitter = () => {
   announceEip6963Provider({
     info: {
       icon: config.walletIcon as any,
+      uuid: config.environmentId,
       name: config.walletName,
       rdns: config.eip6963.rdns,
     },
