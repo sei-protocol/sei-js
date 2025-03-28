@@ -1,6 +1,6 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"include": ["./library", "./public"],
+	"include": ["./library"],
 	"compilerOptions": {
 		"outDir": "./dist"
 	}
