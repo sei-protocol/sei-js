@@ -1,13 +1,6 @@
 import { AminoTypes, SigningStargateClient, SigningStargateClientOptions, StargateClient, StargateClientOptions, defaultRegistryTypes } from '@cosmjs/stargate';
 import { OfflineSigner, Registry } from '@cosmjs/proto-signing';
-import {
-	cosmosAminoConverters,
-	cosmwasmAminoConverters,
-	cosmwasmProtoRegistry,
-	ibcAminoConverters,
-	seiprotocolProtoRegistry,
-	seiprotocolAminoConverters
-} from '@sei-js/proto';
+import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/encoding';
 import { HttpEndpoint } from '@cosmjs/cosmwasm-stargate';
 
 /**
@@ -18,14 +11,14 @@ import { HttpEndpoint } from '@cosmjs/cosmwasm-stargate';
  * import { Registry } from "@cosmjs/proto-signing";
  * import { defaultRegistryTypes } from "@cosmjs/stargate";
  * import { getSigningStargateClient } from '@sei-js/cosmjs';
- * import { seiprotocol, seiprotocolProtoRegistry } from "@sei-js/proto";
+ * import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/encoding';
  *
  * ...
  *
  * // Set up Sei proto registry
  * const registry = new Registry([
  *   ...defaultRegistryTypes,
- *   ...seiprotocolProtoRegistry,
+ *   ...seiProtoRegistry,
  * ]);
  *
  * // Create a client with registry
@@ -36,8 +29,7 @@ import { HttpEndpoint } from '@cosmjs/cosmwasm-stargate';
  * @category Config
  */
 export const createSeiRegistry = (): Registry => {
-	// @ts-ignore
-	return new Registry([...defaultRegistryTypes, ...cosmwasmProtoRegistry, ...seiprotocolProtoRegistry]);
+	return new Registry([...defaultRegistryTypes, ...seiProtoRegistry]);
 };
 
 /**
@@ -66,13 +58,7 @@ export const createSeiRegistry = (): Registry => {
  * @category Config
  */
 export const createSeiAminoTypes = (): AminoTypes => {
-	const types = {
-		...cosmosAminoConverters,
-		...cosmwasmAminoConverters,
-		...ibcAminoConverters,
-		...seiprotocolAminoConverters
-	};
-	return new AminoTypes(types);
+	return new AminoTypes(aminoConverters);
 };
 
 /**

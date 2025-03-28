@@ -41,6 +41,7 @@
     "@cosmjs/stargate": "^0.29.5",
     "@cosmjs/tendermint-rpc": "^0.29.5",
     "@cosmjs/utils": "^0.29.5",
+    "@sei-js/cosmos": "^1.0.2",
     "bech32": "^2.0.0",
     "buffer": "^6.0.3",
     "elliptic": "^6.5.4",
@@ -49,8 +50,7 @@
     "readonly-date": "^1.0.0",
     "sha.js": "^2.4.11",
     "styled-components": "^6.1.1",
-    "xstream": "^11.14.0",
-    "@sei-js/proto": "^4.0.8"
+    "xstream": "^11.14.0"
   },
   "peerDependencies": {},
   "devDependencies": {
