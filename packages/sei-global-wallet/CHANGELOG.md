@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.2.1
+
+### Patch Changes
+
+- da9b5b8: Update Dynamic to version 4.9.11
+
 ## 1.2.0
 
 ### Minor Changes
