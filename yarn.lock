@@ -2040,88 +2040,88 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dynamic-labs/assert-package-version@4.9.11":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/assert-package-version/-/assert-package-version-4.9.11.tgz#d1ddc9aa712ffcbea17dc464bc6d20c6f45b18ad"
-  integrity sha512-2yzMVoy4zLtpVVEWaqYXdsunXP0MWfWzneLQ/4mc7uzx82u4Hd/pKev4xa7iKo8MK9fzjOFsPNZP7QYaWx1/bQ==
+"@dynamic-labs/assert-package-version@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/assert-package-version/-/assert-package-version-4.10.1.tgz#4a730829ebe26dc0da9c6b414da494bbd5c07d2e"
+  integrity sha512-Qo+VchtjspMQ+5t7JhcaQshGB6YN/jStnHOtpeQsN1oO/HsaxCTgdQXEus6tsFUddRtpRlRkG7Y2DjfzixUZEw==
   dependencies:
-    "@dynamic-labs/logger" "4.9.11"
+    "@dynamic-labs/logger" "4.10.1"
 
-"@dynamic-labs/global-wallet-client@^4.9.6":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/global-wallet-client/-/global-wallet-client-4.9.11.tgz#c2fe67e034d852ca86b54c3ae01c91a19a3ba257"
-  integrity sha512-tBq2onn5EQHPAVp6hbt78DcxScFLlON2O+U3XrQ2O3FyoDdjprH6DD0luqbN3VhDkeny2BCRkRawS0lkz/uQKQ==
+"@dynamic-labs/global-wallet-client@^4.9.11":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/global-wallet-client/-/global-wallet-client-4.10.1.tgz#236482f85c412557899d55c76e9644c0c9bbf281"
+  integrity sha512-vCwXuYRv41Hsmd2gOECeVRkaoZZX7jWO6JI5NaVG/E66n+hXEcNXYE+wNpRtY0IrzcOIruYxBNGI4d+rwhEfsw==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.9.11"
-    "@dynamic-labs/logger" "4.9.11"
-    "@dynamic-labs/message-transport" "4.9.11"
-    "@dynamic-labs/store" "4.9.11"
-    "@dynamic-labs/types" "4.9.11"
-    "@dynamic-labs/utils" "4.9.11"
+    "@dynamic-labs/assert-package-version" "4.10.1"
+    "@dynamic-labs/logger" "4.10.1"
+    "@dynamic-labs/message-transport" "4.10.1"
+    "@dynamic-labs/store" "4.10.1"
+    "@dynamic-labs/types" "4.10.1"
+    "@dynamic-labs/utils" "4.10.1"
     eventemitter3 "5.0.1"
 
-"@dynamic-labs/logger@4.9.11":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/logger/-/logger-4.9.11.tgz#61828c6eafbb344ab7628da24909c40c3a206aec"
-  integrity sha512-l6WP+DAUakm6JFVjNFdPASyAzOTByNeBBU605LkH1p3GmgRWCKketQmXK1AKlEUFuia+KmnSoh/u+k60rJ+LTQ==
+"@dynamic-labs/logger@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/logger/-/logger-4.10.1.tgz#99045d42676ea452ef034aeaaddf9e1def28403b"
+  integrity sha512-N+MP4ZRe42YKIAwUx+wYJpaUsGQS3ZUirwp3YOpfQNulljLnlg1kM9jk4rKxHO73PT/rOR+X1CDUthmWWri+uQ==
   dependencies:
     eventemitter3 "5.0.1"
 
-"@dynamic-labs/message-transport@4.9.11":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/message-transport/-/message-transport-4.9.11.tgz#214ba31ec24d7239a1d01b4f7f2215cba2157fc3"
-  integrity sha512-cbCiTCp9PD3AnJ+exoRq/GRiiU2E8yhHTC+rYaiSKT9Mu6ta+EV2NBOlb0Xr/nbdTVGa8WN67qwd5Ld6v+qZLQ==
+"@dynamic-labs/message-transport@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/message-transport/-/message-transport-4.10.1.tgz#26aabaee9ffdb36c11a1208eed4f5b9a87173417"
+  integrity sha512-TY6mAR3Qmc6UTGHO655XjIGXcb5OguwKSMRWchTUiPM0aocH5iMTdAEEyfaiF1V0mzlesT9ofd34ocjyEBo3Rg==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.9.11"
-    "@dynamic-labs/logger" "4.9.11"
-    "@dynamic-labs/sdk-api-core" "0.0.644"
-    "@dynamic-labs/types" "4.9.11"
-    "@dynamic-labs/utils" "4.9.11"
-    "@dynamic-labs/webauthn" "4.9.11"
+    "@dynamic-labs/assert-package-version" "4.10.1"
+    "@dynamic-labs/logger" "4.10.1"
+    "@dynamic-labs/sdk-api-core" "0.0.650"
+    "@dynamic-labs/types" "4.10.1"
+    "@dynamic-labs/utils" "4.10.1"
+    "@dynamic-labs/webauthn" "4.10.1"
     "@vue/reactivity" "^3.4.21"
     eventemitter3 "5.0.1"
 
-"@dynamic-labs/sdk-api-core@0.0.644":
-  version "0.0.644"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/sdk-api-core/-/sdk-api-core-0.0.644.tgz#61927135ca956e672bbd8352ce07d0b8dcea28a6"
-  integrity sha512-xr/Xjba8TDlkC3KYMkuonSfnyek1iJCalHApAspwZVftNirzF26Hb3kUwc4mUrIbHTD4MbJI+FbeYK704jM6/Q==
+"@dynamic-labs/sdk-api-core@0.0.650":
+  version "0.0.650"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/sdk-api-core/-/sdk-api-core-0.0.650.tgz#161489af2cefa3d8e31ce0b8492fbbd9a159c2f6"
+  integrity sha512-/dAOxwnh0OaFV2KUbnj4zRSzEDFZptsmoJm58dP6ACfQClx5aPI49WGHM8NKjBd5xbaB7oxzhuQWizOnT/6j9g==
 
-"@dynamic-labs/store@4.9.11":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/store/-/store-4.9.11.tgz#7e2ef1745c18ad98cc204c774eb1516b7b9a6c95"
-  integrity sha512-BR3NdClPrzW1ksA6Bfxmn03C6IdVLJUNAc0w4IeMT6d9wsa65MH5hrlb8A0LKNgACntv5WVoizeht0GjDAI/sw==
+"@dynamic-labs/store@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/store/-/store-4.10.1.tgz#1655f24bddd61db4018ea7f780871771f7ba8f1b"
+  integrity sha512-nIIQfV1qNqcXz+pBViKEhexo2HqJn5buJHFfZL8ZL7xkh05z1DRuhGvmh43fj4jn9HhhmqxEY9OsrbAYoYQ0aA==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.9.11"
-    "@dynamic-labs/logger" "4.9.11"
+    "@dynamic-labs/assert-package-version" "4.10.1"
+    "@dynamic-labs/logger" "4.10.1"
 
-"@dynamic-labs/types@4.9.11":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/types/-/types-4.9.11.tgz#5d498c8b70eafcd78102e821957162fed9d64582"
-  integrity sha512-fRNUTknuNF59o55GrZvpHHPynHOjbLbb9TSy7iFCZVjAGEMd8IYmJT1kNCI7M3dcrN2WutlmLDAAbDJZdNKafw==
+"@dynamic-labs/types@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/types/-/types-4.10.1.tgz#fffb75a42a691a49f5a94fa089c8187d4289405e"
+  integrity sha512-Xgy0x4RMbqXTI9UUIGFXEbDgmXRwUX2U0X89TsRFFYMsOrmK/+/02bhmsXdBFgfWK/OlnCIcqaaYryvTrzCTQQ==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.9.11"
-    "@dynamic-labs/sdk-api-core" "0.0.644"
+    "@dynamic-labs/assert-package-version" "4.10.1"
+    "@dynamic-labs/sdk-api-core" "0.0.650"
 
-"@dynamic-labs/utils@4.9.11":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/utils/-/utils-4.9.11.tgz#4a539b78a5aaecd0bcbcee37b892a27cb5535c92"
-  integrity sha512-rM2t0V+1+ljB3rCKuIoeU5kGjPAN9u6X6ZlukKvoTALRMU6kXo3bhJRagmuQXV8NIweyed9fzSJ1Jw4rczH/hg==
+"@dynamic-labs/utils@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/utils/-/utils-4.10.1.tgz#e00124cf25f4e7772992cc113f61ec0addd468d3"
+  integrity sha512-Vij5Q3U8SCdH1M/t6I5vxaaYsKA1Agp+5Pr8+fbuEq62zHMj9QWKuJGRkjgKJhmwWqV5MOZuzOrktiMQKeCHCA==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.9.11"
-    "@dynamic-labs/logger" "4.9.11"
-    "@dynamic-labs/sdk-api-core" "0.0.644"
-    "@dynamic-labs/types" "4.9.11"
+    "@dynamic-labs/assert-package-version" "4.10.1"
+    "@dynamic-labs/logger" "4.10.1"
+    "@dynamic-labs/sdk-api-core" "0.0.650"
+    "@dynamic-labs/types" "4.10.1"
     buffer "6.0.3"
     eventemitter3 "5.0.1"
     tldts "6.0.16"
 
-"@dynamic-labs/webauthn@4.9.11":
-  version "4.9.11"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/webauthn/-/webauthn-4.9.11.tgz#78d44366ca66b1471e129c62631ba74adca610b2"
-  integrity sha512-h42mq5GYBaPXrWhnVYUPBlHSMOk5XIuGR5ava18UkOLJZ4sTDkUzD1TWj6kqG2WW6jVduYxLl7EJUC/X/ynUjQ==
+"@dynamic-labs/webauthn@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/webauthn/-/webauthn-4.10.1.tgz#b8c3f709d3ff9959c002dd9e7868cb2496a3b645"
+  integrity sha512-MrRP71UeQQrMChQe90xWnbqAW8sbOtRBzwHPi+8246Nnd+yTzPm8Tk1qElyJIMfkGiPniUyFjnNNPldif5dOHw==
   dependencies:
-    "@dynamic-labs/assert-package-version" "4.9.11"
-    "@dynamic-labs/logger" "4.9.11"
+    "@dynamic-labs/assert-package-version" "4.10.1"
+    "@dynamic-labs/logger" "4.10.1"
     "@simplewebauthn/browser" "9.0.1"
     "@simplewebauthn/types" "9.0.1"
 

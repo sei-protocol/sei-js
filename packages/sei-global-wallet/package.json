@@ -1,7 +1,7 @@
 {
   "name": "@sei-js/sei-global-wallet",
-  "description": "Sei Global Wallet is a library to support Dynamic Global Wallet",
-  "version": "1.2.0",
+  "description": "Sei Global Wallet is a library to support Dynamic Global Wallets",
+  "version": "1.3.0",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -18,7 +18,7 @@
     "lint": "eslint --ext .ts"
   },
   "dependencies": {
-    "@dynamic-labs/global-wallet-client": "^4.9.6",
+    "@dynamic-labs/global-wallet-client": "^4.9.11",
     "@wallet-standard/wallet": "^1.1.0"
   },
   "devDependencies": {
