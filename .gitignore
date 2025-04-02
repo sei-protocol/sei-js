@@ -1,8 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # testing
-packages/cosmjs/coverage
-packages/evm/coverage
+packages/*/coverage
 
 
 # compiled output
