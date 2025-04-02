@@ -1,5 +1,11 @@
 # @sei-js/create-sei-app
 
+## 0.0.1
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 0.0.0
 
 ### Major Changes
