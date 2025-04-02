@@ -1,4 +1,4 @@
-import { StdSignature, StdSignDoc } from '@cosmjs/amino';
+import type { StdSignDoc, StdSignature } from '@cosmjs/amino';
 import { fromBase64 } from '@cosmjs/encoding';
 import { compressedPubKeyToAddress, isValidSeiCosmosAddress, verifyDigest32 } from './address';
 import { sha256 } from './hash';
@@ -15,7 +15,8 @@ import { serializeAminoSignDoc } from './serialize';
  */
 export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array): StdSignDoc {
 	// If data is already a base64 string, convert it to a Buffer and back to a string.
-	data = Buffer.from(data).toString('base64');
+	//@ts-ignore
+	const base64Data = Buffer.from(data).toString('base64');
 
 	//According to ADR-36 specifications https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md
 	return {
@@ -29,7 +30,7 @@ export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array)
 			// fee gas must be equal to 0
 			gas: '0',
 			//fee amount must be an empty array
-			amount: []
+			amount: [],
 		},
 		msgs: [
 			{
@@ -38,18 +39,18 @@ export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array)
 					signer,
 					// Data is arbitrary bytes which can represent text, files, objects. It's applications developers decision how Data should be deserialized, serialized and the object it can represent in their context
 					// It's applications developers decision how Data should be treated, by treated we mean the serialization and deserialization process and the Object Data should represent.
-					data
-				}
-			}
+					data: base64Data,
+				},
+			},
 		],
 		// the memo must be empty
-		memo: ''
+		memo: '',
 	};
 }
 
 function checkAndValidateADR36AminoSignDoc(signDoc: StdSignDoc): boolean {
 	const hasOnlyMsgSignData = (() => {
-		if (signDoc && signDoc.msgs && Array.isArray(signDoc.msgs) && signDoc.msgs.length === 1) {
+		if (signDoc?.msgs && Array.isArray(signDoc.msgs) && signDoc.msgs.length === 1) {
 			const msg = signDoc.msgs[0];
 			return msg.type === 'sign/MsgSignData';
 		} else {
