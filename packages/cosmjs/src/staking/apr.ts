@@ -1,6 +1,6 @@
 import moment, { Moment } from 'moment';
-import { PoolSDKType } from '@sei-js/proto/dist/types/codegen/cosmos/staking/v1beta1/staking';
-import { ParamsSDKType, ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/mint/v1beta1/mint';
+import type { Pool } from '@sei-js/cosmos/types/cosmos/staking/v1beta1';
+import { Params, ScheduledTokenRelease } from '@sei-js/cosmos/types/mint/v1beta1';
 
 /**
  * Calculates the estimated staking APR based on the upcoming token release schedule and the current number of bonded tokens.
@@ -35,7 +35,7 @@ export async function estimateStakingAPR(queryClient: any): Promise<number> {
  * @returns An object with information about the amount of bonded and non-bonded tokens in the staking pool.
  * @category Staking
  */
-export async function getPool(queryClient: any): Promise<PoolSDKType | undefined> {
+export async function getPool(queryClient: any): Promise<Pool | undefined> {
 	try {
 		const result = await queryClient.cosmos.staking.v1beta1.pool({});
 		return result.pool;
@@ -50,7 +50,7 @@ export async function getPool(queryClient: any): Promise<PoolSDKType | undefined
  * @returns An object with information about the mint schedule and token denom.
  * @category Staking
  */
-export async function getMintParams(queryClient: any): Promise<ParamsSDKType | undefined> {
+export async function getMintParams(queryClient: any): Promise<Params | undefined> {
 	try {
 		const result = await queryClient.seiprotocol.seichain.mint.params({});
 		return result.params;
@@ -68,7 +68,7 @@ export async function getMintParams(queryClient: any): Promise<ParamsSDKType | u
  * @returns The number of tokens to be released in the given window.
  * @category Staking
  */
-export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSchedule: ScheduledTokenReleaseSDKType[]): number {
+export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSchedule: ScheduledTokenRelease[]): number {
 	// End date is the exclusive end date of the window to query.
 	// I.e. if start date is 2023-1-1 and days is 365, end date here will be 2024-1-1 so rewards will be calculated from 2023-1-1 to 2023-12-31
 	const endDate = startDate.clone().add(days, 'days');
@@ -115,9 +115,9 @@ export function getUpcomingMintTokens(startDate: Moment, days: number, releaseSc
 }
 
 // Converts the releaseSchedule into ReleaseSchedule[] and sorts it by start date.
-function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenReleaseSDKType[]) {
+function getSortedReleaseSchedule(releaseSchedule: ScheduledTokenRelease[]) {
 	const releaseScheduleTimes = releaseSchedule.map((schedule) => {
-		return createReleaseSchedule(schedule.start_date, schedule.end_date, schedule.token_release_amount);
+		return createReleaseSchedule(schedule.start_date, schedule.end_date, BigInt(schedule.token_release_amount));
 	});
 
 	// Sort release schedule in increasing order of start time.

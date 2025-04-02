@@ -1,7 +1,14 @@
-import { AminoTypes, SigningStargateClient, SigningStargateClientOptions, StargateClient, StargateClientOptions, defaultRegistryTypes } from '@cosmjs/stargate';
-import { OfflineSigner, Registry } from '@cosmjs/proto-signing';
+import type { HttpEndpoint } from '@cosmjs/cosmwasm-stargate';
+import { type OfflineSigner, Registry } from '@cosmjs/proto-signing';
+import {
+	AminoTypes,
+	SigningStargateClient,
+	type SigningStargateClientOptions,
+	StargateClient,
+	type StargateClientOptions,
+	defaultRegistryTypes
+} from '@cosmjs/stargate';
 import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/encoding';
-import { HttpEndpoint } from '@cosmjs/cosmwasm-stargate';
 
 /**
  * Creates a Registry object that maps CosmWasm and Sei protobuf type identifiers to their actual implementations.
