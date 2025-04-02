@@ -1,5 +1,11 @@
 # @sei-js/ledger
 
+## 1.1.3
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 1.1.2
 
 ### Patch Changes

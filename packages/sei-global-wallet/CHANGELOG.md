@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.3.1
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 1.3.0
 
 ### Minor Changes

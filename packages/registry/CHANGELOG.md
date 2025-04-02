@@ -1,5 +1,11 @@
 # @sei-js/registry
 
+## 1.0.2
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 1.0.1
 
 ### Patch Changes

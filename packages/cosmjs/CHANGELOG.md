@@ -1,5 +1,11 @@
 # @sei-js/cosmjs
 
+## 1.0.9
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 1.0.8
 
 ### Patch Changes
