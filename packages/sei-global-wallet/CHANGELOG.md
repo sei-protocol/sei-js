@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.3.0
+
+### Minor Changes
+
+- a129406: Switch to a separate global wallets app
+
 ## 1.2.1
 
 ### Patch Changes
