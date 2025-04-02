@@ -1,5 +1,17 @@
 # @sei-js/global-wallet
 
+## 1.3.0
+
+### Minor Changes
+
+- a129406: Switch to a separate global wallets app
+
+## 1.2.1
+
+### Patch Changes
+
+- da9b5b8: Update Dynamic to version 4.9.11
+
 ## 1.2.0
 
 ### Minor Changes
