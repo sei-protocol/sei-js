@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.3.3
+
+### Patch Changes
+
+- 1ebf1b8: Bump dynamic version
+
 ## 1.3.2
 
 ### Patch Changes
