@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 2.0.3
+
+### Patch Changes
+
+- cd65a51: Fix broken NPM publish for all packages
+
 ## 2.0.2
 
 ### Patch Changes

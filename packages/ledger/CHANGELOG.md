@@ -1,5 +1,11 @@
 # @sei-js/ledger
 
+## 1.1.4
+
+### Patch Changes
+
+- cd65a51: Fix broken NPM publish for all packages
+
 ## 1.1.3
 
 ### Patch Changes

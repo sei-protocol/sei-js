@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.3.2
+
+### Patch Changes
+
+- cd65a51: Fix broken NPM publish for all packages
+
 ## 1.3.1
 
 ### Patch Changes
