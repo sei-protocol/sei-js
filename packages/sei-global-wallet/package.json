@@ -9,8 +9,7 @@
 	"typings": "./dist/types/index.d.ts",
 	"license": "ISC",
 	"scripts": {
-		"prebuild": "rimraf dist",
-		"build": "yarn build:types && yarn build:cjs && yarn build:esm",
+		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
@@ -54,12 +53,8 @@
 	},
 	"typesVersions": {
 		"*": {
-			"eip6963": [
-				"./dist/types/eip6963.d.ts"
-			],
-			"solana-standard": [
-				"./dist/types/solana-standard.d.ts"
-			]
+			"eip6963": ["./dist/types/eip6963.d.ts"],
+			"solana-standard": ["./dist/types/solana-standard.d.ts"]
 		}
 	},
 	"exports": {
