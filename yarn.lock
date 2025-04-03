@@ -2339,25 +2339,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dynamic-labs/assert-package-version@npm:4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/assert-package-version@npm:4.9.11"
+"@dynamic-labs/assert-package-version@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/assert-package-version@npm:4.10.2"
   dependencies:
-    "@dynamic-labs/logger": "npm:4.9.11"
-  checksum: 10c0/ac0d0195631afbff5026a6c93fe8aab791de4a4e29f346f3256ec6408cc9490608ec4cbe9504d9ab6faaf30d4a76503682806c1af4f816a10a8b93101666a74a
+    "@dynamic-labs/logger": "npm:4.10.2"
+  checksum: 10c0/c1df0c7b878838ad3939a9d67ab5f59df5c09dfe2c6fa72d8ce657599ebfc2dfa7c5817d8b69409309b72ecc15f8c2259c88e34e4b16021f325c024ef2b064b4
   languageName: node
   linkType: hard
 
-"@dynamic-labs/global-wallet-client@npm:^4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/global-wallet-client@npm:4.9.11"
+"@dynamic-labs/global-wallet-client@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/global-wallet-client@npm:4.10.2"
   dependencies:
-    "@dynamic-labs/assert-package-version": "npm:4.9.11"
-    "@dynamic-labs/logger": "npm:4.9.11"
-    "@dynamic-labs/message-transport": "npm:4.9.11"
-    "@dynamic-labs/store": "npm:4.9.11"
-    "@dynamic-labs/types": "npm:4.9.11"
-    "@dynamic-labs/utils": "npm:4.9.11"
+    "@dynamic-labs/assert-package-version": "npm:4.10.2"
+    "@dynamic-labs/logger": "npm:4.10.2"
+    "@dynamic-labs/message-transport": "npm:4.10.2"
+    "@dynamic-labs/store": "npm:4.10.2"
+    "@dynamic-labs/types": "npm:4.10.2"
+    "@dynamic-labs/utils": "npm:4.10.2"
     eventemitter3: "npm:5.0.1"
   peerDependencies:
     "@solana/wallet-standard-features": ^1.2.0
@@ -2379,86 +2379,86 @@ __metadata:
       optional: true
     viem:
       optional: true
-  checksum: 10c0/9c04ffb14acff3f6110e6bf38ee7c1f12e891f08a533e9de060516f2fb42c78b0ae7008312bfb9d8baa02f0909e9bc378be1ab41ab6587fafdac1a53f6465204
+  checksum: 10c0/9df6b85c0d8b1295936a667028c5a3bea716f3bfa17fba818f20ed9a23daa0edbbd1f4a59c225f9d7f5c7aedb8324020dee45ee9726d2c96fa283095fcd4b384
   languageName: node
   linkType: hard
 
-"@dynamic-labs/logger@npm:4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/logger@npm:4.9.11"
+"@dynamic-labs/logger@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/logger@npm:4.10.2"
   dependencies:
     eventemitter3: "npm:5.0.1"
-  checksum: 10c0/35d80ff0019cd28e497134fae1ec02327e747f7ed53edba14026022759f07babcc358d5db91ad5e717420834e14744d08f14919d903d58c226deb9db5c6c99af
+  checksum: 10c0/f2a101be97d014dc6823bf5f0ed70c10e7388d3c1701ba85b9088f12a4c0508bc17dde921bc3c357c92c68810f1f1bca11914e4f53e13a2100d4695e25896e09
   languageName: node
   linkType: hard
 
-"@dynamic-labs/message-transport@npm:4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/message-transport@npm:4.9.11"
+"@dynamic-labs/message-transport@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/message-transport@npm:4.10.2"
   dependencies:
-    "@dynamic-labs/assert-package-version": "npm:4.9.11"
-    "@dynamic-labs/logger": "npm:4.9.11"
-    "@dynamic-labs/sdk-api-core": "npm:0.0.644"
-    "@dynamic-labs/types": "npm:4.9.11"
-    "@dynamic-labs/utils": "npm:4.9.11"
-    "@dynamic-labs/webauthn": "npm:4.9.11"
+    "@dynamic-labs/assert-package-version": "npm:4.10.2"
+    "@dynamic-labs/logger": "npm:4.10.2"
+    "@dynamic-labs/sdk-api-core": "npm:0.0.650"
+    "@dynamic-labs/types": "npm:4.10.2"
+    "@dynamic-labs/utils": "npm:4.10.2"
+    "@dynamic-labs/webauthn": "npm:4.10.2"
     "@vue/reactivity": "npm:^3.4.21"
     eventemitter3: "npm:5.0.1"
-  checksum: 10c0/92ec1ed9140d07839556e5c9366004259aa37bcc8af169ccf56393deaf1ae5cc7ace71676f3d3d8cd2d4f644f08a6a6bb8d48000295b6e5ff29794faa5bd5447
+  checksum: 10c0/8a08d101a246cee87327b0b7dd6d7d5b5c8a5b5efdb11f13803a89b6839789121307e0bbf5b4d789901cee211b4c47ae39d3dca98f646698e98b7a6db7ad7c8c
   languageName: node
   linkType: hard
 
-"@dynamic-labs/sdk-api-core@npm:0.0.644":
-  version: 0.0.644
-  resolution: "@dynamic-labs/sdk-api-core@npm:0.0.644"
-  checksum: 10c0/c7ea411c464b1bb1b6dbed522a5aa8dae8c833a3ba90997c1c6711f36fb2a84add3fe7ce4fd81a30749170b378031180feb7c4d03783b560db7f178fd2a2340f
+"@dynamic-labs/sdk-api-core@npm:0.0.650":
+  version: 0.0.650
+  resolution: "@dynamic-labs/sdk-api-core@npm:0.0.650"
+  checksum: 10c0/46f7168430bb3d97f5cd9cb93176a75a1b879fe55720cef52440ee6cf4985de7c73fe1456a05b4a07ac7a9fcc8b490e5a06306c7805b84af3efbc3a9e7048ffb
   languageName: node
   linkType: hard
 
-"@dynamic-labs/store@npm:4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/store@npm:4.9.11"
+"@dynamic-labs/store@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/store@npm:4.10.2"
   dependencies:
-    "@dynamic-labs/assert-package-version": "npm:4.9.11"
-    "@dynamic-labs/logger": "npm:4.9.11"
-  checksum: 10c0/7a8588d3f0475b373653716fd1667e78eb80f39a15762ff6d8b6b0fe086cd7fa2bdcb5d36034f2583c268c1511f05b99dd7af5bfd136a83ac1d1d9c9f811f5f5
+    "@dynamic-labs/assert-package-version": "npm:4.10.2"
+    "@dynamic-labs/logger": "npm:4.10.2"
+  checksum: 10c0/fea6476f130a7b3d7a275472503fe22c2b2331b5de31fa0e6396c705f10396801861ac8ef9da4d383bc0eb9b9ae8ed7f06769c4e99713c75f974b71233b09fd1
   languageName: node
   linkType: hard
 
-"@dynamic-labs/types@npm:4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/types@npm:4.9.11"
+"@dynamic-labs/types@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/types@npm:4.10.2"
   dependencies:
-    "@dynamic-labs/assert-package-version": "npm:4.9.11"
-    "@dynamic-labs/sdk-api-core": "npm:0.0.644"
-  checksum: 10c0/077e5f949c20079084d27106fabf8bdbbc937f4b09b412686f02679457f418611b33191853e1cfc39a90aeb9bf770b89525b461233a44c4915c2bbc0a195c67a
+    "@dynamic-labs/assert-package-version": "npm:4.10.2"
+    "@dynamic-labs/sdk-api-core": "npm:0.0.650"
+  checksum: 10c0/efe3a14b85c90be87513d57d27e09ca09a03874dff0e5ca240743734ceb8df6f276718eb7b78cf2b801a16e246d9aa61e6eabbc7abebf0a36a307680d1724b60
   languageName: node
   linkType: hard
 
-"@dynamic-labs/utils@npm:4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/utils@npm:4.9.11"
+"@dynamic-labs/utils@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/utils@npm:4.10.2"
   dependencies:
-    "@dynamic-labs/assert-package-version": "npm:4.9.11"
-    "@dynamic-labs/logger": "npm:4.9.11"
-    "@dynamic-labs/sdk-api-core": "npm:0.0.644"
-    "@dynamic-labs/types": "npm:4.9.11"
+    "@dynamic-labs/assert-package-version": "npm:4.10.2"
+    "@dynamic-labs/logger": "npm:4.10.2"
+    "@dynamic-labs/sdk-api-core": "npm:0.0.650"
+    "@dynamic-labs/types": "npm:4.10.2"
     buffer: "npm:6.0.3"
     eventemitter3: "npm:5.0.1"
     tldts: "npm:6.0.16"
-  checksum: 10c0/8c7e815396a17ea454a1169c69eab107be17490fb78107ace1c0684d2637e9d2efeedbcaba672395178678bb743ee46999e5abaf34317e5d9ee1442cf8af3540
+  checksum: 10c0/25c9799d8101c8c621acd44f027edd48e83857bd6a539f9ba05084a353c1fd8d6ab9b044c23c1c62d6dbcd8db354d84a39c8567cd1b0f4cc2cae9b368f5e14f9
   languageName: node
   linkType: hard
 
-"@dynamic-labs/webauthn@npm:4.9.11":
-  version: 4.9.11
-  resolution: "@dynamic-labs/webauthn@npm:4.9.11"
+"@dynamic-labs/webauthn@npm:4.10.2":
+  version: 4.10.2
+  resolution: "@dynamic-labs/webauthn@npm:4.10.2"
   dependencies:
-    "@dynamic-labs/assert-package-version": "npm:4.9.11"
-    "@dynamic-labs/logger": "npm:4.9.11"
+    "@dynamic-labs/assert-package-version": "npm:4.10.2"
+    "@dynamic-labs/logger": "npm:4.10.2"
     "@simplewebauthn/browser": "npm:9.0.1"
     "@simplewebauthn/types": "npm:9.0.1"
-  checksum: 10c0/bb9ed4aad49b28d4dcd46004254193262a35e9be0554450b3782d39e80d3d4aa2a67d9b5c1a55871ac6d20a6949683c435df0b14d9ac3c80af5e76d4b889d873
+  checksum: 10c0/b5ff3d017070c9a6512a652a461c692217462e80f8ac87d8f7226ef29b0b42b626a3efdde319c30f726a4f94c983d70a1afbfc7b38d88efc41b187ce16fe65e5
   languageName: node
   linkType: hard
 
@@ -3780,7 +3780,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sei-js/sei-global-wallet@workspace:packages/sei-global-wallet"
   dependencies:
-    "@dynamic-labs/global-wallet-client": "npm:^4.9.11"
+    "@dynamic-labs/global-wallet-client": "npm:^4.10.2"
     "@wallet-standard/wallet": "npm:^1.1.0"
     tsc-alias: "npm:^1.8.10"
     typescript: "npm:^5.7.3"
