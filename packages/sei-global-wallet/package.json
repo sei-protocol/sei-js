@@ -16,7 +16,7 @@
 		"lint": "eslint --ext .ts"
 	},
 	"dependencies": {
-		"@dynamic-labs/global-wallet-client": "^4.9.11",
+		"@dynamic-labs/global-wallet-client": "^4.10.2",
 		"@wallet-standard/wallet": "^1.1.0"
 	},
 	"devDependencies": {
