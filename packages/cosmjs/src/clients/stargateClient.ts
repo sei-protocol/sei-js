@@ -8,7 +8,7 @@ import {
 	type StargateClientOptions,
 	defaultRegistryTypes,
 } from '@cosmjs/stargate';
-import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/dist/types/encoding';
+import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/encoding';
 
 /**
  * Creates a Registry object that maps CosmWasm and Sei protobuf type identifiers to their actual implementations.

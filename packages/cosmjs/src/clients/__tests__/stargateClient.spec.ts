@@ -44,7 +44,7 @@ describe('stargateClient', () => {
 
 			await getStargateClient(rpcEndpoint);
 
-			expect(StargateClient.connect).toHaveBeenCalledWith(rpcEndpoint, {});
+			expect(StargateClient.connect).toHaveBeenCalledWith(rpcEndpoint, undefined);
 		});
 	});
 
