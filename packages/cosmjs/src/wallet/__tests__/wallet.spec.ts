@@ -1,6 +1,6 @@
 import { stringToPath } from '@cosmjs/crypto';
-import { generateWallet, getHdPath, restoreWallet } from '../wallet';
 import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
+import { generateWallet, getHdPath, restoreWallet } from '../wallet';
 
 jest.mock('@cosmjs/proto-signing', () => {
 	const originalModule = jest.requireActual('@cosmjs/proto-signing');
@@ -10,8 +10,8 @@ jest.mock('@cosmjs/proto-signing', () => {
 		DirectSecp256k1HdWallet: {
 			...originalModule.DirectSecp256k1HdWallet,
 			fromMnemonic: jest.fn(),
-			generate: jest.fn()
-		}
+			generate: jest.fn(),
+		},
 	};
 });
 
@@ -46,7 +46,33 @@ describe('Wallet functions', () => {
 		expect(wallet).toBe(mockWallet);
 		expect(DirectSecp256k1HdWallet.generate).toHaveBeenCalledWith(12, {
 			prefix: 'sei',
-			hdPaths: [getHdPath(0)]
+			hdPaths: [getHdPath(0)],
+		});
+	});
+
+	it('should generate a wallet with default inputs', async () => {
+		const mockWallet = {};
+		(DirectSecp256k1HdWallet.generate as jest.Mock).mockResolvedValue(mockWallet);
+
+		const wallet = await generateWallet();
+
+		expect(wallet).toBe(mockWallet);
+		expect(DirectSecp256k1HdWallet.generate).toHaveBeenCalledWith(12, {
+			prefix: 'sei',
+			hdPaths: [getHdPath(0)],
+		});
+	});
+
+	it('should generate a wallet with default HD path', async () => {
+		const mockWallet = {};
+		(DirectSecp256k1HdWallet.generate as jest.Mock).mockResolvedValue(mockWallet);
+
+		const wallet = await generateWallet(12);
+
+		expect(wallet).toBe(mockWallet);
+		expect(DirectSecp256k1HdWallet.generate).toHaveBeenCalledWith(12, {
+			prefix: 'sei',
+			hdPaths: [getHdPath(0)],
 		});
 	});
 
@@ -59,7 +85,7 @@ describe('Wallet functions', () => {
 		expect(wallet).toBe(mockWallet);
 		expect(DirectSecp256k1HdWallet.generate).toHaveBeenCalledWith(12, {
 			prefix: 'sei',
-			hdPaths: [getHdPath(7)]
+			hdPaths: [getHdPath(7)],
 		});
 	});
 
@@ -74,7 +100,22 @@ describe('Wallet functions', () => {
 		expect(wallet).toBe(mockWallet);
 		expect(DirectSecp256k1HdWallet.fromMnemonic).toHaveBeenCalledWith(seedPhrase, {
 			prefix: 'sei',
-			hdPaths: [getHdPath(0)]
+			hdPaths: [getHdPath(0)],
+		});
+	});
+
+	it('should restore a wallet from a seed phrase with a default HD path', async () => {
+		const mockWallet = {};
+		const seedPhrase = 'test seed phrase';
+
+		(DirectSecp256k1HdWallet.fromMnemonic as jest.Mock).mockResolvedValue(mockWallet);
+
+		const wallet = await restoreWallet(seedPhrase);
+
+		expect(wallet).toBe(mockWallet);
+		expect(DirectSecp256k1HdWallet.fromMnemonic).toHaveBeenCalledWith(seedPhrase, {
+			prefix: 'sei',
+			hdPaths: [getHdPath(0)],
 		});
 	});
 });

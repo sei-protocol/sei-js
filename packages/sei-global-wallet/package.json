@@ -12,8 +12,7 @@
 		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
-		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"lint": "eslint --ext .ts"
+		"build:types": "tsc --project ./tsconfig.declaration.json"
 	},
 	"dependencies": {
 		"@dynamic-labs/global-wallet-client": "^4.10.2",
@@ -32,22 +31,22 @@
 		"viem": "^2.7.12"
 	},
 	"peerDependenciesMeta": {
-		"viem": {
+		"@solana/wallet-standard-features": {
 			"optional": true
 		},
 		"@solana/web3.js": {
 			"optional": true
 		},
-		"@solana/wallet-standard-features": {
+		"@wallet-standard/base": {
 			"optional": true
 		},
 		"@wallet-standard/features": {
 			"optional": true
 		},
-		"@wallet-standard/base": {
+		"@wallet-standard/wallet": {
 			"optional": true
 		},
-		"@wallet-standard/wallet": {
+		"viem": {
 			"optional": true
 		}
 	},

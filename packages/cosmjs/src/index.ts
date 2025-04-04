@@ -1,5 +1,3 @@
-export * from './core';
-export * from './cosmoskit';
-export * from './staking';
+export * from './clients';
 export * from './utils';
 export * from './wallet';

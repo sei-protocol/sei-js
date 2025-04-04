@@ -1,14 +1,14 @@
 import { CosmWasmClient, SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { OfflineSigner } from '@cosmjs/proto-signing';
+import type { OfflineSigner } from '@cosmjs/proto-signing';
 import { getCosmWasmClient, getSigningCosmWasmClient } from '../cosmWasmClient';
 
 jest.mock('@cosmjs/cosmwasm-stargate', () => ({
 	CosmWasmClient: {
-		connect: jest.fn()
+		connect: jest.fn(),
 	},
 	SigningCosmWasmClient: {
-		connectWithSigner: jest.fn()
-	}
+		connectWithSigner: jest.fn(),
+	},
 }));
 
 describe('getCosmWasmClient', () => {
@@ -34,8 +34,8 @@ describe('getSigningCosmWasmClient', () => {
 			signer,
 			expect.objectContaining({
 				registry: expect.anything(),
-				aminoTypes: expect.anything()
-			})
+				aminoTypes: expect.anything(),
+			}),
 		);
 	});
 });

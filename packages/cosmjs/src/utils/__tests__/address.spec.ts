@@ -1,7 +1,10 @@
+import { randomBytes } from 'node:crypto';
 import { describe, expect, it } from '@jest/globals';
-import { getAddressHashFromPubKey, isValidSeiCosmosAddress, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
-import { randomBytes } from 'crypto';
+import { secp256k1 } from '@noble/curves/secp256k1';
+import { ec as EllipticCurve } from 'elliptic';
+import { deriveAddressesFromPrivateKey, getAddressHashFromPubKey, isValidSeiCosmosAddress, pubKeyToBytes, pubKeyToKeyPair, verifyDigest32 } from '../address';
 import { truncateSeiAddress } from '../address';
+import { sha256 } from '../hash';
 
 describe('truncateAddress', () => {
 	it('should return the truncated address with first 3 and last 5 characters for valid sei contract addresses', () => {
@@ -23,8 +26,8 @@ describe('truncateAddress', () => {
 });
 
 const MOCK_PUB_KEY = new Uint8Array([
-	4, 116, 1, 101, 176, 186, 244, 209, 5, 209, 19, 132, 244, 147, 197, 29, 25, 163, 111, 176, 167, 12, 14, 132, 111, 54, 27, 175, 58, 222, 9, 164, 17, 238, 10, 125,
-	251, 27, 86, 34, 144, 170, 53, 1, 39, 215, 43, 232, 73, 1, 141, 150, 35, 103, 128, 242, 240, 169, 107, 169, 102, 44, 226, 126, 14
+	4, 116, 1, 101, 176, 186, 244, 209, 5, 209, 19, 132, 244, 147, 197, 29, 25, 163, 111, 176, 167, 12, 14, 132, 111, 54, 27, 175, 58, 222, 9, 164, 17, 238, 10,
+	125, 251, 27, 86, 34, 144, 170, 53, 1, 39, 215, 43, 232, 73, 1, 141, 150, 35, 103, 128, 242, 240, 169, 107, 169, 102, 44, 226, 126, 14,
 ]);
 
 const MOCK_PUB_KEY_ADDRESS = new Uint8Array([238, 39, 110, 158, 63, 196, 185, 243, 87, 44, 63, 181, 99, 247, 136, 235, 53, 144, 126, 40]);
@@ -68,6 +71,15 @@ describe('pubKeyToKeyPair', () => {
 });
 
 describe('pubKeyToBytes', () => {
+	it('should return uncompressed pubKey when given compressed key and uncompressed=true', () => {
+		// Generate compressed public key from a random 32-byte private key
+		const privateKey = Uint8Array.from({ length: 32 }, () => Math.floor(Math.random() * 256));
+		const compressedPubKey = secp256k1.getPublicKey(privateKey, true); // 33-byte compressed key
+
+		const uncompressedBytes = pubKeyToBytes(compressedPubKey, true);
+		expect(uncompressedBytes.length).toBe(65); // uncompressed key should be 65 bytes
+	});
+
 	it('should return the same pubKey when uncompressed and length is 65', () => {
 		// Generate a random 65-byte Uint8Array as a mock uncompressed public key
 		const uncompressedPubKey = new Uint8Array(randomBytes(65));
@@ -121,5 +133,38 @@ describe('verifyDigest32', () => {
 		const pubKey = MOCK_PUB_KEY;
 
 		expect(() => verifyDigest32(digest, incorrectSignature, pubKey)).toThrow('Invalid length of signature: 63');
+	});
+
+	it('should verify a valid digest and signature with corresponding pub key', () => {
+		// Generate a private key
+		const privateKey = Uint8Array.from({ length: 32 }, () => Math.floor(Math.random() * 256));
+
+		// Create key pair and public key
+		const ec = new EllipticCurve('secp256k1');
+		const keyPair = ec.keyFromPrivate(Buffer.from(privateKey).toString('hex'));
+		const pubKey = new Uint8Array(Buffer.from(keyPair.getPublic(true, 'hex'), 'hex')); // compressed
+
+		// Create a digest
+		const message = new TextEncoder().encode('test message');
+		const digest = sha256(message);
+
+		// Sign it
+		const signature = keyPair.sign(digest, { canonical: true });
+		const signatureBytes = new Uint8Array([...Buffer.from(signature.r.toArray('be', 32)), ...Buffer.from(signature.s.toArray('be', 32))]);
+
+		// Run the verification
+		const result = verifyDigest32(digest, signatureBytes, pubKey);
+		expect(result).toBe(true);
+	});
+});
+
+describe('deriveAddressesFromPrivateKey', () => {
+	it('should derive a valid SEI address from a valid private key', () => {
+		const privKey = '3c3a57a3575f3311c20766c55e5f5d99d5f6e14d3dfce7c80bdcb3c280783f88';
+		const expectedPrefix = 'sei';
+
+		const address = deriveAddressesFromPrivateKey(privKey);
+		expect(address.startsWith(expectedPrefix)).toBe(true);
+		expect(isValidSeiCosmosAddress(address)).toBe(true);
 	});
 });

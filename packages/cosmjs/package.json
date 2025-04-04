@@ -12,8 +12,7 @@
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"docs": "typedoc --out docs",
-		"test": "jest",
-		"lint": "eslint --ext .ts"
+		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [
@@ -28,15 +27,15 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@cosmjs/amino": "^0.29.5",
-		"@cosmjs/cosmwasm-stargate": "^0.29.5",
-		"@cosmjs/crypto": "^0.29.5",
-		"@cosmjs/encoding": "^0.32.3",
-		"@cosmjs/math": "^0.29.5",
-		"@cosmjs/proto-signing": "^0.29.5",
-		"@cosmjs/stargate": "^0.29.5",
-		"@cosmjs/tendermint-rpc": "^0.29.5",
-		"@sei-js/proto": "^4.1.0",
+		"@cosmjs/amino": "^0.33.1",
+		"@cosmjs/cosmwasm-stargate": "^0.33.1",
+		"@cosmjs/crypto": "^0.33.1",
+		"@cosmjs/encoding": "^0.33.1",
+		"@cosmjs/math": "^0.33.1",
+		"@cosmjs/proto-signing": "^0.33.1",
+		"@cosmjs/stargate": "^0.33.1",
+		"@cosmjs/tendermint-rpc": "^0.33.1",
+		"@sei-js/cosmos": "^1.0.4",
 		"bech32": "^2.0.0",
 		"elliptic": "^6.5.4",
 		"moment": "^2.30.1",
