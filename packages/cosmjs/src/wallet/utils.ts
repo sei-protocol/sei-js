@@ -1,4 +1,4 @@
-import { ChainConfig, ChainInfo, Currency } from './types';
+import type { ChainConfig, ChainInfo, Currency } from './types';
 
 /**
  * @category Config

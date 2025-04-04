@@ -1,8 +1,8 @@
 import type { StdSignDoc, StdSignature } from '@cosmjs/amino';
+import { serializeSignDoc } from '@cosmjs/amino/build/signdoc';
 import { fromBase64 } from '@cosmjs/encoding';
 import { compressedPubKeyToAddress, isValidSeiCosmosAddress, verifyDigest32 } from './address';
 import { sha256 } from './hash';
-import { serializeAminoSignDoc } from './serialize';
 
 /**
  * Creates a StdSignDoc for an [ADR-36](https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-036-arbitrary-signature.md) object.
@@ -125,7 +125,7 @@ function verifyADR36AminoSignDoc(signDoc: StdSignDoc, pubKey: Uint8Array, signat
 		throw new Error('Unmatched signer');
 	}
 
-	const msg = serializeAminoSignDoc(signDoc);
+	const msg = serializeSignDoc(signDoc);
 
 	return verifyDigest32(sha256(msg), signature, pubKey);
 }

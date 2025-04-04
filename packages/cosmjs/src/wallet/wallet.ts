@@ -1,5 +1,5 @@
+import { type HdPath, stringToPath } from '@cosmjs/crypto';
 import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
-import { HdPath, stringToPath } from '@cosmjs/crypto';
 
 /**
  * Gets the Hierarchical deterministic Cosmos Hub/Atom path for the accountIndex
