@@ -12,16 +12,10 @@
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"docs": "typedoc --out docs",
-		"test": "jest",
-		"lint": "eslint --ext .ts"
+		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": [
-		"sei",
-		"javascript",
-		"typescript",
-		"react"
-	],
+	"keywords": ["sei", "javascript", "typescript", "react"],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"publishConfig": {

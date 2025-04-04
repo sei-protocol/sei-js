@@ -21,8 +21,8 @@ jobs:
       - name: Yarn Install
         run: yarn
 
-      - name: Test
-        run: yarn test:all
-
       - name: Build All Packages
         run: yarn build:all
+
+      - name: Test
+        run: yarn test:all
