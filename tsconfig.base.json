@@ -11,9 +11,7 @@
 		"lib": ["ES2022"],
 		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true,
-		"declaration": false,
-
-		"baseUrl": "./"
+		"declaration": false
 	},
 	"exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "**/*.spec.js", "**/*.test.js", "**/__tests__/**/*"]
 }
