@@ -8,7 +8,6 @@ The `@sei-js/cosmjs` package contains helper functions for wallet connection, tr
   - [Generating or Restoring a Wallet](#generating-or-restoring-a-wallet)
   - [Cosmos Kit Configs](#cosmos-kit)
   - [Chain Suggestion](#chain-suggestion)
-- [Query Client](#query-client)
 - [Signing Client](#signing-client)
 - [Utils](#utils)
   - [Address](#address)
@@ -108,26 +107,6 @@ const chainSuggest = getChainSuggest();
 await window.keplr.suggestChain(chainSuggest); // See the Keplr API docs for more information on chain suggestion.
 
 ```
-
-## Query Client
-When querying a Sei chain it is helpful to use a query client from @sei-js in order to have the correct registry and amino types. It is recommended that you do not use common web2 request libraries (fetch, axios, request) as they will not have typed query and response types. In order to use a query client, you need a REST API endpoint, from a Sei RPC provider.
-
-### Usage
-```tsx
-import { getQueryClient } from '@sei-js/cosmjs';
-
-const queryClient = await getQueryClient(REST_URL);
-
-// Getting the market summary from the Sei tokenfactory
-const tokenFactoryParams = await queryClient.seiprotocol.seichain.tokenFactory.params();
-
-// Query the bank balance of a given address
-const balances = await queryClient.cosmos.bank.v1beta1.allBalances({ address });
-
-// Query a specific transaction hash
-const txInfo = await queryClient.cosmos.tx.v1beta1.getTx({ hash });
-```
-
 
 ## Signing Client
 @sei-js contains helper functions to get a SigningStargateClient with default Sei protocol registry and amino types. In order to interact with this, you need a Sei RPC URL from a provider.

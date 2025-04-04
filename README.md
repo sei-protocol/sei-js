@@ -13,13 +13,14 @@ You can also refer to the [typedoc documentation](https://sei-protocol.github.io
 
 SeiJS consists of smaller NPM packages within the @sei-js namespace. For more detailed documentation on each package, please refer to the table below.
 
-| Package                            | Description                                                                                                                                                                                            |
-|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [@sei-js/cosmjs](packages/cosmjs)  | TypeScript library containing helper functions for wallet connection, transaction signing, and RPC querying using cosmjs.                                                                              |
-| [@sei-js/evm](packages/evm)        | Typescript library containing helper functions for interacting with the EVM on Sei.                                                                                                                    |
-| [@sei-js/proto](packages/proto)    | TypeScript library for Sei protobuf generated using [Telescope](https://github.com/osmosis-labs/telescope)                                                                                             |
-| [@sei-js/registry](packages/proto) | TypeScript library exporting constants from the [Sei chain-registry](https://github.com/sei-protocol/chain-registry) and the [community asset list](https://github.com/Sei-Public-Goods/sei-assetlist) |
-| [@sei-js/create-sei](packages/create-sei) | CLI Tool used to quickly spin up Sei Projects and dApps in either the cosmos or EVM ecosystem |
+| Package                                                 | Description                                                                                                                     |
+|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| [@sei-js/evm](packages/evm)                             | Typescript library containing helper functions for interacting with the EVM on Sei.                                             |
+| [@sei-js/create-sei](packages/create-sei)               | CLI Tool used to quickly spin up Sei Projects and dApps in either the cosmos or EVM ecosystem                                   |
+| [@sei-js/sei-global-wallet](packages/sei-global-wallet) | A global wallet conforming to EIP-6963 allowing for AA across dApps.                                                            |
+| [@sei-js/cosmjs](packages/cosmjs)                       | TypeScript library containing helper functions for wallet connection, transaction signing, and RPC querying using cosmjs.       |
+| [@sei-js/cosmos](packages/cosmos)                       | TypeScript library for Sei protobuf encoding and decoding, a REST query client, and Typescript types for everything Sei Cosmos. |
+| [@sei-js/ledger](packages/ledger)                       | TypeScript library transacting on Sei using a Ledger device.                                                                    |
 
 ## Development
 To build all packages and docs, run `yarn install` then `yarn build:all`
