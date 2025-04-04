@@ -18,8 +18,7 @@
 		"generate-sei-cosmos": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/cosmos-sdk",
 		"generate-sei-chain": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/sei-chain",
 		"generate-third-party": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/third-party",
-		"extract-libraries": "rimraf library && tsx scripts/index.ts",
-		"lint": "echo 'No linting configured for this package'"
+		"extract-libraries": "rimraf library && tsx scripts/index.ts"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [
