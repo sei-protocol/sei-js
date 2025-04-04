@@ -1,38 +1,38 @@
-import { getUpcomingMintTokens } from '../apr';
+import type { ScheduledTokenRelease } from '@sei-js/cosmos/types/mint/v1beta1';
 import moment from 'moment';
-import { ScheduledTokenReleaseSDKType } from '@sei-js/proto/dist/types/codegen/mint/v1beta1/mint';
+import { getUpcomingMintTokens } from '../apr';
 
-const releaseSchedule: ScheduledTokenReleaseSDKType[] = [
+const releaseSchedule: ScheduledTokenRelease[] = [
 	{
-		token_release_amount: 500000n,
+		token_release_amount: 500000,
 		start_date: '2023-10-01',
-		end_date: '2023-10-20'
+		end_date: '2023-10-20',
 	},
 	{
-		token_release_amount: 500000n,
+		token_release_amount: 500000,
 		start_date: '2023-11-01',
-		end_date: '2023-11-30'
+		end_date: '2023-11-30',
 	},
 	{
-		token_release_amount: 500000n,
+		token_release_amount: 500000,
 		start_date: '2023-11-30',
-		end_date: '2023-12-31'
+		end_date: '2023-12-31',
 	},
 	{
-		token_release_amount: 10000000n,
+		token_release_amount: 10000000,
 		start_date: '2024-01-01',
-		end_date: '2024-12-31'
+		end_date: '2024-12-31',
 	},
 	{
-		token_release_amount: 10000000n,
+		token_release_amount: 10000000,
 		start_date: '2025-01-01',
-		end_date: '2025-12-31'
+		end_date: '2025-12-31',
 	},
 	{
-		token_release_amount: 8500000n,
+		token_release_amount: 8500000,
 		start_date: '2023-01-01',
-		end_date: '2023-09-30'
-	}
+		end_date: '2023-09-30',
+	},
 ];
 
 describe('getUpcomingMintTokens', () => {

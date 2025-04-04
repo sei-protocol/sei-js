@@ -1,12 +1,12 @@
 import type { HttpEndpoint } from '@cosmjs/cosmwasm-stargate';
-import { type OfflineSigner, Registry } from '@cosmjs/proto-signing';
+import { type GeneratedType, type OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import {
 	AminoTypes,
 	SigningStargateClient,
 	type SigningStargateClientOptions,
 	StargateClient,
 	type StargateClientOptions,
-	defaultRegistryTypes
+	defaultRegistryTypes,
 } from '@cosmjs/stargate';
 import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/encoding';
 
@@ -36,7 +36,7 @@ import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/encoding';
  * @category Config
  */
 export const createSeiRegistry = (): Registry => {
-	return new Registry([...defaultRegistryTypes, ...seiProtoRegistry]);
+	return new Registry([...defaultRegistryTypes, ...(seiProtoRegistry as ReadonlyArray<[string, GeneratedType]>)]);
 };
 
 /**
@@ -189,7 +189,7 @@ export const getStargateClient = async (rpcEndpoint: string | HttpEndpoint, opti
 export const getSigningStargateClient = async (
 	rpcEndpoint: string | HttpEndpoint,
 	signer: OfflineSigner,
-	options: SigningStargateClientOptions = {}
+	options: SigningStargateClientOptions = {},
 ): Promise<SigningStargateClient> => {
 	const registry = createSeiRegistry();
 	const aminoTypes = createSeiAminoTypes();
@@ -197,6 +197,6 @@ export const getSigningStargateClient = async (
 		registry,
 		aminoTypes,
 		broadcastPollIntervalMs: options.broadcastPollIntervalMs || 400,
-		...options
+		...options,
 	});
 };

@@ -1,6 +1,6 @@
-import moment, { Moment } from 'moment';
 import type { Pool } from '@sei-js/cosmos/types/cosmos/staking/v1beta1';
-import { Params, ScheduledTokenRelease } from '@sei-js/cosmos/types/mint/v1beta1';
+import type { Params, ScheduledTokenRelease } from '@sei-js/cosmos/types/mint/v1beta1';
+import moment, { type Moment } from 'moment';
 
 /**
  * Calculates the estimated staking APR based on the upcoming token release schedule and the current number of bonded tokens.
@@ -146,6 +146,6 @@ function createReleaseSchedule(start_date: string, end_date: string, token_relea
 	return {
 		startDate: moment(start_date),
 		endDate: moment(end_date),
-		tokenReleaseAmount: Number(token_release_amount)
+		tokenReleaseAmount: Number(token_release_amount),
 	};
 }
