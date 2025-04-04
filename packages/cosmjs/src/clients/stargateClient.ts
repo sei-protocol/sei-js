@@ -166,14 +166,14 @@ export const getStargateClient = async (rpcEndpoint: string | HttpEndpoint, opti
 export const getSigningStargateClient = async (
 	rpcEndpoint: string | HttpEndpoint,
 	signer: OfflineSigner,
-	options: SigningStargateClientOptions = {},
+	options?: SigningStargateClientOptions,
 ): Promise<SigningStargateClient> => {
 	const registry = createSeiRegistry();
 	const aminoTypes = createSeiAminoTypes();
 	return SigningStargateClient.connectWithSigner(rpcEndpoint, signer, {
 		registry,
 		aminoTypes,
-		broadcastPollIntervalMs: options.broadcastPollIntervalMs || 400, // Need to decrease this because Sei is so fast ⚡🏃💨💨
+		broadcastPollIntervalMs: options?.broadcastPollIntervalMs || 400, // Need to decrease this because Sei is so fast ⚡🏃💨💨
 		...options,
 	});
 };

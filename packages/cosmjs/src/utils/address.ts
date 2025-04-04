@@ -1,9 +1,9 @@
-import { ec as EllipticCurve } from 'elliptic';
-import { sha256 } from './hash';
 import { ripemd160 } from '@cosmjs/crypto';
-import { toBech32 } from './bech32';
 import { fromBech32 } from '@cosmjs/encoding';
 import { secp256k1 } from '@noble/curves/secp256k1';
+import { ec as EllipticCurve } from 'elliptic';
+import { toBech32 } from './bech32';
+import { sha256 } from './hash';
 
 /**
  * Derives and returns the address from a given private key.
@@ -13,9 +13,6 @@ import { secp256k1 } from '@noble/curves/secp256k1';
  */
 export const deriveAddressesFromPrivateKey = (privateKeyHex: string) => {
 	const privateKey = Uint8Array.from(Buffer.from(privateKeyHex.padStart(64, '0'), 'hex'));
-	if (privateKey.length !== 32) {
-		throw new Error('Private key must be 32 bytes long.');
-	}
 
 	const publicKey = secp256k1.getPublicKey(privateKey, true);
 	return compressedPubKeyToAddress(publicKey);
@@ -103,9 +100,9 @@ export const verifyDigest32 = (digest: Uint8Array, signature: Uint8Array, pubKey
 		digest,
 		{
 			r: Buffer.from(r).toString('hex'),
-			s: Buffer.from(s).toString('hex')
+			s: Buffer.from(s).toString('hex'),
 		},
-		pubKeyToKeyPair(pubKey)
+		pubKeyToKeyPair(pubKey),
 	);
 };
 

@@ -8,7 +8,7 @@ const DEFAULT_CHAIN_INFO = {
 	chainId: 'pacific-1',
 	restUrl: 'https://rest.wallet.pacific-1.sei.io/',
 	rpcUrl: 'https://rpc.wallet.pacific-1.sei.io/',
-	gasPriceStep: { low: 0.02, average: 0.04, high: 0.06 }
+	gasPriceStep: { low: 0.02, average: 0.04, high: 0.06 },
 };
 
 /**
@@ -18,11 +18,11 @@ const DEFAULT_CHAIN_INFO = {
  * @returns A chain configuration object with overrides from ChainInfo and any additional currencies.
  * @category Wallets (Advanced)
  */
-export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[] = []): ChainConfig => {
+export const getChainSuggest = (chainInfo?: ChainInfo, currencies: Currency[] = []): ChainConfig => {
 	const prefix = 'sei';
 	const { chainId, chainName, rpcUrl, restUrl, gasPriceStep } = {
 		...DEFAULT_CHAIN_INFO,
-		...chainInfo
+		...chainInfo,
 	};
 
 	return {
@@ -31,7 +31,7 @@ export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[
 		rpc: rpcUrl,
 		rest: restUrl,
 		bip44: {
-			coinType: 118
+			coinType: 118,
 		},
 		bech32Config: {
 			bech32PrefixAccAddr: prefix,
@@ -39,30 +39,30 @@ export const getChainSuggest = (chainInfo: ChainInfo = {}, currencies: Currency[
 			bech32PrefixValAddr: `${prefix}valoper`,
 			bech32PrefixValPub: `${prefix}valoperpub`,
 			bech32PrefixConsAddr: `${prefix}valcons`,
-			bech32PrefixConsPub: `${prefix}valconspub`
+			bech32PrefixConsPub: `${prefix}valconspub`,
 		},
 		currencies: [
 			{
 				coinDenom: 'SEI',
 				coinMinimalDenom: 'usei',
-				coinDecimals: 6
+				coinDecimals: 6,
 			},
-			...currencies
+			...currencies,
 		],
 		feeCurrencies: [
 			{
 				coinDenom: 'SEI',
 				coinMinimalDenom: 'usei',
 				coinDecimals: 6,
-				gasPriceStep
-			}
+				gasPriceStep,
+			},
 		],
 		stakeCurrency: {
 			coinDenom: 'SEI',
 			coinMinimalDenom: 'usei',
-			coinDecimals: 6
+			coinDecimals: 6,
 		},
 		coinType: 118,
-		features: ['stargate', 'ibc-transfer', 'cosmwasm']
+		features: ['stargate', 'ibc-transfer', 'cosmwasm'],
 	};
 };
