@@ -1,33 +1,19 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES2020",
-    "strict": true,
-    "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noImplicitAny": false,
-    "lib": ["ES2022"],
-    "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "declaration": false,
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ES2020",
+		"strict": true,
+		"moduleResolution": "Node",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"noImplicitAny": false,
+		"lib": ["ES2022"],
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true,
+		"declaration": false,
 
-    "baseUrl": "./",
-    "paths": {
-      "@sei-js/cosmos/*": ["packages/cosmos/dist/esm/*", "packages/cosmos/dist/cjs/*"],
-      "@sei-js/cosmjs/*": ["packages/cosmjs/dist/esm/*", "packages/cosmjs/dist/cjs/*"],
-      "@sei-js/evm/*": ["packages/evm/dist/esm/*", "packages/evm/dist/cjs/*"],
-      "@sei-js/registry/*": ["packages/registry/dist/esm/*", "packages/registry/dist/cjs/*"]
-    }
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/*.spec.js",
-    "**/*.test.js",
-    "**/__tests__/**/*"
-  ]
+		"baseUrl": "./"
+	},
+	"exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "**/*.spec.js", "**/*.test.js", "**/__tests__/**/*"]
 }
