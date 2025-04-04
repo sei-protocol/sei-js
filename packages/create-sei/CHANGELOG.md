@@ -1,5 +1,17 @@
 # @sei-js/create-sei-app
 
+## 0.0.2
+
+### Patch Changes
+
+- cd65a51: Fix broken NPM publish for all packages
+
+## 0.0.1
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 0.0.0
 
 ### Major Changes

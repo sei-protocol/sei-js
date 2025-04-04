@@ -1,5 +1,17 @@
 # @sei-js/cosmos
 
+## 1.0.4
+
+### Patch Changes
+
+- cd65a51: Fix broken NPM publish for all packages
+
+## 1.0.3
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 1.0.2
 
 ### Patch Changes

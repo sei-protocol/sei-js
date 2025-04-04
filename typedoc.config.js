@@ -1,5 +1,5 @@
 module.exports = {
-	entryPoints: ['packages/evm', 'packages/cosmjs', 'packages/proto', 'packages/registry'],
+	entryPoints: ['packages/evm', 'packages/cosmjs', 'packages/cosmos', 'packages/create-sei', 'packages/registry', 'packages/sei-account', 'packages/ledger'],
 	name: '@sei-js',
 	entryPointStrategy: 'packages',
 	includeVersion: false,
@@ -10,7 +10,7 @@ module.exports = {
 	navigation: {
 		includeCategories: true,
 		includeGroups: true,
-		includeFolders: true
+		includeFolders: true,
 	},
 	categorizeByGroup: false,
 	compilerOptions: {
@@ -18,6 +18,6 @@ module.exports = {
 		strict: true,
 		composite: true,
 		declaration: true,
-		declarationMap: true
-	}
+		declarationMap: true,
+	},
 };

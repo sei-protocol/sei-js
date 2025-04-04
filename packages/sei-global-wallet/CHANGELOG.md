@@ -1,5 +1,23 @@
 # @sei-js/global-wallet
 
+## 1.3.3
+
+### Patch Changes
+
+- 1ebf1b8: Bump dynamic version
+
+## 1.3.2
+
+### Patch Changes
+
+- cd65a51: Fix broken NPM publish for all packages
+
+## 1.3.1
+
+### Patch Changes
+
+- d6e74ed: Update package structure and building of all @sei-js packages
+
 ## 1.3.0
 
 ### Minor Changes

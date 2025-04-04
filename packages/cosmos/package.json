@@ -1,26 +1,24 @@
 {
 	"name": "@sei-js/cosmos",
-	"version": "1.0.2",
+	"version": "1.0.4",
 	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
 	"sideEffects": false,
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
 	"files": [
 		"dist"
 	],
 	"scripts": {
-		"prebuild": "rimraf dist",
-		"build": "yarn compile:all",
+		"build": "rimraf dist && yarn compile:all",
 		"compile:all": "yarn compile:cjs && yarn compile:esm && yarn compile:declarations",
 		"compile:cjs": "tsc --outDir dist/cjs --module commonjs --project ./tsconfig.json",
 		"compile:esm": "tsc --outDir dist/esm --module esnext --project ./tsconfig.json",
 		"compile:declarations": "tsc --project ./tsconfig.declaration.json",
-		"pregenerate": "rimraf protoc",
-		"generate": "yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party",
-		"postgenerate": "yarn extract-libraries",
+		"generate": "rimraf protoc && yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party && yarn extract-libraries",
 		"generate-sei-cosmos": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/cosmos-sdk",
 		"generate-sei-chain": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/sei-chain",
 		"generate-third-party": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/third-party",
-		"preextract-libraries": "rimraf library",
-		"extract-libraries": "tsx scripts/index.ts",
+		"extract-libraries": "rimraf library && tsx scripts/index.ts",
 		"lint": "echo 'No linting configured for this package'"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
@@ -33,11 +31,9 @@
 	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
-	"private": false,
 	"publishConfig": {
 		"access": "public"
 	},
-	"peerDependencies": {},
 	"dependencies": {
 		"@bufbuild/protobuf": "^2.1.0",
 		"@cosmjs/proto-signing": "^0.32.4",
@@ -45,6 +41,19 @@
 	},
 	"devDependencies": {
 		"tsx": "^4.19.1"
+	},
+	"typesVersions": {
+		"*": {
+			"types/*": [
+				"dist/types/types/*/index.d.ts"
+			],
+			"rest": [
+				"dist/types/rest/index.d.ts"
+			],
+			"encoding": [
+				"dist/types/encoding/index.d.ts"
+			]
+		}
 	},
 	"exports": {
 		"./types/*": {

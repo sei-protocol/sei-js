@@ -1,5 +1,5 @@
 # runs if /packages/registry/** is updated and the release workflow completes successfully
-name: Release Package
+name: Update Registry Submodules
 
 on:
   workflow_run:

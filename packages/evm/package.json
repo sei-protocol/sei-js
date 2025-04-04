@@ -1,21 +1,18 @@
 {
 	"name": "@sei-js/evm",
-	"version": "2.0.1",
+	"version": "2.0.3",
 	"description": "TypeScript library for EVM interactions on the Sei blockchain",
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
 	"types": "./dist/types/index.d.ts",
 	"sideEffects": false,
 	"scripts": {
-		"prebuild": "rimraf dist",
-		"build": "yarn build:types && yarn build:cjs && yarn build:esm && yarn build:prettier",
+		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"build:prettier": "prettier --write 'dist/**/*.js'",
 		"docs": "typedoc --out docs",
-		"test": "jest --passWithNoTests",
-		"lint": "eslint --ext .ts"
+		"test": "jest --passWithNoTests"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [
@@ -27,7 +24,6 @@
 	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
-	"private": false,
 	"publishConfig": {
 		"access": "public"
 	},
