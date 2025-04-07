@@ -12,7 +12,8 @@
 		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
-		"build:types": "tsc --project ./tsconfig.declaration.json"
+		"build:types": "tsc --project ./tsconfig.declaration.json",
+		"test": "jest"
 	},
 	"dependencies": {
 		"@dynamic-labs/global-wallet-client": "^4.10.2",
