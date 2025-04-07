@@ -1,4 +1,3 @@
-import * as confidentialtransfers from "./confidentialtransfers/index";
 import * as confio from "./confio/index";
 import * as cosmos_accesscontrol from "./cosmos/accesscontrol/index";
 import * as cosmos_accesscontrol_x from "./cosmos/accesscontrol_x/index";
@@ -54,7 +53,6 @@ export * from "./amino";
 export * from "./registry";
 
 export const Encoder = {
-	confidentialtransfers: confidentialtransfers,
 	confio: confio,
 	cosmos: {
 		accesscontrol: cosmos_accesscontrol,
@@ -66,7 +64,10 @@ export const Encoder = {
 			abci: { v1beta1: cosmos_base_abci_v1beta1 },
 			kv: { v1beta1: cosmos_base_kv_v1beta1 },
 			query: { v1beta1: cosmos_base_query_v1beta1 },
-			reflection: { v1beta1: cosmos_base_reflection_v1beta1, v2alpha1: cosmos_base_reflection_v2alpha1 },
+			reflection: {
+				v1beta1: cosmos_base_reflection_v1beta1,
+				v2alpha1: cosmos_base_reflection_v2alpha1
+			},
 			snapshots: { v1beta1: cosmos_base_snapshots_v1beta1 },
 			store: { v1beta1: cosmos_base_store_v1beta1 },
 			tendermint: { v1beta1: cosmos_base_tendermint_v1beta1 },
@@ -90,7 +91,10 @@ export const Encoder = {
 		params: { types: cosmos_params_types, v1beta1: cosmos_params_v1beta1 },
 		slashing: { v1beta1: cosmos_slashing_v1beta1 },
 		staking: { v1beta1: cosmos_staking_v1beta1 },
-		tx: { signing: { v1beta1: cosmos_tx_signing_v1beta1 }, v1beta1: cosmos_tx_v1beta1 },
+		tx: {
+			signing: { v1beta1: cosmos_tx_signing_v1beta1 },
+			v1beta1: cosmos_tx_v1beta1
+		},
 		upgrade: { v1beta1: cosmos_upgrade_v1beta1 },
 		vesting: { v1beta1: cosmos_vesting_v1beta1 }
 	},
