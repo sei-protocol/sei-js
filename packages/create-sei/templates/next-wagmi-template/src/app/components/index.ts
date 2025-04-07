@@ -1,2 +1,2 @@
-export * from './Homepage/Homepage'
-export * from './Web3Provider'
+export * from './Homepage/Homepage';
+export * from './Web3Provider';

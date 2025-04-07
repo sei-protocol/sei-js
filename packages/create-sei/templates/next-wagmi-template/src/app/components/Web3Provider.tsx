@@ -17,18 +17,18 @@ interface Web3ProviderProps {
 }
 
 const connectors = connectorsForWallets(
-    [
-      {
-        groupName: 'Recommended',
-        wallets: [metaMaskWallet],
-      },
-    ],
-    {
-      appName: '<YOUR_APPNAME_HERE>',
-      projectId: "<YOUR_ID_HERE>",
-    }
-  );
-  
+	[
+		{
+			groupName: 'Recommended',
+			wallets: [metaMaskWallet]
+		}
+	],
+	{
+		appName: '<YOUR_APPNAME_HERE>',
+		projectId: '<YOUR_ID_HERE>'
+	}
+);
+
 function Web3Provider({ children }: Web3ProviderProps) {
 	// Buffer polyfill
 	if (typeof window !== 'undefined') {
@@ -50,22 +50,23 @@ function Web3Provider({ children }: Web3ProviderProps) {
 	return (
 		<WagmiProvider config={config}>
 			<QueryClientProvider client={queryClient}>
-          <RainbowKitProvider
-              theme={lightTheme({
-                  accentColor: '#7e1914',
-                  accentColorForeground: 'white',
-                  borderRadius: 'medium',
-                  fontStack: 'system',
-              })}
-              appInfo={{
-                  appName: '<APP-NAME-HERE>',
-                  learnMoreUrl: 'https://www.docs.sei.io/user-guides/wallet-setup'
-              }}
-              modalSize='compact'
-              initialChain={chainConfig.id}>
-              {children}
-          </RainbowKitProvider>
-      </QueryClientProvider>
+				<RainbowKitProvider
+					theme={lightTheme({
+						accentColor: '#7e1914',
+						accentColorForeground: 'white',
+						borderRadius: 'medium',
+						fontStack: 'system'
+					})}
+					appInfo={{
+						appName: '<APP-NAME-HERE>',
+						learnMoreUrl: 'https://www.docs.sei.io/user-guides/wallet-setup'
+					}}
+					modalSize="compact"
+					initialChain={chainConfig.id}
+				>
+					{children}
+				</RainbowKitProvider>
+			</QueryClientProvider>
 		</WagmiProvider>
 	);
 }
