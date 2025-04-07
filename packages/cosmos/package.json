@@ -17,7 +17,8 @@
 		"generate-sei-chain": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/sei-chain",
 		"generate-third-party": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/third-party",
 		"extract-libraries": "rimraf library && tsx scripts/index.ts",
-		"format": "biome format --write"
+		"format": "biome format --write",
+		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": ["sei", "typescript", "types", "enums", "interfaces"],
