@@ -1,4 +1,10 @@
 import type { AminoConverters } from "@cosmjs/stargate";
+import { aminoConverters as confidentialtransfers_confidential_amino } from "./confidentialtransfers/confidential";
+import { aminoConverters as confidentialtransfers_cryptography_amino } from "./confidentialtransfers/cryptography";
+import { aminoConverters as confidentialtransfers_genesis_amino } from "./confidentialtransfers/genesis";
+import { aminoConverters as confidentialtransfers_params_amino } from "./confidentialtransfers/params";
+import { aminoConverters as confidentialtransfers_tx_amino } from "./confidentialtransfers/tx";
+import { aminoConverters as confidentialtransfers_zk_amino } from "./confidentialtransfers/zk";
 import { aminoConverters as confio_proofs_amino } from "./confio/proofs";
 import { aminoConverters as cosmos_accesscontrol_accesscontrol_amino } from "./cosmos/accesscontrol/accesscontrol";
 import { aminoConverters as cosmos_accesscontrol_x_genesis_amino } from "./cosmos/accesscontrol_x/genesis";
@@ -112,6 +118,12 @@ import { aminoConverters as tokenfactory_params_amino } from "./tokenfactory/par
 import { aminoConverters as tokenfactory_tx_amino } from "./tokenfactory/tx";
 
 export const aminoConverters: AminoConverters = {
+	...confidentialtransfers_confidential_amino,
+	...confidentialtransfers_cryptography_amino,
+	...confidentialtransfers_genesis_amino,
+	...confidentialtransfers_params_amino,
+	...confidentialtransfers_tx_amino,
+	...confidentialtransfers_zk_amino,
 	...confio_proofs_amino,
 	...cosmos_accesscontrol_x_genesis_amino,
 	...cosmos_accesscontrol_x_query_amino,
