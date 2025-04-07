@@ -40,5 +40,4 @@ export const IBC_PRECOMPILE_ABI = [
 		stateMutability: 'nonpayable',
 		type: 'function'
 	}
-
 ] as const;

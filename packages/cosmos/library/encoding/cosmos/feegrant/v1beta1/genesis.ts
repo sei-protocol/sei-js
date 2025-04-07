@@ -45,7 +45,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.feegrant.v1beta1.Gen
 
 	fromJSON(object: any): GenesisState {
 		return {
-			allowances: globalThis.Array.isArray(object?.allowances) ? object.allowances.map((e: any) => Grant.fromJSON(e)) : [],
+			allowances: globalThis.Array.isArray(object?.allowances) ? object.allowances.map((e: any) => Grant.fromJSON(e)) : []
 		};
 	},
 
@@ -64,7 +64,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.feegrant.v1beta1.Gen
 		const message = createBaseGenesisState();
 		message.allowances = object.allowances?.map((e) => Grant.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -75,6 +75,6 @@ export const aminoConverters = {
 	"/cosmos.feegrant.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

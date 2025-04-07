@@ -56,7 +56,7 @@ export const CommitInfo: MessageFns<CommitInfo, "cosmos.base.store.v1beta1.Commi
 	fromJSON(object: any): CommitInfo {
 		return {
 			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-			store_infos: globalThis.Array.isArray(object?.store_infos) ? object.store_infos.map((e: any) => StoreInfo.fromJSON(e)) : [],
+			store_infos: globalThis.Array.isArray(object?.store_infos) ? object.store_infos.map((e: any) => StoreInfo.fromJSON(e)) : []
 		};
 	},
 
@@ -79,7 +79,7 @@ export const CommitInfo: MessageFns<CommitInfo, "cosmos.base.store.v1beta1.Commi
 		message.version = object.version ?? 0;
 		message.store_infos = object.store_infos?.map((e) => StoreInfo.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const StoreInfo: MessageFns<StoreInfo, "cosmos.base.store.v1beta1.StoreInfo"> = {
@@ -128,7 +128,7 @@ export const StoreInfo: MessageFns<StoreInfo, "cosmos.base.store.v1beta1.StoreIn
 	fromJSON(object: any): StoreInfo {
 		return {
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
-			commit_id: isSet(object.commit_id) ? CommitID.fromJSON(object.commit_id) : undefined,
+			commit_id: isSet(object.commit_id) ? CommitID.fromJSON(object.commit_id) : undefined
 		};
 	},
 
@@ -151,7 +151,7 @@ export const StoreInfo: MessageFns<StoreInfo, "cosmos.base.store.v1beta1.StoreIn
 		message.name = object.name ?? "";
 		message.commit_id = object.commit_id !== undefined && object.commit_id !== null ? CommitID.fromPartial(object.commit_id) : undefined;
 		return message;
-	},
+	}
 };
 
 export const CommitID: MessageFns<CommitID, "cosmos.base.store.v1beta1.CommitID"> = {
@@ -200,7 +200,7 @@ export const CommitID: MessageFns<CommitID, "cosmos.base.store.v1beta1.CommitID"
 	fromJSON(object: any): CommitID {
 		return {
 			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
+			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0)
 		};
 	},
 
@@ -223,7 +223,7 @@ export const CommitID: MessageFns<CommitID, "cosmos.base.store.v1beta1.CommitID"
 		message.version = object.version ?? 0;
 		message.hash = object.hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseCommitInfo(): CommitInfo {
@@ -280,24 +280,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.store.v1beta1.CommitInfo", CommitInfo as never],
 	["/cosmos.base.store.v1beta1.StoreInfo", StoreInfo as never],
-	["/cosmos.base.store.v1beta1.CommitID", CommitID as never],
+	["/cosmos.base.store.v1beta1.CommitID", CommitID as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.store.v1beta1.CommitInfo": {
 		aminoType: "cosmos-sdk/CommitInfo",
 		toAmino: (message: CommitInfo) => ({ ...message }),
-		fromAmino: (object: CommitInfo) => ({ ...object }),
+		fromAmino: (object: CommitInfo) => ({ ...object })
 	},
 
 	"/cosmos.base.store.v1beta1.StoreInfo": {
 		aminoType: "cosmos-sdk/StoreInfo",
 		toAmino: (message: StoreInfo) => ({ ...message }),
-		fromAmino: (object: StoreInfo) => ({ ...object }),
+		fromAmino: (object: StoreInfo) => ({ ...object })
 	},
 
 	"/cosmos.base.store.v1beta1.CommitID": {
 		aminoType: "cosmos-sdk/CommitID",
 		toAmino: (message: CommitID) => ({ ...message }),
-		fromAmino: (object: CommitID) => ({ ...object }),
-	},
+		fromAmino: (object: CommitID) => ({ ...object })
+	}
 };

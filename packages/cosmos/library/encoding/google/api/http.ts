@@ -56,7 +56,7 @@ export const Http: MessageFns<Http, "google.api.Http"> = {
 	fromJSON(object: any): Http {
 		return {
 			rules: globalThis.Array.isArray(object?.rules) ? object.rules.map((e: any) => HttpRule.fromJSON(e)) : [],
-			fully_decode_reserved_expansion: isSet(object.fully_decode_reserved_expansion) ? globalThis.Boolean(object.fully_decode_reserved_expansion) : false,
+			fully_decode_reserved_expansion: isSet(object.fully_decode_reserved_expansion) ? globalThis.Boolean(object.fully_decode_reserved_expansion) : false
 		};
 	},
 
@@ -79,7 +79,7 @@ export const Http: MessageFns<Http, "google.api.Http"> = {
 		message.rules = object.rules?.map((e) => HttpRule.fromPartial(e)) || [];
 		message.fully_decode_reserved_expansion = object.fully_decode_reserved_expansion ?? false;
 		return message;
-	},
+	}
 };
 
 export const HttpRule: MessageFns<HttpRule, "google.api.HttpRule"> = {
@@ -216,7 +216,7 @@ export const HttpRule: MessageFns<HttpRule, "google.api.HttpRule"> = {
 			custom: isSet(object.custom) ? CustomHttpPattern.fromJSON(object.custom) : undefined,
 			body: isSet(object.body) ? globalThis.String(object.body) : "",
 			response_body: isSet(object.response_body) ? globalThis.String(object.response_body) : "",
-			additional_bindings: globalThis.Array.isArray(object?.additional_bindings) ? object.additional_bindings.map((e: any) => HttpRule.fromJSON(e)) : [],
+			additional_bindings: globalThis.Array.isArray(object?.additional_bindings) ? object.additional_bindings.map((e: any) => HttpRule.fromJSON(e)) : []
 		};
 	},
 
@@ -271,7 +271,7 @@ export const HttpRule: MessageFns<HttpRule, "google.api.HttpRule"> = {
 		message.response_body = object.response_body ?? "";
 		message.additional_bindings = object.additional_bindings?.map((e) => HttpRule.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const CustomHttpPattern: MessageFns<CustomHttpPattern, "google.api.CustomHttpPattern"> = {
@@ -320,7 +320,7 @@ export const CustomHttpPattern: MessageFns<CustomHttpPattern, "google.api.Custom
 	fromJSON(object: any): CustomHttpPattern {
 		return {
 			kind: isSet(object.kind) ? globalThis.String(object.kind) : "",
-			path: isSet(object.path) ? globalThis.String(object.path) : "",
+			path: isSet(object.path) ? globalThis.String(object.path) : ""
 		};
 	},
 
@@ -343,7 +343,7 @@ export const CustomHttpPattern: MessageFns<CustomHttpPattern, "google.api.Custom
 		message.kind = object.kind ?? "";
 		message.path = object.path ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseHttp(): Http {
@@ -361,7 +361,7 @@ function createBaseHttpRule(): HttpRule {
 		custom: undefined,
 		body: "",
 		response_body: "",
-		additional_bindings: [],
+		additional_bindings: []
 	};
 }
 
@@ -375,24 +375,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/google.api.Http", Http as never],
 	["/google.api.HttpRule", HttpRule as never],
-	["/google.api.CustomHttpPattern", CustomHttpPattern as never],
+	["/google.api.CustomHttpPattern", CustomHttpPattern as never]
 ];
 export const aminoConverters = {
 	"/google.api.Http": {
 		aminoType: "google.api.Http",
 		toAmino: (message: Http) => ({ ...message }),
-		fromAmino: (object: Http) => ({ ...object }),
+		fromAmino: (object: Http) => ({ ...object })
 	},
 
 	"/google.api.HttpRule": {
 		aminoType: "google.api.HttpRule",
 		toAmino: (message: HttpRule) => ({ ...message }),
-		fromAmino: (object: HttpRule) => ({ ...object }),
+		fromAmino: (object: HttpRule) => ({ ...object })
 	},
 
 	"/google.api.CustomHttpPattern": {
 		aminoType: "google.api.CustomHttpPattern",
 		toAmino: (message: CustomHttpPattern) => ({ ...message }),
-		fromAmino: (object: CustomHttpPattern) => ({ ...object }),
-	},
+		fromAmino: (object: CustomHttpPattern) => ({ ...object })
+	}
 };

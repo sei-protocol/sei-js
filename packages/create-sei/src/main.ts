@@ -23,8 +23,7 @@ const printWelcomeMessage = () => {
 			borderColor: '#932C23'
 		})
 	);
-}
-
+};
 
 enum FrontendScaffolding {
 	Vite = 'vite',
@@ -48,7 +47,7 @@ interface WizardOptions {
 }
 
 const promptFramework = async () => {
-	const {appFramework} = await inquirer.prompt([
+	const { appFramework } = await inquirer.prompt([
 		{
 			type: 'list',
 			name: 'appFramework',
@@ -58,10 +57,10 @@ const promptFramework = async () => {
 	]);
 
 	return appFramework;
-}
+};
 
 const promptRpcIntegrations = async () => {
-	const {rpcIntegrationType} = await inquirer.prompt([
+	const { rpcIntegrationType } = await inquirer.prompt([
 		{
 			type: 'list',
 			name: 'rpcIntegrationType',
@@ -74,7 +73,7 @@ const promptRpcIntegrations = async () => {
 };
 
 const promptEVMLibrary = async () => {
-	const {evmLibrary} = await inquirer.prompt([
+	const { evmLibrary } = await inquirer.prompt([
 		{
 			type: 'list',
 			name: 'evmLibrary',
@@ -91,15 +90,15 @@ function isValidDirectoryName(dirName) {
 	const windowsReservedRe = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])$/i;
 	const trailingRe = /[. ]+$/;
 	const validNpmPackageRe = /^(?:@[a-z0-9-*~][a-z0-9-*._~]*)?[a-z0-9-~][a-z0-9-._~]*$/;
-  
+
 	if (typeof dirName !== 'string' || dirName.length === 0) {
-	  return false;
+		return false;
 	}
-  
+
 	if (illegalRe.test(dirName) || windowsReservedRe.test(dirName) || trailingRe.test(dirName) || !validNpmPackageRe.test(dirName)) {
-	  return false;
+		return false;
 	}
-  
+
 	return true;
 }
 
@@ -138,20 +137,19 @@ const validateOptions = (options: WizardOptions): boolean => {
 	}
 
 	return valid;
-}
+};
 
 async function runWizard(options: WizardOptions): Promise<void> {
 	if (!validateOptions(options)) {
 		return;
 	}
-	
+
 	printWelcomeMessage();
 
 	let dAppName = '';
 	if (options.name) {
-		dAppName = options.name
-	}
-	else {
+		dAppName = options.name;
+	} else {
 		const promptResult = await inquirer.prompt([
 			{
 				type: 'input',
@@ -163,19 +161,19 @@ async function runWizard(options: WizardOptions): Promise<void> {
 			}
 		]);
 
-		dAppName = promptResult.dAppName
-	}	
+		dAppName = promptResult.dAppName;
+	}
 
-	const appFramework = options.framework || await promptFramework();
-	let appConnectionType = options.ecosystem || await promptRpcIntegrations();
+	const appFramework = options.framework || (await promptFramework());
+	let appConnectionType = options.ecosystem || (await promptRpcIntegrations());
 	if (appConnectionType == RPCIntegrationType.EVM) {
-		appConnectionType = options.library || await promptEVMLibrary();
+		appConnectionType = options.library || (await promptEVMLibrary());
 	}
 
 	const templateName = `${appFramework}-${appConnectionType}-template`;
-	const templatePath = path.join(__dirname, 'templates', templateName)
-	const dst = path.join(process.cwd(), dAppName)
-	await fs.promises.cp(templatePath,  dst, {recursive: true})
+	const templatePath = path.join(__dirname, 'templates', templateName);
+	const dst = path.join(process.cwd(), dAppName);
+	await fs.promises.cp(templatePath, dst, { recursive: true });
 
 	console.log(`Project setup complete! Using template ${templateName}\n`);
 	console.log(`To start your app, run: \n > cd ${dAppName} \n > yarn \n > yarn dev\n`);
@@ -197,4 +195,3 @@ program
 	});
 
 program.parse(process.argv);
-

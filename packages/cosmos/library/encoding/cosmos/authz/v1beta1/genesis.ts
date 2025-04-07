@@ -45,7 +45,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.authz.v1beta1.Genesi
 
 	fromJSON(object: any): GenesisState {
 		return {
-			authorization: globalThis.Array.isArray(object?.authorization) ? object.authorization.map((e: any) => GrantAuthorization.fromJSON(e)) : [],
+			authorization: globalThis.Array.isArray(object?.authorization) ? object.authorization.map((e: any) => GrantAuthorization.fromJSON(e)) : []
 		};
 	},
 
@@ -64,7 +64,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.authz.v1beta1.Genesi
 		const message = createBaseGenesisState();
 		message.authorization = object.authorization?.map((e) => GrantAuthorization.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -75,6 +75,6 @@ export const aminoConverters = {
 	"/cosmos.authz.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

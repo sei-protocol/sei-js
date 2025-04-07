@@ -58,7 +58,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.epoch.
 	fromJSON(object: any): GenesisState {
 		return {
 			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-			epoch: isSet(object.epoch) ? Epoch.fromJSON(object.epoch) : undefined,
+			epoch: isSet(object.epoch) ? Epoch.fromJSON(object.epoch) : undefined
 		};
 	},
 
@@ -81,7 +81,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.epoch.
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		message.epoch = object.epoch !== undefined && object.epoch !== null ? Epoch.fromPartial(object.epoch) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -96,6 +96,6 @@ export const aminoConverters = {
 	"/seiprotocol.seichain.epoch.GenesisState": {
 		aminoType: "epoch/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

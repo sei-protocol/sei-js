@@ -9,7 +9,7 @@ export enum AuthorizationType {
 	AUTHORIZATION_TYPE_UNDELEGATE = 2,
 	/** AUTHORIZATION_TYPE_REDELEGATE - AUTHORIZATION_TYPE_REDELEGATE defines an authorization type for Msg/BeginRedelegate */
 	AUTHORIZATION_TYPE_REDELEGATE = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface StakeAuthorization {

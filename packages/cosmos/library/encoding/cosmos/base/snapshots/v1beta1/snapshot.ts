@@ -9,7 +9,7 @@ import type {
 	SnapshotIAVLItem as SnapshotIAVLItem_type,
 	SnapshotItem as SnapshotItem_type,
 	SnapshotStoreItem as SnapshotStoreItem_type,
-	Snapshot as Snapshot_type,
+	Snapshot as Snapshot_type
 } from "../../../../../types/cosmos/base/snapshots/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../../common";
@@ -101,7 +101,7 @@ export const Snapshot: MessageFns<Snapshot, "cosmos.base.snapshots.v1beta1.Snaps
 			format: isSet(object.format) ? globalThis.Number(object.format) : 0,
 			chunks: isSet(object.chunks) ? globalThis.Number(object.chunks) : 0,
 			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
-			metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined,
+			metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined
 		};
 	},
 
@@ -136,7 +136,7 @@ export const Snapshot: MessageFns<Snapshot, "cosmos.base.snapshots.v1beta1.Snaps
 		message.hash = object.hash ?? new Uint8Array(0);
 		message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
 		return message;
-	},
+	}
 };
 
 export const Metadata: MessageFns<Metadata, "cosmos.base.snapshots.v1beta1.Metadata"> = {
@@ -174,7 +174,7 @@ export const Metadata: MessageFns<Metadata, "cosmos.base.snapshots.v1beta1.Metad
 
 	fromJSON(object: any): Metadata {
 		return {
-			chunk_hashes: globalThis.Array.isArray(object?.chunk_hashes) ? object.chunk_hashes.map((e: any) => bytesFromBase64(e)) : [],
+			chunk_hashes: globalThis.Array.isArray(object?.chunk_hashes) ? object.chunk_hashes.map((e: any) => bytesFromBase64(e)) : []
 		};
 	},
 
@@ -193,7 +193,7 @@ export const Metadata: MessageFns<Metadata, "cosmos.base.snapshots.v1beta1.Metad
 		const message = createBaseMetadata();
 		message.chunk_hashes = object.chunk_hashes?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const SnapshotItem: MessageFns<SnapshotItem, "cosmos.base.snapshots.v1beta1.SnapshotItem"> = {
@@ -264,7 +264,7 @@ export const SnapshotItem: MessageFns<SnapshotItem, "cosmos.base.snapshots.v1bet
 			store: isSet(object.store) ? SnapshotStoreItem.fromJSON(object.store) : undefined,
 			iavl: isSet(object.iavl) ? SnapshotIAVLItem.fromJSON(object.iavl) : undefined,
 			extension: isSet(object.extension) ? SnapshotExtensionMeta.fromJSON(object.extension) : undefined,
-			extension_payload: isSet(object.extension_payload) ? SnapshotExtensionPayload.fromJSON(object.extension_payload) : undefined,
+			extension_payload: isSet(object.extension_payload) ? SnapshotExtensionPayload.fromJSON(object.extension_payload) : undefined
 		};
 	},
 
@@ -296,7 +296,7 @@ export const SnapshotItem: MessageFns<SnapshotItem, "cosmos.base.snapshots.v1bet
 		message.extension_payload =
 			object.extension_payload !== undefined && object.extension_payload !== null ? SnapshotExtensionPayload.fromPartial(object.extension_payload) : undefined;
 		return message;
-	},
+	}
 };
 
 export const SnapshotStoreItem: MessageFns<SnapshotStoreItem, "cosmos.base.snapshots.v1beta1.SnapshotStoreItem"> = {
@@ -351,7 +351,7 @@ export const SnapshotStoreItem: MessageFns<SnapshotStoreItem, "cosmos.base.snaps
 		const message = createBaseSnapshotStoreItem();
 		message.name = object.name ?? "";
 		return message;
-	},
+	}
 };
 
 export const SnapshotIAVLItem: MessageFns<SnapshotIAVLItem, "cosmos.base.snapshots.v1beta1.SnapshotIAVLItem"> = {
@@ -422,7 +422,7 @@ export const SnapshotIAVLItem: MessageFns<SnapshotIAVLItem, "cosmos.base.snapsho
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
 			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
 			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
+			height: isSet(object.height) ? globalThis.Number(object.height) : 0
 		};
 	},
 
@@ -453,7 +453,7 @@ export const SnapshotIAVLItem: MessageFns<SnapshotIAVLItem, "cosmos.base.snapsho
 		message.version = object.version ?? 0;
 		message.height = object.height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const SnapshotExtensionMeta: MessageFns<SnapshotExtensionMeta, "cosmos.base.snapshots.v1beta1.SnapshotExtensionMeta"> = {
@@ -502,7 +502,7 @@ export const SnapshotExtensionMeta: MessageFns<SnapshotExtensionMeta, "cosmos.ba
 	fromJSON(object: any): SnapshotExtensionMeta {
 		return {
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
-			format: isSet(object.format) ? globalThis.Number(object.format) : 0,
+			format: isSet(object.format) ? globalThis.Number(object.format) : 0
 		};
 	},
 
@@ -525,7 +525,7 @@ export const SnapshotExtensionMeta: MessageFns<SnapshotExtensionMeta, "cosmos.ba
 		message.name = object.name ?? "";
 		message.format = object.format ?? 0;
 		return message;
-	},
+	}
 };
 
 export const SnapshotExtensionPayload: MessageFns<SnapshotExtensionPayload, "cosmos.base.snapshots.v1beta1.SnapshotExtensionPayload"> = {
@@ -580,7 +580,7 @@ export const SnapshotExtensionPayload: MessageFns<SnapshotExtensionPayload, "cos
 		const message = createBaseSnapshotExtensionPayload();
 		message.payload = object.payload ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseSnapshot(): Snapshot {
@@ -655,36 +655,36 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.snapshots.v1beta1.Metadata", Metadata as never],
 	["/cosmos.base.snapshots.v1beta1.SnapshotItem", SnapshotItem as never],
 	["/cosmos.base.snapshots.v1beta1.SnapshotStoreItem", SnapshotStoreItem as never],
-	["/cosmos.base.snapshots.v1beta1.SnapshotIAVLItem", SnapshotIAVLItem as never],
+	["/cosmos.base.snapshots.v1beta1.SnapshotIAVLItem", SnapshotIAVLItem as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.snapshots.v1beta1.Snapshot": {
 		aminoType: "cosmos-sdk/Snapshot",
 		toAmino: (message: Snapshot) => ({ ...message }),
-		fromAmino: (object: Snapshot) => ({ ...object }),
+		fromAmino: (object: Snapshot) => ({ ...object })
 	},
 
 	"/cosmos.base.snapshots.v1beta1.Metadata": {
 		aminoType: "cosmos-sdk/Metadata",
 		toAmino: (message: Metadata) => ({ ...message }),
-		fromAmino: (object: Metadata) => ({ ...object }),
+		fromAmino: (object: Metadata) => ({ ...object })
 	},
 
 	"/cosmos.base.snapshots.v1beta1.SnapshotItem": {
 		aminoType: "cosmos-sdk/SnapshotItem",
 		toAmino: (message: SnapshotItem) => ({ ...message }),
-		fromAmino: (object: SnapshotItem) => ({ ...object }),
+		fromAmino: (object: SnapshotItem) => ({ ...object })
 	},
 
 	"/cosmos.base.snapshots.v1beta1.SnapshotStoreItem": {
 		aminoType: "cosmos-sdk/SnapshotStoreItem",
 		toAmino: (message: SnapshotStoreItem) => ({ ...message }),
-		fromAmino: (object: SnapshotStoreItem) => ({ ...object }),
+		fromAmino: (object: SnapshotStoreItem) => ({ ...object })
 	},
 
 	"/cosmos.base.snapshots.v1beta1.SnapshotIAVLItem": {
 		aminoType: "cosmos-sdk/SnapshotIAVLItem",
 		toAmino: (message: SnapshotIAVLItem) => ({ ...message }),
-		fromAmino: (object: SnapshotIAVLItem) => ({ ...object }),
-	},
+		fromAmino: (object: SnapshotIAVLItem) => ({ ...object })
+	}
 };

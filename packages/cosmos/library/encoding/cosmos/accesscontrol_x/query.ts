@@ -16,7 +16,7 @@ import type {
 	ResourceDependencyMappingFromMessageKeyRequest as ResourceDependencyMappingFromMessageKeyRequest_type,
 	ResourceDependencyMappingFromMessageKeyResponse as ResourceDependencyMappingFromMessageKeyResponse_type,
 	WasmDependencyMappingRequest as WasmDependencyMappingRequest_type,
-	WasmDependencyMappingResponse as WasmDependencyMappingResponse_type,
+	WasmDependencyMappingResponse as WasmDependencyMappingResponse_type
 } from "../../../types/cosmos/accesscontrol_x";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -70,7 +70,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.accessco
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.accesscontrol_x.v1beta1.QueryParamsResponse"> = {
@@ -125,7 +125,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.access
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const ResourceDependencyMappingFromMessageKeyRequest: MessageFns<
@@ -183,7 +183,7 @@ export const ResourceDependencyMappingFromMessageKeyRequest: MessageFns<
 		const message = createBaseResourceDependencyMappingFromMessageKeyRequest();
 		message.message_key = object.message_key ?? "";
 		return message;
-	},
+	}
 };
 
 export const ResourceDependencyMappingFromMessageKeyResponse: MessageFns<
@@ -224,7 +224,7 @@ export const ResourceDependencyMappingFromMessageKeyResponse: MessageFns<
 
 	fromJSON(object: any): ResourceDependencyMappingFromMessageKeyResponse {
 		return {
-			message_dependency_mapping: isSet(object.message_dependency_mapping) ? MessageDependencyMapping.fromJSON(object.message_dependency_mapping) : undefined,
+			message_dependency_mapping: isSet(object.message_dependency_mapping) ? MessageDependencyMapping.fromJSON(object.message_dependency_mapping) : undefined
 		};
 	},
 
@@ -246,7 +246,7 @@ export const ResourceDependencyMappingFromMessageKeyResponse: MessageFns<
 				? MessageDependencyMapping.fromPartial(object.message_dependency_mapping)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const WasmDependencyMappingRequest: MessageFns<WasmDependencyMappingRequest, "cosmos.accesscontrol_x.v1beta1.WasmDependencyMappingRequest"> = {
@@ -301,7 +301,7 @@ export const WasmDependencyMappingRequest: MessageFns<WasmDependencyMappingReque
 		const message = createBaseWasmDependencyMappingRequest();
 		message.contract_address = object.contract_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const WasmDependencyMappingResponse: MessageFns<WasmDependencyMappingResponse, "cosmos.accesscontrol_x.v1beta1.WasmDependencyMappingResponse"> = {
@@ -339,7 +339,7 @@ export const WasmDependencyMappingResponse: MessageFns<WasmDependencyMappingResp
 
 	fromJSON(object: any): WasmDependencyMappingResponse {
 		return {
-			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined,
+			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined
 		};
 	},
 
@@ -361,7 +361,7 @@ export const WasmDependencyMappingResponse: MessageFns<WasmDependencyMappingResp
 				? WasmDependencyMapping.fromPartial(object.wasm_dependency_mapping)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const ListResourceDependencyMappingRequest: MessageFns<
@@ -405,7 +405,7 @@ export const ListResourceDependencyMappingRequest: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<ListResourceDependencyMappingRequest>, I>>(_: I): ListResourceDependencyMappingRequest {
 		const message = createBaseListResourceDependencyMappingRequest();
 		return message;
-	},
+	}
 };
 
 export const ListResourceDependencyMappingResponse: MessageFns<
@@ -448,7 +448,7 @@ export const ListResourceDependencyMappingResponse: MessageFns<
 		return {
 			message_dependency_mapping_list: globalThis.Array.isArray(object?.message_dependency_mapping_list)
 				? object.message_dependency_mapping_list.map((e: any) => MessageDependencyMapping.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -467,7 +467,7 @@ export const ListResourceDependencyMappingResponse: MessageFns<
 		const message = createBaseListResourceDependencyMappingResponse();
 		message.message_dependency_mapping_list = object.message_dependency_mapping_list?.map((e) => MessageDependencyMapping.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ListWasmDependencyMappingRequest: MessageFns<ListWasmDependencyMappingRequest, "cosmos.accesscontrol_x.v1beta1.ListWasmDependencyMappingRequest"> =
@@ -509,7 +509,7 @@ export const ListWasmDependencyMappingRequest: MessageFns<ListWasmDependencyMapp
 		fromPartial<I extends Exact<DeepPartial<ListWasmDependencyMappingRequest>, I>>(_: I): ListWasmDependencyMappingRequest {
 			const message = createBaseListWasmDependencyMappingRequest();
 			return message;
-		},
+		}
 	};
 
 export const ListWasmDependencyMappingResponse: MessageFns<
@@ -552,7 +552,7 @@ export const ListWasmDependencyMappingResponse: MessageFns<
 		return {
 			wasm_dependency_mapping_list: globalThis.Array.isArray(object?.wasm_dependency_mapping_list)
 				? object.wasm_dependency_mapping_list.map((e: any) => WasmDependencyMapping.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -571,7 +571,7 @@ export const ListWasmDependencyMappingResponse: MessageFns<
 		const message = createBaseListWasmDependencyMappingResponse();
 		message.wasm_dependency_mapping_list = object.wasm_dependency_mapping_list?.map((e) => WasmDependencyMapping.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -622,6 +622,6 @@ export const aminoConverters = {
 	"/cosmos.accesscontrol_x.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
-	},
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
+	}
 };

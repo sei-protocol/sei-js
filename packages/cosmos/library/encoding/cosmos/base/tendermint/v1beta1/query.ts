@@ -27,7 +27,7 @@ import type {
 	GetValidatorSetByHeightResponse as GetValidatorSetByHeightResponse_type,
 	Module as Module_type,
 	Validator as Validator_type,
-	VersionInfo as VersionInfo_type,
+	VersionInfo as VersionInfo_type
 } from "../../../../../types/cosmos/base/tendermint/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../../common";
@@ -94,7 +94,7 @@ export const GetValidatorSetByHeightRequest: MessageFns<GetValidatorSetByHeightR
 	fromJSON(object: any): GetValidatorSetByHeightRequest {
 		return {
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -117,7 +117,7 @@ export const GetValidatorSetByHeightRequest: MessageFns<GetValidatorSetByHeightR
 		message.height = object.height ?? 0;
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetValidatorSetByHeightResponse: MessageFns<GetValidatorSetByHeightResponse, "cosmos.base.tendermint.v1beta1.GetValidatorSetByHeightResponse"> = {
@@ -177,7 +177,7 @@ export const GetValidatorSetByHeightResponse: MessageFns<GetValidatorSetByHeight
 		return {
 			block_height: isSet(object.block_height) ? globalThis.Number(object.block_height) : 0,
 			validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e: any) => Validator.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -204,7 +204,7 @@ export const GetValidatorSetByHeightResponse: MessageFns<GetValidatorSetByHeight
 		message.validators = object.validators?.map((e) => Validator.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetLatestValidatorSetRequest: MessageFns<GetLatestValidatorSetRequest, "cosmos.base.tendermint.v1beta1.GetLatestValidatorSetRequest"> = {
@@ -259,7 +259,7 @@ export const GetLatestValidatorSetRequest: MessageFns<GetLatestValidatorSetReque
 		const message = createBaseGetLatestValidatorSetRequest();
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetLatestValidatorSetResponse: MessageFns<GetLatestValidatorSetResponse, "cosmos.base.tendermint.v1beta1.GetLatestValidatorSetResponse"> = {
@@ -319,7 +319,7 @@ export const GetLatestValidatorSetResponse: MessageFns<GetLatestValidatorSetResp
 		return {
 			block_height: isSet(object.block_height) ? globalThis.Number(object.block_height) : 0,
 			validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e: any) => Validator.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -346,7 +346,7 @@ export const GetLatestValidatorSetResponse: MessageFns<GetLatestValidatorSetResp
 		message.validators = object.validators?.map((e) => Validator.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const Validator: MessageFns<Validator, "cosmos.base.tendermint.v1beta1.Validator"> = {
@@ -417,7 +417,7 @@ export const Validator: MessageFns<Validator, "cosmos.base.tendermint.v1beta1.Va
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
 			pub_key: isSet(object.pub_key) ? Any.fromJSON(object.pub_key) : undefined,
 			voting_power: isSet(object.voting_power) ? globalThis.Number(object.voting_power) : 0,
-			proposer_priority: isSet(object.proposer_priority) ? globalThis.Number(object.proposer_priority) : 0,
+			proposer_priority: isSet(object.proposer_priority) ? globalThis.Number(object.proposer_priority) : 0
 		};
 	},
 
@@ -448,7 +448,7 @@ export const Validator: MessageFns<Validator, "cosmos.base.tendermint.v1beta1.Va
 		message.voting_power = object.voting_power ?? 0;
 		message.proposer_priority = object.proposer_priority ?? 0;
 		return message;
-	},
+	}
 };
 
 export const GetBlockByHeightRequest: MessageFns<GetBlockByHeightRequest, "cosmos.base.tendermint.v1beta1.GetBlockByHeightRequest"> = {
@@ -503,7 +503,7 @@ export const GetBlockByHeightRequest: MessageFns<GetBlockByHeightRequest, "cosmo
 		const message = createBaseGetBlockByHeightRequest();
 		message.height = object.height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const GetBlockByHeightResponse: MessageFns<GetBlockByHeightResponse, "cosmos.base.tendermint.v1beta1.GetBlockByHeightResponse"> = {
@@ -552,7 +552,7 @@ export const GetBlockByHeightResponse: MessageFns<GetBlockByHeightResponse, "cos
 	fromJSON(object: any): GetBlockByHeightResponse {
 		return {
 			block_id: isSet(object.block_id) ? BlockID.fromJSON(object.block_id) : undefined,
-			block: isSet(object.block) ? Block.fromJSON(object.block) : undefined,
+			block: isSet(object.block) ? Block.fromJSON(object.block) : undefined
 		};
 	},
 
@@ -575,7 +575,7 @@ export const GetBlockByHeightResponse: MessageFns<GetBlockByHeightResponse, "cos
 		message.block_id = object.block_id !== undefined && object.block_id !== null ? BlockID.fromPartial(object.block_id) : undefined;
 		message.block = object.block !== undefined && object.block !== null ? Block.fromPartial(object.block) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetLatestBlockRequest: MessageFns<GetLatestBlockRequest, "cosmos.base.tendermint.v1beta1.GetLatestBlockRequest"> = {
@@ -616,7 +616,7 @@ export const GetLatestBlockRequest: MessageFns<GetLatestBlockRequest, "cosmos.ba
 	fromPartial<I extends Exact<DeepPartial<GetLatestBlockRequest>, I>>(_: I): GetLatestBlockRequest {
 		const message = createBaseGetLatestBlockRequest();
 		return message;
-	},
+	}
 };
 
 export const GetLatestBlockResponse: MessageFns<GetLatestBlockResponse, "cosmos.base.tendermint.v1beta1.GetLatestBlockResponse"> = {
@@ -665,7 +665,7 @@ export const GetLatestBlockResponse: MessageFns<GetLatestBlockResponse, "cosmos.
 	fromJSON(object: any): GetLatestBlockResponse {
 		return {
 			block_id: isSet(object.block_id) ? BlockID.fromJSON(object.block_id) : undefined,
-			block: isSet(object.block) ? Block.fromJSON(object.block) : undefined,
+			block: isSet(object.block) ? Block.fromJSON(object.block) : undefined
 		};
 	},
 
@@ -688,7 +688,7 @@ export const GetLatestBlockResponse: MessageFns<GetLatestBlockResponse, "cosmos.
 		message.block_id = object.block_id !== undefined && object.block_id !== null ? BlockID.fromPartial(object.block_id) : undefined;
 		message.block = object.block !== undefined && object.block !== null ? Block.fromPartial(object.block) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetSyncingRequest: MessageFns<GetSyncingRequest, "cosmos.base.tendermint.v1beta1.GetSyncingRequest"> = {
@@ -729,7 +729,7 @@ export const GetSyncingRequest: MessageFns<GetSyncingRequest, "cosmos.base.tende
 	fromPartial<I extends Exact<DeepPartial<GetSyncingRequest>, I>>(_: I): GetSyncingRequest {
 		const message = createBaseGetSyncingRequest();
 		return message;
-	},
+	}
 };
 
 export const GetSyncingResponse: MessageFns<GetSyncingResponse, "cosmos.base.tendermint.v1beta1.GetSyncingResponse"> = {
@@ -784,7 +784,7 @@ export const GetSyncingResponse: MessageFns<GetSyncingResponse, "cosmos.base.ten
 		const message = createBaseGetSyncingResponse();
 		message.syncing = object.syncing ?? false;
 		return message;
-	},
+	}
 };
 
 export const GetNodeInfoRequest: MessageFns<GetNodeInfoRequest, "cosmos.base.tendermint.v1beta1.GetNodeInfoRequest"> = {
@@ -825,7 +825,7 @@ export const GetNodeInfoRequest: MessageFns<GetNodeInfoRequest, "cosmos.base.ten
 	fromPartial<I extends Exact<DeepPartial<GetNodeInfoRequest>, I>>(_: I): GetNodeInfoRequest {
 		const message = createBaseGetNodeInfoRequest();
 		return message;
-	},
+	}
 };
 
 export const GetNodeInfoResponse: MessageFns<GetNodeInfoResponse, "cosmos.base.tendermint.v1beta1.GetNodeInfoResponse"> = {
@@ -874,7 +874,7 @@ export const GetNodeInfoResponse: MessageFns<GetNodeInfoResponse, "cosmos.base.t
 	fromJSON(object: any): GetNodeInfoResponse {
 		return {
 			default_node_info: isSet(object.default_node_info) ? NodeInfo.fromJSON(object.default_node_info) : undefined,
-			application_version: isSet(object.application_version) ? VersionInfo.fromJSON(object.application_version) : undefined,
+			application_version: isSet(object.application_version) ? VersionInfo.fromJSON(object.application_version) : undefined
 		};
 	},
 
@@ -899,7 +899,7 @@ export const GetNodeInfoResponse: MessageFns<GetNodeInfoResponse, "cosmos.base.t
 		message.application_version =
 			object.application_version !== undefined && object.application_version !== null ? VersionInfo.fromPartial(object.application_version) : undefined;
 		return message;
-	},
+	}
 };
 
 export const VersionInfo: MessageFns<VersionInfo, "cosmos.base.tendermint.v1beta1.VersionInfo"> = {
@@ -1014,7 +1014,7 @@ export const VersionInfo: MessageFns<VersionInfo, "cosmos.base.tendermint.v1beta
 			build_tags: isSet(object.build_tags) ? globalThis.String(object.build_tags) : "",
 			go_version: isSet(object.go_version) ? globalThis.String(object.go_version) : "",
 			build_deps: globalThis.Array.isArray(object?.build_deps) ? object.build_deps.map((e: any) => Module.fromJSON(e)) : [],
-			cosmos_sdk_version: isSet(object.cosmos_sdk_version) ? globalThis.String(object.cosmos_sdk_version) : "",
+			cosmos_sdk_version: isSet(object.cosmos_sdk_version) ? globalThis.String(object.cosmos_sdk_version) : ""
 		};
 	},
 
@@ -1061,7 +1061,7 @@ export const VersionInfo: MessageFns<VersionInfo, "cosmos.base.tendermint.v1beta
 		message.build_deps = object.build_deps?.map((e) => Module.fromPartial(e)) || [];
 		message.cosmos_sdk_version = object.cosmos_sdk_version ?? "";
 		return message;
-	},
+	}
 };
 
 export const Module: MessageFns<Module, "cosmos.base.tendermint.v1beta1.Module"> = {
@@ -1121,7 +1121,7 @@ export const Module: MessageFns<Module, "cosmos.base.tendermint.v1beta1.Module">
 		return {
 			path: isSet(object.path) ? globalThis.String(object.path) : "",
 			version: isSet(object.version) ? globalThis.String(object.version) : "",
-			sum: isSet(object.sum) ? globalThis.String(object.sum) : "",
+			sum: isSet(object.sum) ? globalThis.String(object.sum) : ""
 		};
 	},
 
@@ -1148,7 +1148,7 @@ export const Module: MessageFns<Module, "cosmos.base.tendermint.v1beta1.Module">
 		message.version = object.version ?? "";
 		message.sum = object.sum ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseGetValidatorSetByHeightRequest(): GetValidatorSetByHeightRequest {
@@ -1212,7 +1212,7 @@ function createBaseVersionInfo(): VersionInfo {
 		build_tags: "",
 		go_version: "",
 		build_deps: [],
-		cosmos_sdk_version: "",
+		cosmos_sdk_version: ""
 	};
 }
 
@@ -1240,42 +1240,42 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.tendermint.v1beta1.GetSyncingResponse", GetSyncingResponse as never],
 	["/cosmos.base.tendermint.v1beta1.GetNodeInfoRequest", GetNodeInfoRequest as never],
 	["/cosmos.base.tendermint.v1beta1.VersionInfo", VersionInfo as never],
-	["/cosmos.base.tendermint.v1beta1.Module", Module as never],
+	["/cosmos.base.tendermint.v1beta1.Module", Module as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.tendermint.v1beta1.Validator": {
 		aminoType: "cosmos-sdk/Validator",
 		toAmino: (message: Validator) => ({ ...message }),
-		fromAmino: (object: Validator) => ({ ...object }),
+		fromAmino: (object: Validator) => ({ ...object })
 	},
 
 	"/cosmos.base.tendermint.v1beta1.GetSyncingRequest": {
 		aminoType: "cosmos-sdk/GetSyncingRequest",
 		toAmino: (message: GetSyncingRequest) => ({ ...message }),
-		fromAmino: (object: GetSyncingRequest) => ({ ...object }),
+		fromAmino: (object: GetSyncingRequest) => ({ ...object })
 	},
 
 	"/cosmos.base.tendermint.v1beta1.GetSyncingResponse": {
 		aminoType: "cosmos-sdk/GetSyncingResponse",
 		toAmino: (message: GetSyncingResponse) => ({ ...message }),
-		fromAmino: (object: GetSyncingResponse) => ({ ...object }),
+		fromAmino: (object: GetSyncingResponse) => ({ ...object })
 	},
 
 	"/cosmos.base.tendermint.v1beta1.GetNodeInfoRequest": {
 		aminoType: "cosmos-sdk/GetNodeInfoRequest",
 		toAmino: (message: GetNodeInfoRequest) => ({ ...message }),
-		fromAmino: (object: GetNodeInfoRequest) => ({ ...object }),
+		fromAmino: (object: GetNodeInfoRequest) => ({ ...object })
 	},
 
 	"/cosmos.base.tendermint.v1beta1.VersionInfo": {
 		aminoType: "cosmos-sdk/VersionInfo",
 		toAmino: (message: VersionInfo) => ({ ...message }),
-		fromAmino: (object: VersionInfo) => ({ ...object }),
+		fromAmino: (object: VersionInfo) => ({ ...object })
 	},
 
 	"/cosmos.base.tendermint.v1beta1.Module": {
 		aminoType: "cosmos-sdk/Module",
 		toAmino: (message: Module) => ({ ...message }),
-		fromAmino: (object: Module) => ({ ...object }),
-	},
+		fromAmino: (object: Module) => ({ ...object })
+	}
 };

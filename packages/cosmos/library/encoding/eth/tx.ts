@@ -10,7 +10,7 @@ import type {
 	BlobTx as BlobTx_type,
 	DynamicFeeTx as DynamicFeeTx_type,
 	ExtensionOptionsEthereumTx as ExtensionOptionsEthereumTx_type,
-	LegacyTx as LegacyTx_type,
+	LegacyTx as LegacyTx_type
 } from "../../types/eth";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -70,7 +70,7 @@ export const AccessTuple: MessageFns<AccessTuple, "seiprotocol.seichain.eth.Acce
 	fromJSON(object: any): AccessTuple {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			storage_keys: globalThis.Array.isArray(object?.storage_keys) ? object.storage_keys.map((e: any) => globalThis.String(e)) : [],
+			storage_keys: globalThis.Array.isArray(object?.storage_keys) ? object.storage_keys.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -93,7 +93,7 @@ export const AccessTuple: MessageFns<AccessTuple, "seiprotocol.seichain.eth.Acce
 		message.address = object.address ?? "";
 		message.storage_keys = object.storage_keys?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const AssociateTx: MessageFns<AssociateTx, "seiprotocol.seichain.eth.AssociateTx"> = {
@@ -164,7 +164,7 @@ export const AssociateTx: MessageFns<AssociateTx, "seiprotocol.seichain.eth.Asso
 			v: isSet(object.v) ? bytesFromBase64(object.v) : new Uint8Array(0),
 			r: isSet(object.r) ? bytesFromBase64(object.r) : new Uint8Array(0),
 			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0),
-			custom_message: isSet(object.custom_message) ? globalThis.String(object.custom_message) : "",
+			custom_message: isSet(object.custom_message) ? globalThis.String(object.custom_message) : ""
 		};
 	},
 
@@ -195,7 +195,7 @@ export const AssociateTx: MessageFns<AssociateTx, "seiprotocol.seichain.eth.Asso
 		message.s = object.s ?? new Uint8Array(0);
 		message.custom_message = object.custom_message ?? "";
 		return message;
-	},
+	}
 };
 
 export const LegacyTx: MessageFns<LegacyTx, "seiprotocol.seichain.eth.LegacyTx"> = {
@@ -321,7 +321,7 @@ export const LegacyTx: MessageFns<LegacyTx, "seiprotocol.seichain.eth.LegacyTx">
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
 			v: isSet(object.v) ? bytesFromBase64(object.v) : new Uint8Array(0),
 			r: isSet(object.r) ? bytesFromBase64(object.r) : new Uint8Array(0),
-			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0),
+			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0)
 		};
 	},
 
@@ -372,7 +372,7 @@ export const LegacyTx: MessageFns<LegacyTx, "seiprotocol.seichain.eth.LegacyTx">
 		message.r = object.r ?? new Uint8Array(0);
 		message.s = object.s ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const AccessListTx: MessageFns<AccessListTx, "seiprotocol.seichain.eth.AccessListTx"> = {
@@ -520,7 +520,7 @@ export const AccessListTx: MessageFns<AccessListTx, "seiprotocol.seichain.eth.Ac
 			accesses: globalThis.Array.isArray(object?.accesses) ? object.accesses.map((e: any) => AccessTuple.fromJSON(e)) : [],
 			v: isSet(object.v) ? bytesFromBase64(object.v) : new Uint8Array(0),
 			r: isSet(object.r) ? bytesFromBase64(object.r) : new Uint8Array(0),
-			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0),
+			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0)
 		};
 	},
 
@@ -579,7 +579,7 @@ export const AccessListTx: MessageFns<AccessListTx, "seiprotocol.seichain.eth.Ac
 		message.r = object.r ?? new Uint8Array(0);
 		message.s = object.s ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const DynamicFeeTx: MessageFns<DynamicFeeTx, "seiprotocol.seichain.eth.DynamicFeeTx"> = {
@@ -738,7 +738,7 @@ export const DynamicFeeTx: MessageFns<DynamicFeeTx, "seiprotocol.seichain.eth.Dy
 			accesses: globalThis.Array.isArray(object?.accesses) ? object.accesses.map((e: any) => AccessTuple.fromJSON(e)) : [],
 			v: isSet(object.v) ? bytesFromBase64(object.v) : new Uint8Array(0),
 			r: isSet(object.r) ? bytesFromBase64(object.r) : new Uint8Array(0),
-			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0),
+			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0)
 		};
 	},
 
@@ -801,7 +801,7 @@ export const DynamicFeeTx: MessageFns<DynamicFeeTx, "seiprotocol.seichain.eth.Dy
 		message.r = object.r ?? new Uint8Array(0);
 		message.s = object.s ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const BlobTx: MessageFns<BlobTx, "seiprotocol.seichain.eth.BlobTx"> = {
@@ -993,7 +993,7 @@ export const BlobTx: MessageFns<BlobTx, "seiprotocol.seichain.eth.BlobTx"> = {
 			sidecar: isSet(object.sidecar) ? BlobTxSidecar.fromJSON(object.sidecar) : undefined,
 			v: isSet(object.v) ? bytesFromBase64(object.v) : new Uint8Array(0),
 			r: isSet(object.r) ? bytesFromBase64(object.r) : new Uint8Array(0),
-			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0),
+			s: isSet(object.s) ? bytesFromBase64(object.s) : new Uint8Array(0)
 		};
 	},
 
@@ -1068,7 +1068,7 @@ export const BlobTx: MessageFns<BlobTx, "seiprotocol.seichain.eth.BlobTx"> = {
 		message.r = object.r ?? new Uint8Array(0);
 		message.s = object.s ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const BlobTxSidecar: MessageFns<BlobTxSidecar, "seiprotocol.seichain.eth.BlobTxSidecar"> = {
@@ -1128,7 +1128,7 @@ export const BlobTxSidecar: MessageFns<BlobTxSidecar, "seiprotocol.seichain.eth.
 		return {
 			blobs: globalThis.Array.isArray(object?.blobs) ? object.blobs.map((e: any) => bytesFromBase64(e)) : [],
 			commitments: globalThis.Array.isArray(object?.commitments) ? object.commitments.map((e: any) => bytesFromBase64(e)) : [],
-			proofs: globalThis.Array.isArray(object?.proofs) ? object.proofs.map((e: any) => bytesFromBase64(e)) : [],
+			proofs: globalThis.Array.isArray(object?.proofs) ? object.proofs.map((e: any) => bytesFromBase64(e)) : []
 		};
 	},
 
@@ -1155,7 +1155,7 @@ export const BlobTxSidecar: MessageFns<BlobTxSidecar, "seiprotocol.seichain.eth.
 		message.commitments = object.commitments?.map((e) => e) || [];
 		message.proofs = object.proofs?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const ExtensionOptionsEthereumTx: MessageFns<ExtensionOptionsEthereumTx, "seiprotocol.seichain.eth.ExtensionOptionsEthereumTx"> = {
@@ -1196,7 +1196,7 @@ export const ExtensionOptionsEthereumTx: MessageFns<ExtensionOptionsEthereumTx, 
 	fromPartial<I extends Exact<DeepPartial<ExtensionOptionsEthereumTx>, I>>(_: I): ExtensionOptionsEthereumTx {
 		const message = createBaseExtensionOptionsEthereumTx();
 		return message;
-	},
+	}
 };
 
 function createBaseAccessTuple(): AccessTuple {
@@ -1217,7 +1217,7 @@ function createBaseLegacyTx(): LegacyTx {
 		data: new Uint8Array(0),
 		v: new Uint8Array(0),
 		r: new Uint8Array(0),
-		s: new Uint8Array(0),
+		s: new Uint8Array(0)
 	};
 }
 
@@ -1233,7 +1233,7 @@ function createBaseAccessListTx(): AccessListTx {
 		accesses: [],
 		v: new Uint8Array(0),
 		r: new Uint8Array(0),
-		s: new Uint8Array(0),
+		s: new Uint8Array(0)
 	};
 }
 
@@ -1250,7 +1250,7 @@ function createBaseDynamicFeeTx(): DynamicFeeTx {
 		accesses: [],
 		v: new Uint8Array(0),
 		r: new Uint8Array(0),
-		s: new Uint8Array(0),
+		s: new Uint8Array(0)
 	};
 }
 
@@ -1270,7 +1270,7 @@ function createBaseBlobTx(): BlobTx {
 		sidecar: undefined,
 		v: new Uint8Array(0),
 		r: new Uint8Array(0),
-		s: new Uint8Array(0),
+		s: new Uint8Array(0)
 	};
 }
 
@@ -1328,48 +1328,48 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.eth.AccessListTx", AccessListTx as never],
 	["/seiprotocol.seichain.eth.DynamicFeeTx", DynamicFeeTx as never],
 	["/seiprotocol.seichain.eth.BlobTx", BlobTx as never],
-	["/seiprotocol.seichain.eth.BlobTxSidecar", BlobTxSidecar as never],
+	["/seiprotocol.seichain.eth.BlobTxSidecar", BlobTxSidecar as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.eth.AccessTuple": {
 		aminoType: "eth/AccessTuple",
 		toAmino: (message: AccessTuple) => ({ ...message }),
-		fromAmino: (object: AccessTuple) => ({ ...object }),
+		fromAmino: (object: AccessTuple) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.eth.AssociateTx": {
 		aminoType: "eth/AssociateTx",
 		toAmino: (message: AssociateTx) => ({ ...message }),
-		fromAmino: (object: AssociateTx) => ({ ...object }),
+		fromAmino: (object: AssociateTx) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.eth.LegacyTx": {
 		aminoType: "eth/LegacyTx",
 		toAmino: (message: LegacyTx) => ({ ...message }),
-		fromAmino: (object: LegacyTx) => ({ ...object }),
+		fromAmino: (object: LegacyTx) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.eth.AccessListTx": {
 		aminoType: "eth/AccessListTx",
 		toAmino: (message: AccessListTx) => ({ ...message }),
-		fromAmino: (object: AccessListTx) => ({ ...object }),
+		fromAmino: (object: AccessListTx) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.eth.DynamicFeeTx": {
 		aminoType: "eth/DynamicFeeTx",
 		toAmino: (message: DynamicFeeTx) => ({ ...message }),
-		fromAmino: (object: DynamicFeeTx) => ({ ...object }),
+		fromAmino: (object: DynamicFeeTx) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.eth.BlobTx": {
 		aminoType: "eth/BlobTx",
 		toAmino: (message: BlobTx) => ({ ...message }),
-		fromAmino: (object: BlobTx) => ({ ...object }),
+		fromAmino: (object: BlobTx) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.eth.BlobTxSidecar": {
 		aminoType: "eth/BlobTxSidecar",
 		toAmino: (message: BlobTxSidecar) => ({ ...message }),
-		fromAmino: (object: BlobTxSidecar) => ({ ...object }),
-	},
+		fromAmino: (object: BlobTxSidecar) => ({ ...object })
+	}
 };

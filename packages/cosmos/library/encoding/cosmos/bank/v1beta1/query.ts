@@ -24,7 +24,7 @@ import type {
 	QuerySupplyOfRequest as QuerySupplyOfRequest_type,
 	QuerySupplyOfResponse as QuerySupplyOfResponse_type,
 	QueryTotalSupplyRequest as QueryTotalSupplyRequest_type,
-	QueryTotalSupplyResponse as QueryTotalSupplyResponse_type,
+	QueryTotalSupplyResponse as QueryTotalSupplyResponse_type
 } from "../../../../types/cosmos/bank/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -92,7 +92,7 @@ export const QueryBalanceRequest: MessageFns<QueryBalanceRequest, "cosmos.bank.v
 	fromJSON(object: any): QueryBalanceRequest {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
+			denom: isSet(object.denom) ? globalThis.String(object.denom) : ""
 		};
 	},
 
@@ -115,7 +115,7 @@ export const QueryBalanceRequest: MessageFns<QueryBalanceRequest, "cosmos.bank.v
 		message.address = object.address ?? "";
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryBalanceResponse: MessageFns<QueryBalanceResponse, "cosmos.bank.v1beta1.QueryBalanceResponse"> = {
@@ -170,7 +170,7 @@ export const QueryBalanceResponse: MessageFns<QueryBalanceResponse, "cosmos.bank
 		const message = createBaseQueryBalanceResponse();
 		message.balance = object.balance !== undefined && object.balance !== null ? Coin.fromPartial(object.balance) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllBalancesRequest: MessageFns<QueryAllBalancesRequest, "cosmos.bank.v1beta1.QueryAllBalancesRequest"> = {
@@ -219,7 +219,7 @@ export const QueryAllBalancesRequest: MessageFns<QueryAllBalancesRequest, "cosmo
 	fromJSON(object: any): QueryAllBalancesRequest {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -242,7 +242,7 @@ export const QueryAllBalancesRequest: MessageFns<QueryAllBalancesRequest, "cosmo
 		message.address = object.address ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllBalancesResponse: MessageFns<QueryAllBalancesResponse, "cosmos.bank.v1beta1.QueryAllBalancesResponse"> = {
@@ -291,7 +291,7 @@ export const QueryAllBalancesResponse: MessageFns<QueryAllBalancesResponse, "cos
 	fromJSON(object: any): QueryAllBalancesResponse {
 		return {
 			balances: globalThis.Array.isArray(object?.balances) ? object.balances.map((e: any) => Coin.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -314,7 +314,7 @@ export const QueryAllBalancesResponse: MessageFns<QueryAllBalancesResponse, "cos
 		message.balances = object.balances?.map((e) => Coin.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QuerySpendableBalancesRequest: MessageFns<QuerySpendableBalancesRequest, "cosmos.bank.v1beta1.QuerySpendableBalancesRequest"> = {
@@ -363,7 +363,7 @@ export const QuerySpendableBalancesRequest: MessageFns<QuerySpendableBalancesReq
 	fromJSON(object: any): QuerySpendableBalancesRequest {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -386,7 +386,7 @@ export const QuerySpendableBalancesRequest: MessageFns<QuerySpendableBalancesReq
 		message.address = object.address ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QuerySpendableBalancesResponse: MessageFns<QuerySpendableBalancesResponse, "cosmos.bank.v1beta1.QuerySpendableBalancesResponse"> = {
@@ -435,7 +435,7 @@ export const QuerySpendableBalancesResponse: MessageFns<QuerySpendableBalancesRe
 	fromJSON(object: any): QuerySpendableBalancesResponse {
 		return {
 			balances: globalThis.Array.isArray(object?.balances) ? object.balances.map((e: any) => Coin.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -458,7 +458,7 @@ export const QuerySpendableBalancesResponse: MessageFns<QuerySpendableBalancesRe
 		message.balances = object.balances?.map((e) => Coin.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryTotalSupplyRequest: MessageFns<QueryTotalSupplyRequest, "cosmos.bank.v1beta1.QueryTotalSupplyRequest"> = {
@@ -513,7 +513,7 @@ export const QueryTotalSupplyRequest: MessageFns<QueryTotalSupplyRequest, "cosmo
 		const message = createBaseQueryTotalSupplyRequest();
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryTotalSupplyResponse: MessageFns<QueryTotalSupplyResponse, "cosmos.bank.v1beta1.QueryTotalSupplyResponse"> = {
@@ -562,7 +562,7 @@ export const QueryTotalSupplyResponse: MessageFns<QueryTotalSupplyResponse, "cos
 	fromJSON(object: any): QueryTotalSupplyResponse {
 		return {
 			supply: globalThis.Array.isArray(object?.supply) ? object.supply.map((e: any) => Coin.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -585,7 +585,7 @@ export const QueryTotalSupplyResponse: MessageFns<QueryTotalSupplyResponse, "cos
 		message.supply = object.supply?.map((e) => Coin.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QuerySupplyOfRequest: MessageFns<QuerySupplyOfRequest, "cosmos.bank.v1beta1.QuerySupplyOfRequest"> = {
@@ -640,7 +640,7 @@ export const QuerySupplyOfRequest: MessageFns<QuerySupplyOfRequest, "cosmos.bank
 		const message = createBaseQuerySupplyOfRequest();
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const QuerySupplyOfResponse: MessageFns<QuerySupplyOfResponse, "cosmos.bank.v1beta1.QuerySupplyOfResponse"> = {
@@ -695,7 +695,7 @@ export const QuerySupplyOfResponse: MessageFns<QuerySupplyOfResponse, "cosmos.ba
 		const message = createBaseQuerySupplyOfResponse();
 		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.bank.v1beta1.QueryParamsRequest"> = {
@@ -736,7 +736,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.bank.v1b
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.bank.v1beta1.QueryParamsResponse"> = {
@@ -791,7 +791,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.bank.v
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDenomsMetadataRequest: MessageFns<QueryDenomsMetadataRequest, "cosmos.bank.v1beta1.QueryDenomsMetadataRequest"> = {
@@ -846,7 +846,7 @@ export const QueryDenomsMetadataRequest: MessageFns<QueryDenomsMetadataRequest, 
 		const message = createBaseQueryDenomsMetadataRequest();
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDenomsMetadataResponse: MessageFns<QueryDenomsMetadataResponse, "cosmos.bank.v1beta1.QueryDenomsMetadataResponse"> = {
@@ -895,7 +895,7 @@ export const QueryDenomsMetadataResponse: MessageFns<QueryDenomsMetadataResponse
 	fromJSON(object: any): QueryDenomsMetadataResponse {
 		return {
 			metadatas: globalThis.Array.isArray(object?.metadatas) ? object.metadatas.map((e: any) => Metadata.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -918,7 +918,7 @@ export const QueryDenomsMetadataResponse: MessageFns<QueryDenomsMetadataResponse
 		message.metadatas = object.metadatas?.map((e) => Metadata.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDenomMetadataRequest: MessageFns<QueryDenomMetadataRequest, "cosmos.bank.v1beta1.QueryDenomMetadataRequest"> = {
@@ -973,7 +973,7 @@ export const QueryDenomMetadataRequest: MessageFns<QueryDenomMetadataRequest, "c
 		const message = createBaseQueryDenomMetadataRequest();
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDenomMetadataResponse: MessageFns<QueryDenomMetadataResponse, "cosmos.bank.v1beta1.QueryDenomMetadataResponse"> = {
@@ -1028,7 +1028,7 @@ export const QueryDenomMetadataResponse: MessageFns<QueryDenomMetadataResponse, 
 		const message = createBaseQueryDenomMetadataResponse();
 		message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryBalanceRequest(): QueryBalanceRequest {
@@ -1104,42 +1104,42 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.bank.v1beta1.QuerySupplyOfRequest", QuerySupplyOfRequest as never],
 	["/cosmos.bank.v1beta1.QuerySupplyOfResponse", QuerySupplyOfResponse as never],
 	["/cosmos.bank.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.bank.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.bank.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.bank.v1beta1.QueryBalanceRequest": {
 		aminoType: "cosmos-sdk/QueryBalanceRequest",
 		toAmino: (message: QueryBalanceRequest) => ({ ...message }),
-		fromAmino: (object: QueryBalanceRequest) => ({ ...object }),
+		fromAmino: (object: QueryBalanceRequest) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.QueryBalanceResponse": {
 		aminoType: "cosmos-sdk/QueryBalanceResponse",
 		toAmino: (message: QueryBalanceResponse) => ({ ...message }),
-		fromAmino: (object: QueryBalanceResponse) => ({ ...object }),
+		fromAmino: (object: QueryBalanceResponse) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.QuerySupplyOfRequest": {
 		aminoType: "cosmos-sdk/QuerySupplyOfRequest",
 		toAmino: (message: QuerySupplyOfRequest) => ({ ...message }),
-		fromAmino: (object: QuerySupplyOfRequest) => ({ ...object }),
+		fromAmino: (object: QuerySupplyOfRequest) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.QuerySupplyOfResponse": {
 		aminoType: "cosmos-sdk/QuerySupplyOfResponse",
 		toAmino: (message: QuerySupplyOfResponse) => ({ ...message }),
-		fromAmino: (object: QuerySupplyOfResponse) => ({ ...object }),
+		fromAmino: (object: QuerySupplyOfResponse) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.QueryParamsResponse": {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	}
 };

@@ -4,7 +4,7 @@ import type {
 	ListAllInterfacesRequest as ListAllInterfacesRequest_type,
 	ListAllInterfacesResponse as ListAllInterfacesResponse_type,
 	ListImplementationsRequest as ListImplementationsRequest_type,
-	ListImplementationsResponse as ListImplementationsResponse_type,
+	ListImplementationsResponse as ListImplementationsResponse_type
 } from "../../../../../types/cosmos/base/reflection/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../../common";
@@ -52,7 +52,7 @@ export const ListAllInterfacesRequest: MessageFns<ListAllInterfacesRequest, "cos
 	fromPartial<I extends Exact<DeepPartial<ListAllInterfacesRequest>, I>>(_: I): ListAllInterfacesRequest {
 		const message = createBaseListAllInterfacesRequest();
 		return message;
-	},
+	}
 };
 
 export const ListAllInterfacesResponse: MessageFns<ListAllInterfacesResponse, "cosmos.base.reflection.v1beta1.ListAllInterfacesResponse"> = {
@@ -90,7 +90,7 @@ export const ListAllInterfacesResponse: MessageFns<ListAllInterfacesResponse, "c
 
 	fromJSON(object: any): ListAllInterfacesResponse {
 		return {
-			interface_names: globalThis.Array.isArray(object?.interface_names) ? object.interface_names.map((e: any) => globalThis.String(e)) : [],
+			interface_names: globalThis.Array.isArray(object?.interface_names) ? object.interface_names.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -109,7 +109,7 @@ export const ListAllInterfacesResponse: MessageFns<ListAllInterfacesResponse, "c
 		const message = createBaseListAllInterfacesResponse();
 		message.interface_names = object.interface_names?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const ListImplementationsRequest: MessageFns<ListImplementationsRequest, "cosmos.base.reflection.v1beta1.ListImplementationsRequest"> = {
@@ -164,7 +164,7 @@ export const ListImplementationsRequest: MessageFns<ListImplementationsRequest, 
 		const message = createBaseListImplementationsRequest();
 		message.interface_name = object.interface_name ?? "";
 		return message;
-	},
+	}
 };
 
 export const ListImplementationsResponse: MessageFns<ListImplementationsResponse, "cosmos.base.reflection.v1beta1.ListImplementationsResponse"> = {
@@ -204,7 +204,7 @@ export const ListImplementationsResponse: MessageFns<ListImplementationsResponse
 		return {
 			implementation_message_names: globalThis.Array.isArray(object?.implementation_message_names)
 				? object.implementation_message_names.map((e: any) => globalThis.String(e))
-				: [],
+				: []
 		};
 	},
 
@@ -223,7 +223,7 @@ export const ListImplementationsResponse: MessageFns<ListImplementationsResponse
 		const message = createBaseListImplementationsResponse();
 		message.implementation_message_names = object.implementation_message_names?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseListAllInterfacesRequest(): ListAllInterfacesRequest {

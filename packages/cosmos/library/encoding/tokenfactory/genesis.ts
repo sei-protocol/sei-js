@@ -59,7 +59,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.tokenf
 	fromJSON(object: any): GenesisState {
 		return {
 			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-			factory_denoms: globalThis.Array.isArray(object?.factory_denoms) ? object.factory_denoms.map((e: any) => GenesisDenom.fromJSON(e)) : [],
+			factory_denoms: globalThis.Array.isArray(object?.factory_denoms) ? object.factory_denoms.map((e: any) => GenesisDenom.fromJSON(e)) : []
 		};
 	},
 
@@ -82,7 +82,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.tokenf
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		message.factory_denoms = object.factory_denoms?.map((e) => GenesisDenom.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const GenesisDenom: MessageFns<GenesisDenom, "seiprotocol.seichain.tokenfactory.GenesisDenom"> = {
@@ -131,7 +131,7 @@ export const GenesisDenom: MessageFns<GenesisDenom, "seiprotocol.seichain.tokenf
 	fromJSON(object: any): GenesisDenom {
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			authority_metadata: isSet(object.authority_metadata) ? DenomAuthorityMetadata.fromJSON(object.authority_metadata) : undefined,
+			authority_metadata: isSet(object.authority_metadata) ? DenomAuthorityMetadata.fromJSON(object.authority_metadata) : undefined
 		};
 	},
 
@@ -155,7 +155,7 @@ export const GenesisDenom: MessageFns<GenesisDenom, "seiprotocol.seichain.tokenf
 		message.authority_metadata =
 			object.authority_metadata !== undefined && object.authority_metadata !== null ? DenomAuthorityMetadata.fromPartial(object.authority_metadata) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -171,18 +171,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.tokenfactory.GenesisState", GenesisState as never],
-	["/seiprotocol.seichain.tokenfactory.GenesisDenom", GenesisDenom as never],
+	["/seiprotocol.seichain.tokenfactory.GenesisDenom", GenesisDenom as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.tokenfactory.GenesisState": {
 		aminoType: "tokenfactory/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
+		fromAmino: (object: GenesisState) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.GenesisDenom": {
 		aminoType: "tokenfactory/GenesisDenom",
 		toAmino: (message: GenesisDenom) => ({ ...message }),
-		fromAmino: (object: GenesisDenom) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisDenom) => ({ ...object })
+	}
 };

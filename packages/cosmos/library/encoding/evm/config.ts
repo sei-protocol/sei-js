@@ -65,7 +65,7 @@ export const ChainConfig: MessageFns<ChainConfig, "seiprotocol.seichain.evm.Chai
 		return {
 			cancun_time: isSet(object.cancun_time) ? globalThis.Number(object.cancun_time) : 0,
 			prague_time: isSet(object.prague_time) ? globalThis.Number(object.prague_time) : 0,
-			verkle_time: isSet(object.verkle_time) ? globalThis.Number(object.verkle_time) : 0,
+			verkle_time: isSet(object.verkle_time) ? globalThis.Number(object.verkle_time) : 0
 		};
 	},
 
@@ -92,7 +92,7 @@ export const ChainConfig: MessageFns<ChainConfig, "seiprotocol.seichain.evm.Chai
 		message.prague_time = object.prague_time ?? 0;
 		message.verkle_time = object.verkle_time ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseChainConfig(): ChainConfig {
@@ -118,6 +118,6 @@ export const aminoConverters = {
 	"/seiprotocol.seichain.evm.ChainConfig": {
 		aminoType: "evm/ChainConfig",
 		toAmino: (message: ChainConfig) => ({ ...message }),
-		fromAmino: (object: ChainConfig) => ({ ...object }),
-	},
+		fromAmino: (object: ChainConfig) => ({ ...object })
+	}
 };

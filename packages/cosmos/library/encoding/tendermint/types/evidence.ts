@@ -12,7 +12,7 @@ import type {
 	DuplicateVoteEvidence as DuplicateVoteEvidence_type,
 	EvidenceList as EvidenceList_type,
 	Evidence as Evidence_type,
-	LightClientAttackEvidence as LightClientAttackEvidence_type,
+	LightClientAttackEvidence as LightClientAttackEvidence_type
 } from "../../../types/tendermint/types";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -70,7 +70,7 @@ export const Evidence: MessageFns<Evidence, "tendermint.types.Evidence"> = {
 			duplicate_vote_evidence: isSet(object.duplicate_vote_evidence) ? DuplicateVoteEvidence.fromJSON(object.duplicate_vote_evidence) : undefined,
 			light_client_attack_evidence: isSet(object.light_client_attack_evidence)
 				? LightClientAttackEvidence.fromJSON(object.light_client_attack_evidence)
-				: undefined,
+				: undefined
 		};
 	},
 
@@ -99,7 +99,7 @@ export const Evidence: MessageFns<Evidence, "tendermint.types.Evidence"> = {
 				? LightClientAttackEvidence.fromPartial(object.light_client_attack_evidence)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const DuplicateVoteEvidence: MessageFns<DuplicateVoteEvidence, "tendermint.types.DuplicateVoteEvidence"> = {
@@ -181,7 +181,7 @@ export const DuplicateVoteEvidence: MessageFns<DuplicateVoteEvidence, "tendermin
 			vote_b: isSet(object.vote_b) ? Vote.fromJSON(object.vote_b) : undefined,
 			total_voting_power: isSet(object.total_voting_power) ? globalThis.Number(object.total_voting_power) : 0,
 			validator_power: isSet(object.validator_power) ? globalThis.Number(object.validator_power) : 0,
-			timestamp: isSet(object.timestamp) ? fromJsonTimestamp(object.timestamp) : undefined,
+			timestamp: isSet(object.timestamp) ? fromJsonTimestamp(object.timestamp) : undefined
 		};
 	},
 
@@ -216,7 +216,7 @@ export const DuplicateVoteEvidence: MessageFns<DuplicateVoteEvidence, "tendermin
 		message.validator_power = object.validator_power ?? 0;
 		message.timestamp = object.timestamp ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const LightClientAttackEvidence: MessageFns<LightClientAttackEvidence, "tendermint.types.LightClientAttackEvidence"> = {
@@ -298,7 +298,7 @@ export const LightClientAttackEvidence: MessageFns<LightClientAttackEvidence, "t
 			common_height: isSet(object.common_height) ? globalThis.Number(object.common_height) : 0,
 			byzantine_validators: globalThis.Array.isArray(object?.byzantine_validators) ? object.byzantine_validators.map((e: any) => Validator.fromJSON(e)) : [],
 			total_voting_power: isSet(object.total_voting_power) ? globalThis.Number(object.total_voting_power) : 0,
-			timestamp: isSet(object.timestamp) ? fromJsonTimestamp(object.timestamp) : undefined,
+			timestamp: isSet(object.timestamp) ? fromJsonTimestamp(object.timestamp) : undefined
 		};
 	},
 
@@ -334,7 +334,7 @@ export const LightClientAttackEvidence: MessageFns<LightClientAttackEvidence, "t
 		message.total_voting_power = object.total_voting_power ?? 0;
 		message.timestamp = object.timestamp ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const EvidenceList: MessageFns<EvidenceList, "tendermint.types.EvidenceList"> = {
@@ -372,7 +372,7 @@ export const EvidenceList: MessageFns<EvidenceList, "tendermint.types.EvidenceLi
 
 	fromJSON(object: any): EvidenceList {
 		return {
-			evidence: globalThis.Array.isArray(object?.evidence) ? object.evidence.map((e: any) => Evidence.fromJSON(e)) : [],
+			evidence: globalThis.Array.isArray(object?.evidence) ? object.evidence.map((e: any) => Evidence.fromJSON(e)) : []
 		};
 	},
 
@@ -391,7 +391,7 @@ export const EvidenceList: MessageFns<EvidenceList, "tendermint.types.EvidenceLi
 		const message = createBaseEvidenceList();
 		message.evidence = object.evidence?.map((e) => Evidence.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseEvidence(): Evidence {
@@ -408,7 +408,7 @@ function createBaseLightClientAttackEvidence(): LightClientAttackEvidence {
 		common_height: 0,
 		byzantine_validators: [],
 		total_voting_power: 0,
-		timestamp: undefined,
+		timestamp: undefined
 	};
 }
 
@@ -455,24 +455,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.types.Evidence", Evidence as never],
 	["/tendermint.types.DuplicateVoteEvidence", DuplicateVoteEvidence as never],
-	["/tendermint.types.EvidenceList", EvidenceList as never],
+	["/tendermint.types.EvidenceList", EvidenceList as never]
 ];
 export const aminoConverters = {
 	"/tendermint.types.Evidence": {
 		aminoType: "tendermint.types.Evidence",
 		toAmino: (message: Evidence) => ({ ...message }),
-		fromAmino: (object: Evidence) => ({ ...object }),
+		fromAmino: (object: Evidence) => ({ ...object })
 	},
 
 	"/tendermint.types.DuplicateVoteEvidence": {
 		aminoType: "tendermint.types.DuplicateVoteEvidence",
 		toAmino: (message: DuplicateVoteEvidence) => ({ ...message }),
-		fromAmino: (object: DuplicateVoteEvidence) => ({ ...object }),
+		fromAmino: (object: DuplicateVoteEvidence) => ({ ...object })
 	},
 
 	"/tendermint.types.EvidenceList": {
 		aminoType: "tendermint.types.EvidenceList",
 		toAmino: (message: EvidenceList) => ({ ...message }),
-		fromAmino: (object: EvidenceList) => ({ ...object }),
-	},
+		fromAmino: (object: EvidenceList) => ({ ...object })
+	}
 };

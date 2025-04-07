@@ -43,7 +43,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.tokenfactory.Param
 
 	fromJSON(object: any): Params {
 		return {
-			denom_allowlist_max_size: isSet(object.denom_allowlist_max_size) ? globalThis.Number(object.denom_allowlist_max_size) : 0,
+			denom_allowlist_max_size: isSet(object.denom_allowlist_max_size) ? globalThis.Number(object.denom_allowlist_max_size) : 0
 		};
 	},
 
@@ -62,7 +62,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.tokenfactory.Param
 		const message = createBaseParams();
 		message.denom_allowlist_max_size = object.denom_allowlist_max_size ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseParams(): Params {
@@ -77,6 +77,6 @@ export const aminoConverters = {
 	"/seiprotocol.seichain.tokenfactory.Params": {
 		aminoType: "tokenfactory/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
-	},
+		fromAmino: (object: Params) => ({ ...object })
+	}
 };

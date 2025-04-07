@@ -12,7 +12,7 @@ import type {
 	QueryGranterGrantsRequest as QueryGranterGrantsRequest_type,
 	QueryGranterGrantsResponse as QueryGranterGrantsResponse_type,
 	QueryGrantsRequest as QueryGrantsRequest_type,
-	QueryGrantsResponse as QueryGrantsResponse_type,
+	QueryGrantsResponse as QueryGrantsResponse_type
 } from "../../../../types/cosmos/authz/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -92,7 +92,7 @@ export const QueryGrantsRequest: MessageFns<QueryGrantsRequest, "cosmos.authz.v1
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
 			msg_type_url: isSet(object.msg_type_url) ? globalThis.String(object.msg_type_url) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -123,7 +123,7 @@ export const QueryGrantsRequest: MessageFns<QueryGrantsRequest, "cosmos.authz.v1
 		message.msg_type_url = object.msg_type_url ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryGrantsResponse: MessageFns<QueryGrantsResponse, "cosmos.authz.v1beta1.QueryGrantsResponse"> = {
@@ -172,7 +172,7 @@ export const QueryGrantsResponse: MessageFns<QueryGrantsResponse, "cosmos.authz.
 	fromJSON(object: any): QueryGrantsResponse {
 		return {
 			grants: globalThis.Array.isArray(object?.grants) ? object.grants.map((e: any) => Grant.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -195,7 +195,7 @@ export const QueryGrantsResponse: MessageFns<QueryGrantsResponse, "cosmos.authz.
 		message.grants = object.grants?.map((e) => Grant.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryGranterGrantsRequest: MessageFns<QueryGranterGrantsRequest, "cosmos.authz.v1beta1.QueryGranterGrantsRequest"> = {
@@ -244,7 +244,7 @@ export const QueryGranterGrantsRequest: MessageFns<QueryGranterGrantsRequest, "c
 	fromJSON(object: any): QueryGranterGrantsRequest {
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -267,7 +267,7 @@ export const QueryGranterGrantsRequest: MessageFns<QueryGranterGrantsRequest, "c
 		message.granter = object.granter ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryGranterGrantsResponse: MessageFns<QueryGranterGrantsResponse, "cosmos.authz.v1beta1.QueryGranterGrantsResponse"> = {
@@ -316,7 +316,7 @@ export const QueryGranterGrantsResponse: MessageFns<QueryGranterGrantsResponse, 
 	fromJSON(object: any): QueryGranterGrantsResponse {
 		return {
 			grants: globalThis.Array.isArray(object?.grants) ? object.grants.map((e: any) => GrantAuthorization.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -339,7 +339,7 @@ export const QueryGranterGrantsResponse: MessageFns<QueryGranterGrantsResponse, 
 		message.grants = object.grants?.map((e) => GrantAuthorization.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryGranteeGrantsRequest: MessageFns<QueryGranteeGrantsRequest, "cosmos.authz.v1beta1.QueryGranteeGrantsRequest"> = {
@@ -388,7 +388,7 @@ export const QueryGranteeGrantsRequest: MessageFns<QueryGranteeGrantsRequest, "c
 	fromJSON(object: any): QueryGranteeGrantsRequest {
 		return {
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -411,7 +411,7 @@ export const QueryGranteeGrantsRequest: MessageFns<QueryGranteeGrantsRequest, "c
 		message.grantee = object.grantee ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryGranteeGrantsResponse: MessageFns<QueryGranteeGrantsResponse, "cosmos.authz.v1beta1.QueryGranteeGrantsResponse"> = {
@@ -460,7 +460,7 @@ export const QueryGranteeGrantsResponse: MessageFns<QueryGranteeGrantsResponse, 
 	fromJSON(object: any): QueryGranteeGrantsResponse {
 		return {
 			grants: globalThis.Array.isArray(object?.grants) ? object.grants.map((e: any) => GrantAuthorization.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -483,7 +483,7 @@ export const QueryGranteeGrantsResponse: MessageFns<QueryGranteeGrantsResponse, 
 		message.grants = object.grants?.map((e) => GrantAuthorization.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryGrantsRequest(): QueryGrantsRequest {
@@ -515,18 +515,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.authz.v1beta1.QueryGrantsRequest", QueryGrantsRequest as never],
-	["/cosmos.authz.v1beta1.QueryGrantsResponse", QueryGrantsResponse as never],
+	["/cosmos.authz.v1beta1.QueryGrantsResponse", QueryGrantsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.authz.v1beta1.QueryGrantsRequest": {
 		aminoType: "cosmos-sdk/QueryGrantsRequest",
 		toAmino: (message: QueryGrantsRequest) => ({ ...message }),
-		fromAmino: (object: QueryGrantsRequest) => ({ ...object }),
+		fromAmino: (object: QueryGrantsRequest) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.QueryGrantsResponse": {
 		aminoType: "cosmos-sdk/QueryGrantsResponse",
 		toAmino: (message: QueryGrantsResponse) => ({ ...message }),
-		fromAmino: (object: QueryGrantsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryGrantsResponse) => ({ ...object })
+	}
 };

@@ -13,13 +13,12 @@ import { Params } from "./params";
 export const protobufPackage = "seiprotocol.seichain.tokenfactory";
 
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
-export interface QueryParamsRequest {
-}
+export interface QueryParamsRequest {}
 
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
-  /** params defines the parameters of the module. */
-  params?: Params | undefined;
+	/** params defines the parameters of the module. */
+	params?: Params | undefined;
 }
 
 /**
@@ -27,7 +26,7 @@ export interface QueryParamsResponse {
  * DenomAuthorityMetadata gRPC query.
  */
 export interface QueryDenomAuthorityMetadataRequest {
-  denom: string;
+	denom: string;
 }
 
 /**
@@ -35,7 +34,7 @@ export interface QueryDenomAuthorityMetadataRequest {
  * DenomAuthorityMetadata gRPC query.
  */
 export interface QueryDenomAuthorityMetadataResponse {
-  authority_metadata?: DenomAuthorityMetadata | undefined;
+	authority_metadata?: DenomAuthorityMetadata | undefined;
 }
 
 /**
@@ -43,7 +42,7 @@ export interface QueryDenomAuthorityMetadataResponse {
  * DenomsFromCreator gRPC query.
  */
 export interface QueryDenomsFromCreatorRequest {
-  creator: string;
+	creator: string;
 }
 
 /**
@@ -51,13 +50,13 @@ export interface QueryDenomsFromCreatorRequest {
  * DenomsFromCreator gRPC query.
  */
 export interface QueryDenomsFromCreatorResponse {
-  denoms: string[];
+	denoms: string[];
 }
 
 /** QueryDenomMetadataRequest is the request type for the DenomMetadata gRPC method. */
 export interface QueryDenomMetadataRequest {
-  /** denom is the coin denom to query the metadata for. */
-  denom: string;
+	/** denom is the coin denom to query the metadata for. */
+	denom: string;
 }
 
 /**
@@ -65,14 +64,14 @@ export interface QueryDenomMetadataRequest {
  * method.
  */
 export interface QueryDenomMetadataResponse {
-  /** metadata describes and provides all the client information for the requested token. */
-  metadata?: Metadata | undefined;
+	/** metadata describes and provides all the client information for the requested token. */
+	metadata?: Metadata | undefined;
 }
 
 /** QueryDenomAllowListRequest is the request type for the DenomAllowList gRPC method */
 export interface QueryDenomAllowListRequest {
-  /** denom is the coin denom to query the allowlist for. */
-  denom: string;
+	/** denom is the coin denom to query the allowlist for. */
+	denom: string;
 }
 
 /**
@@ -80,664 +79,622 @@ export interface QueryDenomAllowListRequest {
  * method.
  */
 export interface QueryDenomAllowListResponse {
-  /** allow_list provides addresses allowed for the requested token. */
-  allow_list?: AllowList | undefined;
+	/** allow_list provides addresses allowed for the requested token. */
+	allow_list?: AllowList | undefined;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
-  return {};
+	return {};
 }
 
-export const QueryParamsRequest: MessageFns<
-  QueryParamsRequest,
-  "seiprotocol.seichain.tokenfactory.QueryParamsRequest"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryParamsRequest" as const,
+export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.seichain.tokenfactory.QueryParamsRequest"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryParamsRequest" as const,
 
-  encode(_: QueryParamsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+	encode(_: QueryParamsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryParamsRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryParamsRequest();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(_: any): QueryParamsRequest {
-    return {};
-  },
+	fromJSON(_: any): QueryParamsRequest {
+		return {};
+	},
 
-  toJSON(_: QueryParamsRequest): unknown {
-    const obj: any = {};
-    return obj;
-  },
+	toJSON(_: QueryParamsRequest): unknown {
+		const obj: any = {};
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
-    return QueryParamsRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
-    const message = createBaseQueryParamsRequest();
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
+		return QueryParamsRequest.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
+		const message = createBaseQueryParamsRequest();
+		return message;
+	}
 };
 
 function createBaseQueryParamsResponse(): QueryParamsResponse {
-  return { params: undefined };
+	return { params: undefined };
 }
 
-export const QueryParamsResponse: MessageFns<
-  QueryParamsResponse,
-  "seiprotocol.seichain.tokenfactory.QueryParamsResponse"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryParamsResponse" as const,
+export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.seichain.tokenfactory.QueryParamsResponse"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryParamsResponse" as const,
 
-  encode(message: QueryParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.params !== undefined) {
-      Params.encode(message.params, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: QueryParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.params !== undefined) {
+			Params.encode(message.params, writer.uint32(10).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryParamsResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryParamsResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.params = Params.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.params = Params.decode(reader, reader.uint32());
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryParamsResponse {
-    return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
-  },
+	fromJSON(object: any): QueryParamsResponse {
+		return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
+	},
 
-  toJSON(message: QueryParamsResponse): unknown {
-    const obj: any = {};
-    if (message.params !== undefined) {
-      obj.params = Params.toJSON(message.params);
-    }
-    return obj;
-  },
+	toJSON(message: QueryParamsResponse): unknown {
+		const obj: any = {};
+		if (message.params !== undefined) {
+			obj.params = Params.toJSON(message.params);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
-    return QueryParamsResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
-    const message = createBaseQueryParamsResponse();
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
+		return QueryParamsResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
+		const message = createBaseQueryParamsResponse();
+		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
+		return message;
+	}
 };
 
 function createBaseQueryDenomAuthorityMetadataRequest(): QueryDenomAuthorityMetadataRequest {
-  return { denom: "" };
+	return { denom: "" };
 }
 
 export const QueryDenomAuthorityMetadataRequest: MessageFns<
-  QueryDenomAuthorityMetadataRequest,
-  "seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataRequest"
+	QueryDenomAuthorityMetadataRequest,
+	"seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataRequest"
 > = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataRequest" as const,
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataRequest" as const,
 
-  encode(message: QueryDenomAuthorityMetadataRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.denom !== "") {
-      writer.uint32(10).string(message.denom);
-    }
-    return writer;
-  },
+	encode(message: QueryDenomAuthorityMetadataRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.denom !== "") {
+			writer.uint32(10).string(message.denom);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAuthorityMetadataRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomAuthorityMetadataRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAuthorityMetadataRequest {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomAuthorityMetadataRequest();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.denom = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.denom = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomAuthorityMetadataRequest {
-    return { denom: isSet(object.denom) ? globalThis.String(object.denom) : "" };
-  },
+	fromJSON(object: any): QueryDenomAuthorityMetadataRequest {
+		return { denom: isSet(object.denom) ? globalThis.String(object.denom) : "" };
+	},
 
-  toJSON(message: QueryDenomAuthorityMetadataRequest): unknown {
-    const obj: any = {};
-    if (message.denom !== "") {
-      obj.denom = message.denom;
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomAuthorityMetadataRequest): unknown {
+		const obj: any = {};
+		if (message.denom !== "") {
+			obj.denom = message.denom;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataRequest>, I>>(
-    base?: I,
-  ): QueryDenomAuthorityMetadataRequest {
-    return QueryDenomAuthorityMetadataRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataRequest>, I>>(
-    object: I,
-  ): QueryDenomAuthorityMetadataRequest {
-    const message = createBaseQueryDenomAuthorityMetadataRequest();
-    message.denom = object.denom ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataRequest>, I>>(base?: I): QueryDenomAuthorityMetadataRequest {
+		return QueryDenomAuthorityMetadataRequest.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataRequest>, I>>(object: I): QueryDenomAuthorityMetadataRequest {
+		const message = createBaseQueryDenomAuthorityMetadataRequest();
+		message.denom = object.denom ?? "";
+		return message;
+	}
 };
 
 function createBaseQueryDenomAuthorityMetadataResponse(): QueryDenomAuthorityMetadataResponse {
-  return { authority_metadata: undefined };
+	return { authority_metadata: undefined };
 }
 
 export const QueryDenomAuthorityMetadataResponse: MessageFns<
-  QueryDenomAuthorityMetadataResponse,
-  "seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse"
+	QueryDenomAuthorityMetadataResponse,
+	"seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse"
 > = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse" as const,
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse" as const,
 
-  encode(message: QueryDenomAuthorityMetadataResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.authority_metadata !== undefined) {
-      DenomAuthorityMetadata.encode(message.authority_metadata, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: QueryDenomAuthorityMetadataResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.authority_metadata !== undefined) {
+			DenomAuthorityMetadata.encode(message.authority_metadata, writer.uint32(10).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAuthorityMetadataResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomAuthorityMetadataResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAuthorityMetadataResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomAuthorityMetadataResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.authority_metadata = DenomAuthorityMetadata.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.authority_metadata = DenomAuthorityMetadata.decode(reader, reader.uint32());
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomAuthorityMetadataResponse {
-    return {
-      authority_metadata: isSet(object.authority_metadata)
-        ? DenomAuthorityMetadata.fromJSON(object.authority_metadata)
-        : undefined,
-    };
-  },
+	fromJSON(object: any): QueryDenomAuthorityMetadataResponse {
+		return {
+			authority_metadata: isSet(object.authority_metadata) ? DenomAuthorityMetadata.fromJSON(object.authority_metadata) : undefined
+		};
+	},
 
-  toJSON(message: QueryDenomAuthorityMetadataResponse): unknown {
-    const obj: any = {};
-    if (message.authority_metadata !== undefined) {
-      obj.authority_metadata = DenomAuthorityMetadata.toJSON(message.authority_metadata);
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomAuthorityMetadataResponse): unknown {
+		const obj: any = {};
+		if (message.authority_metadata !== undefined) {
+			obj.authority_metadata = DenomAuthorityMetadata.toJSON(message.authority_metadata);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataResponse>, I>>(
-    base?: I,
-  ): QueryDenomAuthorityMetadataResponse {
-    return QueryDenomAuthorityMetadataResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataResponse>, I>>(
-    object: I,
-  ): QueryDenomAuthorityMetadataResponse {
-    const message = createBaseQueryDenomAuthorityMetadataResponse();
-    message.authority_metadata = (object.authority_metadata !== undefined && object.authority_metadata !== null)
-      ? DenomAuthorityMetadata.fromPartial(object.authority_metadata)
-      : undefined;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataResponse>, I>>(base?: I): QueryDenomAuthorityMetadataResponse {
+		return QueryDenomAuthorityMetadataResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomAuthorityMetadataResponse>, I>>(object: I): QueryDenomAuthorityMetadataResponse {
+		const message = createBaseQueryDenomAuthorityMetadataResponse();
+		message.authority_metadata =
+			object.authority_metadata !== undefined && object.authority_metadata !== null ? DenomAuthorityMetadata.fromPartial(object.authority_metadata) : undefined;
+		return message;
+	}
 };
 
 function createBaseQueryDenomsFromCreatorRequest(): QueryDenomsFromCreatorRequest {
-  return { creator: "" };
+	return { creator: "" };
 }
 
-export const QueryDenomsFromCreatorRequest: MessageFns<
-  QueryDenomsFromCreatorRequest,
-  "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorRequest"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorRequest" as const,
+export const QueryDenomsFromCreatorRequest: MessageFns<QueryDenomsFromCreatorRequest, "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorRequest"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorRequest" as const,
 
-  encode(message: QueryDenomsFromCreatorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.creator !== "") {
-      writer.uint32(10).string(message.creator);
-    }
-    return writer;
-  },
+	encode(message: QueryDenomsFromCreatorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.creator !== "") {
+			writer.uint32(10).string(message.creator);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomsFromCreatorRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomsFromCreatorRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomsFromCreatorRequest {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomsFromCreatorRequest();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.creator = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.creator = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomsFromCreatorRequest {
-    return { creator: isSet(object.creator) ? globalThis.String(object.creator) : "" };
-  },
+	fromJSON(object: any): QueryDenomsFromCreatorRequest {
+		return { creator: isSet(object.creator) ? globalThis.String(object.creator) : "" };
+	},
 
-  toJSON(message: QueryDenomsFromCreatorRequest): unknown {
-    const obj: any = {};
-    if (message.creator !== "") {
-      obj.creator = message.creator;
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomsFromCreatorRequest): unknown {
+		const obj: any = {};
+		if (message.creator !== "") {
+			obj.creator = message.creator;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomsFromCreatorRequest>, I>>(base?: I): QueryDenomsFromCreatorRequest {
-    return QueryDenomsFromCreatorRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomsFromCreatorRequest>, I>>(
-    object: I,
-  ): QueryDenomsFromCreatorRequest {
-    const message = createBaseQueryDenomsFromCreatorRequest();
-    message.creator = object.creator ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomsFromCreatorRequest>, I>>(base?: I): QueryDenomsFromCreatorRequest {
+		return QueryDenomsFromCreatorRequest.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomsFromCreatorRequest>, I>>(object: I): QueryDenomsFromCreatorRequest {
+		const message = createBaseQueryDenomsFromCreatorRequest();
+		message.creator = object.creator ?? "";
+		return message;
+	}
 };
 
 function createBaseQueryDenomsFromCreatorResponse(): QueryDenomsFromCreatorResponse {
-  return { denoms: [] };
+	return { denoms: [] };
 }
 
-export const QueryDenomsFromCreatorResponse: MessageFns<
-  QueryDenomsFromCreatorResponse,
-  "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse" as const,
+export const QueryDenomsFromCreatorResponse: MessageFns<QueryDenomsFromCreatorResponse, "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse" as const,
 
-  encode(message: QueryDenomsFromCreatorResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    for (const v of message.denoms) {
-      writer.uint32(10).string(v!);
-    }
-    return writer;
-  },
+	encode(message: QueryDenomsFromCreatorResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		for (const v of message.denoms) {
+			writer.uint32(10).string(v!);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomsFromCreatorResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomsFromCreatorResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomsFromCreatorResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomsFromCreatorResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.denoms.push(reader.string());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.denoms.push(reader.string());
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomsFromCreatorResponse {
-    return {
-      denoms: globalThis.Array.isArray(object?.denoms) ? object.denoms.map((e: any) => globalThis.String(e)) : [],
-    };
-  },
+	fromJSON(object: any): QueryDenomsFromCreatorResponse {
+		return {
+			denoms: globalThis.Array.isArray(object?.denoms) ? object.denoms.map((e: any) => globalThis.String(e)) : []
+		};
+	},
 
-  toJSON(message: QueryDenomsFromCreatorResponse): unknown {
-    const obj: any = {};
-    if (message.denoms?.length) {
-      obj.denoms = message.denoms;
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomsFromCreatorResponse): unknown {
+		const obj: any = {};
+		if (message.denoms?.length) {
+			obj.denoms = message.denoms;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomsFromCreatorResponse>, I>>(base?: I): QueryDenomsFromCreatorResponse {
-    return QueryDenomsFromCreatorResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomsFromCreatorResponse>, I>>(
-    object: I,
-  ): QueryDenomsFromCreatorResponse {
-    const message = createBaseQueryDenomsFromCreatorResponse();
-    message.denoms = object.denoms?.map((e) => e) || [];
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomsFromCreatorResponse>, I>>(base?: I): QueryDenomsFromCreatorResponse {
+		return QueryDenomsFromCreatorResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomsFromCreatorResponse>, I>>(object: I): QueryDenomsFromCreatorResponse {
+		const message = createBaseQueryDenomsFromCreatorResponse();
+		message.denoms = object.denoms?.map((e) => e) || [];
+		return message;
+	}
 };
 
 function createBaseQueryDenomMetadataRequest(): QueryDenomMetadataRequest {
-  return { denom: "" };
+	return { denom: "" };
 }
 
-export const QueryDenomMetadataRequest: MessageFns<
-  QueryDenomMetadataRequest,
-  "seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest" as const,
+export const QueryDenomMetadataRequest: MessageFns<QueryDenomMetadataRequest, "seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest" as const,
 
-  encode(message: QueryDenomMetadataRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.denom !== "") {
-      writer.uint32(10).string(message.denom);
-    }
-    return writer;
-  },
+	encode(message: QueryDenomMetadataRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.denom !== "") {
+			writer.uint32(10).string(message.denom);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomMetadataRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomMetadataRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomMetadataRequest {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomMetadataRequest();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.denom = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.denom = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomMetadataRequest {
-    return { denom: isSet(object.denom) ? globalThis.String(object.denom) : "" };
-  },
+	fromJSON(object: any): QueryDenomMetadataRequest {
+		return { denom: isSet(object.denom) ? globalThis.String(object.denom) : "" };
+	},
 
-  toJSON(message: QueryDenomMetadataRequest): unknown {
-    const obj: any = {};
-    if (message.denom !== "") {
-      obj.denom = message.denom;
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomMetadataRequest): unknown {
+		const obj: any = {};
+		if (message.denom !== "") {
+			obj.denom = message.denom;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomMetadataRequest>, I>>(base?: I): QueryDenomMetadataRequest {
-    return QueryDenomMetadataRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomMetadataRequest>, I>>(object: I): QueryDenomMetadataRequest {
-    const message = createBaseQueryDenomMetadataRequest();
-    message.denom = object.denom ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomMetadataRequest>, I>>(base?: I): QueryDenomMetadataRequest {
+		return QueryDenomMetadataRequest.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomMetadataRequest>, I>>(object: I): QueryDenomMetadataRequest {
+		const message = createBaseQueryDenomMetadataRequest();
+		message.denom = object.denom ?? "";
+		return message;
+	}
 };
 
 function createBaseQueryDenomMetadataResponse(): QueryDenomMetadataResponse {
-  return { metadata: undefined };
+	return { metadata: undefined };
 }
 
-export const QueryDenomMetadataResponse: MessageFns<
-  QueryDenomMetadataResponse,
-  "seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse" as const,
+export const QueryDenomMetadataResponse: MessageFns<QueryDenomMetadataResponse, "seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse" as const,
 
-  encode(message: QueryDenomMetadataResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.metadata !== undefined) {
-      Metadata.encode(message.metadata, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: QueryDenomMetadataResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.metadata !== undefined) {
+			Metadata.encode(message.metadata, writer.uint32(10).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomMetadataResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomMetadataResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomMetadataResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomMetadataResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.metadata = Metadata.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.metadata = Metadata.decode(reader, reader.uint32());
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomMetadataResponse {
-    return { metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined };
-  },
+	fromJSON(object: any): QueryDenomMetadataResponse {
+		return { metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined };
+	},
 
-  toJSON(message: QueryDenomMetadataResponse): unknown {
-    const obj: any = {};
-    if (message.metadata !== undefined) {
-      obj.metadata = Metadata.toJSON(message.metadata);
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomMetadataResponse): unknown {
+		const obj: any = {};
+		if (message.metadata !== undefined) {
+			obj.metadata = Metadata.toJSON(message.metadata);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomMetadataResponse>, I>>(base?: I): QueryDenomMetadataResponse {
-    return QueryDenomMetadataResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomMetadataResponse>, I>>(object: I): QueryDenomMetadataResponse {
-    const message = createBaseQueryDenomMetadataResponse();
-    message.metadata = (object.metadata !== undefined && object.metadata !== null)
-      ? Metadata.fromPartial(object.metadata)
-      : undefined;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomMetadataResponse>, I>>(base?: I): QueryDenomMetadataResponse {
+		return QueryDenomMetadataResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomMetadataResponse>, I>>(object: I): QueryDenomMetadataResponse {
+		const message = createBaseQueryDenomMetadataResponse();
+		message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
+		return message;
+	}
 };
 
 function createBaseQueryDenomAllowListRequest(): QueryDenomAllowListRequest {
-  return { denom: "" };
+	return { denom: "" };
 }
 
-export const QueryDenomAllowListRequest: MessageFns<
-  QueryDenomAllowListRequest,
-  "seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest" as const,
+export const QueryDenomAllowListRequest: MessageFns<QueryDenomAllowListRequest, "seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest" as const,
 
-  encode(message: QueryDenomAllowListRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.denom !== "") {
-      writer.uint32(10).string(message.denom);
-    }
-    return writer;
-  },
+	encode(message: QueryDenomAllowListRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.denom !== "") {
+			writer.uint32(10).string(message.denom);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAllowListRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomAllowListRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAllowListRequest {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomAllowListRequest();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.denom = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.denom = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomAllowListRequest {
-    return { denom: isSet(object.denom) ? globalThis.String(object.denom) : "" };
-  },
+	fromJSON(object: any): QueryDenomAllowListRequest {
+		return { denom: isSet(object.denom) ? globalThis.String(object.denom) : "" };
+	},
 
-  toJSON(message: QueryDenomAllowListRequest): unknown {
-    const obj: any = {};
-    if (message.denom !== "") {
-      obj.denom = message.denom;
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomAllowListRequest): unknown {
+		const obj: any = {};
+		if (message.denom !== "") {
+			obj.denom = message.denom;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomAllowListRequest>, I>>(base?: I): QueryDenomAllowListRequest {
-    return QueryDenomAllowListRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAllowListRequest>, I>>(object: I): QueryDenomAllowListRequest {
-    const message = createBaseQueryDenomAllowListRequest();
-    message.denom = object.denom ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomAllowListRequest>, I>>(base?: I): QueryDenomAllowListRequest {
+		return QueryDenomAllowListRequest.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomAllowListRequest>, I>>(object: I): QueryDenomAllowListRequest {
+		const message = createBaseQueryDenomAllowListRequest();
+		message.denom = object.denom ?? "";
+		return message;
+	}
 };
 
 function createBaseQueryDenomAllowListResponse(): QueryDenomAllowListResponse {
-  return { allow_list: undefined };
+	return { allow_list: undefined };
 }
 
-export const QueryDenomAllowListResponse: MessageFns<
-  QueryDenomAllowListResponse,
-  "seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse"
-> = {
-  $type: "seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse" as const,
+export const QueryDenomAllowListResponse: MessageFns<QueryDenomAllowListResponse, "seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse"> = {
+	$type: "seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse" as const,
 
-  encode(message: QueryDenomAllowListResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.allow_list !== undefined) {
-      AllowList.encode(message.allow_list, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: QueryDenomAllowListResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.allow_list !== undefined) {
+			AllowList.encode(message.allow_list, writer.uint32(10).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAllowListResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryDenomAllowListResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomAllowListResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseQueryDenomAllowListResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.allow_list = AllowList.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.allow_list = AllowList.decode(reader, reader.uint32());
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): QueryDenomAllowListResponse {
-    return { allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined };
-  },
+	fromJSON(object: any): QueryDenomAllowListResponse {
+		return { allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined };
+	},
 
-  toJSON(message: QueryDenomAllowListResponse): unknown {
-    const obj: any = {};
-    if (message.allow_list !== undefined) {
-      obj.allow_list = AllowList.toJSON(message.allow_list);
-    }
-    return obj;
-  },
+	toJSON(message: QueryDenomAllowListResponse): unknown {
+		const obj: any = {};
+		if (message.allow_list !== undefined) {
+			obj.allow_list = AllowList.toJSON(message.allow_list);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<QueryDenomAllowListResponse>, I>>(base?: I): QueryDenomAllowListResponse {
-    return QueryDenomAllowListResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAllowListResponse>, I>>(object: I): QueryDenomAllowListResponse {
-    const message = createBaseQueryDenomAllowListResponse();
-    message.allow_list = (object.allow_list !== undefined && object.allow_list !== null)
-      ? AllowList.fromPartial(object.allow_list)
-      : undefined;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<QueryDenomAllowListResponse>, I>>(base?: I): QueryDenomAllowListResponse {
+		return QueryDenomAllowListResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<QueryDenomAllowListResponse>, I>>(object: I): QueryDenomAllowListResponse {
+		const message = createBaseQueryDenomAllowListResponse();
+		message.allow_list = object.allow_list !== undefined && object.allow_list !== null ? AllowList.fromPartial(object.allow_list) : undefined;
+		return message;
+	}
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+	? T
+	: T extends globalThis.Array<infer U>
+		? globalThis.Array<DeepPartial<U>>
+		: T extends ReadonlyArray<infer U>
+			? ReadonlyArray<DeepPartial<U>>
+			: T extends {}
+				? { [K in keyof T]?: DeepPartial<T[K]> }
+				: Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
+	return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-  readonly $type: V;
-  encode(message: T, writer?: BinaryWriter): BinaryWriter;
-  decode(input: BinaryReader | Uint8Array, length?: number): T;
-  fromJSON(object: any): T;
-  toJSON(message: T): unknown;
-  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+	readonly $type: V;
+	encode(message: T, writer?: BinaryWriter): BinaryWriter;
+	decode(input: BinaryReader | Uint8Array, length?: number): T;
+	fromJSON(object: any): T;
+	toJSON(message: T): unknown;
+	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

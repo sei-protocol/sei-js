@@ -54,7 +54,7 @@ export const Duration: MessageFns<Duration, "google.protobuf.Duration"> = {
 	fromJSON(object: any): Duration {
 		return {
 			seconds: isSet(object.seconds) ? globalThis.Number(object.seconds) : 0,
-			nanos: isSet(object.nanos) ? globalThis.Number(object.nanos) : 0,
+			nanos: isSet(object.nanos) ? globalThis.Number(object.nanos) : 0
 		};
 	},
 
@@ -77,7 +77,7 @@ export const Duration: MessageFns<Duration, "google.protobuf.Duration"> = {
 		message.seconds = object.seconds ?? 0;
 		message.nanos = object.nanos ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseDuration(): Duration {
@@ -103,6 +103,6 @@ export const aminoConverters = {
 	"/google.protobuf.Duration": {
 		aminoType: "google.protobuf.Duration",
 		toAmino: (message: Duration) => ({ ...message }),
-		fromAmino: (object: Duration) => ({ ...object }),
-	},
+		fromAmino: (object: Duration) => ({ ...object })
+	}
 };

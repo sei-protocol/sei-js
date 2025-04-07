@@ -7,14 +7,14 @@ import type { ConsensusParams } from "../types/params";
 export enum CheckTxType {
 	NEW = 0,
 	RECHECK = 1,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum MisbehaviorType {
 	UNKNOWN = 0,
 	DUPLICATE_VOTE = 1,
 	LIGHT_CLIENT_ATTACK = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface Request {
@@ -256,7 +256,7 @@ export enum ResponseOfferSnapshotResult {
 	REJECT_FORMAT = 4,
 	/** REJECT_SENDER - Reject all snapshots from the sender(s), try others */
 	REJECT_SENDER = 5,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface ResponseLoadSnapshotChunk {
@@ -284,7 +284,7 @@ export enum ResponseApplySnapshotChunkResult {
 	RETRY_SNAPSHOT = 4,
 	/** REJECT_SNAPSHOT - Reject this snapshot, try others */
 	REJECT_SNAPSHOT = 5,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface ResponsePrepareProposal {
@@ -307,7 +307,7 @@ export enum ResponseProcessProposalProposalStatus {
 	UNKNOWN = 0,
 	ACCEPT = 1,
 	REJECT = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface ResponseExtendVote {
@@ -322,7 +322,7 @@ export enum ResponseVerifyVoteExtensionVerifyStatus {
 	UNKNOWN = 0,
 	ACCEPT = 1,
 	REJECT = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface ResponseFinalizeBlock {
@@ -395,7 +395,7 @@ export enum TxRecordTxAction {
 	ADDED = 2,
 	/** REMOVED - The Application wants this transaction removed from the proposal and the mempool. */
 	REMOVED = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface Validator {

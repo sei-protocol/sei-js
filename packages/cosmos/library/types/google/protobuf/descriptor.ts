@@ -36,7 +36,7 @@ export enum Edition {
 	 * support a new edition.
 	 */
 	EDITION_MAX = 2147483647,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface FileDescriptorSet {
@@ -136,7 +136,7 @@ export enum ExtensionRangeOptionsVerificationState {
 	/** DECLARATION - All the extensions of the range must be declared. */
 	DECLARATION = 0,
 	UNVERIFIED = 1,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface ExtensionRangeOptionsDeclaration {
@@ -276,7 +276,7 @@ export enum FieldDescriptorProtoType {
 	TYPE_SINT32 = 17,
 	/** TYPE_SINT64 - Uses ZigZag encoding. */
 	TYPE_SINT64 = 18,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FieldDescriptorProtoLabel {
@@ -289,7 +289,7 @@ export enum FieldDescriptorProtoLabel {
 	 * can be used to get this behavior.
 	 */
 	LABEL_REQUIRED = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface OneofDescriptorProto {
@@ -481,7 +481,7 @@ export enum FileOptionsOptimizeMode {
 	CODE_SIZE = 2,
 	/** LITE_RUNTIME - Generate code using MessageLite and the lite runtime. */
 	LITE_RUNTIME = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface MessageOptions {
@@ -666,7 +666,7 @@ export enum FieldOptionsCType {
 	 */
 	CORD = 1,
 	STRING_PIECE = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FieldOptionsJSType {
@@ -676,14 +676,14 @@ export enum FieldOptionsJSType {
 	JS_STRING = 1,
 	/** JS_NUMBER - Use JavaScript numbers. */
 	JS_NUMBER = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FieldOptionsOptionRetention {
 	RETENTION_UNKNOWN = 0,
 	RETENTION_RUNTIME = 1,
 	RETENTION_SOURCE = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FieldOptionsOptionTargetType {
@@ -697,7 +697,7 @@ export enum FieldOptionsOptionTargetType {
 	TARGET_TYPE_ENUM_ENTRY = 7,
 	TARGET_TYPE_SERVICE = 8,
 	TARGET_TYPE_METHOD = 9,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface FieldOptionsEditionDefault {
@@ -825,7 +825,7 @@ export enum MethodOptionsIdempotencyLevel {
 	NO_SIDE_EFFECTS = 1,
 	/** IDEMPOTENT - idempotent, but may have side effects */
 	IDEMPOTENT = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface UninterpretedOption {
@@ -861,42 +861,42 @@ export enum FeatureSetFieldPresence {
 	EXPLICIT = 1,
 	IMPLICIT = 2,
 	LEGACY_REQUIRED = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FeatureSetEnumType {
 	ENUM_TYPE_UNKNOWN = 0,
 	OPEN = 1,
 	CLOSED = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FeatureSetRepeatedFieldEncoding {
 	REPEATED_FIELD_ENCODING_UNKNOWN = 0,
 	PACKED = 1,
 	EXPANDED = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FeatureSetUtf8Validation {
 	UTF8_VALIDATION_UNKNOWN = 0,
 	VERIFY = 2,
 	NONE = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FeatureSetMessageEncoding {
 	MESSAGE_ENCODING_UNKNOWN = 0,
 	LENGTH_PREFIXED = 1,
 	DELIMITED = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum FeatureSetJsonFormat {
 	JSON_FORMAT_UNKNOWN = 0,
 	ALLOW = 1,
 	LEGACY_BEST_EFFORT = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface FeatureSetDefaults {
@@ -1096,5 +1096,5 @@ export enum GeneratedCodeInfoAnnotationSemantic {
 	SET = 1,
 	/** ALIAS - An alias to the element is returned. */
 	ALIAS = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }

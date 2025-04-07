@@ -11,7 +11,7 @@ import type {
 	Params as Params_type,
 	PriceSnapshotItem as PriceSnapshotItem_type,
 	PriceSnapshot as PriceSnapshot_type,
-	VotePenaltyCounter as VotePenaltyCounter_type,
+	VotePenaltyCounter as VotePenaltyCounter_type
 } from "../../types/oracle";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -138,7 +138,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.oracle.Params"> = 
 			slash_fraction: isSet(object.slash_fraction) ? globalThis.String(object.slash_fraction) : "",
 			slash_window: isSet(object.slash_window) ? globalThis.Number(object.slash_window) : 0,
 			min_valid_per_window: isSet(object.min_valid_per_window) ? globalThis.String(object.min_valid_per_window) : "",
-			lookback_duration: isSet(object.lookback_duration) ? globalThis.Number(object.lookback_duration) : 0,
+			lookback_duration: isSet(object.lookback_duration) ? globalThis.Number(object.lookback_duration) : 0
 		};
 	},
 
@@ -185,7 +185,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.oracle.Params"> = 
 		message.min_valid_per_window = object.min_valid_per_window ?? "";
 		message.lookback_duration = object.lookback_duration ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Denom: MessageFns<Denom, "seiprotocol.seichain.oracle.Denom"> = {
@@ -240,7 +240,7 @@ export const Denom: MessageFns<Denom, "seiprotocol.seichain.oracle.Denom"> = {
 		const message = createBaseDenom();
 		message.name = object.name ?? "";
 		return message;
-	},
+	}
 };
 
 export const AggregateExchangeRateVote: MessageFns<AggregateExchangeRateVote, "seiprotocol.seichain.oracle.AggregateExchangeRateVote"> = {
@@ -291,7 +291,7 @@ export const AggregateExchangeRateVote: MessageFns<AggregateExchangeRateVote, "s
 			exchange_rate_tuples: globalThis.Array.isArray(object?.exchange_rate_tuples)
 				? object.exchange_rate_tuples.map((e: any) => ExchangeRateTuple.fromJSON(e))
 				: [],
-			voter: isSet(object.voter) ? globalThis.String(object.voter) : "",
+			voter: isSet(object.voter) ? globalThis.String(object.voter) : ""
 		};
 	},
 
@@ -314,7 +314,7 @@ export const AggregateExchangeRateVote: MessageFns<AggregateExchangeRateVote, "s
 		message.exchange_rate_tuples = object.exchange_rate_tuples?.map((e) => ExchangeRateTuple.fromPartial(e)) || [];
 		message.voter = object.voter ?? "";
 		return message;
-	},
+	}
 };
 
 export const ExchangeRateTuple: MessageFns<ExchangeRateTuple, "seiprotocol.seichain.oracle.ExchangeRateTuple"> = {
@@ -363,7 +363,7 @@ export const ExchangeRateTuple: MessageFns<ExchangeRateTuple, "seiprotocol.seich
 	fromJSON(object: any): ExchangeRateTuple {
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			exchange_rate: isSet(object.exchange_rate) ? globalThis.String(object.exchange_rate) : "",
+			exchange_rate: isSet(object.exchange_rate) ? globalThis.String(object.exchange_rate) : ""
 		};
 	},
 
@@ -386,7 +386,7 @@ export const ExchangeRateTuple: MessageFns<ExchangeRateTuple, "seiprotocol.seich
 		message.denom = object.denom ?? "";
 		message.exchange_rate = object.exchange_rate ?? "";
 		return message;
-	},
+	}
 };
 
 export const OracleExchangeRate: MessageFns<OracleExchangeRate, "seiprotocol.seichain.oracle.OracleExchangeRate"> = {
@@ -446,7 +446,7 @@ export const OracleExchangeRate: MessageFns<OracleExchangeRate, "seiprotocol.sei
 		return {
 			exchange_rate: isSet(object.exchange_rate) ? globalThis.String(object.exchange_rate) : "",
 			last_update: isSet(object.last_update) ? globalThis.String(object.last_update) : "",
-			last_update_timestamp: isSet(object.last_update_timestamp) ? globalThis.Number(object.last_update_timestamp) : 0,
+			last_update_timestamp: isSet(object.last_update_timestamp) ? globalThis.Number(object.last_update_timestamp) : 0
 		};
 	},
 
@@ -473,7 +473,7 @@ export const OracleExchangeRate: MessageFns<OracleExchangeRate, "seiprotocol.sei
 		message.last_update = object.last_update ?? "";
 		message.last_update_timestamp = object.last_update_timestamp ?? 0;
 		return message;
-	},
+	}
 };
 
 export const PriceSnapshotItem: MessageFns<PriceSnapshotItem, "seiprotocol.seichain.oracle.PriceSnapshotItem"> = {
@@ -522,7 +522,7 @@ export const PriceSnapshotItem: MessageFns<PriceSnapshotItem, "seiprotocol.seich
 	fromJSON(object: any): PriceSnapshotItem {
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			oracle_exchange_rate: isSet(object.oracle_exchange_rate) ? OracleExchangeRate.fromJSON(object.oracle_exchange_rate) : undefined,
+			oracle_exchange_rate: isSet(object.oracle_exchange_rate) ? OracleExchangeRate.fromJSON(object.oracle_exchange_rate) : undefined
 		};
 	},
 
@@ -548,7 +548,7 @@ export const PriceSnapshotItem: MessageFns<PriceSnapshotItem, "seiprotocol.seich
 				? OracleExchangeRate.fromPartial(object.oracle_exchange_rate)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const PriceSnapshot: MessageFns<PriceSnapshot, "seiprotocol.seichain.oracle.PriceSnapshot"> = {
@@ -599,7 +599,7 @@ export const PriceSnapshot: MessageFns<PriceSnapshot, "seiprotocol.seichain.orac
 			snapshot_timestamp: isSet(object.snapshot_timestamp) ? globalThis.Number(object.snapshot_timestamp) : 0,
 			price_snapshot_items: globalThis.Array.isArray(object?.price_snapshot_items)
 				? object.price_snapshot_items.map((e: any) => PriceSnapshotItem.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -622,7 +622,7 @@ export const PriceSnapshot: MessageFns<PriceSnapshot, "seiprotocol.seichain.orac
 		message.snapshot_timestamp = object.snapshot_timestamp ?? 0;
 		message.price_snapshot_items = object.price_snapshot_items?.map((e) => PriceSnapshotItem.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const OracleTwap: MessageFns<OracleTwap, "seiprotocol.seichain.oracle.OracleTwap"> = {
@@ -682,7 +682,7 @@ export const OracleTwap: MessageFns<OracleTwap, "seiprotocol.seichain.oracle.Ora
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
 			twap: isSet(object.twap) ? globalThis.String(object.twap) : "",
-			lookback_seconds: isSet(object.lookback_seconds) ? globalThis.Number(object.lookback_seconds) : 0,
+			lookback_seconds: isSet(object.lookback_seconds) ? globalThis.Number(object.lookback_seconds) : 0
 		};
 	},
 
@@ -709,7 +709,7 @@ export const OracleTwap: MessageFns<OracleTwap, "seiprotocol.seichain.oracle.Ora
 		message.twap = object.twap ?? "";
 		message.lookback_seconds = object.lookback_seconds ?? 0;
 		return message;
-	},
+	}
 };
 
 export const VotePenaltyCounter: MessageFns<VotePenaltyCounter, "seiprotocol.seichain.oracle.VotePenaltyCounter"> = {
@@ -769,7 +769,7 @@ export const VotePenaltyCounter: MessageFns<VotePenaltyCounter, "seiprotocol.sei
 		return {
 			miss_count: isSet(object.miss_count) ? globalThis.Number(object.miss_count) : 0,
 			abstain_count: isSet(object.abstain_count) ? globalThis.Number(object.abstain_count) : 0,
-			success_count: isSet(object.success_count) ? globalThis.Number(object.success_count) : 0,
+			success_count: isSet(object.success_count) ? globalThis.Number(object.success_count) : 0
 		};
 	},
 
@@ -796,7 +796,7 @@ export const VotePenaltyCounter: MessageFns<VotePenaltyCounter, "seiprotocol.sei
 		message.abstain_count = object.abstain_count ?? 0;
 		message.success_count = object.success_count ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseParams(): Params {
@@ -808,7 +808,7 @@ function createBaseParams(): Params {
 		slash_fraction: "",
 		slash_window: 0,
 		min_valid_per_window: "",
-		lookback_duration: 0,
+		lookback_duration: 0
 	};
 }
 
@@ -866,54 +866,54 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.oracle.PriceSnapshotItem", PriceSnapshotItem as never],
 	["/seiprotocol.seichain.oracle.PriceSnapshot", PriceSnapshot as never],
 	["/seiprotocol.seichain.oracle.OracleTwap", OracleTwap as never],
-	["/seiprotocol.seichain.oracle.VotePenaltyCounter", VotePenaltyCounter as never],
+	["/seiprotocol.seichain.oracle.VotePenaltyCounter", VotePenaltyCounter as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.oracle.Params": {
 		aminoType: "oracle/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
+		fromAmino: (object: Params) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.Denom": {
 		aminoType: "oracle/Denom",
 		toAmino: (message: Denom) => ({ ...message }),
-		fromAmino: (object: Denom) => ({ ...object }),
+		fromAmino: (object: Denom) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.ExchangeRateTuple": {
 		aminoType: "oracle/ExchangeRateTuple",
 		toAmino: (message: ExchangeRateTuple) => ({ ...message }),
-		fromAmino: (object: ExchangeRateTuple) => ({ ...object }),
+		fromAmino: (object: ExchangeRateTuple) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.OracleExchangeRate": {
 		aminoType: "oracle/OracleExchangeRate",
 		toAmino: (message: OracleExchangeRate) => ({ ...message }),
-		fromAmino: (object: OracleExchangeRate) => ({ ...object }),
+		fromAmino: (object: OracleExchangeRate) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.PriceSnapshotItem": {
 		aminoType: "oracle/PriceSnapshotItem",
 		toAmino: (message: PriceSnapshotItem) => ({ ...message }),
-		fromAmino: (object: PriceSnapshotItem) => ({ ...object }),
+		fromAmino: (object: PriceSnapshotItem) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.PriceSnapshot": {
 		aminoType: "oracle/PriceSnapshot",
 		toAmino: (message: PriceSnapshot) => ({ ...message }),
-		fromAmino: (object: PriceSnapshot) => ({ ...object }),
+		fromAmino: (object: PriceSnapshot) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.OracleTwap": {
 		aminoType: "oracle/OracleTwap",
 		toAmino: (message: OracleTwap) => ({ ...message }),
-		fromAmino: (object: OracleTwap) => ({ ...object }),
+		fromAmino: (object: OracleTwap) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.VotePenaltyCounter": {
 		aminoType: "oracle/VotePenaltyCounter",
 		toAmino: (message: VotePenaltyCounter) => ({ ...message }),
-		fromAmino: (object: VotePenaltyCounter) => ({ ...object }),
-	},
+		fromAmino: (object: VotePenaltyCounter) => ({ ...object })
+	}
 };

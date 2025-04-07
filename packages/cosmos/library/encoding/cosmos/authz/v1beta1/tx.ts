@@ -12,7 +12,7 @@ import type {
 	MsgGrantResponse as MsgGrantResponse_type,
 	MsgGrant as MsgGrant_type,
 	MsgRevokeResponse as MsgRevokeResponse_type,
-	MsgRevoke as MsgRevoke_type,
+	MsgRevoke as MsgRevoke_type
 } from "../../../../types/cosmos/authz/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -81,7 +81,7 @@ export const MsgGrant: MessageFns<MsgGrant, "cosmos.authz.v1beta1.MsgGrant"> = {
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			grant: isSet(object.grant) ? Grant.fromJSON(object.grant) : undefined,
+			grant: isSet(object.grant) ? Grant.fromJSON(object.grant) : undefined
 		};
 	},
 
@@ -108,7 +108,7 @@ export const MsgGrant: MessageFns<MsgGrant, "cosmos.authz.v1beta1.MsgGrant"> = {
 		message.grantee = object.grantee ?? "";
 		message.grant = object.grant !== undefined && object.grant !== null ? Grant.fromPartial(object.grant) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgExecResponse: MessageFns<MsgExecResponse, "cosmos.authz.v1beta1.MsgExecResponse"> = {
@@ -146,7 +146,7 @@ export const MsgExecResponse: MessageFns<MsgExecResponse, "cosmos.authz.v1beta1.
 
 	fromJSON(object: any): MsgExecResponse {
 		return {
-			results: globalThis.Array.isArray(object?.results) ? object.results.map((e: any) => bytesFromBase64(e)) : [],
+			results: globalThis.Array.isArray(object?.results) ? object.results.map((e: any) => bytesFromBase64(e)) : []
 		};
 	},
 
@@ -165,7 +165,7 @@ export const MsgExecResponse: MessageFns<MsgExecResponse, "cosmos.authz.v1beta1.
 		const message = createBaseMsgExecResponse();
 		message.results = object.results?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgExec: MessageFns<MsgExec, "cosmos.authz.v1beta1.MsgExec"> = {
@@ -214,7 +214,7 @@ export const MsgExec: MessageFns<MsgExec, "cosmos.authz.v1beta1.MsgExec"> = {
 	fromJSON(object: any): MsgExec {
 		return {
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			msgs: globalThis.Array.isArray(object?.msgs) ? object.msgs.map((e: any) => Any.fromJSON(e)) : [],
+			msgs: globalThis.Array.isArray(object?.msgs) ? object.msgs.map((e: any) => Any.fromJSON(e)) : []
 		};
 	},
 
@@ -237,7 +237,7 @@ export const MsgExec: MessageFns<MsgExec, "cosmos.authz.v1beta1.MsgExec"> = {
 		message.grantee = object.grantee ?? "";
 		message.msgs = object.msgs?.map((e) => Any.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgGrantResponse: MessageFns<MsgGrantResponse, "cosmos.authz.v1beta1.MsgGrantResponse"> = {
@@ -278,7 +278,7 @@ export const MsgGrantResponse: MessageFns<MsgGrantResponse, "cosmos.authz.v1beta
 	fromPartial<I extends Exact<DeepPartial<MsgGrantResponse>, I>>(_: I): MsgGrantResponse {
 		const message = createBaseMsgGrantResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgRevoke: MessageFns<MsgRevoke, "cosmos.authz.v1beta1.MsgRevoke"> = {
@@ -338,7 +338,7 @@ export const MsgRevoke: MessageFns<MsgRevoke, "cosmos.authz.v1beta1.MsgRevoke"> 
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			msg_type_url: isSet(object.msg_type_url) ? globalThis.String(object.msg_type_url) : "",
+			msg_type_url: isSet(object.msg_type_url) ? globalThis.String(object.msg_type_url) : ""
 		};
 	},
 
@@ -365,7 +365,7 @@ export const MsgRevoke: MessageFns<MsgRevoke, "cosmos.authz.v1beta1.MsgRevoke"> 
 		message.grantee = object.grantee ?? "";
 		message.msg_type_url = object.msg_type_url ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgRevokeResponse: MessageFns<MsgRevokeResponse, "cosmos.authz.v1beta1.MsgRevokeResponse"> = {
@@ -406,7 +406,7 @@ export const MsgRevokeResponse: MessageFns<MsgRevokeResponse, "cosmos.authz.v1be
 	fromPartial<I extends Exact<DeepPartial<MsgRevokeResponse>, I>>(_: I): MsgRevokeResponse {
 		const message = createBaseMsgRevokeResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgGrant(): MsgGrant {
@@ -467,42 +467,42 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.authz.v1beta1.MsgExec", MsgExec as never],
 	["/cosmos.authz.v1beta1.MsgGrantResponse", MsgGrantResponse as never],
 	["/cosmos.authz.v1beta1.MsgRevoke", MsgRevoke as never],
-	["/cosmos.authz.v1beta1.MsgRevokeResponse", MsgRevokeResponse as never],
+	["/cosmos.authz.v1beta1.MsgRevokeResponse", MsgRevokeResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.authz.v1beta1.MsgGrant": {
 		aminoType: "cosmos-sdk/MsgGrant",
 		toAmino: (message: MsgGrant) => ({ ...message }),
-		fromAmino: (object: MsgGrant) => ({ ...object }),
+		fromAmino: (object: MsgGrant) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.MsgExecResponse": {
 		aminoType: "cosmos-sdk/MsgExecResponse",
 		toAmino: (message: MsgExecResponse) => ({ ...message }),
-		fromAmino: (object: MsgExecResponse) => ({ ...object }),
+		fromAmino: (object: MsgExecResponse) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.MsgExec": {
 		aminoType: "cosmos-sdk/MsgExec",
 		toAmino: (message: MsgExec) => ({ ...message }),
-		fromAmino: (object: MsgExec) => ({ ...object }),
+		fromAmino: (object: MsgExec) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.MsgGrantResponse": {
 		aminoType: "cosmos-sdk/MsgGrantResponse",
 		toAmino: (message: MsgGrantResponse) => ({ ...message }),
-		fromAmino: (object: MsgGrantResponse) => ({ ...object }),
+		fromAmino: (object: MsgGrantResponse) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.MsgRevoke": {
 		aminoType: "cosmos-sdk/MsgRevoke",
 		toAmino: (message: MsgRevoke) => ({ ...message }),
-		fromAmino: (object: MsgRevoke) => ({ ...object }),
+		fromAmino: (object: MsgRevoke) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.MsgRevokeResponse": {
 		aminoType: "cosmos-sdk/MsgRevokeResponse",
 		toAmino: (message: MsgRevokeResponse) => ({ ...message }),
-		fromAmino: (object: MsgRevokeResponse) => ({ ...object }),
-	},
+		fromAmino: (object: MsgRevokeResponse) => ({ ...object })
+	}
 };

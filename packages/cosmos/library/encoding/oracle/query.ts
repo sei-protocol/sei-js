@@ -25,7 +25,7 @@ import type {
 	QueryVotePenaltyCounterRequest as QueryVotePenaltyCounterRequest_type,
 	QueryVotePenaltyCounterResponse as QueryVotePenaltyCounterResponse_type,
 	QueryVoteTargetsRequest as QueryVoteTargetsRequest_type,
-	QueryVoteTargetsResponse as QueryVoteTargetsResponse_type,
+	QueryVoteTargetsResponse as QueryVoteTargetsResponse_type
 } from "../../types/oracle";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -104,7 +104,7 @@ export const QueryExchangeRateRequest: MessageFns<QueryExchangeRateRequest, "sei
 		const message = createBaseQueryExchangeRateRequest();
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryExchangeRateResponse: MessageFns<QueryExchangeRateResponse, "seiprotocol.seichain.oracle.QueryExchangeRateResponse"> = {
@@ -142,7 +142,7 @@ export const QueryExchangeRateResponse: MessageFns<QueryExchangeRateResponse, "s
 
 	fromJSON(object: any): QueryExchangeRateResponse {
 		return {
-			oracle_exchange_rate: isSet(object.oracle_exchange_rate) ? OracleExchangeRate.fromJSON(object.oracle_exchange_rate) : undefined,
+			oracle_exchange_rate: isSet(object.oracle_exchange_rate) ? OracleExchangeRate.fromJSON(object.oracle_exchange_rate) : undefined
 		};
 	},
 
@@ -164,7 +164,7 @@ export const QueryExchangeRateResponse: MessageFns<QueryExchangeRateResponse, "s
 				? OracleExchangeRate.fromPartial(object.oracle_exchange_rate)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryExchangeRatesRequest: MessageFns<QueryExchangeRatesRequest, "seiprotocol.seichain.oracle.QueryExchangeRatesRequest"> = {
@@ -205,7 +205,7 @@ export const QueryExchangeRatesRequest: MessageFns<QueryExchangeRatesRequest, "s
 	fromPartial<I extends Exact<DeepPartial<QueryExchangeRatesRequest>, I>>(_: I): QueryExchangeRatesRequest {
 		const message = createBaseQueryExchangeRatesRequest();
 		return message;
-	},
+	}
 };
 
 export const DenomOracleExchangeRatePair: MessageFns<DenomOracleExchangeRatePair, "seiprotocol.seichain.oracle.DenomOracleExchangeRatePair"> = {
@@ -254,7 +254,7 @@ export const DenomOracleExchangeRatePair: MessageFns<DenomOracleExchangeRatePair
 	fromJSON(object: any): DenomOracleExchangeRatePair {
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			oracle_exchange_rate: isSet(object.oracle_exchange_rate) ? OracleExchangeRate.fromJSON(object.oracle_exchange_rate) : undefined,
+			oracle_exchange_rate: isSet(object.oracle_exchange_rate) ? OracleExchangeRate.fromJSON(object.oracle_exchange_rate) : undefined
 		};
 	},
 
@@ -280,7 +280,7 @@ export const DenomOracleExchangeRatePair: MessageFns<DenomOracleExchangeRatePair
 				? OracleExchangeRate.fromPartial(object.oracle_exchange_rate)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryExchangeRatesResponse: MessageFns<QueryExchangeRatesResponse, "seiprotocol.seichain.oracle.QueryExchangeRatesResponse"> = {
@@ -320,7 +320,7 @@ export const QueryExchangeRatesResponse: MessageFns<QueryExchangeRatesResponse, 
 		return {
 			denom_oracle_exchange_rate_pairs: globalThis.Array.isArray(object?.denom_oracle_exchange_rate_pairs)
 				? object.denom_oracle_exchange_rate_pairs.map((e: any) => DenomOracleExchangeRatePair.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -339,7 +339,7 @@ export const QueryExchangeRatesResponse: MessageFns<QueryExchangeRatesResponse, 
 		const message = createBaseQueryExchangeRatesResponse();
 		message.denom_oracle_exchange_rate_pairs = object.denom_oracle_exchange_rate_pairs?.map((e) => DenomOracleExchangeRatePair.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const QueryActivesRequest: MessageFns<QueryActivesRequest, "seiprotocol.seichain.oracle.QueryActivesRequest"> = {
@@ -380,7 +380,7 @@ export const QueryActivesRequest: MessageFns<QueryActivesRequest, "seiprotocol.s
 	fromPartial<I extends Exact<DeepPartial<QueryActivesRequest>, I>>(_: I): QueryActivesRequest {
 		const message = createBaseQueryActivesRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryActivesResponse: MessageFns<QueryActivesResponse, "seiprotocol.seichain.oracle.QueryActivesResponse"> = {
@@ -418,7 +418,7 @@ export const QueryActivesResponse: MessageFns<QueryActivesResponse, "seiprotocol
 
 	fromJSON(object: any): QueryActivesResponse {
 		return {
-			actives: globalThis.Array.isArray(object?.actives) ? object.actives.map((e: any) => globalThis.String(e)) : [],
+			actives: globalThis.Array.isArray(object?.actives) ? object.actives.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -437,7 +437,7 @@ export const QueryActivesResponse: MessageFns<QueryActivesResponse, "seiprotocol
 		const message = createBaseQueryActivesResponse();
 		message.actives = object.actives?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const QueryVoteTargetsRequest: MessageFns<QueryVoteTargetsRequest, "seiprotocol.seichain.oracle.QueryVoteTargetsRequest"> = {
@@ -478,7 +478,7 @@ export const QueryVoteTargetsRequest: MessageFns<QueryVoteTargetsRequest, "seipr
 	fromPartial<I extends Exact<DeepPartial<QueryVoteTargetsRequest>, I>>(_: I): QueryVoteTargetsRequest {
 		const message = createBaseQueryVoteTargetsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryVoteTargetsResponse: MessageFns<QueryVoteTargetsResponse, "seiprotocol.seichain.oracle.QueryVoteTargetsResponse"> = {
@@ -516,7 +516,7 @@ export const QueryVoteTargetsResponse: MessageFns<QueryVoteTargetsResponse, "sei
 
 	fromJSON(object: any): QueryVoteTargetsResponse {
 		return {
-			vote_targets: globalThis.Array.isArray(object?.vote_targets) ? object.vote_targets.map((e: any) => globalThis.String(e)) : [],
+			vote_targets: globalThis.Array.isArray(object?.vote_targets) ? object.vote_targets.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -535,7 +535,7 @@ export const QueryVoteTargetsResponse: MessageFns<QueryVoteTargetsResponse, "sei
 		const message = createBaseQueryVoteTargetsResponse();
 		message.vote_targets = object.vote_targets?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const QueryPriceSnapshotHistoryRequest: MessageFns<QueryPriceSnapshotHistoryRequest, "seiprotocol.seichain.oracle.QueryPriceSnapshotHistoryRequest"> = {
@@ -576,7 +576,7 @@ export const QueryPriceSnapshotHistoryRequest: MessageFns<QueryPriceSnapshotHist
 	fromPartial<I extends Exact<DeepPartial<QueryPriceSnapshotHistoryRequest>, I>>(_: I): QueryPriceSnapshotHistoryRequest {
 		const message = createBaseQueryPriceSnapshotHistoryRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryPriceSnapshotHistoryResponse: MessageFns<QueryPriceSnapshotHistoryResponse, "seiprotocol.seichain.oracle.QueryPriceSnapshotHistoryResponse"> =
@@ -615,7 +615,7 @@ export const QueryPriceSnapshotHistoryResponse: MessageFns<QueryPriceSnapshotHis
 
 		fromJSON(object: any): QueryPriceSnapshotHistoryResponse {
 			return {
-				price_snapshots: globalThis.Array.isArray(object?.price_snapshots) ? object.price_snapshots.map((e: any) => PriceSnapshot.fromJSON(e)) : [],
+				price_snapshots: globalThis.Array.isArray(object?.price_snapshots) ? object.price_snapshots.map((e: any) => PriceSnapshot.fromJSON(e)) : []
 			};
 		},
 
@@ -634,7 +634,7 @@ export const QueryPriceSnapshotHistoryResponse: MessageFns<QueryPriceSnapshotHis
 			const message = createBaseQueryPriceSnapshotHistoryResponse();
 			message.price_snapshots = object.price_snapshots?.map((e) => PriceSnapshot.fromPartial(e)) || [];
 			return message;
-		},
+		}
 	};
 
 export const QueryTwapsRequest: MessageFns<QueryTwapsRequest, "seiprotocol.seichain.oracle.QueryTwapsRequest"> = {
@@ -689,7 +689,7 @@ export const QueryTwapsRequest: MessageFns<QueryTwapsRequest, "seiprotocol.seich
 		const message = createBaseQueryTwapsRequest();
 		message.lookback_seconds = object.lookback_seconds ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryTwapsResponse: MessageFns<QueryTwapsResponse, "seiprotocol.seichain.oracle.QueryTwapsResponse"> = {
@@ -727,7 +727,7 @@ export const QueryTwapsResponse: MessageFns<QueryTwapsResponse, "seiprotocol.sei
 
 	fromJSON(object: any): QueryTwapsResponse {
 		return {
-			oracle_twaps: globalThis.Array.isArray(object?.oracle_twaps) ? object.oracle_twaps.map((e: any) => OracleTwap.fromJSON(e)) : [],
+			oracle_twaps: globalThis.Array.isArray(object?.oracle_twaps) ? object.oracle_twaps.map((e: any) => OracleTwap.fromJSON(e)) : []
 		};
 	},
 
@@ -746,7 +746,7 @@ export const QueryTwapsResponse: MessageFns<QueryTwapsResponse, "seiprotocol.sei
 		const message = createBaseQueryTwapsResponse();
 		message.oracle_twaps = object.oracle_twaps?.map((e) => OracleTwap.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const QueryFeederDelegationRequest: MessageFns<QueryFeederDelegationRequest, "seiprotocol.seichain.oracle.QueryFeederDelegationRequest"> = {
@@ -801,7 +801,7 @@ export const QueryFeederDelegationRequest: MessageFns<QueryFeederDelegationReque
 		const message = createBaseQueryFeederDelegationRequest();
 		message.validator_addr = object.validator_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryFeederDelegationResponse: MessageFns<QueryFeederDelegationResponse, "seiprotocol.seichain.oracle.QueryFeederDelegationResponse"> = {
@@ -856,7 +856,7 @@ export const QueryFeederDelegationResponse: MessageFns<QueryFeederDelegationResp
 		const message = createBaseQueryFeederDelegationResponse();
 		message.feeder_addr = object.feeder_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryVotePenaltyCounterRequest: MessageFns<QueryVotePenaltyCounterRequest, "seiprotocol.seichain.oracle.QueryVotePenaltyCounterRequest"> = {
@@ -911,7 +911,7 @@ export const QueryVotePenaltyCounterRequest: MessageFns<QueryVotePenaltyCounterR
 		const message = createBaseQueryVotePenaltyCounterRequest();
 		message.validator_addr = object.validator_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryVotePenaltyCounterResponse: MessageFns<QueryVotePenaltyCounterResponse, "seiprotocol.seichain.oracle.QueryVotePenaltyCounterResponse"> = {
@@ -949,7 +949,7 @@ export const QueryVotePenaltyCounterResponse: MessageFns<QueryVotePenaltyCounter
 
 	fromJSON(object: any): QueryVotePenaltyCounterResponse {
 		return {
-			vote_penalty_counter: isSet(object.vote_penalty_counter) ? VotePenaltyCounter.fromJSON(object.vote_penalty_counter) : undefined,
+			vote_penalty_counter: isSet(object.vote_penalty_counter) ? VotePenaltyCounter.fromJSON(object.vote_penalty_counter) : undefined
 		};
 	},
 
@@ -971,7 +971,7 @@ export const QueryVotePenaltyCounterResponse: MessageFns<QueryVotePenaltyCounter
 				? VotePenaltyCounter.fromPartial(object.vote_penalty_counter)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const QuerySlashWindowRequest: MessageFns<QuerySlashWindowRequest, "seiprotocol.seichain.oracle.QuerySlashWindowRequest"> = {
@@ -1012,7 +1012,7 @@ export const QuerySlashWindowRequest: MessageFns<QuerySlashWindowRequest, "seipr
 	fromPartial<I extends Exact<DeepPartial<QuerySlashWindowRequest>, I>>(_: I): QuerySlashWindowRequest {
 		const message = createBaseQuerySlashWindowRequest();
 		return message;
-	},
+	}
 };
 
 export const QuerySlashWindowResponse: MessageFns<QuerySlashWindowResponse, "seiprotocol.seichain.oracle.QuerySlashWindowResponse"> = {
@@ -1067,7 +1067,7 @@ export const QuerySlashWindowResponse: MessageFns<QuerySlashWindowResponse, "sei
 		const message = createBaseQuerySlashWindowResponse();
 		message.window_progress = object.window_progress ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.seichain.oracle.QueryParamsRequest"> = {
@@ -1108,7 +1108,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.sei
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.seichain.oracle.QueryParamsResponse"> = {
@@ -1163,7 +1163,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.s
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryExchangeRateRequest(): QueryExchangeRateRequest {
@@ -1269,36 +1269,36 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.oracle.QueryTwapsRequest", QueryTwapsRequest as never],
 	["/seiprotocol.seichain.oracle.QueryTwapsResponse", QueryTwapsResponse as never],
 	["/seiprotocol.seichain.oracle.QueryParamsRequest", QueryParamsRequest as never],
-	["/seiprotocol.seichain.oracle.QueryParamsResponse", QueryParamsResponse as never],
+	["/seiprotocol.seichain.oracle.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.oracle.QueryActivesRequest": {
 		aminoType: "oracle/QueryActivesRequest",
 		toAmino: (message: QueryActivesRequest) => ({ ...message }),
-		fromAmino: (object: QueryActivesRequest) => ({ ...object }),
+		fromAmino: (object: QueryActivesRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.QueryTwapsRequest": {
 		aminoType: "oracle/QueryTwapsRequest",
 		toAmino: (message: QueryTwapsRequest) => ({ ...message }),
-		fromAmino: (object: QueryTwapsRequest) => ({ ...object }),
+		fromAmino: (object: QueryTwapsRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.QueryTwapsResponse": {
 		aminoType: "oracle/QueryTwapsResponse",
 		toAmino: (message: QueryTwapsResponse) => ({ ...message }),
-		fromAmino: (object: QueryTwapsResponse) => ({ ...object }),
+		fromAmino: (object: QueryTwapsResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.QueryParamsRequest": {
 		aminoType: "oracle/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.QueryParamsResponse": {
 		aminoType: "oracle/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	}
 };

@@ -66,7 +66,7 @@ export const EventGrant: MessageFns<EventGrant, "cosmos.authz.v1beta1.EventGrant
 		return {
 			msg_type_url: isSet(object.msg_type_url) ? globalThis.String(object.msg_type_url) : "",
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
+			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : ""
 		};
 	},
 
@@ -93,7 +93,7 @@ export const EventGrant: MessageFns<EventGrant, "cosmos.authz.v1beta1.EventGrant
 		message.granter = object.granter ?? "";
 		message.grantee = object.grantee ?? "";
 		return message;
-	},
+	}
 };
 
 export const EventRevoke: MessageFns<EventRevoke, "cosmos.authz.v1beta1.EventRevoke"> = {
@@ -153,7 +153,7 @@ export const EventRevoke: MessageFns<EventRevoke, "cosmos.authz.v1beta1.EventRev
 		return {
 			msg_type_url: isSet(object.msg_type_url) ? globalThis.String(object.msg_type_url) : "",
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
+			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : ""
 		};
 	},
 
@@ -180,7 +180,7 @@ export const EventRevoke: MessageFns<EventRevoke, "cosmos.authz.v1beta1.EventRev
 		message.granter = object.granter ?? "";
 		message.grantee = object.grantee ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseEventGrant(): EventGrant {
@@ -196,18 +196,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.authz.v1beta1.EventGrant", EventGrant as never],
-	["/cosmos.authz.v1beta1.EventRevoke", EventRevoke as never],
+	["/cosmos.authz.v1beta1.EventRevoke", EventRevoke as never]
 ];
 export const aminoConverters = {
 	"/cosmos.authz.v1beta1.EventGrant": {
 		aminoType: "cosmos-sdk/EventGrant",
 		toAmino: (message: EventGrant) => ({ ...message }),
-		fromAmino: (object: EventGrant) => ({ ...object }),
+		fromAmino: (object: EventGrant) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.EventRevoke": {
 		aminoType: "cosmos-sdk/EventRevoke",
 		toAmino: (message: EventRevoke) => ({ ...message }),
-		fromAmino: (object: EventRevoke) => ({ ...object }),
-	},
+		fromAmino: (object: EventRevoke) => ({ ...object })
+	}
 };

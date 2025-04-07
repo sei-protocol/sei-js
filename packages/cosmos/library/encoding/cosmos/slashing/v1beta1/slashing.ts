@@ -11,7 +11,7 @@ import type {
 	ValidatorMissedBlockArrayLegacyMissedHeights as ValidatorMissedBlockArrayLegacyMissedHeights_type,
 	ValidatorMissedBlockArray as ValidatorMissedBlockArray_type,
 	ValidatorSigningInfoLegacyMissedHeights as ValidatorSigningInfoLegacyMissedHeights_type,
-	ValidatorSigningInfo as ValidatorSigningInfo_type,
+	ValidatorSigningInfo as ValidatorSigningInfo_type
 } from "../../../../types/cosmos/slashing/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -104,7 +104,7 @@ export const ValidatorSigningInfoLegacyMissedHeights: MessageFns<
 			start_height: isSet(object.start_height) ? globalThis.Number(object.start_height) : 0,
 			jailed_until: isSet(object.jailed_until) ? fromJsonTimestamp(object.jailed_until) : undefined,
 			tombstoned: isSet(object.tombstoned) ? globalThis.Boolean(object.tombstoned) : false,
-			missed_blocks_counter: isSet(object.missed_blocks_counter) ? globalThis.Number(object.missed_blocks_counter) : 0,
+			missed_blocks_counter: isSet(object.missed_blocks_counter) ? globalThis.Number(object.missed_blocks_counter) : 0
 		};
 	},
 
@@ -139,7 +139,7 @@ export const ValidatorSigningInfoLegacyMissedHeights: MessageFns<
 		message.tombstoned = object.tombstoned ?? false;
 		message.missed_blocks_counter = object.missed_blocks_counter ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ValidatorSigningInfo: MessageFns<ValidatorSigningInfo, "cosmos.slashing.v1beta1.ValidatorSigningInfo"> = {
@@ -232,7 +232,7 @@ export const ValidatorSigningInfo: MessageFns<ValidatorSigningInfo, "cosmos.slas
 			index_offset: isSet(object.index_offset) ? globalThis.Number(object.index_offset) : 0,
 			jailed_until: isSet(object.jailed_until) ? fromJsonTimestamp(object.jailed_until) : undefined,
 			tombstoned: isSet(object.tombstoned) ? globalThis.Boolean(object.tombstoned) : false,
-			missed_blocks_counter: isSet(object.missed_blocks_counter) ? globalThis.Number(object.missed_blocks_counter) : 0,
+			missed_blocks_counter: isSet(object.missed_blocks_counter) ? globalThis.Number(object.missed_blocks_counter) : 0
 		};
 	},
 
@@ -271,7 +271,7 @@ export const ValidatorSigningInfo: MessageFns<ValidatorSigningInfo, "cosmos.slas
 		message.tombstoned = object.tombstoned ?? false;
 		message.missed_blocks_counter = object.missed_blocks_counter ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ValidatorMissedBlockArrayLegacyMissedHeights: MessageFns<
@@ -335,7 +335,7 @@ export const ValidatorMissedBlockArrayLegacyMissedHeights: MessageFns<
 	fromJSON(object: any): ValidatorMissedBlockArrayLegacyMissedHeights {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			missed_heights: globalThis.Array.isArray(object?.missed_heights) ? object.missed_heights.map((e: any) => globalThis.Number(e)) : [],
+			missed_heights: globalThis.Array.isArray(object?.missed_heights) ? object.missed_heights.map((e: any) => globalThis.Number(e)) : []
 		};
 	},
 
@@ -358,7 +358,7 @@ export const ValidatorMissedBlockArrayLegacyMissedHeights: MessageFns<
 		message.address = object.address ?? "";
 		message.missed_heights = object.missed_heights?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const ValidatorMissedBlockArray: MessageFns<ValidatorMissedBlockArray, "cosmos.slashing.v1beta1.ValidatorMissedBlockArray"> = {
@@ -430,7 +430,7 @@ export const ValidatorMissedBlockArray: MessageFns<ValidatorMissedBlockArray, "c
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
 			window_size: isSet(object.window_size) ? globalThis.Number(object.window_size) : 0,
-			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => globalThis.Number(e)) : [],
+			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => globalThis.Number(e)) : []
 		};
 	},
 
@@ -457,7 +457,7 @@ export const ValidatorMissedBlockArray: MessageFns<ValidatorMissedBlockArray, "c
 		message.window_size = object.window_size ?? 0;
 		message.missed_blocks = object.missed_blocks?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const Params: MessageFns<Params, "cosmos.slashing.v1beta1.Params"> = {
@@ -539,7 +539,7 @@ export const Params: MessageFns<Params, "cosmos.slashing.v1beta1.Params"> = {
 			min_signed_per_window: isSet(object.min_signed_per_window) ? bytesFromBase64(object.min_signed_per_window) : new Uint8Array(0),
 			downtime_jail_duration: isSet(object.downtime_jail_duration) ? Duration.fromJSON(object.downtime_jail_duration) : undefined,
 			slash_fraction_double_sign: isSet(object.slash_fraction_double_sign) ? bytesFromBase64(object.slash_fraction_double_sign) : new Uint8Array(0),
-			slash_fraction_downtime: isSet(object.slash_fraction_downtime) ? bytesFromBase64(object.slash_fraction_downtime) : new Uint8Array(0),
+			slash_fraction_downtime: isSet(object.slash_fraction_downtime) ? bytesFromBase64(object.slash_fraction_downtime) : new Uint8Array(0)
 		};
 	},
 
@@ -575,7 +575,7 @@ export const Params: MessageFns<Params, "cosmos.slashing.v1beta1.Params"> = {
 		message.slash_fraction_double_sign = object.slash_fraction_double_sign ?? new Uint8Array(0);
 		message.slash_fraction_downtime = object.slash_fraction_downtime ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseValidatorSigningInfoLegacyMissedHeights(): ValidatorSigningInfoLegacyMissedHeights {
@@ -589,7 +589,7 @@ function createBaseValidatorSigningInfo(): ValidatorSigningInfo {
 		index_offset: 0,
 		jailed_until: undefined,
 		tombstoned: false,
-		missed_blocks_counter: 0,
+		missed_blocks_counter: 0
 	};
 }
 
@@ -607,7 +607,7 @@ function createBaseParams(): Params {
 		min_signed_per_window: new Uint8Array(0),
 		downtime_jail_duration: undefined,
 		slash_fraction_double_sign: new Uint8Array(0),
-		slash_fraction_downtime: new Uint8Array(0),
+		slash_fraction_downtime: new Uint8Array(0)
 	};
 }
 
@@ -674,18 +674,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.slashing.v1beta1.ValidatorSigningInfo", ValidatorSigningInfo as never],
-	["/cosmos.slashing.v1beta1.Params", Params as never],
+	["/cosmos.slashing.v1beta1.Params", Params as never]
 ];
 export const aminoConverters = {
 	"/cosmos.slashing.v1beta1.ValidatorSigningInfo": {
 		aminoType: "cosmos-sdk/ValidatorSigningInfo",
 		toAmino: (message: ValidatorSigningInfo) => ({ ...message }),
-		fromAmino: (object: ValidatorSigningInfo) => ({ ...object }),
+		fromAmino: (object: ValidatorSigningInfo) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.Params": {
 		aminoType: "cosmos-sdk/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
-	},
+		fromAmino: (object: Params) => ({ ...object })
+	}
 };

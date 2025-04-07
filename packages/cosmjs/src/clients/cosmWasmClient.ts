@@ -74,7 +74,7 @@ export const getCosmWasmClient = async (rpcEndpoint: string | HttpEndpoint): Pro
 export const getSigningCosmWasmClient = async (
 	rpcEndpoint: string | HttpEndpoint,
 	signer: OfflineSigner,
-	options?: SigningCosmWasmClientOptions,
+	options?: SigningCosmWasmClientOptions
 ): Promise<SigningCosmWasmClient> => {
 	const registry = createSeiRegistry();
 	const aminoTypes = createSeiAminoTypes();
@@ -82,6 +82,6 @@ export const getSigningCosmWasmClient = async (
 		registry,
 		aminoTypes,
 		broadcastPollIntervalMs: options?.broadcastPollIntervalMs || 400,
-		...options,
+		...options
 	});
 };

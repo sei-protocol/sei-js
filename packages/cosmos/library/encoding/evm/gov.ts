@@ -8,7 +8,7 @@ import type {
 	AddERCCW721PointerProposal as AddERCCW721PointerProposal_type,
 	AddERCCW1155PointerProposal as AddERCCW1155PointerProposal_type,
 	AddERCNativePointerProposalV2 as AddERCNativePointerProposalV2_type,
-	AddERCNativePointerProposal as AddERCNativePointerProposal_type,
+	AddERCNativePointerProposal as AddERCNativePointerProposal_type
 } from "../../types/evm";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -101,7 +101,7 @@ export const AddERCNativePointerProposal: MessageFns<AddERCNativePointerProposal
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			token: isSet(object.token) ? globalThis.String(object.token) : "",
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -136,7 +136,7 @@ export const AddERCNativePointerProposal: MessageFns<AddERCNativePointerProposal
 		message.pointer = object.pointer ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const AddERCCW20PointerProposal: MessageFns<AddERCCW20PointerProposal, "seiprotocol.seichain.evm.AddERCCW20PointerProposal"> = {
@@ -218,7 +218,7 @@ export const AddERCCW20PointerProposal: MessageFns<AddERCCW20PointerProposal, "s
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -253,7 +253,7 @@ export const AddERCCW20PointerProposal: MessageFns<AddERCCW20PointerProposal, "s
 		message.pointer = object.pointer ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const AddERCCW721PointerProposal: MessageFns<AddERCCW721PointerProposal, "seiprotocol.seichain.evm.AddERCCW721PointerProposal"> = {
@@ -335,7 +335,7 @@ export const AddERCCW721PointerProposal: MessageFns<AddERCCW721PointerProposal, 
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -370,7 +370,7 @@ export const AddERCCW721PointerProposal: MessageFns<AddERCCW721PointerProposal, 
 		message.pointer = object.pointer ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const AddERCCW1155PointerProposal: MessageFns<AddERCCW1155PointerProposal, "seiprotocol.seichain.evm.AddERCCW1155PointerProposal"> = {
@@ -452,7 +452,7 @@ export const AddERCCW1155PointerProposal: MessageFns<AddERCCW1155PointerProposal
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -487,7 +487,7 @@ export const AddERCCW1155PointerProposal: MessageFns<AddERCCW1155PointerProposal
 		message.pointer = object.pointer ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const AddCWERC20PointerProposal: MessageFns<AddCWERC20PointerProposal, "seiprotocol.seichain.evm.AddCWERC20PointerProposal"> = {
@@ -569,7 +569,7 @@ export const AddCWERC20PointerProposal: MessageFns<AddCWERC20PointerProposal, "s
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -604,7 +604,7 @@ export const AddCWERC20PointerProposal: MessageFns<AddCWERC20PointerProposal, "s
 		message.pointer = object.pointer ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const AddCWERC721PointerProposal: MessageFns<AddCWERC721PointerProposal, "seiprotocol.seichain.evm.AddCWERC721PointerProposal"> = {
@@ -686,7 +686,7 @@ export const AddCWERC721PointerProposal: MessageFns<AddCWERC721PointerProposal, 
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -721,7 +721,7 @@ export const AddCWERC721PointerProposal: MessageFns<AddCWERC721PointerProposal, 
 		message.pointer = object.pointer ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const AddCWERC1155PointerProposal: MessageFns<AddCWERC1155PointerProposal, "seiprotocol.seichain.evm.AddCWERC1155PointerProposal"> = {
@@ -803,7 +803,7 @@ export const AddCWERC1155PointerProposal: MessageFns<AddCWERC1155PointerProposal
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -838,7 +838,7 @@ export const AddCWERC1155PointerProposal: MessageFns<AddCWERC1155PointerProposal
 		message.pointer = object.pointer ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const AddERCNativePointerProposalV2: MessageFns<AddERCNativePointerProposalV2, "seiprotocol.seichain.evm.AddERCNativePointerProposalV2"> = {
@@ -931,7 +931,7 @@ export const AddERCNativePointerProposalV2: MessageFns<AddERCNativePointerPropos
 			token: isSet(object.token) ? globalThis.String(object.token) : "",
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
 			symbol: isSet(object.symbol) ? globalThis.String(object.symbol) : "",
-			decimals: isSet(object.decimals) ? globalThis.Number(object.decimals) : 0,
+			decimals: isSet(object.decimals) ? globalThis.Number(object.decimals) : 0
 		};
 	},
 
@@ -970,7 +970,7 @@ export const AddERCNativePointerProposalV2: MessageFns<AddERCNativePointerPropos
 		message.symbol = object.symbol ?? "";
 		message.decimals = object.decimals ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseAddERCNativePointerProposal(): AddERCNativePointerProposal {

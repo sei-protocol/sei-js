@@ -222,5 +222,5 @@ export const aminoConverters: AminoConverters = {
 	...tendermint_version_types_amino,
 	...tokenfactory_genesis_amino,
 	...tokenfactory_params_amino,
-	...tokenfactory_tx_amino,
+	...tokenfactory_tx_amino
 };

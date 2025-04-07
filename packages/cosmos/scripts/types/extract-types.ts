@@ -15,7 +15,7 @@ const EXCLUDED_TYPES = new Set([
 	"JSONStringStreamController",
 	"Primitive",
 	"RequestPayload",
-	"FlattenedRequestPayload",
+	"FlattenedRequestPayload"
 ]);
 
 export const extractTypes = async (sourceFilePath: string, destinationFilePath: string): Promise<void> => {

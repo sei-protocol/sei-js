@@ -44,7 +44,7 @@ export const MultiSignature: MessageFns<MultiSignature, "cosmos.crypto.multisig.
 
 	fromJSON(object: any): MultiSignature {
 		return {
-			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => bytesFromBase64(e)) : [],
+			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => bytesFromBase64(e)) : []
 		};
 	},
 
@@ -63,7 +63,7 @@ export const MultiSignature: MessageFns<MultiSignature, "cosmos.crypto.multisig.
 		const message = createBaseMultiSignature();
 		message.signatures = object.signatures?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const CompactBitArray: MessageFns<CompactBitArray, "cosmos.crypto.multisig.v1beta1.CompactBitArray"> = {
@@ -112,7 +112,7 @@ export const CompactBitArray: MessageFns<CompactBitArray, "cosmos.crypto.multisi
 	fromJSON(object: any): CompactBitArray {
 		return {
 			extra_bits_stored: isSet(object.extra_bits_stored) ? globalThis.Number(object.extra_bits_stored) : 0,
-			elems: isSet(object.elems) ? bytesFromBase64(object.elems) : new Uint8Array(0),
+			elems: isSet(object.elems) ? bytesFromBase64(object.elems) : new Uint8Array(0)
 		};
 	},
 
@@ -135,7 +135,7 @@ export const CompactBitArray: MessageFns<CompactBitArray, "cosmos.crypto.multisi
 		message.extra_bits_stored = object.extra_bits_stored ?? 0;
 		message.elems = object.elems ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseMultiSignature(): MultiSignature {
@@ -176,18 +176,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.crypto.multisig.v1beta1.MultiSignature", MultiSignature as never],
-	["/cosmos.crypto.multisig.v1beta1.CompactBitArray", CompactBitArray as never],
+	["/cosmos.crypto.multisig.v1beta1.CompactBitArray", CompactBitArray as never]
 ];
 export const aminoConverters = {
 	"/cosmos.crypto.multisig.v1beta1.MultiSignature": {
 		aminoType: "cosmos-sdk/MultiSignature",
 		toAmino: (message: MultiSignature) => ({ ...message }),
-		fromAmino: (object: MultiSignature) => ({ ...object }),
+		fromAmino: (object: MultiSignature) => ({ ...object })
 	},
 
 	"/cosmos.crypto.multisig.v1beta1.CompactBitArray": {
 		aminoType: "cosmos-sdk/CompactBitArray",
 		toAmino: (message: CompactBitArray) => ({ ...message }),
-		fromAmino: (object: CompactBitArray) => ({ ...object }),
-	},
+		fromAmino: (object: CompactBitArray) => ({ ...object })
+	}
 };

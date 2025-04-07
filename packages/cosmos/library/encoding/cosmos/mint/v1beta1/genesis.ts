@@ -56,7 +56,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.mint.v1beta1.Genesis
 	fromJSON(object: any): GenesisState {
 		return {
 			minter: isSet(object.minter) ? Minter.fromJSON(object.minter) : undefined,
-			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined
 		};
 	},
 
@@ -79,7 +79,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.mint.v1beta1.Genesis
 		message.minter = object.minter !== undefined && object.minter !== null ? Minter.fromPartial(object.minter) : undefined;
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -94,6 +94,6 @@ export const aminoConverters = {
 	"/cosmos.mint.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

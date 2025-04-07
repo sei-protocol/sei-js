@@ -11,7 +11,7 @@ import {
 	ValidatorAccumulatedCommission,
 	ValidatorCurrentRewards,
 	ValidatorHistoricalRewards,
-	ValidatorSlashEvent,
+	ValidatorSlashEvent
 } from "./distribution";
 
 import type {
@@ -22,7 +22,7 @@ import type {
 	ValidatorCurrentRewardsRecord as ValidatorCurrentRewardsRecord_type,
 	ValidatorHistoricalRewardsRecord as ValidatorHistoricalRewardsRecord_type,
 	ValidatorOutstandingRewardsRecord as ValidatorOutstandingRewardsRecord_type,
-	ValidatorSlashEventRecord as ValidatorSlashEventRecord_type,
+	ValidatorSlashEventRecord as ValidatorSlashEventRecord_type
 } from "../../../../types/cosmos/distribution/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -82,7 +82,7 @@ export const DelegatorWithdrawInfo: MessageFns<DelegatorWithdrawInfo, "cosmos.di
 	fromJSON(object: any): DelegatorWithdrawInfo {
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
-			withdraw_address: isSet(object.withdraw_address) ? globalThis.String(object.withdraw_address) : "",
+			withdraw_address: isSet(object.withdraw_address) ? globalThis.String(object.withdraw_address) : ""
 		};
 	},
 
@@ -105,7 +105,7 @@ export const DelegatorWithdrawInfo: MessageFns<DelegatorWithdrawInfo, "cosmos.di
 		message.delegator_address = object.delegator_address ?? "";
 		message.withdraw_address = object.withdraw_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const ValidatorOutstandingRewardsRecord: MessageFns<ValidatorOutstandingRewardsRecord, "cosmos.distribution.v1beta1.ValidatorOutstandingRewardsRecord"> =
@@ -155,7 +155,7 @@ export const ValidatorOutstandingRewardsRecord: MessageFns<ValidatorOutstandingR
 		fromJSON(object: any): ValidatorOutstandingRewardsRecord {
 			return {
 				validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-				outstanding_rewards: globalThis.Array.isArray(object?.outstanding_rewards) ? object.outstanding_rewards.map((e: any) => DecCoin.fromJSON(e)) : [],
+				outstanding_rewards: globalThis.Array.isArray(object?.outstanding_rewards) ? object.outstanding_rewards.map((e: any) => DecCoin.fromJSON(e)) : []
 			};
 		},
 
@@ -178,7 +178,7 @@ export const ValidatorOutstandingRewardsRecord: MessageFns<ValidatorOutstandingR
 			message.validator_address = object.validator_address ?? "";
 			message.outstanding_rewards = object.outstanding_rewards?.map((e) => DecCoin.fromPartial(e)) || [];
 			return message;
-		},
+		}
 	};
 
 export const ValidatorAccumulatedCommissionRecord: MessageFns<
@@ -230,7 +230,7 @@ export const ValidatorAccumulatedCommissionRecord: MessageFns<
 	fromJSON(object: any): ValidatorAccumulatedCommissionRecord {
 		return {
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			accumulated: isSet(object.accumulated) ? ValidatorAccumulatedCommission.fromJSON(object.accumulated) : undefined,
+			accumulated: isSet(object.accumulated) ? ValidatorAccumulatedCommission.fromJSON(object.accumulated) : undefined
 		};
 	},
 
@@ -254,7 +254,7 @@ export const ValidatorAccumulatedCommissionRecord: MessageFns<
 		message.accumulated =
 			object.accumulated !== undefined && object.accumulated !== null ? ValidatorAccumulatedCommission.fromPartial(object.accumulated) : undefined;
 		return message;
-	},
+	}
 };
 
 export const ValidatorHistoricalRewardsRecord: MessageFns<ValidatorHistoricalRewardsRecord, "cosmos.distribution.v1beta1.ValidatorHistoricalRewardsRecord"> = {
@@ -314,7 +314,7 @@ export const ValidatorHistoricalRewardsRecord: MessageFns<ValidatorHistoricalRew
 		return {
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
 			period: isSet(object.period) ? globalThis.Number(object.period) : 0,
-			rewards: isSet(object.rewards) ? ValidatorHistoricalRewards.fromJSON(object.rewards) : undefined,
+			rewards: isSet(object.rewards) ? ValidatorHistoricalRewards.fromJSON(object.rewards) : undefined
 		};
 	},
 
@@ -341,7 +341,7 @@ export const ValidatorHistoricalRewardsRecord: MessageFns<ValidatorHistoricalRew
 		message.period = object.period ?? 0;
 		message.rewards = object.rewards !== undefined && object.rewards !== null ? ValidatorHistoricalRewards.fromPartial(object.rewards) : undefined;
 		return message;
-	},
+	}
 };
 
 export const ValidatorCurrentRewardsRecord: MessageFns<ValidatorCurrentRewardsRecord, "cosmos.distribution.v1beta1.ValidatorCurrentRewardsRecord"> = {
@@ -390,7 +390,7 @@ export const ValidatorCurrentRewardsRecord: MessageFns<ValidatorCurrentRewardsRe
 	fromJSON(object: any): ValidatorCurrentRewardsRecord {
 		return {
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			rewards: isSet(object.rewards) ? ValidatorCurrentRewards.fromJSON(object.rewards) : undefined,
+			rewards: isSet(object.rewards) ? ValidatorCurrentRewards.fromJSON(object.rewards) : undefined
 		};
 	},
 
@@ -413,7 +413,7 @@ export const ValidatorCurrentRewardsRecord: MessageFns<ValidatorCurrentRewardsRe
 		message.validator_address = object.validator_address ?? "";
 		message.rewards = object.rewards !== undefined && object.rewards !== null ? ValidatorCurrentRewards.fromPartial(object.rewards) : undefined;
 		return message;
-	},
+	}
 };
 
 export const DelegatorStartingInfoRecord: MessageFns<DelegatorStartingInfoRecord, "cosmos.distribution.v1beta1.DelegatorStartingInfoRecord"> = {
@@ -473,7 +473,7 @@ export const DelegatorStartingInfoRecord: MessageFns<DelegatorStartingInfoRecord
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			starting_info: isSet(object.starting_info) ? DelegatorStartingInfo.fromJSON(object.starting_info) : undefined,
+			starting_info: isSet(object.starting_info) ? DelegatorStartingInfo.fromJSON(object.starting_info) : undefined
 		};
 	},
 
@@ -501,7 +501,7 @@ export const DelegatorStartingInfoRecord: MessageFns<DelegatorStartingInfoRecord
 		message.starting_info =
 			object.starting_info !== undefined && object.starting_info !== null ? DelegatorStartingInfo.fromPartial(object.starting_info) : undefined;
 		return message;
-	},
+	}
 };
 
 export const ValidatorSlashEventRecord: MessageFns<ValidatorSlashEventRecord, "cosmos.distribution.v1beta1.ValidatorSlashEventRecord"> = {
@@ -572,7 +572,7 @@ export const ValidatorSlashEventRecord: MessageFns<ValidatorSlashEventRecord, "c
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			period: isSet(object.period) ? globalThis.Number(object.period) : 0,
-			validator_slash_event: isSet(object.validator_slash_event) ? ValidatorSlashEvent.fromJSON(object.validator_slash_event) : undefined,
+			validator_slash_event: isSet(object.validator_slash_event) ? ValidatorSlashEvent.fromJSON(object.validator_slash_event) : undefined
 		};
 	},
 
@@ -606,7 +606,7 @@ export const ValidatorSlashEventRecord: MessageFns<ValidatorSlashEventRecord, "c
 				? ValidatorSlashEvent.fromPartial(object.validator_slash_event)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.distribution.v1beta1.GenesisState"> = {
@@ -757,7 +757,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.distribution.v1beta1
 				: [],
 			validator_slash_events: globalThis.Array.isArray(object?.validator_slash_events)
 				? object.validator_slash_events.map((e: any) => ValidatorSlashEventRecord.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -812,7 +812,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.distribution.v1beta1
 		message.delegator_starting_infos = object.delegator_starting_infos?.map((e) => DelegatorStartingInfoRecord.fromPartial(e)) || [];
 		message.validator_slash_events = object.validator_slash_events?.map((e) => ValidatorSlashEventRecord.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseDelegatorWithdrawInfo(): DelegatorWithdrawInfo {
@@ -854,7 +854,7 @@ function createBaseGenesisState(): GenesisState {
 		validator_historical_rewards: [],
 		validator_current_rewards: [],
 		delegator_starting_infos: [],
-		validator_slash_events: [],
+		validator_slash_events: []
 	};
 }
 
@@ -877,6 +877,6 @@ export const aminoConverters = {
 	"/cosmos.distribution.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

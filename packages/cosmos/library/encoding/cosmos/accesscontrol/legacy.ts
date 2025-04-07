@@ -6,7 +6,7 @@ import { accessOperationSelectorTypeFromJSON, accessOperationSelectorTypeToJSON 
 
 import type {
 	LegacyAccessOperationWithSelector as LegacyAccessOperationWithSelector_type,
-	LegacyWasmDependencyMapping as LegacyWasmDependencyMapping_type,
+	LegacyWasmDependencyMapping as LegacyWasmDependencyMapping_type
 } from "../../../types/cosmos/accesscontrol";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -74,7 +74,7 @@ export const LegacyAccessOperationWithSelector: MessageFns<
 		return {
 			operation: isSet(object.operation) ? AccessOperation.fromJSON(object.operation) : undefined,
 			selector_type: isSet(object.selector_type) ? accessOperationSelectorTypeFromJSON(object.selector_type) : 0,
-			selector: isSet(object.selector) ? globalThis.String(object.selector) : "",
+			selector: isSet(object.selector) ? globalThis.String(object.selector) : ""
 		};
 	},
 
@@ -101,7 +101,7 @@ export const LegacyAccessOperationWithSelector: MessageFns<
 		message.selector_type = object.selector_type ?? 0;
 		message.selector = object.selector ?? "";
 		return message;
-	},
+	}
 };
 
 export const LegacyWasmDependencyMapping: MessageFns<LegacyWasmDependencyMapping, "cosmos.accesscontrol.v1beta1.LegacyWasmDependencyMapping"> = {
@@ -172,7 +172,7 @@ export const LegacyWasmDependencyMapping: MessageFns<LegacyWasmDependencyMapping
 			enabled: isSet(object.enabled) ? globalThis.Boolean(object.enabled) : false,
 			access_ops: globalThis.Array.isArray(object?.access_ops) ? object.access_ops.map((e: any) => LegacyAccessOperationWithSelector.fromJSON(e)) : [],
 			reset_reason: isSet(object.reset_reason) ? globalThis.String(object.reset_reason) : "",
-			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : "",
+			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : ""
 		};
 	},
 
@@ -203,7 +203,7 @@ export const LegacyWasmDependencyMapping: MessageFns<LegacyWasmDependencyMapping
 		message.reset_reason = object.reset_reason ?? "";
 		message.contract_address = object.contract_address ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseLegacyAccessOperationWithSelector(): LegacyAccessOperationWithSelector {

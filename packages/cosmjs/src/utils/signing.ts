@@ -30,7 +30,7 @@ export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array)
 			// fee gas must be equal to 0
 			gas: '0',
 			//fee amount must be an empty array
-			amount: [],
+			amount: []
 		},
 		msgs: [
 			{
@@ -39,12 +39,12 @@ export function makeADR36AminoSignDoc(signer: string, data: string | Uint8Array)
 					signer,
 					// Data is arbitrary bytes which can represent text, files, objects. It's applications developers decision how Data should be deserialized, serialized and the object it can represent in their context
 					// It's applications developers decision how Data should be treated, by treated we mean the serialization and deserialization process and the Object Data should represent.
-					data: base64Data,
-				},
-			},
+					data: base64Data
+				}
+			}
 		],
 		// the memo must be empty
-		memo: '',
+		memo: ''
 	};
 }
 

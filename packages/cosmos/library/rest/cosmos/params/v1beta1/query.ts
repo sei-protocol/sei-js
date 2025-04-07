@@ -6,7 +6,7 @@ export class Query {
 	static Params(req: QueryParamsRequest, initReq?: fm.InitReq): Promise<QueryParamsResponse> {
 		return fm.fetchReq<QueryParamsRequest, QueryParamsResponse>(`/cosmos/params/v1beta1/params?${fm.renderURLSearchParams(req, [])}`, {
 			...initReq,
-			method: "GET",
+			method: "GET"
 		});
 	}
 }

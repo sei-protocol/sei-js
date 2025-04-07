@@ -10,7 +10,7 @@ import type {
 	MsgMultiSendResponse as MsgMultiSendResponse_type,
 	MsgMultiSend as MsgMultiSend_type,
 	MsgSendResponse as MsgSendResponse_type,
-	MsgSend as MsgSend_type,
+	MsgSend as MsgSend_type
 } from "../../../../types/cosmos/bank/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -77,7 +77,7 @@ export const MsgSend: MessageFns<MsgSend, "cosmos.bank.v1beta1.MsgSend"> = {
 		return {
 			from_address: isSet(object.from_address) ? globalThis.String(object.from_address) : "",
 			to_address: isSet(object.to_address) ? globalThis.String(object.to_address) : "",
-			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
+			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -104,7 +104,7 @@ export const MsgSend: MessageFns<MsgSend, "cosmos.bank.v1beta1.MsgSend"> = {
 		message.to_address = object.to_address ?? "";
 		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgSendResponse: MessageFns<MsgSendResponse, "cosmos.bank.v1beta1.MsgSendResponse"> = {
@@ -145,7 +145,7 @@ export const MsgSendResponse: MessageFns<MsgSendResponse, "cosmos.bank.v1beta1.M
 	fromPartial<I extends Exact<DeepPartial<MsgSendResponse>, I>>(_: I): MsgSendResponse {
 		const message = createBaseMsgSendResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgMultiSend: MessageFns<MsgMultiSend, "cosmos.bank.v1beta1.MsgMultiSend"> = {
@@ -194,7 +194,7 @@ export const MsgMultiSend: MessageFns<MsgMultiSend, "cosmos.bank.v1beta1.MsgMult
 	fromJSON(object: any): MsgMultiSend {
 		return {
 			inputs: globalThis.Array.isArray(object?.inputs) ? object.inputs.map((e: any) => Input.fromJSON(e)) : [],
-			outputs: globalThis.Array.isArray(object?.outputs) ? object.outputs.map((e: any) => Output.fromJSON(e)) : [],
+			outputs: globalThis.Array.isArray(object?.outputs) ? object.outputs.map((e: any) => Output.fromJSON(e)) : []
 		};
 	},
 
@@ -217,7 +217,7 @@ export const MsgMultiSend: MessageFns<MsgMultiSend, "cosmos.bank.v1beta1.MsgMult
 		message.inputs = object.inputs?.map((e) => Input.fromPartial(e)) || [];
 		message.outputs = object.outputs?.map((e) => Output.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgMultiSendResponse: MessageFns<MsgMultiSendResponse, "cosmos.bank.v1beta1.MsgMultiSendResponse"> = {
@@ -258,7 +258,7 @@ export const MsgMultiSendResponse: MessageFns<MsgMultiSendResponse, "cosmos.bank
 	fromPartial<I extends Exact<DeepPartial<MsgMultiSendResponse>, I>>(_: I): MsgMultiSendResponse {
 		const message = createBaseMsgMultiSendResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgSend(): MsgSend {
@@ -284,30 +284,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.bank.v1beta1.MsgSend", MsgSend as never],
 	["/cosmos.bank.v1beta1.MsgSendResponse", MsgSendResponse as never],
 	["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend as never],
-	["/cosmos.bank.v1beta1.MsgMultiSendResponse", MsgMultiSendResponse as never],
+	["/cosmos.bank.v1beta1.MsgMultiSendResponse", MsgMultiSendResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.bank.v1beta1.MsgSend": {
 		aminoType: "cosmos-sdk/MsgSend",
 		toAmino: (message: MsgSend) => ({ ...message }),
-		fromAmino: (object: MsgSend) => ({ ...object }),
+		fromAmino: (object: MsgSend) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.MsgSendResponse": {
 		aminoType: "cosmos-sdk/MsgSendResponse",
 		toAmino: (message: MsgSendResponse) => ({ ...message }),
-		fromAmino: (object: MsgSendResponse) => ({ ...object }),
+		fromAmino: (object: MsgSendResponse) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.MsgMultiSend": {
 		aminoType: "cosmos-sdk/MsgMultiSend",
 		toAmino: (message: MsgMultiSend) => ({ ...message }),
-		fromAmino: (object: MsgMultiSend) => ({ ...object }),
+		fromAmino: (object: MsgMultiSend) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.MsgMultiSendResponse": {
 		aminoType: "cosmos-sdk/MsgMultiSendResponse",
 		toAmino: (message: MsgMultiSendResponse) => ({ ...message }),
-		fromAmino: (object: MsgMultiSendResponse) => ({ ...object }),
-	},
+		fromAmino: (object: MsgMultiSendResponse) => ({ ...object })
+	}
 };

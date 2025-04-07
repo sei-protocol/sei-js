@@ -20,7 +20,7 @@ import type {
 	SignerInfo as SignerInfo_type,
 	TxBody as TxBody_type,
 	TxRaw as TxRaw_type,
-	Tx as Tx_type,
+	Tx as Tx_type
 } from "../../../../types/cosmos/tx/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -93,7 +93,7 @@ export const Tx: MessageFns<Tx, "cosmos.tx.v1beta1.Tx"> = {
 		return {
 			body: isSet(object.body) ? TxBody.fromJSON(object.body) : undefined,
 			auth_info: isSet(object.auth_info) ? AuthInfo.fromJSON(object.auth_info) : undefined,
-			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => bytesFromBase64(e)) : [],
+			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => bytesFromBase64(e)) : []
 		};
 	},
 
@@ -120,7 +120,7 @@ export const Tx: MessageFns<Tx, "cosmos.tx.v1beta1.Tx"> = {
 		message.auth_info = object.auth_info !== undefined && object.auth_info !== null ? AuthInfo.fromPartial(object.auth_info) : undefined;
 		message.signatures = object.signatures?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const TxRaw: MessageFns<TxRaw, "cosmos.tx.v1beta1.TxRaw"> = {
@@ -180,7 +180,7 @@ export const TxRaw: MessageFns<TxRaw, "cosmos.tx.v1beta1.TxRaw"> = {
 		return {
 			body_bytes: isSet(object.body_bytes) ? bytesFromBase64(object.body_bytes) : new Uint8Array(0),
 			auth_info_bytes: isSet(object.auth_info_bytes) ? bytesFromBase64(object.auth_info_bytes) : new Uint8Array(0),
-			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => bytesFromBase64(e)) : [],
+			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => bytesFromBase64(e)) : []
 		};
 	},
 
@@ -207,7 +207,7 @@ export const TxRaw: MessageFns<TxRaw, "cosmos.tx.v1beta1.TxRaw"> = {
 		message.auth_info_bytes = object.auth_info_bytes ?? new Uint8Array(0);
 		message.signatures = object.signatures?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const SignDoc: MessageFns<SignDoc, "cosmos.tx.v1beta1.SignDoc"> = {
@@ -278,7 +278,7 @@ export const SignDoc: MessageFns<SignDoc, "cosmos.tx.v1beta1.SignDoc"> = {
 			body_bytes: isSet(object.body_bytes) ? bytesFromBase64(object.body_bytes) : new Uint8Array(0),
 			auth_info_bytes: isSet(object.auth_info_bytes) ? bytesFromBase64(object.auth_info_bytes) : new Uint8Array(0),
 			chain_id: isSet(object.chain_id) ? globalThis.String(object.chain_id) : "",
-			account_number: isSet(object.account_number) ? globalThis.Number(object.account_number) : 0,
+			account_number: isSet(object.account_number) ? globalThis.Number(object.account_number) : 0
 		};
 	},
 
@@ -309,7 +309,7 @@ export const SignDoc: MessageFns<SignDoc, "cosmos.tx.v1beta1.SignDoc"> = {
 		message.chain_id = object.chain_id ?? "";
 		message.account_number = object.account_number ?? 0;
 		return message;
-	},
+	}
 };
 
 export const TxBody: MessageFns<TxBody, "cosmos.tx.v1beta1.TxBody"> = {
@@ -393,7 +393,7 @@ export const TxBody: MessageFns<TxBody, "cosmos.tx.v1beta1.TxBody"> = {
 			extension_options: globalThis.Array.isArray(object?.extension_options) ? object.extension_options.map((e: any) => Any.fromJSON(e)) : [],
 			non_critical_extension_options: globalThis.Array.isArray(object?.non_critical_extension_options)
 				? object.non_critical_extension_options.map((e: any) => Any.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -428,7 +428,7 @@ export const TxBody: MessageFns<TxBody, "cosmos.tx.v1beta1.TxBody"> = {
 		message.extension_options = object.extension_options?.map((e) => Any.fromPartial(e)) || [];
 		message.non_critical_extension_options = object.non_critical_extension_options?.map((e) => Any.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const AuthInfo: MessageFns<AuthInfo, "cosmos.tx.v1beta1.AuthInfo"> = {
@@ -477,7 +477,7 @@ export const AuthInfo: MessageFns<AuthInfo, "cosmos.tx.v1beta1.AuthInfo"> = {
 	fromJSON(object: any): AuthInfo {
 		return {
 			signer_infos: globalThis.Array.isArray(object?.signer_infos) ? object.signer_infos.map((e: any) => SignerInfo.fromJSON(e)) : [],
-			fee: isSet(object.fee) ? Fee.fromJSON(object.fee) : undefined,
+			fee: isSet(object.fee) ? Fee.fromJSON(object.fee) : undefined
 		};
 	},
 
@@ -500,7 +500,7 @@ export const AuthInfo: MessageFns<AuthInfo, "cosmos.tx.v1beta1.AuthInfo"> = {
 		message.signer_infos = object.signer_infos?.map((e) => SignerInfo.fromPartial(e)) || [];
 		message.fee = object.fee !== undefined && object.fee !== null ? Fee.fromPartial(object.fee) : undefined;
 		return message;
-	},
+	}
 };
 
 export const SignerInfo: MessageFns<SignerInfo, "cosmos.tx.v1beta1.SignerInfo"> = {
@@ -560,7 +560,7 @@ export const SignerInfo: MessageFns<SignerInfo, "cosmos.tx.v1beta1.SignerInfo"> 
 		return {
 			public_key: isSet(object.public_key) ? Any.fromJSON(object.public_key) : undefined,
 			mode_info: isSet(object.mode_info) ? ModeInfo.fromJSON(object.mode_info) : undefined,
-			sequence: isSet(object.sequence) ? globalThis.Number(object.sequence) : 0,
+			sequence: isSet(object.sequence) ? globalThis.Number(object.sequence) : 0
 		};
 	},
 
@@ -587,7 +587,7 @@ export const SignerInfo: MessageFns<SignerInfo, "cosmos.tx.v1beta1.SignerInfo"> 
 		message.mode_info = object.mode_info !== undefined && object.mode_info !== null ? ModeInfo.fromPartial(object.mode_info) : undefined;
 		message.sequence = object.sequence ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ModeInfo: MessageFns<ModeInfo, "cosmos.tx.v1beta1.ModeInfo"> = {
@@ -636,7 +636,7 @@ export const ModeInfo: MessageFns<ModeInfo, "cosmos.tx.v1beta1.ModeInfo"> = {
 	fromJSON(object: any): ModeInfo {
 		return {
 			single: isSet(object.single) ? ModeInfoSingle.fromJSON(object.single) : undefined,
-			multi: isSet(object.multi) ? ModeInfoMulti.fromJSON(object.multi) : undefined,
+			multi: isSet(object.multi) ? ModeInfoMulti.fromJSON(object.multi) : undefined
 		};
 	},
 
@@ -659,7 +659,7 @@ export const ModeInfo: MessageFns<ModeInfo, "cosmos.tx.v1beta1.ModeInfo"> = {
 		message.single = object.single !== undefined && object.single !== null ? ModeInfoSingle.fromPartial(object.single) : undefined;
 		message.multi = object.multi !== undefined && object.multi !== null ? ModeInfoMulti.fromPartial(object.multi) : undefined;
 		return message;
-	},
+	}
 };
 
 export const ModeInfoSingle: MessageFns<ModeInfoSingle, "cosmos.tx.v1beta1.ModeInfo.Single"> = {
@@ -714,7 +714,7 @@ export const ModeInfoSingle: MessageFns<ModeInfoSingle, "cosmos.tx.v1beta1.ModeI
 		const message = createBaseModeInfoSingle();
 		message.mode = object.mode ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ModeInfoMulti: MessageFns<ModeInfoMulti, "cosmos.tx.v1beta1.ModeInfo.Multi"> = {
@@ -763,7 +763,7 @@ export const ModeInfoMulti: MessageFns<ModeInfoMulti, "cosmos.tx.v1beta1.ModeInf
 	fromJSON(object: any): ModeInfoMulti {
 		return {
 			bitarray: isSet(object.bitarray) ? CompactBitArray.fromJSON(object.bitarray) : undefined,
-			mode_infos: globalThis.Array.isArray(object?.mode_infos) ? object.mode_infos.map((e: any) => ModeInfo.fromJSON(e)) : [],
+			mode_infos: globalThis.Array.isArray(object?.mode_infos) ? object.mode_infos.map((e: any) => ModeInfo.fromJSON(e)) : []
 		};
 	},
 
@@ -786,7 +786,7 @@ export const ModeInfoMulti: MessageFns<ModeInfoMulti, "cosmos.tx.v1beta1.ModeInf
 		message.bitarray = object.bitarray !== undefined && object.bitarray !== null ? CompactBitArray.fromPartial(object.bitarray) : undefined;
 		message.mode_infos = object.mode_infos?.map((e) => ModeInfo.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
@@ -868,7 +868,7 @@ export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
 			gas_limit: isSet(object.gas_limit) ? globalThis.Number(object.gas_limit) : 0,
 			payer: isSet(object.payer) ? globalThis.String(object.payer) : "",
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			gas_estimate: isSet(object.gas_estimate) ? globalThis.Number(object.gas_estimate) : 0,
+			gas_estimate: isSet(object.gas_estimate) ? globalThis.Number(object.gas_estimate) : 0
 		};
 	},
 
@@ -903,7 +903,7 @@ export const Fee: MessageFns<Fee, "cosmos.tx.v1beta1.Fee"> = {
 		message.granter = object.granter ?? "";
 		message.gas_estimate = object.gas_estimate ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseTx(): Tx {
@@ -995,66 +995,66 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.tx.v1beta1.ModeInfo", ModeInfo as never],
 	["/cosmos.tx.v1beta1.ModeInfo.Single", ModeInfoSingle as never],
 	["/cosmos.tx.v1beta1.ModeInfo.Multi", ModeInfoMulti as never],
-	["/cosmos.tx.v1beta1.Fee", Fee as never],
+	["/cosmos.tx.v1beta1.Fee", Fee as never]
 ];
 export const aminoConverters = {
 	"/cosmos.tx.v1beta1.Tx": {
 		aminoType: "cosmos-sdk/Tx",
 		toAmino: (message: Tx) => ({ ...message }),
-		fromAmino: (object: Tx) => ({ ...object }),
+		fromAmino: (object: Tx) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.TxRaw": {
 		aminoType: "cosmos-sdk/TxRaw",
 		toAmino: (message: TxRaw) => ({ ...message }),
-		fromAmino: (object: TxRaw) => ({ ...object }),
+		fromAmino: (object: TxRaw) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.SignDoc": {
 		aminoType: "cosmos-sdk/SignDoc",
 		toAmino: (message: SignDoc) => ({ ...message }),
-		fromAmino: (object: SignDoc) => ({ ...object }),
+		fromAmino: (object: SignDoc) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.TxBody": {
 		aminoType: "cosmos-sdk/TxBody",
 		toAmino: (message: TxBody) => ({ ...message }),
-		fromAmino: (object: TxBody) => ({ ...object }),
+		fromAmino: (object: TxBody) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.AuthInfo": {
 		aminoType: "cosmos-sdk/AuthInfo",
 		toAmino: (message: AuthInfo) => ({ ...message }),
-		fromAmino: (object: AuthInfo) => ({ ...object }),
+		fromAmino: (object: AuthInfo) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.SignerInfo": {
 		aminoType: "cosmos-sdk/SignerInfo",
 		toAmino: (message: SignerInfo) => ({ ...message }),
-		fromAmino: (object: SignerInfo) => ({ ...object }),
+		fromAmino: (object: SignerInfo) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.ModeInfo": {
 		aminoType: "cosmos-sdk/ModeInfo",
 		toAmino: (message: ModeInfo) => ({ ...message }),
-		fromAmino: (object: ModeInfo) => ({ ...object }),
+		fromAmino: (object: ModeInfo) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.ModeInfo.Single": {
 		aminoType: "cosmos-sdk/Single",
 		toAmino: (message: ModeInfoSingle) => ({ ...message }),
-		fromAmino: (object: ModeInfoSingle) => ({ ...object }),
+		fromAmino: (object: ModeInfoSingle) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.ModeInfo.Multi": {
 		aminoType: "cosmos-sdk/Multi",
 		toAmino: (message: ModeInfoMulti) => ({ ...message }),
-		fromAmino: (object: ModeInfoMulti) => ({ ...object }),
+		fromAmino: (object: ModeInfoMulti) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.Fee": {
 		aminoType: "cosmos-sdk/Fee",
 		toAmino: (message: Fee) => ({ ...message }),
-		fromAmino: (object: Fee) => ({ ...object }),
-	},
+		fromAmino: (object: Fee) => ({ ...object })
+	}
 };

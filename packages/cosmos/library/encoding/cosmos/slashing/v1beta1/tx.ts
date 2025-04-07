@@ -61,7 +61,7 @@ export const MsgUnjail: MessageFns<MsgUnjail, "cosmos.slashing.v1beta1.MsgUnjail
 		const message = createBaseMsgUnjail();
 		message.validator_addr = object.validator_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgUnjailResponse: MessageFns<MsgUnjailResponse, "cosmos.slashing.v1beta1.MsgUnjailResponse"> = {
@@ -102,7 +102,7 @@ export const MsgUnjailResponse: MessageFns<MsgUnjailResponse, "cosmos.slashing.v
 	fromPartial<I extends Exact<DeepPartial<MsgUnjailResponse>, I>>(_: I): MsgUnjailResponse {
 		const message = createBaseMsgUnjailResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgUnjail(): MsgUnjail {
@@ -118,18 +118,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.slashing.v1beta1.MsgUnjail", MsgUnjail as never],
-	["/cosmos.slashing.v1beta1.MsgUnjailResponse", MsgUnjailResponse as never],
+	["/cosmos.slashing.v1beta1.MsgUnjailResponse", MsgUnjailResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.slashing.v1beta1.MsgUnjail": {
 		aminoType: "cosmos-sdk/MsgUnjail",
 		toAmino: (message: MsgUnjail) => ({ ...message }),
-		fromAmino: (object: MsgUnjail) => ({ ...object }),
+		fromAmino: (object: MsgUnjail) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.MsgUnjailResponse": {
 		aminoType: "cosmos-sdk/MsgUnjailResponse",
 		toAmino: (message: MsgUnjailResponse) => ({ ...message }),
-		fromAmino: (object: MsgUnjailResponse) => ({ ...object }),
-	},
+		fromAmino: (object: MsgUnjailResponse) => ({ ...object })
+	}
 };

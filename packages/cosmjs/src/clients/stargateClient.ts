@@ -6,7 +6,7 @@ import {
 	type SigningStargateClientOptions,
 	StargateClient,
 	type StargateClientOptions,
-	defaultRegistryTypes,
+	defaultRegistryTypes
 } from '@cosmjs/stargate';
 import { aminoConverters, seiProtoRegistry } from '@sei-js/cosmos/encoding';
 
@@ -166,7 +166,7 @@ export const getStargateClient = async (rpcEndpoint: string | HttpEndpoint, opti
 export const getSigningStargateClient = async (
 	rpcEndpoint: string | HttpEndpoint,
 	signer: OfflineSigner,
-	options?: SigningStargateClientOptions,
+	options?: SigningStargateClientOptions
 ): Promise<SigningStargateClient> => {
 	const registry = createSeiRegistry();
 	const aminoTypes = createSeiAminoTypes();
@@ -174,6 +174,6 @@ export const getSigningStargateClient = async (
 		registry,
 		aminoTypes,
 		broadcastPollIntervalMs: options?.broadcastPollIntervalMs || 400, // Need to decrease this because Sei is so fast ⚡🏃💨💨
-		...options,
+		...options
 	});
 };

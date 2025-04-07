@@ -9,7 +9,7 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
 import type {
 	GenericAuthorization as GenericAuthorization_type,
 	GrantAuthorization as GrantAuthorization_type,
-	Grant as Grant_type,
+	Grant as Grant_type
 } from "../../../../types/cosmos/authz/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -70,7 +70,7 @@ export const GenericAuthorization: MessageFns<GenericAuthorization, "cosmos.auth
 		const message = createBaseGenericAuthorization();
 		message.msg = object.msg ?? "";
 		return message;
-	},
+	}
 };
 
 export const Grant: MessageFns<Grant, "cosmos.authz.v1beta1.Grant"> = {
@@ -119,7 +119,7 @@ export const Grant: MessageFns<Grant, "cosmos.authz.v1beta1.Grant"> = {
 	fromJSON(object: any): Grant {
 		return {
 			authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
-			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined,
+			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined
 		};
 	},
 
@@ -142,7 +142,7 @@ export const Grant: MessageFns<Grant, "cosmos.authz.v1beta1.Grant"> = {
 		message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
 		message.expiration = object.expiration ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const GrantAuthorization: MessageFns<GrantAuthorization, "cosmos.authz.v1beta1.GrantAuthorization"> = {
@@ -213,7 +213,7 @@ export const GrantAuthorization: MessageFns<GrantAuthorization, "cosmos.authz.v1
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
 			authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
-			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined,
+			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined
 		};
 	},
 
@@ -244,7 +244,7 @@ export const GrantAuthorization: MessageFns<GrantAuthorization, "cosmos.authz.v1
 		message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
 		message.expiration = object.expiration ?? undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseGenericAuthorization(): GenericAuthorization {
@@ -287,24 +287,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.authz.v1beta1.GenericAuthorization", GenericAuthorization as never],
 	["/cosmos.authz.v1beta1.Grant", Grant as never],
-	["/cosmos.authz.v1beta1.GrantAuthorization", GrantAuthorization as never],
+	["/cosmos.authz.v1beta1.GrantAuthorization", GrantAuthorization as never]
 ];
 export const aminoConverters = {
 	"/cosmos.authz.v1beta1.GenericAuthorization": {
 		aminoType: "cosmos-sdk/GenericAuthorization",
 		toAmino: (message: GenericAuthorization) => ({ ...message }),
-		fromAmino: (object: GenericAuthorization) => ({ ...object }),
+		fromAmino: (object: GenericAuthorization) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.Grant": {
 		aminoType: "cosmos-sdk/Grant",
 		toAmino: (message: Grant) => ({ ...message }),
-		fromAmino: (object: Grant) => ({ ...object }),
+		fromAmino: (object: Grant) => ({ ...object })
 	},
 
 	"/cosmos.authz.v1beta1.GrantAuthorization": {
 		aminoType: "cosmos-sdk/GrantAuthorization",
 		toAmino: (message: GrantAuthorization) => ({ ...message }),
-		fromAmino: (object: GrantAuthorization) => ({ ...object }),
-	},
+		fromAmino: (object: GrantAuthorization) => ({ ...object })
+	}
 };

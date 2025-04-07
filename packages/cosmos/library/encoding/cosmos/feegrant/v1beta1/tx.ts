@@ -8,7 +8,7 @@ import type {
 	MsgGrantAllowanceResponse as MsgGrantAllowanceResponse_type,
 	MsgGrantAllowance as MsgGrantAllowance_type,
 	MsgRevokeAllowanceResponse as MsgRevokeAllowanceResponse_type,
-	MsgRevokeAllowance as MsgRevokeAllowance_type,
+	MsgRevokeAllowance as MsgRevokeAllowance_type
 } from "../../../../types/cosmos/feegrant/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -75,7 +75,7 @@ export const MsgGrantAllowance: MessageFns<MsgGrantAllowance, "cosmos.feegrant.v
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined,
+			allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined
 		};
 	},
 
@@ -102,7 +102,7 @@ export const MsgGrantAllowance: MessageFns<MsgGrantAllowance, "cosmos.feegrant.v
 		message.grantee = object.grantee ?? "";
 		message.allowance = object.allowance !== undefined && object.allowance !== null ? Any.fromPartial(object.allowance) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgGrantAllowanceResponse: MessageFns<MsgGrantAllowanceResponse, "cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse"> = {
@@ -143,7 +143,7 @@ export const MsgGrantAllowanceResponse: MessageFns<MsgGrantAllowanceResponse, "c
 	fromPartial<I extends Exact<DeepPartial<MsgGrantAllowanceResponse>, I>>(_: I): MsgGrantAllowanceResponse {
 		const message = createBaseMsgGrantAllowanceResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgRevokeAllowance: MessageFns<MsgRevokeAllowance, "cosmos.feegrant.v1beta1.MsgRevokeAllowance"> = {
@@ -192,7 +192,7 @@ export const MsgRevokeAllowance: MessageFns<MsgRevokeAllowance, "cosmos.feegrant
 	fromJSON(object: any): MsgRevokeAllowance {
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
+			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : ""
 		};
 	},
 
@@ -215,7 +215,7 @@ export const MsgRevokeAllowance: MessageFns<MsgRevokeAllowance, "cosmos.feegrant
 		message.granter = object.granter ?? "";
 		message.grantee = object.grantee ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgRevokeAllowanceResponse: MessageFns<MsgRevokeAllowanceResponse, "cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse"> = {
@@ -256,7 +256,7 @@ export const MsgRevokeAllowanceResponse: MessageFns<MsgRevokeAllowanceResponse, 
 	fromPartial<I extends Exact<DeepPartial<MsgRevokeAllowanceResponse>, I>>(_: I): MsgRevokeAllowanceResponse {
 		const message = createBaseMsgRevokeAllowanceResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgGrantAllowance(): MsgGrantAllowance {
@@ -280,18 +280,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.feegrant.v1beta1.MsgGrantAllowance", MsgGrantAllowance as never],
-	["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance as never],
+	["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance as never]
 ];
 export const aminoConverters = {
 	"/cosmos.feegrant.v1beta1.MsgGrantAllowance": {
 		aminoType: "cosmos-sdk/MsgGrantAllowance",
 		toAmino: (message: MsgGrantAllowance) => ({ ...message }),
-		fromAmino: (object: MsgGrantAllowance) => ({ ...object }),
+		fromAmino: (object: MsgGrantAllowance) => ({ ...object })
 	},
 
 	"/cosmos.feegrant.v1beta1.MsgRevokeAllowance": {
 		aminoType: "cosmos-sdk/MsgRevokeAllowance",
 		toAmino: (message: MsgRevokeAllowance) => ({ ...message }),
-		fromAmino: (object: MsgRevokeAllowance) => ({ ...object }),
-	},
+		fromAmino: (object: MsgRevokeAllowance) => ({ ...object })
+	}
 };

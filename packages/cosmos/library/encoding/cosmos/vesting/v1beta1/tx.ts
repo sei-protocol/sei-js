@@ -4,7 +4,7 @@ import { Coin } from "../../base/v1beta1/coin";
 
 import type {
 	MsgCreateVestingAccountResponse as MsgCreateVestingAccountResponse_type,
-	MsgCreateVestingAccount as MsgCreateVestingAccount_type,
+	MsgCreateVestingAccount as MsgCreateVestingAccount_type
 } from "../../../../types/cosmos/vesting/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -102,7 +102,7 @@ export const MsgCreateVestingAccount: MessageFns<MsgCreateVestingAccount, "cosmo
 			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
 			end_time: isSet(object.end_time) ? globalThis.Number(object.end_time) : 0,
 			delayed: isSet(object.delayed) ? globalThis.Boolean(object.delayed) : false,
-			admin: isSet(object.admin) ? globalThis.String(object.admin) : "",
+			admin: isSet(object.admin) ? globalThis.String(object.admin) : ""
 		};
 	},
 
@@ -141,7 +141,7 @@ export const MsgCreateVestingAccount: MessageFns<MsgCreateVestingAccount, "cosmo
 		message.delayed = object.delayed ?? false;
 		message.admin = object.admin ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgCreateVestingAccountResponse: MessageFns<MsgCreateVestingAccountResponse, "cosmos.vesting.v1beta1.MsgCreateVestingAccountResponse"> = {
@@ -182,7 +182,7 @@ export const MsgCreateVestingAccountResponse: MessageFns<MsgCreateVestingAccount
 	fromPartial<I extends Exact<DeepPartial<MsgCreateVestingAccountResponse>, I>>(_: I): MsgCreateVestingAccountResponse {
 		const message = createBaseMsgCreateVestingAccountResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgCreateVestingAccount(): MsgCreateVestingAccount {

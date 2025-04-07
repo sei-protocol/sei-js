@@ -10,7 +10,7 @@ import type {
 	QueryAllEvidenceRequest as QueryAllEvidenceRequest_type,
 	QueryAllEvidenceResponse as QueryAllEvidenceResponse_type,
 	QueryEvidenceRequest as QueryEvidenceRequest_type,
-	QueryEvidenceResponse as QueryEvidenceResponse_type,
+	QueryEvidenceResponse as QueryEvidenceResponse_type
 } from "../../../../types/cosmos/evidence/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -72,7 +72,7 @@ export const QueryEvidenceRequest: MessageFns<QueryEvidenceRequest, "cosmos.evid
 		const message = createBaseQueryEvidenceRequest();
 		message.evidence_hash = object.evidence_hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const QueryEvidenceResponse: MessageFns<QueryEvidenceResponse, "cosmos.evidence.v1beta1.QueryEvidenceResponse"> = {
@@ -127,7 +127,7 @@ export const QueryEvidenceResponse: MessageFns<QueryEvidenceResponse, "cosmos.ev
 		const message = createBaseQueryEvidenceResponse();
 		message.evidence = object.evidence !== undefined && object.evidence !== null ? Any.fromPartial(object.evidence) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllEvidenceRequest: MessageFns<QueryAllEvidenceRequest, "cosmos.evidence.v1beta1.QueryAllEvidenceRequest"> = {
@@ -182,7 +182,7 @@ export const QueryAllEvidenceRequest: MessageFns<QueryAllEvidenceRequest, "cosmo
 		const message = createBaseQueryAllEvidenceRequest();
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllEvidenceResponse: MessageFns<QueryAllEvidenceResponse, "cosmos.evidence.v1beta1.QueryAllEvidenceResponse"> = {
@@ -231,7 +231,7 @@ export const QueryAllEvidenceResponse: MessageFns<QueryAllEvidenceResponse, "cos
 	fromJSON(object: any): QueryAllEvidenceResponse {
 		return {
 			evidence: globalThis.Array.isArray(object?.evidence) ? object.evidence.map((e: any) => Any.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -254,7 +254,7 @@ export const QueryAllEvidenceResponse: MessageFns<QueryAllEvidenceResponse, "cos
 		message.evidence = object.evidence?.map((e) => Any.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryEvidenceRequest(): QueryEvidenceRequest {
@@ -303,18 +303,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.evidence.v1beta1.QueryEvidenceRequest", QueryEvidenceRequest as never],
-	["/cosmos.evidence.v1beta1.QueryEvidenceResponse", QueryEvidenceResponse as never],
+	["/cosmos.evidence.v1beta1.QueryEvidenceResponse", QueryEvidenceResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.evidence.v1beta1.QueryEvidenceRequest": {
 		aminoType: "cosmos-sdk/QueryEvidenceRequest",
 		toAmino: (message: QueryEvidenceRequest) => ({ ...message }),
-		fromAmino: (object: QueryEvidenceRequest) => ({ ...object }),
+		fromAmino: (object: QueryEvidenceRequest) => ({ ...object })
 	},
 
 	"/cosmos.evidence.v1beta1.QueryEvidenceResponse": {
 		aminoType: "cosmos-sdk/QueryEvidenceResponse",
 		toAmino: (message: QueryEvidenceResponse) => ({ ...message }),
-		fromAmino: (object: QueryEvidenceResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryEvidenceResponse) => ({ ...object })
+	}
 };

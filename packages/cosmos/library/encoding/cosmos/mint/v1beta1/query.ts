@@ -10,7 +10,7 @@ import type {
 	QueryInflationRequest as QueryInflationRequest_type,
 	QueryInflationResponse as QueryInflationResponse_type,
 	QueryParamsRequest as QueryParamsRequest_type,
-	QueryParamsResponse as QueryParamsResponse_type,
+	QueryParamsResponse as QueryParamsResponse_type
 } from "../../../../types/cosmos/mint/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -60,7 +60,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.mint.v1b
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.mint.v1beta1.QueryParamsResponse"> = {
@@ -115,7 +115,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.mint.v
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryInflationRequest: MessageFns<QueryInflationRequest, "cosmos.mint.v1beta1.QueryInflationRequest"> = {
@@ -156,7 +156,7 @@ export const QueryInflationRequest: MessageFns<QueryInflationRequest, "cosmos.mi
 	fromPartial<I extends Exact<DeepPartial<QueryInflationRequest>, I>>(_: I): QueryInflationRequest {
 		const message = createBaseQueryInflationRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryInflationResponse: MessageFns<QueryInflationResponse, "cosmos.mint.v1beta1.QueryInflationResponse"> = {
@@ -211,7 +211,7 @@ export const QueryInflationResponse: MessageFns<QueryInflationResponse, "cosmos.
 		const message = createBaseQueryInflationResponse();
 		message.inflation = object.inflation ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const QueryAnnualProvisionsRequest: MessageFns<QueryAnnualProvisionsRequest, "cosmos.mint.v1beta1.QueryAnnualProvisionsRequest"> = {
@@ -252,7 +252,7 @@ export const QueryAnnualProvisionsRequest: MessageFns<QueryAnnualProvisionsReque
 	fromPartial<I extends Exact<DeepPartial<QueryAnnualProvisionsRequest>, I>>(_: I): QueryAnnualProvisionsRequest {
 		const message = createBaseQueryAnnualProvisionsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryAnnualProvisionsResponse: MessageFns<QueryAnnualProvisionsResponse, "cosmos.mint.v1beta1.QueryAnnualProvisionsResponse"> = {
@@ -290,7 +290,7 @@ export const QueryAnnualProvisionsResponse: MessageFns<QueryAnnualProvisionsResp
 
 	fromJSON(object: any): QueryAnnualProvisionsResponse {
 		return {
-			annual_provisions: isSet(object.annual_provisions) ? bytesFromBase64(object.annual_provisions) : new Uint8Array(0),
+			annual_provisions: isSet(object.annual_provisions) ? bytesFromBase64(object.annual_provisions) : new Uint8Array(0)
 		};
 	},
 
@@ -309,7 +309,7 @@ export const QueryAnnualProvisionsResponse: MessageFns<QueryAnnualProvisionsResp
 		const message = createBaseQueryAnnualProvisionsResponse();
 		message.annual_provisions = object.annual_provisions ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -368,30 +368,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.mint.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
 	["/cosmos.mint.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
 	["/cosmos.mint.v1beta1.QueryInflationRequest", QueryInflationRequest as never],
-	["/cosmos.mint.v1beta1.QueryInflationResponse", QueryInflationResponse as never],
+	["/cosmos.mint.v1beta1.QueryInflationResponse", QueryInflationResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.mint.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/cosmos.mint.v1beta1.QueryParamsResponse": {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
 	},
 
 	"/cosmos.mint.v1beta1.QueryInflationRequest": {
 		aminoType: "cosmos-sdk/QueryInflationRequest",
 		toAmino: (message: QueryInflationRequest) => ({ ...message }),
-		fromAmino: (object: QueryInflationRequest) => ({ ...object }),
+		fromAmino: (object: QueryInflationRequest) => ({ ...object })
 	},
 
 	"/cosmos.mint.v1beta1.QueryInflationResponse": {
 		aminoType: "cosmos-sdk/QueryInflationResponse",
 		toAmino: (message: QueryInflationResponse) => ({ ...message }),
-		fromAmino: (object: QueryInflationResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryInflationResponse) => ({ ...object })
+	}
 };

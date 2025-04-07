@@ -11,7 +11,7 @@ import type {
 	SignatureDescriptorDataSingle as SignatureDescriptorDataSingle_type,
 	SignatureDescriptorData as SignatureDescriptorData_type,
 	SignatureDescriptor as SignatureDescriptor_type,
-	SignatureDescriptors as SignatureDescriptors_type,
+	SignatureDescriptors as SignatureDescriptors_type
 } from "../../../../../types/cosmos/tx/signing/v1beta1";
 
 import { SignMode } from "../../../../../types/cosmos/tx/signing/v1beta1";
@@ -59,7 +59,7 @@ export const SignatureDescriptors: MessageFns<SignatureDescriptors, "cosmos.tx.s
 
 	fromJSON(object: any): SignatureDescriptors {
 		return {
-			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => SignatureDescriptor.fromJSON(e)) : [],
+			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => SignatureDescriptor.fromJSON(e)) : []
 		};
 	},
 
@@ -78,7 +78,7 @@ export const SignatureDescriptors: MessageFns<SignatureDescriptors, "cosmos.tx.s
 		const message = createBaseSignatureDescriptors();
 		message.signatures = object.signatures?.map((e) => SignatureDescriptor.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const SignatureDescriptor: MessageFns<SignatureDescriptor, "cosmos.tx.signing.v1beta1.SignatureDescriptor"> = {
@@ -138,7 +138,7 @@ export const SignatureDescriptor: MessageFns<SignatureDescriptor, "cosmos.tx.sig
 		return {
 			public_key: isSet(object.public_key) ? Any.fromJSON(object.public_key) : undefined,
 			data: isSet(object.data) ? SignatureDescriptorData.fromJSON(object.data) : undefined,
-			sequence: isSet(object.sequence) ? globalThis.Number(object.sequence) : 0,
+			sequence: isSet(object.sequence) ? globalThis.Number(object.sequence) : 0
 		};
 	},
 
@@ -165,7 +165,7 @@ export const SignatureDescriptor: MessageFns<SignatureDescriptor, "cosmos.tx.sig
 		message.data = object.data !== undefined && object.data !== null ? SignatureDescriptorData.fromPartial(object.data) : undefined;
 		message.sequence = object.sequence ?? 0;
 		return message;
-	},
+	}
 };
 
 export const SignatureDescriptorData: MessageFns<SignatureDescriptorData, "cosmos.tx.signing.v1beta1.SignatureDescriptor.Data"> = {
@@ -214,7 +214,7 @@ export const SignatureDescriptorData: MessageFns<SignatureDescriptorData, "cosmo
 	fromJSON(object: any): SignatureDescriptorData {
 		return {
 			single: isSet(object.single) ? SignatureDescriptorDataSingle.fromJSON(object.single) : undefined,
-			multi: isSet(object.multi) ? SignatureDescriptorDataMulti.fromJSON(object.multi) : undefined,
+			multi: isSet(object.multi) ? SignatureDescriptorDataMulti.fromJSON(object.multi) : undefined
 		};
 	},
 
@@ -237,7 +237,7 @@ export const SignatureDescriptorData: MessageFns<SignatureDescriptorData, "cosmo
 		message.single = object.single !== undefined && object.single !== null ? SignatureDescriptorDataSingle.fromPartial(object.single) : undefined;
 		message.multi = object.multi !== undefined && object.multi !== null ? SignatureDescriptorDataMulti.fromPartial(object.multi) : undefined;
 		return message;
-	},
+	}
 };
 
 export const SignatureDescriptorDataSingle: MessageFns<SignatureDescriptorDataSingle, "cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single"> = {
@@ -286,7 +286,7 @@ export const SignatureDescriptorDataSingle: MessageFns<SignatureDescriptorDataSi
 	fromJSON(object: any): SignatureDescriptorDataSingle {
 		return {
 			mode: isSet(object.mode) ? signModeFromJSON(object.mode) : 0,
-			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0),
+			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0)
 		};
 	},
 
@@ -309,7 +309,7 @@ export const SignatureDescriptorDataSingle: MessageFns<SignatureDescriptorDataSi
 		message.mode = object.mode ?? 0;
 		message.signature = object.signature ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const SignatureDescriptorDataMulti: MessageFns<SignatureDescriptorDataMulti, "cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi"> = {
@@ -358,7 +358,7 @@ export const SignatureDescriptorDataMulti: MessageFns<SignatureDescriptorDataMul
 	fromJSON(object: any): SignatureDescriptorDataMulti {
 		return {
 			bitarray: isSet(object.bitarray) ? CompactBitArray.fromJSON(object.bitarray) : undefined,
-			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => SignatureDescriptorData.fromJSON(e)) : [],
+			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => SignatureDescriptorData.fromJSON(e)) : []
 		};
 	},
 
@@ -381,7 +381,7 @@ export const SignatureDescriptorDataMulti: MessageFns<SignatureDescriptorDataMul
 		message.bitarray = object.bitarray !== undefined && object.bitarray !== null ? CompactBitArray.fromPartial(object.bitarray) : undefined;
 		message.signatures = object.signatures?.map((e) => SignatureDescriptorData.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export function signModeFromJSON(object: any): SignMode {
@@ -487,18 +487,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.tx.signing.v1beta1.SignatureDescriptors", SignatureDescriptors as never],
-	["/cosmos.tx.signing.v1beta1.SignatureDescriptor", SignatureDescriptor as never],
+	["/cosmos.tx.signing.v1beta1.SignatureDescriptor", SignatureDescriptor as never]
 ];
 export const aminoConverters = {
 	"/cosmos.tx.signing.v1beta1.SignatureDescriptors": {
 		aminoType: "cosmos-sdk/SignatureDescriptors",
 		toAmino: (message: SignatureDescriptors) => ({ ...message }),
-		fromAmino: (object: SignatureDescriptors) => ({ ...object }),
+		fromAmino: (object: SignatureDescriptors) => ({ ...object })
 	},
 
 	"/cosmos.tx.signing.v1beta1.SignatureDescriptor": {
 		aminoType: "cosmos-sdk/SignatureDescriptor",
 		toAmino: (message: SignatureDescriptor) => ({ ...message }),
-		fromAmino: (object: SignatureDescriptor) => ({ ...object }),
-	},
+		fromAmino: (object: SignatureDescriptor) => ({ ...object })
+	}
 };

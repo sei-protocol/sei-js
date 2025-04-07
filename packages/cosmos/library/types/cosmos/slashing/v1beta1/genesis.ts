@@ -3,7 +3,7 @@ import type {
 	ValidatorMissedBlockArray,
 	ValidatorMissedBlockArrayLegacyMissedHeights,
 	ValidatorSigningInfo,
-	ValidatorSigningInfoLegacyMissedHeights,
+	ValidatorSigningInfoLegacyMissedHeights
 } from "./slashing";
 
 export interface GenesisState {

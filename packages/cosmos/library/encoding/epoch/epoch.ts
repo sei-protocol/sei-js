@@ -91,7 +91,7 @@ export const Epoch: MessageFns<Epoch, "seiprotocol.seichain.epoch.Epoch"> = {
 			epoch_duration: isSet(object.epoch_duration) ? Duration.fromJSON(object.epoch_duration) : undefined,
 			current_epoch: isSet(object.current_epoch) ? globalThis.Number(object.current_epoch) : 0,
 			current_epoch_start_time: isSet(object.current_epoch_start_time) ? fromJsonTimestamp(object.current_epoch_start_time) : undefined,
-			current_epoch_height: isSet(object.current_epoch_height) ? globalThis.Number(object.current_epoch_height) : 0,
+			current_epoch_height: isSet(object.current_epoch_height) ? globalThis.Number(object.current_epoch_height) : 0
 		};
 	},
 
@@ -126,7 +126,7 @@ export const Epoch: MessageFns<Epoch, "seiprotocol.seichain.epoch.Epoch"> = {
 		message.current_epoch_start_time = object.current_epoch_start_time ?? undefined;
 		message.current_epoch_height = object.current_epoch_height ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseEpoch(): Epoch {
@@ -135,7 +135,7 @@ function createBaseEpoch(): Epoch {
 		epoch_duration: undefined,
 		current_epoch: 0,
 		current_epoch_start_time: undefined,
-		current_epoch_height: 0,
+		current_epoch_height: 0
 	};
 }
 
@@ -180,6 +180,6 @@ export const aminoConverters = {
 	"/seiprotocol.seichain.epoch.Epoch": {
 		aminoType: "epoch/Epoch",
 		toAmino: (message: Epoch) => ({ ...message }),
-		fromAmino: (object: Epoch) => ({ ...object }),
-	},
+		fromAmino: (object: Epoch) => ({ ...object })
+	}
 };

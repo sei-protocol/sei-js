@@ -10,1101 +10,1078 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "seiprotocol.seichain.evm";
 
 export interface AddERCNativePointerProposal {
-  title: string;
-  description: string;
-  token: string;
-  pointer: string;
-  version: number;
+	title: string;
+	description: string;
+	token: string;
+	pointer: string;
+	version: number;
 }
 
 export interface AddERCCW20PointerProposal {
-  title: string;
-  description: string;
-  pointee: string;
-  pointer: string;
-  version: number;
+	title: string;
+	description: string;
+	pointee: string;
+	pointer: string;
+	version: number;
 }
 
 export interface AddERCCW721PointerProposal {
-  title: string;
-  description: string;
-  pointee: string;
-  pointer: string;
-  version: number;
+	title: string;
+	description: string;
+	pointee: string;
+	pointer: string;
+	version: number;
 }
 
 export interface AddERCCW1155PointerProposal {
-  title: string;
-  description: string;
-  pointee: string;
-  pointer: string;
-  version: number;
+	title: string;
+	description: string;
+	pointee: string;
+	pointer: string;
+	version: number;
 }
 
 export interface AddCWERC20PointerProposal {
-  title: string;
-  description: string;
-  pointee: string;
-  pointer: string;
-  version: number;
+	title: string;
+	description: string;
+	pointee: string;
+	pointer: string;
+	version: number;
 }
 
 export interface AddCWERC721PointerProposal {
-  title: string;
-  description: string;
-  pointee: string;
-  pointer: string;
-  version: number;
+	title: string;
+	description: string;
+	pointee: string;
+	pointer: string;
+	version: number;
 }
 
 export interface AddCWERC1155PointerProposal {
-  title: string;
-  description: string;
-  pointee: string;
-  pointer: string;
-  version: number;
+	title: string;
+	description: string;
+	pointee: string;
+	pointer: string;
+	version: number;
 }
 
 export interface AddERCNativePointerProposalV2 {
-  title: string;
-  description: string;
-  token: string;
-  name: string;
-  symbol: string;
-  decimals: number;
+	title: string;
+	description: string;
+	token: string;
+	name: string;
+	symbol: string;
+	decimals: number;
 }
 
 function createBaseAddERCNativePointerProposal(): AddERCNativePointerProposal {
-  return { title: "", description: "", token: "", pointer: "", version: 0 };
+	return { title: "", description: "", token: "", pointer: "", version: 0 };
 }
 
-export const AddERCNativePointerProposal: MessageFns<
-  AddERCNativePointerProposal,
-  "seiprotocol.seichain.evm.AddERCNativePointerProposal"
-> = {
-  $type: "seiprotocol.seichain.evm.AddERCNativePointerProposal" as const,
+export const AddERCNativePointerProposal: MessageFns<AddERCNativePointerProposal, "seiprotocol.seichain.evm.AddERCNativePointerProposal"> = {
+	$type: "seiprotocol.seichain.evm.AddERCNativePointerProposal" as const,
 
-  encode(message: AddERCNativePointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.token !== "") {
-      writer.uint32(26).string(message.token);
-    }
-    if (message.pointer !== "") {
-      writer.uint32(34).string(message.pointer);
-    }
-    if (message.version !== 0) {
-      writer.uint32(40).uint32(message.version);
-    }
-    return writer;
-  },
+	encode(message: AddERCNativePointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.token !== "") {
+			writer.uint32(26).string(message.token);
+		}
+		if (message.pointer !== "") {
+			writer.uint32(34).string(message.pointer);
+		}
+		if (message.version !== 0) {
+			writer.uint32(40).uint32(message.version);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddERCNativePointerProposal {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddERCNativePointerProposal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddERCNativePointerProposal {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddERCNativePointerProposal();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.token = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.token = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.pointer = reader.string();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
+					message.pointer = reader.string();
+					continue;
+				case 5:
+					if (tag !== 40) {
+						break;
+					}
 
-          message.version = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.version = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddERCNativePointerProposal {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      token: isSet(object.token) ? globalThis.String(object.token) : "",
-      pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-    };
-  },
+	fromJSON(object: any): AddERCNativePointerProposal {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			token: isSet(object.token) ? globalThis.String(object.token) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
+		};
+	},
 
-  toJSON(message: AddERCNativePointerProposal): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.token !== "") {
-      obj.token = message.token;
-    }
-    if (message.pointer !== "") {
-      obj.pointer = message.pointer;
-    }
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    return obj;
-  },
+	toJSON(message: AddERCNativePointerProposal): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.token !== "") {
+			obj.token = message.token;
+		}
+		if (message.pointer !== "") {
+			obj.pointer = message.pointer;
+		}
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddERCNativePointerProposal>, I>>(base?: I): AddERCNativePointerProposal {
-    return AddERCNativePointerProposal.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddERCNativePointerProposal>, I>>(object: I): AddERCNativePointerProposal {
-    const message = createBaseAddERCNativePointerProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.token = object.token ?? "";
-    message.pointer = object.pointer ?? "";
-    message.version = object.version ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddERCNativePointerProposal>, I>>(base?: I): AddERCNativePointerProposal {
+		return AddERCNativePointerProposal.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddERCNativePointerProposal>, I>>(object: I): AddERCNativePointerProposal {
+		const message = createBaseAddERCNativePointerProposal();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.token = object.token ?? "";
+		message.pointer = object.pointer ?? "";
+		message.version = object.version ?? 0;
+		return message;
+	}
 };
 
 function createBaseAddERCCW20PointerProposal(): AddERCCW20PointerProposal {
-  return { title: "", description: "", pointee: "", pointer: "", version: 0 };
+	return { title: "", description: "", pointee: "", pointer: "", version: 0 };
 }
 
-export const AddERCCW20PointerProposal: MessageFns<
-  AddERCCW20PointerProposal,
-  "seiprotocol.seichain.evm.AddERCCW20PointerProposal"
-> = {
-  $type: "seiprotocol.seichain.evm.AddERCCW20PointerProposal" as const,
+export const AddERCCW20PointerProposal: MessageFns<AddERCCW20PointerProposal, "seiprotocol.seichain.evm.AddERCCW20PointerProposal"> = {
+	$type: "seiprotocol.seichain.evm.AddERCCW20PointerProposal" as const,
 
-  encode(message: AddERCCW20PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.pointee !== "") {
-      writer.uint32(26).string(message.pointee);
-    }
-    if (message.pointer !== "") {
-      writer.uint32(34).string(message.pointer);
-    }
-    if (message.version !== 0) {
-      writer.uint32(40).uint32(message.version);
-    }
-    return writer;
-  },
+	encode(message: AddERCCW20PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.pointee !== "") {
+			writer.uint32(26).string(message.pointee);
+		}
+		if (message.pointer !== "") {
+			writer.uint32(34).string(message.pointer);
+		}
+		if (message.version !== 0) {
+			writer.uint32(40).uint32(message.version);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddERCCW20PointerProposal {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddERCCW20PointerProposal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddERCCW20PointerProposal {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddERCCW20PointerProposal();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.pointee = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.pointee = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.pointer = reader.string();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
+					message.pointer = reader.string();
+					continue;
+				case 5:
+					if (tag !== 40) {
+						break;
+					}
 
-          message.version = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.version = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddERCCW20PointerProposal {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
-      pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-    };
-  },
+	fromJSON(object: any): AddERCCW20PointerProposal {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
+		};
+	},
 
-  toJSON(message: AddERCCW20PointerProposal): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.pointee !== "") {
-      obj.pointee = message.pointee;
-    }
-    if (message.pointer !== "") {
-      obj.pointer = message.pointer;
-    }
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    return obj;
-  },
+	toJSON(message: AddERCCW20PointerProposal): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.pointee !== "") {
+			obj.pointee = message.pointee;
+		}
+		if (message.pointer !== "") {
+			obj.pointer = message.pointer;
+		}
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddERCCW20PointerProposal>, I>>(base?: I): AddERCCW20PointerProposal {
-    return AddERCCW20PointerProposal.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddERCCW20PointerProposal>, I>>(object: I): AddERCCW20PointerProposal {
-    const message = createBaseAddERCCW20PointerProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.pointee = object.pointee ?? "";
-    message.pointer = object.pointer ?? "";
-    message.version = object.version ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddERCCW20PointerProposal>, I>>(base?: I): AddERCCW20PointerProposal {
+		return AddERCCW20PointerProposal.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddERCCW20PointerProposal>, I>>(object: I): AddERCCW20PointerProposal {
+		const message = createBaseAddERCCW20PointerProposal();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.pointee = object.pointee ?? "";
+		message.pointer = object.pointer ?? "";
+		message.version = object.version ?? 0;
+		return message;
+	}
 };
 
 function createBaseAddERCCW721PointerProposal(): AddERCCW721PointerProposal {
-  return { title: "", description: "", pointee: "", pointer: "", version: 0 };
+	return { title: "", description: "", pointee: "", pointer: "", version: 0 };
 }
 
-export const AddERCCW721PointerProposal: MessageFns<
-  AddERCCW721PointerProposal,
-  "seiprotocol.seichain.evm.AddERCCW721PointerProposal"
-> = {
-  $type: "seiprotocol.seichain.evm.AddERCCW721PointerProposal" as const,
+export const AddERCCW721PointerProposal: MessageFns<AddERCCW721PointerProposal, "seiprotocol.seichain.evm.AddERCCW721PointerProposal"> = {
+	$type: "seiprotocol.seichain.evm.AddERCCW721PointerProposal" as const,
 
-  encode(message: AddERCCW721PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.pointee !== "") {
-      writer.uint32(26).string(message.pointee);
-    }
-    if (message.pointer !== "") {
-      writer.uint32(34).string(message.pointer);
-    }
-    if (message.version !== 0) {
-      writer.uint32(40).uint32(message.version);
-    }
-    return writer;
-  },
+	encode(message: AddERCCW721PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.pointee !== "") {
+			writer.uint32(26).string(message.pointee);
+		}
+		if (message.pointer !== "") {
+			writer.uint32(34).string(message.pointer);
+		}
+		if (message.version !== 0) {
+			writer.uint32(40).uint32(message.version);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddERCCW721PointerProposal {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddERCCW721PointerProposal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddERCCW721PointerProposal {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddERCCW721PointerProposal();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.pointee = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.pointee = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.pointer = reader.string();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
+					message.pointer = reader.string();
+					continue;
+				case 5:
+					if (tag !== 40) {
+						break;
+					}
 
-          message.version = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.version = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddERCCW721PointerProposal {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
-      pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-    };
-  },
+	fromJSON(object: any): AddERCCW721PointerProposal {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
+		};
+	},
 
-  toJSON(message: AddERCCW721PointerProposal): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.pointee !== "") {
-      obj.pointee = message.pointee;
-    }
-    if (message.pointer !== "") {
-      obj.pointer = message.pointer;
-    }
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    return obj;
-  },
+	toJSON(message: AddERCCW721PointerProposal): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.pointee !== "") {
+			obj.pointee = message.pointee;
+		}
+		if (message.pointer !== "") {
+			obj.pointer = message.pointer;
+		}
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddERCCW721PointerProposal>, I>>(base?: I): AddERCCW721PointerProposal {
-    return AddERCCW721PointerProposal.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddERCCW721PointerProposal>, I>>(object: I): AddERCCW721PointerProposal {
-    const message = createBaseAddERCCW721PointerProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.pointee = object.pointee ?? "";
-    message.pointer = object.pointer ?? "";
-    message.version = object.version ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddERCCW721PointerProposal>, I>>(base?: I): AddERCCW721PointerProposal {
+		return AddERCCW721PointerProposal.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddERCCW721PointerProposal>, I>>(object: I): AddERCCW721PointerProposal {
+		const message = createBaseAddERCCW721PointerProposal();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.pointee = object.pointee ?? "";
+		message.pointer = object.pointer ?? "";
+		message.version = object.version ?? 0;
+		return message;
+	}
 };
 
 function createBaseAddERCCW1155PointerProposal(): AddERCCW1155PointerProposal {
-  return { title: "", description: "", pointee: "", pointer: "", version: 0 };
+	return { title: "", description: "", pointee: "", pointer: "", version: 0 };
 }
 
-export const AddERCCW1155PointerProposal: MessageFns<
-  AddERCCW1155PointerProposal,
-  "seiprotocol.seichain.evm.AddERCCW1155PointerProposal"
-> = {
-  $type: "seiprotocol.seichain.evm.AddERCCW1155PointerProposal" as const,
+export const AddERCCW1155PointerProposal: MessageFns<AddERCCW1155PointerProposal, "seiprotocol.seichain.evm.AddERCCW1155PointerProposal"> = {
+	$type: "seiprotocol.seichain.evm.AddERCCW1155PointerProposal" as const,
 
-  encode(message: AddERCCW1155PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.pointee !== "") {
-      writer.uint32(26).string(message.pointee);
-    }
-    if (message.pointer !== "") {
-      writer.uint32(34).string(message.pointer);
-    }
-    if (message.version !== 0) {
-      writer.uint32(40).uint32(message.version);
-    }
-    return writer;
-  },
+	encode(message: AddERCCW1155PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.pointee !== "") {
+			writer.uint32(26).string(message.pointee);
+		}
+		if (message.pointer !== "") {
+			writer.uint32(34).string(message.pointer);
+		}
+		if (message.version !== 0) {
+			writer.uint32(40).uint32(message.version);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddERCCW1155PointerProposal {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddERCCW1155PointerProposal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddERCCW1155PointerProposal {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddERCCW1155PointerProposal();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.pointee = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.pointee = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.pointer = reader.string();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
+					message.pointer = reader.string();
+					continue;
+				case 5:
+					if (tag !== 40) {
+						break;
+					}
 
-          message.version = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.version = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddERCCW1155PointerProposal {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
-      pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-    };
-  },
+	fromJSON(object: any): AddERCCW1155PointerProposal {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
+		};
+	},
 
-  toJSON(message: AddERCCW1155PointerProposal): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.pointee !== "") {
-      obj.pointee = message.pointee;
-    }
-    if (message.pointer !== "") {
-      obj.pointer = message.pointer;
-    }
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    return obj;
-  },
+	toJSON(message: AddERCCW1155PointerProposal): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.pointee !== "") {
+			obj.pointee = message.pointee;
+		}
+		if (message.pointer !== "") {
+			obj.pointer = message.pointer;
+		}
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddERCCW1155PointerProposal>, I>>(base?: I): AddERCCW1155PointerProposal {
-    return AddERCCW1155PointerProposal.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddERCCW1155PointerProposal>, I>>(object: I): AddERCCW1155PointerProposal {
-    const message = createBaseAddERCCW1155PointerProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.pointee = object.pointee ?? "";
-    message.pointer = object.pointer ?? "";
-    message.version = object.version ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddERCCW1155PointerProposal>, I>>(base?: I): AddERCCW1155PointerProposal {
+		return AddERCCW1155PointerProposal.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddERCCW1155PointerProposal>, I>>(object: I): AddERCCW1155PointerProposal {
+		const message = createBaseAddERCCW1155PointerProposal();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.pointee = object.pointee ?? "";
+		message.pointer = object.pointer ?? "";
+		message.version = object.version ?? 0;
+		return message;
+	}
 };
 
 function createBaseAddCWERC20PointerProposal(): AddCWERC20PointerProposal {
-  return { title: "", description: "", pointee: "", pointer: "", version: 0 };
+	return { title: "", description: "", pointee: "", pointer: "", version: 0 };
 }
 
-export const AddCWERC20PointerProposal: MessageFns<
-  AddCWERC20PointerProposal,
-  "seiprotocol.seichain.evm.AddCWERC20PointerProposal"
-> = {
-  $type: "seiprotocol.seichain.evm.AddCWERC20PointerProposal" as const,
+export const AddCWERC20PointerProposal: MessageFns<AddCWERC20PointerProposal, "seiprotocol.seichain.evm.AddCWERC20PointerProposal"> = {
+	$type: "seiprotocol.seichain.evm.AddCWERC20PointerProposal" as const,
 
-  encode(message: AddCWERC20PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.pointee !== "") {
-      writer.uint32(26).string(message.pointee);
-    }
-    if (message.pointer !== "") {
-      writer.uint32(34).string(message.pointer);
-    }
-    if (message.version !== 0) {
-      writer.uint32(40).uint32(message.version);
-    }
-    return writer;
-  },
+	encode(message: AddCWERC20PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.pointee !== "") {
+			writer.uint32(26).string(message.pointee);
+		}
+		if (message.pointer !== "") {
+			writer.uint32(34).string(message.pointer);
+		}
+		if (message.version !== 0) {
+			writer.uint32(40).uint32(message.version);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddCWERC20PointerProposal {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddCWERC20PointerProposal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddCWERC20PointerProposal {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddCWERC20PointerProposal();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.pointee = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.pointee = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.pointer = reader.string();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
+					message.pointer = reader.string();
+					continue;
+				case 5:
+					if (tag !== 40) {
+						break;
+					}
 
-          message.version = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.version = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddCWERC20PointerProposal {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
-      pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-    };
-  },
+	fromJSON(object: any): AddCWERC20PointerProposal {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
+		};
+	},
 
-  toJSON(message: AddCWERC20PointerProposal): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.pointee !== "") {
-      obj.pointee = message.pointee;
-    }
-    if (message.pointer !== "") {
-      obj.pointer = message.pointer;
-    }
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    return obj;
-  },
+	toJSON(message: AddCWERC20PointerProposal): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.pointee !== "") {
+			obj.pointee = message.pointee;
+		}
+		if (message.pointer !== "") {
+			obj.pointer = message.pointer;
+		}
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddCWERC20PointerProposal>, I>>(base?: I): AddCWERC20PointerProposal {
-    return AddCWERC20PointerProposal.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddCWERC20PointerProposal>, I>>(object: I): AddCWERC20PointerProposal {
-    const message = createBaseAddCWERC20PointerProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.pointee = object.pointee ?? "";
-    message.pointer = object.pointer ?? "";
-    message.version = object.version ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddCWERC20PointerProposal>, I>>(base?: I): AddCWERC20PointerProposal {
+		return AddCWERC20PointerProposal.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddCWERC20PointerProposal>, I>>(object: I): AddCWERC20PointerProposal {
+		const message = createBaseAddCWERC20PointerProposal();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.pointee = object.pointee ?? "";
+		message.pointer = object.pointer ?? "";
+		message.version = object.version ?? 0;
+		return message;
+	}
 };
 
 function createBaseAddCWERC721PointerProposal(): AddCWERC721PointerProposal {
-  return { title: "", description: "", pointee: "", pointer: "", version: 0 };
+	return { title: "", description: "", pointee: "", pointer: "", version: 0 };
 }
 
-export const AddCWERC721PointerProposal: MessageFns<
-  AddCWERC721PointerProposal,
-  "seiprotocol.seichain.evm.AddCWERC721PointerProposal"
-> = {
-  $type: "seiprotocol.seichain.evm.AddCWERC721PointerProposal" as const,
+export const AddCWERC721PointerProposal: MessageFns<AddCWERC721PointerProposal, "seiprotocol.seichain.evm.AddCWERC721PointerProposal"> = {
+	$type: "seiprotocol.seichain.evm.AddCWERC721PointerProposal" as const,
 
-  encode(message: AddCWERC721PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.pointee !== "") {
-      writer.uint32(26).string(message.pointee);
-    }
-    if (message.pointer !== "") {
-      writer.uint32(34).string(message.pointer);
-    }
-    if (message.version !== 0) {
-      writer.uint32(40).uint32(message.version);
-    }
-    return writer;
-  },
+	encode(message: AddCWERC721PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.pointee !== "") {
+			writer.uint32(26).string(message.pointee);
+		}
+		if (message.pointer !== "") {
+			writer.uint32(34).string(message.pointer);
+		}
+		if (message.version !== 0) {
+			writer.uint32(40).uint32(message.version);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddCWERC721PointerProposal {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddCWERC721PointerProposal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddCWERC721PointerProposal {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddCWERC721PointerProposal();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.pointee = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.pointee = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.pointer = reader.string();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
+					message.pointer = reader.string();
+					continue;
+				case 5:
+					if (tag !== 40) {
+						break;
+					}
 
-          message.version = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.version = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddCWERC721PointerProposal {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
-      pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-    };
-  },
+	fromJSON(object: any): AddCWERC721PointerProposal {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
+		};
+	},
 
-  toJSON(message: AddCWERC721PointerProposal): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.pointee !== "") {
-      obj.pointee = message.pointee;
-    }
-    if (message.pointer !== "") {
-      obj.pointer = message.pointer;
-    }
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    return obj;
-  },
+	toJSON(message: AddCWERC721PointerProposal): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.pointee !== "") {
+			obj.pointee = message.pointee;
+		}
+		if (message.pointer !== "") {
+			obj.pointer = message.pointer;
+		}
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddCWERC721PointerProposal>, I>>(base?: I): AddCWERC721PointerProposal {
-    return AddCWERC721PointerProposal.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddCWERC721PointerProposal>, I>>(object: I): AddCWERC721PointerProposal {
-    const message = createBaseAddCWERC721PointerProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.pointee = object.pointee ?? "";
-    message.pointer = object.pointer ?? "";
-    message.version = object.version ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddCWERC721PointerProposal>, I>>(base?: I): AddCWERC721PointerProposal {
+		return AddCWERC721PointerProposal.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddCWERC721PointerProposal>, I>>(object: I): AddCWERC721PointerProposal {
+		const message = createBaseAddCWERC721PointerProposal();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.pointee = object.pointee ?? "";
+		message.pointer = object.pointer ?? "";
+		message.version = object.version ?? 0;
+		return message;
+	}
 };
 
 function createBaseAddCWERC1155PointerProposal(): AddCWERC1155PointerProposal {
-  return { title: "", description: "", pointee: "", pointer: "", version: 0 };
+	return { title: "", description: "", pointee: "", pointer: "", version: 0 };
 }
 
-export const AddCWERC1155PointerProposal: MessageFns<
-  AddCWERC1155PointerProposal,
-  "seiprotocol.seichain.evm.AddCWERC1155PointerProposal"
-> = {
-  $type: "seiprotocol.seichain.evm.AddCWERC1155PointerProposal" as const,
+export const AddCWERC1155PointerProposal: MessageFns<AddCWERC1155PointerProposal, "seiprotocol.seichain.evm.AddCWERC1155PointerProposal"> = {
+	$type: "seiprotocol.seichain.evm.AddCWERC1155PointerProposal" as const,
 
-  encode(message: AddCWERC1155PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.pointee !== "") {
-      writer.uint32(26).string(message.pointee);
-    }
-    if (message.pointer !== "") {
-      writer.uint32(34).string(message.pointer);
-    }
-    if (message.version !== 0) {
-      writer.uint32(40).uint32(message.version);
-    }
-    return writer;
-  },
+	encode(message: AddCWERC1155PointerProposal, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.pointee !== "") {
+			writer.uint32(26).string(message.pointee);
+		}
+		if (message.pointer !== "") {
+			writer.uint32(34).string(message.pointer);
+		}
+		if (message.version !== 0) {
+			writer.uint32(40).uint32(message.version);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddCWERC1155PointerProposal {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddCWERC1155PointerProposal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddCWERC1155PointerProposal {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddCWERC1155PointerProposal();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.pointee = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.pointee = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.pointer = reader.string();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
+					message.pointer = reader.string();
+					continue;
+				case 5:
+					if (tag !== 40) {
+						break;
+					}
 
-          message.version = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.version = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddCWERC1155PointerProposal {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
-      pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-    };
-  },
+	fromJSON(object: any): AddCWERC1155PointerProposal {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
+		};
+	},
 
-  toJSON(message: AddCWERC1155PointerProposal): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.pointee !== "") {
-      obj.pointee = message.pointee;
-    }
-    if (message.pointer !== "") {
-      obj.pointer = message.pointer;
-    }
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    return obj;
-  },
+	toJSON(message: AddCWERC1155PointerProposal): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.pointee !== "") {
+			obj.pointee = message.pointee;
+		}
+		if (message.pointer !== "") {
+			obj.pointer = message.pointer;
+		}
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddCWERC1155PointerProposal>, I>>(base?: I): AddCWERC1155PointerProposal {
-    return AddCWERC1155PointerProposal.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddCWERC1155PointerProposal>, I>>(object: I): AddCWERC1155PointerProposal {
-    const message = createBaseAddCWERC1155PointerProposal();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.pointee = object.pointee ?? "";
-    message.pointer = object.pointer ?? "";
-    message.version = object.version ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddCWERC1155PointerProposal>, I>>(base?: I): AddCWERC1155PointerProposal {
+		return AddCWERC1155PointerProposal.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddCWERC1155PointerProposal>, I>>(object: I): AddCWERC1155PointerProposal {
+		const message = createBaseAddCWERC1155PointerProposal();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.pointee = object.pointee ?? "";
+		message.pointer = object.pointer ?? "";
+		message.version = object.version ?? 0;
+		return message;
+	}
 };
 
 function createBaseAddERCNativePointerProposalV2(): AddERCNativePointerProposalV2 {
-  return { title: "", description: "", token: "", name: "", symbol: "", decimals: 0 };
+	return { title: "", description: "", token: "", name: "", symbol: "", decimals: 0 };
 }
 
-export const AddERCNativePointerProposalV2: MessageFns<
-  AddERCNativePointerProposalV2,
-  "seiprotocol.seichain.evm.AddERCNativePointerProposalV2"
-> = {
-  $type: "seiprotocol.seichain.evm.AddERCNativePointerProposalV2" as const,
+export const AddERCNativePointerProposalV2: MessageFns<AddERCNativePointerProposalV2, "seiprotocol.seichain.evm.AddERCNativePointerProposalV2"> = {
+	$type: "seiprotocol.seichain.evm.AddERCNativePointerProposalV2" as const,
 
-  encode(message: AddERCNativePointerProposalV2, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.title !== "") {
-      writer.uint32(10).string(message.title);
-    }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
-    }
-    if (message.token !== "") {
-      writer.uint32(26).string(message.token);
-    }
-    if (message.name !== "") {
-      writer.uint32(34).string(message.name);
-    }
-    if (message.symbol !== "") {
-      writer.uint32(42).string(message.symbol);
-    }
-    if (message.decimals !== 0) {
-      writer.uint32(48).uint32(message.decimals);
-    }
-    return writer;
-  },
+	encode(message: AddERCNativePointerProposalV2, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.title !== "") {
+			writer.uint32(10).string(message.title);
+		}
+		if (message.description !== "") {
+			writer.uint32(18).string(message.description);
+		}
+		if (message.token !== "") {
+			writer.uint32(26).string(message.token);
+		}
+		if (message.name !== "") {
+			writer.uint32(34).string(message.name);
+		}
+		if (message.symbol !== "") {
+			writer.uint32(42).string(message.symbol);
+		}
+		if (message.decimals !== 0) {
+			writer.uint32(48).uint32(message.decimals);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AddERCNativePointerProposalV2 {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAddERCNativePointerProposalV2();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): AddERCNativePointerProposalV2 {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAddERCNativePointerProposalV2();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.title = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.title = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.description = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.description = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.token = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.token = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.name = reader.string();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
+					message.name = reader.string();
+					continue;
+				case 5:
+					if (tag !== 42) {
+						break;
+					}
 
-          message.symbol = reader.string();
-          continue;
-        case 6:
-          if (tag !== 48) {
-            break;
-          }
+					message.symbol = reader.string();
+					continue;
+				case 6:
+					if (tag !== 48) {
+						break;
+					}
 
-          message.decimals = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.decimals = reader.uint32();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): AddERCNativePointerProposalV2 {
-    return {
-      title: isSet(object.title) ? globalThis.String(object.title) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      token: isSet(object.token) ? globalThis.String(object.token) : "",
-      name: isSet(object.name) ? globalThis.String(object.name) : "",
-      symbol: isSet(object.symbol) ? globalThis.String(object.symbol) : "",
-      decimals: isSet(object.decimals) ? globalThis.Number(object.decimals) : 0,
-    };
-  },
+	fromJSON(object: any): AddERCNativePointerProposalV2 {
+		return {
+			title: isSet(object.title) ? globalThis.String(object.title) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			token: isSet(object.token) ? globalThis.String(object.token) : "",
+			name: isSet(object.name) ? globalThis.String(object.name) : "",
+			symbol: isSet(object.symbol) ? globalThis.String(object.symbol) : "",
+			decimals: isSet(object.decimals) ? globalThis.Number(object.decimals) : 0
+		};
+	},
 
-  toJSON(message: AddERCNativePointerProposalV2): unknown {
-    const obj: any = {};
-    if (message.title !== "") {
-      obj.title = message.title;
-    }
-    if (message.description !== "") {
-      obj.description = message.description;
-    }
-    if (message.token !== "") {
-      obj.token = message.token;
-    }
-    if (message.name !== "") {
-      obj.name = message.name;
-    }
-    if (message.symbol !== "") {
-      obj.symbol = message.symbol;
-    }
-    if (message.decimals !== 0) {
-      obj.decimals = Math.round(message.decimals);
-    }
-    return obj;
-  },
+	toJSON(message: AddERCNativePointerProposalV2): unknown {
+		const obj: any = {};
+		if (message.title !== "") {
+			obj.title = message.title;
+		}
+		if (message.description !== "") {
+			obj.description = message.description;
+		}
+		if (message.token !== "") {
+			obj.token = message.token;
+		}
+		if (message.name !== "") {
+			obj.name = message.name;
+		}
+		if (message.symbol !== "") {
+			obj.symbol = message.symbol;
+		}
+		if (message.decimals !== 0) {
+			obj.decimals = Math.round(message.decimals);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<AddERCNativePointerProposalV2>, I>>(base?: I): AddERCNativePointerProposalV2 {
-    return AddERCNativePointerProposalV2.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AddERCNativePointerProposalV2>, I>>(
-    object: I,
-  ): AddERCNativePointerProposalV2 {
-    const message = createBaseAddERCNativePointerProposalV2();
-    message.title = object.title ?? "";
-    message.description = object.description ?? "";
-    message.token = object.token ?? "";
-    message.name = object.name ?? "";
-    message.symbol = object.symbol ?? "";
-    message.decimals = object.decimals ?? 0;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<AddERCNativePointerProposalV2>, I>>(base?: I): AddERCNativePointerProposalV2 {
+		return AddERCNativePointerProposalV2.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<AddERCNativePointerProposalV2>, I>>(object: I): AddERCNativePointerProposalV2 {
+		const message = createBaseAddERCNativePointerProposalV2();
+		message.title = object.title ?? "";
+		message.description = object.description ?? "";
+		message.token = object.token ?? "";
+		message.name = object.name ?? "";
+		message.symbol = object.symbol ?? "";
+		message.decimals = object.decimals ?? 0;
+		return message;
+	}
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+	? T
+	: T extends globalThis.Array<infer U>
+		? globalThis.Array<DeepPartial<U>>
+		: T extends ReadonlyArray<infer U>
+			? ReadonlyArray<DeepPartial<U>>
+			: T extends {}
+				? { [K in keyof T]?: DeepPartial<T[K]> }
+				: Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
+	return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-  readonly $type: V;
-  encode(message: T, writer?: BinaryWriter): BinaryWriter;
-  decode(input: BinaryReader | Uint8Array, length?: number): T;
-  fromJSON(object: any): T;
-  toJSON(message: T): unknown;
-  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+	readonly $type: V;
+	encode(message: T, writer?: BinaryWriter): BinaryWriter;
+	decode(input: BinaryReader | Uint8Array, length?: number): T;
+	fromJSON(object: any): T;
+	toJSON(message: T): unknown;
+	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

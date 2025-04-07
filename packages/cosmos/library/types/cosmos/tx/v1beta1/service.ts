@@ -15,7 +15,7 @@ export enum OrderBy {
 	ORDER_BY_ASC = 1,
 	/** ORDER_BY_DESC - ORDER_BY_DESC defines descending order */
 	ORDER_BY_DESC = 2,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum BroadcastMode {
@@ -36,7 +36,7 @@ export enum BroadcastMode {
 	 * immediately.
 	 */
 	BROADCAST_MODE_ASYNC = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface GetTxsEventRequest {

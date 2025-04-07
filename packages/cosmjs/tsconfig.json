@@ -1,13 +1,12 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "include": ["src"],
-  "compilerOptions": {
-    "outDir": "./dist/types",
-  },
-  "typedocOptions": {
-    "readme": "./README.md",
-    "name": "cosmjs",
-    "entryPoints": ["src/index.ts"]
-  }
+	"extends": "../../tsconfig.base.json",
+	"include": ["src"],
+	"compilerOptions": {
+		"outDir": "./dist/types"
+	},
+	"typedocOptions": {
+		"readme": "./README.md",
+		"name": "cosmjs",
+		"entryPoints": ["src/index.ts"]
+	}
 }
-

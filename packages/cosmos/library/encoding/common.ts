@@ -14,7 +14,11 @@ export type DeepPartial<T> = T extends Builtin
 
 export type KeysOfUnion<T> = T extends T ? keyof T : never;
 
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin
+	? P
+	: P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+			[K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+		};
 
 export interface MessageFns<T, V extends string> {
 	readonly $type: V;

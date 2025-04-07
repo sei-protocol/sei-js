@@ -14,8 +14,8 @@ export const protobufPackage = "cosmos.base.store.v1beta1";
  * a version/height.
  */
 export interface CommitInfo {
-  version: number;
-  store_infos: StoreInfo[];
+	version: number;
+	store_infos: StoreInfo[];
 }
 
 /**
@@ -23,8 +23,8 @@ export interface CommitInfo {
  * between a store name and the commit ID.
  */
 export interface StoreInfo {
-  name: string;
-  commit_id?: CommitID | undefined;
+	name: string;
+	commit_id?: CommitID | undefined;
 }
 
 /**
@@ -32,300 +32,299 @@ export interface StoreInfo {
  * committed.
  */
 export interface CommitID {
-  version: number;
-  hash: Uint8Array;
+	version: number;
+	hash: Uint8Array;
 }
 
 function createBaseCommitInfo(): CommitInfo {
-  return { version: 0, store_infos: [] };
+	return { version: 0, store_infos: [] };
 }
 
 export const CommitInfo: MessageFns<CommitInfo, "cosmos.base.store.v1beta1.CommitInfo"> = {
-  $type: "cosmos.base.store.v1beta1.CommitInfo" as const,
+	$type: "cosmos.base.store.v1beta1.CommitInfo" as const,
 
-  encode(message: CommitInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.version !== 0) {
-      writer.uint32(8).int64(message.version);
-    }
-    for (const v of message.store_infos) {
-      StoreInfo.encode(v!, writer.uint32(18).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: CommitInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.version !== 0) {
+			writer.uint32(8).int64(message.version);
+		}
+		for (const v of message.store_infos) {
+			StoreInfo.encode(v!, writer.uint32(18).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CommitInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCommitInfo();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): CommitInfo {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseCommitInfo();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 8) {
+						break;
+					}
 
-          message.version = longToNumber(reader.int64());
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.version = longToNumber(reader.int64());
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.store_infos.push(StoreInfo.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.store_infos.push(StoreInfo.decode(reader, reader.uint32()));
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): CommitInfo {
-    return {
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-      store_infos: globalThis.Array.isArray(object?.store_infos)
-        ? object.store_infos.map((e: any) => StoreInfo.fromJSON(e))
-        : [],
-    };
-  },
+	fromJSON(object: any): CommitInfo {
+		return {
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			store_infos: globalThis.Array.isArray(object?.store_infos) ? object.store_infos.map((e: any) => StoreInfo.fromJSON(e)) : []
+		};
+	},
 
-  toJSON(message: CommitInfo): unknown {
-    const obj: any = {};
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    if (message.store_infos?.length) {
-      obj.store_infos = message.store_infos.map((e) => StoreInfo.toJSON(e));
-    }
-    return obj;
-  },
+	toJSON(message: CommitInfo): unknown {
+		const obj: any = {};
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		if (message.store_infos?.length) {
+			obj.store_infos = message.store_infos.map((e) => StoreInfo.toJSON(e));
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<CommitInfo>, I>>(base?: I): CommitInfo {
-    return CommitInfo.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<CommitInfo>, I>>(object: I): CommitInfo {
-    const message = createBaseCommitInfo();
-    message.version = object.version ?? 0;
-    message.store_infos = object.store_infos?.map((e) => StoreInfo.fromPartial(e)) || [];
-    return message;
-  },
+	create<I extends Exact<DeepPartial<CommitInfo>, I>>(base?: I): CommitInfo {
+		return CommitInfo.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<CommitInfo>, I>>(object: I): CommitInfo {
+		const message = createBaseCommitInfo();
+		message.version = object.version ?? 0;
+		message.store_infos = object.store_infos?.map((e) => StoreInfo.fromPartial(e)) || [];
+		return message;
+	}
 };
 
 function createBaseStoreInfo(): StoreInfo {
-  return { name: "", commit_id: undefined };
+	return { name: "", commit_id: undefined };
 }
 
 export const StoreInfo: MessageFns<StoreInfo, "cosmos.base.store.v1beta1.StoreInfo"> = {
-  $type: "cosmos.base.store.v1beta1.StoreInfo" as const,
+	$type: "cosmos.base.store.v1beta1.StoreInfo" as const,
 
-  encode(message: StoreInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.name !== "") {
-      writer.uint32(10).string(message.name);
-    }
-    if (message.commit_id !== undefined) {
-      CommitID.encode(message.commit_id, writer.uint32(18).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: StoreInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.name !== "") {
+			writer.uint32(10).string(message.name);
+		}
+		if (message.commit_id !== undefined) {
+			CommitID.encode(message.commit_id, writer.uint32(18).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): StoreInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseStoreInfo();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): StoreInfo {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseStoreInfo();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.name = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.name = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.commit_id = CommitID.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.commit_id = CommitID.decode(reader, reader.uint32());
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): StoreInfo {
-    return {
-      name: isSet(object.name) ? globalThis.String(object.name) : "",
-      commit_id: isSet(object.commit_id) ? CommitID.fromJSON(object.commit_id) : undefined,
-    };
-  },
+	fromJSON(object: any): StoreInfo {
+		return {
+			name: isSet(object.name) ? globalThis.String(object.name) : "",
+			commit_id: isSet(object.commit_id) ? CommitID.fromJSON(object.commit_id) : undefined
+		};
+	},
 
-  toJSON(message: StoreInfo): unknown {
-    const obj: any = {};
-    if (message.name !== "") {
-      obj.name = message.name;
-    }
-    if (message.commit_id !== undefined) {
-      obj.commit_id = CommitID.toJSON(message.commit_id);
-    }
-    return obj;
-  },
+	toJSON(message: StoreInfo): unknown {
+		const obj: any = {};
+		if (message.name !== "") {
+			obj.name = message.name;
+		}
+		if (message.commit_id !== undefined) {
+			obj.commit_id = CommitID.toJSON(message.commit_id);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<StoreInfo>, I>>(base?: I): StoreInfo {
-    return StoreInfo.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<StoreInfo>, I>>(object: I): StoreInfo {
-    const message = createBaseStoreInfo();
-    message.name = object.name ?? "";
-    message.commit_id = (object.commit_id !== undefined && object.commit_id !== null)
-      ? CommitID.fromPartial(object.commit_id)
-      : undefined;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<StoreInfo>, I>>(base?: I): StoreInfo {
+		return StoreInfo.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<StoreInfo>, I>>(object: I): StoreInfo {
+		const message = createBaseStoreInfo();
+		message.name = object.name ?? "";
+		message.commit_id = object.commit_id !== undefined && object.commit_id !== null ? CommitID.fromPartial(object.commit_id) : undefined;
+		return message;
+	}
 };
 
 function createBaseCommitID(): CommitID {
-  return { version: 0, hash: new Uint8Array(0) };
+	return { version: 0, hash: new Uint8Array(0) };
 }
 
 export const CommitID: MessageFns<CommitID, "cosmos.base.store.v1beta1.CommitID"> = {
-  $type: "cosmos.base.store.v1beta1.CommitID" as const,
+	$type: "cosmos.base.store.v1beta1.CommitID" as const,
 
-  encode(message: CommitID, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.version !== 0) {
-      writer.uint32(8).int64(message.version);
-    }
-    if (message.hash.length !== 0) {
-      writer.uint32(18).bytes(message.hash);
-    }
-    return writer;
-  },
+	encode(message: CommitID, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.version !== 0) {
+			writer.uint32(8).int64(message.version);
+		}
+		if (message.hash.length !== 0) {
+			writer.uint32(18).bytes(message.hash);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CommitID {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCommitID();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): CommitID {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseCommitID();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 8) {
+						break;
+					}
 
-          message.version = longToNumber(reader.int64());
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.version = longToNumber(reader.int64());
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.hash = reader.bytes();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.hash = reader.bytes();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): CommitID {
-    return {
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-      hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
-    };
-  },
+	fromJSON(object: any): CommitID {
+		return {
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0)
+		};
+	},
 
-  toJSON(message: CommitID): unknown {
-    const obj: any = {};
-    if (message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    if (message.hash.length !== 0) {
-      obj.hash = base64FromBytes(message.hash);
-    }
-    return obj;
-  },
+	toJSON(message: CommitID): unknown {
+		const obj: any = {};
+		if (message.version !== 0) {
+			obj.version = Math.round(message.version);
+		}
+		if (message.hash.length !== 0) {
+			obj.hash = base64FromBytes(message.hash);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<CommitID>, I>>(base?: I): CommitID {
-    return CommitID.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<CommitID>, I>>(object: I): CommitID {
-    const message = createBaseCommitID();
-    message.version = object.version ?? 0;
-    message.hash = object.hash ?? new Uint8Array(0);
-    return message;
-  },
+	create<I extends Exact<DeepPartial<CommitID>, I>>(base?: I): CommitID {
+		return CommitID.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<CommitID>, I>>(object: I): CommitID {
+		const message = createBaseCommitID();
+		message.version = object.version ?? 0;
+		message.hash = object.hash ?? new Uint8Array(0);
+		return message;
+	}
 };
 
 function bytesFromBase64(b64: string): Uint8Array {
-  if ((globalThis as any).Buffer) {
-    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
-  } else {
-    const bin = globalThis.atob(b64);
-    const arr = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; ++i) {
-      arr[i] = bin.charCodeAt(i);
-    }
-    return arr;
-  }
+	if ((globalThis as any).Buffer) {
+		return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+	} else {
+		const bin = globalThis.atob(b64);
+		const arr = new Uint8Array(bin.length);
+		for (let i = 0; i < bin.length; ++i) {
+			arr[i] = bin.charCodeAt(i);
+		}
+		return arr;
+	}
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-  if ((globalThis as any).Buffer) {
-    return globalThis.Buffer.from(arr).toString("base64");
-  } else {
-    const bin: string[] = [];
-    arr.forEach((byte) => {
-      bin.push(globalThis.String.fromCharCode(byte));
-    });
-    return globalThis.btoa(bin.join(""));
-  }
+	if ((globalThis as any).Buffer) {
+		return globalThis.Buffer.from(arr).toString("base64");
+	} else {
+		const bin: string[] = [];
+		arr.forEach((byte) => {
+			bin.push(globalThis.String.fromCharCode(byte));
+		});
+		return globalThis.btoa(bin.join(""));
+	}
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+	? T
+	: T extends globalThis.Array<infer U>
+		? globalThis.Array<DeepPartial<U>>
+		: T extends ReadonlyArray<infer U>
+			? ReadonlyArray<DeepPartial<U>>
+			: T extends {}
+				? { [K in keyof T]?: DeepPartial<T[K]> }
+				: Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
+	const num = globalThis.Number(int64.toString());
+	if (num > globalThis.Number.MAX_SAFE_INTEGER) {
+		throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+	}
+	if (num < globalThis.Number.MIN_SAFE_INTEGER) {
+		throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
+	}
+	return num;
 }
 
 function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
+	return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-  readonly $type: V;
-  encode(message: T, writer?: BinaryWriter): BinaryWriter;
-  decode(input: BinaryReader | Uint8Array, length?: number): T;
-  fromJSON(object: any): T;
-  toJSON(message: T): unknown;
-  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+	readonly $type: V;
+	encode(message: T, writer?: BinaryWriter): BinaryWriter;
+	decode(input: BinaryReader | Uint8Array, length?: number): T;
+	fromJSON(object: any): T;
+	toJSON(message: T): unknown;
+	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

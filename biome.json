@@ -32,7 +32,8 @@
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",
-			"jsxQuoteStyle": "double"
+			"jsxQuoteStyle": "double",
+			"trailingCommas": "none"
 		}
 	}
 }

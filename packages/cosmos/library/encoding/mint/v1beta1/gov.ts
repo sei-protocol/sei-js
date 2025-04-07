@@ -67,7 +67,7 @@ export const UpdateMinterProposal: MessageFns<UpdateMinterProposal, "seiprotocol
 		return {
 			title: isSet(object.title) ? globalThis.String(object.title) : "",
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
-			minter: isSet(object.minter) ? Minter.fromJSON(object.minter) : undefined,
+			minter: isSet(object.minter) ? Minter.fromJSON(object.minter) : undefined
 		};
 	},
 
@@ -94,7 +94,7 @@ export const UpdateMinterProposal: MessageFns<UpdateMinterProposal, "seiprotocol
 		message.description = object.description ?? "";
 		message.minter = object.minter !== undefined && object.minter !== null ? Minter.fromPartial(object.minter) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseUpdateMinterProposal(): UpdateMinterProposal {
@@ -109,6 +109,6 @@ export const aminoConverters = {
 	"/seiprotocol.seichain.mint.UpdateMinterProposal": {
 		aminoType: "mint/UpdateMinterProposal",
 		toAmino: (message: UpdateMinterProposal) => ({ ...message }),
-		fromAmino: (object: UpdateMinterProposal) => ({ ...object }),
-	},
+		fromAmino: (object: UpdateMinterProposal) => ({ ...object })
+	}
 };

@@ -61,7 +61,7 @@ export const Pairs: MessageFns<Pairs, "cosmos.base.kv.v1beta1.Pairs"> = {
 		const message = createBasePairs();
 		message.pairs = object.pairs?.map((e) => Pair.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Pair: MessageFns<Pair, "cosmos.base.kv.v1beta1.Pair"> = {
@@ -110,7 +110,7 @@ export const Pair: MessageFns<Pair, "cosmos.base.kv.v1beta1.Pair"> = {
 	fromJSON(object: any): Pair {
 		return {
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
-			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
+			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0)
 		};
 	},
 
@@ -133,7 +133,7 @@ export const Pair: MessageFns<Pair, "cosmos.base.kv.v1beta1.Pair"> = {
 		message.key = object.key ?? new Uint8Array(0);
 		message.value = object.value ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBasePairs(): Pairs {
@@ -174,18 +174,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.kv.v1beta1.Pairs", Pairs as never],
-	["/cosmos.base.kv.v1beta1.Pair", Pair as never],
+	["/cosmos.base.kv.v1beta1.Pair", Pair as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.kv.v1beta1.Pairs": {
 		aminoType: "cosmos-sdk/Pairs",
 		toAmino: (message: Pairs) => ({ ...message }),
-		fromAmino: (object: Pairs) => ({ ...object }),
+		fromAmino: (object: Pairs) => ({ ...object })
 	},
 
 	"/cosmos.base.kv.v1beta1.Pair": {
 		aminoType: "cosmos-sdk/Pair",
 		toAmino: (message: Pair) => ({ ...message }),
-		fromAmino: (object: Pair) => ({ ...object }),
-	},
+		fromAmino: (object: Pair) => ({ ...object })
+	}
 };

@@ -16,7 +16,7 @@ import type {
 	SimulationResponse as SimulationResponse_type,
 	StringEvent as StringEvent_type,
 	TxMsgData as TxMsgData_type,
-	TxResponse as TxResponse_type,
+	TxResponse as TxResponse_type
 } from "../../../../../types/cosmos/base/abci/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../../common";
@@ -199,7 +199,7 @@ export const TxResponse: MessageFns<TxResponse, "cosmos.base.abci.v1beta1.TxResp
 			gas_used: isSet(object.gas_used) ? globalThis.Number(object.gas_used) : 0,
 			tx: isSet(object.tx) ? Any.fromJSON(object.tx) : undefined,
 			timestamp: isSet(object.timestamp) ? globalThis.String(object.timestamp) : "",
-			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => Event.fromJSON(e)) : [],
+			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => Event.fromJSON(e)) : []
 		};
 	},
 
@@ -266,7 +266,7 @@ export const TxResponse: MessageFns<TxResponse, "cosmos.base.abci.v1beta1.TxResp
 		message.timestamp = object.timestamp ?? "";
 		message.events = object.events?.map((e) => Event.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ABCIMessageLog: MessageFns<ABCIMessageLog, "cosmos.base.abci.v1beta1.ABCIMessageLog"> = {
@@ -326,7 +326,7 @@ export const ABCIMessageLog: MessageFns<ABCIMessageLog, "cosmos.base.abci.v1beta
 		return {
 			msg_index: isSet(object.msg_index) ? globalThis.Number(object.msg_index) : 0,
 			log: isSet(object.log) ? globalThis.String(object.log) : "",
-			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => StringEvent.fromJSON(e)) : [],
+			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => StringEvent.fromJSON(e)) : []
 		};
 	},
 
@@ -353,7 +353,7 @@ export const ABCIMessageLog: MessageFns<ABCIMessageLog, "cosmos.base.abci.v1beta
 		message.log = object.log ?? "";
 		message.events = object.events?.map((e) => StringEvent.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const StringEvent: MessageFns<StringEvent, "cosmos.base.abci.v1beta1.StringEvent"> = {
@@ -402,7 +402,7 @@ export const StringEvent: MessageFns<StringEvent, "cosmos.base.abci.v1beta1.Stri
 	fromJSON(object: any): StringEvent {
 		return {
 			type: isSet(object.type) ? globalThis.String(object.type) : "",
-			attributes: globalThis.Array.isArray(object?.attributes) ? object.attributes.map((e: any) => Attribute.fromJSON(e)) : [],
+			attributes: globalThis.Array.isArray(object?.attributes) ? object.attributes.map((e: any) => Attribute.fromJSON(e)) : []
 		};
 	},
 
@@ -425,7 +425,7 @@ export const StringEvent: MessageFns<StringEvent, "cosmos.base.abci.v1beta1.Stri
 		message.type = object.type ?? "";
 		message.attributes = object.attributes?.map((e) => Attribute.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Attribute: MessageFns<Attribute, "cosmos.base.abci.v1beta1.Attribute"> = {
@@ -474,7 +474,7 @@ export const Attribute: MessageFns<Attribute, "cosmos.base.abci.v1beta1.Attribut
 	fromJSON(object: any): Attribute {
 		return {
 			key: isSet(object.key) ? globalThis.String(object.key) : "",
-			value: isSet(object.value) ? globalThis.String(object.value) : "",
+			value: isSet(object.value) ? globalThis.String(object.value) : ""
 		};
 	},
 
@@ -497,7 +497,7 @@ export const Attribute: MessageFns<Attribute, "cosmos.base.abci.v1beta1.Attribut
 		message.key = object.key ?? "";
 		message.value = object.value ?? "";
 		return message;
-	},
+	}
 };
 
 export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = {
@@ -557,7 +557,7 @@ export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = 
 		return {
 			gas_wanted: isSet(object.gas_wanted) ? globalThis.Number(object.gas_wanted) : 0,
 			gas_used: isSet(object.gas_used) ? globalThis.Number(object.gas_used) : 0,
-			gas_estimate: isSet(object.gas_estimate) ? globalThis.Number(object.gas_estimate) : 0,
+			gas_estimate: isSet(object.gas_estimate) ? globalThis.Number(object.gas_estimate) : 0
 		};
 	},
 
@@ -584,7 +584,7 @@ export const GasInfo: MessageFns<GasInfo, "cosmos.base.abci.v1beta1.GasInfo"> = 
 		message.gas_used = object.gas_used ?? 0;
 		message.gas_estimate = object.gas_estimate ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Result: MessageFns<Result, "cosmos.base.abci.v1beta1.Result"> = {
@@ -655,7 +655,7 @@ export const Result: MessageFns<Result, "cosmos.base.abci.v1beta1.Result"> = {
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
 			log: isSet(object.log) ? globalThis.String(object.log) : "",
 			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => Event.fromJSON(e)) : [],
-			evmError: isSet(object.evmError) ? globalThis.String(object.evmError) : "",
+			evmError: isSet(object.evmError) ? globalThis.String(object.evmError) : ""
 		};
 	},
 
@@ -686,7 +686,7 @@ export const Result: MessageFns<Result, "cosmos.base.abci.v1beta1.Result"> = {
 		message.events = object.events?.map((e) => Event.fromPartial(e)) || [];
 		message.evmError = object.evmError ?? "";
 		return message;
-	},
+	}
 };
 
 export const SimulationResponse: MessageFns<SimulationResponse, "cosmos.base.abci.v1beta1.SimulationResponse"> = {
@@ -735,7 +735,7 @@ export const SimulationResponse: MessageFns<SimulationResponse, "cosmos.base.abc
 	fromJSON(object: any): SimulationResponse {
 		return {
 			gas_info: isSet(object.gas_info) ? GasInfo.fromJSON(object.gas_info) : undefined,
-			result: isSet(object.result) ? Result.fromJSON(object.result) : undefined,
+			result: isSet(object.result) ? Result.fromJSON(object.result) : undefined
 		};
 	},
 
@@ -758,7 +758,7 @@ export const SimulationResponse: MessageFns<SimulationResponse, "cosmos.base.abc
 		message.gas_info = object.gas_info !== undefined && object.gas_info !== null ? GasInfo.fromPartial(object.gas_info) : undefined;
 		message.result = object.result !== undefined && object.result !== null ? Result.fromPartial(object.result) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgData: MessageFns<MsgData, "cosmos.base.abci.v1beta1.MsgData"> = {
@@ -807,7 +807,7 @@ export const MsgData: MessageFns<MsgData, "cosmos.base.abci.v1beta1.MsgData"> = 
 	fromJSON(object: any): MsgData {
 		return {
 			msg_type: isSet(object.msg_type) ? globalThis.String(object.msg_type) : "",
-			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
+			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0)
 		};
 	},
 
@@ -830,7 +830,7 @@ export const MsgData: MessageFns<MsgData, "cosmos.base.abci.v1beta1.MsgData"> = 
 		message.msg_type = object.msg_type ?? "";
 		message.data = object.data ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const TxMsgData: MessageFns<TxMsgData, "cosmos.base.abci.v1beta1.TxMsgData"> = {
@@ -885,7 +885,7 @@ export const TxMsgData: MessageFns<TxMsgData, "cosmos.base.abci.v1beta1.TxMsgDat
 		const message = createBaseTxMsgData();
 		message.data = object.data?.map((e) => MsgData.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const SearchTxsResult: MessageFns<SearchTxsResult, "cosmos.base.abci.v1beta1.SearchTxsResult"> = {
@@ -978,7 +978,7 @@ export const SearchTxsResult: MessageFns<SearchTxsResult, "cosmos.base.abci.v1be
 			page_number: isSet(object.page_number) ? globalThis.Number(object.page_number) : 0,
 			page_total: isSet(object.page_total) ? globalThis.Number(object.page_total) : 0,
 			limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-			txs: globalThis.Array.isArray(object?.txs) ? object.txs.map((e: any) => TxResponse.fromJSON(e)) : [],
+			txs: globalThis.Array.isArray(object?.txs) ? object.txs.map((e: any) => TxResponse.fromJSON(e)) : []
 		};
 	},
 
@@ -1017,7 +1017,7 @@ export const SearchTxsResult: MessageFns<SearchTxsResult, "cosmos.base.abci.v1be
 		message.limit = object.limit ?? 0;
 		message.txs = object.txs?.map((e) => TxResponse.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseTxResponse(): TxResponse {
@@ -1034,7 +1034,7 @@ function createBaseTxResponse(): TxResponse {
 		gas_used: 0,
 		tx: undefined,
 		timestamp: "",
-		events: [],
+		events: []
 	};
 }
 
@@ -1123,66 +1123,66 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.abci.v1beta1.SimulationResponse", SimulationResponse as never],
 	["/cosmos.base.abci.v1beta1.MsgData", MsgData as never],
 	["/cosmos.base.abci.v1beta1.TxMsgData", TxMsgData as never],
-	["/cosmos.base.abci.v1beta1.SearchTxsResult", SearchTxsResult as never],
+	["/cosmos.base.abci.v1beta1.SearchTxsResult", SearchTxsResult as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.abci.v1beta1.TxResponse": {
 		aminoType: "cosmos-sdk/TxResponse",
 		toAmino: (message: TxResponse) => ({ ...message }),
-		fromAmino: (object: TxResponse) => ({ ...object }),
+		fromAmino: (object: TxResponse) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.ABCIMessageLog": {
 		aminoType: "cosmos-sdk/ABCIMessageLog",
 		toAmino: (message: ABCIMessageLog) => ({ ...message }),
-		fromAmino: (object: ABCIMessageLog) => ({ ...object }),
+		fromAmino: (object: ABCIMessageLog) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.StringEvent": {
 		aminoType: "cosmos-sdk/StringEvent",
 		toAmino: (message: StringEvent) => ({ ...message }),
-		fromAmino: (object: StringEvent) => ({ ...object }),
+		fromAmino: (object: StringEvent) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.Attribute": {
 		aminoType: "cosmos-sdk/Attribute",
 		toAmino: (message: Attribute) => ({ ...message }),
-		fromAmino: (object: Attribute) => ({ ...object }),
+		fromAmino: (object: Attribute) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.GasInfo": {
 		aminoType: "cosmos-sdk/GasInfo",
 		toAmino: (message: GasInfo) => ({ ...message }),
-		fromAmino: (object: GasInfo) => ({ ...object }),
+		fromAmino: (object: GasInfo) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.Result": {
 		aminoType: "cosmos-sdk/Result",
 		toAmino: (message: Result) => ({ ...message }),
-		fromAmino: (object: Result) => ({ ...object }),
+		fromAmino: (object: Result) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.SimulationResponse": {
 		aminoType: "cosmos-sdk/SimulationResponse",
 		toAmino: (message: SimulationResponse) => ({ ...message }),
-		fromAmino: (object: SimulationResponse) => ({ ...object }),
+		fromAmino: (object: SimulationResponse) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.MsgData": {
 		aminoType: "cosmos-sdk/MsgData",
 		toAmino: (message: MsgData) => ({ ...message }),
-		fromAmino: (object: MsgData) => ({ ...object }),
+		fromAmino: (object: MsgData) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.TxMsgData": {
 		aminoType: "cosmos-sdk/TxMsgData",
 		toAmino: (message: TxMsgData) => ({ ...message }),
-		fromAmino: (object: TxMsgData) => ({ ...object }),
+		fromAmino: (object: TxMsgData) => ({ ...object })
 	},
 
 	"/cosmos.base.abci.v1beta1.SearchTxsResult": {
 		aminoType: "cosmos-sdk/SearchTxsResult",
 		toAmino: (message: SearchTxsResult) => ({ ...message }),
-		fromAmino: (object: SearchTxsResult) => ({ ...object }),
-	},
+		fromAmino: (object: SearchTxsResult) => ({ ...object })
+	}
 };

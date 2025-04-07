@@ -9,7 +9,7 @@ import type {
 	NodeInfo as NodeInfo_type,
 	PeerAddressInfo as PeerAddressInfo_type,
 	PeerInfo as PeerInfo_type,
-	ProtocolVersion as ProtocolVersion_type,
+	ProtocolVersion as ProtocolVersion_type
 } from "../../../types/tendermint/p2p";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -77,7 +77,7 @@ export const ProtocolVersion: MessageFns<ProtocolVersion, "tendermint.p2p.Protoc
 		return {
 			p2p: isSet(object.p2p) ? globalThis.Number(object.p2p) : 0,
 			block: isSet(object.block) ? globalThis.Number(object.block) : 0,
-			app: isSet(object.app) ? globalThis.Number(object.app) : 0,
+			app: isSet(object.app) ? globalThis.Number(object.app) : 0
 		};
 	},
 
@@ -104,7 +104,7 @@ export const ProtocolVersion: MessageFns<ProtocolVersion, "tendermint.p2p.Protoc
 		message.block = object.block ?? 0;
 		message.app = object.app ?? 0;
 		return message;
-	},
+	}
 };
 
 export const NodeInfo: MessageFns<NodeInfo, "tendermint.p2p.NodeInfo"> = {
@@ -219,7 +219,7 @@ export const NodeInfo: MessageFns<NodeInfo, "tendermint.p2p.NodeInfo"> = {
 			version: isSet(object.version) ? globalThis.String(object.version) : "",
 			channels: isSet(object.channels) ? bytesFromBase64(object.channels) : new Uint8Array(0),
 			moniker: isSet(object.moniker) ? globalThis.String(object.moniker) : "",
-			other: isSet(object.other) ? NodeInfoOther.fromJSON(object.other) : undefined,
+			other: isSet(object.other) ? NodeInfoOther.fromJSON(object.other) : undefined
 		};
 	},
 
@@ -267,7 +267,7 @@ export const NodeInfo: MessageFns<NodeInfo, "tendermint.p2p.NodeInfo"> = {
 		message.moniker = object.moniker ?? "";
 		message.other = object.other !== undefined && object.other !== null ? NodeInfoOther.fromPartial(object.other) : undefined;
 		return message;
-	},
+	}
 };
 
 export const NodeInfoOther: MessageFns<NodeInfoOther, "tendermint.p2p.NodeInfoOther"> = {
@@ -316,7 +316,7 @@ export const NodeInfoOther: MessageFns<NodeInfoOther, "tendermint.p2p.NodeInfoOt
 	fromJSON(object: any): NodeInfoOther {
 		return {
 			tx_index: isSet(object.tx_index) ? globalThis.String(object.tx_index) : "",
-			rpc_address: isSet(object.rpc_address) ? globalThis.String(object.rpc_address) : "",
+			rpc_address: isSet(object.rpc_address) ? globalThis.String(object.rpc_address) : ""
 		};
 	},
 
@@ -339,7 +339,7 @@ export const NodeInfoOther: MessageFns<NodeInfoOther, "tendermint.p2p.NodeInfoOt
 		message.tx_index = object.tx_index ?? "";
 		message.rpc_address = object.rpc_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const PeerInfo: MessageFns<PeerInfo, "tendermint.p2p.PeerInfo"> = {
@@ -399,7 +399,7 @@ export const PeerInfo: MessageFns<PeerInfo, "tendermint.p2p.PeerInfo"> = {
 		return {
 			id: isSet(object.id) ? globalThis.String(object.id) : "",
 			address_info: globalThis.Array.isArray(object?.address_info) ? object.address_info.map((e: any) => PeerAddressInfo.fromJSON(e)) : [],
-			last_connected: isSet(object.last_connected) ? fromJsonTimestamp(object.last_connected) : undefined,
+			last_connected: isSet(object.last_connected) ? fromJsonTimestamp(object.last_connected) : undefined
 		};
 	},
 
@@ -426,7 +426,7 @@ export const PeerInfo: MessageFns<PeerInfo, "tendermint.p2p.PeerInfo"> = {
 		message.address_info = object.address_info?.map((e) => PeerAddressInfo.fromPartial(e)) || [];
 		message.last_connected = object.last_connected ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const PeerAddressInfo: MessageFns<PeerAddressInfo, "tendermint.p2p.PeerAddressInfo"> = {
@@ -497,7 +497,7 @@ export const PeerAddressInfo: MessageFns<PeerAddressInfo, "tendermint.p2p.PeerAd
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
 			last_dial_success: isSet(object.last_dial_success) ? fromJsonTimestamp(object.last_dial_success) : undefined,
 			last_dial_failure: isSet(object.last_dial_failure) ? fromJsonTimestamp(object.last_dial_failure) : undefined,
-			dial_failures: isSet(object.dial_failures) ? globalThis.Number(object.dial_failures) : 0,
+			dial_failures: isSet(object.dial_failures) ? globalThis.Number(object.dial_failures) : 0
 		};
 	},
 
@@ -528,7 +528,7 @@ export const PeerAddressInfo: MessageFns<PeerAddressInfo, "tendermint.p2p.PeerAd
 		message.last_dial_failure = object.last_dial_failure ?? undefined;
 		message.dial_failures = object.dial_failures ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseProtocolVersion(): ProtocolVersion {
@@ -544,7 +544,7 @@ function createBaseNodeInfo(): NodeInfo {
 		version: "",
 		channels: new Uint8Array(0),
 		moniker: "",
-		other: undefined,
+		other: undefined
 	};
 }
 
@@ -626,36 +626,36 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.p2p.NodeInfo", NodeInfo as never],
 	["/tendermint.p2p.NodeInfoOther", NodeInfoOther as never],
 	["/tendermint.p2p.PeerInfo", PeerInfo as never],
-	["/tendermint.p2p.PeerAddressInfo", PeerAddressInfo as never],
+	["/tendermint.p2p.PeerAddressInfo", PeerAddressInfo as never]
 ];
 export const aminoConverters = {
 	"/tendermint.p2p.ProtocolVersion": {
 		aminoType: "tendermint.p2p.ProtocolVersion",
 		toAmino: (message: ProtocolVersion) => ({ ...message }),
-		fromAmino: (object: ProtocolVersion) => ({ ...object }),
+		fromAmino: (object: ProtocolVersion) => ({ ...object })
 	},
 
 	"/tendermint.p2p.NodeInfo": {
 		aminoType: "tendermint.p2p.NodeInfo",
 		toAmino: (message: NodeInfo) => ({ ...message }),
-		fromAmino: (object: NodeInfo) => ({ ...object }),
+		fromAmino: (object: NodeInfo) => ({ ...object })
 	},
 
 	"/tendermint.p2p.NodeInfoOther": {
 		aminoType: "tendermint.p2p.NodeInfoOther",
 		toAmino: (message: NodeInfoOther) => ({ ...message }),
-		fromAmino: (object: NodeInfoOther) => ({ ...object }),
+		fromAmino: (object: NodeInfoOther) => ({ ...object })
 	},
 
 	"/tendermint.p2p.PeerInfo": {
 		aminoType: "tendermint.p2p.PeerInfo",
 		toAmino: (message: PeerInfo) => ({ ...message }),
-		fromAmino: (object: PeerInfo) => ({ ...object }),
+		fromAmino: (object: PeerInfo) => ({ ...object })
 	},
 
 	"/tendermint.p2p.PeerAddressInfo": {
 		aminoType: "tendermint.p2p.PeerAddressInfo",
 		toAmino: (message: PeerAddressInfo) => ({ ...message }),
-		fromAmino: (object: PeerAddressInfo) => ({ ...object }),
-	},
+		fromAmino: (object: PeerAddressInfo) => ({ ...object })
+	}
 };

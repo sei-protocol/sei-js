@@ -37,7 +37,7 @@ export enum SignMode {
 	 * Since: cosmos-sdk 0.45.2
 	 */
 	SIGN_MODE_EIP_191 = 191,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface SignatureDescriptors {

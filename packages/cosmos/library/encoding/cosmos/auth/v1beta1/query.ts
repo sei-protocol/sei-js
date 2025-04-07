@@ -16,7 +16,7 @@ import type {
 	QueryNextAccountNumberRequest as QueryNextAccountNumberRequest_type,
 	QueryNextAccountNumberResponse as QueryNextAccountNumberResponse_type,
 	QueryParamsRequest as QueryParamsRequest_type,
-	QueryParamsResponse as QueryParamsResponse_type,
+	QueryParamsResponse as QueryParamsResponse_type
 } from "../../../../types/cosmos/auth/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -82,7 +82,7 @@ export const QueryAccountsRequest: MessageFns<QueryAccountsRequest, "cosmos.auth
 		const message = createBaseQueryAccountsRequest();
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAccountsResponse: MessageFns<QueryAccountsResponse, "cosmos.auth.v1beta1.QueryAccountsResponse"> = {
@@ -131,7 +131,7 @@ export const QueryAccountsResponse: MessageFns<QueryAccountsResponse, "cosmos.au
 	fromJSON(object: any): QueryAccountsResponse {
 		return {
 			accounts: globalThis.Array.isArray(object?.accounts) ? object.accounts.map((e: any) => Any.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -154,7 +154,7 @@ export const QueryAccountsResponse: MessageFns<QueryAccountsResponse, "cosmos.au
 		message.accounts = object.accounts?.map((e) => Any.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAccountRequest: MessageFns<QueryAccountRequest, "cosmos.auth.v1beta1.QueryAccountRequest"> = {
@@ -209,7 +209,7 @@ export const QueryAccountRequest: MessageFns<QueryAccountRequest, "cosmos.auth.v
 		const message = createBaseQueryAccountRequest();
 		message.address = object.address ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryAccountResponse: MessageFns<QueryAccountResponse, "cosmos.auth.v1beta1.QueryAccountResponse"> = {
@@ -264,7 +264,7 @@ export const QueryAccountResponse: MessageFns<QueryAccountResponse, "cosmos.auth
 		const message = createBaseQueryAccountResponse();
 		message.account = object.account !== undefined && object.account !== null ? Any.fromPartial(object.account) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.auth.v1beta1.QueryParamsRequest"> = {
@@ -305,7 +305,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.auth.v1b
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.auth.v1beta1.QueryParamsResponse"> = {
@@ -360,7 +360,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.auth.v
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryNextAccountNumberRequest: MessageFns<QueryNextAccountNumberRequest, "cosmos.auth.v1beta1.QueryNextAccountNumberRequest"> = {
@@ -401,7 +401,7 @@ export const QueryNextAccountNumberRequest: MessageFns<QueryNextAccountNumberReq
 	fromPartial<I extends Exact<DeepPartial<QueryNextAccountNumberRequest>, I>>(_: I): QueryNextAccountNumberRequest {
 		const message = createBaseQueryNextAccountNumberRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryNextAccountNumberResponse: MessageFns<QueryNextAccountNumberResponse, "cosmos.auth.v1beta1.QueryNextAccountNumberResponse"> = {
@@ -456,7 +456,7 @@ export const QueryNextAccountNumberResponse: MessageFns<QueryNextAccountNumberRe
 		const message = createBaseQueryNextAccountNumberResponse();
 		message.count = object.count ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryAccountsRequest(): QueryAccountsRequest {
@@ -511,42 +511,42 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.auth.v1beta1.QueryAccountRequest", QueryAccountRequest as never],
 	["/cosmos.auth.v1beta1.QueryAccountResponse", QueryAccountResponse as never],
 	["/cosmos.auth.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.auth.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.auth.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.auth.v1beta1.QueryAccountsRequest": {
 		aminoType: "cosmos-sdk/QueryAccountsRequest",
 		toAmino: (message: QueryAccountsRequest) => ({ ...message }),
-		fromAmino: (object: QueryAccountsRequest) => ({ ...object }),
+		fromAmino: (object: QueryAccountsRequest) => ({ ...object })
 	},
 
 	"/cosmos.auth.v1beta1.QueryAccountsResponse": {
 		aminoType: "cosmos-sdk/QueryAccountsResponse",
 		toAmino: (message: QueryAccountsResponse) => ({ ...message }),
-		fromAmino: (object: QueryAccountsResponse) => ({ ...object }),
+		fromAmino: (object: QueryAccountsResponse) => ({ ...object })
 	},
 
 	"/cosmos.auth.v1beta1.QueryAccountRequest": {
 		aminoType: "cosmos-sdk/QueryAccountRequest",
 		toAmino: (message: QueryAccountRequest) => ({ ...message }),
-		fromAmino: (object: QueryAccountRequest) => ({ ...object }),
+		fromAmino: (object: QueryAccountRequest) => ({ ...object })
 	},
 
 	"/cosmos.auth.v1beta1.QueryAccountResponse": {
 		aminoType: "cosmos-sdk/QueryAccountResponse",
 		toAmino: (message: QueryAccountResponse) => ({ ...message }),
-		fromAmino: (object: QueryAccountResponse) => ({ ...object }),
+		fromAmino: (object: QueryAccountResponse) => ({ ...object })
 	},
 
 	"/cosmos.auth.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/cosmos.auth.v1beta1.QueryParamsResponse": {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	}
 };

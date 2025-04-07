@@ -10,7 +10,7 @@ import type {
 	CancelSoftwareUpgradeProposal as CancelSoftwareUpgradeProposal_type,
 	ModuleVersion as ModuleVersion_type,
 	Plan as Plan_type,
-	SoftwareUpgradeProposal as SoftwareUpgradeProposal_type,
+	SoftwareUpgradeProposal as SoftwareUpgradeProposal_type
 } from "../../../../types/cosmos/upgrade/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -99,7 +99,7 @@ export const Plan: MessageFns<Plan, "cosmos.upgrade.v1beta1.Plan"> = {
 			time: isSet(object.time) ? fromJsonTimestamp(object.time) : undefined,
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			info: isSet(object.info) ? globalThis.String(object.info) : "",
-			upgraded_client_state: isSet(object.upgraded_client_state) ? Any.fromJSON(object.upgraded_client_state) : undefined,
+			upgraded_client_state: isSet(object.upgraded_client_state) ? Any.fromJSON(object.upgraded_client_state) : undefined
 		};
 	},
 
@@ -135,7 +135,7 @@ export const Plan: MessageFns<Plan, "cosmos.upgrade.v1beta1.Plan"> = {
 		message.upgraded_client_state =
 			object.upgraded_client_state !== undefined && object.upgraded_client_state !== null ? Any.fromPartial(object.upgraded_client_state) : undefined;
 		return message;
-	},
+	}
 };
 
 export const SoftwareUpgradeProposal: MessageFns<SoftwareUpgradeProposal, "cosmos.upgrade.v1beta1.SoftwareUpgradeProposal"> = {
@@ -195,7 +195,7 @@ export const SoftwareUpgradeProposal: MessageFns<SoftwareUpgradeProposal, "cosmo
 		return {
 			title: isSet(object.title) ? globalThis.String(object.title) : "",
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
-			plan: isSet(object.plan) ? Plan.fromJSON(object.plan) : undefined,
+			plan: isSet(object.plan) ? Plan.fromJSON(object.plan) : undefined
 		};
 	},
 
@@ -222,7 +222,7 @@ export const SoftwareUpgradeProposal: MessageFns<SoftwareUpgradeProposal, "cosmo
 		message.description = object.description ?? "";
 		message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
 		return message;
-	},
+	}
 };
 
 export const CancelSoftwareUpgradeProposal: MessageFns<CancelSoftwareUpgradeProposal, "cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal"> = {
@@ -271,7 +271,7 @@ export const CancelSoftwareUpgradeProposal: MessageFns<CancelSoftwareUpgradeProp
 	fromJSON(object: any): CancelSoftwareUpgradeProposal {
 		return {
 			title: isSet(object.title) ? globalThis.String(object.title) : "",
-			description: isSet(object.description) ? globalThis.String(object.description) : "",
+			description: isSet(object.description) ? globalThis.String(object.description) : ""
 		};
 	},
 
@@ -294,7 +294,7 @@ export const CancelSoftwareUpgradeProposal: MessageFns<CancelSoftwareUpgradeProp
 		message.title = object.title ?? "";
 		message.description = object.description ?? "";
 		return message;
-	},
+	}
 };
 
 export const ModuleVersion: MessageFns<ModuleVersion, "cosmos.upgrade.v1beta1.ModuleVersion"> = {
@@ -343,7 +343,7 @@ export const ModuleVersion: MessageFns<ModuleVersion, "cosmos.upgrade.v1beta1.Mo
 	fromJSON(object: any): ModuleVersion {
 		return {
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
-			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
+			version: isSet(object.version) ? globalThis.Number(object.version) : 0
 		};
 	},
 
@@ -366,7 +366,7 @@ export const ModuleVersion: MessageFns<ModuleVersion, "cosmos.upgrade.v1beta1.Mo
 		message.name = object.name ?? "";
 		message.version = object.version ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBasePlan(): Plan {
@@ -423,18 +423,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.upgrade.v1beta1.Plan", Plan as never],
-	["/cosmos.upgrade.v1beta1.ModuleVersion", ModuleVersion as never],
+	["/cosmos.upgrade.v1beta1.ModuleVersion", ModuleVersion as never]
 ];
 export const aminoConverters = {
 	"/cosmos.upgrade.v1beta1.Plan": {
 		aminoType: "cosmos-sdk/Plan",
 		toAmino: (message: Plan) => ({ ...message }),
-		fromAmino: (object: Plan) => ({ ...object }),
+		fromAmino: (object: Plan) => ({ ...object })
 	},
 
 	"/cosmos.upgrade.v1beta1.ModuleVersion": {
 		aminoType: "cosmos-sdk/ModuleVersion",
 		toAmino: (message: ModuleVersion) => ({ ...message }),
-		fromAmino: (object: ModuleVersion) => ({ ...object }),
-	},
+		fromAmino: (object: ModuleVersion) => ({ ...object })
+	}
 };

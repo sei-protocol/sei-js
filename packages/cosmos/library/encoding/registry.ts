@@ -221,5 +221,5 @@ export const seiProtoRegistry = [
 	...tendermint_version_types_registry,
 	...tokenfactory_genesis_registry,
 	...tokenfactory_params_registry,
-	...tokenfactory_tx_registry,
+	...tokenfactory_tx_registry
 ];

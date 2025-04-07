@@ -44,7 +44,7 @@ export const Whitelist: MessageFns<Whitelist, "seiprotocol.seichain.evm.Whitelis
 
 	fromJSON(object: any): Whitelist {
 		return {
-			hashes: globalThis.Array.isArray(object?.hashes) ? object.hashes.map((e: any) => globalThis.String(e)) : [],
+			hashes: globalThis.Array.isArray(object?.hashes) ? object.hashes.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -63,7 +63,7 @@ export const Whitelist: MessageFns<Whitelist, "seiprotocol.seichain.evm.Whitelis
 		const message = createBaseWhitelist();
 		message.hashes = object.hashes?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const DeferredInfo: MessageFns<DeferredInfo, "seiprotocol.seichain.evm.DeferredInfo"> = {
@@ -145,7 +145,7 @@ export const DeferredInfo: MessageFns<DeferredInfo, "seiprotocol.seichain.evm.De
 			tx_hash: isSet(object.tx_hash) ? bytesFromBase64(object.tx_hash) : new Uint8Array(0),
 			tx_bloom: isSet(object.tx_bloom) ? bytesFromBase64(object.tx_bloom) : new Uint8Array(0),
 			surplus: isSet(object.surplus) ? globalThis.String(object.surplus) : "",
-			error: isSet(object.error) ? globalThis.String(object.error) : "",
+			error: isSet(object.error) ? globalThis.String(object.error) : ""
 		};
 	},
 
@@ -180,7 +180,7 @@ export const DeferredInfo: MessageFns<DeferredInfo, "seiprotocol.seichain.evm.De
 		message.surplus = object.surplus ?? "";
 		message.error = object.error ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseWhitelist(): Whitelist {
@@ -221,18 +221,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.Whitelist", Whitelist as never],
-	["/seiprotocol.seichain.evm.DeferredInfo", DeferredInfo as never],
+	["/seiprotocol.seichain.evm.DeferredInfo", DeferredInfo as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.Whitelist": {
 		aminoType: "evm/Whitelist",
 		toAmino: (message: Whitelist) => ({ ...message }),
-		fromAmino: (object: Whitelist) => ({ ...object }),
+		fromAmino: (object: Whitelist) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.DeferredInfo": {
 		aminoType: "evm/DeferredInfo",
 		toAmino: (message: DeferredInfo) => ({ ...message }),
-		fromAmino: (object: DeferredInfo) => ({ ...object }),
-	},
+		fromAmino: (object: DeferredInfo) => ({ ...object })
+	}
 };

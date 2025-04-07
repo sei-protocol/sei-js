@@ -17,317 +17,310 @@ export const protobufPackage = "cosmos.feegrant.v1beta1";
  * of fees from the account of Granter.
  */
 export interface MsgGrantAllowance {
-  /** granter is the address of the user granting an allowance of their funds. */
-  granter: string;
-  /** grantee is the address of the user being granted an allowance of another user's funds. */
-  grantee: string;
-  /** allowance can be any of basic and filtered fee allowance. */
-  allowance?: Any | undefined;
+	/** granter is the address of the user granting an allowance of their funds. */
+	granter: string;
+	/** grantee is the address of the user being granted an allowance of another user's funds. */
+	grantee: string;
+	/** allowance can be any of basic and filtered fee allowance. */
+	allowance?: Any | undefined;
 }
 
 /** MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response type. */
-export interface MsgGrantAllowanceResponse {
-}
+export interface MsgGrantAllowanceResponse {}
 
 /** MsgRevokeAllowance removes any existing Allowance from Granter to Grantee. */
 export interface MsgRevokeAllowance {
-  /** granter is the address of the user granting an allowance of their funds. */
-  granter: string;
-  /** grantee is the address of the user being granted an allowance of another user's funds. */
-  grantee: string;
+	/** granter is the address of the user granting an allowance of their funds. */
+	granter: string;
+	/** grantee is the address of the user being granted an allowance of another user's funds. */
+	grantee: string;
 }
 
 /** MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse response type. */
-export interface MsgRevokeAllowanceResponse {
-}
+export interface MsgRevokeAllowanceResponse {}
 
 function createBaseMsgGrantAllowance(): MsgGrantAllowance {
-  return { granter: "", grantee: "", allowance: undefined };
+	return { granter: "", grantee: "", allowance: undefined };
 }
 
 export const MsgGrantAllowance: MessageFns<MsgGrantAllowance, "cosmos.feegrant.v1beta1.MsgGrantAllowance"> = {
-  $type: "cosmos.feegrant.v1beta1.MsgGrantAllowance" as const,
+	$type: "cosmos.feegrant.v1beta1.MsgGrantAllowance" as const,
 
-  encode(message: MsgGrantAllowance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.granter !== "") {
-      writer.uint32(10).string(message.granter);
-    }
-    if (message.grantee !== "") {
-      writer.uint32(18).string(message.grantee);
-    }
-    if (message.allowance !== undefined) {
-      Any.encode(message.allowance, writer.uint32(26).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: MsgGrantAllowance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.granter !== "") {
+			writer.uint32(10).string(message.granter);
+		}
+		if (message.grantee !== "") {
+			writer.uint32(18).string(message.grantee);
+		}
+		if (message.allowance !== undefined) {
+			Any.encode(message.allowance, writer.uint32(26).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgGrantAllowance {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgGrantAllowance();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgGrantAllowance {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgGrantAllowance();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.granter = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.granter = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.grantee = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.grantee = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.allowance = Any.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.allowance = Any.decode(reader, reader.uint32());
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgGrantAllowance {
-    return {
-      granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-      grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-      allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined,
-    };
-  },
+	fromJSON(object: any): MsgGrantAllowance {
+		return {
+			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
+			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
+			allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined
+		};
+	},
 
-  toJSON(message: MsgGrantAllowance): unknown {
-    const obj: any = {};
-    if (message.granter !== "") {
-      obj.granter = message.granter;
-    }
-    if (message.grantee !== "") {
-      obj.grantee = message.grantee;
-    }
-    if (message.allowance !== undefined) {
-      obj.allowance = Any.toJSON(message.allowance);
-    }
-    return obj;
-  },
+	toJSON(message: MsgGrantAllowance): unknown {
+		const obj: any = {};
+		if (message.granter !== "") {
+			obj.granter = message.granter;
+		}
+		if (message.grantee !== "") {
+			obj.grantee = message.grantee;
+		}
+		if (message.allowance !== undefined) {
+			obj.allowance = Any.toJSON(message.allowance);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgGrantAllowance>, I>>(base?: I): MsgGrantAllowance {
-    return MsgGrantAllowance.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgGrantAllowance>, I>>(object: I): MsgGrantAllowance {
-    const message = createBaseMsgGrantAllowance();
-    message.granter = object.granter ?? "";
-    message.grantee = object.grantee ?? "";
-    message.allowance = (object.allowance !== undefined && object.allowance !== null)
-      ? Any.fromPartial(object.allowance)
-      : undefined;
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgGrantAllowance>, I>>(base?: I): MsgGrantAllowance {
+		return MsgGrantAllowance.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgGrantAllowance>, I>>(object: I): MsgGrantAllowance {
+		const message = createBaseMsgGrantAllowance();
+		message.granter = object.granter ?? "";
+		message.grantee = object.grantee ?? "";
+		message.allowance = object.allowance !== undefined && object.allowance !== null ? Any.fromPartial(object.allowance) : undefined;
+		return message;
+	}
 };
 
 function createBaseMsgGrantAllowanceResponse(): MsgGrantAllowanceResponse {
-  return {};
+	return {};
 }
 
-export const MsgGrantAllowanceResponse: MessageFns<
-  MsgGrantAllowanceResponse,
-  "cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse"
-> = {
-  $type: "cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse" as const,
+export const MsgGrantAllowanceResponse: MessageFns<MsgGrantAllowanceResponse, "cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse"> = {
+	$type: "cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse" as const,
 
-  encode(_: MsgGrantAllowanceResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+	encode(_: MsgGrantAllowanceResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgGrantAllowanceResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgGrantAllowanceResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgGrantAllowanceResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgGrantAllowanceResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(_: any): MsgGrantAllowanceResponse {
-    return {};
-  },
+	fromJSON(_: any): MsgGrantAllowanceResponse {
+		return {};
+	},
 
-  toJSON(_: MsgGrantAllowanceResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+	toJSON(_: MsgGrantAllowanceResponse): unknown {
+		const obj: any = {};
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgGrantAllowanceResponse>, I>>(base?: I): MsgGrantAllowanceResponse {
-    return MsgGrantAllowanceResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgGrantAllowanceResponse>, I>>(_: I): MsgGrantAllowanceResponse {
-    const message = createBaseMsgGrantAllowanceResponse();
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgGrantAllowanceResponse>, I>>(base?: I): MsgGrantAllowanceResponse {
+		return MsgGrantAllowanceResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgGrantAllowanceResponse>, I>>(_: I): MsgGrantAllowanceResponse {
+		const message = createBaseMsgGrantAllowanceResponse();
+		return message;
+	}
 };
 
 function createBaseMsgRevokeAllowance(): MsgRevokeAllowance {
-  return { granter: "", grantee: "" };
+	return { granter: "", grantee: "" };
 }
 
 export const MsgRevokeAllowance: MessageFns<MsgRevokeAllowance, "cosmos.feegrant.v1beta1.MsgRevokeAllowance"> = {
-  $type: "cosmos.feegrant.v1beta1.MsgRevokeAllowance" as const,
+	$type: "cosmos.feegrant.v1beta1.MsgRevokeAllowance" as const,
 
-  encode(message: MsgRevokeAllowance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.granter !== "") {
-      writer.uint32(10).string(message.granter);
-    }
-    if (message.grantee !== "") {
-      writer.uint32(18).string(message.grantee);
-    }
-    return writer;
-  },
+	encode(message: MsgRevokeAllowance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.granter !== "") {
+			writer.uint32(10).string(message.granter);
+		}
+		if (message.grantee !== "") {
+			writer.uint32(18).string(message.grantee);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgRevokeAllowance {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgRevokeAllowance();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgRevokeAllowance {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgRevokeAllowance();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.granter = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.granter = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.grantee = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.grantee = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgRevokeAllowance {
-    return {
-      granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-      grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-    };
-  },
+	fromJSON(object: any): MsgRevokeAllowance {
+		return {
+			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
+			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : ""
+		};
+	},
 
-  toJSON(message: MsgRevokeAllowance): unknown {
-    const obj: any = {};
-    if (message.granter !== "") {
-      obj.granter = message.granter;
-    }
-    if (message.grantee !== "") {
-      obj.grantee = message.grantee;
-    }
-    return obj;
-  },
+	toJSON(message: MsgRevokeAllowance): unknown {
+		const obj: any = {};
+		if (message.granter !== "") {
+			obj.granter = message.granter;
+		}
+		if (message.grantee !== "") {
+			obj.grantee = message.grantee;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgRevokeAllowance>, I>>(base?: I): MsgRevokeAllowance {
-    return MsgRevokeAllowance.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgRevokeAllowance>, I>>(object: I): MsgRevokeAllowance {
-    const message = createBaseMsgRevokeAllowance();
-    message.granter = object.granter ?? "";
-    message.grantee = object.grantee ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgRevokeAllowance>, I>>(base?: I): MsgRevokeAllowance {
+		return MsgRevokeAllowance.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgRevokeAllowance>, I>>(object: I): MsgRevokeAllowance {
+		const message = createBaseMsgRevokeAllowance();
+		message.granter = object.granter ?? "";
+		message.grantee = object.grantee ?? "";
+		return message;
+	}
 };
 
 function createBaseMsgRevokeAllowanceResponse(): MsgRevokeAllowanceResponse {
-  return {};
+	return {};
 }
 
-export const MsgRevokeAllowanceResponse: MessageFns<
-  MsgRevokeAllowanceResponse,
-  "cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse"
-> = {
-  $type: "cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse" as const,
+export const MsgRevokeAllowanceResponse: MessageFns<MsgRevokeAllowanceResponse, "cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse"> = {
+	$type: "cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse" as const,
 
-  encode(_: MsgRevokeAllowanceResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+	encode(_: MsgRevokeAllowanceResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgRevokeAllowanceResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgRevokeAllowanceResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgRevokeAllowanceResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgRevokeAllowanceResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(_: any): MsgRevokeAllowanceResponse {
-    return {};
-  },
+	fromJSON(_: any): MsgRevokeAllowanceResponse {
+		return {};
+	},
 
-  toJSON(_: MsgRevokeAllowanceResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+	toJSON(_: MsgRevokeAllowanceResponse): unknown {
+		const obj: any = {};
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgRevokeAllowanceResponse>, I>>(base?: I): MsgRevokeAllowanceResponse {
-    return MsgRevokeAllowanceResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgRevokeAllowanceResponse>, I>>(_: I): MsgRevokeAllowanceResponse {
-    const message = createBaseMsgRevokeAllowanceResponse();
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgRevokeAllowanceResponse>, I>>(base?: I): MsgRevokeAllowanceResponse {
+		return MsgRevokeAllowanceResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgRevokeAllowanceResponse>, I>>(_: I): MsgRevokeAllowanceResponse {
+		const message = createBaseMsgRevokeAllowanceResponse();
+		return message;
+	}
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+	? T
+	: T extends globalThis.Array<infer U>
+		? globalThis.Array<DeepPartial<U>>
+		: T extends ReadonlyArray<infer U>
+			? ReadonlyArray<DeepPartial<U>>
+			: T extends {}
+				? { [K in keyof T]?: DeepPartial<T[K]> }
+				: Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
+	return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-  readonly $type: V;
-  encode(message: T, writer?: BinaryWriter): BinaryWriter;
-  decode(input: BinaryReader | Uint8Array, length?: number): T;
-  fromJSON(object: any): T;
-  toJSON(message: T): unknown;
-  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+	readonly $type: V;
+	encode(message: T, writer?: BinaryWriter): BinaryWriter;
+	decode(input: BinaryReader | Uint8Array, length?: number): T;
+	fromJSON(object: any): T;
+	toJSON(message: T): unknown;
+	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

@@ -76,7 +76,7 @@ export const StoreKVPair: MessageFns<StoreKVPair, "cosmos.base.store.v1beta1.Sto
 			store_key: isSet(object.store_key) ? globalThis.String(object.store_key) : "",
 			delete: isSet(object.delete) ? globalThis.Boolean(object.delete) : false,
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
-			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
+			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0)
 		};
 	},
 
@@ -107,7 +107,7 @@ export const StoreKVPair: MessageFns<StoreKVPair, "cosmos.base.store.v1beta1.Sto
 		message.key = object.key ?? new Uint8Array(0);
 		message.value = object.value ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseStoreKVPair(): StoreKVPair {
@@ -147,6 +147,6 @@ export const aminoConverters = {
 	"/cosmos.base.store.v1beta1.StoreKVPair": {
 		aminoType: "cosmos-sdk/StoreKVPair",
 		toAmino: (message: StoreKVPair) => ({ ...message }),
-		fromAmino: (object: StoreKVPair) => ({ ...object }),
-	},
+		fromAmino: (object: StoreKVPair) => ({ ...object })
+	}
 };

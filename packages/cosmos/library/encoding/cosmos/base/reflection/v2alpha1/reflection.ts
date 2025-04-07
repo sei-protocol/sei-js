@@ -28,7 +28,7 @@ import type {
 	QueryServiceDescriptor as QueryServiceDescriptor_type,
 	QueryServicesDescriptor as QueryServicesDescriptor_type,
 	SigningModeDescriptor as SigningModeDescriptor_type,
-	TxDescriptor as TxDescriptor_type,
+	TxDescriptor as TxDescriptor_type
 } from "../../../../../types/cosmos/base/reflection/v2alpha1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../../common";
@@ -150,7 +150,7 @@ export const AppDescriptor: MessageFns<AppDescriptor, "cosmos.base.reflection.v2
 			codec: isSet(object.codec) ? CodecDescriptor.fromJSON(object.codec) : undefined,
 			configuration: isSet(object.configuration) ? ConfigurationDescriptor.fromJSON(object.configuration) : undefined,
 			query_services: isSet(object.query_services) ? QueryServicesDescriptor.fromJSON(object.query_services) : undefined,
-			tx: isSet(object.tx) ? TxDescriptor.fromJSON(object.tx) : undefined,
+			tx: isSet(object.tx) ? TxDescriptor.fromJSON(object.tx) : undefined
 		};
 	},
 
@@ -191,7 +191,7 @@ export const AppDescriptor: MessageFns<AppDescriptor, "cosmos.base.reflection.v2
 			object.query_services !== undefined && object.query_services !== null ? QueryServicesDescriptor.fromPartial(object.query_services) : undefined;
 		message.tx = object.tx !== undefined && object.tx !== null ? TxDescriptor.fromPartial(object.tx) : undefined;
 		return message;
-	},
+	}
 };
 
 export const TxDescriptor: MessageFns<TxDescriptor, "cosmos.base.reflection.v2alpha1.TxDescriptor"> = {
@@ -240,7 +240,7 @@ export const TxDescriptor: MessageFns<TxDescriptor, "cosmos.base.reflection.v2al
 	fromJSON(object: any): TxDescriptor {
 		return {
 			fullname: isSet(object.fullname) ? globalThis.String(object.fullname) : "",
-			msgs: globalThis.Array.isArray(object?.msgs) ? object.msgs.map((e: any) => MsgDescriptor.fromJSON(e)) : [],
+			msgs: globalThis.Array.isArray(object?.msgs) ? object.msgs.map((e: any) => MsgDescriptor.fromJSON(e)) : []
 		};
 	},
 
@@ -263,7 +263,7 @@ export const TxDescriptor: MessageFns<TxDescriptor, "cosmos.base.reflection.v2al
 		message.fullname = object.fullname ?? "";
 		message.msgs = object.msgs?.map((e) => MsgDescriptor.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const AuthnDescriptor: MessageFns<AuthnDescriptor, "cosmos.base.reflection.v2alpha1.AuthnDescriptor"> = {
@@ -301,7 +301,7 @@ export const AuthnDescriptor: MessageFns<AuthnDescriptor, "cosmos.base.reflectio
 
 	fromJSON(object: any): AuthnDescriptor {
 		return {
-			sign_modes: globalThis.Array.isArray(object?.sign_modes) ? object.sign_modes.map((e: any) => SigningModeDescriptor.fromJSON(e)) : [],
+			sign_modes: globalThis.Array.isArray(object?.sign_modes) ? object.sign_modes.map((e: any) => SigningModeDescriptor.fromJSON(e)) : []
 		};
 	},
 
@@ -320,7 +320,7 @@ export const AuthnDescriptor: MessageFns<AuthnDescriptor, "cosmos.base.reflectio
 		const message = createBaseAuthnDescriptor();
 		message.sign_modes = object.sign_modes?.map((e) => SigningModeDescriptor.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const SigningModeDescriptor: MessageFns<SigningModeDescriptor, "cosmos.base.reflection.v2alpha1.SigningModeDescriptor"> = {
@@ -382,7 +382,7 @@ export const SigningModeDescriptor: MessageFns<SigningModeDescriptor, "cosmos.ba
 			number: isSet(object.number) ? globalThis.Number(object.number) : 0,
 			authn_info_provider_method_fullname: isSet(object.authn_info_provider_method_fullname)
 				? globalThis.String(object.authn_info_provider_method_fullname)
-				: "",
+				: ""
 		};
 	},
 
@@ -409,7 +409,7 @@ export const SigningModeDescriptor: MessageFns<SigningModeDescriptor, "cosmos.ba
 		message.number = object.number ?? 0;
 		message.authn_info_provider_method_fullname = object.authn_info_provider_method_fullname ?? "";
 		return message;
-	},
+	}
 };
 
 export const ChainDescriptor: MessageFns<ChainDescriptor, "cosmos.base.reflection.v2alpha1.ChainDescriptor"> = {
@@ -464,7 +464,7 @@ export const ChainDescriptor: MessageFns<ChainDescriptor, "cosmos.base.reflectio
 		const message = createBaseChainDescriptor();
 		message.id = object.id ?? "";
 		return message;
-	},
+	}
 };
 
 export const CodecDescriptor: MessageFns<CodecDescriptor, "cosmos.base.reflection.v2alpha1.CodecDescriptor"> = {
@@ -502,7 +502,7 @@ export const CodecDescriptor: MessageFns<CodecDescriptor, "cosmos.base.reflectio
 
 	fromJSON(object: any): CodecDescriptor {
 		return {
-			interfaces: globalThis.Array.isArray(object?.interfaces) ? object.interfaces.map((e: any) => InterfaceDescriptor.fromJSON(e)) : [],
+			interfaces: globalThis.Array.isArray(object?.interfaces) ? object.interfaces.map((e: any) => InterfaceDescriptor.fromJSON(e)) : []
 		};
 	},
 
@@ -521,7 +521,7 @@ export const CodecDescriptor: MessageFns<CodecDescriptor, "cosmos.base.reflectio
 		const message = createBaseCodecDescriptor();
 		message.interfaces = object.interfaces?.map((e) => InterfaceDescriptor.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const InterfaceDescriptor: MessageFns<InterfaceDescriptor, "cosmos.base.reflection.v2alpha1.InterfaceDescriptor"> = {
@@ -585,7 +585,7 @@ export const InterfaceDescriptor: MessageFns<InterfaceDescriptor, "cosmos.base.r
 				: [],
 			interface_implementers: globalThis.Array.isArray(object?.interface_implementers)
 				? object.interface_implementers.map((e: any) => InterfaceImplementerDescriptor.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -612,7 +612,7 @@ export const InterfaceDescriptor: MessageFns<InterfaceDescriptor, "cosmos.base.r
 		message.interface_accepting_messages = object.interface_accepting_messages?.map((e) => InterfaceAcceptingMessageDescriptor.fromPartial(e)) || [];
 		message.interface_implementers = object.interface_implementers?.map((e) => InterfaceImplementerDescriptor.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const InterfaceImplementerDescriptor: MessageFns<InterfaceImplementerDescriptor, "cosmos.base.reflection.v2alpha1.InterfaceImplementerDescriptor"> = {
@@ -661,7 +661,7 @@ export const InterfaceImplementerDescriptor: MessageFns<InterfaceImplementerDesc
 	fromJSON(object: any): InterfaceImplementerDescriptor {
 		return {
 			fullname: isSet(object.fullname) ? globalThis.String(object.fullname) : "",
-			type_url: isSet(object.type_url) ? globalThis.String(object.type_url) : "",
+			type_url: isSet(object.type_url) ? globalThis.String(object.type_url) : ""
 		};
 	},
 
@@ -684,7 +684,7 @@ export const InterfaceImplementerDescriptor: MessageFns<InterfaceImplementerDesc
 		message.fullname = object.fullname ?? "";
 		message.type_url = object.type_url ?? "";
 		return message;
-	},
+	}
 };
 
 export const InterfaceAcceptingMessageDescriptor: MessageFns<
@@ -738,7 +738,7 @@ export const InterfaceAcceptingMessageDescriptor: MessageFns<
 			fullname: isSet(object.fullname) ? globalThis.String(object.fullname) : "",
 			field_descriptor_names: globalThis.Array.isArray(object?.field_descriptor_names)
 				? object.field_descriptor_names.map((e: any) => globalThis.String(e))
-				: [],
+				: []
 		};
 	},
 
@@ -761,7 +761,7 @@ export const InterfaceAcceptingMessageDescriptor: MessageFns<
 		message.fullname = object.fullname ?? "";
 		message.field_descriptor_names = object.field_descriptor_names?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const ConfigurationDescriptor: MessageFns<ConfigurationDescriptor, "cosmos.base.reflection.v2alpha1.ConfigurationDescriptor"> = {
@@ -799,7 +799,7 @@ export const ConfigurationDescriptor: MessageFns<ConfigurationDescriptor, "cosmo
 
 	fromJSON(object: any): ConfigurationDescriptor {
 		return {
-			bech32_account_address_prefix: isSet(object.bech32_account_address_prefix) ? globalThis.String(object.bech32_account_address_prefix) : "",
+			bech32_account_address_prefix: isSet(object.bech32_account_address_prefix) ? globalThis.String(object.bech32_account_address_prefix) : ""
 		};
 	},
 
@@ -818,7 +818,7 @@ export const ConfigurationDescriptor: MessageFns<ConfigurationDescriptor, "cosmo
 		const message = createBaseConfigurationDescriptor();
 		message.bech32_account_address_prefix = object.bech32_account_address_prefix ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgDescriptor: MessageFns<MsgDescriptor, "cosmos.base.reflection.v2alpha1.MsgDescriptor"> = {
@@ -873,7 +873,7 @@ export const MsgDescriptor: MessageFns<MsgDescriptor, "cosmos.base.reflection.v2
 		const message = createBaseMsgDescriptor();
 		message.msg_type_url = object.msg_type_url ?? "";
 		return message;
-	},
+	}
 };
 
 export const GetAuthnDescriptorRequest: MessageFns<GetAuthnDescriptorRequest, "cosmos.base.reflection.v2alpha1.GetAuthnDescriptorRequest"> = {
@@ -914,7 +914,7 @@ export const GetAuthnDescriptorRequest: MessageFns<GetAuthnDescriptorRequest, "c
 	fromPartial<I extends Exact<DeepPartial<GetAuthnDescriptorRequest>, I>>(_: I): GetAuthnDescriptorRequest {
 		const message = createBaseGetAuthnDescriptorRequest();
 		return message;
-	},
+	}
 };
 
 export const GetAuthnDescriptorResponse: MessageFns<GetAuthnDescriptorResponse, "cosmos.base.reflection.v2alpha1.GetAuthnDescriptorResponse"> = {
@@ -969,7 +969,7 @@ export const GetAuthnDescriptorResponse: MessageFns<GetAuthnDescriptorResponse, 
 		const message = createBaseGetAuthnDescriptorResponse();
 		message.authn = object.authn !== undefined && object.authn !== null ? AuthnDescriptor.fromPartial(object.authn) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetChainDescriptorRequest: MessageFns<GetChainDescriptorRequest, "cosmos.base.reflection.v2alpha1.GetChainDescriptorRequest"> = {
@@ -1010,7 +1010,7 @@ export const GetChainDescriptorRequest: MessageFns<GetChainDescriptorRequest, "c
 	fromPartial<I extends Exact<DeepPartial<GetChainDescriptorRequest>, I>>(_: I): GetChainDescriptorRequest {
 		const message = createBaseGetChainDescriptorRequest();
 		return message;
-	},
+	}
 };
 
 export const GetChainDescriptorResponse: MessageFns<GetChainDescriptorResponse, "cosmos.base.reflection.v2alpha1.GetChainDescriptorResponse"> = {
@@ -1065,7 +1065,7 @@ export const GetChainDescriptorResponse: MessageFns<GetChainDescriptorResponse, 
 		const message = createBaseGetChainDescriptorResponse();
 		message.chain = object.chain !== undefined && object.chain !== null ? ChainDescriptor.fromPartial(object.chain) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetCodecDescriptorRequest: MessageFns<GetCodecDescriptorRequest, "cosmos.base.reflection.v2alpha1.GetCodecDescriptorRequest"> = {
@@ -1106,7 +1106,7 @@ export const GetCodecDescriptorRequest: MessageFns<GetCodecDescriptorRequest, "c
 	fromPartial<I extends Exact<DeepPartial<GetCodecDescriptorRequest>, I>>(_: I): GetCodecDescriptorRequest {
 		const message = createBaseGetCodecDescriptorRequest();
 		return message;
-	},
+	}
 };
 
 export const GetCodecDescriptorResponse: MessageFns<GetCodecDescriptorResponse, "cosmos.base.reflection.v2alpha1.GetCodecDescriptorResponse"> = {
@@ -1161,7 +1161,7 @@ export const GetCodecDescriptorResponse: MessageFns<GetCodecDescriptorResponse, 
 		const message = createBaseGetCodecDescriptorResponse();
 		message.codec = object.codec !== undefined && object.codec !== null ? CodecDescriptor.fromPartial(object.codec) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetConfigurationDescriptorRequest: MessageFns<
@@ -1205,7 +1205,7 @@ export const GetConfigurationDescriptorRequest: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<GetConfigurationDescriptorRequest>, I>>(_: I): GetConfigurationDescriptorRequest {
 		const message = createBaseGetConfigurationDescriptorRequest();
 		return message;
-	},
+	}
 };
 
 export const GetConfigurationDescriptorResponse: MessageFns<
@@ -1263,7 +1263,7 @@ export const GetConfigurationDescriptorResponse: MessageFns<
 		const message = createBaseGetConfigurationDescriptorResponse();
 		message.config = object.config !== undefined && object.config !== null ? ConfigurationDescriptor.fromPartial(object.config) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetQueryServicesDescriptorRequest: MessageFns<
@@ -1307,7 +1307,7 @@ export const GetQueryServicesDescriptorRequest: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<GetQueryServicesDescriptorRequest>, I>>(_: I): GetQueryServicesDescriptorRequest {
 		const message = createBaseGetQueryServicesDescriptorRequest();
 		return message;
-	},
+	}
 };
 
 export const GetQueryServicesDescriptorResponse: MessageFns<
@@ -1365,7 +1365,7 @@ export const GetQueryServicesDescriptorResponse: MessageFns<
 		const message = createBaseGetQueryServicesDescriptorResponse();
 		message.queries = object.queries !== undefined && object.queries !== null ? QueryServicesDescriptor.fromPartial(object.queries) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetTxDescriptorRequest: MessageFns<GetTxDescriptorRequest, "cosmos.base.reflection.v2alpha1.GetTxDescriptorRequest"> = {
@@ -1406,7 +1406,7 @@ export const GetTxDescriptorRequest: MessageFns<GetTxDescriptorRequest, "cosmos.
 	fromPartial<I extends Exact<DeepPartial<GetTxDescriptorRequest>, I>>(_: I): GetTxDescriptorRequest {
 		const message = createBaseGetTxDescriptorRequest();
 		return message;
-	},
+	}
 };
 
 export const GetTxDescriptorResponse: MessageFns<GetTxDescriptorResponse, "cosmos.base.reflection.v2alpha1.GetTxDescriptorResponse"> = {
@@ -1461,7 +1461,7 @@ export const GetTxDescriptorResponse: MessageFns<GetTxDescriptorResponse, "cosmo
 		const message = createBaseGetTxDescriptorResponse();
 		message.tx = object.tx !== undefined && object.tx !== null ? TxDescriptor.fromPartial(object.tx) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryServicesDescriptor: MessageFns<QueryServicesDescriptor, "cosmos.base.reflection.v2alpha1.QueryServicesDescriptor"> = {
@@ -1499,7 +1499,7 @@ export const QueryServicesDescriptor: MessageFns<QueryServicesDescriptor, "cosmo
 
 	fromJSON(object: any): QueryServicesDescriptor {
 		return {
-			query_services: globalThis.Array.isArray(object?.query_services) ? object.query_services.map((e: any) => QueryServiceDescriptor.fromJSON(e)) : [],
+			query_services: globalThis.Array.isArray(object?.query_services) ? object.query_services.map((e: any) => QueryServiceDescriptor.fromJSON(e)) : []
 		};
 	},
 
@@ -1518,7 +1518,7 @@ export const QueryServicesDescriptor: MessageFns<QueryServicesDescriptor, "cosmo
 		const message = createBaseQueryServicesDescriptor();
 		message.query_services = object.query_services?.map((e) => QueryServiceDescriptor.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const QueryServiceDescriptor: MessageFns<QueryServiceDescriptor, "cosmos.base.reflection.v2alpha1.QueryServiceDescriptor"> = {
@@ -1578,7 +1578,7 @@ export const QueryServiceDescriptor: MessageFns<QueryServiceDescriptor, "cosmos.
 		return {
 			fullname: isSet(object.fullname) ? globalThis.String(object.fullname) : "",
 			is_module: isSet(object.is_module) ? globalThis.Boolean(object.is_module) : false,
-			methods: globalThis.Array.isArray(object?.methods) ? object.methods.map((e: any) => QueryMethodDescriptor.fromJSON(e)) : [],
+			methods: globalThis.Array.isArray(object?.methods) ? object.methods.map((e: any) => QueryMethodDescriptor.fromJSON(e)) : []
 		};
 	},
 
@@ -1605,7 +1605,7 @@ export const QueryServiceDescriptor: MessageFns<QueryServiceDescriptor, "cosmos.
 		message.is_module = object.is_module ?? false;
 		message.methods = object.methods?.map((e) => QueryMethodDescriptor.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const QueryMethodDescriptor: MessageFns<QueryMethodDescriptor, "cosmos.base.reflection.v2alpha1.QueryMethodDescriptor"> = {
@@ -1654,7 +1654,7 @@ export const QueryMethodDescriptor: MessageFns<QueryMethodDescriptor, "cosmos.ba
 	fromJSON(object: any): QueryMethodDescriptor {
 		return {
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
-			full_query_path: isSet(object.full_query_path) ? globalThis.String(object.full_query_path) : "",
+			full_query_path: isSet(object.full_query_path) ? globalThis.String(object.full_query_path) : ""
 		};
 	},
 
@@ -1677,7 +1677,7 @@ export const QueryMethodDescriptor: MessageFns<QueryMethodDescriptor, "cosmos.ba
 		message.name = object.name ?? "";
 		message.full_query_path = object.full_query_path ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseAppDescriptor(): AppDescriptor {
@@ -1687,7 +1687,7 @@ function createBaseAppDescriptor(): AppDescriptor {
 		codec: undefined,
 		configuration: undefined,
 		query_services: undefined,
-		tx: undefined,
+		tx: undefined
 	};
 }
 
@@ -1800,42 +1800,42 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.reflection.v2alpha1.AuthnDescriptor", AuthnDescriptor as never],
 	["/cosmos.base.reflection.v2alpha1.ChainDescriptor", ChainDescriptor as never],
 	["/cosmos.base.reflection.v2alpha1.CodecDescriptor", CodecDescriptor as never],
-	["/cosmos.base.reflection.v2alpha1.MsgDescriptor", MsgDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.MsgDescriptor", MsgDescriptor as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.reflection.v2alpha1.AppDescriptor": {
 		aminoType: "cosmos-sdk/AppDescriptor",
 		toAmino: (message: AppDescriptor) => ({ ...message }),
-		fromAmino: (object: AppDescriptor) => ({ ...object }),
+		fromAmino: (object: AppDescriptor) => ({ ...object })
 	},
 
 	"/cosmos.base.reflection.v2alpha1.TxDescriptor": {
 		aminoType: "cosmos-sdk/TxDescriptor",
 		toAmino: (message: TxDescriptor) => ({ ...message }),
-		fromAmino: (object: TxDescriptor) => ({ ...object }),
+		fromAmino: (object: TxDescriptor) => ({ ...object })
 	},
 
 	"/cosmos.base.reflection.v2alpha1.AuthnDescriptor": {
 		aminoType: "cosmos-sdk/AuthnDescriptor",
 		toAmino: (message: AuthnDescriptor) => ({ ...message }),
-		fromAmino: (object: AuthnDescriptor) => ({ ...object }),
+		fromAmino: (object: AuthnDescriptor) => ({ ...object })
 	},
 
 	"/cosmos.base.reflection.v2alpha1.ChainDescriptor": {
 		aminoType: "cosmos-sdk/ChainDescriptor",
 		toAmino: (message: ChainDescriptor) => ({ ...message }),
-		fromAmino: (object: ChainDescriptor) => ({ ...object }),
+		fromAmino: (object: ChainDescriptor) => ({ ...object })
 	},
 
 	"/cosmos.base.reflection.v2alpha1.CodecDescriptor": {
 		aminoType: "cosmos-sdk/CodecDescriptor",
 		toAmino: (message: CodecDescriptor) => ({ ...message }),
-		fromAmino: (object: CodecDescriptor) => ({ ...object }),
+		fromAmino: (object: CodecDescriptor) => ({ ...object })
 	},
 
 	"/cosmos.base.reflection.v2alpha1.MsgDescriptor": {
 		aminoType: "cosmos-sdk/MsgDescriptor",
 		toAmino: (message: MsgDescriptor) => ({ ...message }),
-		fromAmino: (object: MsgDescriptor) => ({ ...object }),
-	},
+		fromAmino: (object: MsgDescriptor) => ({ ...object })
+	}
 };

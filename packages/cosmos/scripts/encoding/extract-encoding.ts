@@ -115,7 +115,7 @@ export const extractEncoding = async (sourceFilePath: string, destinationFilePat
 			interfaceDeclarations.push(
 				Array.from(typesToCopy)
 					.map((type) => `export interface ${type} extends ${type}_type {}`)
-					.join("\n"),
+					.join("\n")
 			);
 		}
 

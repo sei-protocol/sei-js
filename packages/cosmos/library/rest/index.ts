@@ -31,11 +31,11 @@ export const Querier = {
 		params: { v1beta1: cosmos_params_v1beta1 },
 		slashing: { v1beta1: cosmos_slashing_v1beta1 },
 		staking: { v1beta1: cosmos_staking_v1beta1 },
-		upgrade: { v1beta1: cosmos_upgrade_v1beta1 },
+		upgrade: { v1beta1: cosmos_upgrade_v1beta1 }
 	},
 	epoch: epoch,
 	evm: evm,
 	mint: { v1beta1: mint_v1beta1 },
 	oracle: oracle,
-	tokenfactory: tokenfactory,
+	tokenfactory: tokenfactory
 };

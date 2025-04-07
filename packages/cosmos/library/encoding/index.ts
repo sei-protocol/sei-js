@@ -64,11 +64,14 @@ export const Encoder = {
 			abci: { v1beta1: cosmos_base_abci_v1beta1 },
 			kv: { v1beta1: cosmos_base_kv_v1beta1 },
 			query: { v1beta1: cosmos_base_query_v1beta1 },
-			reflection: { v1beta1: cosmos_base_reflection_v1beta1, v2alpha1: cosmos_base_reflection_v2alpha1 },
+			reflection: {
+				v1beta1: cosmos_base_reflection_v1beta1,
+				v2alpha1: cosmos_base_reflection_v2alpha1
+			},
 			snapshots: { v1beta1: cosmos_base_snapshots_v1beta1 },
 			store: { v1beta1: cosmos_base_store_v1beta1 },
 			tendermint: { v1beta1: cosmos_base_tendermint_v1beta1 },
-			v1beta1: cosmos_base_v1beta1,
+			v1beta1: cosmos_base_v1beta1
 		},
 		capability: { v1beta1: cosmos_capability_v1beta1 },
 		crisis: { v1beta1: cosmos_crisis_v1beta1 },
@@ -77,7 +80,7 @@ export const Encoder = {
 			multisig: cosmos_crypto_multisig,
 			secp256k1: cosmos_crypto_secp256k1,
 			secp256r1: cosmos_crypto_secp256r1,
-			sr25519: cosmos_crypto_sr25519,
+			sr25519: cosmos_crypto_sr25519
 		},
 		distribution: { v1beta1: cosmos_distribution_v1beta1 },
 		evidence: { v1beta1: cosmos_evidence_v1beta1 },
@@ -88,9 +91,12 @@ export const Encoder = {
 		params: { types: cosmos_params_types, v1beta1: cosmos_params_v1beta1 },
 		slashing: { v1beta1: cosmos_slashing_v1beta1 },
 		staking: { v1beta1: cosmos_staking_v1beta1 },
-		tx: { signing: { v1beta1: cosmos_tx_signing_v1beta1 }, v1beta1: cosmos_tx_v1beta1 },
+		tx: {
+			signing: { v1beta1: cosmos_tx_signing_v1beta1 },
+			v1beta1: cosmos_tx_v1beta1
+		},
 		upgrade: { v1beta1: cosmos_upgrade_v1beta1 },
-		vesting: { v1beta1: cosmos_vesting_v1beta1 },
+		vesting: { v1beta1: cosmos_vesting_v1beta1 }
 	},
 	epoch: epoch,
 	eth: eth,
@@ -104,7 +110,7 @@ export const Encoder = {
 		libs: { bits: tendermint_libs_bits },
 		p2p: tendermint_p2p,
 		types: tendermint_types,
-		version: tendermint_version,
+		version: tendermint_version
 	},
-	tokenfactory: tokenfactory,
+	tokenfactory: tokenfactory
 };

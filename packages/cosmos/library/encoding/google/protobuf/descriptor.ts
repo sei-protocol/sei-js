@@ -35,7 +35,7 @@ import type {
 	SourceCodeInfoLocation as SourceCodeInfoLocation_type,
 	SourceCodeInfo as SourceCodeInfo_type,
 	UninterpretedOptionNamePart as UninterpretedOptionNamePart_type,
-	UninterpretedOption as UninterpretedOption_type,
+	UninterpretedOption as UninterpretedOption_type
 } from "../../../types/google/protobuf";
 
 import {
@@ -55,7 +55,7 @@ import {
 	FieldOptionsOptionTargetType,
 	FileOptionsOptimizeMode,
 	GeneratedCodeInfoAnnotationSemantic,
-	MethodOptionsIdempotencyLevel,
+	MethodOptionsIdempotencyLevel
 } from "../../../types/google/protobuf";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -129,7 +129,7 @@ export const FileDescriptorSet: MessageFns<FileDescriptorSet, "google.protobuf.F
 
 	fromJSON(object: any): FileDescriptorSet {
 		return {
-			file: globalThis.Array.isArray(object?.file) ? object.file.map((e: any) => FileDescriptorProto.fromJSON(e)) : [],
+			file: globalThis.Array.isArray(object?.file) ? object.file.map((e: any) => FileDescriptorProto.fromJSON(e)) : []
 		};
 	},
 
@@ -148,7 +148,7 @@ export const FileDescriptorSet: MessageFns<FileDescriptorSet, "google.protobuf.F
 		const message = createBaseFileDescriptorSet();
 		message.file = object.file?.map((e) => FileDescriptorProto.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const FileDescriptorProto: MessageFns<FileDescriptorProto, "google.protobuf.FileDescriptorProto"> = {
@@ -342,7 +342,7 @@ export const FileDescriptorProto: MessageFns<FileDescriptorProto, "google.protob
 			options: isSet(object.options) ? FileOptions.fromJSON(object.options) : undefined,
 			source_code_info: isSet(object.source_code_info) ? SourceCodeInfo.fromJSON(object.source_code_info) : undefined,
 			syntax: isSet(object.syntax) ? globalThis.String(object.syntax) : "",
-			edition: isSet(object.edition) ? editionFromJSON(object.edition) : 0,
+			edition: isSet(object.edition) ? editionFromJSON(object.edition) : 0
 		};
 	},
 
@@ -410,7 +410,7 @@ export const FileDescriptorProto: MessageFns<FileDescriptorProto, "google.protob
 		message.syntax = object.syntax ?? "";
 		message.edition = object.edition ?? 0;
 		return message;
-	},
+	}
 };
 
 export const DescriptorProto: MessageFns<DescriptorProto, "google.protobuf.DescriptorProto"> = {
@@ -549,7 +549,7 @@ export const DescriptorProto: MessageFns<DescriptorProto, "google.protobuf.Descr
 			oneof_decl: globalThis.Array.isArray(object?.oneof_decl) ? object.oneof_decl.map((e: any) => OneofDescriptorProto.fromJSON(e)) : [],
 			options: isSet(object.options) ? MessageOptions.fromJSON(object.options) : undefined,
 			reserved_range: globalThis.Array.isArray(object?.reserved_range) ? object.reserved_range.map((e: any) => DescriptorProtoReservedRange.fromJSON(e)) : [],
-			reserved_name: globalThis.Array.isArray(object?.reserved_name) ? object.reserved_name.map((e: any) => globalThis.String(e)) : [],
+			reserved_name: globalThis.Array.isArray(object?.reserved_name) ? object.reserved_name.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -604,7 +604,7 @@ export const DescriptorProto: MessageFns<DescriptorProto, "google.protobuf.Descr
 		message.reserved_range = object.reserved_range?.map((e) => DescriptorProtoReservedRange.fromPartial(e)) || [];
 		message.reserved_name = object.reserved_name?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const DescriptorProtoExtensionRange: MessageFns<DescriptorProtoExtensionRange, "google.protobuf.DescriptorProto.ExtensionRange"> = {
@@ -664,7 +664,7 @@ export const DescriptorProtoExtensionRange: MessageFns<DescriptorProtoExtensionR
 		return {
 			start: isSet(object.start) ? globalThis.Number(object.start) : 0,
 			end: isSet(object.end) ? globalThis.Number(object.end) : 0,
-			options: isSet(object.options) ? ExtensionRangeOptions.fromJSON(object.options) : undefined,
+			options: isSet(object.options) ? ExtensionRangeOptions.fromJSON(object.options) : undefined
 		};
 	},
 
@@ -691,7 +691,7 @@ export const DescriptorProtoExtensionRange: MessageFns<DescriptorProtoExtensionR
 		message.end = object.end ?? 0;
 		message.options = object.options !== undefined && object.options !== null ? ExtensionRangeOptions.fromPartial(object.options) : undefined;
 		return message;
-	},
+	}
 };
 
 export const DescriptorProtoReservedRange: MessageFns<DescriptorProtoReservedRange, "google.protobuf.DescriptorProto.ReservedRange"> = {
@@ -740,7 +740,7 @@ export const DescriptorProtoReservedRange: MessageFns<DescriptorProtoReservedRan
 	fromJSON(object: any): DescriptorProtoReservedRange {
 		return {
 			start: isSet(object.start) ? globalThis.Number(object.start) : 0,
-			end: isSet(object.end) ? globalThis.Number(object.end) : 0,
+			end: isSet(object.end) ? globalThis.Number(object.end) : 0
 		};
 	},
 
@@ -763,7 +763,7 @@ export const DescriptorProtoReservedRange: MessageFns<DescriptorProtoReservedRan
 		message.start = object.start ?? 0;
 		message.end = object.end ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ExtensionRangeOptions: MessageFns<ExtensionRangeOptions, "google.protobuf.ExtensionRangeOptions"> = {
@@ -836,7 +836,7 @@ export const ExtensionRangeOptions: MessageFns<ExtensionRangeOptions, "google.pr
 				: [],
 			declaration: globalThis.Array.isArray(object?.declaration) ? object.declaration.map((e: any) => ExtensionRangeOptionsDeclaration.fromJSON(e)) : [],
 			features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
-			verification: isSet(object.verification) ? extensionRangeOptionsVerificationStateFromJSON(object.verification) : 1,
+			verification: isSet(object.verification) ? extensionRangeOptionsVerificationStateFromJSON(object.verification) : 1
 		};
 	},
 
@@ -867,7 +867,7 @@ export const ExtensionRangeOptions: MessageFns<ExtensionRangeOptions, "google.pr
 		message.features = object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
 		message.verification = object.verification ?? 1;
 		return message;
-	},
+	}
 };
 
 export const ExtensionRangeOptionsDeclaration: MessageFns<ExtensionRangeOptionsDeclaration, "google.protobuf.ExtensionRangeOptions.Declaration"> = {
@@ -949,7 +949,7 @@ export const ExtensionRangeOptionsDeclaration: MessageFns<ExtensionRangeOptionsD
 			full_name: isSet(object.full_name) ? globalThis.String(object.full_name) : "",
 			type: isSet(object.type) ? globalThis.String(object.type) : "",
 			reserved: isSet(object.reserved) ? globalThis.Boolean(object.reserved) : false,
-			repeated: isSet(object.repeated) ? globalThis.Boolean(object.repeated) : false,
+			repeated: isSet(object.repeated) ? globalThis.Boolean(object.repeated) : false
 		};
 	},
 
@@ -984,7 +984,7 @@ export const ExtensionRangeOptionsDeclaration: MessageFns<ExtensionRangeOptionsD
 		message.reserved = object.reserved ?? false;
 		message.repeated = object.repeated ?? false;
 		return message;
-	},
+	}
 };
 
 export const FieldDescriptorProto: MessageFns<FieldDescriptorProto, "google.protobuf.FieldDescriptorProto"> = {
@@ -1132,7 +1132,7 @@ export const FieldDescriptorProto: MessageFns<FieldDescriptorProto, "google.prot
 			oneof_index: isSet(object.oneof_index) ? globalThis.Number(object.oneof_index) : 0,
 			json_name: isSet(object.json_name) ? globalThis.String(object.json_name) : "",
 			options: isSet(object.options) ? FieldOptions.fromJSON(object.options) : undefined,
-			proto3_optional: isSet(object.proto3_optional) ? globalThis.Boolean(object.proto3_optional) : false,
+			proto3_optional: isSet(object.proto3_optional) ? globalThis.Boolean(object.proto3_optional) : false
 		};
 	},
 
@@ -1191,7 +1191,7 @@ export const FieldDescriptorProto: MessageFns<FieldDescriptorProto, "google.prot
 		message.options = object.options !== undefined && object.options !== null ? FieldOptions.fromPartial(object.options) : undefined;
 		message.proto3_optional = object.proto3_optional ?? false;
 		return message;
-	},
+	}
 };
 
 export const OneofDescriptorProto: MessageFns<OneofDescriptorProto, "google.protobuf.OneofDescriptorProto"> = {
@@ -1240,7 +1240,7 @@ export const OneofDescriptorProto: MessageFns<OneofDescriptorProto, "google.prot
 	fromJSON(object: any): OneofDescriptorProto {
 		return {
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
-			options: isSet(object.options) ? OneofOptions.fromJSON(object.options) : undefined,
+			options: isSet(object.options) ? OneofOptions.fromJSON(object.options) : undefined
 		};
 	},
 
@@ -1263,7 +1263,7 @@ export const OneofDescriptorProto: MessageFns<OneofDescriptorProto, "google.prot
 		message.name = object.name ?? "";
 		message.options = object.options !== undefined && object.options !== null ? OneofOptions.fromPartial(object.options) : undefined;
 		return message;
-	},
+	}
 };
 
 export const EnumDescriptorProto: MessageFns<EnumDescriptorProto, "google.protobuf.EnumDescriptorProto"> = {
@@ -1347,7 +1347,7 @@ export const EnumDescriptorProto: MessageFns<EnumDescriptorProto, "google.protob
 			reserved_range: globalThis.Array.isArray(object?.reserved_range)
 				? object.reserved_range.map((e: any) => EnumDescriptorProtoEnumReservedRange.fromJSON(e))
 				: [],
-			reserved_name: globalThis.Array.isArray(object?.reserved_name) ? object.reserved_name.map((e: any) => globalThis.String(e)) : [],
+			reserved_name: globalThis.Array.isArray(object?.reserved_name) ? object.reserved_name.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -1382,7 +1382,7 @@ export const EnumDescriptorProto: MessageFns<EnumDescriptorProto, "google.protob
 		message.reserved_range = object.reserved_range?.map((e) => EnumDescriptorProtoEnumReservedRange.fromPartial(e)) || [];
 		message.reserved_name = object.reserved_name?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const EnumDescriptorProtoEnumReservedRange: MessageFns<EnumDescriptorProtoEnumReservedRange, "google.protobuf.EnumDescriptorProto.EnumReservedRange"> = {
@@ -1431,7 +1431,7 @@ export const EnumDescriptorProtoEnumReservedRange: MessageFns<EnumDescriptorProt
 	fromJSON(object: any): EnumDescriptorProtoEnumReservedRange {
 		return {
 			start: isSet(object.start) ? globalThis.Number(object.start) : 0,
-			end: isSet(object.end) ? globalThis.Number(object.end) : 0,
+			end: isSet(object.end) ? globalThis.Number(object.end) : 0
 		};
 	},
 
@@ -1454,7 +1454,7 @@ export const EnumDescriptorProtoEnumReservedRange: MessageFns<EnumDescriptorProt
 		message.start = object.start ?? 0;
 		message.end = object.end ?? 0;
 		return message;
-	},
+	}
 };
 
 export const EnumValueDescriptorProto: MessageFns<EnumValueDescriptorProto, "google.protobuf.EnumValueDescriptorProto"> = {
@@ -1514,7 +1514,7 @@ export const EnumValueDescriptorProto: MessageFns<EnumValueDescriptorProto, "goo
 		return {
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
 			number: isSet(object.number) ? globalThis.Number(object.number) : 0,
-			options: isSet(object.options) ? EnumValueOptions.fromJSON(object.options) : undefined,
+			options: isSet(object.options) ? EnumValueOptions.fromJSON(object.options) : undefined
 		};
 	},
 
@@ -1541,7 +1541,7 @@ export const EnumValueDescriptorProto: MessageFns<EnumValueDescriptorProto, "goo
 		message.number = object.number ?? 0;
 		message.options = object.options !== undefined && object.options !== null ? EnumValueOptions.fromPartial(object.options) : undefined;
 		return message;
-	},
+	}
 };
 
 export const ServiceDescriptorProto: MessageFns<ServiceDescriptorProto, "google.protobuf.ServiceDescriptorProto"> = {
@@ -1601,7 +1601,7 @@ export const ServiceDescriptorProto: MessageFns<ServiceDescriptorProto, "google.
 		return {
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
 			method: globalThis.Array.isArray(object?.method) ? object.method.map((e: any) => MethodDescriptorProto.fromJSON(e)) : [],
-			options: isSet(object.options) ? ServiceOptions.fromJSON(object.options) : undefined,
+			options: isSet(object.options) ? ServiceOptions.fromJSON(object.options) : undefined
 		};
 	},
 
@@ -1628,7 +1628,7 @@ export const ServiceDescriptorProto: MessageFns<ServiceDescriptorProto, "google.
 		message.method = object.method?.map((e) => MethodDescriptorProto.fromPartial(e)) || [];
 		message.options = object.options !== undefined && object.options !== null ? ServiceOptions.fromPartial(object.options) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MethodDescriptorProto: MessageFns<MethodDescriptorProto, "google.protobuf.MethodDescriptorProto"> = {
@@ -1721,7 +1721,7 @@ export const MethodDescriptorProto: MessageFns<MethodDescriptorProto, "google.pr
 			output_type: isSet(object.output_type) ? globalThis.String(object.output_type) : "",
 			options: isSet(object.options) ? MethodOptions.fromJSON(object.options) : undefined,
 			client_streaming: isSet(object.client_streaming) ? globalThis.Boolean(object.client_streaming) : false,
-			server_streaming: isSet(object.server_streaming) ? globalThis.Boolean(object.server_streaming) : false,
+			server_streaming: isSet(object.server_streaming) ? globalThis.Boolean(object.server_streaming) : false
 		};
 	},
 
@@ -1760,7 +1760,7 @@ export const MethodDescriptorProto: MessageFns<MethodDescriptorProto, "google.pr
 		message.client_streaming = object.client_streaming ?? false;
 		message.server_streaming = object.server_streaming ?? false;
 		return message;
-	},
+	}
 };
 
 export const FileOptions: MessageFns<FileOptions, "google.protobuf.FileOptions"> = {
@@ -2020,7 +2020,7 @@ export const FileOptions: MessageFns<FileOptions, "google.protobuf.FileOptions">
 			features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -2119,7 +2119,7 @@ export const FileOptions: MessageFns<FileOptions, "google.protobuf.FileOptions">
 		message.features = object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MessageOptions: MessageFns<MessageOptions, "google.protobuf.MessageOptions"> = {
@@ -2227,7 +2227,7 @@ export const MessageOptions: MessageFns<MessageOptions, "google.protobuf.Message
 			features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -2270,7 +2270,7 @@ export const MessageOptions: MessageFns<MessageOptions, "google.protobuf.Message
 		message.features = object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const FieldOptions: MessageFns<FieldOptions, "google.protobuf.FieldOptions"> = {
@@ -2467,7 +2467,7 @@ export const FieldOptions: MessageFns<FieldOptions, "google.protobuf.FieldOption
 			feature_support: isSet(object.feature_support) ? FieldOptionsFeatureSupport.fromJSON(object.feature_support) : undefined,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -2539,7 +2539,7 @@ export const FieldOptions: MessageFns<FieldOptions, "google.protobuf.FieldOption
 			object.feature_support !== undefined && object.feature_support !== null ? FieldOptionsFeatureSupport.fromPartial(object.feature_support) : undefined;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const FieldOptionsEditionDefault: MessageFns<FieldOptionsEditionDefault, "google.protobuf.FieldOptions.EditionDefault"> = {
@@ -2588,7 +2588,7 @@ export const FieldOptionsEditionDefault: MessageFns<FieldOptionsEditionDefault, 
 	fromJSON(object: any): FieldOptionsEditionDefault {
 		return {
 			edition: isSet(object.edition) ? editionFromJSON(object.edition) : 0,
-			value: isSet(object.value) ? globalThis.String(object.value) : "",
+			value: isSet(object.value) ? globalThis.String(object.value) : ""
 		};
 	},
 
@@ -2611,7 +2611,7 @@ export const FieldOptionsEditionDefault: MessageFns<FieldOptionsEditionDefault, 
 		message.edition = object.edition ?? 0;
 		message.value = object.value ?? "";
 		return message;
-	},
+	}
 };
 
 export const FieldOptionsFeatureSupport: MessageFns<FieldOptionsFeatureSupport, "google.protobuf.FieldOptions.FeatureSupport"> = {
@@ -2682,7 +2682,7 @@ export const FieldOptionsFeatureSupport: MessageFns<FieldOptionsFeatureSupport, 
 			edition_introduced: isSet(object.edition_introduced) ? editionFromJSON(object.edition_introduced) : 0,
 			edition_deprecated: isSet(object.edition_deprecated) ? editionFromJSON(object.edition_deprecated) : 0,
 			deprecation_warning: isSet(object.deprecation_warning) ? globalThis.String(object.deprecation_warning) : "",
-			edition_removed: isSet(object.edition_removed) ? editionFromJSON(object.edition_removed) : 0,
+			edition_removed: isSet(object.edition_removed) ? editionFromJSON(object.edition_removed) : 0
 		};
 	},
 
@@ -2713,7 +2713,7 @@ export const FieldOptionsFeatureSupport: MessageFns<FieldOptionsFeatureSupport, 
 		message.deprecation_warning = object.deprecation_warning ?? "";
 		message.edition_removed = object.edition_removed ?? 0;
 		return message;
-	},
+	}
 };
 
 export const OneofOptions: MessageFns<OneofOptions, "google.protobuf.OneofOptions"> = {
@@ -2764,7 +2764,7 @@ export const OneofOptions: MessageFns<OneofOptions, "google.protobuf.OneofOption
 			features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -2787,7 +2787,7 @@ export const OneofOptions: MessageFns<OneofOptions, "google.protobuf.OneofOption
 		message.features = object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const EnumOptions: MessageFns<EnumOptions, "google.protobuf.EnumOptions"> = {
@@ -2873,7 +2873,7 @@ export const EnumOptions: MessageFns<EnumOptions, "google.protobuf.EnumOptions">
 			features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -2908,7 +2908,7 @@ export const EnumOptions: MessageFns<EnumOptions, "google.protobuf.EnumOptions">
 		message.features = object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const EnumValueOptions: MessageFns<EnumValueOptions, "google.protobuf.EnumValueOptions"> = {
@@ -2992,7 +2992,7 @@ export const EnumValueOptions: MessageFns<EnumValueOptions, "google.protobuf.Enu
 			feature_support: isSet(object.feature_support) ? FieldOptionsFeatureSupport.fromJSON(object.feature_support) : undefined,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -3028,7 +3028,7 @@ export const EnumValueOptions: MessageFns<EnumValueOptions, "google.protobuf.Enu
 			object.feature_support !== undefined && object.feature_support !== null ? FieldOptionsFeatureSupport.fromPartial(object.feature_support) : undefined;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ServiceOptions: MessageFns<ServiceOptions, "google.protobuf.ServiceOptions"> = {
@@ -3090,7 +3090,7 @@ export const ServiceOptions: MessageFns<ServiceOptions, "google.protobuf.Service
 			deprecated: isSet(object.deprecated) ? globalThis.Boolean(object.deprecated) : false,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -3117,7 +3117,7 @@ export const ServiceOptions: MessageFns<ServiceOptions, "google.protobuf.Service
 		message.deprecated = object.deprecated ?? false;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MethodOptions: MessageFns<MethodOptions, "google.protobuf.MethodOptions"> = {
@@ -3190,7 +3190,7 @@ export const MethodOptions: MessageFns<MethodOptions, "google.protobuf.MethodOpt
 			features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
 			uninterpreted_option: globalThis.Array.isArray(object?.uninterpreted_option)
 				? object.uninterpreted_option.map((e: any) => UninterpretedOption.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -3221,7 +3221,7 @@ export const MethodOptions: MessageFns<MethodOptions, "google.protobuf.MethodOpt
 		message.features = object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
 		message.uninterpreted_option = object.uninterpreted_option?.map((e) => UninterpretedOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const UninterpretedOption: MessageFns<UninterpretedOption, "google.protobuf.UninterpretedOption"> = {
@@ -3325,7 +3325,7 @@ export const UninterpretedOption: MessageFns<UninterpretedOption, "google.protob
 			negative_int_value: isSet(object.negative_int_value) ? globalThis.Number(object.negative_int_value) : 0,
 			double_value: isSet(object.double_value) ? globalThis.Number(object.double_value) : 0,
 			string_value: isSet(object.string_value) ? bytesFromBase64(object.string_value) : new Uint8Array(0),
-			aggregate_value: isSet(object.aggregate_value) ? globalThis.String(object.aggregate_value) : "",
+			aggregate_value: isSet(object.aggregate_value) ? globalThis.String(object.aggregate_value) : ""
 		};
 	},
 
@@ -3368,7 +3368,7 @@ export const UninterpretedOption: MessageFns<UninterpretedOption, "google.protob
 		message.string_value = object.string_value ?? new Uint8Array(0);
 		message.aggregate_value = object.aggregate_value ?? "";
 		return message;
-	},
+	}
 };
 
 export const UninterpretedOptionNamePart: MessageFns<UninterpretedOptionNamePart, "google.protobuf.UninterpretedOption.NamePart"> = {
@@ -3417,7 +3417,7 @@ export const UninterpretedOptionNamePart: MessageFns<UninterpretedOptionNamePart
 	fromJSON(object: any): UninterpretedOptionNamePart {
 		return {
 			name_part: isSet(object.name_part) ? globalThis.String(object.name_part) : "",
-			is_extension: isSet(object.is_extension) ? globalThis.Boolean(object.is_extension) : false,
+			is_extension: isSet(object.is_extension) ? globalThis.Boolean(object.is_extension) : false
 		};
 	},
 
@@ -3440,7 +3440,7 @@ export const UninterpretedOptionNamePart: MessageFns<UninterpretedOptionNamePart
 		message.name_part = object.name_part ?? "";
 		message.is_extension = object.is_extension ?? false;
 		return message;
-	},
+	}
 };
 
 export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = {
@@ -3533,7 +3533,7 @@ export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = 
 			repeated_field_encoding: isSet(object.repeated_field_encoding) ? featureSetRepeatedFieldEncodingFromJSON(object.repeated_field_encoding) : 0,
 			utf8_validation: isSet(object.utf8_validation) ? featureSetUtf8ValidationFromJSON(object.utf8_validation) : 0,
 			message_encoding: isSet(object.message_encoding) ? featureSetMessageEncodingFromJSON(object.message_encoding) : 0,
-			json_format: isSet(object.json_format) ? featureSetJsonFormatFromJSON(object.json_format) : 0,
+			json_format: isSet(object.json_format) ? featureSetJsonFormatFromJSON(object.json_format) : 0
 		};
 	},
 
@@ -3572,7 +3572,7 @@ export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = 
 		message.message_encoding = object.message_encoding ?? 0;
 		message.json_format = object.json_format ?? 0;
 		return message;
-	},
+	}
 };
 
 export const FeatureSetDefaults: MessageFns<FeatureSetDefaults, "google.protobuf.FeatureSetDefaults"> = {
@@ -3632,7 +3632,7 @@ export const FeatureSetDefaults: MessageFns<FeatureSetDefaults, "google.protobuf
 		return {
 			defaults: globalThis.Array.isArray(object?.defaults) ? object.defaults.map((e: any) => FeatureSetDefaultsFeatureSetEditionDefault.fromJSON(e)) : [],
 			minimum_edition: isSet(object.minimum_edition) ? editionFromJSON(object.minimum_edition) : 0,
-			maximum_edition: isSet(object.maximum_edition) ? editionFromJSON(object.maximum_edition) : 0,
+			maximum_edition: isSet(object.maximum_edition) ? editionFromJSON(object.maximum_edition) : 0
 		};
 	},
 
@@ -3659,7 +3659,7 @@ export const FeatureSetDefaults: MessageFns<FeatureSetDefaults, "google.protobuf
 		message.minimum_edition = object.minimum_edition ?? 0;
 		message.maximum_edition = object.maximum_edition ?? 0;
 		return message;
-	},
+	}
 };
 
 export const FeatureSetDefaultsFeatureSetEditionDefault: MessageFns<
@@ -3722,7 +3722,7 @@ export const FeatureSetDefaultsFeatureSetEditionDefault: MessageFns<
 		return {
 			edition: isSet(object.edition) ? editionFromJSON(object.edition) : 0,
 			overridable_features: isSet(object.overridable_features) ? FeatureSet.fromJSON(object.overridable_features) : undefined,
-			fixed_features: isSet(object.fixed_features) ? FeatureSet.fromJSON(object.fixed_features) : undefined,
+			fixed_features: isSet(object.fixed_features) ? FeatureSet.fromJSON(object.fixed_features) : undefined
 		};
 	},
 
@@ -3750,7 +3750,7 @@ export const FeatureSetDefaultsFeatureSetEditionDefault: MessageFns<
 			object.overridable_features !== undefined && object.overridable_features !== null ? FeatureSet.fromPartial(object.overridable_features) : undefined;
 		message.fixed_features = object.fixed_features !== undefined && object.fixed_features !== null ? FeatureSet.fromPartial(object.fixed_features) : undefined;
 		return message;
-	},
+	}
 };
 
 export const SourceCodeInfo: MessageFns<SourceCodeInfo, "google.protobuf.SourceCodeInfo"> = {
@@ -3788,7 +3788,7 @@ export const SourceCodeInfo: MessageFns<SourceCodeInfo, "google.protobuf.SourceC
 
 	fromJSON(object: any): SourceCodeInfo {
 		return {
-			location: globalThis.Array.isArray(object?.location) ? object.location.map((e: any) => SourceCodeInfoLocation.fromJSON(e)) : [],
+			location: globalThis.Array.isArray(object?.location) ? object.location.map((e: any) => SourceCodeInfoLocation.fromJSON(e)) : []
 		};
 	},
 
@@ -3807,7 +3807,7 @@ export const SourceCodeInfo: MessageFns<SourceCodeInfo, "google.protobuf.SourceC
 		const message = createBaseSourceCodeInfo();
 		message.location = object.location?.map((e) => SourceCodeInfoLocation.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const SourceCodeInfoLocation: MessageFns<SourceCodeInfoLocation, "google.protobuf.SourceCodeInfo.Location"> = {
@@ -3915,7 +3915,7 @@ export const SourceCodeInfoLocation: MessageFns<SourceCodeInfoLocation, "google.
 			trailing_comments: isSet(object.trailing_comments) ? globalThis.String(object.trailing_comments) : "",
 			leading_detached_comments: globalThis.Array.isArray(object?.leading_detached_comments)
 				? object.leading_detached_comments.map((e: any) => globalThis.String(e))
-				: [],
+				: []
 		};
 	},
 
@@ -3950,7 +3950,7 @@ export const SourceCodeInfoLocation: MessageFns<SourceCodeInfoLocation, "google.
 		message.trailing_comments = object.trailing_comments ?? "";
 		message.leading_detached_comments = object.leading_detached_comments?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const GeneratedCodeInfo: MessageFns<GeneratedCodeInfo, "google.protobuf.GeneratedCodeInfo"> = {
@@ -3988,7 +3988,7 @@ export const GeneratedCodeInfo: MessageFns<GeneratedCodeInfo, "google.protobuf.G
 
 	fromJSON(object: any): GeneratedCodeInfo {
 		return {
-			annotation: globalThis.Array.isArray(object?.annotation) ? object.annotation.map((e: any) => GeneratedCodeInfoAnnotation.fromJSON(e)) : [],
+			annotation: globalThis.Array.isArray(object?.annotation) ? object.annotation.map((e: any) => GeneratedCodeInfoAnnotation.fromJSON(e)) : []
 		};
 	},
 
@@ -4007,7 +4007,7 @@ export const GeneratedCodeInfo: MessageFns<GeneratedCodeInfo, "google.protobuf.G
 		const message = createBaseGeneratedCodeInfo();
 		message.annotation = object.annotation?.map((e) => GeneratedCodeInfoAnnotation.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const GeneratedCodeInfoAnnotation: MessageFns<GeneratedCodeInfoAnnotation, "google.protobuf.GeneratedCodeInfo.Annotation"> = {
@@ -4101,7 +4101,7 @@ export const GeneratedCodeInfoAnnotation: MessageFns<GeneratedCodeInfoAnnotation
 			source_file: isSet(object.source_file) ? globalThis.String(object.source_file) : "",
 			begin: isSet(object.begin) ? globalThis.Number(object.begin) : 0,
 			end: isSet(object.end) ? globalThis.Number(object.end) : 0,
-			semantic: isSet(object.semantic) ? generatedCodeInfoAnnotationSemanticFromJSON(object.semantic) : 0,
+			semantic: isSet(object.semantic) ? generatedCodeInfoAnnotationSemanticFromJSON(object.semantic) : 0
 		};
 	},
 
@@ -4136,7 +4136,7 @@ export const GeneratedCodeInfoAnnotation: MessageFns<GeneratedCodeInfoAnnotation
 		message.end = object.end ?? 0;
 		message.semantic = object.semantic ?? 0;
 		return message;
-	},
+	}
 };
 
 export function editionFromJSON(object: any): Edition {
@@ -4856,7 +4856,7 @@ function createBaseFileDescriptorProto(): FileDescriptorProto {
 		options: undefined,
 		source_code_info: undefined,
 		syntax: "",
-		edition: 0,
+		edition: 0
 	};
 }
 
@@ -4871,7 +4871,7 @@ function createBaseDescriptorProto(): DescriptorProto {
 		oneof_decl: [],
 		options: undefined,
 		reserved_range: [],
-		reserved_name: [],
+		reserved_name: []
 	};
 }
 
@@ -4903,7 +4903,7 @@ function createBaseFieldDescriptorProto(): FieldDescriptorProto {
 		oneof_index: 0,
 		json_name: "",
 		options: undefined,
-		proto3_optional: false,
+		proto3_optional: false
 	};
 }
 
@@ -4934,7 +4934,7 @@ function createBaseMethodDescriptorProto(): MethodDescriptorProto {
 		output_type: "",
 		options: undefined,
 		client_streaming: false,
-		server_streaming: false,
+		server_streaming: false
 	};
 }
 
@@ -4960,7 +4960,7 @@ function createBaseFileOptions(): FileOptions {
 		php_metadata_namespace: "",
 		ruby_package: "",
 		features: undefined,
-		uninterpreted_option: [],
+		uninterpreted_option: []
 	};
 }
 
@@ -4972,7 +4972,7 @@ function createBaseMessageOptions(): MessageOptions {
 		map_entry: false,
 		deprecated_legacy_json_field_conflicts: false,
 		features: undefined,
-		uninterpreted_option: [],
+		uninterpreted_option: []
 	};
 }
 
@@ -4991,7 +4991,7 @@ function createBaseFieldOptions(): FieldOptions {
 		edition_defaults: [],
 		features: undefined,
 		feature_support: undefined,
-		uninterpreted_option: [],
+		uninterpreted_option: []
 	};
 }
 
@@ -5013,7 +5013,7 @@ function createBaseEnumOptions(): EnumOptions {
 		deprecated: false,
 		deprecated_legacy_json_field_conflicts: false,
 		features: undefined,
-		uninterpreted_option: [],
+		uninterpreted_option: []
 	};
 }
 
@@ -5023,7 +5023,7 @@ function createBaseEnumValueOptions(): EnumValueOptions {
 		features: undefined,
 		debug_redact: false,
 		feature_support: undefined,
-		uninterpreted_option: [],
+		uninterpreted_option: []
 	};
 }
 
@@ -5043,7 +5043,7 @@ function createBaseUninterpretedOption(): UninterpretedOption {
 		negative_int_value: 0,
 		double_value: 0,
 		string_value: new Uint8Array(0),
-		aggregate_value: "",
+		aggregate_value: ""
 	};
 }
 
@@ -5058,7 +5058,7 @@ function createBaseFeatureSet(): FeatureSet {
 		repeated_field_encoding: 0,
 		utf8_validation: 0,
 		message_encoding: 0,
-		json_format: 0,
+		json_format: 0
 	};
 }
 
@@ -5148,144 +5148,144 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/google.protobuf.FeatureSetDefaults", FeatureSetDefaults as never],
 	["/google.protobuf.SourceCodeInfo", SourceCodeInfo as never],
 	["/google.protobuf.SourceCodeInfo.Location", SourceCodeInfoLocation as never],
-	["/google.protobuf.GeneratedCodeInfo", GeneratedCodeInfo as never],
+	["/google.protobuf.GeneratedCodeInfo", GeneratedCodeInfo as never]
 ];
 export const aminoConverters = {
 	"/google.protobuf.FileDescriptorSet": {
 		aminoType: "google.protobuf.FileDescriptorSet",
 		toAmino: (message: FileDescriptorSet) => ({ ...message }),
-		fromAmino: (object: FileDescriptorSet) => ({ ...object }),
+		fromAmino: (object: FileDescriptorSet) => ({ ...object })
 	},
 
 	"/google.protobuf.FileDescriptorProto": {
 		aminoType: "google.protobuf.FileDescriptorProto",
 		toAmino: (message: FileDescriptorProto) => ({ ...message }),
-		fromAmino: (object: FileDescriptorProto) => ({ ...object }),
+		fromAmino: (object: FileDescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.DescriptorProto": {
 		aminoType: "google.protobuf.DescriptorProto",
 		toAmino: (message: DescriptorProto) => ({ ...message }),
-		fromAmino: (object: DescriptorProto) => ({ ...object }),
+		fromAmino: (object: DescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.ExtensionRangeOptions": {
 		aminoType: "google.protobuf.ExtensionRangeOptions",
 		toAmino: (message: ExtensionRangeOptions) => ({ ...message }),
-		fromAmino: (object: ExtensionRangeOptions) => ({ ...object }),
+		fromAmino: (object: ExtensionRangeOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.FieldDescriptorProto": {
 		aminoType: "google.protobuf.FieldDescriptorProto",
 		toAmino: (message: FieldDescriptorProto) => ({ ...message }),
-		fromAmino: (object: FieldDescriptorProto) => ({ ...object }),
+		fromAmino: (object: FieldDescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.OneofDescriptorProto": {
 		aminoType: "google.protobuf.OneofDescriptorProto",
 		toAmino: (message: OneofDescriptorProto) => ({ ...message }),
-		fromAmino: (object: OneofDescriptorProto) => ({ ...object }),
+		fromAmino: (object: OneofDescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.EnumDescriptorProto": {
 		aminoType: "google.protobuf.EnumDescriptorProto",
 		toAmino: (message: EnumDescriptorProto) => ({ ...message }),
-		fromAmino: (object: EnumDescriptorProto) => ({ ...object }),
+		fromAmino: (object: EnumDescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.ServiceDescriptorProto": {
 		aminoType: "google.protobuf.ServiceDescriptorProto",
 		toAmino: (message: ServiceDescriptorProto) => ({ ...message }),
-		fromAmino: (object: ServiceDescriptorProto) => ({ ...object }),
+		fromAmino: (object: ServiceDescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.MethodDescriptorProto": {
 		aminoType: "google.protobuf.MethodDescriptorProto",
 		toAmino: (message: MethodDescriptorProto) => ({ ...message }),
-		fromAmino: (object: MethodDescriptorProto) => ({ ...object }),
+		fromAmino: (object: MethodDescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.FileOptions": {
 		aminoType: "google.protobuf.FileOptions",
 		toAmino: (message: FileOptions) => ({ ...message }),
-		fromAmino: (object: FileOptions) => ({ ...object }),
+		fromAmino: (object: FileOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.MessageOptions": {
 		aminoType: "google.protobuf.MessageOptions",
 		toAmino: (message: MessageOptions) => ({ ...message }),
-		fromAmino: (object: MessageOptions) => ({ ...object }),
+		fromAmino: (object: MessageOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.FieldOptions": {
 		aminoType: "google.protobuf.FieldOptions",
 		toAmino: (message: FieldOptions) => ({ ...message }),
-		fromAmino: (object: FieldOptions) => ({ ...object }),
+		fromAmino: (object: FieldOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.OneofOptions": {
 		aminoType: "google.protobuf.OneofOptions",
 		toAmino: (message: OneofOptions) => ({ ...message }),
-		fromAmino: (object: OneofOptions) => ({ ...object }),
+		fromAmino: (object: OneofOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.EnumOptions": {
 		aminoType: "google.protobuf.EnumOptions",
 		toAmino: (message: EnumOptions) => ({ ...message }),
-		fromAmino: (object: EnumOptions) => ({ ...object }),
+		fromAmino: (object: EnumOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.EnumValueOptions": {
 		aminoType: "google.protobuf.EnumValueOptions",
 		toAmino: (message: EnumValueOptions) => ({ ...message }),
-		fromAmino: (object: EnumValueOptions) => ({ ...object }),
+		fromAmino: (object: EnumValueOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.ServiceOptions": {
 		aminoType: "google.protobuf.ServiceOptions",
 		toAmino: (message: ServiceOptions) => ({ ...message }),
-		fromAmino: (object: ServiceOptions) => ({ ...object }),
+		fromAmino: (object: ServiceOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.MethodOptions": {
 		aminoType: "google.protobuf.MethodOptions",
 		toAmino: (message: MethodOptions) => ({ ...message }),
-		fromAmino: (object: MethodOptions) => ({ ...object }),
+		fromAmino: (object: MethodOptions) => ({ ...object })
 	},
 
 	"/google.protobuf.UninterpretedOption": {
 		aminoType: "google.protobuf.UninterpretedOption",
 		toAmino: (message: UninterpretedOption) => ({ ...message }),
-		fromAmino: (object: UninterpretedOption) => ({ ...object }),
+		fromAmino: (object: UninterpretedOption) => ({ ...object })
 	},
 
 	"/google.protobuf.FeatureSet": {
 		aminoType: "google.protobuf.FeatureSet",
 		toAmino: (message: FeatureSet) => ({ ...message }),
-		fromAmino: (object: FeatureSet) => ({ ...object }),
+		fromAmino: (object: FeatureSet) => ({ ...object })
 	},
 
 	"/google.protobuf.FeatureSetDefaults": {
 		aminoType: "google.protobuf.FeatureSetDefaults",
 		toAmino: (message: FeatureSetDefaults) => ({ ...message }),
-		fromAmino: (object: FeatureSetDefaults) => ({ ...object }),
+		fromAmino: (object: FeatureSetDefaults) => ({ ...object })
 	},
 
 	"/google.protobuf.SourceCodeInfo": {
 		aminoType: "google.protobuf.SourceCodeInfo",
 		toAmino: (message: SourceCodeInfo) => ({ ...message }),
-		fromAmino: (object: SourceCodeInfo) => ({ ...object }),
+		fromAmino: (object: SourceCodeInfo) => ({ ...object })
 	},
 
 	"/google.protobuf.SourceCodeInfo.Location": {
 		aminoType: "google.protobuf.SourceCodeInfo.Location",
 		toAmino: (message: SourceCodeInfoLocation) => ({ ...message }),
-		fromAmino: (object: SourceCodeInfoLocation) => ({ ...object }),
+		fromAmino: (object: SourceCodeInfoLocation) => ({ ...object })
 	},
 
 	"/google.protobuf.GeneratedCodeInfo": {
 		aminoType: "google.protobuf.GeneratedCodeInfo",
 		toAmino: (message: GeneratedCodeInfo) => ({ ...message }),
-		fromAmino: (object: GeneratedCodeInfo) => ({ ...object }),
-	},
+		fromAmino: (object: GeneratedCodeInfo) => ({ ...object })
+	}
 };

@@ -104,7 +104,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.oracle
 			aggregate_exchange_rate_votes: globalThis.Array.isArray(object?.aggregate_exchange_rate_votes)
 				? object.aggregate_exchange_rate_votes.map((e: any) => AggregateExchangeRateVote.fromJSON(e))
 				: [],
-			price_snapshots: globalThis.Array.isArray(object?.price_snapshots) ? object.price_snapshots.map((e: any) => PriceSnapshot.fromJSON(e)) : [],
+			price_snapshots: globalThis.Array.isArray(object?.price_snapshots) ? object.price_snapshots.map((e: any) => PriceSnapshot.fromJSON(e)) : []
 		};
 	},
 
@@ -143,7 +143,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.oracle
 		message.aggregate_exchange_rate_votes = object.aggregate_exchange_rate_votes?.map((e) => AggregateExchangeRateVote.fromPartial(e)) || [];
 		message.price_snapshots = object.price_snapshots?.map((e) => PriceSnapshot.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const FeederDelegation: MessageFns<FeederDelegation, "seiprotocol.seichain.oracle.FeederDelegation"> = {
@@ -192,7 +192,7 @@ export const FeederDelegation: MessageFns<FeederDelegation, "seiprotocol.seichai
 	fromJSON(object: any): FeederDelegation {
 		return {
 			feeder_address: isSet(object.feeder_address) ? globalThis.String(object.feeder_address) : "",
-			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
+			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : ""
 		};
 	},
 
@@ -215,7 +215,7 @@ export const FeederDelegation: MessageFns<FeederDelegation, "seiprotocol.seichai
 		message.feeder_address = object.feeder_address ?? "";
 		message.validator_address = object.validator_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const PenaltyCounter: MessageFns<PenaltyCounter, "seiprotocol.seichain.oracle.PenaltyCounter"> = {
@@ -264,7 +264,7 @@ export const PenaltyCounter: MessageFns<PenaltyCounter, "seiprotocol.seichain.or
 	fromJSON(object: any): PenaltyCounter {
 		return {
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			vote_penalty_counter: isSet(object.vote_penalty_counter) ? VotePenaltyCounter.fromJSON(object.vote_penalty_counter) : undefined,
+			vote_penalty_counter: isSet(object.vote_penalty_counter) ? VotePenaltyCounter.fromJSON(object.vote_penalty_counter) : undefined
 		};
 	},
 
@@ -290,7 +290,7 @@ export const PenaltyCounter: MessageFns<PenaltyCounter, "seiprotocol.seichain.or
 				? VotePenaltyCounter.fromPartial(object.vote_penalty_counter)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -300,7 +300,7 @@ function createBaseGenesisState(): GenesisState {
 		exchange_rates: [],
 		penalty_counters: [],
 		aggregate_exchange_rate_votes: [],
-		price_snapshots: [],
+		price_snapshots: []
 	};
 }
 
@@ -318,24 +318,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.oracle.GenesisState", GenesisState as never],
 	["/seiprotocol.seichain.oracle.FeederDelegation", FeederDelegation as never],
-	["/seiprotocol.seichain.oracle.PenaltyCounter", PenaltyCounter as never],
+	["/seiprotocol.seichain.oracle.PenaltyCounter", PenaltyCounter as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.oracle.GenesisState": {
 		aminoType: "oracle/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
+		fromAmino: (object: GenesisState) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.FeederDelegation": {
 		aminoType: "oracle/FeederDelegation",
 		toAmino: (message: FeederDelegation) => ({ ...message }),
-		fromAmino: (object: FeederDelegation) => ({ ...object }),
+		fromAmino: (object: FeederDelegation) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.PenaltyCounter": {
 		aminoType: "oracle/PenaltyCounter",
 		toAmino: (message: PenaltyCounter) => ({ ...message }),
-		fromAmino: (object: PenaltyCounter) => ({ ...object }),
-	},
+		fromAmino: (object: PenaltyCounter) => ({ ...object })
+	}
 };

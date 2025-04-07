@@ -80,7 +80,7 @@ export const BaseAccount: MessageFns<BaseAccount, "cosmos.auth.v1beta1.BaseAccou
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
 			pub_key: isSet(object.pub_key) ? Any.fromJSON(object.pub_key) : undefined,
 			account_number: isSet(object.account_number) ? globalThis.Number(object.account_number) : 0,
-			sequence: isSet(object.sequence) ? globalThis.Number(object.sequence) : 0,
+			sequence: isSet(object.sequence) ? globalThis.Number(object.sequence) : 0
 		};
 	},
 
@@ -111,7 +111,7 @@ export const BaseAccount: MessageFns<BaseAccount, "cosmos.auth.v1beta1.BaseAccou
 		message.account_number = object.account_number ?? 0;
 		message.sequence = object.sequence ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ModuleAccount: MessageFns<ModuleAccount, "cosmos.auth.v1beta1.ModuleAccount"> = {
@@ -171,7 +171,7 @@ export const ModuleAccount: MessageFns<ModuleAccount, "cosmos.auth.v1beta1.Modul
 		return {
 			base_account: isSet(object.base_account) ? BaseAccount.fromJSON(object.base_account) : undefined,
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
-			permissions: globalThis.Array.isArray(object?.permissions) ? object.permissions.map((e: any) => globalThis.String(e)) : [],
+			permissions: globalThis.Array.isArray(object?.permissions) ? object.permissions.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -198,7 +198,7 @@ export const ModuleAccount: MessageFns<ModuleAccount, "cosmos.auth.v1beta1.Modul
 		message.name = object.name ?? "";
 		message.permissions = object.permissions?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const Params: MessageFns<Params, "cosmos.auth.v1beta1.Params"> = {
@@ -291,7 +291,7 @@ export const Params: MessageFns<Params, "cosmos.auth.v1beta1.Params"> = {
 			tx_size_cost_per_byte: isSet(object.tx_size_cost_per_byte) ? globalThis.Number(object.tx_size_cost_per_byte) : 0,
 			sig_verify_cost_ed25519: isSet(object.sig_verify_cost_ed25519) ? globalThis.Number(object.sig_verify_cost_ed25519) : 0,
 			sig_verify_cost_secp256k1: isSet(object.sig_verify_cost_secp256k1) ? globalThis.Number(object.sig_verify_cost_secp256k1) : 0,
-			disable_seqno_check: isSet(object.disable_seqno_check) ? globalThis.Boolean(object.disable_seqno_check) : false,
+			disable_seqno_check: isSet(object.disable_seqno_check) ? globalThis.Boolean(object.disable_seqno_check) : false
 		};
 	},
 
@@ -330,7 +330,7 @@ export const Params: MessageFns<Params, "cosmos.auth.v1beta1.Params"> = {
 		message.sig_verify_cost_secp256k1 = object.sig_verify_cost_secp256k1 ?? 0;
 		message.disable_seqno_check = object.disable_seqno_check ?? false;
 		return message;
-	},
+	}
 };
 
 function createBaseBaseAccount(): BaseAccount {
@@ -348,7 +348,7 @@ function createBaseParams(): Params {
 		tx_size_cost_per_byte: 0,
 		sig_verify_cost_ed25519: 0,
 		sig_verify_cost_secp256k1: 0,
-		disable_seqno_check: false,
+		disable_seqno_check: false
 	};
 }
 
@@ -369,24 +369,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.auth.v1beta1.BaseAccount", BaseAccount as never],
 	["/cosmos.auth.v1beta1.ModuleAccount", ModuleAccount as never],
-	["/cosmos.auth.v1beta1.Params", Params as never],
+	["/cosmos.auth.v1beta1.Params", Params as never]
 ];
 export const aminoConverters = {
 	"/cosmos.auth.v1beta1.BaseAccount": {
 		aminoType: "cosmos-sdk/BaseAccount",
 		toAmino: (message: BaseAccount) => ({ ...message }),
-		fromAmino: (object: BaseAccount) => ({ ...object }),
+		fromAmino: (object: BaseAccount) => ({ ...object })
 	},
 
 	"/cosmos.auth.v1beta1.ModuleAccount": {
 		aminoType: "cosmos-sdk/ModuleAccount",
 		toAmino: (message: ModuleAccount) => ({ ...message }),
-		fromAmino: (object: ModuleAccount) => ({ ...object }),
+		fromAmino: (object: ModuleAccount) => ({ ...object })
 	},
 
 	"/cosmos.auth.v1beta1.Params": {
 		aminoType: "cosmos-sdk/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
-	},
+		fromAmino: (object: Params) => ({ ...object })
+	}
 };

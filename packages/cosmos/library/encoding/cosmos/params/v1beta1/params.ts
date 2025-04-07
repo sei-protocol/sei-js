@@ -77,7 +77,7 @@ export const ParameterChangeProposal: MessageFns<ParameterChangeProposal, "cosmo
 			title: isSet(object.title) ? globalThis.String(object.title) : "",
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			changes: globalThis.Array.isArray(object?.changes) ? object.changes.map((e: any) => ParamChange.fromJSON(e)) : [],
-			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false,
+			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false
 		};
 	},
 
@@ -108,7 +108,7 @@ export const ParameterChangeProposal: MessageFns<ParameterChangeProposal, "cosmo
 		message.changes = object.changes?.map((e) => ParamChange.fromPartial(e)) || [];
 		message.is_expedited = object.is_expedited ?? false;
 		return message;
-	},
+	}
 };
 
 export const ParamChange: MessageFns<ParamChange, "cosmos.params.v1beta1.ParamChange"> = {
@@ -168,7 +168,7 @@ export const ParamChange: MessageFns<ParamChange, "cosmos.params.v1beta1.ParamCh
 		return {
 			subspace: isSet(object.subspace) ? globalThis.String(object.subspace) : "",
 			key: isSet(object.key) ? globalThis.String(object.key) : "",
-			value: isSet(object.value) ? globalThis.String(object.value) : "",
+			value: isSet(object.value) ? globalThis.String(object.value) : ""
 		};
 	},
 
@@ -195,7 +195,7 @@ export const ParamChange: MessageFns<ParamChange, "cosmos.params.v1beta1.ParamCh
 		message.key = object.key ?? "";
 		message.value = object.value ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseParameterChangeProposal(): ParameterChangeProposal {
@@ -214,6 +214,6 @@ export const aminoConverters = {
 	"/cosmos.params.v1beta1.ParamChange": {
 		aminoType: "cosmos-sdk/ParamChange",
 		toAmino: (message: ParamChange) => ({ ...message }),
-		fromAmino: (object: ParamChange) => ({ ...object }),
-	},
+		fromAmino: (object: ParamChange) => ({ ...object })
+	}
 };

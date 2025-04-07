@@ -8,7 +8,7 @@ import type {
 	ScheduledTokenRelease as ScheduledTokenRelease_type,
 	Version2Minter as Version2Minter_type,
 	Version2Params as Version2Params_type,
-	Version2ScheduledTokenRelease as Version2ScheduledTokenRelease_type,
+	Version2ScheduledTokenRelease as Version2ScheduledTokenRelease_type
 } from "../../../types/mint/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -132,7 +132,7 @@ export const Minter: MessageFns<Minter, "seiprotocol.seichain.mint.Minter"> = {
 			remaining_mint_amount: isSet(object.remaining_mint_amount) ? globalThis.Number(object.remaining_mint_amount) : 0,
 			last_mint_amount: isSet(object.last_mint_amount) ? globalThis.Number(object.last_mint_amount) : 0,
 			last_mint_date: isSet(object.last_mint_date) ? globalThis.String(object.last_mint_date) : "",
-			last_mint_height: isSet(object.last_mint_height) ? globalThis.Number(object.last_mint_height) : 0,
+			last_mint_height: isSet(object.last_mint_height) ? globalThis.Number(object.last_mint_height) : 0
 		};
 	},
 
@@ -179,7 +179,7 @@ export const Minter: MessageFns<Minter, "seiprotocol.seichain.mint.Minter"> = {
 		message.last_mint_date = object.last_mint_date ?? "";
 		message.last_mint_height = object.last_mint_height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ScheduledTokenRelease: MessageFns<ScheduledTokenRelease, "seiprotocol.seichain.mint.ScheduledTokenRelease"> = {
@@ -239,7 +239,7 @@ export const ScheduledTokenRelease: MessageFns<ScheduledTokenRelease, "seiprotoc
 		return {
 			start_date: isSet(object.start_date) ? globalThis.String(object.start_date) : "",
 			end_date: isSet(object.end_date) ? globalThis.String(object.end_date) : "",
-			token_release_amount: isSet(object.token_release_amount) ? globalThis.Number(object.token_release_amount) : 0,
+			token_release_amount: isSet(object.token_release_amount) ? globalThis.Number(object.token_release_amount) : 0
 		};
 	},
 
@@ -266,7 +266,7 @@ export const ScheduledTokenRelease: MessageFns<ScheduledTokenRelease, "seiprotoc
 		message.end_date = object.end_date ?? "";
 		message.token_release_amount = object.token_release_amount ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Params: MessageFns<Params, "seiprotocol.seichain.mint.Params"> = {
@@ -317,7 +317,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.mint.Params"> = {
 			mint_denom: isSet(object.mint_denom) ? globalThis.String(object.mint_denom) : "",
 			token_release_schedule: globalThis.Array.isArray(object?.token_release_schedule)
 				? object.token_release_schedule.map((e: any) => ScheduledTokenRelease.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -340,7 +340,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.mint.Params"> = {
 		message.mint_denom = object.mint_denom ?? "";
 		message.token_release_schedule = object.token_release_schedule?.map((e) => ScheduledTokenRelease.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Version2Minter: MessageFns<Version2Minter, "seiprotocol.seichain.mint.Version2Minter"> = {
@@ -411,7 +411,7 @@ export const Version2Minter: MessageFns<Version2Minter, "seiprotocol.seichain.mi
 			last_mint_amount: isSet(object.last_mint_amount) ? globalThis.String(object.last_mint_amount) : "",
 			last_mint_date: isSet(object.last_mint_date) ? globalThis.String(object.last_mint_date) : "",
 			last_mint_height: isSet(object.last_mint_height) ? globalThis.Number(object.last_mint_height) : 0,
-			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
+			denom: isSet(object.denom) ? globalThis.String(object.denom) : ""
 		};
 	},
 
@@ -442,7 +442,7 @@ export const Version2Minter: MessageFns<Version2Minter, "seiprotocol.seichain.mi
 		message.last_mint_height = object.last_mint_height ?? 0;
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const Version2ScheduledTokenRelease: MessageFns<Version2ScheduledTokenRelease, "seiprotocol.seichain.mint.Version2ScheduledTokenRelease"> = {
@@ -491,7 +491,7 @@ export const Version2ScheduledTokenRelease: MessageFns<Version2ScheduledTokenRel
 	fromJSON(object: any): Version2ScheduledTokenRelease {
 		return {
 			date: isSet(object.date) ? globalThis.String(object.date) : "",
-			token_release_amount: isSet(object.token_release_amount) ? globalThis.Number(object.token_release_amount) : 0,
+			token_release_amount: isSet(object.token_release_amount) ? globalThis.Number(object.token_release_amount) : 0
 		};
 	},
 
@@ -514,7 +514,7 @@ export const Version2ScheduledTokenRelease: MessageFns<Version2ScheduledTokenRel
 		message.date = object.date ?? "";
 		message.token_release_amount = object.token_release_amount ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Version2Params: MessageFns<Version2Params, "seiprotocol.seichain.mint.Version2Params"> = {
@@ -565,7 +565,7 @@ export const Version2Params: MessageFns<Version2Params, "seiprotocol.seichain.mi
 			mint_denom: isSet(object.mint_denom) ? globalThis.String(object.mint_denom) : "",
 			token_release_schedule: globalThis.Array.isArray(object?.token_release_schedule)
 				? object.token_release_schedule.map((e: any) => Version2ScheduledTokenRelease.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -588,7 +588,7 @@ export const Version2Params: MessageFns<Version2Params, "seiprotocol.seichain.mi
 		message.mint_denom = object.mint_denom ?? "";
 		message.token_release_schedule = object.token_release_schedule?.map((e) => Version2ScheduledTokenRelease.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseMinter(): Minter {
@@ -600,7 +600,7 @@ function createBaseMinter(): Minter {
 		remaining_mint_amount: 0,
 		last_mint_amount: 0,
 		last_mint_date: "",
-		last_mint_height: 0,
+		last_mint_height: 0
 	};
 }
 
@@ -642,30 +642,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.mint.Minter", Minter as never],
 	["/seiprotocol.seichain.mint.Params", Params as never],
 	["/seiprotocol.seichain.mint.Version2Minter", Version2Minter as never],
-	["/seiprotocol.seichain.mint.Version2Params", Version2Params as never],
+	["/seiprotocol.seichain.mint.Version2Params", Version2Params as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.mint.Minter": {
 		aminoType: "mint/Minter",
 		toAmino: (message: Minter) => ({ ...message }),
-		fromAmino: (object: Minter) => ({ ...object }),
+		fromAmino: (object: Minter) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.Params": {
 		aminoType: "mint/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
+		fromAmino: (object: Params) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.Version2Minter": {
 		aminoType: "mint/Version2Minter",
 		toAmino: (message: Version2Minter) => ({ ...message }),
-		fromAmino: (object: Version2Minter) => ({ ...object }),
+		fromAmino: (object: Version2Minter) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.Version2Params": {
 		aminoType: "mint/Version2Params",
 		toAmino: (message: Version2Params) => ({ ...message }),
-		fromAmino: (object: Version2Params) => ({ ...object }),
-	},
+		fromAmino: (object: Version2Params) => ({ ...object })
+	}
 };

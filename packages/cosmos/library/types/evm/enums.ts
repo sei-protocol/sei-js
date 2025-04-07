@@ -6,5 +6,5 @@ export enum PointerType {
 	CW721 = 4,
 	ERC1155 = 5,
 	CW1155 = 6,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }

@@ -12,7 +12,7 @@ import type {
 	QueryAllowancesByGranterRequest as QueryAllowancesByGranterRequest_type,
 	QueryAllowancesByGranterResponse as QueryAllowancesByGranterResponse_type,
 	QueryAllowancesRequest as QueryAllowancesRequest_type,
-	QueryAllowancesResponse as QueryAllowancesResponse_type,
+	QueryAllowancesResponse as QueryAllowancesResponse_type
 } from "../../../../types/cosmos/feegrant/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -70,7 +70,7 @@ export const QueryAllowanceRequest: MessageFns<QueryAllowanceRequest, "cosmos.fe
 	fromJSON(object: any): QueryAllowanceRequest {
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
+			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : ""
 		};
 	},
 
@@ -93,7 +93,7 @@ export const QueryAllowanceRequest: MessageFns<QueryAllowanceRequest, "cosmos.fe
 		message.granter = object.granter ?? "";
 		message.grantee = object.grantee ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryAllowanceResponse: MessageFns<QueryAllowanceResponse, "cosmos.feegrant.v1beta1.QueryAllowanceResponse"> = {
@@ -148,7 +148,7 @@ export const QueryAllowanceResponse: MessageFns<QueryAllowanceResponse, "cosmos.
 		const message = createBaseQueryAllowanceResponse();
 		message.allowance = object.allowance !== undefined && object.allowance !== null ? Grant.fromPartial(object.allowance) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllowancesRequest: MessageFns<QueryAllowancesRequest, "cosmos.feegrant.v1beta1.QueryAllowancesRequest"> = {
@@ -197,7 +197,7 @@ export const QueryAllowancesRequest: MessageFns<QueryAllowancesRequest, "cosmos.
 	fromJSON(object: any): QueryAllowancesRequest {
 		return {
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -220,7 +220,7 @@ export const QueryAllowancesRequest: MessageFns<QueryAllowancesRequest, "cosmos.
 		message.grantee = object.grantee ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllowancesResponse: MessageFns<QueryAllowancesResponse, "cosmos.feegrant.v1beta1.QueryAllowancesResponse"> = {
@@ -269,7 +269,7 @@ export const QueryAllowancesResponse: MessageFns<QueryAllowancesResponse, "cosmo
 	fromJSON(object: any): QueryAllowancesResponse {
 		return {
 			allowances: globalThis.Array.isArray(object?.allowances) ? object.allowances.map((e: any) => Grant.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -292,7 +292,7 @@ export const QueryAllowancesResponse: MessageFns<QueryAllowancesResponse, "cosmo
 		message.allowances = object.allowances?.map((e) => Grant.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllowancesByGranterRequest: MessageFns<QueryAllowancesByGranterRequest, "cosmos.feegrant.v1beta1.QueryAllowancesByGranterRequest"> = {
@@ -341,7 +341,7 @@ export const QueryAllowancesByGranterRequest: MessageFns<QueryAllowancesByGrante
 	fromJSON(object: any): QueryAllowancesByGranterRequest {
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -364,7 +364,7 @@ export const QueryAllowancesByGranterRequest: MessageFns<QueryAllowancesByGrante
 		message.granter = object.granter ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAllowancesByGranterResponse: MessageFns<QueryAllowancesByGranterResponse, "cosmos.feegrant.v1beta1.QueryAllowancesByGranterResponse"> = {
@@ -413,7 +413,7 @@ export const QueryAllowancesByGranterResponse: MessageFns<QueryAllowancesByGrant
 	fromJSON(object: any): QueryAllowancesByGranterResponse {
 		return {
 			allowances: globalThis.Array.isArray(object?.allowances) ? object.allowances.map((e: any) => Grant.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -436,7 +436,7 @@ export const QueryAllowancesByGranterResponse: MessageFns<QueryAllowancesByGrant
 		message.allowances = object.allowances?.map((e) => Grant.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryAllowanceRequest(): QueryAllowanceRequest {
@@ -471,6 +471,6 @@ export const aminoConverters = {
 	"/cosmos.feegrant.v1beta1.QueryAllowanceRequest": {
 		aminoType: "cosmos-sdk/QueryAllowanceRequest",
 		toAmino: (message: QueryAllowanceRequest) => ({ ...message }),
-		fromAmino: (object: QueryAllowanceRequest) => ({ ...object }),
-	},
+		fromAmino: (object: QueryAllowanceRequest) => ({ ...object })
+	}
 };

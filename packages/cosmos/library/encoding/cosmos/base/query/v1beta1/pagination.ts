@@ -88,7 +88,7 @@ export const PageRequest: MessageFns<PageRequest, "cosmos.base.query.v1beta1.Pag
 			offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
 			limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
 			count_total: isSet(object.count_total) ? globalThis.Boolean(object.count_total) : false,
-			reverse: isSet(object.reverse) ? globalThis.Boolean(object.reverse) : false,
+			reverse: isSet(object.reverse) ? globalThis.Boolean(object.reverse) : false
 		};
 	},
 
@@ -123,7 +123,7 @@ export const PageRequest: MessageFns<PageRequest, "cosmos.base.query.v1beta1.Pag
 		message.count_total = object.count_total ?? false;
 		message.reverse = object.reverse ?? false;
 		return message;
-	},
+	}
 };
 
 export const PageResponse: MessageFns<PageResponse, "cosmos.base.query.v1beta1.PageResponse"> = {
@@ -172,7 +172,7 @@ export const PageResponse: MessageFns<PageResponse, "cosmos.base.query.v1beta1.P
 	fromJSON(object: any): PageResponse {
 		return {
 			next_key: isSet(object.next_key) ? bytesFromBase64(object.next_key) : new Uint8Array(0),
-			total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+			total: isSet(object.total) ? globalThis.Number(object.total) : 0
 		};
 	},
 
@@ -195,7 +195,7 @@ export const PageResponse: MessageFns<PageResponse, "cosmos.base.query.v1beta1.P
 		message.next_key = object.next_key ?? new Uint8Array(0);
 		message.total = object.total ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBasePageRequest(): PageRequest {
@@ -247,18 +247,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.query.v1beta1.PageRequest", PageRequest as never],
-	["/cosmos.base.query.v1beta1.PageResponse", PageResponse as never],
+	["/cosmos.base.query.v1beta1.PageResponse", PageResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.query.v1beta1.PageRequest": {
 		aminoType: "cosmos-sdk/PageRequest",
 		toAmino: (message: PageRequest) => ({ ...message }),
-		fromAmino: (object: PageRequest) => ({ ...object }),
+		fromAmino: (object: PageRequest) => ({ ...object })
 	},
 
 	"/cosmos.base.query.v1beta1.PageResponse": {
 		aminoType: "cosmos-sdk/PageResponse",
 		toAmino: (message: PageResponse) => ({ ...message }),
-		fromAmino: (object: PageResponse) => ({ ...object }),
-	},
+		fromAmino: (object: PageResponse) => ({ ...object })
+	}
 };
