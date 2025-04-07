@@ -1,9 +1,9 @@
 {
-    "compilerOptions": {
-      "module": "ES2022",
-      "strict": true,
-      "composite": true,
-      "declaration": true,
-      "declarationMap": true
-    }
+	"compilerOptions": {
+		"module": "ES2022",
+		"strict": true,
+		"composite": true,
+		"declaration": true,
+		"declarationMap": true
+	}
 }

@@ -10,7 +10,7 @@ module.exports = {
 	navigation: {
 		includeCategories: true,
 		includeGroups: true,
-		includeFolders: true,
+		includeFolders: true
 	},
 	categorizeByGroup: false,
 	compilerOptions: {
@@ -18,6 +18,6 @@ module.exports = {
 		strict: true,
 		composite: true,
 		declaration: true,
-		declarationMap: true,
-	},
+		declarationMap: true
+	}
 };
