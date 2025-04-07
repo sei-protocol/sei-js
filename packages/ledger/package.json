@@ -13,7 +13,7 @@
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"docs": "typedoc --out docs",
-		"test": "jest --passWithNoTests"
+		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": ["sei", "javascript", "typescript", "ledger"],
