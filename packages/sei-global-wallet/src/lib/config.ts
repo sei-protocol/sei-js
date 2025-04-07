@@ -1,4 +1,17 @@
-export const config = {
+import type { DataURIImage } from '@dynamic-labs/global-wallet-client';
+import type { WalletIcon } from '@wallet-standard/base';
+
+interface EIP6963Config {
+	walletName: string;
+	walletIcon: DataURIImage | WalletIcon;
+	walletUrl: string;
+	environmentId: string;
+	eip6963: {
+		rdns: string;
+	};
+}
+
+export const config: EIP6963Config = {
 	// Wallet name will be seen as the Wallet name
 	walletName: 'Sei Global Wallet',
 	// Wallet icon will be seen as the Wallet icon
