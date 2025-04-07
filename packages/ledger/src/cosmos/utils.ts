@@ -7,9 +7,9 @@ import { SeiApp } from '@zondax/ledger-sei';
  * @returns {Promise<{transport: Transport, app: SeiApp}>} transport and app instances
  */
 export const createTransportAndApp = async () => {
-  const transport = await Transport.create();
-  const app = new SeiApp(transport);
-  return {transport, app};
+	const transport = await Transport.create();
+	const app = new SeiApp(transport);
+	return { transport, app };
 };
 
 /**
@@ -21,8 +21,7 @@ export const createTransportAndApp = async () => {
  * address and public key
  */
 export const getAddresses = async (app: SeiApp, path: string) => {
-  const evmAddress = await app.getEVMAddress(path);
-  const nativeAddress = await app.getCosmosAddress(path);
-  return {evmAddress, nativeAddress};
+	const evmAddress = await app.getEVMAddress(path);
+	const nativeAddress = await app.getCosmosAddress(path);
+	return { evmAddress, nativeAddress };
 };
-

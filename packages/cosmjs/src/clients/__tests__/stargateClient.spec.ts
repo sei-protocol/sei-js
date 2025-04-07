@@ -9,12 +9,12 @@ jest.mock('@cosmjs/stargate', () => {
 		...originalModule,
 		StargateClient: {
 			...originalModule.StargateClient,
-			connect: jest.fn(),
+			connect: jest.fn()
 		},
 		SigningStargateClient: {
 			...originalModule.SigningStargateClient,
-			connectWithSigner: jest.fn(),
-		},
+			connectWithSigner: jest.fn()
+		}
 	};
 });
 
@@ -61,8 +61,8 @@ describe('stargateClient', () => {
 				signer,
 				expect.objectContaining({
 					registry: createSeiRegistry(),
-					aminoTypes: createSeiAminoTypes(),
-				}),
+					aminoTypes: createSeiAminoTypes()
+				})
 			);
 		});
 	});

@@ -100,9 +100,9 @@ export const verifyDigest32 = (digest: Uint8Array, signature: Uint8Array, pubKey
 		digest,
 		{
 			r: Buffer.from(r).toString('hex'),
-			s: Buffer.from(s).toString('hex'),
+			s: Buffer.from(s).toString('hex')
 		},
-		pubKeyToKeyPair(pubKey),
+		pubKeyToKeyPair(pubKey)
 	);
 };
 
