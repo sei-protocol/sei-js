@@ -15,7 +15,7 @@ import type {
 	InnerSpec as InnerSpec_type,
 	LeafOp as LeafOp_type,
 	NonExistenceProof as NonExistenceProof_type,
-	ProofSpec as ProofSpec_type,
+	ProofSpec as ProofSpec_type
 } from "../../types/confio";
 
 import { HashOp, LengthOp } from "../../types/confio";
@@ -104,7 +104,7 @@ export const ExistenceProof: MessageFns<ExistenceProof, "ics23.ExistenceProof"> 
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
 			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
 			leaf: isSet(object.leaf) ? LeafOp.fromJSON(object.leaf) : undefined,
-			path: globalThis.Array.isArray(object?.path) ? object.path.map((e: any) => InnerOp.fromJSON(e)) : [],
+			path: globalThis.Array.isArray(object?.path) ? object.path.map((e: any) => InnerOp.fromJSON(e)) : []
 		};
 	},
 
@@ -135,7 +135,7 @@ export const ExistenceProof: MessageFns<ExistenceProof, "ics23.ExistenceProof"> 
 		message.leaf = object.leaf !== undefined && object.leaf !== null ? LeafOp.fromPartial(object.leaf) : undefined;
 		message.path = object.path?.map((e) => InnerOp.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const NonExistenceProof: MessageFns<NonExistenceProof, "ics23.NonExistenceProof"> = {
@@ -195,7 +195,7 @@ export const NonExistenceProof: MessageFns<NonExistenceProof, "ics23.NonExistenc
 		return {
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
 			left: isSet(object.left) ? ExistenceProof.fromJSON(object.left) : undefined,
-			right: isSet(object.right) ? ExistenceProof.fromJSON(object.right) : undefined,
+			right: isSet(object.right) ? ExistenceProof.fromJSON(object.right) : undefined
 		};
 	},
 
@@ -222,7 +222,7 @@ export const NonExistenceProof: MessageFns<NonExistenceProof, "ics23.NonExistenc
 		message.left = object.left !== undefined && object.left !== null ? ExistenceProof.fromPartial(object.left) : undefined;
 		message.right = object.right !== undefined && object.right !== null ? ExistenceProof.fromPartial(object.right) : undefined;
 		return message;
-	},
+	}
 };
 
 export const CommitmentProof: MessageFns<CommitmentProof, "ics23.CommitmentProof"> = {
@@ -293,7 +293,7 @@ export const CommitmentProof: MessageFns<CommitmentProof, "ics23.CommitmentProof
 			exist: isSet(object.exist) ? ExistenceProof.fromJSON(object.exist) : undefined,
 			nonexist: isSet(object.nonexist) ? NonExistenceProof.fromJSON(object.nonexist) : undefined,
 			batch: isSet(object.batch) ? BatchProof.fromJSON(object.batch) : undefined,
-			compressed: isSet(object.compressed) ? CompressedBatchProof.fromJSON(object.compressed) : undefined,
+			compressed: isSet(object.compressed) ? CompressedBatchProof.fromJSON(object.compressed) : undefined
 		};
 	},
 
@@ -324,7 +324,7 @@ export const CommitmentProof: MessageFns<CommitmentProof, "ics23.CommitmentProof
 		message.batch = object.batch !== undefined && object.batch !== null ? BatchProof.fromPartial(object.batch) : undefined;
 		message.compressed = object.compressed !== undefined && object.compressed !== null ? CompressedBatchProof.fromPartial(object.compressed) : undefined;
 		return message;
-	},
+	}
 };
 
 export const LeafOp: MessageFns<LeafOp, "ics23.LeafOp"> = {
@@ -406,7 +406,7 @@ export const LeafOp: MessageFns<LeafOp, "ics23.LeafOp"> = {
 			prehash_key: isSet(object.prehash_key) ? hashOpFromJSON(object.prehash_key) : 0,
 			prehash_value: isSet(object.prehash_value) ? hashOpFromJSON(object.prehash_value) : 0,
 			length: isSet(object.length) ? lengthOpFromJSON(object.length) : 0,
-			prefix: isSet(object.prefix) ? bytesFromBase64(object.prefix) : new Uint8Array(0),
+			prefix: isSet(object.prefix) ? bytesFromBase64(object.prefix) : new Uint8Array(0)
 		};
 	},
 
@@ -441,7 +441,7 @@ export const LeafOp: MessageFns<LeafOp, "ics23.LeafOp"> = {
 		message.length = object.length ?? 0;
 		message.prefix = object.prefix ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const InnerOp: MessageFns<InnerOp, "ics23.InnerOp"> = {
@@ -501,7 +501,7 @@ export const InnerOp: MessageFns<InnerOp, "ics23.InnerOp"> = {
 		return {
 			hash: isSet(object.hash) ? hashOpFromJSON(object.hash) : 0,
 			prefix: isSet(object.prefix) ? bytesFromBase64(object.prefix) : new Uint8Array(0),
-			suffix: isSet(object.suffix) ? bytesFromBase64(object.suffix) : new Uint8Array(0),
+			suffix: isSet(object.suffix) ? bytesFromBase64(object.suffix) : new Uint8Array(0)
 		};
 	},
 
@@ -528,7 +528,7 @@ export const InnerOp: MessageFns<InnerOp, "ics23.InnerOp"> = {
 		message.prefix = object.prefix ?? new Uint8Array(0);
 		message.suffix = object.suffix ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ProofSpec: MessageFns<ProofSpec, "ics23.ProofSpec"> = {
@@ -599,7 +599,7 @@ export const ProofSpec: MessageFns<ProofSpec, "ics23.ProofSpec"> = {
 			leaf_spec: isSet(object.leaf_spec) ? LeafOp.fromJSON(object.leaf_spec) : undefined,
 			inner_spec: isSet(object.inner_spec) ? InnerSpec.fromJSON(object.inner_spec) : undefined,
 			max_depth: isSet(object.max_depth) ? globalThis.Number(object.max_depth) : 0,
-			min_depth: isSet(object.min_depth) ? globalThis.Number(object.min_depth) : 0,
+			min_depth: isSet(object.min_depth) ? globalThis.Number(object.min_depth) : 0
 		};
 	},
 
@@ -630,7 +630,7 @@ export const ProofSpec: MessageFns<ProofSpec, "ics23.ProofSpec"> = {
 		message.max_depth = object.max_depth ?? 0;
 		message.min_depth = object.min_depth ?? 0;
 		return message;
-	},
+	}
 };
 
 export const InnerSpec: MessageFns<InnerSpec, "ics23.InnerSpec"> = {
@@ -735,7 +735,7 @@ export const InnerSpec: MessageFns<InnerSpec, "ics23.InnerSpec"> = {
 			min_prefix_length: isSet(object.min_prefix_length) ? globalThis.Number(object.min_prefix_length) : 0,
 			max_prefix_length: isSet(object.max_prefix_length) ? globalThis.Number(object.max_prefix_length) : 0,
 			empty_child: isSet(object.empty_child) ? bytesFromBase64(object.empty_child) : new Uint8Array(0),
-			hash: isSet(object.hash) ? hashOpFromJSON(object.hash) : 0,
+			hash: isSet(object.hash) ? hashOpFromJSON(object.hash) : 0
 		};
 	},
 
@@ -774,7 +774,7 @@ export const InnerSpec: MessageFns<InnerSpec, "ics23.InnerSpec"> = {
 		message.empty_child = object.empty_child ?? new Uint8Array(0);
 		message.hash = object.hash ?? 0;
 		return message;
-	},
+	}
 };
 
 export const BatchProof: MessageFns<BatchProof, "ics23.BatchProof"> = {
@@ -812,7 +812,7 @@ export const BatchProof: MessageFns<BatchProof, "ics23.BatchProof"> = {
 
 	fromJSON(object: any): BatchProof {
 		return {
-			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => BatchEntry.fromJSON(e)) : [],
+			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => BatchEntry.fromJSON(e)) : []
 		};
 	},
 
@@ -831,7 +831,7 @@ export const BatchProof: MessageFns<BatchProof, "ics23.BatchProof"> = {
 		const message = createBaseBatchProof();
 		message.entries = object.entries?.map((e) => BatchEntry.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const BatchEntry: MessageFns<BatchEntry, "ics23.BatchEntry"> = {
@@ -880,7 +880,7 @@ export const BatchEntry: MessageFns<BatchEntry, "ics23.BatchEntry"> = {
 	fromJSON(object: any): BatchEntry {
 		return {
 			exist: isSet(object.exist) ? ExistenceProof.fromJSON(object.exist) : undefined,
-			nonexist: isSet(object.nonexist) ? NonExistenceProof.fromJSON(object.nonexist) : undefined,
+			nonexist: isSet(object.nonexist) ? NonExistenceProof.fromJSON(object.nonexist) : undefined
 		};
 	},
 
@@ -903,7 +903,7 @@ export const BatchEntry: MessageFns<BatchEntry, "ics23.BatchEntry"> = {
 		message.exist = object.exist !== undefined && object.exist !== null ? ExistenceProof.fromPartial(object.exist) : undefined;
 		message.nonexist = object.nonexist !== undefined && object.nonexist !== null ? NonExistenceProof.fromPartial(object.nonexist) : undefined;
 		return message;
-	},
+	}
 };
 
 export const CompressedBatchProof: MessageFns<CompressedBatchProof, "ics23.CompressedBatchProof"> = {
@@ -952,7 +952,7 @@ export const CompressedBatchProof: MessageFns<CompressedBatchProof, "ics23.Compr
 	fromJSON(object: any): CompressedBatchProof {
 		return {
 			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => CompressedBatchEntry.fromJSON(e)) : [],
-			lookup_inners: globalThis.Array.isArray(object?.lookup_inners) ? object.lookup_inners.map((e: any) => InnerOp.fromJSON(e)) : [],
+			lookup_inners: globalThis.Array.isArray(object?.lookup_inners) ? object.lookup_inners.map((e: any) => InnerOp.fromJSON(e)) : []
 		};
 	},
 
@@ -975,7 +975,7 @@ export const CompressedBatchProof: MessageFns<CompressedBatchProof, "ics23.Compr
 		message.entries = object.entries?.map((e) => CompressedBatchEntry.fromPartial(e)) || [];
 		message.lookup_inners = object.lookup_inners?.map((e) => InnerOp.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const CompressedBatchEntry: MessageFns<CompressedBatchEntry, "ics23.CompressedBatchEntry"> = {
@@ -1024,7 +1024,7 @@ export const CompressedBatchEntry: MessageFns<CompressedBatchEntry, "ics23.Compr
 	fromJSON(object: any): CompressedBatchEntry {
 		return {
 			exist: isSet(object.exist) ? CompressedExistenceProof.fromJSON(object.exist) : undefined,
-			nonexist: isSet(object.nonexist) ? CompressedNonExistenceProof.fromJSON(object.nonexist) : undefined,
+			nonexist: isSet(object.nonexist) ? CompressedNonExistenceProof.fromJSON(object.nonexist) : undefined
 		};
 	},
 
@@ -1047,7 +1047,7 @@ export const CompressedBatchEntry: MessageFns<CompressedBatchEntry, "ics23.Compr
 		message.exist = object.exist !== undefined && object.exist !== null ? CompressedExistenceProof.fromPartial(object.exist) : undefined;
 		message.nonexist = object.nonexist !== undefined && object.nonexist !== null ? CompressedNonExistenceProof.fromPartial(object.nonexist) : undefined;
 		return message;
-	},
+	}
 };
 
 export const CompressedExistenceProof: MessageFns<CompressedExistenceProof, "ics23.CompressedExistenceProof"> = {
@@ -1130,7 +1130,7 @@ export const CompressedExistenceProof: MessageFns<CompressedExistenceProof, "ics
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
 			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
 			leaf: isSet(object.leaf) ? LeafOp.fromJSON(object.leaf) : undefined,
-			path: globalThis.Array.isArray(object?.path) ? object.path.map((e: any) => globalThis.Number(e)) : [],
+			path: globalThis.Array.isArray(object?.path) ? object.path.map((e: any) => globalThis.Number(e)) : []
 		};
 	},
 
@@ -1161,7 +1161,7 @@ export const CompressedExistenceProof: MessageFns<CompressedExistenceProof, "ics
 		message.leaf = object.leaf !== undefined && object.leaf !== null ? LeafOp.fromPartial(object.leaf) : undefined;
 		message.path = object.path?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const CompressedNonExistenceProof: MessageFns<CompressedNonExistenceProof, "ics23.CompressedNonExistenceProof"> = {
@@ -1221,7 +1221,7 @@ export const CompressedNonExistenceProof: MessageFns<CompressedNonExistenceProof
 		return {
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
 			left: isSet(object.left) ? CompressedExistenceProof.fromJSON(object.left) : undefined,
-			right: isSet(object.right) ? CompressedExistenceProof.fromJSON(object.right) : undefined,
+			right: isSet(object.right) ? CompressedExistenceProof.fromJSON(object.right) : undefined
 		};
 	},
 
@@ -1248,7 +1248,7 @@ export const CompressedNonExistenceProof: MessageFns<CompressedNonExistenceProof
 		message.left = object.left !== undefined && object.left !== null ? CompressedExistenceProof.fromPartial(object.left) : undefined;
 		message.right = object.right !== undefined && object.right !== null ? CompressedExistenceProof.fromPartial(object.right) : undefined;
 		return message;
-	},
+	}
 };
 
 export function hashOpFromJSON(object: any): HashOp {
@@ -1391,7 +1391,7 @@ function createBaseInnerSpec(): InnerSpec {
 		min_prefix_length: 0,
 		max_prefix_length: 0,
 		empty_child: new Uint8Array(0),
-		hash: 0,
+		hash: 0
 	};
 }
 
@@ -1460,84 +1460,84 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/ics23.CompressedBatchProof", CompressedBatchProof as never],
 	["/ics23.CompressedBatchEntry", CompressedBatchEntry as never],
 	["/ics23.CompressedExistenceProof", CompressedExistenceProof as never],
-	["/ics23.CompressedNonExistenceProof", CompressedNonExistenceProof as never],
+	["/ics23.CompressedNonExistenceProof", CompressedNonExistenceProof as never]
 ];
 export const aminoConverters = {
 	"/ics23.ExistenceProof": {
 		aminoType: "ics23.ExistenceProof",
 		toAmino: (message: ExistenceProof) => ({ ...message }),
-		fromAmino: (object: ExistenceProof) => ({ ...object }),
+		fromAmino: (object: ExistenceProof) => ({ ...object })
 	},
 
 	"/ics23.NonExistenceProof": {
 		aminoType: "ics23.NonExistenceProof",
 		toAmino: (message: NonExistenceProof) => ({ ...message }),
-		fromAmino: (object: NonExistenceProof) => ({ ...object }),
+		fromAmino: (object: NonExistenceProof) => ({ ...object })
 	},
 
 	"/ics23.CommitmentProof": {
 		aminoType: "ics23.CommitmentProof",
 		toAmino: (message: CommitmentProof) => ({ ...message }),
-		fromAmino: (object: CommitmentProof) => ({ ...object }),
+		fromAmino: (object: CommitmentProof) => ({ ...object })
 	},
 
 	"/ics23.LeafOp": {
 		aminoType: "ics23.LeafOp",
 		toAmino: (message: LeafOp) => ({ ...message }),
-		fromAmino: (object: LeafOp) => ({ ...object }),
+		fromAmino: (object: LeafOp) => ({ ...object })
 	},
 
 	"/ics23.InnerOp": {
 		aminoType: "ics23.InnerOp",
 		toAmino: (message: InnerOp) => ({ ...message }),
-		fromAmino: (object: InnerOp) => ({ ...object }),
+		fromAmino: (object: InnerOp) => ({ ...object })
 	},
 
 	"/ics23.ProofSpec": {
 		aminoType: "ics23.ProofSpec",
 		toAmino: (message: ProofSpec) => ({ ...message }),
-		fromAmino: (object: ProofSpec) => ({ ...object }),
+		fromAmino: (object: ProofSpec) => ({ ...object })
 	},
 
 	"/ics23.InnerSpec": {
 		aminoType: "ics23.InnerSpec",
 		toAmino: (message: InnerSpec) => ({ ...message }),
-		fromAmino: (object: InnerSpec) => ({ ...object }),
+		fromAmino: (object: InnerSpec) => ({ ...object })
 	},
 
 	"/ics23.BatchProof": {
 		aminoType: "ics23.BatchProof",
 		toAmino: (message: BatchProof) => ({ ...message }),
-		fromAmino: (object: BatchProof) => ({ ...object }),
+		fromAmino: (object: BatchProof) => ({ ...object })
 	},
 
 	"/ics23.BatchEntry": {
 		aminoType: "ics23.BatchEntry",
 		toAmino: (message: BatchEntry) => ({ ...message }),
-		fromAmino: (object: BatchEntry) => ({ ...object }),
+		fromAmino: (object: BatchEntry) => ({ ...object })
 	},
 
 	"/ics23.CompressedBatchProof": {
 		aminoType: "ics23.CompressedBatchProof",
 		toAmino: (message: CompressedBatchProof) => ({ ...message }),
-		fromAmino: (object: CompressedBatchProof) => ({ ...object }),
+		fromAmino: (object: CompressedBatchProof) => ({ ...object })
 	},
 
 	"/ics23.CompressedBatchEntry": {
 		aminoType: "ics23.CompressedBatchEntry",
 		toAmino: (message: CompressedBatchEntry) => ({ ...message }),
-		fromAmino: (object: CompressedBatchEntry) => ({ ...object }),
+		fromAmino: (object: CompressedBatchEntry) => ({ ...object })
 	},
 
 	"/ics23.CompressedExistenceProof": {
 		aminoType: "ics23.CompressedExistenceProof",
 		toAmino: (message: CompressedExistenceProof) => ({ ...message }),
-		fromAmino: (object: CompressedExistenceProof) => ({ ...object }),
+		fromAmino: (object: CompressedExistenceProof) => ({ ...object })
 	},
 
 	"/ics23.CompressedNonExistenceProof": {
 		aminoType: "ics23.CompressedNonExistenceProof",
 		toAmino: (message: CompressedNonExistenceProof) => ({ ...message }),
-		fromAmino: (object: CompressedNonExistenceProof) => ({ ...object }),
-	},
+		fromAmino: (object: CompressedNonExistenceProof) => ({ ...object })
+	}
 };

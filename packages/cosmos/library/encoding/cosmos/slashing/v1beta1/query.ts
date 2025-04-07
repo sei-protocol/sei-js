@@ -12,7 +12,7 @@ import type {
 	QuerySigningInfoRequest as QuerySigningInfoRequest_type,
 	QuerySigningInfoResponse as QuerySigningInfoResponse_type,
 	QuerySigningInfosRequest as QuerySigningInfosRequest_type,
-	QuerySigningInfosResponse as QuerySigningInfosResponse_type,
+	QuerySigningInfosResponse as QuerySigningInfosResponse_type
 } from "../../../../types/cosmos/slashing/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -62,7 +62,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.slashing
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.slashing.v1beta1.QueryParamsResponse"> = {
@@ -117,7 +117,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.slashi
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QuerySigningInfoRequest: MessageFns<QuerySigningInfoRequest, "cosmos.slashing.v1beta1.QuerySigningInfoRequest"> = {
@@ -172,7 +172,7 @@ export const QuerySigningInfoRequest: MessageFns<QuerySigningInfoRequest, "cosmo
 		const message = createBaseQuerySigningInfoRequest();
 		message.cons_address = object.cons_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const QuerySigningInfoResponse: MessageFns<QuerySigningInfoResponse, "cosmos.slashing.v1beta1.QuerySigningInfoResponse"> = {
@@ -210,7 +210,7 @@ export const QuerySigningInfoResponse: MessageFns<QuerySigningInfoResponse, "cos
 
 	fromJSON(object: any): QuerySigningInfoResponse {
 		return {
-			val_signing_info: isSet(object.val_signing_info) ? ValidatorSigningInfo.fromJSON(object.val_signing_info) : undefined,
+			val_signing_info: isSet(object.val_signing_info) ? ValidatorSigningInfo.fromJSON(object.val_signing_info) : undefined
 		};
 	},
 
@@ -230,7 +230,7 @@ export const QuerySigningInfoResponse: MessageFns<QuerySigningInfoResponse, "cos
 		message.val_signing_info =
 			object.val_signing_info !== undefined && object.val_signing_info !== null ? ValidatorSigningInfo.fromPartial(object.val_signing_info) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QuerySigningInfosRequest: MessageFns<QuerySigningInfosRequest, "cosmos.slashing.v1beta1.QuerySigningInfosRequest"> = {
@@ -285,7 +285,7 @@ export const QuerySigningInfosRequest: MessageFns<QuerySigningInfosRequest, "cos
 		const message = createBaseQuerySigningInfosRequest();
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QuerySigningInfosResponse: MessageFns<QuerySigningInfosResponse, "cosmos.slashing.v1beta1.QuerySigningInfosResponse"> = {
@@ -334,7 +334,7 @@ export const QuerySigningInfosResponse: MessageFns<QuerySigningInfosResponse, "c
 	fromJSON(object: any): QuerySigningInfosResponse {
 		return {
 			info: globalThis.Array.isArray(object?.info) ? object.info.map((e: any) => ValidatorSigningInfo.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -357,7 +357,7 @@ export const QuerySigningInfosResponse: MessageFns<QuerySigningInfosResponse, "c
 		message.info = object.info?.map((e) => ValidatorSigningInfo.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -389,18 +389,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.slashing.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.slashing.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.slashing.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.slashing.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.QueryParamsResponse": {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	}
 };

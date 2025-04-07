@@ -14,1203 +14,1176 @@ import { Log } from "./receipt";
 export const protobufPackage = "seiprotocol.seichain.evm";
 
 export interface MsgEVMTransaction {
-  data?: Any | undefined;
-  derived: Uint8Array;
+	data?: Any | undefined;
+	derived: Uint8Array;
 }
 
 export interface MsgEVMTransactionResponse {
-  gas_used: number;
-  vm_error: string;
-  return_data: Uint8Array;
-  hash: string;
-  logs: Log[];
+	gas_used: number;
+	vm_error: string;
+	return_data: Uint8Array;
+	hash: string;
+	logs: Log[];
 }
 
 export interface MsgInternalEVMCall {
-  sender: string;
-  value: string;
-  to: string;
-  data: Uint8Array;
+	sender: string;
+	value: string;
+	to: string;
+	data: Uint8Array;
 }
 
-export interface MsgInternalEVMCallResponse {
-}
+export interface MsgInternalEVMCallResponse {}
 
 export interface MsgInternalEVMDelegateCall {
-  sender: string;
-  codeHash: Uint8Array;
-  to: string;
-  data: Uint8Array;
-  fromContract: string;
+	sender: string;
+	codeHash: Uint8Array;
+	to: string;
+	data: Uint8Array;
+	fromContract: string;
 }
 
-export interface MsgInternalEVMDelegateCallResponse {
-}
+export interface MsgInternalEVMDelegateCallResponse {}
 
 export interface MsgSend {
-  from_address: string;
-  to_address: string;
-  amount: Coin[];
+	from_address: string;
+	to_address: string;
+	amount: Coin[];
 }
 
-export interface MsgSendResponse {
-}
+export interface MsgSendResponse {}
 
 export interface MsgRegisterPointer {
-  sender: string;
-  pointer_type: PointerType;
-  erc_address: string;
+	sender: string;
+	pointer_type: PointerType;
+	erc_address: string;
 }
 
 export interface MsgRegisterPointerResponse {
-  pointer_address: string;
+	pointer_address: string;
 }
 
 export interface MsgAssociateContractAddress {
-  sender: string;
-  address: string;
+	sender: string;
+	address: string;
 }
 
-export interface MsgAssociateContractAddressResponse {
-}
+export interface MsgAssociateContractAddressResponse {}
 
 export interface MsgAssociate {
-  sender: string;
-  custom_message: string;
+	sender: string;
+	custom_message: string;
 }
 
-export interface MsgAssociateResponse {
-}
+export interface MsgAssociateResponse {}
 
 function createBaseMsgEVMTransaction(): MsgEVMTransaction {
-  return { data: undefined, derived: new Uint8Array(0) };
+	return { data: undefined, derived: new Uint8Array(0) };
 }
 
 export const MsgEVMTransaction: MessageFns<MsgEVMTransaction, "seiprotocol.seichain.evm.MsgEVMTransaction"> = {
-  $type: "seiprotocol.seichain.evm.MsgEVMTransaction" as const,
+	$type: "seiprotocol.seichain.evm.MsgEVMTransaction" as const,
 
-  encode(message: MsgEVMTransaction, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.data !== undefined) {
-      Any.encode(message.data, writer.uint32(10).fork()).join();
-    }
-    if (message.derived.length !== 0) {
-      writer.uint32(18).bytes(message.derived);
-    }
-    return writer;
-  },
+	encode(message: MsgEVMTransaction, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.data !== undefined) {
+			Any.encode(message.data, writer.uint32(10).fork()).join();
+		}
+		if (message.derived.length !== 0) {
+			writer.uint32(18).bytes(message.derived);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgEVMTransaction {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgEVMTransaction();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgEVMTransaction {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgEVMTransaction();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.data = Any.decode(reader, reader.uint32());
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.data = Any.decode(reader, reader.uint32());
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.derived = reader.bytes();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.derived = reader.bytes();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgEVMTransaction {
-    return {
-      data: isSet(object.data) ? Any.fromJSON(object.data) : undefined,
-      derived: isSet(object.derived) ? bytesFromBase64(object.derived) : new Uint8Array(0),
-    };
-  },
+	fromJSON(object: any): MsgEVMTransaction {
+		return {
+			data: isSet(object.data) ? Any.fromJSON(object.data) : undefined,
+			derived: isSet(object.derived) ? bytesFromBase64(object.derived) : new Uint8Array(0)
+		};
+	},
 
-  toJSON(message: MsgEVMTransaction): unknown {
-    const obj: any = {};
-    if (message.data !== undefined) {
-      obj.data = Any.toJSON(message.data);
-    }
-    if (message.derived.length !== 0) {
-      obj.derived = base64FromBytes(message.derived);
-    }
-    return obj;
-  },
+	toJSON(message: MsgEVMTransaction): unknown {
+		const obj: any = {};
+		if (message.data !== undefined) {
+			obj.data = Any.toJSON(message.data);
+		}
+		if (message.derived.length !== 0) {
+			obj.derived = base64FromBytes(message.derived);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgEVMTransaction>, I>>(base?: I): MsgEVMTransaction {
-    return MsgEVMTransaction.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgEVMTransaction>, I>>(object: I): MsgEVMTransaction {
-    const message = createBaseMsgEVMTransaction();
-    message.data = (object.data !== undefined && object.data !== null) ? Any.fromPartial(object.data) : undefined;
-    message.derived = object.derived ?? new Uint8Array(0);
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgEVMTransaction>, I>>(base?: I): MsgEVMTransaction {
+		return MsgEVMTransaction.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgEVMTransaction>, I>>(object: I): MsgEVMTransaction {
+		const message = createBaseMsgEVMTransaction();
+		message.data = object.data !== undefined && object.data !== null ? Any.fromPartial(object.data) : undefined;
+		message.derived = object.derived ?? new Uint8Array(0);
+		return message;
+	}
 };
 
 function createBaseMsgEVMTransactionResponse(): MsgEVMTransactionResponse {
-  return { gas_used: 0, vm_error: "", return_data: new Uint8Array(0), hash: "", logs: [] };
+	return { gas_used: 0, vm_error: "", return_data: new Uint8Array(0), hash: "", logs: [] };
 }
 
-export const MsgEVMTransactionResponse: MessageFns<
-  MsgEVMTransactionResponse,
-  "seiprotocol.seichain.evm.MsgEVMTransactionResponse"
-> = {
-  $type: "seiprotocol.seichain.evm.MsgEVMTransactionResponse" as const,
+export const MsgEVMTransactionResponse: MessageFns<MsgEVMTransactionResponse, "seiprotocol.seichain.evm.MsgEVMTransactionResponse"> = {
+	$type: "seiprotocol.seichain.evm.MsgEVMTransactionResponse" as const,
 
-  encode(message: MsgEVMTransactionResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gas_used !== 0) {
-      writer.uint32(8).uint64(message.gas_used);
-    }
-    if (message.vm_error !== "") {
-      writer.uint32(18).string(message.vm_error);
-    }
-    if (message.return_data.length !== 0) {
-      writer.uint32(26).bytes(message.return_data);
-    }
-    if (message.hash !== "") {
-      writer.uint32(34).string(message.hash);
-    }
-    for (const v of message.logs) {
-      Log.encode(v!, writer.uint32(42).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: MsgEVMTransactionResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.gas_used !== 0) {
+			writer.uint32(8).uint64(message.gas_used);
+		}
+		if (message.vm_error !== "") {
+			writer.uint32(18).string(message.vm_error);
+		}
+		if (message.return_data.length !== 0) {
+			writer.uint32(26).bytes(message.return_data);
+		}
+		if (message.hash !== "") {
+			writer.uint32(34).string(message.hash);
+		}
+		for (const v of message.logs) {
+			Log.encode(v!, writer.uint32(42).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgEVMTransactionResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgEVMTransactionResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgEVMTransactionResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgEVMTransactionResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 8) {
+						break;
+					}
 
-          message.gas_used = longToNumber(reader.uint64());
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.gas_used = longToNumber(reader.uint64());
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.vm_error = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.vm_error = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.return_data = reader.bytes();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.return_data = reader.bytes();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.hash = reader.string();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
+					message.hash = reader.string();
+					continue;
+				case 5:
+					if (tag !== 42) {
+						break;
+					}
 
-          message.logs.push(Log.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.logs.push(Log.decode(reader, reader.uint32()));
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgEVMTransactionResponse {
-    return {
-      gas_used: isSet(object.gas_used) ? globalThis.Number(object.gas_used) : 0,
-      vm_error: isSet(object.vm_error) ? globalThis.String(object.vm_error) : "",
-      return_data: isSet(object.return_data) ? bytesFromBase64(object.return_data) : new Uint8Array(0),
-      hash: isSet(object.hash) ? globalThis.String(object.hash) : "",
-      logs: globalThis.Array.isArray(object?.logs) ? object.logs.map((e: any) => Log.fromJSON(e)) : [],
-    };
-  },
+	fromJSON(object: any): MsgEVMTransactionResponse {
+		return {
+			gas_used: isSet(object.gas_used) ? globalThis.Number(object.gas_used) : 0,
+			vm_error: isSet(object.vm_error) ? globalThis.String(object.vm_error) : "",
+			return_data: isSet(object.return_data) ? bytesFromBase64(object.return_data) : new Uint8Array(0),
+			hash: isSet(object.hash) ? globalThis.String(object.hash) : "",
+			logs: globalThis.Array.isArray(object?.logs) ? object.logs.map((e: any) => Log.fromJSON(e)) : []
+		};
+	},
 
-  toJSON(message: MsgEVMTransactionResponse): unknown {
-    const obj: any = {};
-    if (message.gas_used !== 0) {
-      obj.gas_used = Math.round(message.gas_used);
-    }
-    if (message.vm_error !== "") {
-      obj.vm_error = message.vm_error;
-    }
-    if (message.return_data.length !== 0) {
-      obj.return_data = base64FromBytes(message.return_data);
-    }
-    if (message.hash !== "") {
-      obj.hash = message.hash;
-    }
-    if (message.logs?.length) {
-      obj.logs = message.logs.map((e) => Log.toJSON(e));
-    }
-    return obj;
-  },
+	toJSON(message: MsgEVMTransactionResponse): unknown {
+		const obj: any = {};
+		if (message.gas_used !== 0) {
+			obj.gas_used = Math.round(message.gas_used);
+		}
+		if (message.vm_error !== "") {
+			obj.vm_error = message.vm_error;
+		}
+		if (message.return_data.length !== 0) {
+			obj.return_data = base64FromBytes(message.return_data);
+		}
+		if (message.hash !== "") {
+			obj.hash = message.hash;
+		}
+		if (message.logs?.length) {
+			obj.logs = message.logs.map((e) => Log.toJSON(e));
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgEVMTransactionResponse>, I>>(base?: I): MsgEVMTransactionResponse {
-    return MsgEVMTransactionResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgEVMTransactionResponse>, I>>(object: I): MsgEVMTransactionResponse {
-    const message = createBaseMsgEVMTransactionResponse();
-    message.gas_used = object.gas_used ?? 0;
-    message.vm_error = object.vm_error ?? "";
-    message.return_data = object.return_data ?? new Uint8Array(0);
-    message.hash = object.hash ?? "";
-    message.logs = object.logs?.map((e) => Log.fromPartial(e)) || [];
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgEVMTransactionResponse>, I>>(base?: I): MsgEVMTransactionResponse {
+		return MsgEVMTransactionResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgEVMTransactionResponse>, I>>(object: I): MsgEVMTransactionResponse {
+		const message = createBaseMsgEVMTransactionResponse();
+		message.gas_used = object.gas_used ?? 0;
+		message.vm_error = object.vm_error ?? "";
+		message.return_data = object.return_data ?? new Uint8Array(0);
+		message.hash = object.hash ?? "";
+		message.logs = object.logs?.map((e) => Log.fromPartial(e)) || [];
+		return message;
+	}
 };
 
 function createBaseMsgInternalEVMCall(): MsgInternalEVMCall {
-  return { sender: "", value: "", to: "", data: new Uint8Array(0) };
+	return { sender: "", value: "", to: "", data: new Uint8Array(0) };
 }
 
 export const MsgInternalEVMCall: MessageFns<MsgInternalEVMCall, "seiprotocol.seichain.evm.MsgInternalEVMCall"> = {
-  $type: "seiprotocol.seichain.evm.MsgInternalEVMCall" as const,
+	$type: "seiprotocol.seichain.evm.MsgInternalEVMCall" as const,
 
-  encode(message: MsgInternalEVMCall, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sender !== "") {
-      writer.uint32(10).string(message.sender);
-    }
-    if (message.value !== "") {
-      writer.uint32(18).string(message.value);
-    }
-    if (message.to !== "") {
-      writer.uint32(26).string(message.to);
-    }
-    if (message.data.length !== 0) {
-      writer.uint32(34).bytes(message.data);
-    }
-    return writer;
-  },
+	encode(message: MsgInternalEVMCall, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.sender !== "") {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.value !== "") {
+			writer.uint32(18).string(message.value);
+		}
+		if (message.to !== "") {
+			writer.uint32(26).string(message.to);
+		}
+		if (message.data.length !== 0) {
+			writer.uint32(34).bytes(message.data);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMCall {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgInternalEVMCall();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMCall {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgInternalEVMCall();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.sender = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.sender = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.value = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.value = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.to = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.to = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.data = reader.bytes();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.data = reader.bytes();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgInternalEVMCall {
-    return {
-      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-      value: isSet(object.value) ? globalThis.String(object.value) : "",
-      to: isSet(object.to) ? globalThis.String(object.to) : "",
-      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
-    };
-  },
+	fromJSON(object: any): MsgInternalEVMCall {
+		return {
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			value: isSet(object.value) ? globalThis.String(object.value) : "",
+			to: isSet(object.to) ? globalThis.String(object.to) : "",
+			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0)
+		};
+	},
 
-  toJSON(message: MsgInternalEVMCall): unknown {
-    const obj: any = {};
-    if (message.sender !== "") {
-      obj.sender = message.sender;
-    }
-    if (message.value !== "") {
-      obj.value = message.value;
-    }
-    if (message.to !== "") {
-      obj.to = message.to;
-    }
-    if (message.data.length !== 0) {
-      obj.data = base64FromBytes(message.data);
-    }
-    return obj;
-  },
+	toJSON(message: MsgInternalEVMCall): unknown {
+		const obj: any = {};
+		if (message.sender !== "") {
+			obj.sender = message.sender;
+		}
+		if (message.value !== "") {
+			obj.value = message.value;
+		}
+		if (message.to !== "") {
+			obj.to = message.to;
+		}
+		if (message.data.length !== 0) {
+			obj.data = base64FromBytes(message.data);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgInternalEVMCall>, I>>(base?: I): MsgInternalEVMCall {
-    return MsgInternalEVMCall.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgInternalEVMCall>, I>>(object: I): MsgInternalEVMCall {
-    const message = createBaseMsgInternalEVMCall();
-    message.sender = object.sender ?? "";
-    message.value = object.value ?? "";
-    message.to = object.to ?? "";
-    message.data = object.data ?? new Uint8Array(0);
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgInternalEVMCall>, I>>(base?: I): MsgInternalEVMCall {
+		return MsgInternalEVMCall.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgInternalEVMCall>, I>>(object: I): MsgInternalEVMCall {
+		const message = createBaseMsgInternalEVMCall();
+		message.sender = object.sender ?? "";
+		message.value = object.value ?? "";
+		message.to = object.to ?? "";
+		message.data = object.data ?? new Uint8Array(0);
+		return message;
+	}
 };
 
 function createBaseMsgInternalEVMCallResponse(): MsgInternalEVMCallResponse {
-  return {};
+	return {};
 }
 
-export const MsgInternalEVMCallResponse: MessageFns<
-  MsgInternalEVMCallResponse,
-  "seiprotocol.seichain.evm.MsgInternalEVMCallResponse"
-> = {
-  $type: "seiprotocol.seichain.evm.MsgInternalEVMCallResponse" as const,
+export const MsgInternalEVMCallResponse: MessageFns<MsgInternalEVMCallResponse, "seiprotocol.seichain.evm.MsgInternalEVMCallResponse"> = {
+	$type: "seiprotocol.seichain.evm.MsgInternalEVMCallResponse" as const,
 
-  encode(_: MsgInternalEVMCallResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+	encode(_: MsgInternalEVMCallResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMCallResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgInternalEVMCallResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMCallResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgInternalEVMCallResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(_: any): MsgInternalEVMCallResponse {
-    return {};
-  },
+	fromJSON(_: any): MsgInternalEVMCallResponse {
+		return {};
+	},
 
-  toJSON(_: MsgInternalEVMCallResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+	toJSON(_: MsgInternalEVMCallResponse): unknown {
+		const obj: any = {};
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgInternalEVMCallResponse>, I>>(base?: I): MsgInternalEVMCallResponse {
-    return MsgInternalEVMCallResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgInternalEVMCallResponse>, I>>(_: I): MsgInternalEVMCallResponse {
-    const message = createBaseMsgInternalEVMCallResponse();
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgInternalEVMCallResponse>, I>>(base?: I): MsgInternalEVMCallResponse {
+		return MsgInternalEVMCallResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgInternalEVMCallResponse>, I>>(_: I): MsgInternalEVMCallResponse {
+		const message = createBaseMsgInternalEVMCallResponse();
+		return message;
+	}
 };
 
 function createBaseMsgInternalEVMDelegateCall(): MsgInternalEVMDelegateCall {
-  return { sender: "", codeHash: new Uint8Array(0), to: "", data: new Uint8Array(0), fromContract: "" };
+	return { sender: "", codeHash: new Uint8Array(0), to: "", data: new Uint8Array(0), fromContract: "" };
 }
 
-export const MsgInternalEVMDelegateCall: MessageFns<
-  MsgInternalEVMDelegateCall,
-  "seiprotocol.seichain.evm.MsgInternalEVMDelegateCall"
-> = {
-  $type: "seiprotocol.seichain.evm.MsgInternalEVMDelegateCall" as const,
+export const MsgInternalEVMDelegateCall: MessageFns<MsgInternalEVMDelegateCall, "seiprotocol.seichain.evm.MsgInternalEVMDelegateCall"> = {
+	$type: "seiprotocol.seichain.evm.MsgInternalEVMDelegateCall" as const,
 
-  encode(message: MsgInternalEVMDelegateCall, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sender !== "") {
-      writer.uint32(10).string(message.sender);
-    }
-    if (message.codeHash.length !== 0) {
-      writer.uint32(18).bytes(message.codeHash);
-    }
-    if (message.to !== "") {
-      writer.uint32(26).string(message.to);
-    }
-    if (message.data.length !== 0) {
-      writer.uint32(34).bytes(message.data);
-    }
-    if (message.fromContract !== "") {
-      writer.uint32(42).string(message.fromContract);
-    }
-    return writer;
-  },
+	encode(message: MsgInternalEVMDelegateCall, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.sender !== "") {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.codeHash.length !== 0) {
+			writer.uint32(18).bytes(message.codeHash);
+		}
+		if (message.to !== "") {
+			writer.uint32(26).string(message.to);
+		}
+		if (message.data.length !== 0) {
+			writer.uint32(34).bytes(message.data);
+		}
+		if (message.fromContract !== "") {
+			writer.uint32(42).string(message.fromContract);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMDelegateCall {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgInternalEVMDelegateCall();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMDelegateCall {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgInternalEVMDelegateCall();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.sender = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.sender = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.codeHash = reader.bytes();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.codeHash = reader.bytes();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.to = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.to = reader.string();
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.data = reader.bytes();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
+					message.data = reader.bytes();
+					continue;
+				case 5:
+					if (tag !== 42) {
+						break;
+					}
 
-          message.fromContract = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.fromContract = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgInternalEVMDelegateCall {
-    return {
-      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-      codeHash: isSet(object.codeHash) ? bytesFromBase64(object.codeHash) : new Uint8Array(0),
-      to: isSet(object.to) ? globalThis.String(object.to) : "",
-      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
-      fromContract: isSet(object.fromContract) ? globalThis.String(object.fromContract) : "",
-    };
-  },
+	fromJSON(object: any): MsgInternalEVMDelegateCall {
+		return {
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			codeHash: isSet(object.codeHash) ? bytesFromBase64(object.codeHash) : new Uint8Array(0),
+			to: isSet(object.to) ? globalThis.String(object.to) : "",
+			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
+			fromContract: isSet(object.fromContract) ? globalThis.String(object.fromContract) : ""
+		};
+	},
 
-  toJSON(message: MsgInternalEVMDelegateCall): unknown {
-    const obj: any = {};
-    if (message.sender !== "") {
-      obj.sender = message.sender;
-    }
-    if (message.codeHash.length !== 0) {
-      obj.codeHash = base64FromBytes(message.codeHash);
-    }
-    if (message.to !== "") {
-      obj.to = message.to;
-    }
-    if (message.data.length !== 0) {
-      obj.data = base64FromBytes(message.data);
-    }
-    if (message.fromContract !== "") {
-      obj.fromContract = message.fromContract;
-    }
-    return obj;
-  },
+	toJSON(message: MsgInternalEVMDelegateCall): unknown {
+		const obj: any = {};
+		if (message.sender !== "") {
+			obj.sender = message.sender;
+		}
+		if (message.codeHash.length !== 0) {
+			obj.codeHash = base64FromBytes(message.codeHash);
+		}
+		if (message.to !== "") {
+			obj.to = message.to;
+		}
+		if (message.data.length !== 0) {
+			obj.data = base64FromBytes(message.data);
+		}
+		if (message.fromContract !== "") {
+			obj.fromContract = message.fromContract;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgInternalEVMDelegateCall>, I>>(base?: I): MsgInternalEVMDelegateCall {
-    return MsgInternalEVMDelegateCall.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgInternalEVMDelegateCall>, I>>(object: I): MsgInternalEVMDelegateCall {
-    const message = createBaseMsgInternalEVMDelegateCall();
-    message.sender = object.sender ?? "";
-    message.codeHash = object.codeHash ?? new Uint8Array(0);
-    message.to = object.to ?? "";
-    message.data = object.data ?? new Uint8Array(0);
-    message.fromContract = object.fromContract ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgInternalEVMDelegateCall>, I>>(base?: I): MsgInternalEVMDelegateCall {
+		return MsgInternalEVMDelegateCall.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgInternalEVMDelegateCall>, I>>(object: I): MsgInternalEVMDelegateCall {
+		const message = createBaseMsgInternalEVMDelegateCall();
+		message.sender = object.sender ?? "";
+		message.codeHash = object.codeHash ?? new Uint8Array(0);
+		message.to = object.to ?? "";
+		message.data = object.data ?? new Uint8Array(0);
+		message.fromContract = object.fromContract ?? "";
+		return message;
+	}
 };
 
 function createBaseMsgInternalEVMDelegateCallResponse(): MsgInternalEVMDelegateCallResponse {
-  return {};
+	return {};
 }
 
-export const MsgInternalEVMDelegateCallResponse: MessageFns<
-  MsgInternalEVMDelegateCallResponse,
-  "seiprotocol.seichain.evm.MsgInternalEVMDelegateCallResponse"
-> = {
-  $type: "seiprotocol.seichain.evm.MsgInternalEVMDelegateCallResponse" as const,
+export const MsgInternalEVMDelegateCallResponse: MessageFns<MsgInternalEVMDelegateCallResponse, "seiprotocol.seichain.evm.MsgInternalEVMDelegateCallResponse"> =
+	{
+		$type: "seiprotocol.seichain.evm.MsgInternalEVMDelegateCallResponse" as const,
 
-  encode(_: MsgInternalEVMDelegateCallResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+		encode(_: MsgInternalEVMDelegateCallResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+			return writer;
+		},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMDelegateCallResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgInternalEVMDelegateCallResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+		decode(input: BinaryReader | Uint8Array, length?: number): MsgInternalEVMDelegateCallResponse {
+			const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+			let end = length === undefined ? reader.len : reader.pos + length;
+			const message = createBaseMsgInternalEVMDelegateCallResponse();
+			while (reader.pos < end) {
+				const tag = reader.uint32();
+				switch (tag >>> 3) {
+				}
+				if ((tag & 7) === 4 || tag === 0) {
+					break;
+				}
+				reader.skip(tag & 7);
+			}
+			return message;
+		},
 
-  fromJSON(_: any): MsgInternalEVMDelegateCallResponse {
-    return {};
-  },
+		fromJSON(_: any): MsgInternalEVMDelegateCallResponse {
+			return {};
+		},
 
-  toJSON(_: MsgInternalEVMDelegateCallResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+		toJSON(_: MsgInternalEVMDelegateCallResponse): unknown {
+			const obj: any = {};
+			return obj;
+		},
 
-  create<I extends Exact<DeepPartial<MsgInternalEVMDelegateCallResponse>, I>>(
-    base?: I,
-  ): MsgInternalEVMDelegateCallResponse {
-    return MsgInternalEVMDelegateCallResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgInternalEVMDelegateCallResponse>, I>>(
-    _: I,
-  ): MsgInternalEVMDelegateCallResponse {
-    const message = createBaseMsgInternalEVMDelegateCallResponse();
-    return message;
-  },
-};
+		create<I extends Exact<DeepPartial<MsgInternalEVMDelegateCallResponse>, I>>(base?: I): MsgInternalEVMDelegateCallResponse {
+			return MsgInternalEVMDelegateCallResponse.fromPartial(base ?? ({} as any));
+		},
+		fromPartial<I extends Exact<DeepPartial<MsgInternalEVMDelegateCallResponse>, I>>(_: I): MsgInternalEVMDelegateCallResponse {
+			const message = createBaseMsgInternalEVMDelegateCallResponse();
+			return message;
+		}
+	};
 
 function createBaseMsgSend(): MsgSend {
-  return { from_address: "", to_address: "", amount: [] };
+	return { from_address: "", to_address: "", amount: [] };
 }
 
 export const MsgSend: MessageFns<MsgSend, "seiprotocol.seichain.evm.MsgSend"> = {
-  $type: "seiprotocol.seichain.evm.MsgSend" as const,
+	$type: "seiprotocol.seichain.evm.MsgSend" as const,
 
-  encode(message: MsgSend, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.from_address !== "") {
-      writer.uint32(10).string(message.from_address);
-    }
-    if (message.to_address !== "") {
-      writer.uint32(18).string(message.to_address);
-    }
-    for (const v of message.amount) {
-      Coin.encode(v!, writer.uint32(26).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: MsgSend, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.from_address !== "") {
+			writer.uint32(10).string(message.from_address);
+		}
+		if (message.to_address !== "") {
+			writer.uint32(18).string(message.to_address);
+		}
+		for (const v of message.amount) {
+			Coin.encode(v!, writer.uint32(26).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgSend {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgSend();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgSend {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgSend();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.from_address = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.from_address = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.to_address = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.to_address = reader.string();
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.amount.push(Coin.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.amount.push(Coin.decode(reader, reader.uint32()));
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgSend {
-    return {
-      from_address: isSet(object.from_address) ? globalThis.String(object.from_address) : "",
-      to_address: isSet(object.to_address) ? globalThis.String(object.to_address) : "",
-      amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
-    };
-  },
+	fromJSON(object: any): MsgSend {
+		return {
+			from_address: isSet(object.from_address) ? globalThis.String(object.from_address) : "",
+			to_address: isSet(object.to_address) ? globalThis.String(object.to_address) : "",
+			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : []
+		};
+	},
 
-  toJSON(message: MsgSend): unknown {
-    const obj: any = {};
-    if (message.from_address !== "") {
-      obj.from_address = message.from_address;
-    }
-    if (message.to_address !== "") {
-      obj.to_address = message.to_address;
-    }
-    if (message.amount?.length) {
-      obj.amount = message.amount.map((e) => Coin.toJSON(e));
-    }
-    return obj;
-  },
+	toJSON(message: MsgSend): unknown {
+		const obj: any = {};
+		if (message.from_address !== "") {
+			obj.from_address = message.from_address;
+		}
+		if (message.to_address !== "") {
+			obj.to_address = message.to_address;
+		}
+		if (message.amount?.length) {
+			obj.amount = message.amount.map((e) => Coin.toJSON(e));
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgSend>, I>>(base?: I): MsgSend {
-    return MsgSend.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgSend>, I>>(object: I): MsgSend {
-    const message = createBaseMsgSend();
-    message.from_address = object.from_address ?? "";
-    message.to_address = object.to_address ?? "";
-    message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgSend>, I>>(base?: I): MsgSend {
+		return MsgSend.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgSend>, I>>(object: I): MsgSend {
+		const message = createBaseMsgSend();
+		message.from_address = object.from_address ?? "";
+		message.to_address = object.to_address ?? "";
+		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
+		return message;
+	}
 };
 
 function createBaseMsgSendResponse(): MsgSendResponse {
-  return {};
+	return {};
 }
 
 export const MsgSendResponse: MessageFns<MsgSendResponse, "seiprotocol.seichain.evm.MsgSendResponse"> = {
-  $type: "seiprotocol.seichain.evm.MsgSendResponse" as const,
+	$type: "seiprotocol.seichain.evm.MsgSendResponse" as const,
 
-  encode(_: MsgSendResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+	encode(_: MsgSendResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgSendResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgSendResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgSendResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgSendResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(_: any): MsgSendResponse {
-    return {};
-  },
+	fromJSON(_: any): MsgSendResponse {
+		return {};
+	},
 
-  toJSON(_: MsgSendResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+	toJSON(_: MsgSendResponse): unknown {
+		const obj: any = {};
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgSendResponse>, I>>(base?: I): MsgSendResponse {
-    return MsgSendResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgSendResponse>, I>>(_: I): MsgSendResponse {
-    const message = createBaseMsgSendResponse();
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgSendResponse>, I>>(base?: I): MsgSendResponse {
+		return MsgSendResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgSendResponse>, I>>(_: I): MsgSendResponse {
+		const message = createBaseMsgSendResponse();
+		return message;
+	}
 };
 
 function createBaseMsgRegisterPointer(): MsgRegisterPointer {
-  return { sender: "", pointer_type: 0, erc_address: "" };
+	return { sender: "", pointer_type: 0, erc_address: "" };
 }
 
 export const MsgRegisterPointer: MessageFns<MsgRegisterPointer, "seiprotocol.seichain.evm.MsgRegisterPointer"> = {
-  $type: "seiprotocol.seichain.evm.MsgRegisterPointer" as const,
+	$type: "seiprotocol.seichain.evm.MsgRegisterPointer" as const,
 
-  encode(message: MsgRegisterPointer, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sender !== "") {
-      writer.uint32(10).string(message.sender);
-    }
-    if (message.pointer_type !== 0) {
-      writer.uint32(16).int32(message.pointer_type);
-    }
-    if (message.erc_address !== "") {
-      writer.uint32(26).string(message.erc_address);
-    }
-    return writer;
-  },
+	encode(message: MsgRegisterPointer, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.sender !== "") {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.pointer_type !== 0) {
+			writer.uint32(16).int32(message.pointer_type);
+		}
+		if (message.erc_address !== "") {
+			writer.uint32(26).string(message.erc_address);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgRegisterPointer {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgRegisterPointer();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgRegisterPointer {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgRegisterPointer();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.sender = reader.string();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
+					message.sender = reader.string();
+					continue;
+				case 2:
+					if (tag !== 16) {
+						break;
+					}
 
-          message.pointer_type = reader.int32() as any;
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.pointer_type = reader.int32() as any;
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.erc_address = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.erc_address = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgRegisterPointer {
-    return {
-      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-      pointer_type: isSet(object.pointer_type) ? pointerTypeFromJSON(object.pointer_type) : 0,
-      erc_address: isSet(object.erc_address) ? globalThis.String(object.erc_address) : "",
-    };
-  },
+	fromJSON(object: any): MsgRegisterPointer {
+		return {
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			pointer_type: isSet(object.pointer_type) ? pointerTypeFromJSON(object.pointer_type) : 0,
+			erc_address: isSet(object.erc_address) ? globalThis.String(object.erc_address) : ""
+		};
+	},
 
-  toJSON(message: MsgRegisterPointer): unknown {
-    const obj: any = {};
-    if (message.sender !== "") {
-      obj.sender = message.sender;
-    }
-    if (message.pointer_type !== 0) {
-      obj.pointer_type = pointerTypeToJSON(message.pointer_type);
-    }
-    if (message.erc_address !== "") {
-      obj.erc_address = message.erc_address;
-    }
-    return obj;
-  },
+	toJSON(message: MsgRegisterPointer): unknown {
+		const obj: any = {};
+		if (message.sender !== "") {
+			obj.sender = message.sender;
+		}
+		if (message.pointer_type !== 0) {
+			obj.pointer_type = pointerTypeToJSON(message.pointer_type);
+		}
+		if (message.erc_address !== "") {
+			obj.erc_address = message.erc_address;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgRegisterPointer>, I>>(base?: I): MsgRegisterPointer {
-    return MsgRegisterPointer.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterPointer>, I>>(object: I): MsgRegisterPointer {
-    const message = createBaseMsgRegisterPointer();
-    message.sender = object.sender ?? "";
-    message.pointer_type = object.pointer_type ?? 0;
-    message.erc_address = object.erc_address ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgRegisterPointer>, I>>(base?: I): MsgRegisterPointer {
+		return MsgRegisterPointer.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgRegisterPointer>, I>>(object: I): MsgRegisterPointer {
+		const message = createBaseMsgRegisterPointer();
+		message.sender = object.sender ?? "";
+		message.pointer_type = object.pointer_type ?? 0;
+		message.erc_address = object.erc_address ?? "";
+		return message;
+	}
 };
 
 function createBaseMsgRegisterPointerResponse(): MsgRegisterPointerResponse {
-  return { pointer_address: "" };
+	return { pointer_address: "" };
 }
 
-export const MsgRegisterPointerResponse: MessageFns<
-  MsgRegisterPointerResponse,
-  "seiprotocol.seichain.evm.MsgRegisterPointerResponse"
-> = {
-  $type: "seiprotocol.seichain.evm.MsgRegisterPointerResponse" as const,
+export const MsgRegisterPointerResponse: MessageFns<MsgRegisterPointerResponse, "seiprotocol.seichain.evm.MsgRegisterPointerResponse"> = {
+	$type: "seiprotocol.seichain.evm.MsgRegisterPointerResponse" as const,
 
-  encode(message: MsgRegisterPointerResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.pointer_address !== "") {
-      writer.uint32(10).string(message.pointer_address);
-    }
-    return writer;
-  },
+	encode(message: MsgRegisterPointerResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.pointer_address !== "") {
+			writer.uint32(10).string(message.pointer_address);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgRegisterPointerResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgRegisterPointerResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgRegisterPointerResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgRegisterPointerResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.pointer_address = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.pointer_address = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgRegisterPointerResponse {
-    return { pointer_address: isSet(object.pointer_address) ? globalThis.String(object.pointer_address) : "" };
-  },
+	fromJSON(object: any): MsgRegisterPointerResponse {
+		return { pointer_address: isSet(object.pointer_address) ? globalThis.String(object.pointer_address) : "" };
+	},
 
-  toJSON(message: MsgRegisterPointerResponse): unknown {
-    const obj: any = {};
-    if (message.pointer_address !== "") {
-      obj.pointer_address = message.pointer_address;
-    }
-    return obj;
-  },
+	toJSON(message: MsgRegisterPointerResponse): unknown {
+		const obj: any = {};
+		if (message.pointer_address !== "") {
+			obj.pointer_address = message.pointer_address;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgRegisterPointerResponse>, I>>(base?: I): MsgRegisterPointerResponse {
-    return MsgRegisterPointerResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterPointerResponse>, I>>(object: I): MsgRegisterPointerResponse {
-    const message = createBaseMsgRegisterPointerResponse();
-    message.pointer_address = object.pointer_address ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgRegisterPointerResponse>, I>>(base?: I): MsgRegisterPointerResponse {
+		return MsgRegisterPointerResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgRegisterPointerResponse>, I>>(object: I): MsgRegisterPointerResponse {
+		const message = createBaseMsgRegisterPointerResponse();
+		message.pointer_address = object.pointer_address ?? "";
+		return message;
+	}
 };
 
 function createBaseMsgAssociateContractAddress(): MsgAssociateContractAddress {
-  return { sender: "", address: "" };
+	return { sender: "", address: "" };
 }
 
-export const MsgAssociateContractAddress: MessageFns<
-  MsgAssociateContractAddress,
-  "seiprotocol.seichain.evm.MsgAssociateContractAddress"
-> = {
-  $type: "seiprotocol.seichain.evm.MsgAssociateContractAddress" as const,
+export const MsgAssociateContractAddress: MessageFns<MsgAssociateContractAddress, "seiprotocol.seichain.evm.MsgAssociateContractAddress"> = {
+	$type: "seiprotocol.seichain.evm.MsgAssociateContractAddress" as const,
 
-  encode(message: MsgAssociateContractAddress, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sender !== "") {
-      writer.uint32(10).string(message.sender);
-    }
-    if (message.address !== "") {
-      writer.uint32(18).string(message.address);
-    }
-    return writer;
-  },
+	encode(message: MsgAssociateContractAddress, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.sender !== "") {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.address !== "") {
+			writer.uint32(18).string(message.address);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociateContractAddress {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgAssociateContractAddress();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociateContractAddress {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgAssociateContractAddress();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.sender = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.sender = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.address = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.address = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgAssociateContractAddress {
-    return {
-      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-      address: isSet(object.address) ? globalThis.String(object.address) : "",
-    };
-  },
+	fromJSON(object: any): MsgAssociateContractAddress {
+		return {
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			address: isSet(object.address) ? globalThis.String(object.address) : ""
+		};
+	},
 
-  toJSON(message: MsgAssociateContractAddress): unknown {
-    const obj: any = {};
-    if (message.sender !== "") {
-      obj.sender = message.sender;
-    }
-    if (message.address !== "") {
-      obj.address = message.address;
-    }
-    return obj;
-  },
+	toJSON(message: MsgAssociateContractAddress): unknown {
+		const obj: any = {};
+		if (message.sender !== "") {
+			obj.sender = message.sender;
+		}
+		if (message.address !== "") {
+			obj.address = message.address;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgAssociateContractAddress>, I>>(base?: I): MsgAssociateContractAddress {
-    return MsgAssociateContractAddress.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgAssociateContractAddress>, I>>(object: I): MsgAssociateContractAddress {
-    const message = createBaseMsgAssociateContractAddress();
-    message.sender = object.sender ?? "";
-    message.address = object.address ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgAssociateContractAddress>, I>>(base?: I): MsgAssociateContractAddress {
+		return MsgAssociateContractAddress.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgAssociateContractAddress>, I>>(object: I): MsgAssociateContractAddress {
+		const message = createBaseMsgAssociateContractAddress();
+		message.sender = object.sender ?? "";
+		message.address = object.address ?? "";
+		return message;
+	}
 };
 
 function createBaseMsgAssociateContractAddressResponse(): MsgAssociateContractAddressResponse {
-  return {};
+	return {};
 }
 
 export const MsgAssociateContractAddressResponse: MessageFns<
-  MsgAssociateContractAddressResponse,
-  "seiprotocol.seichain.evm.MsgAssociateContractAddressResponse"
+	MsgAssociateContractAddressResponse,
+	"seiprotocol.seichain.evm.MsgAssociateContractAddressResponse"
 > = {
-  $type: "seiprotocol.seichain.evm.MsgAssociateContractAddressResponse" as const,
+	$type: "seiprotocol.seichain.evm.MsgAssociateContractAddressResponse" as const,
 
-  encode(_: MsgAssociateContractAddressResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+	encode(_: MsgAssociateContractAddressResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociateContractAddressResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgAssociateContractAddressResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociateContractAddressResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgAssociateContractAddressResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(_: any): MsgAssociateContractAddressResponse {
-    return {};
-  },
+	fromJSON(_: any): MsgAssociateContractAddressResponse {
+		return {};
+	},
 
-  toJSON(_: MsgAssociateContractAddressResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+	toJSON(_: MsgAssociateContractAddressResponse): unknown {
+		const obj: any = {};
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgAssociateContractAddressResponse>, I>>(
-    base?: I,
-  ): MsgAssociateContractAddressResponse {
-    return MsgAssociateContractAddressResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgAssociateContractAddressResponse>, I>>(
-    _: I,
-  ): MsgAssociateContractAddressResponse {
-    const message = createBaseMsgAssociateContractAddressResponse();
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgAssociateContractAddressResponse>, I>>(base?: I): MsgAssociateContractAddressResponse {
+		return MsgAssociateContractAddressResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgAssociateContractAddressResponse>, I>>(_: I): MsgAssociateContractAddressResponse {
+		const message = createBaseMsgAssociateContractAddressResponse();
+		return message;
+	}
 };
 
 function createBaseMsgAssociate(): MsgAssociate {
-  return { sender: "", custom_message: "" };
+	return { sender: "", custom_message: "" };
 }
 
 export const MsgAssociate: MessageFns<MsgAssociate, "seiprotocol.seichain.evm.MsgAssociate"> = {
-  $type: "seiprotocol.seichain.evm.MsgAssociate" as const,
+	$type: "seiprotocol.seichain.evm.MsgAssociate" as const,
 
-  encode(message: MsgAssociate, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sender !== "") {
-      writer.uint32(10).string(message.sender);
-    }
-    if (message.custom_message !== "") {
-      writer.uint32(18).string(message.custom_message);
-    }
-    return writer;
-  },
+	encode(message: MsgAssociate, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.sender !== "") {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.custom_message !== "") {
+			writer.uint32(18).string(message.custom_message);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociate {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgAssociate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociate {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgAssociate();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.sender = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.sender = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.custom_message = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.custom_message = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): MsgAssociate {
-    return {
-      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-      custom_message: isSet(object.custom_message) ? globalThis.String(object.custom_message) : "",
-    };
-  },
+	fromJSON(object: any): MsgAssociate {
+		return {
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			custom_message: isSet(object.custom_message) ? globalThis.String(object.custom_message) : ""
+		};
+	},
 
-  toJSON(message: MsgAssociate): unknown {
-    const obj: any = {};
-    if (message.sender !== "") {
-      obj.sender = message.sender;
-    }
-    if (message.custom_message !== "") {
-      obj.custom_message = message.custom_message;
-    }
-    return obj;
-  },
+	toJSON(message: MsgAssociate): unknown {
+		const obj: any = {};
+		if (message.sender !== "") {
+			obj.sender = message.sender;
+		}
+		if (message.custom_message !== "") {
+			obj.custom_message = message.custom_message;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgAssociate>, I>>(base?: I): MsgAssociate {
-    return MsgAssociate.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgAssociate>, I>>(object: I): MsgAssociate {
-    const message = createBaseMsgAssociate();
-    message.sender = object.sender ?? "";
-    message.custom_message = object.custom_message ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgAssociate>, I>>(base?: I): MsgAssociate {
+		return MsgAssociate.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgAssociate>, I>>(object: I): MsgAssociate {
+		const message = createBaseMsgAssociate();
+		message.sender = object.sender ?? "";
+		message.custom_message = object.custom_message ?? "";
+		return message;
+	}
 };
 
 function createBaseMsgAssociateResponse(): MsgAssociateResponse {
-  return {};
+	return {};
 }
 
 export const MsgAssociateResponse: MessageFns<MsgAssociateResponse, "seiprotocol.seichain.evm.MsgAssociateResponse"> = {
-  $type: "seiprotocol.seichain.evm.MsgAssociateResponse" as const,
+	$type: "seiprotocol.seichain.evm.MsgAssociateResponse" as const,
 
-  encode(_: MsgAssociateResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+	encode(_: MsgAssociateResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociateResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgAssociateResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgAssociateResponse {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgAssociateResponse();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(_: any): MsgAssociateResponse {
-    return {};
-  },
+	fromJSON(_: any): MsgAssociateResponse {
+		return {};
+	},
 
-  toJSON(_: MsgAssociateResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+	toJSON(_: MsgAssociateResponse): unknown {
+		const obj: any = {};
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<MsgAssociateResponse>, I>>(base?: I): MsgAssociateResponse {
-    return MsgAssociateResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgAssociateResponse>, I>>(_: I): MsgAssociateResponse {
-    const message = createBaseMsgAssociateResponse();
-    return message;
-  },
+	create<I extends Exact<DeepPartial<MsgAssociateResponse>, I>>(base?: I): MsgAssociateResponse {
+		return MsgAssociateResponse.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgAssociateResponse>, I>>(_: I): MsgAssociateResponse {
+		const message = createBaseMsgAssociateResponse();
+		return message;
+	}
 };
 
 function bytesFromBase64(b64: string): Uint8Array {
-  if ((globalThis as any).Buffer) {
-    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
-  } else {
-    const bin = globalThis.atob(b64);
-    const arr = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; ++i) {
-      arr[i] = bin.charCodeAt(i);
-    }
-    return arr;
-  }
+	if ((globalThis as any).Buffer) {
+		return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+	} else {
+		const bin = globalThis.atob(b64);
+		const arr = new Uint8Array(bin.length);
+		for (let i = 0; i < bin.length; ++i) {
+			arr[i] = bin.charCodeAt(i);
+		}
+		return arr;
+	}
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-  if ((globalThis as any).Buffer) {
-    return globalThis.Buffer.from(arr).toString("base64");
-  } else {
-    const bin: string[] = [];
-    arr.forEach((byte) => {
-      bin.push(globalThis.String.fromCharCode(byte));
-    });
-    return globalThis.btoa(bin.join(""));
-  }
+	if ((globalThis as any).Buffer) {
+		return globalThis.Buffer.from(arr).toString("base64");
+	} else {
+		const bin: string[] = [];
+		arr.forEach((byte) => {
+			bin.push(globalThis.String.fromCharCode(byte));
+		});
+		return globalThis.btoa(bin.join(""));
+	}
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+	? T
+	: T extends globalThis.Array<infer U>
+		? globalThis.Array<DeepPartial<U>>
+		: T extends ReadonlyArray<infer U>
+			? ReadonlyArray<DeepPartial<U>>
+			: T extends {}
+				? { [K in keyof T]?: DeepPartial<T[K]> }
+				: Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
+	const num = globalThis.Number(int64.toString());
+	if (num > globalThis.Number.MAX_SAFE_INTEGER) {
+		throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+	}
+	if (num < globalThis.Number.MIN_SAFE_INTEGER) {
+		throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
+	}
+	return num;
 }
 
 function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
+	return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-  readonly $type: V;
-  encode(message: T, writer?: BinaryWriter): BinaryWriter;
-  decode(input: BinaryReader | Uint8Array, length?: number): T;
-  fromJSON(object: any): T;
-  toJSON(message: T): unknown;
-  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+	readonly $type: V;
+	encode(message: T, writer?: BinaryWriter): BinaryWriter;
+	decode(input: BinaryReader | Uint8Array, length?: number): T;
+	fromJSON(object: any): T;
+	toJSON(message: T): unknown;
+	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

@@ -46,7 +46,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.epoch.Params"> = {
 	fromPartial<I extends Exact<DeepPartial<Params>, I>>(_: I): Params {
 		const message = createBaseParams();
 		return message;
-	},
+	}
 };
 
 function createBaseParams(): Params {
@@ -57,6 +57,6 @@ export const aminoConverters = {
 	"/seiprotocol.seichain.epoch.Params": {
 		aminoType: "epoch/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
-	},
+		fromAmino: (object: Params) => ({ ...object })
+	}
 };

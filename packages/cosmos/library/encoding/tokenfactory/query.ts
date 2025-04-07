@@ -16,7 +16,7 @@ import type {
 	QueryDenomsFromCreatorRequest as QueryDenomsFromCreatorRequest_type,
 	QueryDenomsFromCreatorResponse as QueryDenomsFromCreatorResponse_type,
 	QueryParamsRequest as QueryParamsRequest_type,
-	QueryParamsResponse as QueryParamsResponse_type,
+	QueryParamsResponse as QueryParamsResponse_type
 } from "../../types/tokenfactory";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -70,7 +70,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.sei
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.seichain.tokenfactory.QueryParamsResponse"> = {
@@ -125,7 +125,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.s
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDenomAuthorityMetadataRequest: MessageFns<
@@ -183,7 +183,7 @@ export const QueryDenomAuthorityMetadataRequest: MessageFns<
 		const message = createBaseQueryDenomAuthorityMetadataRequest();
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDenomAuthorityMetadataResponse: MessageFns<
@@ -224,7 +224,7 @@ export const QueryDenomAuthorityMetadataResponse: MessageFns<
 
 	fromJSON(object: any): QueryDenomAuthorityMetadataResponse {
 		return {
-			authority_metadata: isSet(object.authority_metadata) ? DenomAuthorityMetadata.fromJSON(object.authority_metadata) : undefined,
+			authority_metadata: isSet(object.authority_metadata) ? DenomAuthorityMetadata.fromJSON(object.authority_metadata) : undefined
 		};
 	},
 
@@ -244,7 +244,7 @@ export const QueryDenomAuthorityMetadataResponse: MessageFns<
 		message.authority_metadata =
 			object.authority_metadata !== undefined && object.authority_metadata !== null ? DenomAuthorityMetadata.fromPartial(object.authority_metadata) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDenomsFromCreatorRequest: MessageFns<QueryDenomsFromCreatorRequest, "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorRequest"> = {
@@ -299,7 +299,7 @@ export const QueryDenomsFromCreatorRequest: MessageFns<QueryDenomsFromCreatorReq
 		const message = createBaseQueryDenomsFromCreatorRequest();
 		message.creator = object.creator ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDenomsFromCreatorResponse: MessageFns<QueryDenomsFromCreatorResponse, "seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse"> = {
@@ -337,7 +337,7 @@ export const QueryDenomsFromCreatorResponse: MessageFns<QueryDenomsFromCreatorRe
 
 	fromJSON(object: any): QueryDenomsFromCreatorResponse {
 		return {
-			denoms: globalThis.Array.isArray(object?.denoms) ? object.denoms.map((e: any) => globalThis.String(e)) : [],
+			denoms: globalThis.Array.isArray(object?.denoms) ? object.denoms.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -356,7 +356,7 @@ export const QueryDenomsFromCreatorResponse: MessageFns<QueryDenomsFromCreatorRe
 		const message = createBaseQueryDenomsFromCreatorResponse();
 		message.denoms = object.denoms?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const QueryDenomMetadataRequest: MessageFns<QueryDenomMetadataRequest, "seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest"> = {
@@ -411,7 +411,7 @@ export const QueryDenomMetadataRequest: MessageFns<QueryDenomMetadataRequest, "s
 		const message = createBaseQueryDenomMetadataRequest();
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDenomMetadataResponse: MessageFns<QueryDenomMetadataResponse, "seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse"> = {
@@ -466,7 +466,7 @@ export const QueryDenomMetadataResponse: MessageFns<QueryDenomMetadataResponse, 
 		const message = createBaseQueryDenomMetadataResponse();
 		message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDenomAllowListRequest: MessageFns<QueryDenomAllowListRequest, "seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest"> = {
@@ -521,7 +521,7 @@ export const QueryDenomAllowListRequest: MessageFns<QueryDenomAllowListRequest, 
 		const message = createBaseQueryDenomAllowListRequest();
 		message.denom = object.denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDenomAllowListResponse: MessageFns<QueryDenomAllowListResponse, "seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse"> = {
@@ -576,7 +576,7 @@ export const QueryDenomAllowListResponse: MessageFns<QueryDenomAllowListResponse
 		const message = createBaseQueryDenomAllowListResponse();
 		message.allow_list = object.allow_list !== undefined && object.allow_list !== null ? AllowList.fromPartial(object.allow_list) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {

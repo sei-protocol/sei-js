@@ -54,7 +54,7 @@ export const Timestamp: MessageFns<Timestamp, "google.protobuf.Timestamp"> = {
 	fromJSON(object: any): Timestamp {
 		return {
 			seconds: isSet(object.seconds) ? globalThis.Number(object.seconds) : 0,
-			nanos: isSet(object.nanos) ? globalThis.Number(object.nanos) : 0,
+			nanos: isSet(object.nanos) ? globalThis.Number(object.nanos) : 0
 		};
 	},
 
@@ -77,7 +77,7 @@ export const Timestamp: MessageFns<Timestamp, "google.protobuf.Timestamp"> = {
 		message.seconds = object.seconds ?? 0;
 		message.nanos = object.nanos ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseTimestamp(): Timestamp {
@@ -103,6 +103,6 @@ export const aminoConverters = {
 	"/google.protobuf.Timestamp": {
 		aminoType: "google.protobuf.Timestamp",
 		toAmino: (message: Timestamp) => ({ ...message }),
-		fromAmino: (object: Timestamp) => ({ ...object }),
-	},
+		fromAmino: (object: Timestamp) => ({ ...object })
+	}
 };

@@ -57,7 +57,7 @@ export const GenesisOwners: MessageFns<GenesisOwners, "cosmos.capability.v1beta1
 	fromJSON(object: any): GenesisOwners {
 		return {
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
-			index_owners: isSet(object.index_owners) ? CapabilityOwners.fromJSON(object.index_owners) : undefined,
+			index_owners: isSet(object.index_owners) ? CapabilityOwners.fromJSON(object.index_owners) : undefined
 		};
 	},
 
@@ -80,7 +80,7 @@ export const GenesisOwners: MessageFns<GenesisOwners, "cosmos.capability.v1beta1
 		message.index = object.index ?? 0;
 		message.index_owners = object.index_owners !== undefined && object.index_owners !== null ? CapabilityOwners.fromPartial(object.index_owners) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.capability.v1beta1.GenesisState"> = {
@@ -129,7 +129,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.capability.v1beta1.G
 	fromJSON(object: any): GenesisState {
 		return {
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
-			owners: globalThis.Array.isArray(object?.owners) ? object.owners.map((e: any) => GenesisOwners.fromJSON(e)) : [],
+			owners: globalThis.Array.isArray(object?.owners) ? object.owners.map((e: any) => GenesisOwners.fromJSON(e)) : []
 		};
 	},
 
@@ -152,7 +152,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.capability.v1beta1.G
 		message.index = object.index ?? 0;
 		message.owners = object.owners?.map((e) => GenesisOwners.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisOwners(): GenesisOwners {
@@ -179,18 +179,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.capability.v1beta1.GenesisOwners", GenesisOwners as never],
-	["/cosmos.capability.v1beta1.GenesisState", GenesisState as never],
+	["/cosmos.capability.v1beta1.GenesisState", GenesisState as never]
 ];
 export const aminoConverters = {
 	"/cosmos.capability.v1beta1.GenesisOwners": {
 		aminoType: "cosmos-sdk/GenesisOwners",
 		toAmino: (message: GenesisOwners) => ({ ...message }),
-		fromAmino: (object: GenesisOwners) => ({ ...object }),
+		fromAmino: (object: GenesisOwners) => ({ ...object })
 	},
 
 	"/cosmos.capability.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

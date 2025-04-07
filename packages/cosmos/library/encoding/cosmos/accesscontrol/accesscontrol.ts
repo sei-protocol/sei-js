@@ -10,7 +10,7 @@ import {
 	resourceTypeFromJSON,
 	resourceTypeToJSON,
 	wasmMessageSubtypeFromJSON,
-	wasmMessageSubtypeToJSON,
+	wasmMessageSubtypeToJSON
 } from "./constants";
 
 import type {
@@ -20,7 +20,7 @@ import type {
 	WasmAccessOperations as WasmAccessOperations_type,
 	WasmContractReference as WasmContractReference_type,
 	WasmContractReferences as WasmContractReferences_type,
-	WasmDependencyMapping as WasmDependencyMapping_type,
+	WasmDependencyMapping as WasmDependencyMapping_type
 } from "../../../types/cosmos/accesscontrol";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -90,7 +90,7 @@ export const AccessOperation: MessageFns<AccessOperation, "cosmos.accesscontrol.
 		return {
 			access_type: isSet(object.access_type) ? accessTypeFromJSON(object.access_type) : 0,
 			resource_type: isSet(object.resource_type) ? resourceTypeFromJSON(object.resource_type) : 0,
-			identifier_template: isSet(object.identifier_template) ? globalThis.String(object.identifier_template) : "",
+			identifier_template: isSet(object.identifier_template) ? globalThis.String(object.identifier_template) : ""
 		};
 	},
 
@@ -117,7 +117,7 @@ export const AccessOperation: MessageFns<AccessOperation, "cosmos.accesscontrol.
 		message.resource_type = object.resource_type ?? 0;
 		message.identifier_template = object.identifier_template ?? "";
 		return message;
-	},
+	}
 };
 
 export const WasmAccessOperation: MessageFns<WasmAccessOperation, "cosmos.accesscontrol.v1beta1.WasmAccessOperation"> = {
@@ -177,7 +177,7 @@ export const WasmAccessOperation: MessageFns<WasmAccessOperation, "cosmos.access
 		return {
 			operation: isSet(object.operation) ? AccessOperation.fromJSON(object.operation) : undefined,
 			selector_type: isSet(object.selector_type) ? accessOperationSelectorTypeFromJSON(object.selector_type) : 0,
-			selector: isSet(object.selector) ? globalThis.String(object.selector) : "",
+			selector: isSet(object.selector) ? globalThis.String(object.selector) : ""
 		};
 	},
 
@@ -204,7 +204,7 @@ export const WasmAccessOperation: MessageFns<WasmAccessOperation, "cosmos.access
 		message.selector_type = object.selector_type ?? 0;
 		message.selector = object.selector ?? "";
 		return message;
-	},
+	}
 };
 
 export const WasmContractReference: MessageFns<WasmContractReference, "cosmos.accesscontrol.v1beta1.WasmContractReference"> = {
@@ -275,7 +275,7 @@ export const WasmContractReference: MessageFns<WasmContractReference, "cosmos.ac
 			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : "",
 			message_type: isSet(object.message_type) ? wasmMessageSubtypeFromJSON(object.message_type) : 0,
 			message_name: isSet(object.message_name) ? globalThis.String(object.message_name) : "",
-			json_translation_template: isSet(object.json_translation_template) ? globalThis.String(object.json_translation_template) : "",
+			json_translation_template: isSet(object.json_translation_template) ? globalThis.String(object.json_translation_template) : ""
 		};
 	},
 
@@ -306,7 +306,7 @@ export const WasmContractReference: MessageFns<WasmContractReference, "cosmos.ac
 		message.message_name = object.message_name ?? "";
 		message.json_translation_template = object.json_translation_template ?? "";
 		return message;
-	},
+	}
 };
 
 export const WasmContractReferences: MessageFns<WasmContractReferences, "cosmos.accesscontrol.v1beta1.WasmContractReferences"> = {
@@ -357,7 +357,7 @@ export const WasmContractReferences: MessageFns<WasmContractReferences, "cosmos.
 			message_name: isSet(object.message_name) ? globalThis.String(object.message_name) : "",
 			contract_references: globalThis.Array.isArray(object?.contract_references)
 				? object.contract_references.map((e: any) => WasmContractReference.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -380,7 +380,7 @@ export const WasmContractReferences: MessageFns<WasmContractReferences, "cosmos.
 		message.message_name = object.message_name ?? "";
 		message.contract_references = object.contract_references?.map((e) => WasmContractReference.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const WasmAccessOperations: MessageFns<WasmAccessOperations, "cosmos.accesscontrol.v1beta1.WasmAccessOperations"> = {
@@ -429,7 +429,7 @@ export const WasmAccessOperations: MessageFns<WasmAccessOperations, "cosmos.acce
 	fromJSON(object: any): WasmAccessOperations {
 		return {
 			message_name: isSet(object.message_name) ? globalThis.String(object.message_name) : "",
-			wasm_operations: globalThis.Array.isArray(object?.wasm_operations) ? object.wasm_operations.map((e: any) => WasmAccessOperation.fromJSON(e)) : [],
+			wasm_operations: globalThis.Array.isArray(object?.wasm_operations) ? object.wasm_operations.map((e: any) => WasmAccessOperation.fromJSON(e)) : []
 		};
 	},
 
@@ -452,7 +452,7 @@ export const WasmAccessOperations: MessageFns<WasmAccessOperations, "cosmos.acce
 		message.message_name = object.message_name ?? "";
 		message.wasm_operations = object.wasm_operations?.map((e) => WasmAccessOperation.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MessageDependencyMapping: MessageFns<MessageDependencyMapping, "cosmos.accesscontrol.v1beta1.MessageDependencyMapping"> = {
@@ -512,7 +512,7 @@ export const MessageDependencyMapping: MessageFns<MessageDependencyMapping, "cos
 		return {
 			message_key: isSet(object.message_key) ? globalThis.String(object.message_key) : "",
 			access_ops: globalThis.Array.isArray(object?.access_ops) ? object.access_ops.map((e: any) => AccessOperation.fromJSON(e)) : [],
-			dynamic_enabled: isSet(object.dynamic_enabled) ? globalThis.Boolean(object.dynamic_enabled) : false,
+			dynamic_enabled: isSet(object.dynamic_enabled) ? globalThis.Boolean(object.dynamic_enabled) : false
 		};
 	},
 
@@ -539,7 +539,7 @@ export const MessageDependencyMapping: MessageFns<MessageDependencyMapping, "cos
 		message.access_ops = object.access_ops?.map((e) => AccessOperation.fromPartial(e)) || [];
 		message.dynamic_enabled = object.dynamic_enabled ?? false;
 		return message;
-	},
+	}
 };
 
 export const WasmDependencyMapping: MessageFns<WasmDependencyMapping, "cosmos.accesscontrol.v1beta1.WasmDependencyMapping"> = {
@@ -662,7 +662,7 @@ export const WasmDependencyMapping: MessageFns<WasmDependencyMapping, "cosmos.ac
 				? object.execute_contract_references.map((e: any) => WasmContractReferences.fromJSON(e))
 				: [],
 			reset_reason: isSet(object.reset_reason) ? globalThis.String(object.reset_reason) : "",
-			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : "",
+			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : ""
 		};
 	},
 
@@ -709,7 +709,7 @@ export const WasmDependencyMapping: MessageFns<WasmDependencyMapping, "cosmos.ac
 		message.reset_reason = object.reset_reason ?? "";
 		message.contract_address = object.contract_address ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseAccessOperation(): AccessOperation {
@@ -745,7 +745,7 @@ function createBaseWasmDependencyMapping(): WasmDependencyMapping {
 		query_contract_references: [],
 		execute_contract_references: [],
 		reset_reason: "",
-		contract_address: "",
+		contract_address: ""
 	};
 }
 
@@ -754,18 +754,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.accesscontrol.v1beta1.AccessOperation", AccessOperation as never],
-	["/cosmos.accesscontrol.v1beta1.WasmAccessOperation", WasmAccessOperation as never],
+	["/cosmos.accesscontrol.v1beta1.WasmAccessOperation", WasmAccessOperation as never]
 ];
 export const aminoConverters = {
 	"/cosmos.accesscontrol.v1beta1.AccessOperation": {
 		aminoType: "cosmos-sdk/AccessOperation",
 		toAmino: (message: AccessOperation) => ({ ...message }),
-		fromAmino: (object: AccessOperation) => ({ ...object }),
+		fromAmino: (object: AccessOperation) => ({ ...object })
 	},
 
 	"/cosmos.accesscontrol.v1beta1.WasmAccessOperation": {
 		aminoType: "cosmos-sdk/WasmAccessOperation",
 		toAmino: (message: WasmAccessOperation) => ({ ...message }),
-		fromAmino: (object: WasmAccessOperation) => ({ ...object }),
-	},
+		fromAmino: (object: WasmAccessOperation) => ({ ...object })
+	}
 };

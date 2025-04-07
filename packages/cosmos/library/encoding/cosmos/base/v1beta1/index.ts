@@ -1,3 +1,3 @@
 // @ts-nocheck
 
-export * from './coin';
+export * from "./coin";

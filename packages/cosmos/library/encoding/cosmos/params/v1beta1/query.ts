@@ -57,7 +57,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.params.v
 	fromJSON(object: any): QueryParamsRequest {
 		return {
 			subspace: isSet(object.subspace) ? globalThis.String(object.subspace) : "",
-			key: isSet(object.key) ? globalThis.String(object.key) : "",
+			key: isSet(object.key) ? globalThis.String(object.key) : ""
 		};
 	},
 
@@ -80,7 +80,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.params.v
 		message.subspace = object.subspace ?? "";
 		message.key = object.key ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.params.v1beta1.QueryParamsResponse"> = {
@@ -135,7 +135,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.params
 		const message = createBaseQueryParamsResponse();
 		message.param = object.param !== undefined && object.param !== null ? ParamChange.fromPartial(object.param) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -151,18 +151,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.params.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.params.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.params.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.params.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/cosmos.params.v1beta1.QueryParamsResponse": {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	}
 };

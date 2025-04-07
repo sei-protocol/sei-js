@@ -12,7 +12,7 @@ import type {
 	DelayedVestingAccount as DelayedVestingAccount_type,
 	Period as Period_type,
 	PeriodicVestingAccount as PeriodicVestingAccount_type,
-	PermanentLockedAccount as PermanentLockedAccount_type,
+	PermanentLockedAccount as PermanentLockedAccount_type
 } from "../../../../types/cosmos/vesting/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -125,7 +125,7 @@ export const BaseVestingAccount: MessageFns<BaseVestingAccount, "cosmos.vesting.
 			delegated_vesting: globalThis.Array.isArray(object?.delegated_vesting) ? object.delegated_vesting.map((e: any) => Coin.fromJSON(e)) : [],
 			end_time: isSet(object.end_time) ? globalThis.Number(object.end_time) : 0,
 			admin: isSet(object.admin) ? globalThis.String(object.admin) : "",
-			cancelled_time: isSet(object.cancelled_time) ? globalThis.Number(object.cancelled_time) : 0,
+			cancelled_time: isSet(object.cancelled_time) ? globalThis.Number(object.cancelled_time) : 0
 		};
 	},
 
@@ -168,7 +168,7 @@ export const BaseVestingAccount: MessageFns<BaseVestingAccount, "cosmos.vesting.
 		message.admin = object.admin ?? "";
 		message.cancelled_time = object.cancelled_time ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ContinuousVestingAccount: MessageFns<ContinuousVestingAccount, "cosmos.vesting.v1beta1.ContinuousVestingAccount"> = {
@@ -217,7 +217,7 @@ export const ContinuousVestingAccount: MessageFns<ContinuousVestingAccount, "cos
 	fromJSON(object: any): ContinuousVestingAccount {
 		return {
 			base_vesting_account: isSet(object.base_vesting_account) ? BaseVestingAccount.fromJSON(object.base_vesting_account) : undefined,
-			start_time: isSet(object.start_time) ? globalThis.Number(object.start_time) : 0,
+			start_time: isSet(object.start_time) ? globalThis.Number(object.start_time) : 0
 		};
 	},
 
@@ -243,7 +243,7 @@ export const ContinuousVestingAccount: MessageFns<ContinuousVestingAccount, "cos
 				: undefined;
 		message.start_time = object.start_time ?? 0;
 		return message;
-	},
+	}
 };
 
 export const DelayedVestingAccount: MessageFns<DelayedVestingAccount, "cosmos.vesting.v1beta1.DelayedVestingAccount"> = {
@@ -281,7 +281,7 @@ export const DelayedVestingAccount: MessageFns<DelayedVestingAccount, "cosmos.ve
 
 	fromJSON(object: any): DelayedVestingAccount {
 		return {
-			base_vesting_account: isSet(object.base_vesting_account) ? BaseVestingAccount.fromJSON(object.base_vesting_account) : undefined,
+			base_vesting_account: isSet(object.base_vesting_account) ? BaseVestingAccount.fromJSON(object.base_vesting_account) : undefined
 		};
 	},
 
@@ -303,7 +303,7 @@ export const DelayedVestingAccount: MessageFns<DelayedVestingAccount, "cosmos.ve
 				? BaseVestingAccount.fromPartial(object.base_vesting_account)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const Period: MessageFns<Period, "cosmos.vesting.v1beta1.Period"> = {
@@ -352,7 +352,7 @@ export const Period: MessageFns<Period, "cosmos.vesting.v1beta1.Period"> = {
 	fromJSON(object: any): Period {
 		return {
 			length: isSet(object.length) ? globalThis.Number(object.length) : 0,
-			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
+			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -375,7 +375,7 @@ export const Period: MessageFns<Period, "cosmos.vesting.v1beta1.Period"> = {
 		message.length = object.length ?? 0;
 		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const PeriodicVestingAccount: MessageFns<PeriodicVestingAccount, "cosmos.vesting.v1beta1.PeriodicVestingAccount"> = {
@@ -435,7 +435,7 @@ export const PeriodicVestingAccount: MessageFns<PeriodicVestingAccount, "cosmos.
 		return {
 			base_vesting_account: isSet(object.base_vesting_account) ? BaseVestingAccount.fromJSON(object.base_vesting_account) : undefined,
 			start_time: isSet(object.start_time) ? globalThis.Number(object.start_time) : 0,
-			vesting_periods: globalThis.Array.isArray(object?.vesting_periods) ? object.vesting_periods.map((e: any) => Period.fromJSON(e)) : [],
+			vesting_periods: globalThis.Array.isArray(object?.vesting_periods) ? object.vesting_periods.map((e: any) => Period.fromJSON(e)) : []
 		};
 	},
 
@@ -465,7 +465,7 @@ export const PeriodicVestingAccount: MessageFns<PeriodicVestingAccount, "cosmos.
 		message.start_time = object.start_time ?? 0;
 		message.vesting_periods = object.vesting_periods?.map((e) => Period.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const PermanentLockedAccount: MessageFns<PermanentLockedAccount, "cosmos.vesting.v1beta1.PermanentLockedAccount"> = {
@@ -503,7 +503,7 @@ export const PermanentLockedAccount: MessageFns<PermanentLockedAccount, "cosmos.
 
 	fromJSON(object: any): PermanentLockedAccount {
 		return {
-			base_vesting_account: isSet(object.base_vesting_account) ? BaseVestingAccount.fromJSON(object.base_vesting_account) : undefined,
+			base_vesting_account: isSet(object.base_vesting_account) ? BaseVestingAccount.fromJSON(object.base_vesting_account) : undefined
 		};
 	},
 
@@ -525,7 +525,7 @@ export const PermanentLockedAccount: MessageFns<PermanentLockedAccount, "cosmos.
 				? BaseVestingAccount.fromPartial(object.base_vesting_account)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseBaseVestingAccount(): BaseVestingAccount {
@@ -536,7 +536,7 @@ function createBaseBaseVestingAccount(): BaseVestingAccount {
 		delegated_vesting: [],
 		end_time: 0,
 		admin: "",
-		cancelled_time: 0,
+		cancelled_time: 0
 	};
 }
 
@@ -577,24 +577,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.vesting.v1beta1.BaseVestingAccount", BaseVestingAccount as never],
 	["/cosmos.vesting.v1beta1.DelayedVestingAccount", DelayedVestingAccount as never],
-	["/cosmos.vesting.v1beta1.Period", Period as never],
+	["/cosmos.vesting.v1beta1.Period", Period as never]
 ];
 export const aminoConverters = {
 	"/cosmos.vesting.v1beta1.BaseVestingAccount": {
 		aminoType: "cosmos-sdk/BaseVestingAccount",
 		toAmino: (message: BaseVestingAccount) => ({ ...message }),
-		fromAmino: (object: BaseVestingAccount) => ({ ...object }),
+		fromAmino: (object: BaseVestingAccount) => ({ ...object })
 	},
 
 	"/cosmos.vesting.v1beta1.DelayedVestingAccount": {
 		aminoType: "cosmos-sdk/DelayedVestingAccount",
 		toAmino: (message: DelayedVestingAccount) => ({ ...message }),
-		fromAmino: (object: DelayedVestingAccount) => ({ ...object }),
+		fromAmino: (object: DelayedVestingAccount) => ({ ...object })
 	},
 
 	"/cosmos.vesting.v1beta1.Period": {
 		aminoType: "cosmos-sdk/Period",
 		toAmino: (message: Period) => ({ ...message }),
-		fromAmino: (object: Period) => ({ ...object }),
-	},
+		fromAmino: (object: Period) => ({ ...object })
+	}
 };

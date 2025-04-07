@@ -6,7 +6,7 @@ import { Coin } from "../../base/v1beta1/coin";
 
 import type {
 	StakeAuthorizationValidators as StakeAuthorizationValidators_type,
-	StakeAuthorization as StakeAuthorization_type,
+	StakeAuthorization as StakeAuthorization_type
 } from "../../../../types/cosmos/staking/v1beta1";
 
 import { AuthorizationType } from "../../../../types/cosmos/staking/v1beta1";
@@ -84,7 +84,7 @@ export const StakeAuthorization: MessageFns<StakeAuthorization, "cosmos.staking.
 			max_tokens: isSet(object.max_tokens) ? Coin.fromJSON(object.max_tokens) : undefined,
 			allow_list: isSet(object.allow_list) ? StakeAuthorizationValidators.fromJSON(object.allow_list) : undefined,
 			deny_list: isSet(object.deny_list) ? StakeAuthorizationValidators.fromJSON(object.deny_list) : undefined,
-			authorization_type: isSet(object.authorization_type) ? authorizationTypeFromJSON(object.authorization_type) : 0,
+			authorization_type: isSet(object.authorization_type) ? authorizationTypeFromJSON(object.authorization_type) : 0
 		};
 	},
 
@@ -116,7 +116,7 @@ export const StakeAuthorization: MessageFns<StakeAuthorization, "cosmos.staking.
 		message.deny_list = object.deny_list !== undefined && object.deny_list !== null ? StakeAuthorizationValidators.fromPartial(object.deny_list) : undefined;
 		message.authorization_type = object.authorization_type ?? 0;
 		return message;
-	},
+	}
 };
 
 export const StakeAuthorizationValidators: MessageFns<StakeAuthorizationValidators, "cosmos.staking.v1beta1.StakeAuthorization.Validators"> = {
@@ -154,7 +154,7 @@ export const StakeAuthorizationValidators: MessageFns<StakeAuthorizationValidato
 
 	fromJSON(object: any): StakeAuthorizationValidators {
 		return {
-			address: globalThis.Array.isArray(object?.address) ? object.address.map((e: any) => globalThis.String(e)) : [],
+			address: globalThis.Array.isArray(object?.address) ? object.address.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -173,7 +173,7 @@ export const StakeAuthorizationValidators: MessageFns<StakeAuthorizationValidato
 		const message = createBaseStakeAuthorizationValidators();
 		message.address = object.address?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export function authorizationTypeFromJSON(object: any): AuthorizationType {
@@ -229,6 +229,6 @@ export const aminoConverters = {
 	"/cosmos.staking.v1beta1.StakeAuthorization": {
 		aminoType: "cosmos-sdk/StakeAuthorization",
 		toAmino: (message: StakeAuthorization) => ({ ...message }),
-		fromAmino: (object: StakeAuthorization) => ({ ...object }),
-	},
+		fromAmino: (object: StakeAuthorization) => ({ ...object })
+	}
 };

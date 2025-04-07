@@ -45,7 +45,7 @@ export const SendAuthorization: MessageFns<SendAuthorization, "cosmos.bank.v1bet
 
 	fromJSON(object: any): SendAuthorization {
 		return {
-			spend_limit: globalThis.Array.isArray(object?.spend_limit) ? object.spend_limit.map((e: any) => Coin.fromJSON(e)) : [],
+			spend_limit: globalThis.Array.isArray(object?.spend_limit) ? object.spend_limit.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -64,7 +64,7 @@ export const SendAuthorization: MessageFns<SendAuthorization, "cosmos.bank.v1bet
 		const message = createBaseSendAuthorization();
 		message.spend_limit = object.spend_limit?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseSendAuthorization(): SendAuthorization {
@@ -75,6 +75,6 @@ export const aminoConverters = {
 	"/cosmos.bank.v1beta1.SendAuthorization": {
 		aminoType: "cosmos-sdk/SendAuthorization",
 		toAmino: (message: SendAuthorization) => ({ ...message }),
-		fromAmino: (object: SendAuthorization) => ({ ...object }),
-	},
+		fromAmino: (object: SendAuthorization) => ({ ...object })
+	}
 };

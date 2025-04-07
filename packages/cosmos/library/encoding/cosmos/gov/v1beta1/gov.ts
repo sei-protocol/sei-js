@@ -19,7 +19,7 @@ import type {
 	TextProposal as TextProposal_type,
 	Vote as Vote_type,
 	VotingParams as VotingParams_type,
-	WeightedVoteOption as WeightedVoteOption_type,
+	WeightedVoteOption as WeightedVoteOption_type
 } from "../../../../types/cosmos/gov/v1beta1";
 
 import { ProposalStatus, VoteOption } from "../../../../types/cosmos/gov/v1beta1";
@@ -82,7 +82,7 @@ export const WeightedVoteOption: MessageFns<WeightedVoteOption, "cosmos.gov.v1be
 	fromJSON(object: any): WeightedVoteOption {
 		return {
 			option: isSet(object.option) ? voteOptionFromJSON(object.option) : 0,
-			weight: isSet(object.weight) ? globalThis.String(object.weight) : "",
+			weight: isSet(object.weight) ? globalThis.String(object.weight) : ""
 		};
 	},
 
@@ -105,7 +105,7 @@ export const WeightedVoteOption: MessageFns<WeightedVoteOption, "cosmos.gov.v1be
 		message.option = object.option ?? 0;
 		message.weight = object.weight ?? "";
 		return message;
-	},
+	}
 };
 
 export const TextProposal: MessageFns<TextProposal, "cosmos.gov.v1beta1.TextProposal"> = {
@@ -165,7 +165,7 @@ export const TextProposal: MessageFns<TextProposal, "cosmos.gov.v1beta1.TextProp
 		return {
 			title: isSet(object.title) ? globalThis.String(object.title) : "",
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
-			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false,
+			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false
 		};
 	},
 
@@ -192,7 +192,7 @@ export const TextProposal: MessageFns<TextProposal, "cosmos.gov.v1beta1.TextProp
 		message.description = object.description ?? "";
 		message.is_expedited = object.is_expedited ?? false;
 		return message;
-	},
+	}
 };
 
 export const Deposit: MessageFns<Deposit, "cosmos.gov.v1beta1.Deposit"> = {
@@ -252,7 +252,7 @@ export const Deposit: MessageFns<Deposit, "cosmos.gov.v1beta1.Deposit"> = {
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
 			depositor: isSet(object.depositor) ? globalThis.String(object.depositor) : "",
-			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
+			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -279,7 +279,7 @@ export const Deposit: MessageFns<Deposit, "cosmos.gov.v1beta1.Deposit"> = {
 		message.depositor = object.depositor ?? "";
 		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Proposal: MessageFns<Proposal, "cosmos.gov.v1beta1.Proposal"> = {
@@ -416,7 +416,7 @@ export const Proposal: MessageFns<Proposal, "cosmos.gov.v1beta1.Proposal"> = {
 			total_deposit: globalThis.Array.isArray(object?.total_deposit) ? object.total_deposit.map((e: any) => Coin.fromJSON(e)) : [],
 			voting_start_time: isSet(object.voting_start_time) ? fromJsonTimestamp(object.voting_start_time) : undefined,
 			voting_end_time: isSet(object.voting_end_time) ? fromJsonTimestamp(object.voting_end_time) : undefined,
-			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false,
+			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false
 		};
 	},
 
@@ -472,7 +472,7 @@ export const Proposal: MessageFns<Proposal, "cosmos.gov.v1beta1.Proposal"> = {
 		message.voting_end_time = object.voting_end_time ?? undefined;
 		message.is_expedited = object.is_expedited ?? false;
 		return message;
-	},
+	}
 };
 
 export const TallyResult: MessageFns<TallyResult, "cosmos.gov.v1beta1.TallyResult"> = {
@@ -543,7 +543,7 @@ export const TallyResult: MessageFns<TallyResult, "cosmos.gov.v1beta1.TallyResul
 			yes: isSet(object.yes) ? globalThis.String(object.yes) : "",
 			abstain: isSet(object.abstain) ? globalThis.String(object.abstain) : "",
 			no: isSet(object.no) ? globalThis.String(object.no) : "",
-			no_with_veto: isSet(object.no_with_veto) ? globalThis.String(object.no_with_veto) : "",
+			no_with_veto: isSet(object.no_with_veto) ? globalThis.String(object.no_with_veto) : ""
 		};
 	},
 
@@ -574,7 +574,7 @@ export const TallyResult: MessageFns<TallyResult, "cosmos.gov.v1beta1.TallyResul
 		message.no = object.no ?? "";
 		message.no_with_veto = object.no_with_veto ?? "";
 		return message;
-	},
+	}
 };
 
 export const Vote: MessageFns<Vote, "cosmos.gov.v1beta1.Vote"> = {
@@ -645,7 +645,7 @@ export const Vote: MessageFns<Vote, "cosmos.gov.v1beta1.Vote"> = {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
 			voter: isSet(object.voter) ? globalThis.String(object.voter) : "",
 			option: isSet(object.option) ? voteOptionFromJSON(object.option) : 0,
-			options: globalThis.Array.isArray(object?.options) ? object.options.map((e: any) => WeightedVoteOption.fromJSON(e)) : [],
+			options: globalThis.Array.isArray(object?.options) ? object.options.map((e: any) => WeightedVoteOption.fromJSON(e)) : []
 		};
 	},
 
@@ -676,7 +676,7 @@ export const Vote: MessageFns<Vote, "cosmos.gov.v1beta1.Vote"> = {
 		message.option = object.option ?? 0;
 		message.options = object.options?.map((e) => WeightedVoteOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const DepositParams: MessageFns<DepositParams, "cosmos.gov.v1beta1.DepositParams"> = {
@@ -736,7 +736,7 @@ export const DepositParams: MessageFns<DepositParams, "cosmos.gov.v1beta1.Deposi
 		return {
 			min_deposit: globalThis.Array.isArray(object?.min_deposit) ? object.min_deposit.map((e: any) => Coin.fromJSON(e)) : [],
 			max_deposit_period: isSet(object.max_deposit_period) ? Duration.fromJSON(object.max_deposit_period) : undefined,
-			min_expedited_deposit: globalThis.Array.isArray(object?.min_expedited_deposit) ? object.min_expedited_deposit.map((e: any) => Coin.fromJSON(e)) : [],
+			min_expedited_deposit: globalThis.Array.isArray(object?.min_expedited_deposit) ? object.min_expedited_deposit.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -764,7 +764,7 @@ export const DepositParams: MessageFns<DepositParams, "cosmos.gov.v1beta1.Deposi
 			object.max_deposit_period !== undefined && object.max_deposit_period !== null ? Duration.fromPartial(object.max_deposit_period) : undefined;
 		message.min_expedited_deposit = object.min_expedited_deposit?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const VotingParams: MessageFns<VotingParams, "cosmos.gov.v1beta1.VotingParams"> = {
@@ -813,7 +813,7 @@ export const VotingParams: MessageFns<VotingParams, "cosmos.gov.v1beta1.VotingPa
 	fromJSON(object: any): VotingParams {
 		return {
 			voting_period: isSet(object.voting_period) ? Duration.fromJSON(object.voting_period) : undefined,
-			expedited_voting_period: isSet(object.expedited_voting_period) ? Duration.fromJSON(object.expedited_voting_period) : undefined,
+			expedited_voting_period: isSet(object.expedited_voting_period) ? Duration.fromJSON(object.expedited_voting_period) : undefined
 		};
 	},
 
@@ -839,7 +839,7 @@ export const VotingParams: MessageFns<VotingParams, "cosmos.gov.v1beta1.VotingPa
 				? Duration.fromPartial(object.expedited_voting_period)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const TallyParams: MessageFns<TallyParams, "cosmos.gov.v1beta1.TallyParams"> = {
@@ -921,7 +921,7 @@ export const TallyParams: MessageFns<TallyParams, "cosmos.gov.v1beta1.TallyParam
 			threshold: isSet(object.threshold) ? bytesFromBase64(object.threshold) : new Uint8Array(0),
 			veto_threshold: isSet(object.veto_threshold) ? bytesFromBase64(object.veto_threshold) : new Uint8Array(0),
 			expedited_quorum: isSet(object.expedited_quorum) ? bytesFromBase64(object.expedited_quorum) : new Uint8Array(0),
-			expedited_threshold: isSet(object.expedited_threshold) ? bytesFromBase64(object.expedited_threshold) : new Uint8Array(0),
+			expedited_threshold: isSet(object.expedited_threshold) ? bytesFromBase64(object.expedited_threshold) : new Uint8Array(0)
 		};
 	},
 
@@ -956,7 +956,7 @@ export const TallyParams: MessageFns<TallyParams, "cosmos.gov.v1beta1.TallyParam
 		message.expedited_quorum = object.expedited_quorum ?? new Uint8Array(0);
 		message.expedited_threshold = object.expedited_threshold ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export function voteOptionFromJSON(object: any): VoteOption {
@@ -1071,7 +1071,7 @@ function createBaseProposal(): Proposal {
 		total_deposit: [],
 		voting_start_time: undefined,
 		voting_end_time: undefined,
-		is_expedited: false,
+		is_expedited: false
 	};
 }
 
@@ -1097,7 +1097,7 @@ function createBaseTallyParams(): TallyParams {
 		threshold: new Uint8Array(0),
 		veto_threshold: new Uint8Array(0),
 		expedited_quorum: new Uint8Array(0),
-		expedited_threshold: new Uint8Array(0),
+		expedited_threshold: new Uint8Array(0)
 	};
 }
 
@@ -1171,60 +1171,60 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.gov.v1beta1.Vote", Vote as never],
 	["/cosmos.gov.v1beta1.DepositParams", DepositParams as never],
 	["/cosmos.gov.v1beta1.VotingParams", VotingParams as never],
-	["/cosmos.gov.v1beta1.TallyParams", TallyParams as never],
+	["/cosmos.gov.v1beta1.TallyParams", TallyParams as never]
 ];
 export const aminoConverters = {
 	"/cosmos.gov.v1beta1.WeightedVoteOption": {
 		aminoType: "cosmos-sdk/WeightedVoteOption",
 		toAmino: (message: WeightedVoteOption) => ({ ...message }),
-		fromAmino: (object: WeightedVoteOption) => ({ ...object }),
+		fromAmino: (object: WeightedVoteOption) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.TextProposal": {
 		aminoType: "cosmos-sdk/TextProposal",
 		toAmino: (message: TextProposal) => ({ ...message }),
-		fromAmino: (object: TextProposal) => ({ ...object }),
+		fromAmino: (object: TextProposal) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.Deposit": {
 		aminoType: "cosmos-sdk/Deposit",
 		toAmino: (message: Deposit) => ({ ...message }),
-		fromAmino: (object: Deposit) => ({ ...object }),
+		fromAmino: (object: Deposit) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.Proposal": {
 		aminoType: "cosmos-sdk/Proposal",
 		toAmino: (message: Proposal) => ({ ...message }),
-		fromAmino: (object: Proposal) => ({ ...object }),
+		fromAmino: (object: Proposal) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.TallyResult": {
 		aminoType: "cosmos-sdk/TallyResult",
 		toAmino: (message: TallyResult) => ({ ...message }),
-		fromAmino: (object: TallyResult) => ({ ...object }),
+		fromAmino: (object: TallyResult) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.Vote": {
 		aminoType: "cosmos-sdk/Vote",
 		toAmino: (message: Vote) => ({ ...message }),
-		fromAmino: (object: Vote) => ({ ...object }),
+		fromAmino: (object: Vote) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.DepositParams": {
 		aminoType: "cosmos-sdk/DepositParams",
 		toAmino: (message: DepositParams) => ({ ...message }),
-		fromAmino: (object: DepositParams) => ({ ...object }),
+		fromAmino: (object: DepositParams) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.VotingParams": {
 		aminoType: "cosmos-sdk/VotingParams",
 		toAmino: (message: VotingParams) => ({ ...message }),
-		fromAmino: (object: VotingParams) => ({ ...object }),
+		fromAmino: (object: VotingParams) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.TallyParams": {
 		aminoType: "cosmos-sdk/TallyParams",
 		toAmino: (message: TallyParams) => ({ ...message }),
-		fromAmino: (object: TallyParams) => ({ ...object }),
-	},
+		fromAmino: (object: TallyParams) => ({ ...object })
+	}
 };

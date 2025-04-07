@@ -22,7 +22,7 @@ import type {
 	QueryVoteRequest as QueryVoteRequest_type,
 	QueryVoteResponse as QueryVoteResponse_type,
 	QueryVotesRequest as QueryVotesRequest_type,
-	QueryVotesResponse as QueryVotesResponse_type,
+	QueryVotesResponse as QueryVotesResponse_type
 } from "../../../../types/cosmos/gov/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -96,7 +96,7 @@ export const QueryProposalRequest: MessageFns<QueryProposalRequest, "cosmos.gov.
 		const message = createBaseQueryProposalRequest();
 		message.proposal_id = object.proposal_id ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryProposalResponse: MessageFns<QueryProposalResponse, "cosmos.gov.v1beta1.QueryProposalResponse"> = {
@@ -151,7 +151,7 @@ export const QueryProposalResponse: MessageFns<QueryProposalResponse, "cosmos.go
 		const message = createBaseQueryProposalResponse();
 		message.proposal = object.proposal !== undefined && object.proposal !== null ? Proposal.fromPartial(object.proposal) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryProposalsRequest: MessageFns<QueryProposalsRequest, "cosmos.gov.v1beta1.QueryProposalsRequest"> = {
@@ -222,7 +222,7 @@ export const QueryProposalsRequest: MessageFns<QueryProposalsRequest, "cosmos.go
 			proposal_status: isSet(object.proposal_status) ? proposalStatusFromJSON(object.proposal_status) : 0,
 			voter: isSet(object.voter) ? globalThis.String(object.voter) : "",
 			depositor: isSet(object.depositor) ? globalThis.String(object.depositor) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -253,7 +253,7 @@ export const QueryProposalsRequest: MessageFns<QueryProposalsRequest, "cosmos.go
 		message.depositor = object.depositor ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryProposalsResponse: MessageFns<QueryProposalsResponse, "cosmos.gov.v1beta1.QueryProposalsResponse"> = {
@@ -302,7 +302,7 @@ export const QueryProposalsResponse: MessageFns<QueryProposalsResponse, "cosmos.
 	fromJSON(object: any): QueryProposalsResponse {
 		return {
 			proposals: globalThis.Array.isArray(object?.proposals) ? object.proposals.map((e: any) => Proposal.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -325,7 +325,7 @@ export const QueryProposalsResponse: MessageFns<QueryProposalsResponse, "cosmos.
 		message.proposals = object.proposals?.map((e) => Proposal.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryVoteRequest: MessageFns<QueryVoteRequest, "cosmos.gov.v1beta1.QueryVoteRequest"> = {
@@ -374,7 +374,7 @@ export const QueryVoteRequest: MessageFns<QueryVoteRequest, "cosmos.gov.v1beta1.
 	fromJSON(object: any): QueryVoteRequest {
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
-			voter: isSet(object.voter) ? globalThis.String(object.voter) : "",
+			voter: isSet(object.voter) ? globalThis.String(object.voter) : ""
 		};
 	},
 
@@ -397,7 +397,7 @@ export const QueryVoteRequest: MessageFns<QueryVoteRequest, "cosmos.gov.v1beta1.
 		message.proposal_id = object.proposal_id ?? 0;
 		message.voter = object.voter ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryVoteResponse: MessageFns<QueryVoteResponse, "cosmos.gov.v1beta1.QueryVoteResponse"> = {
@@ -452,7 +452,7 @@ export const QueryVoteResponse: MessageFns<QueryVoteResponse, "cosmos.gov.v1beta
 		const message = createBaseQueryVoteResponse();
 		message.vote = object.vote !== undefined && object.vote !== null ? Vote.fromPartial(object.vote) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryVotesRequest: MessageFns<QueryVotesRequest, "cosmos.gov.v1beta1.QueryVotesRequest"> = {
@@ -501,7 +501,7 @@ export const QueryVotesRequest: MessageFns<QueryVotesRequest, "cosmos.gov.v1beta
 	fromJSON(object: any): QueryVotesRequest {
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -524,7 +524,7 @@ export const QueryVotesRequest: MessageFns<QueryVotesRequest, "cosmos.gov.v1beta
 		message.proposal_id = object.proposal_id ?? 0;
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryVotesResponse: MessageFns<QueryVotesResponse, "cosmos.gov.v1beta1.QueryVotesResponse"> = {
@@ -573,7 +573,7 @@ export const QueryVotesResponse: MessageFns<QueryVotesResponse, "cosmos.gov.v1be
 	fromJSON(object: any): QueryVotesResponse {
 		return {
 			votes: globalThis.Array.isArray(object?.votes) ? object.votes.map((e: any) => Vote.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -596,7 +596,7 @@ export const QueryVotesResponse: MessageFns<QueryVotesResponse, "cosmos.gov.v1be
 		message.votes = object.votes?.map((e) => Vote.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.gov.v1beta1.QueryParamsRequest"> = {
@@ -651,7 +651,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.gov.v1be
 		const message = createBaseQueryParamsRequest();
 		message.params_type = object.params_type ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.gov.v1beta1.QueryParamsResponse"> = {
@@ -711,7 +711,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.gov.v1
 		return {
 			voting_params: isSet(object.voting_params) ? VotingParams.fromJSON(object.voting_params) : undefined,
 			deposit_params: isSet(object.deposit_params) ? DepositParams.fromJSON(object.deposit_params) : undefined,
-			tally_params: isSet(object.tally_params) ? TallyParams.fromJSON(object.tally_params) : undefined,
+			tally_params: isSet(object.tally_params) ? TallyParams.fromJSON(object.tally_params) : undefined
 		};
 	},
 
@@ -739,7 +739,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.gov.v1
 			object.deposit_params !== undefined && object.deposit_params !== null ? DepositParams.fromPartial(object.deposit_params) : undefined;
 		message.tally_params = object.tally_params !== undefined && object.tally_params !== null ? TallyParams.fromPartial(object.tally_params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDepositRequest: MessageFns<QueryDepositRequest, "cosmos.gov.v1beta1.QueryDepositRequest"> = {
@@ -788,7 +788,7 @@ export const QueryDepositRequest: MessageFns<QueryDepositRequest, "cosmos.gov.v1
 	fromJSON(object: any): QueryDepositRequest {
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
-			depositor: isSet(object.depositor) ? globalThis.String(object.depositor) : "",
+			depositor: isSet(object.depositor) ? globalThis.String(object.depositor) : ""
 		};
 	},
 
@@ -811,7 +811,7 @@ export const QueryDepositRequest: MessageFns<QueryDepositRequest, "cosmos.gov.v1
 		message.proposal_id = object.proposal_id ?? 0;
 		message.depositor = object.depositor ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDepositResponse: MessageFns<QueryDepositResponse, "cosmos.gov.v1beta1.QueryDepositResponse"> = {
@@ -866,7 +866,7 @@ export const QueryDepositResponse: MessageFns<QueryDepositResponse, "cosmos.gov.
 		const message = createBaseQueryDepositResponse();
 		message.deposit = object.deposit !== undefined && object.deposit !== null ? Deposit.fromPartial(object.deposit) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDepositsRequest: MessageFns<QueryDepositsRequest, "cosmos.gov.v1beta1.QueryDepositsRequest"> = {
@@ -915,7 +915,7 @@ export const QueryDepositsRequest: MessageFns<QueryDepositsRequest, "cosmos.gov.
 	fromJSON(object: any): QueryDepositsRequest {
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -938,7 +938,7 @@ export const QueryDepositsRequest: MessageFns<QueryDepositsRequest, "cosmos.gov.
 		message.proposal_id = object.proposal_id ?? 0;
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDepositsResponse: MessageFns<QueryDepositsResponse, "cosmos.gov.v1beta1.QueryDepositsResponse"> = {
@@ -987,7 +987,7 @@ export const QueryDepositsResponse: MessageFns<QueryDepositsResponse, "cosmos.go
 	fromJSON(object: any): QueryDepositsResponse {
 		return {
 			deposits: globalThis.Array.isArray(object?.deposits) ? object.deposits.map((e: any) => Deposit.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1010,7 +1010,7 @@ export const QueryDepositsResponse: MessageFns<QueryDepositsResponse, "cosmos.go
 		message.deposits = object.deposits?.map((e) => Deposit.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryTallyResultRequest: MessageFns<QueryTallyResultRequest, "cosmos.gov.v1beta1.QueryTallyResultRequest"> = {
@@ -1065,7 +1065,7 @@ export const QueryTallyResultRequest: MessageFns<QueryTallyResultRequest, "cosmo
 		const message = createBaseQueryTallyResultRequest();
 		message.proposal_id = object.proposal_id ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryTallyResultResponse: MessageFns<QueryTallyResultResponse, "cosmos.gov.v1beta1.QueryTallyResultResponse"> = {
@@ -1120,7 +1120,7 @@ export const QueryTallyResultResponse: MessageFns<QueryTallyResultResponse, "cos
 		const message = createBaseQueryTallyResultResponse();
 		message.tally = object.tally !== undefined && object.tally !== null ? TallyResult.fromPartial(object.tally) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryProposalRequest(): QueryProposalRequest {
@@ -1215,90 +1215,90 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.gov.v1beta1.QueryDepositRequest", QueryDepositRequest as never],
 	["/cosmos.gov.v1beta1.QueryDepositResponse", QueryDepositResponse as never],
 	["/cosmos.gov.v1beta1.QueryDepositsRequest", QueryDepositsRequest as never],
-	["/cosmos.gov.v1beta1.QueryDepositsResponse", QueryDepositsResponse as never],
+	["/cosmos.gov.v1beta1.QueryDepositsResponse", QueryDepositsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.gov.v1beta1.QueryProposalRequest": {
 		aminoType: "cosmos-sdk/QueryProposalRequest",
 		toAmino: (message: QueryProposalRequest) => ({ ...message }),
-		fromAmino: (object: QueryProposalRequest) => ({ ...object }),
+		fromAmino: (object: QueryProposalRequest) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryProposalResponse": {
 		aminoType: "cosmos-sdk/QueryProposalResponse",
 		toAmino: (message: QueryProposalResponse) => ({ ...message }),
-		fromAmino: (object: QueryProposalResponse) => ({ ...object }),
+		fromAmino: (object: QueryProposalResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryProposalsRequest": {
 		aminoType: "cosmos-sdk/QueryProposalsRequest",
 		toAmino: (message: QueryProposalsRequest) => ({ ...message }),
-		fromAmino: (object: QueryProposalsRequest) => ({ ...object }),
+		fromAmino: (object: QueryProposalsRequest) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryProposalsResponse": {
 		aminoType: "cosmos-sdk/QueryProposalsResponse",
 		toAmino: (message: QueryProposalsResponse) => ({ ...message }),
-		fromAmino: (object: QueryProposalsResponse) => ({ ...object }),
+		fromAmino: (object: QueryProposalsResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryVoteRequest": {
 		aminoType: "cosmos-sdk/QueryVoteRequest",
 		toAmino: (message: QueryVoteRequest) => ({ ...message }),
-		fromAmino: (object: QueryVoteRequest) => ({ ...object }),
+		fromAmino: (object: QueryVoteRequest) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryVoteResponse": {
 		aminoType: "cosmos-sdk/QueryVoteResponse",
 		toAmino: (message: QueryVoteResponse) => ({ ...message }),
-		fromAmino: (object: QueryVoteResponse) => ({ ...object }),
+		fromAmino: (object: QueryVoteResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryVotesRequest": {
 		aminoType: "cosmos-sdk/QueryVotesRequest",
 		toAmino: (message: QueryVotesRequest) => ({ ...message }),
-		fromAmino: (object: QueryVotesRequest) => ({ ...object }),
+		fromAmino: (object: QueryVotesRequest) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryVotesResponse": {
 		aminoType: "cosmos-sdk/QueryVotesResponse",
 		toAmino: (message: QueryVotesResponse) => ({ ...message }),
-		fromAmino: (object: QueryVotesResponse) => ({ ...object }),
+		fromAmino: (object: QueryVotesResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryParamsResponse": {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryDepositRequest": {
 		aminoType: "cosmos-sdk/QueryDepositRequest",
 		toAmino: (message: QueryDepositRequest) => ({ ...message }),
-		fromAmino: (object: QueryDepositRequest) => ({ ...object }),
+		fromAmino: (object: QueryDepositRequest) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryDepositResponse": {
 		aminoType: "cosmos-sdk/QueryDepositResponse",
 		toAmino: (message: QueryDepositResponse) => ({ ...message }),
-		fromAmino: (object: QueryDepositResponse) => ({ ...object }),
+		fromAmino: (object: QueryDepositResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryDepositsRequest": {
 		aminoType: "cosmos-sdk/QueryDepositsRequest",
 		toAmino: (message: QueryDepositsRequest) => ({ ...message }),
-		fromAmino: (object: QueryDepositsRequest) => ({ ...object }),
+		fromAmino: (object: QueryDepositsRequest) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.QueryDepositsResponse": {
 		aminoType: "cosmos-sdk/QueryDepositsResponse",
 		toAmino: (message: QueryDepositsResponse) => ({ ...message }),
-		fromAmino: (object: QueryDepositsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryDepositsResponse) => ({ ...object })
+	}
 };

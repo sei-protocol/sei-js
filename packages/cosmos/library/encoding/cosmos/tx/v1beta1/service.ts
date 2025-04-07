@@ -22,7 +22,7 @@ import type {
 	GetTxsEventRequest as GetTxsEventRequest_type,
 	GetTxsEventResponse as GetTxsEventResponse_type,
 	SimulateRequest as SimulateRequest_type,
-	SimulateResponse as SimulateResponse_type,
+	SimulateResponse as SimulateResponse_type
 } from "../../../../types/cosmos/tx/v1beta1";
 
 import { BroadcastMode, OrderBy } from "../../../../types/cosmos/tx/v1beta1";
@@ -97,7 +97,7 @@ export const GetTxsEventRequest: MessageFns<GetTxsEventRequest, "cosmos.tx.v1bet
 		return {
 			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => globalThis.String(e)) : [],
 			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
-			order_by: isSet(object.order_by) ? orderByFromJSON(object.order_by) : 0,
+			order_by: isSet(object.order_by) ? orderByFromJSON(object.order_by) : 0
 		};
 	},
 
@@ -124,7 +124,7 @@ export const GetTxsEventRequest: MessageFns<GetTxsEventRequest, "cosmos.tx.v1bet
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		message.order_by = object.order_by ?? 0;
 		return message;
-	},
+	}
 };
 
 export const GetTxsEventResponse: MessageFns<GetTxsEventResponse, "cosmos.tx.v1beta1.GetTxsEventResponse"> = {
@@ -184,7 +184,7 @@ export const GetTxsEventResponse: MessageFns<GetTxsEventResponse, "cosmos.tx.v1b
 		return {
 			txs: globalThis.Array.isArray(object?.txs) ? object.txs.map((e: any) => Tx.fromJSON(e)) : [],
 			tx_responses: globalThis.Array.isArray(object?.tx_responses) ? object.tx_responses.map((e: any) => TxResponse.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -211,7 +211,7 @@ export const GetTxsEventResponse: MessageFns<GetTxsEventResponse, "cosmos.tx.v1b
 		message.tx_responses = object.tx_responses?.map((e) => TxResponse.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const BroadcastTxRequest: MessageFns<BroadcastTxRequest, "cosmos.tx.v1beta1.BroadcastTxRequest"> = {
@@ -260,7 +260,7 @@ export const BroadcastTxRequest: MessageFns<BroadcastTxRequest, "cosmos.tx.v1bet
 	fromJSON(object: any): BroadcastTxRequest {
 		return {
 			tx_bytes: isSet(object.tx_bytes) ? bytesFromBase64(object.tx_bytes) : new Uint8Array(0),
-			mode: isSet(object.mode) ? broadcastModeFromJSON(object.mode) : 0,
+			mode: isSet(object.mode) ? broadcastModeFromJSON(object.mode) : 0
 		};
 	},
 
@@ -283,7 +283,7 @@ export const BroadcastTxRequest: MessageFns<BroadcastTxRequest, "cosmos.tx.v1bet
 		message.tx_bytes = object.tx_bytes ?? new Uint8Array(0);
 		message.mode = object.mode ?? 0;
 		return message;
-	},
+	}
 };
 
 export const BroadcastTxResponse: MessageFns<BroadcastTxResponse, "cosmos.tx.v1beta1.BroadcastTxResponse"> = {
@@ -338,7 +338,7 @@ export const BroadcastTxResponse: MessageFns<BroadcastTxResponse, "cosmos.tx.v1b
 		const message = createBaseBroadcastTxResponse();
 		message.tx_response = object.tx_response !== undefined && object.tx_response !== null ? TxResponse.fromPartial(object.tx_response) : undefined;
 		return message;
-	},
+	}
 };
 
 export const SimulateRequest: MessageFns<SimulateRequest, "cosmos.tx.v1beta1.SimulateRequest"> = {
@@ -387,7 +387,7 @@ export const SimulateRequest: MessageFns<SimulateRequest, "cosmos.tx.v1beta1.Sim
 	fromJSON(object: any): SimulateRequest {
 		return {
 			tx: isSet(object.tx) ? Tx.fromJSON(object.tx) : undefined,
-			tx_bytes: isSet(object.tx_bytes) ? bytesFromBase64(object.tx_bytes) : new Uint8Array(0),
+			tx_bytes: isSet(object.tx_bytes) ? bytesFromBase64(object.tx_bytes) : new Uint8Array(0)
 		};
 	},
 
@@ -410,7 +410,7 @@ export const SimulateRequest: MessageFns<SimulateRequest, "cosmos.tx.v1beta1.Sim
 		message.tx = object.tx !== undefined && object.tx !== null ? Tx.fromPartial(object.tx) : undefined;
 		message.tx_bytes = object.tx_bytes ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const SimulateResponse: MessageFns<SimulateResponse, "cosmos.tx.v1beta1.SimulateResponse"> = {
@@ -459,7 +459,7 @@ export const SimulateResponse: MessageFns<SimulateResponse, "cosmos.tx.v1beta1.S
 	fromJSON(object: any): SimulateResponse {
 		return {
 			gas_info: isSet(object.gas_info) ? GasInfo.fromJSON(object.gas_info) : undefined,
-			result: isSet(object.result) ? Result.fromJSON(object.result) : undefined,
+			result: isSet(object.result) ? Result.fromJSON(object.result) : undefined
 		};
 	},
 
@@ -482,7 +482,7 @@ export const SimulateResponse: MessageFns<SimulateResponse, "cosmos.tx.v1beta1.S
 		message.gas_info = object.gas_info !== undefined && object.gas_info !== null ? GasInfo.fromPartial(object.gas_info) : undefined;
 		message.result = object.result !== undefined && object.result !== null ? Result.fromPartial(object.result) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetTxRequest: MessageFns<GetTxRequest, "cosmos.tx.v1beta1.GetTxRequest"> = {
@@ -537,7 +537,7 @@ export const GetTxRequest: MessageFns<GetTxRequest, "cosmos.tx.v1beta1.GetTxRequ
 		const message = createBaseGetTxRequest();
 		message.hash = object.hash ?? "";
 		return message;
-	},
+	}
 };
 
 export const GetTxResponse: MessageFns<GetTxResponse, "cosmos.tx.v1beta1.GetTxResponse"> = {
@@ -586,7 +586,7 @@ export const GetTxResponse: MessageFns<GetTxResponse, "cosmos.tx.v1beta1.GetTxRe
 	fromJSON(object: any): GetTxResponse {
 		return {
 			tx: isSet(object.tx) ? Tx.fromJSON(object.tx) : undefined,
-			tx_response: isSet(object.tx_response) ? TxResponse.fromJSON(object.tx_response) : undefined,
+			tx_response: isSet(object.tx_response) ? TxResponse.fromJSON(object.tx_response) : undefined
 		};
 	},
 
@@ -609,7 +609,7 @@ export const GetTxResponse: MessageFns<GetTxResponse, "cosmos.tx.v1beta1.GetTxRe
 		message.tx = object.tx !== undefined && object.tx !== null ? Tx.fromPartial(object.tx) : undefined;
 		message.tx_response = object.tx_response !== undefined && object.tx_response !== null ? TxResponse.fromPartial(object.tx_response) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetBlockWithTxsRequest: MessageFns<GetBlockWithTxsRequest, "cosmos.tx.v1beta1.GetBlockWithTxsRequest"> = {
@@ -658,7 +658,7 @@ export const GetBlockWithTxsRequest: MessageFns<GetBlockWithTxsRequest, "cosmos.
 	fromJSON(object: any): GetBlockWithTxsRequest {
 		return {
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -681,7 +681,7 @@ export const GetBlockWithTxsRequest: MessageFns<GetBlockWithTxsRequest, "cosmos.
 		message.height = object.height ?? 0;
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const GetBlockWithTxsResponse: MessageFns<GetBlockWithTxsResponse, "cosmos.tx.v1beta1.GetBlockWithTxsResponse"> = {
@@ -752,7 +752,7 @@ export const GetBlockWithTxsResponse: MessageFns<GetBlockWithTxsResponse, "cosmo
 			txs: globalThis.Array.isArray(object?.txs) ? object.txs.map((e: any) => Tx.fromJSON(e)) : [],
 			block_id: isSet(object.block_id) ? BlockID.fromJSON(object.block_id) : undefined,
 			block: isSet(object.block) ? Block.fromJSON(object.block) : undefined,
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -783,7 +783,7 @@ export const GetBlockWithTxsResponse: MessageFns<GetBlockWithTxsResponse, "cosmo
 		message.block = object.block !== undefined && object.block !== null ? Block.fromPartial(object.block) : undefined;
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export function orderByFromJSON(object: any): OrderBy {
@@ -944,66 +944,66 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.tx.v1beta1.GetTxRequest", GetTxRequest as never],
 	["/cosmos.tx.v1beta1.GetTxResponse", GetTxResponse as never],
 	["/cosmos.tx.v1beta1.GetBlockWithTxsRequest", GetBlockWithTxsRequest as never],
-	["/cosmos.tx.v1beta1.GetBlockWithTxsResponse", GetBlockWithTxsResponse as never],
+	["/cosmos.tx.v1beta1.GetBlockWithTxsResponse", GetBlockWithTxsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.tx.v1beta1.GetTxsEventRequest": {
 		aminoType: "cosmos-sdk/GetTxsEventRequest",
 		toAmino: (message: GetTxsEventRequest) => ({ ...message }),
-		fromAmino: (object: GetTxsEventRequest) => ({ ...object }),
+		fromAmino: (object: GetTxsEventRequest) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.GetTxsEventResponse": {
 		aminoType: "cosmos-sdk/GetTxsEventResponse",
 		toAmino: (message: GetTxsEventResponse) => ({ ...message }),
-		fromAmino: (object: GetTxsEventResponse) => ({ ...object }),
+		fromAmino: (object: GetTxsEventResponse) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.BroadcastTxRequest": {
 		aminoType: "cosmos-sdk/BroadcastTxRequest",
 		toAmino: (message: BroadcastTxRequest) => ({ ...message }),
-		fromAmino: (object: BroadcastTxRequest) => ({ ...object }),
+		fromAmino: (object: BroadcastTxRequest) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.BroadcastTxResponse": {
 		aminoType: "cosmos-sdk/BroadcastTxResponse",
 		toAmino: (message: BroadcastTxResponse) => ({ ...message }),
-		fromAmino: (object: BroadcastTxResponse) => ({ ...object }),
+		fromAmino: (object: BroadcastTxResponse) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.SimulateRequest": {
 		aminoType: "cosmos-sdk/SimulateRequest",
 		toAmino: (message: SimulateRequest) => ({ ...message }),
-		fromAmino: (object: SimulateRequest) => ({ ...object }),
+		fromAmino: (object: SimulateRequest) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.SimulateResponse": {
 		aminoType: "cosmos-sdk/SimulateResponse",
 		toAmino: (message: SimulateResponse) => ({ ...message }),
-		fromAmino: (object: SimulateResponse) => ({ ...object }),
+		fromAmino: (object: SimulateResponse) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.GetTxRequest": {
 		aminoType: "cosmos-sdk/GetTxRequest",
 		toAmino: (message: GetTxRequest) => ({ ...message }),
-		fromAmino: (object: GetTxRequest) => ({ ...object }),
+		fromAmino: (object: GetTxRequest) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.GetTxResponse": {
 		aminoType: "cosmos-sdk/GetTxResponse",
 		toAmino: (message: GetTxResponse) => ({ ...message }),
-		fromAmino: (object: GetTxResponse) => ({ ...object }),
+		fromAmino: (object: GetTxResponse) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.GetBlockWithTxsRequest": {
 		aminoType: "cosmos-sdk/GetBlockWithTxsRequest",
 		toAmino: (message: GetBlockWithTxsRequest) => ({ ...message }),
-		fromAmino: (object: GetBlockWithTxsRequest) => ({ ...object }),
+		fromAmino: (object: GetBlockWithTxsRequest) => ({ ...object })
 	},
 
 	"/cosmos.tx.v1beta1.GetBlockWithTxsResponse": {
 		aminoType: "cosmos-sdk/GetBlockWithTxsResponse",
 		toAmino: (message: GetBlockWithTxsResponse) => ({ ...message }),
-		fromAmino: (object: GetBlockWithTxsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: GetBlockWithTxsResponse) => ({ ...object })
+	}
 };

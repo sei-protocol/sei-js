@@ -1,3 +1,4 @@
+import * as confidentialtransfers from "./confidentialtransfers/index";
 import * as confio from "./confio/index";
 import * as cosmos_accesscontrol from "./cosmos/accesscontrol/index";
 import * as cosmos_accesscontrol_x from "./cosmos/accesscontrol_x/index";
@@ -53,6 +54,7 @@ export * from "./amino";
 export * from "./registry";
 
 export const Encoder = {
+	confidentialtransfers: confidentialtransfers,
 	confio: confio,
 	cosmos: {
 		accesscontrol: cosmos_accesscontrol,
@@ -68,7 +70,7 @@ export const Encoder = {
 			snapshots: { v1beta1: cosmos_base_snapshots_v1beta1 },
 			store: { v1beta1: cosmos_base_store_v1beta1 },
 			tendermint: { v1beta1: cosmos_base_tendermint_v1beta1 },
-			v1beta1: cosmos_base_v1beta1,
+			v1beta1: cosmos_base_v1beta1
 		},
 		capability: { v1beta1: cosmos_capability_v1beta1 },
 		crisis: { v1beta1: cosmos_crisis_v1beta1 },
@@ -77,7 +79,7 @@ export const Encoder = {
 			multisig: cosmos_crypto_multisig,
 			secp256k1: cosmos_crypto_secp256k1,
 			secp256r1: cosmos_crypto_secp256r1,
-			sr25519: cosmos_crypto_sr25519,
+			sr25519: cosmos_crypto_sr25519
 		},
 		distribution: { v1beta1: cosmos_distribution_v1beta1 },
 		evidence: { v1beta1: cosmos_evidence_v1beta1 },
@@ -90,7 +92,7 @@ export const Encoder = {
 		staking: { v1beta1: cosmos_staking_v1beta1 },
 		tx: { signing: { v1beta1: cosmos_tx_signing_v1beta1 }, v1beta1: cosmos_tx_v1beta1 },
 		upgrade: { v1beta1: cosmos_upgrade_v1beta1 },
-		vesting: { v1beta1: cosmos_vesting_v1beta1 },
+		vesting: { v1beta1: cosmos_vesting_v1beta1 }
 	},
 	epoch: epoch,
 	eth: eth,
@@ -104,7 +106,7 @@ export const Encoder = {
 		libs: { bits: tendermint_libs_bits },
 		p2p: tendermint_p2p,
 		types: tendermint_types,
-		version: tendermint_version,
+		version: tendermint_version
 	},
-	tokenfactory: tokenfactory,
+	tokenfactory: tokenfactory
 };

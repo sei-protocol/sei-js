@@ -57,7 +57,7 @@ export const Coin: MessageFns<Coin, "cosmos.base.v1beta1.Coin"> = {
 	fromJSON(object: any): Coin {
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			amount: isSet(object.amount) ? globalThis.String(object.amount) : "",
+			amount: isSet(object.amount) ? globalThis.String(object.amount) : ""
 		};
 	},
 
@@ -80,7 +80,7 @@ export const Coin: MessageFns<Coin, "cosmos.base.v1beta1.Coin"> = {
 		message.denom = object.denom ?? "";
 		message.amount = object.amount ?? "";
 		return message;
-	},
+	}
 };
 
 export const DecCoin: MessageFns<DecCoin, "cosmos.base.v1beta1.DecCoin"> = {
@@ -129,7 +129,7 @@ export const DecCoin: MessageFns<DecCoin, "cosmos.base.v1beta1.DecCoin"> = {
 	fromJSON(object: any): DecCoin {
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			amount: isSet(object.amount) ? globalThis.String(object.amount) : "",
+			amount: isSet(object.amount) ? globalThis.String(object.amount) : ""
 		};
 	},
 
@@ -152,7 +152,7 @@ export const DecCoin: MessageFns<DecCoin, "cosmos.base.v1beta1.DecCoin"> = {
 		message.denom = object.denom ?? "";
 		message.amount = object.amount ?? "";
 		return message;
-	},
+	}
 };
 
 export const IntProto: MessageFns<IntProto, "cosmos.base.v1beta1.IntProto"> = {
@@ -207,7 +207,7 @@ export const IntProto: MessageFns<IntProto, "cosmos.base.v1beta1.IntProto"> = {
 		const message = createBaseIntProto();
 		message.int = object.int ?? "";
 		return message;
-	},
+	}
 };
 
 export const DecProto: MessageFns<DecProto, "cosmos.base.v1beta1.DecProto"> = {
@@ -262,7 +262,7 @@ export const DecProto: MessageFns<DecProto, "cosmos.base.v1beta1.DecProto"> = {
 		const message = createBaseDecProto();
 		message.dec = object.dec ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseCoin(): Coin {
@@ -288,30 +288,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.v1beta1.Coin", Coin as never],
 	["/cosmos.base.v1beta1.DecCoin", DecCoin as never],
 	["/cosmos.base.v1beta1.IntProto", IntProto as never],
-	["/cosmos.base.v1beta1.DecProto", DecProto as never],
+	["/cosmos.base.v1beta1.DecProto", DecProto as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.v1beta1.Coin": {
 		aminoType: "cosmos-sdk/Coin",
 		toAmino: (message: Coin) => ({ ...message }),
-		fromAmino: (object: Coin) => ({ ...object }),
+		fromAmino: (object: Coin) => ({ ...object })
 	},
 
 	"/cosmos.base.v1beta1.DecCoin": {
 		aminoType: "cosmos-sdk/DecCoin",
 		toAmino: (message: DecCoin) => ({ ...message }),
-		fromAmino: (object: DecCoin) => ({ ...object }),
+		fromAmino: (object: DecCoin) => ({ ...object })
 	},
 
 	"/cosmos.base.v1beta1.IntProto": {
 		aminoType: "cosmos-sdk/IntProto",
 		toAmino: (message: IntProto) => ({ ...message }),
-		fromAmino: (object: IntProto) => ({ ...object }),
+		fromAmino: (object: IntProto) => ({ ...object })
 	},
 
 	"/cosmos.base.v1beta1.DecProto": {
 		aminoType: "cosmos-sdk/DecProto",
 		toAmino: (message: DecProto) => ({ ...message }),
-		fromAmino: (object: DecProto) => ({ ...object }),
-	},
+		fromAmino: (object: DecProto) => ({ ...object })
+	}
 };

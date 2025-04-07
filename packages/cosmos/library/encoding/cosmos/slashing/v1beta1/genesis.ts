@@ -7,7 +7,7 @@ import {
 	ValidatorMissedBlockArray,
 	ValidatorMissedBlockArrayLegacyMissedHeights,
 	ValidatorSigningInfo,
-	ValidatorSigningInfoLegacyMissedHeights,
+	ValidatorSigningInfoLegacyMissedHeights
 } from "./slashing";
 
 import type {
@@ -17,7 +17,7 @@ import type {
 	MissedBlock as MissedBlock_type,
 	SigningInfoLegacyMissedHeights as SigningInfoLegacyMissedHeights_type,
 	SigningInfo as SigningInfo_type,
-	ValidatorMissedBlocks as ValidatorMissedBlocks_type,
+	ValidatorMissedBlocks as ValidatorMissedBlocks_type
 } from "../../../../types/cosmos/slashing/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -87,7 +87,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.slashing.v1beta1.Gen
 		return {
 			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
 			signing_infos: globalThis.Array.isArray(object?.signing_infos) ? object.signing_infos.map((e: any) => SigningInfo.fromJSON(e)) : [],
-			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => ValidatorMissedBlockArray.fromJSON(e)) : [],
+			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => ValidatorMissedBlockArray.fromJSON(e)) : []
 		};
 	},
 
@@ -114,7 +114,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.slashing.v1beta1.Gen
 		message.signing_infos = object.signing_infos?.map((e) => SigningInfo.fromPartial(e)) || [];
 		message.missed_blocks = object.missed_blocks?.map((e) => ValidatorMissedBlockArray.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const GenesisStateLegacyMissingHeights: MessageFns<GenesisStateLegacyMissingHeights, "cosmos.slashing.v1beta1.GenesisStateLegacyMissingHeights"> = {
@@ -176,7 +176,7 @@ export const GenesisStateLegacyMissingHeights: MessageFns<GenesisStateLegacyMiss
 			signing_infos: globalThis.Array.isArray(object?.signing_infos) ? object.signing_infos.map((e: any) => SigningInfo.fromJSON(e)) : [],
 			missed_blocks: globalThis.Array.isArray(object?.missed_blocks)
 				? object.missed_blocks.map((e: any) => ValidatorMissedBlockArrayLegacyMissedHeights.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -203,7 +203,7 @@ export const GenesisStateLegacyMissingHeights: MessageFns<GenesisStateLegacyMiss
 		message.signing_infos = object.signing_infos?.map((e) => SigningInfo.fromPartial(e)) || [];
 		message.missed_blocks = object.missed_blocks?.map((e) => ValidatorMissedBlockArrayLegacyMissedHeights.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const GenesisStateLegacyV43: MessageFns<GenesisStateLegacyV43, "cosmos.slashing.v1beta1.GenesisStateLegacyV43"> = {
@@ -263,7 +263,7 @@ export const GenesisStateLegacyV43: MessageFns<GenesisStateLegacyV43, "cosmos.sl
 		return {
 			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
 			signing_infos: globalThis.Array.isArray(object?.signing_infos) ? object.signing_infos.map((e: any) => SigningInfo.fromJSON(e)) : [],
-			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => ValidatorMissedBlocks.fromJSON(e)) : [],
+			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => ValidatorMissedBlocks.fromJSON(e)) : []
 		};
 	},
 
@@ -290,7 +290,7 @@ export const GenesisStateLegacyV43: MessageFns<GenesisStateLegacyV43, "cosmos.sl
 		message.signing_infos = object.signing_infos?.map((e) => SigningInfo.fromPartial(e)) || [];
 		message.missed_blocks = object.missed_blocks?.map((e) => ValidatorMissedBlocks.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const SigningInfo: MessageFns<SigningInfo, "cosmos.slashing.v1beta1.SigningInfo"> = {
@@ -339,7 +339,7 @@ export const SigningInfo: MessageFns<SigningInfo, "cosmos.slashing.v1beta1.Signi
 	fromJSON(object: any): SigningInfo {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			validator_signing_info: isSet(object.validator_signing_info) ? ValidatorSigningInfo.fromJSON(object.validator_signing_info) : undefined,
+			validator_signing_info: isSet(object.validator_signing_info) ? ValidatorSigningInfo.fromJSON(object.validator_signing_info) : undefined
 		};
 	},
 
@@ -365,7 +365,7 @@ export const SigningInfo: MessageFns<SigningInfo, "cosmos.slashing.v1beta1.Signi
 				? ValidatorSigningInfo.fromPartial(object.validator_signing_info)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const SigningInfoLegacyMissedHeights: MessageFns<SigningInfoLegacyMissedHeights, "cosmos.slashing.v1beta1.SigningInfoLegacyMissedHeights"> = {
@@ -414,9 +414,7 @@ export const SigningInfoLegacyMissedHeights: MessageFns<SigningInfoLegacyMissedH
 	fromJSON(object: any): SigningInfoLegacyMissedHeights {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			validator_signing_info: isSet(object.validator_signing_info)
-				? ValidatorSigningInfoLegacyMissedHeights.fromJSON(object.validator_signing_info)
-				: undefined,
+			validator_signing_info: isSet(object.validator_signing_info) ? ValidatorSigningInfoLegacyMissedHeights.fromJSON(object.validator_signing_info) : undefined
 		};
 	},
 
@@ -442,7 +440,7 @@ export const SigningInfoLegacyMissedHeights: MessageFns<SigningInfoLegacyMissedH
 				? ValidatorSigningInfoLegacyMissedHeights.fromPartial(object.validator_signing_info)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const ValidatorMissedBlocks: MessageFns<ValidatorMissedBlocks, "cosmos.slashing.v1beta1.ValidatorMissedBlocks"> = {
@@ -491,7 +489,7 @@ export const ValidatorMissedBlocks: MessageFns<ValidatorMissedBlocks, "cosmos.sl
 	fromJSON(object: any): ValidatorMissedBlocks {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => MissedBlock.fromJSON(e)) : [],
+			missed_blocks: globalThis.Array.isArray(object?.missed_blocks) ? object.missed_blocks.map((e: any) => MissedBlock.fromJSON(e)) : []
 		};
 	},
 
@@ -514,7 +512,7 @@ export const ValidatorMissedBlocks: MessageFns<ValidatorMissedBlocks, "cosmos.sl
 		message.address = object.address ?? "";
 		message.missed_blocks = object.missed_blocks?.map((e) => MissedBlock.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MissedBlock: MessageFns<MissedBlock, "cosmos.slashing.v1beta1.MissedBlock"> = {
@@ -563,7 +561,7 @@ export const MissedBlock: MessageFns<MissedBlock, "cosmos.slashing.v1beta1.Misse
 	fromJSON(object: any): MissedBlock {
 		return {
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
-			missed: isSet(object.missed) ? globalThis.Boolean(object.missed) : false,
+			missed: isSet(object.missed) ? globalThis.Boolean(object.missed) : false
 		};
 	},
 
@@ -586,7 +584,7 @@ export const MissedBlock: MessageFns<MissedBlock, "cosmos.slashing.v1beta1.Misse
 		message.index = object.index ?? 0;
 		message.missed = object.missed ?? false;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -636,36 +634,36 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.slashing.v1beta1.GenesisStateLegacyV43", GenesisStateLegacyV43 as never],
 	["/cosmos.slashing.v1beta1.SigningInfo", SigningInfo as never],
 	["/cosmos.slashing.v1beta1.ValidatorMissedBlocks", ValidatorMissedBlocks as never],
-	["/cosmos.slashing.v1beta1.MissedBlock", MissedBlock as never],
+	["/cosmos.slashing.v1beta1.MissedBlock", MissedBlock as never]
 ];
 export const aminoConverters = {
 	"/cosmos.slashing.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
+		fromAmino: (object: GenesisState) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.GenesisStateLegacyV43": {
 		aminoType: "cosmos-sdk/GenesisStateLegacyV43",
 		toAmino: (message: GenesisStateLegacyV43) => ({ ...message }),
-		fromAmino: (object: GenesisStateLegacyV43) => ({ ...object }),
+		fromAmino: (object: GenesisStateLegacyV43) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.SigningInfo": {
 		aminoType: "cosmos-sdk/SigningInfo",
 		toAmino: (message: SigningInfo) => ({ ...message }),
-		fromAmino: (object: SigningInfo) => ({ ...object }),
+		fromAmino: (object: SigningInfo) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.ValidatorMissedBlocks": {
 		aminoType: "cosmos-sdk/ValidatorMissedBlocks",
 		toAmino: (message: ValidatorMissedBlocks) => ({ ...message }),
-		fromAmino: (object: ValidatorMissedBlocks) => ({ ...object }),
+		fromAmino: (object: ValidatorMissedBlocks) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.MissedBlock": {
 		aminoType: "cosmos-sdk/MissedBlock",
 		toAmino: (message: MissedBlock) => ({ ...message }),
-		fromAmino: (object: MissedBlock) => ({ ...object }),
-	},
+		fromAmino: (object: MissedBlock) => ({ ...object })
+	}
 };

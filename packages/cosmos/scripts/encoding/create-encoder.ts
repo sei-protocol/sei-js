@@ -8,7 +8,7 @@ const collectQueriesRecursively = async (
 	rootDir: string,
 	importStatements: string[],
 	parentNamespace: Record<string, any>,
-	currentKey: string,
+	currentKey: string
 ) => {
 	const items = await fs.promises.readdir(dir, { withFileTypes: true });
 

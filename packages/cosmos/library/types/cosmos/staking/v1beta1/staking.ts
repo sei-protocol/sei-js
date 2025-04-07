@@ -15,7 +15,7 @@ export enum BondStatus {
 	BOND_STATUS_UNBONDING = 2,
 	/** BOND_STATUS_BONDED - BONDED defines a validator that is bonded. */
 	BOND_STATUS_BONDED = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface HistoricalInfo {

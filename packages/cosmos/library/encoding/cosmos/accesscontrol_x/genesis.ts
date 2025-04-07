@@ -72,7 +72,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.accesscontrol_x.v1be
 				: [],
 			wasm_dependency_mappings: globalThis.Array.isArray(object?.wasm_dependency_mappings)
 				? object.wasm_dependency_mappings.map((e: any) => WasmDependencyMapping.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -99,7 +99,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.accesscontrol_x.v1be
 		message.message_dependency_mapping = object.message_dependency_mapping?.map((e) => MessageDependencyMapping.fromPartial(e)) || [];
 		message.wasm_dependency_mappings = object.wasm_dependency_mappings?.map((e) => WasmDependencyMapping.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Params: MessageFns<Params, "cosmos.accesscontrol_x.v1beta1.Params"> = {
@@ -140,7 +140,7 @@ export const Params: MessageFns<Params, "cosmos.accesscontrol_x.v1beta1.Params">
 	fromPartial<I extends Exact<DeepPartial<Params>, I>>(_: I): Params {
 		const message = createBaseParams();
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -156,18 +156,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.accesscontrol_x.v1beta1.GenesisState", GenesisState as never],
-	["/cosmos.accesscontrol_x.v1beta1.Params", Params as never],
+	["/cosmos.accesscontrol_x.v1beta1.Params", Params as never]
 ];
 export const aminoConverters = {
 	"/cosmos.accesscontrol_x.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
+		fromAmino: (object: GenesisState) => ({ ...object })
 	},
 
 	"/cosmos.accesscontrol_x.v1beta1.Params": {
 		aminoType: "cosmos-sdk/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
-	},
+		fromAmino: (object: Params) => ({ ...object })
+	}
 };

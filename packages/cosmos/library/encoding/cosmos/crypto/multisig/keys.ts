@@ -56,7 +56,7 @@ export const LegacyAminoPubKey: MessageFns<LegacyAminoPubKey, "cosmos.crypto.mul
 	fromJSON(object: any): LegacyAminoPubKey {
 		return {
 			threshold: isSet(object.threshold) ? globalThis.Number(object.threshold) : 0,
-			public_keys: globalThis.Array.isArray(object?.public_keys) ? object.public_keys.map((e: any) => Any.fromJSON(e)) : [],
+			public_keys: globalThis.Array.isArray(object?.public_keys) ? object.public_keys.map((e: any) => Any.fromJSON(e)) : []
 		};
 	},
 
@@ -79,7 +79,7 @@ export const LegacyAminoPubKey: MessageFns<LegacyAminoPubKey, "cosmos.crypto.mul
 		message.threshold = object.threshold ?? 0;
 		message.public_keys = object.public_keys?.map((e) => Any.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseLegacyAminoPubKey(): LegacyAminoPubKey {
@@ -94,6 +94,6 @@ export const aminoConverters = {
 	"/cosmos.crypto.multisig.LegacyAminoPubKey": {
 		aminoType: "cosmos-sdk/LegacyAminoPubKey",
 		toAmino: (message: LegacyAminoPubKey) => ({ ...message }),
-		fromAmino: (object: LegacyAminoPubKey) => ({ ...object }),
-	},
+		fromAmino: (object: LegacyAminoPubKey) => ({ ...object })
+	}
 };

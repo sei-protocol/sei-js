@@ -55,7 +55,7 @@ export const Minter: MessageFns<Minter, "cosmos.mint.v1beta1.Minter"> = {
 	fromJSON(object: any): Minter {
 		return {
 			inflation: isSet(object.inflation) ? globalThis.String(object.inflation) : "",
-			annual_provisions: isSet(object.annual_provisions) ? globalThis.String(object.annual_provisions) : "",
+			annual_provisions: isSet(object.annual_provisions) ? globalThis.String(object.annual_provisions) : ""
 		};
 	},
 
@@ -78,7 +78,7 @@ export const Minter: MessageFns<Minter, "cosmos.mint.v1beta1.Minter"> = {
 		message.inflation = object.inflation ?? "";
 		message.annual_provisions = object.annual_provisions ?? "";
 		return message;
-	},
+	}
 };
 
 export const Params: MessageFns<Params, "cosmos.mint.v1beta1.Params"> = {
@@ -171,7 +171,7 @@ export const Params: MessageFns<Params, "cosmos.mint.v1beta1.Params"> = {
 			inflation_max: isSet(object.inflation_max) ? globalThis.String(object.inflation_max) : "",
 			inflation_min: isSet(object.inflation_min) ? globalThis.String(object.inflation_min) : "",
 			goal_bonded: isSet(object.goal_bonded) ? globalThis.String(object.goal_bonded) : "",
-			blocks_per_year: isSet(object.blocks_per_year) ? globalThis.Number(object.blocks_per_year) : 0,
+			blocks_per_year: isSet(object.blocks_per_year) ? globalThis.Number(object.blocks_per_year) : 0
 		};
 	},
 
@@ -210,7 +210,7 @@ export const Params: MessageFns<Params, "cosmos.mint.v1beta1.Params"> = {
 		message.goal_bonded = object.goal_bonded ?? "";
 		message.blocks_per_year = object.blocks_per_year ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseMinter(): Minter {
@@ -224,7 +224,7 @@ function createBaseParams(): Params {
 		inflation_max: "",
 		inflation_min: "",
 		goal_bonded: "",
-		blocks_per_year: 0,
+		blocks_per_year: 0
 	};
 }
 
@@ -244,18 +244,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.mint.v1beta1.Minter", Minter as never],
-	["/cosmos.mint.v1beta1.Params", Params as never],
+	["/cosmos.mint.v1beta1.Params", Params as never]
 ];
 export const aminoConverters = {
 	"/cosmos.mint.v1beta1.Minter": {
 		aminoType: "cosmos-sdk/Minter",
 		toAmino: (message: Minter) => ({ ...message }),
-		fromAmino: (object: Minter) => ({ ...object }),
+		fromAmino: (object: Minter) => ({ ...object })
 	},
 
 	"/cosmos.mint.v1beta1.Params": {
 		aminoType: "cosmos-sdk/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
-	},
+		fromAmino: (object: Params) => ({ ...object })
+	}
 };

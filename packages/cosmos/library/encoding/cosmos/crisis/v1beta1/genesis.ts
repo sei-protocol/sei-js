@@ -62,7 +62,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.crisis.v1beta1.Genes
 		const message = createBaseGenesisState();
 		message.constant_fee = object.constant_fee !== undefined && object.constant_fee !== null ? Coin.fromPartial(object.constant_fee) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -77,6 +77,6 @@ export const aminoConverters = {
 	"/cosmos.crisis.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

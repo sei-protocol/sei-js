@@ -10,7 +10,7 @@ import type {
 	ContractState as ContractState_type,
 	GenesisState as GenesisState_type,
 	Nonce as Nonce_type,
-	Serialized as Serialized_type,
+	Serialized as Serialized_type
 } from "../../types/evm";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -68,7 +68,7 @@ export const AddressAssociation: MessageFns<AddressAssociation, "seiprotocol.sei
 	fromJSON(object: any): AddressAssociation {
 		return {
 			sei_address: isSet(object.sei_address) ? globalThis.String(object.sei_address) : "",
-			eth_address: isSet(object.eth_address) ? globalThis.String(object.eth_address) : "",
+			eth_address: isSet(object.eth_address) ? globalThis.String(object.eth_address) : ""
 		};
 	},
 
@@ -91,7 +91,7 @@ export const AddressAssociation: MessageFns<AddressAssociation, "seiprotocol.sei
 		message.sei_address = object.sei_address ?? "";
 		message.eth_address = object.eth_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const Code: MessageFns<Code, "seiprotocol.seichain.evm.Code"> = {
@@ -140,7 +140,7 @@ export const Code: MessageFns<Code, "seiprotocol.seichain.evm.Code"> = {
 	fromJSON(object: any): Code {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			code: isSet(object.code) ? bytesFromBase64(object.code) : new Uint8Array(0),
+			code: isSet(object.code) ? bytesFromBase64(object.code) : new Uint8Array(0)
 		};
 	},
 
@@ -163,7 +163,7 @@ export const Code: MessageFns<Code, "seiprotocol.seichain.evm.Code"> = {
 		message.address = object.address ?? "";
 		message.code = object.code ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ContractState: MessageFns<ContractState, "seiprotocol.seichain.evm.ContractState"> = {
@@ -223,7 +223,7 @@ export const ContractState: MessageFns<ContractState, "seiprotocol.seichain.evm.
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
-			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
+			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0)
 		};
 	},
 
@@ -250,7 +250,7 @@ export const ContractState: MessageFns<ContractState, "seiprotocol.seichain.evm.
 		message.key = object.key ?? new Uint8Array(0);
 		message.value = object.value ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Nonce: MessageFns<Nonce, "seiprotocol.seichain.evm.Nonce"> = {
@@ -299,7 +299,7 @@ export const Nonce: MessageFns<Nonce, "seiprotocol.seichain.evm.Nonce"> = {
 	fromJSON(object: any): Nonce {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			nonce: isSet(object.nonce) ? globalThis.Number(object.nonce) : 0,
+			nonce: isSet(object.nonce) ? globalThis.Number(object.nonce) : 0
 		};
 	},
 
@@ -322,7 +322,7 @@ export const Nonce: MessageFns<Nonce, "seiprotocol.seichain.evm.Nonce"> = {
 		message.address = object.address ?? "";
 		message.nonce = object.nonce ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Serialized: MessageFns<Serialized, "seiprotocol.seichain.evm.Serialized"> = {
@@ -382,7 +382,7 @@ export const Serialized: MessageFns<Serialized, "seiprotocol.seichain.evm.Serial
 		return {
 			prefix: isSet(object.prefix) ? bytesFromBase64(object.prefix) : new Uint8Array(0),
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
-			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
+			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0)
 		};
 	},
 
@@ -409,7 +409,7 @@ export const Serialized: MessageFns<Serialized, "seiprotocol.seichain.evm.Serial
 		message.key = object.key ?? new Uint8Array(0);
 		message.value = object.value ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.evm.GenesisState"> = {
@@ -504,7 +504,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.evm.Ge
 			codes: globalThis.Array.isArray(object?.codes) ? object.codes.map((e: any) => Code.fromJSON(e)) : [],
 			states: globalThis.Array.isArray(object?.states) ? object.states.map((e: any) => ContractState.fromJSON(e)) : [],
 			nonces: globalThis.Array.isArray(object?.nonces) ? object.nonces.map((e: any) => Nonce.fromJSON(e)) : [],
-			serialized: globalThis.Array.isArray(object?.serialized) ? object.serialized.map((e: any) => Serialized.fromJSON(e)) : [],
+			serialized: globalThis.Array.isArray(object?.serialized) ? object.serialized.map((e: any) => Serialized.fromJSON(e)) : []
 		};
 	},
 
@@ -543,7 +543,7 @@ export const GenesisState: MessageFns<GenesisState, "seiprotocol.seichain.evm.Ge
 		message.nonces = object.nonces?.map((e) => Nonce.fromPartial(e)) || [];
 		message.serialized = object.serialized?.map((e) => Serialized.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseAddressAssociation(): AddressAssociation {
@@ -615,42 +615,42 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.ContractState", ContractState as never],
 	["/seiprotocol.seichain.evm.Nonce", Nonce as never],
 	["/seiprotocol.seichain.evm.Serialized", Serialized as never],
-	["/seiprotocol.seichain.evm.GenesisState", GenesisState as never],
+	["/seiprotocol.seichain.evm.GenesisState", GenesisState as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.AddressAssociation": {
 		aminoType: "evm/AddressAssociation",
 		toAmino: (message: AddressAssociation) => ({ ...message }),
-		fromAmino: (object: AddressAssociation) => ({ ...object }),
+		fromAmino: (object: AddressAssociation) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.Code": {
 		aminoType: "evm/Code",
 		toAmino: (message: Code) => ({ ...message }),
-		fromAmino: (object: Code) => ({ ...object }),
+		fromAmino: (object: Code) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.ContractState": {
 		aminoType: "evm/ContractState",
 		toAmino: (message: ContractState) => ({ ...message }),
-		fromAmino: (object: ContractState) => ({ ...object }),
+		fromAmino: (object: ContractState) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.Nonce": {
 		aminoType: "evm/Nonce",
 		toAmino: (message: Nonce) => ({ ...message }),
-		fromAmino: (object: Nonce) => ({ ...object }),
+		fromAmino: (object: Nonce) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.Serialized": {
 		aminoType: "evm/Serialized",
 		toAmino: (message: Serialized) => ({ ...message }),
-		fromAmino: (object: Serialized) => ({ ...object }),
+		fromAmino: (object: Serialized) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.GenesisState": {
 		aminoType: "evm/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

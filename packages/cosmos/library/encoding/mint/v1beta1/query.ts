@@ -8,7 +8,7 @@ import type {
 	QueryMinterRequest as QueryMinterRequest_type,
 	QueryMinterResponse as QueryMinterResponse_type,
 	QueryParamsRequest as QueryParamsRequest_type,
-	QueryParamsResponse as QueryParamsResponse_type,
+	QueryParamsResponse as QueryParamsResponse_type
 } from "../../../types/mint/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -56,7 +56,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.sei
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.seichain.mint.QueryParamsResponse"> = {
@@ -111,7 +111,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.s
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryMinterRequest: MessageFns<QueryMinterRequest, "seiprotocol.seichain.mint.QueryMinterRequest"> = {
@@ -152,7 +152,7 @@ export const QueryMinterRequest: MessageFns<QueryMinterRequest, "seiprotocol.sei
 	fromPartial<I extends Exact<DeepPartial<QueryMinterRequest>, I>>(_: I): QueryMinterRequest {
 		const message = createBaseQueryMinterRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryMinterResponse: MessageFns<QueryMinterResponse, "seiprotocol.seichain.mint.QueryMinterResponse"> = {
@@ -267,7 +267,7 @@ export const QueryMinterResponse: MessageFns<QueryMinterResponse, "seiprotocol.s
 			remaining_mint_amount: isSet(object.remaining_mint_amount) ? globalThis.Number(object.remaining_mint_amount) : 0,
 			last_mint_amount: isSet(object.last_mint_amount) ? globalThis.Number(object.last_mint_amount) : 0,
 			last_mint_date: isSet(object.last_mint_date) ? globalThis.String(object.last_mint_date) : "",
-			last_mint_height: isSet(object.last_mint_height) ? globalThis.Number(object.last_mint_height) : 0,
+			last_mint_height: isSet(object.last_mint_height) ? globalThis.Number(object.last_mint_height) : 0
 		};
 	},
 
@@ -314,7 +314,7 @@ export const QueryMinterResponse: MessageFns<QueryMinterResponse, "seiprotocol.s
 		message.last_mint_date = object.last_mint_date ?? "";
 		message.last_mint_height = object.last_mint_height ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -338,7 +338,7 @@ function createBaseQueryMinterResponse(): QueryMinterResponse {
 		remaining_mint_amount: 0,
 		last_mint_amount: 0,
 		last_mint_date: "",
-		last_mint_height: 0,
+		last_mint_height: 0
 	};
 }
 
@@ -360,30 +360,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.mint.QueryParamsRequest", QueryParamsRequest as never],
 	["/seiprotocol.seichain.mint.QueryParamsResponse", QueryParamsResponse as never],
 	["/seiprotocol.seichain.mint.QueryMinterRequest", QueryMinterRequest as never],
-	["/seiprotocol.seichain.mint.QueryMinterResponse", QueryMinterResponse as never],
+	["/seiprotocol.seichain.mint.QueryMinterResponse", QueryMinterResponse as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.mint.QueryParamsRequest": {
 		aminoType: "mint/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.QueryParamsResponse": {
 		aminoType: "mint/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.QueryMinterRequest": {
 		aminoType: "mint/QueryMinterRequest",
 		toAmino: (message: QueryMinterRequest) => ({ ...message }),
-		fromAmino: (object: QueryMinterRequest) => ({ ...object }),
+		fromAmino: (object: QueryMinterRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.QueryMinterResponse": {
 		aminoType: "mint/QueryMinterResponse",
 		toAmino: (message: QueryMinterResponse) => ({ ...message }),
-		fromAmino: (object: QueryMinterResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryMinterResponse) => ({ ...object })
+	}
 };

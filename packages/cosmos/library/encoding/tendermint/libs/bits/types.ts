@@ -66,7 +66,7 @@ export const BitArray: MessageFns<BitArray, "tendermint.libs.bits.BitArray"> = {
 	fromJSON(object: any): BitArray {
 		return {
 			bits: isSet(object.bits) ? globalThis.Number(object.bits) : 0,
-			elems: globalThis.Array.isArray(object?.elems) ? object.elems.map((e: any) => globalThis.Number(e)) : [],
+			elems: globalThis.Array.isArray(object?.elems) ? object.elems.map((e: any) => globalThis.Number(e)) : []
 		};
 	},
 
@@ -89,7 +89,7 @@ export const BitArray: MessageFns<BitArray, "tendermint.libs.bits.BitArray"> = {
 		message.bits = object.bits ?? 0;
 		message.elems = object.elems?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseBitArray(): BitArray {
@@ -115,6 +115,6 @@ export const aminoConverters = {
 	"/tendermint.libs.bits.BitArray": {
 		aminoType: "tendermint.libs.bits.BitArray",
 		toAmino: (message: BitArray) => ({ ...message }),
-		fromAmino: (object: BitArray) => ({ ...object }),
-	},
+		fromAmino: (object: BitArray) => ({ ...object })
+	}
 };

@@ -45,7 +45,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.evidence.v1beta1.Gen
 
 	fromJSON(object: any): GenesisState {
 		return {
-			evidence: globalThis.Array.isArray(object?.evidence) ? object.evidence.map((e: any) => Any.fromJSON(e)) : [],
+			evidence: globalThis.Array.isArray(object?.evidence) ? object.evidence.map((e: any) => Any.fromJSON(e)) : []
 		};
 	},
 
@@ -64,7 +64,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.evidence.v1beta1.Gen
 		const message = createBaseGenesisState();
 		message.evidence = object.evidence?.map((e) => Any.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -75,6 +75,6 @@ export const aminoConverters = {
 	"/cosmos.evidence.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

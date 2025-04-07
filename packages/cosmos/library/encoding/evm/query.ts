@@ -16,7 +16,7 @@ import type {
 	QuerySeiAddressByEVMAddressRequest as QuerySeiAddressByEVMAddressRequest_type,
 	QuerySeiAddressByEVMAddressResponse as QuerySeiAddressByEVMAddressResponse_type,
 	QueryStaticCallRequest as QueryStaticCallRequest_type,
-	QueryStaticCallResponse as QueryStaticCallResponse_type,
+	QueryStaticCallResponse as QueryStaticCallResponse_type
 } from "../../types/evm";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -87,7 +87,7 @@ export const QuerySeiAddressByEVMAddressRequest: MessageFns<QuerySeiAddressByEVM
 			const message = createBaseQuerySeiAddressByEVMAddressRequest();
 			message.evm_address = object.evm_address ?? "";
 			return message;
-		},
+		}
 	};
 
 export const QuerySeiAddressByEVMAddressResponse: MessageFns<
@@ -139,7 +139,7 @@ export const QuerySeiAddressByEVMAddressResponse: MessageFns<
 	fromJSON(object: any): QuerySeiAddressByEVMAddressResponse {
 		return {
 			sei_address: isSet(object.sei_address) ? globalThis.String(object.sei_address) : "",
-			associated: isSet(object.associated) ? globalThis.Boolean(object.associated) : false,
+			associated: isSet(object.associated) ? globalThis.Boolean(object.associated) : false
 		};
 	},
 
@@ -162,7 +162,7 @@ export const QuerySeiAddressByEVMAddressResponse: MessageFns<
 		message.sei_address = object.sei_address ?? "";
 		message.associated = object.associated ?? false;
 		return message;
-	},
+	}
 };
 
 export const QueryEVMAddressBySeiAddressRequest: MessageFns<QueryEVMAddressBySeiAddressRequest, "seiprotocol.seichain.evm.QueryEVMAddressBySeiAddressRequest"> =
@@ -218,7 +218,7 @@ export const QueryEVMAddressBySeiAddressRequest: MessageFns<QueryEVMAddressBySei
 			const message = createBaseQueryEVMAddressBySeiAddressRequest();
 			message.sei_address = object.sei_address ?? "";
 			return message;
-		},
+		}
 	};
 
 export const QueryEVMAddressBySeiAddressResponse: MessageFns<
@@ -270,7 +270,7 @@ export const QueryEVMAddressBySeiAddressResponse: MessageFns<
 	fromJSON(object: any): QueryEVMAddressBySeiAddressResponse {
 		return {
 			evm_address: isSet(object.evm_address) ? globalThis.String(object.evm_address) : "",
-			associated: isSet(object.associated) ? globalThis.Boolean(object.associated) : false,
+			associated: isSet(object.associated) ? globalThis.Boolean(object.associated) : false
 		};
 	},
 
@@ -293,7 +293,7 @@ export const QueryEVMAddressBySeiAddressResponse: MessageFns<
 		message.evm_address = object.evm_address ?? "";
 		message.associated = object.associated ?? false;
 		return message;
-	},
+	}
 };
 
 export const QueryStaticCallRequest: MessageFns<QueryStaticCallRequest, "seiprotocol.seichain.evm.QueryStaticCallRequest"> = {
@@ -342,7 +342,7 @@ export const QueryStaticCallRequest: MessageFns<QueryStaticCallRequest, "seiprot
 	fromJSON(object: any): QueryStaticCallRequest {
 		return {
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
-			to: isSet(object.to) ? globalThis.String(object.to) : "",
+			to: isSet(object.to) ? globalThis.String(object.to) : ""
 		};
 	},
 
@@ -365,7 +365,7 @@ export const QueryStaticCallRequest: MessageFns<QueryStaticCallRequest, "seiprot
 		message.data = object.data ?? new Uint8Array(0);
 		message.to = object.to ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryStaticCallResponse: MessageFns<QueryStaticCallResponse, "seiprotocol.seichain.evm.QueryStaticCallResponse"> = {
@@ -420,7 +420,7 @@ export const QueryStaticCallResponse: MessageFns<QueryStaticCallResponse, "seipr
 		const message = createBaseQueryStaticCallResponse();
 		message.data = object.data ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const QueryPointerRequest: MessageFns<QueryPointerRequest, "seiprotocol.seichain.evm.QueryPointerRequest"> = {
@@ -469,7 +469,7 @@ export const QueryPointerRequest: MessageFns<QueryPointerRequest, "seiprotocol.s
 	fromJSON(object: any): QueryPointerRequest {
 		return {
 			pointer_type: isSet(object.pointer_type) ? pointerTypeFromJSON(object.pointer_type) : 0,
-			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
+			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : ""
 		};
 	},
 
@@ -492,7 +492,7 @@ export const QueryPointerRequest: MessageFns<QueryPointerRequest, "seiprotocol.s
 		message.pointer_type = object.pointer_type ?? 0;
 		message.pointee = object.pointee ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryPointerResponse: MessageFns<QueryPointerResponse, "seiprotocol.seichain.evm.QueryPointerResponse"> = {
@@ -552,7 +552,7 @@ export const QueryPointerResponse: MessageFns<QueryPointerResponse, "seiprotocol
 		return {
 			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
 			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-			exists: isSet(object.exists) ? globalThis.Boolean(object.exists) : false,
+			exists: isSet(object.exists) ? globalThis.Boolean(object.exists) : false
 		};
 	},
 
@@ -579,7 +579,7 @@ export const QueryPointerResponse: MessageFns<QueryPointerResponse, "seiprotocol
 		message.version = object.version ?? 0;
 		message.exists = object.exists ?? false;
 		return message;
-	},
+	}
 };
 
 export const QueryPointerVersionRequest: MessageFns<QueryPointerVersionRequest, "seiprotocol.seichain.evm.QueryPointerVersionRequest"> = {
@@ -634,7 +634,7 @@ export const QueryPointerVersionRequest: MessageFns<QueryPointerVersionRequest, 
 		const message = createBaseQueryPointerVersionRequest();
 		message.pointer_type = object.pointer_type ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryPointerVersionResponse: MessageFns<QueryPointerVersionResponse, "seiprotocol.seichain.evm.QueryPointerVersionResponse"> = {
@@ -683,7 +683,7 @@ export const QueryPointerVersionResponse: MessageFns<QueryPointerVersionResponse
 	fromJSON(object: any): QueryPointerVersionResponse {
 		return {
 			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-			cw_code_id: isSet(object.cw_code_id) ? globalThis.Number(object.cw_code_id) : 0,
+			cw_code_id: isSet(object.cw_code_id) ? globalThis.Number(object.cw_code_id) : 0
 		};
 	},
 
@@ -706,7 +706,7 @@ export const QueryPointerVersionResponse: MessageFns<QueryPointerVersionResponse
 		message.version = object.version ?? 0;
 		message.cw_code_id = object.cw_code_id ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryPointeeRequest: MessageFns<QueryPointeeRequest, "seiprotocol.seichain.evm.QueryPointeeRequest"> = {
@@ -755,7 +755,7 @@ export const QueryPointeeRequest: MessageFns<QueryPointeeRequest, "seiprotocol.s
 	fromJSON(object: any): QueryPointeeRequest {
 		return {
 			pointer_type: isSet(object.pointer_type) ? pointerTypeFromJSON(object.pointer_type) : 0,
-			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : "",
+			pointer: isSet(object.pointer) ? globalThis.String(object.pointer) : ""
 		};
 	},
 
@@ -778,7 +778,7 @@ export const QueryPointeeRequest: MessageFns<QueryPointeeRequest, "seiprotocol.s
 		message.pointer_type = object.pointer_type ?? 0;
 		message.pointer = object.pointer ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryPointeeResponse: MessageFns<QueryPointeeResponse, "seiprotocol.seichain.evm.QueryPointeeResponse"> = {
@@ -838,7 +838,7 @@ export const QueryPointeeResponse: MessageFns<QueryPointeeResponse, "seiprotocol
 		return {
 			pointee: isSet(object.pointee) ? globalThis.String(object.pointee) : "",
 			version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-			exists: isSet(object.exists) ? globalThis.Boolean(object.exists) : false,
+			exists: isSet(object.exists) ? globalThis.Boolean(object.exists) : false
 		};
 	},
 
@@ -865,7 +865,7 @@ export const QueryPointeeResponse: MessageFns<QueryPointeeResponse, "seiprotocol
 		message.version = object.version ?? 0;
 		message.exists = object.exists ?? false;
 		return message;
-	},
+	}
 };
 
 function createBaseQuerySeiAddressByEVMAddressRequest(): QuerySeiAddressByEVMAddressRequest {
@@ -959,30 +959,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.QueryPointerRequest", QueryPointerRequest as never],
 	["/seiprotocol.seichain.evm.QueryPointerResponse", QueryPointerResponse as never],
 	["/seiprotocol.seichain.evm.QueryPointeeRequest", QueryPointeeRequest as never],
-	["/seiprotocol.seichain.evm.QueryPointeeResponse", QueryPointeeResponse as never],
+	["/seiprotocol.seichain.evm.QueryPointeeResponse", QueryPointeeResponse as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.QueryPointerRequest": {
 		aminoType: "evm/QueryPointerRequest",
 		toAmino: (message: QueryPointerRequest) => ({ ...message }),
-		fromAmino: (object: QueryPointerRequest) => ({ ...object }),
+		fromAmino: (object: QueryPointerRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.QueryPointerResponse": {
 		aminoType: "evm/QueryPointerResponse",
 		toAmino: (message: QueryPointerResponse) => ({ ...message }),
-		fromAmino: (object: QueryPointerResponse) => ({ ...object }),
+		fromAmino: (object: QueryPointerResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.QueryPointeeRequest": {
 		aminoType: "evm/QueryPointeeRequest",
 		toAmino: (message: QueryPointeeRequest) => ({ ...message }),
-		fromAmino: (object: QueryPointeeRequest) => ({ ...object }),
+		fromAmino: (object: QueryPointeeRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.QueryPointeeResponse": {
 		aminoType: "evm/QueryPointeeResponse",
 		toAmino: (message: QueryPointeeResponse) => ({ ...message }),
-		fromAmino: (object: QueryPointeeResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryPointeeResponse) => ({ ...object })
+	}
 };

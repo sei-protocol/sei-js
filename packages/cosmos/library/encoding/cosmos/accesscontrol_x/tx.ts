@@ -5,7 +5,7 @@ import { WasmDependencyMapping } from "../accesscontrol/accesscontrol";
 import type {
 	MsgRegisterWasmDependencyResponse as MsgRegisterWasmDependencyResponse_type,
 	MsgRegisterWasmDependency as MsgRegisterWasmDependency_type,
-	RegisterWasmDependencyJSONFile as RegisterWasmDependencyJSONFile_type,
+	RegisterWasmDependencyJSONFile as RegisterWasmDependencyJSONFile_type
 } from "../../../types/cosmos/accesscontrol_x";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -49,7 +49,7 @@ export const RegisterWasmDependencyJSONFile: MessageFns<RegisterWasmDependencyJS
 
 	fromJSON(object: any): RegisterWasmDependencyJSONFile {
 		return {
-			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined,
+			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined
 		};
 	},
 
@@ -71,7 +71,7 @@ export const RegisterWasmDependencyJSONFile: MessageFns<RegisterWasmDependencyJS
 				? WasmDependencyMapping.fromPartial(object.wasm_dependency_mapping)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgRegisterWasmDependency: MessageFns<MsgRegisterWasmDependency, "cosmos.accesscontrol_x.v1beta1.MsgRegisterWasmDependency"> = {
@@ -120,7 +120,7 @@ export const MsgRegisterWasmDependency: MessageFns<MsgRegisterWasmDependency, "c
 	fromJSON(object: any): MsgRegisterWasmDependency {
 		return {
 			from_address: isSet(object.from_address) ? globalThis.String(object.from_address) : "",
-			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined,
+			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined
 		};
 	},
 
@@ -146,7 +146,7 @@ export const MsgRegisterWasmDependency: MessageFns<MsgRegisterWasmDependency, "c
 				? WasmDependencyMapping.fromPartial(object.wasm_dependency_mapping)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgRegisterWasmDependencyResponse: MessageFns<
@@ -190,7 +190,7 @@ export const MsgRegisterWasmDependencyResponse: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<MsgRegisterWasmDependencyResponse>, I>>(_: I): MsgRegisterWasmDependencyResponse {
 		const message = createBaseMsgRegisterWasmDependencyResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseRegisterWasmDependencyJSONFile(): RegisterWasmDependencyJSONFile {

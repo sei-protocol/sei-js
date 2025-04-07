@@ -28,86 +28,86 @@ import type {
 	QueryValidatorUnbondingDelegationsRequest,
 	QueryValidatorUnbondingDelegationsResponse,
 	QueryValidatorsRequest,
-	QueryValidatorsResponse,
+	QueryValidatorsResponse
 } from "../../../../types/cosmos/staking/v1beta1/query.ts";
 
 export class Query {
 	static Validators(req: QueryValidatorsRequest, initReq?: fm.InitReq): Promise<QueryValidatorsResponse> {
 		return fm.fetchReq<QueryValidatorsRequest, QueryValidatorsResponse>(`/cosmos/staking/v1beta1/validators?${fm.renderURLSearchParams(req, [])}`, {
 			...initReq,
-			method: "GET",
+			method: "GET"
 		});
 	}
 	static Validator(req: QueryValidatorRequest, initReq?: fm.InitReq): Promise<QueryValidatorResponse> {
 		return fm.fetchReq<QueryValidatorRequest, QueryValidatorResponse>(
 			`/cosmos/staking/v1beta1/validators/${req["validator_addr"]}?${fm.renderURLSearchParams(req, ["validator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static ValidatorDelegations(req: QueryValidatorDelegationsRequest, initReq?: fm.InitReq): Promise<QueryValidatorDelegationsResponse> {
 		return fm.fetchReq<QueryValidatorDelegationsRequest, QueryValidatorDelegationsResponse>(
 			`/cosmos/staking/v1beta1/validators/${req["validator_addr"]}/delegations?${fm.renderURLSearchParams(req, ["validator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static ValidatorUnbondingDelegations(
 		req: QueryValidatorUnbondingDelegationsRequest,
-		initReq?: fm.InitReq,
+		initReq?: fm.InitReq
 	): Promise<QueryValidatorUnbondingDelegationsResponse> {
 		return fm.fetchReq<QueryValidatorUnbondingDelegationsRequest, QueryValidatorUnbondingDelegationsResponse>(
 			`/cosmos/staking/v1beta1/validators/${req["validator_addr"]}/unbonding_delegations?${fm.renderURLSearchParams(req, ["validator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static Delegation(req: QueryDelegationRequest, initReq?: fm.InitReq): Promise<QueryDelegationResponse> {
 		return fm.fetchReq<QueryDelegationRequest, QueryDelegationResponse>(
 			`/cosmos/staking/v1beta1/validators/${req["validator_addr"]}/delegations/${req["delegator_addr"]}?${fm.renderURLSearchParams(req, ["validator_addr", "delegator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static UnbondingDelegation(req: QueryUnbondingDelegationRequest, initReq?: fm.InitReq): Promise<QueryUnbondingDelegationResponse> {
 		return fm.fetchReq<QueryUnbondingDelegationRequest, QueryUnbondingDelegationResponse>(
 			`/cosmos/staking/v1beta1/validators/${req["validator_addr"]}/delegations/${req["delegator_addr"]}/unbonding_delegation?${fm.renderURLSearchParams(req, ["validator_addr", "delegator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static DelegatorDelegations(req: QueryDelegatorDelegationsRequest, initReq?: fm.InitReq): Promise<QueryDelegatorDelegationsResponse> {
 		return fm.fetchReq<QueryDelegatorDelegationsRequest, QueryDelegatorDelegationsResponse>(
 			`/cosmos/staking/v1beta1/delegations/${req["delegator_addr"]}?${fm.renderURLSearchParams(req, ["delegator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static DelegatorUnbondingDelegations(
 		req: QueryDelegatorUnbondingDelegationsRequest,
-		initReq?: fm.InitReq,
+		initReq?: fm.InitReq
 	): Promise<QueryDelegatorUnbondingDelegationsResponse> {
 		return fm.fetchReq<QueryDelegatorUnbondingDelegationsRequest, QueryDelegatorUnbondingDelegationsResponse>(
 			`/cosmos/staking/v1beta1/delegators/${req["delegator_addr"]}/unbonding_delegations?${fm.renderURLSearchParams(req, ["delegator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static Redelegations(req: QueryRedelegationsRequest, initReq?: fm.InitReq): Promise<QueryRedelegationsResponse> {
 		return fm.fetchReq<QueryRedelegationsRequest, QueryRedelegationsResponse>(
 			`/cosmos/staking/v1beta1/delegators/${req["delegator_addr"]}/redelegations?${fm.renderURLSearchParams(req, ["delegator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static DelegatorValidators(req: QueryDelegatorValidatorsRequest, initReq?: fm.InitReq): Promise<QueryDelegatorValidatorsResponse> {
 		return fm.fetchReq<QueryDelegatorValidatorsRequest, QueryDelegatorValidatorsResponse>(
 			`/cosmos/staking/v1beta1/delegators/${req["delegator_addr"]}/validators?${fm.renderURLSearchParams(req, ["delegator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static DelegatorValidator(req: QueryDelegatorValidatorRequest, initReq?: fm.InitReq): Promise<QueryDelegatorValidatorResponse> {
 		return fm.fetchReq<QueryDelegatorValidatorRequest, QueryDelegatorValidatorResponse>(
 			`/cosmos/staking/v1beta1/delegators/${req["delegator_addr"]}/validators/${req["validator_addr"]}?${fm.renderURLSearchParams(req, ["delegator_addr", "validator_addr"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static HistoricalInfo(req: QueryHistoricalInfoRequest, initReq?: fm.InitReq): Promise<QueryHistoricalInfoResponse> {
 		return fm.fetchReq<QueryHistoricalInfoRequest, QueryHistoricalInfoResponse>(
 			`/cosmos/staking/v1beta1/historical_info/${req["height"]}?${fm.renderURLSearchParams(req, ["height"])}`,
-			{ ...initReq, method: "GET" },
+			{ ...initReq, method: "GET" }
 		);
 	}
 	static Pool(req: QueryPoolRequest, initReq?: fm.InitReq): Promise<QueryPoolResponse> {
@@ -116,7 +116,7 @@ export class Query {
 	static Params(req: QueryParamsRequest, initReq?: fm.InitReq): Promise<QueryParamsResponse> {
 		return fm.fetchReq<QueryParamsRequest, QueryParamsResponse>(`/cosmos/staking/v1beta1/params?${fm.renderURLSearchParams(req, [])}`, {
 			...initReq,
-			method: "GET",
+			method: "GET"
 		});
 	}
 }

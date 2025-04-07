@@ -59,7 +59,7 @@ import type {
 	TxResult as TxResult_type,
 	ValidatorUpdate as ValidatorUpdate_type,
 	Validator as Validator_type,
-	VoteInfo as VoteInfo_type,
+	VoteInfo as VoteInfo_type
 } from "../../../types/tendermint/abci";
 
 import {
@@ -69,7 +69,7 @@ import {
 	ResponseOfferSnapshotResult,
 	ResponseProcessProposalProposalStatus,
 	ResponseVerifyVoteExtensionVerifyStatus,
-	TxRecordTxAction,
+	TxRecordTxAction
 } from "../../../types/tendermint/abci";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -324,7 +324,7 @@ export const Request: MessageFns<Request, "tendermint.abci.Request"> = {
 			process_proposal: isSet(object.process_proposal) ? RequestProcessProposal.fromJSON(object.process_proposal) : undefined,
 			extend_vote: isSet(object.extend_vote) ? RequestExtendVote.fromJSON(object.extend_vote) : undefined,
 			verify_vote_extension: isSet(object.verify_vote_extension) ? RequestVerifyVoteExtension.fromJSON(object.verify_vote_extension) : undefined,
-			finalize_block: isSet(object.finalize_block) ? RequestFinalizeBlock.fromJSON(object.finalize_block) : undefined,
+			finalize_block: isSet(object.finalize_block) ? RequestFinalizeBlock.fromJSON(object.finalize_block) : undefined
 		};
 	},
 
@@ -417,7 +417,7 @@ export const Request: MessageFns<Request, "tendermint.abci.Request"> = {
 		message.finalize_block =
 			object.finalize_block !== undefined && object.finalize_block !== null ? RequestFinalizeBlock.fromPartial(object.finalize_block) : undefined;
 		return message;
-	},
+	}
 };
 
 export const RequestEcho: MessageFns<RequestEcho, "tendermint.abci.RequestEcho"> = {
@@ -472,7 +472,7 @@ export const RequestEcho: MessageFns<RequestEcho, "tendermint.abci.RequestEcho">
 		const message = createBaseRequestEcho();
 		message.message = object.message ?? "";
 		return message;
-	},
+	}
 };
 
 export const RequestFlush: MessageFns<RequestFlush, "tendermint.abci.RequestFlush"> = {
@@ -513,7 +513,7 @@ export const RequestFlush: MessageFns<RequestFlush, "tendermint.abci.RequestFlus
 	fromPartial<I extends Exact<DeepPartial<RequestFlush>, I>>(_: I): RequestFlush {
 		const message = createBaseRequestFlush();
 		return message;
-	},
+	}
 };
 
 export const RequestInfo: MessageFns<RequestInfo, "tendermint.abci.RequestInfo"> = {
@@ -584,7 +584,7 @@ export const RequestInfo: MessageFns<RequestInfo, "tendermint.abci.RequestInfo">
 			version: isSet(object.version) ? globalThis.String(object.version) : "",
 			block_version: isSet(object.block_version) ? globalThis.Number(object.block_version) : 0,
 			p2p_version: isSet(object.p2p_version) ? globalThis.Number(object.p2p_version) : 0,
-			abci_version: isSet(object.abci_version) ? globalThis.String(object.abci_version) : "",
+			abci_version: isSet(object.abci_version) ? globalThis.String(object.abci_version) : ""
 		};
 	},
 
@@ -615,7 +615,7 @@ export const RequestInfo: MessageFns<RequestInfo, "tendermint.abci.RequestInfo">
 		message.p2p_version = object.p2p_version ?? 0;
 		message.abci_version = object.abci_version ?? "";
 		return message;
-	},
+	}
 };
 
 export const RequestInitChain: MessageFns<RequestInitChain, "tendermint.abci.RequestInitChain"> = {
@@ -708,7 +708,7 @@ export const RequestInitChain: MessageFns<RequestInitChain, "tendermint.abci.Req
 			consensus_params: isSet(object.consensus_params) ? ConsensusParams.fromJSON(object.consensus_params) : undefined,
 			validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e: any) => ValidatorUpdate.fromJSON(e)) : [],
 			app_state_bytes: isSet(object.app_state_bytes) ? bytesFromBase64(object.app_state_bytes) : new Uint8Array(0),
-			initial_height: isSet(object.initial_height) ? globalThis.Number(object.initial_height) : 0,
+			initial_height: isSet(object.initial_height) ? globalThis.Number(object.initial_height) : 0
 		};
 	},
 
@@ -748,7 +748,7 @@ export const RequestInitChain: MessageFns<RequestInitChain, "tendermint.abci.Req
 		message.app_state_bytes = object.app_state_bytes ?? new Uint8Array(0);
 		message.initial_height = object.initial_height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const RequestQuery: MessageFns<RequestQuery, "tendermint.abci.RequestQuery"> = {
@@ -819,7 +819,7 @@ export const RequestQuery: MessageFns<RequestQuery, "tendermint.abci.RequestQuer
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
 			path: isSet(object.path) ? globalThis.String(object.path) : "",
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
-			prove: isSet(object.prove) ? globalThis.Boolean(object.prove) : false,
+			prove: isSet(object.prove) ? globalThis.Boolean(object.prove) : false
 		};
 	},
 
@@ -850,7 +850,7 @@ export const RequestQuery: MessageFns<RequestQuery, "tendermint.abci.RequestQuer
 		message.height = object.height ?? 0;
 		message.prove = object.prove ?? false;
 		return message;
-	},
+	}
 };
 
 export const RequestCheckTx: MessageFns<RequestCheckTx, "tendermint.abci.RequestCheckTx"> = {
@@ -899,7 +899,7 @@ export const RequestCheckTx: MessageFns<RequestCheckTx, "tendermint.abci.Request
 	fromJSON(object: any): RequestCheckTx {
 		return {
 			tx: isSet(object.tx) ? bytesFromBase64(object.tx) : new Uint8Array(0),
-			type: isSet(object.type) ? checkTxTypeFromJSON(object.type) : 0,
+			type: isSet(object.type) ? checkTxTypeFromJSON(object.type) : 0
 		};
 	},
 
@@ -922,7 +922,7 @@ export const RequestCheckTx: MessageFns<RequestCheckTx, "tendermint.abci.Request
 		message.tx = object.tx ?? new Uint8Array(0);
 		message.type = object.type ?? 0;
 		return message;
-	},
+	}
 };
 
 export const RequestCommit: MessageFns<RequestCommit, "tendermint.abci.RequestCommit"> = {
@@ -963,7 +963,7 @@ export const RequestCommit: MessageFns<RequestCommit, "tendermint.abci.RequestCo
 	fromPartial<I extends Exact<DeepPartial<RequestCommit>, I>>(_: I): RequestCommit {
 		const message = createBaseRequestCommit();
 		return message;
-	},
+	}
 };
 
 export const RequestListSnapshots: MessageFns<RequestListSnapshots, "tendermint.abci.RequestListSnapshots"> = {
@@ -1004,7 +1004,7 @@ export const RequestListSnapshots: MessageFns<RequestListSnapshots, "tendermint.
 	fromPartial<I extends Exact<DeepPartial<RequestListSnapshots>, I>>(_: I): RequestListSnapshots {
 		const message = createBaseRequestListSnapshots();
 		return message;
-	},
+	}
 };
 
 export const RequestOfferSnapshot: MessageFns<RequestOfferSnapshot, "tendermint.abci.RequestOfferSnapshot"> = {
@@ -1053,7 +1053,7 @@ export const RequestOfferSnapshot: MessageFns<RequestOfferSnapshot, "tendermint.
 	fromJSON(object: any): RequestOfferSnapshot {
 		return {
 			snapshot: isSet(object.snapshot) ? Snapshot.fromJSON(object.snapshot) : undefined,
-			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0),
+			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0)
 		};
 	},
 
@@ -1076,7 +1076,7 @@ export const RequestOfferSnapshot: MessageFns<RequestOfferSnapshot, "tendermint.
 		message.snapshot = object.snapshot !== undefined && object.snapshot !== null ? Snapshot.fromPartial(object.snapshot) : undefined;
 		message.app_hash = object.app_hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const RequestLoadSnapshotChunk: MessageFns<RequestLoadSnapshotChunk, "tendermint.abci.RequestLoadSnapshotChunk"> = {
@@ -1136,7 +1136,7 @@ export const RequestLoadSnapshotChunk: MessageFns<RequestLoadSnapshotChunk, "ten
 		return {
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			format: isSet(object.format) ? globalThis.Number(object.format) : 0,
-			chunk: isSet(object.chunk) ? globalThis.Number(object.chunk) : 0,
+			chunk: isSet(object.chunk) ? globalThis.Number(object.chunk) : 0
 		};
 	},
 
@@ -1163,7 +1163,7 @@ export const RequestLoadSnapshotChunk: MessageFns<RequestLoadSnapshotChunk, "ten
 		message.format = object.format ?? 0;
 		message.chunk = object.chunk ?? 0;
 		return message;
-	},
+	}
 };
 
 export const RequestApplySnapshotChunk: MessageFns<RequestApplySnapshotChunk, "tendermint.abci.RequestApplySnapshotChunk"> = {
@@ -1223,7 +1223,7 @@ export const RequestApplySnapshotChunk: MessageFns<RequestApplySnapshotChunk, "t
 		return {
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
 			chunk: isSet(object.chunk) ? bytesFromBase64(object.chunk) : new Uint8Array(0),
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : ""
 		};
 	},
 
@@ -1250,7 +1250,7 @@ export const RequestApplySnapshotChunk: MessageFns<RequestApplySnapshotChunk, "t
 		message.chunk = object.chunk ?? new Uint8Array(0);
 		message.sender = object.sender ?? "";
 		return message;
-	},
+	}
 };
 
 export const RequestPrepareProposal: MessageFns<RequestPrepareProposal, "tendermint.abci.RequestPrepareProposal"> = {
@@ -1365,7 +1365,7 @@ export const RequestPrepareProposal: MessageFns<RequestPrepareProposal, "tenderm
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			time: isSet(object.time) ? fromJsonTimestamp(object.time) : undefined,
 			next_validators_hash: isSet(object.next_validators_hash) ? bytesFromBase64(object.next_validators_hash) : new Uint8Array(0),
-			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0),
+			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0)
 		};
 	},
 
@@ -1413,7 +1413,7 @@ export const RequestPrepareProposal: MessageFns<RequestPrepareProposal, "tenderm
 		message.next_validators_hash = object.next_validators_hash ?? new Uint8Array(0);
 		message.proposer_address = object.proposer_address ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const RequestProcessProposal: MessageFns<RequestProcessProposal, "tendermint.abci.RequestProcessProposal"> = {
@@ -1528,7 +1528,7 @@ export const RequestProcessProposal: MessageFns<RequestProcessProposal, "tenderm
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			time: isSet(object.time) ? fromJsonTimestamp(object.time) : undefined,
 			next_validators_hash: isSet(object.next_validators_hash) ? bytesFromBase64(object.next_validators_hash) : new Uint8Array(0),
-			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0),
+			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0)
 		};
 	},
 
@@ -1576,7 +1576,7 @@ export const RequestProcessProposal: MessageFns<RequestProcessProposal, "tenderm
 		message.next_validators_hash = object.next_validators_hash ?? new Uint8Array(0);
 		message.proposer_address = object.proposer_address ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const RequestExtendVote: MessageFns<RequestExtendVote, "tendermint.abci.RequestExtendVote"> = {
@@ -1625,7 +1625,7 @@ export const RequestExtendVote: MessageFns<RequestExtendVote, "tendermint.abci.R
 	fromJSON(object: any): RequestExtendVote {
 		return {
 			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
-			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
+			height: isSet(object.height) ? globalThis.Number(object.height) : 0
 		};
 	},
 
@@ -1648,7 +1648,7 @@ export const RequestExtendVote: MessageFns<RequestExtendVote, "tendermint.abci.R
 		message.hash = object.hash ?? new Uint8Array(0);
 		message.height = object.height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const RequestVerifyVoteExtension: MessageFns<RequestVerifyVoteExtension, "tendermint.abci.RequestVerifyVoteExtension"> = {
@@ -1719,7 +1719,7 @@ export const RequestVerifyVoteExtension: MessageFns<RequestVerifyVoteExtension, 
 			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
 			validator_address: isSet(object.validator_address) ? bytesFromBase64(object.validator_address) : new Uint8Array(0),
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
-			vote_extension: isSet(object.vote_extension) ? bytesFromBase64(object.vote_extension) : new Uint8Array(0),
+			vote_extension: isSet(object.vote_extension) ? bytesFromBase64(object.vote_extension) : new Uint8Array(0)
 		};
 	},
 
@@ -1750,7 +1750,7 @@ export const RequestVerifyVoteExtension: MessageFns<RequestVerifyVoteExtension, 
 		message.height = object.height ?? 0;
 		message.vote_extension = object.vote_extension ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const RequestFinalizeBlock: MessageFns<RequestFinalizeBlock, "tendermint.abci.RequestFinalizeBlock"> = {
@@ -1865,7 +1865,7 @@ export const RequestFinalizeBlock: MessageFns<RequestFinalizeBlock, "tendermint.
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			time: isSet(object.time) ? fromJsonTimestamp(object.time) : undefined,
 			next_validators_hash: isSet(object.next_validators_hash) ? bytesFromBase64(object.next_validators_hash) : new Uint8Array(0),
-			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0),
+			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0)
 		};
 	},
 
@@ -1913,7 +1913,7 @@ export const RequestFinalizeBlock: MessageFns<RequestFinalizeBlock, "tendermint.
 		message.next_validators_hash = object.next_validators_hash ?? new Uint8Array(0);
 		message.proposer_address = object.proposer_address ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Response: MessageFns<Response, "tendermint.abci.Response"> = {
@@ -2127,7 +2127,7 @@ export const Response: MessageFns<Response, "tendermint.abci.Response"> = {
 			process_proposal: isSet(object.process_proposal) ? ResponseProcessProposal.fromJSON(object.process_proposal) : undefined,
 			extend_vote: isSet(object.extend_vote) ? ResponseExtendVote.fromJSON(object.extend_vote) : undefined,
 			verify_vote_extension: isSet(object.verify_vote_extension) ? ResponseVerifyVoteExtension.fromJSON(object.verify_vote_extension) : undefined,
-			finalize_block: isSet(object.finalize_block) ? ResponseFinalizeBlock.fromJSON(object.finalize_block) : undefined,
+			finalize_block: isSet(object.finalize_block) ? ResponseFinalizeBlock.fromJSON(object.finalize_block) : undefined
 		};
 	},
 
@@ -2224,7 +2224,7 @@ export const Response: MessageFns<Response, "tendermint.abci.Response"> = {
 		message.finalize_block =
 			object.finalize_block !== undefined && object.finalize_block !== null ? ResponseFinalizeBlock.fromPartial(object.finalize_block) : undefined;
 		return message;
-	},
+	}
 };
 
 export const ResponseException: MessageFns<ResponseException, "tendermint.abci.ResponseException"> = {
@@ -2279,7 +2279,7 @@ export const ResponseException: MessageFns<ResponseException, "tendermint.abci.R
 		const message = createBaseResponseException();
 		message.error = object.error ?? "";
 		return message;
-	},
+	}
 };
 
 export const ResponseEcho: MessageFns<ResponseEcho, "tendermint.abci.ResponseEcho"> = {
@@ -2334,7 +2334,7 @@ export const ResponseEcho: MessageFns<ResponseEcho, "tendermint.abci.ResponseEch
 		const message = createBaseResponseEcho();
 		message.message = object.message ?? "";
 		return message;
-	},
+	}
 };
 
 export const ResponseFlush: MessageFns<ResponseFlush, "tendermint.abci.ResponseFlush"> = {
@@ -2375,7 +2375,7 @@ export const ResponseFlush: MessageFns<ResponseFlush, "tendermint.abci.ResponseF
 	fromPartial<I extends Exact<DeepPartial<ResponseFlush>, I>>(_: I): ResponseFlush {
 		const message = createBaseResponseFlush();
 		return message;
-	},
+	}
 };
 
 export const ResponseInfo: MessageFns<ResponseInfo, "tendermint.abci.ResponseInfo"> = {
@@ -2457,7 +2457,7 @@ export const ResponseInfo: MessageFns<ResponseInfo, "tendermint.abci.ResponseInf
 			version: isSet(object.version) ? globalThis.String(object.version) : "",
 			app_version: isSet(object.app_version) ? globalThis.Number(object.app_version) : 0,
 			last_block_height: isSet(object.last_block_height) ? globalThis.Number(object.last_block_height) : 0,
-			last_block_app_hash: isSet(object.last_block_app_hash) ? bytesFromBase64(object.last_block_app_hash) : new Uint8Array(0),
+			last_block_app_hash: isSet(object.last_block_app_hash) ? bytesFromBase64(object.last_block_app_hash) : new Uint8Array(0)
 		};
 	},
 
@@ -2492,7 +2492,7 @@ export const ResponseInfo: MessageFns<ResponseInfo, "tendermint.abci.ResponseInf
 		message.last_block_height = object.last_block_height ?? 0;
 		message.last_block_app_hash = object.last_block_app_hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ResponseInitChain: MessageFns<ResponseInitChain, "tendermint.abci.ResponseInitChain"> = {
@@ -2552,7 +2552,7 @@ export const ResponseInitChain: MessageFns<ResponseInitChain, "tendermint.abci.R
 		return {
 			consensus_params: isSet(object.consensus_params) ? ConsensusParams.fromJSON(object.consensus_params) : undefined,
 			validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e: any) => ValidatorUpdate.fromJSON(e)) : [],
-			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0),
+			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0)
 		};
 	},
 
@@ -2580,7 +2580,7 @@ export const ResponseInitChain: MessageFns<ResponseInitChain, "tendermint.abci.R
 		message.validators = object.validators?.map((e) => ValidatorUpdate.fromPartial(e)) || [];
 		message.app_hash = object.app_hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ResponseQuery: MessageFns<ResponseQuery, "tendermint.abci.ResponseQuery"> = {
@@ -2706,7 +2706,7 @@ export const ResponseQuery: MessageFns<ResponseQuery, "tendermint.abci.ResponseQ
 			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
 			proof_ops: isSet(object.proof_ops) ? ProofOps.fromJSON(object.proof_ops) : undefined,
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
-			codespace: isSet(object.codespace) ? globalThis.String(object.codespace) : "",
+			codespace: isSet(object.codespace) ? globalThis.String(object.codespace) : ""
 		};
 	},
 
@@ -2757,7 +2757,7 @@ export const ResponseQuery: MessageFns<ResponseQuery, "tendermint.abci.ResponseQ
 		message.height = object.height ?? 0;
 		message.codespace = object.codespace ?? "";
 		return message;
-	},
+	}
 };
 
 export const ResponseCheckTx: MessageFns<ResponseCheckTx, "tendermint.abci.ResponseCheckTx"> = {
@@ -2850,7 +2850,7 @@ export const ResponseCheckTx: MessageFns<ResponseCheckTx, "tendermint.abci.Respo
 			gas_wanted: isSet(object.gas_wanted) ? globalThis.Number(object.gas_wanted) : 0,
 			codespace: isSet(object.codespace) ? globalThis.String(object.codespace) : "",
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			priority: isSet(object.priority) ? globalThis.Number(object.priority) : 0,
+			priority: isSet(object.priority) ? globalThis.Number(object.priority) : 0
 		};
 	},
 
@@ -2889,7 +2889,7 @@ export const ResponseCheckTx: MessageFns<ResponseCheckTx, "tendermint.abci.Respo
 		message.sender = object.sender ?? "";
 		message.priority = object.priority ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ResponseDeliverTx: MessageFns<ResponseDeliverTx, "tendermint.abci.ResponseDeliverTx"> = {
@@ -3004,7 +3004,7 @@ export const ResponseDeliverTx: MessageFns<ResponseDeliverTx, "tendermint.abci.R
 			gas_wanted: isSet(object.gas_wanted) ? globalThis.Number(object.gas_wanted) : 0,
 			gas_used: isSet(object.gas_used) ? globalThis.Number(object.gas_used) : 0,
 			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => Event.fromJSON(e)) : [],
-			codespace: isSet(object.codespace) ? globalThis.String(object.codespace) : "",
+			codespace: isSet(object.codespace) ? globalThis.String(object.codespace) : ""
 		};
 	},
 
@@ -3051,7 +3051,7 @@ export const ResponseDeliverTx: MessageFns<ResponseDeliverTx, "tendermint.abci.R
 		message.events = object.events?.map((e) => Event.fromPartial(e)) || [];
 		message.codespace = object.codespace ?? "";
 		return message;
-	},
+	}
 };
 
 export const ResponseCommit: MessageFns<ResponseCommit, "tendermint.abci.ResponseCommit"> = {
@@ -3106,7 +3106,7 @@ export const ResponseCommit: MessageFns<ResponseCommit, "tendermint.abci.Respons
 		const message = createBaseResponseCommit();
 		message.retain_height = object.retain_height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ResponseListSnapshots: MessageFns<ResponseListSnapshots, "tendermint.abci.ResponseListSnapshots"> = {
@@ -3144,7 +3144,7 @@ export const ResponseListSnapshots: MessageFns<ResponseListSnapshots, "tendermin
 
 	fromJSON(object: any): ResponseListSnapshots {
 		return {
-			snapshots: globalThis.Array.isArray(object?.snapshots) ? object.snapshots.map((e: any) => Snapshot.fromJSON(e)) : [],
+			snapshots: globalThis.Array.isArray(object?.snapshots) ? object.snapshots.map((e: any) => Snapshot.fromJSON(e)) : []
 		};
 	},
 
@@ -3163,7 +3163,7 @@ export const ResponseListSnapshots: MessageFns<ResponseListSnapshots, "tendermin
 		const message = createBaseResponseListSnapshots();
 		message.snapshots = object.snapshots?.map((e) => Snapshot.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ResponseOfferSnapshot: MessageFns<ResponseOfferSnapshot, "tendermint.abci.ResponseOfferSnapshot"> = {
@@ -3218,7 +3218,7 @@ export const ResponseOfferSnapshot: MessageFns<ResponseOfferSnapshot, "tendermin
 		const message = createBaseResponseOfferSnapshot();
 		message.result = object.result ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ResponseLoadSnapshotChunk: MessageFns<ResponseLoadSnapshotChunk, "tendermint.abci.ResponseLoadSnapshotChunk"> = {
@@ -3273,7 +3273,7 @@ export const ResponseLoadSnapshotChunk: MessageFns<ResponseLoadSnapshotChunk, "t
 		const message = createBaseResponseLoadSnapshotChunk();
 		message.chunk = object.chunk ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ResponseApplySnapshotChunk: MessageFns<ResponseApplySnapshotChunk, "tendermint.abci.ResponseApplySnapshotChunk"> = {
@@ -3345,7 +3345,7 @@ export const ResponseApplySnapshotChunk: MessageFns<ResponseApplySnapshotChunk, 
 		return {
 			result: isSet(object.result) ? responseApplySnapshotChunkResultFromJSON(object.result) : 0,
 			refetch_chunks: globalThis.Array.isArray(object?.refetch_chunks) ? object.refetch_chunks.map((e: any) => globalThis.Number(e)) : [],
-			reject_senders: globalThis.Array.isArray(object?.reject_senders) ? object.reject_senders.map((e: any) => globalThis.String(e)) : [],
+			reject_senders: globalThis.Array.isArray(object?.reject_senders) ? object.reject_senders.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -3372,7 +3372,7 @@ export const ResponseApplySnapshotChunk: MessageFns<ResponseApplySnapshotChunk, 
 		message.refetch_chunks = object.refetch_chunks?.map((e) => e) || [];
 		message.reject_senders = object.reject_senders?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const ResponsePrepareProposal: MessageFns<ResponsePrepareProposal, "tendermint.abci.ResponsePrepareProposal"> = {
@@ -3454,7 +3454,7 @@ export const ResponsePrepareProposal: MessageFns<ResponsePrepareProposal, "tende
 			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0),
 			tx_results: globalThis.Array.isArray(object?.tx_results) ? object.tx_results.map((e: any) => ExecTxResult.fromJSON(e)) : [],
 			validator_updates: globalThis.Array.isArray(object?.validator_updates) ? object.validator_updates.map((e: any) => ValidatorUpdate.fromJSON(e)) : [],
-			consensus_param_updates: isSet(object.consensus_param_updates) ? ConsensusParams.fromJSON(object.consensus_param_updates) : undefined,
+			consensus_param_updates: isSet(object.consensus_param_updates) ? ConsensusParams.fromJSON(object.consensus_param_updates) : undefined
 		};
 	},
 
@@ -3492,7 +3492,7 @@ export const ResponsePrepareProposal: MessageFns<ResponsePrepareProposal, "tende
 				? ConsensusParams.fromPartial(object.consensus_param_updates)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const ResponseProcessProposal: MessageFns<ResponseProcessProposal, "tendermint.abci.ResponseProcessProposal"> = {
@@ -3574,7 +3574,7 @@ export const ResponseProcessProposal: MessageFns<ResponseProcessProposal, "tende
 			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0),
 			tx_results: globalThis.Array.isArray(object?.tx_results) ? object.tx_results.map((e: any) => ExecTxResult.fromJSON(e)) : [],
 			validator_updates: globalThis.Array.isArray(object?.validator_updates) ? object.validator_updates.map((e: any) => ValidatorUpdate.fromJSON(e)) : [],
-			consensus_param_updates: isSet(object.consensus_param_updates) ? ConsensusParams.fromJSON(object.consensus_param_updates) : undefined,
+			consensus_param_updates: isSet(object.consensus_param_updates) ? ConsensusParams.fromJSON(object.consensus_param_updates) : undefined
 		};
 	},
 
@@ -3612,7 +3612,7 @@ export const ResponseProcessProposal: MessageFns<ResponseProcessProposal, "tende
 				? ConsensusParams.fromPartial(object.consensus_param_updates)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const ResponseExtendVote: MessageFns<ResponseExtendVote, "tendermint.abci.ResponseExtendVote"> = {
@@ -3650,7 +3650,7 @@ export const ResponseExtendVote: MessageFns<ResponseExtendVote, "tendermint.abci
 
 	fromJSON(object: any): ResponseExtendVote {
 		return {
-			vote_extension: isSet(object.vote_extension) ? bytesFromBase64(object.vote_extension) : new Uint8Array(0),
+			vote_extension: isSet(object.vote_extension) ? bytesFromBase64(object.vote_extension) : new Uint8Array(0)
 		};
 	},
 
@@ -3669,7 +3669,7 @@ export const ResponseExtendVote: MessageFns<ResponseExtendVote, "tendermint.abci
 		const message = createBaseResponseExtendVote();
 		message.vote_extension = object.vote_extension ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ResponseVerifyVoteExtension: MessageFns<ResponseVerifyVoteExtension, "tendermint.abci.ResponseVerifyVoteExtension"> = {
@@ -3724,7 +3724,7 @@ export const ResponseVerifyVoteExtension: MessageFns<ResponseVerifyVoteExtension
 		const message = createBaseResponseVerifyVoteExtension();
 		message.status = object.status ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ResponseFinalizeBlock: MessageFns<ResponseFinalizeBlock, "tendermint.abci.ResponseFinalizeBlock"> = {
@@ -3806,7 +3806,7 @@ export const ResponseFinalizeBlock: MessageFns<ResponseFinalizeBlock, "tendermin
 			tx_results: globalThis.Array.isArray(object?.tx_results) ? object.tx_results.map((e: any) => ExecTxResult.fromJSON(e)) : [],
 			validator_updates: globalThis.Array.isArray(object?.validator_updates) ? object.validator_updates.map((e: any) => ValidatorUpdate.fromJSON(e)) : [],
 			consensus_param_updates: isSet(object.consensus_param_updates) ? ConsensusParams.fromJSON(object.consensus_param_updates) : undefined,
-			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0),
+			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0)
 		};
 	},
 
@@ -3844,7 +3844,7 @@ export const ResponseFinalizeBlock: MessageFns<ResponseFinalizeBlock, "tendermin
 				: undefined;
 		message.app_hash = object.app_hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const CommitInfo: MessageFns<CommitInfo, "tendermint.abci.CommitInfo"> = {
@@ -3893,7 +3893,7 @@ export const CommitInfo: MessageFns<CommitInfo, "tendermint.abci.CommitInfo"> = 
 	fromJSON(object: any): CommitInfo {
 		return {
 			round: isSet(object.round) ? globalThis.Number(object.round) : 0,
-			votes: globalThis.Array.isArray(object?.votes) ? object.votes.map((e: any) => VoteInfo.fromJSON(e)) : [],
+			votes: globalThis.Array.isArray(object?.votes) ? object.votes.map((e: any) => VoteInfo.fromJSON(e)) : []
 		};
 	},
 
@@ -3916,7 +3916,7 @@ export const CommitInfo: MessageFns<CommitInfo, "tendermint.abci.CommitInfo"> = 
 		message.round = object.round ?? 0;
 		message.votes = object.votes?.map((e) => VoteInfo.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ExtendedCommitInfo: MessageFns<ExtendedCommitInfo, "tendermint.abci.ExtendedCommitInfo"> = {
@@ -3965,7 +3965,7 @@ export const ExtendedCommitInfo: MessageFns<ExtendedCommitInfo, "tendermint.abci
 	fromJSON(object: any): ExtendedCommitInfo {
 		return {
 			round: isSet(object.round) ? globalThis.Number(object.round) : 0,
-			votes: globalThis.Array.isArray(object?.votes) ? object.votes.map((e: any) => ExtendedVoteInfo.fromJSON(e)) : [],
+			votes: globalThis.Array.isArray(object?.votes) ? object.votes.map((e: any) => ExtendedVoteInfo.fromJSON(e)) : []
 		};
 	},
 
@@ -3988,7 +3988,7 @@ export const ExtendedCommitInfo: MessageFns<ExtendedCommitInfo, "tendermint.abci
 		message.round = object.round ?? 0;
 		message.votes = object.votes?.map((e) => ExtendedVoteInfo.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Event: MessageFns<Event, "tendermint.abci.Event"> = {
@@ -4037,7 +4037,7 @@ export const Event: MessageFns<Event, "tendermint.abci.Event"> = {
 	fromJSON(object: any): Event {
 		return {
 			type: isSet(object.type) ? globalThis.String(object.type) : "",
-			attributes: globalThis.Array.isArray(object?.attributes) ? object.attributes.map((e: any) => EventAttribute.fromJSON(e)) : [],
+			attributes: globalThis.Array.isArray(object?.attributes) ? object.attributes.map((e: any) => EventAttribute.fromJSON(e)) : []
 		};
 	},
 
@@ -4060,7 +4060,7 @@ export const Event: MessageFns<Event, "tendermint.abci.Event"> = {
 		message.type = object.type ?? "";
 		message.attributes = object.attributes?.map((e) => EventAttribute.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const EventAttribute: MessageFns<EventAttribute, "tendermint.abci.EventAttribute"> = {
@@ -4120,7 +4120,7 @@ export const EventAttribute: MessageFns<EventAttribute, "tendermint.abci.EventAt
 		return {
 			key: isSet(object.key) ? globalThis.String(object.key) : "",
 			value: isSet(object.value) ? globalThis.String(object.value) : "",
-			index: isSet(object.index) ? globalThis.Boolean(object.index) : false,
+			index: isSet(object.index) ? globalThis.Boolean(object.index) : false
 		};
 	},
 
@@ -4147,7 +4147,7 @@ export const EventAttribute: MessageFns<EventAttribute, "tendermint.abci.EventAt
 		message.value = object.value ?? "";
 		message.index = object.index ?? false;
 		return message;
-	},
+	}
 };
 
 export const ExecTxResult: MessageFns<ExecTxResult, "tendermint.abci.ExecTxResult"> = {
@@ -4262,7 +4262,7 @@ export const ExecTxResult: MessageFns<ExecTxResult, "tendermint.abci.ExecTxResul
 			gas_wanted: isSet(object.gas_wanted) ? globalThis.Number(object.gas_wanted) : 0,
 			gas_used: isSet(object.gas_used) ? globalThis.Number(object.gas_used) : 0,
 			events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => Event.fromJSON(e)) : [],
-			codespace: isSet(object.codespace) ? globalThis.String(object.codespace) : "",
+			codespace: isSet(object.codespace) ? globalThis.String(object.codespace) : ""
 		};
 	},
 
@@ -4309,7 +4309,7 @@ export const ExecTxResult: MessageFns<ExecTxResult, "tendermint.abci.ExecTxResul
 		message.events = object.events?.map((e) => Event.fromPartial(e)) || [];
 		message.codespace = object.codespace ?? "";
 		return message;
-	},
+	}
 };
 
 export const TxResult: MessageFns<TxResult, "tendermint.abci.TxResult"> = {
@@ -4380,7 +4380,7 @@ export const TxResult: MessageFns<TxResult, "tendermint.abci.TxResult"> = {
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
 			tx: isSet(object.tx) ? bytesFromBase64(object.tx) : new Uint8Array(0),
-			result: isSet(object.result) ? ExecTxResult.fromJSON(object.result) : undefined,
+			result: isSet(object.result) ? ExecTxResult.fromJSON(object.result) : undefined
 		};
 	},
 
@@ -4411,7 +4411,7 @@ export const TxResult: MessageFns<TxResult, "tendermint.abci.TxResult"> = {
 		message.tx = object.tx ?? new Uint8Array(0);
 		message.result = object.result !== undefined && object.result !== null ? ExecTxResult.fromPartial(object.result) : undefined;
 		return message;
-	},
+	}
 };
 
 export const TxRecord: MessageFns<TxRecord, "tendermint.abci.TxRecord"> = {
@@ -4460,7 +4460,7 @@ export const TxRecord: MessageFns<TxRecord, "tendermint.abci.TxRecord"> = {
 	fromJSON(object: any): TxRecord {
 		return {
 			action: isSet(object.action) ? txRecordTxActionFromJSON(object.action) : 0,
-			tx: isSet(object.tx) ? bytesFromBase64(object.tx) : new Uint8Array(0),
+			tx: isSet(object.tx) ? bytesFromBase64(object.tx) : new Uint8Array(0)
 		};
 	},
 
@@ -4483,7 +4483,7 @@ export const TxRecord: MessageFns<TxRecord, "tendermint.abci.TxRecord"> = {
 		message.action = object.action ?? 0;
 		message.tx = object.tx ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Validator: MessageFns<Validator, "tendermint.abci.Validator"> = {
@@ -4532,7 +4532,7 @@ export const Validator: MessageFns<Validator, "tendermint.abci.Validator"> = {
 	fromJSON(object: any): Validator {
 		return {
 			address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(0),
-			power: isSet(object.power) ? globalThis.Number(object.power) : 0,
+			power: isSet(object.power) ? globalThis.Number(object.power) : 0
 		};
 	},
 
@@ -4555,7 +4555,7 @@ export const Validator: MessageFns<Validator, "tendermint.abci.Validator"> = {
 		message.address = object.address ?? new Uint8Array(0);
 		message.power = object.power ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ValidatorUpdate: MessageFns<ValidatorUpdate, "tendermint.abci.ValidatorUpdate"> = {
@@ -4604,7 +4604,7 @@ export const ValidatorUpdate: MessageFns<ValidatorUpdate, "tendermint.abci.Valid
 	fromJSON(object: any): ValidatorUpdate {
 		return {
 			pub_key: isSet(object.pub_key) ? PublicKey.fromJSON(object.pub_key) : undefined,
-			power: isSet(object.power) ? globalThis.Number(object.power) : 0,
+			power: isSet(object.power) ? globalThis.Number(object.power) : 0
 		};
 	},
 
@@ -4627,7 +4627,7 @@ export const ValidatorUpdate: MessageFns<ValidatorUpdate, "tendermint.abci.Valid
 		message.pub_key = object.pub_key !== undefined && object.pub_key !== null ? PublicKey.fromPartial(object.pub_key) : undefined;
 		message.power = object.power ?? 0;
 		return message;
-	},
+	}
 };
 
 export const VoteInfo: MessageFns<VoteInfo, "tendermint.abci.VoteInfo"> = {
@@ -4676,7 +4676,7 @@ export const VoteInfo: MessageFns<VoteInfo, "tendermint.abci.VoteInfo"> = {
 	fromJSON(object: any): VoteInfo {
 		return {
 			validator: isSet(object.validator) ? Validator.fromJSON(object.validator) : undefined,
-			signed_last_block: isSet(object.signed_last_block) ? globalThis.Boolean(object.signed_last_block) : false,
+			signed_last_block: isSet(object.signed_last_block) ? globalThis.Boolean(object.signed_last_block) : false
 		};
 	},
 
@@ -4699,7 +4699,7 @@ export const VoteInfo: MessageFns<VoteInfo, "tendermint.abci.VoteInfo"> = {
 		message.validator = object.validator !== undefined && object.validator !== null ? Validator.fromPartial(object.validator) : undefined;
 		message.signed_last_block = object.signed_last_block ?? false;
 		return message;
-	},
+	}
 };
 
 export const ExtendedVoteInfo: MessageFns<ExtendedVoteInfo, "tendermint.abci.ExtendedVoteInfo"> = {
@@ -4759,7 +4759,7 @@ export const ExtendedVoteInfo: MessageFns<ExtendedVoteInfo, "tendermint.abci.Ext
 		return {
 			validator: isSet(object.validator) ? Validator.fromJSON(object.validator) : undefined,
 			signed_last_block: isSet(object.signed_last_block) ? globalThis.Boolean(object.signed_last_block) : false,
-			vote_extension: isSet(object.vote_extension) ? bytesFromBase64(object.vote_extension) : new Uint8Array(0),
+			vote_extension: isSet(object.vote_extension) ? bytesFromBase64(object.vote_extension) : new Uint8Array(0)
 		};
 	},
 
@@ -4786,7 +4786,7 @@ export const ExtendedVoteInfo: MessageFns<ExtendedVoteInfo, "tendermint.abci.Ext
 		message.signed_last_block = object.signed_last_block ?? false;
 		message.vote_extension = object.vote_extension ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Misbehavior: MessageFns<Misbehavior, "tendermint.abci.Misbehavior"> = {
@@ -4868,7 +4868,7 @@ export const Misbehavior: MessageFns<Misbehavior, "tendermint.abci.Misbehavior">
 			validator: isSet(object.validator) ? Validator.fromJSON(object.validator) : undefined,
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			time: isSet(object.time) ? fromJsonTimestamp(object.time) : undefined,
-			total_voting_power: isSet(object.total_voting_power) ? globalThis.Number(object.total_voting_power) : 0,
+			total_voting_power: isSet(object.total_voting_power) ? globalThis.Number(object.total_voting_power) : 0
 		};
 	},
 
@@ -4903,7 +4903,7 @@ export const Misbehavior: MessageFns<Misbehavior, "tendermint.abci.Misbehavior">
 		message.time = object.time ?? undefined;
 		message.total_voting_power = object.total_voting_power ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Snapshot: MessageFns<Snapshot, "tendermint.abci.Snapshot"> = {
@@ -4985,7 +4985,7 @@ export const Snapshot: MessageFns<Snapshot, "tendermint.abci.Snapshot"> = {
 			format: isSet(object.format) ? globalThis.Number(object.format) : 0,
 			chunks: isSet(object.chunks) ? globalThis.Number(object.chunks) : 0,
 			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
-			metadata: isSet(object.metadata) ? bytesFromBase64(object.metadata) : new Uint8Array(0),
+			metadata: isSet(object.metadata) ? bytesFromBase64(object.metadata) : new Uint8Array(0)
 		};
 	},
 
@@ -5020,7 +5020,7 @@ export const Snapshot: MessageFns<Snapshot, "tendermint.abci.Snapshot"> = {
 		message.hash = object.hash ?? new Uint8Array(0);
 		message.metadata = object.metadata ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export function checkTxTypeFromJSON(object: any): CheckTxType {
@@ -5294,7 +5294,7 @@ function createBaseRequest(): Request {
 		process_proposal: undefined,
 		extend_vote: undefined,
 		verify_vote_extension: undefined,
-		finalize_block: undefined,
+		finalize_block: undefined
 	};
 }
 
@@ -5317,7 +5317,7 @@ function createBaseRequestInitChain(): RequestInitChain {
 		consensus_params: undefined,
 		validators: [],
 		app_state_bytes: new Uint8Array(0),
-		initial_height: 0,
+		initial_height: 0
 	};
 }
 
@@ -5358,7 +5358,7 @@ function createBaseRequestPrepareProposal(): RequestPrepareProposal {
 		height: 0,
 		time: undefined,
 		next_validators_hash: new Uint8Array(0),
-		proposer_address: new Uint8Array(0),
+		proposer_address: new Uint8Array(0)
 	};
 }
 
@@ -5371,7 +5371,7 @@ function createBaseRequestProcessProposal(): RequestProcessProposal {
 		height: 0,
 		time: undefined,
 		next_validators_hash: new Uint8Array(0),
-		proposer_address: new Uint8Array(0),
+		proposer_address: new Uint8Array(0)
 	};
 }
 
@@ -5384,7 +5384,7 @@ function createBaseRequestVerifyVoteExtension(): RequestVerifyVoteExtension {
 		hash: new Uint8Array(0),
 		validator_address: new Uint8Array(0),
 		height: 0,
-		vote_extension: new Uint8Array(0),
+		vote_extension: new Uint8Array(0)
 	};
 }
 
@@ -5397,7 +5397,7 @@ function createBaseRequestFinalizeBlock(): RequestFinalizeBlock {
 		height: 0,
 		time: undefined,
 		next_validators_hash: new Uint8Array(0),
-		proposer_address: new Uint8Array(0),
+		proposer_address: new Uint8Array(0)
 	};
 }
 
@@ -5419,7 +5419,7 @@ function createBaseResponse(): Response {
 		process_proposal: undefined,
 		extend_vote: undefined,
 		verify_vote_extension: undefined,
-		finalize_block: undefined,
+		finalize_block: undefined
 	};
 }
 
@@ -5453,7 +5453,7 @@ function createBaseResponseQuery(): ResponseQuery {
 		value: new Uint8Array(0),
 		proof_ops: undefined,
 		height: 0,
-		codespace: "",
+		codespace: ""
 	};
 }
 
@@ -5491,7 +5491,7 @@ function createBaseResponsePrepareProposal(): ResponsePrepareProposal {
 		app_hash: new Uint8Array(0),
 		tx_results: [],
 		validator_updates: [],
-		consensus_param_updates: undefined,
+		consensus_param_updates: undefined
 	};
 }
 
@@ -5501,7 +5501,7 @@ function createBaseResponseProcessProposal(): ResponseProcessProposal {
 		app_hash: new Uint8Array(0),
 		tx_results: [],
 		validator_updates: [],
-		consensus_param_updates: undefined,
+		consensus_param_updates: undefined
 	};
 }
 
@@ -5519,7 +5519,7 @@ function createBaseResponseFinalizeBlock(): ResponseFinalizeBlock {
 		tx_results: [],
 		validator_updates: [],
 		consensus_param_updates: undefined,
-		app_hash: new Uint8Array(0),
+		app_hash: new Uint8Array(0)
 	};
 }
 
@@ -5679,264 +5679,264 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.abci.VoteInfo", VoteInfo as never],
 	["/tendermint.abci.ExtendedVoteInfo", ExtendedVoteInfo as never],
 	["/tendermint.abci.Misbehavior", Misbehavior as never],
-	["/tendermint.abci.Snapshot", Snapshot as never],
+	["/tendermint.abci.Snapshot", Snapshot as never]
 ];
 export const aminoConverters = {
 	"/tendermint.abci.Request": {
 		aminoType: "tendermint.abci.Request",
 		toAmino: (message: Request) => ({ ...message }),
-		fromAmino: (object: Request) => ({ ...object }),
+		fromAmino: (object: Request) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestEcho": {
 		aminoType: "tendermint.abci.RequestEcho",
 		toAmino: (message: RequestEcho) => ({ ...message }),
-		fromAmino: (object: RequestEcho) => ({ ...object }),
+		fromAmino: (object: RequestEcho) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestFlush": {
 		aminoType: "tendermint.abci.RequestFlush",
 		toAmino: (message: RequestFlush) => ({ ...message }),
-		fromAmino: (object: RequestFlush) => ({ ...object }),
+		fromAmino: (object: RequestFlush) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestInfo": {
 		aminoType: "tendermint.abci.RequestInfo",
 		toAmino: (message: RequestInfo) => ({ ...message }),
-		fromAmino: (object: RequestInfo) => ({ ...object }),
+		fromAmino: (object: RequestInfo) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestInitChain": {
 		aminoType: "tendermint.abci.RequestInitChain",
 		toAmino: (message: RequestInitChain) => ({ ...message }),
-		fromAmino: (object: RequestInitChain) => ({ ...object }),
+		fromAmino: (object: RequestInitChain) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestQuery": {
 		aminoType: "tendermint.abci.RequestQuery",
 		toAmino: (message: RequestQuery) => ({ ...message }),
-		fromAmino: (object: RequestQuery) => ({ ...object }),
+		fromAmino: (object: RequestQuery) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestCheckTx": {
 		aminoType: "tendermint.abci.RequestCheckTx",
 		toAmino: (message: RequestCheckTx) => ({ ...message }),
-		fromAmino: (object: RequestCheckTx) => ({ ...object }),
+		fromAmino: (object: RequestCheckTx) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestCommit": {
 		aminoType: "tendermint.abci.RequestCommit",
 		toAmino: (message: RequestCommit) => ({ ...message }),
-		fromAmino: (object: RequestCommit) => ({ ...object }),
+		fromAmino: (object: RequestCommit) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestListSnapshots": {
 		aminoType: "tendermint.abci.RequestListSnapshots",
 		toAmino: (message: RequestListSnapshots) => ({ ...message }),
-		fromAmino: (object: RequestListSnapshots) => ({ ...object }),
+		fromAmino: (object: RequestListSnapshots) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestOfferSnapshot": {
 		aminoType: "tendermint.abci.RequestOfferSnapshot",
 		toAmino: (message: RequestOfferSnapshot) => ({ ...message }),
-		fromAmino: (object: RequestOfferSnapshot) => ({ ...object }),
+		fromAmino: (object: RequestOfferSnapshot) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestPrepareProposal": {
 		aminoType: "tendermint.abci.RequestPrepareProposal",
 		toAmino: (message: RequestPrepareProposal) => ({ ...message }),
-		fromAmino: (object: RequestPrepareProposal) => ({ ...object }),
+		fromAmino: (object: RequestPrepareProposal) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestProcessProposal": {
 		aminoType: "tendermint.abci.RequestProcessProposal",
 		toAmino: (message: RequestProcessProposal) => ({ ...message }),
-		fromAmino: (object: RequestProcessProposal) => ({ ...object }),
+		fromAmino: (object: RequestProcessProposal) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestExtendVote": {
 		aminoType: "tendermint.abci.RequestExtendVote",
 		toAmino: (message: RequestExtendVote) => ({ ...message }),
-		fromAmino: (object: RequestExtendVote) => ({ ...object }),
+		fromAmino: (object: RequestExtendVote) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestFinalizeBlock": {
 		aminoType: "tendermint.abci.RequestFinalizeBlock",
 		toAmino: (message: RequestFinalizeBlock) => ({ ...message }),
-		fromAmino: (object: RequestFinalizeBlock) => ({ ...object }),
+		fromAmino: (object: RequestFinalizeBlock) => ({ ...object })
 	},
 
 	"/tendermint.abci.Response": {
 		aminoType: "tendermint.abci.Response",
 		toAmino: (message: Response) => ({ ...message }),
-		fromAmino: (object: Response) => ({ ...object }),
+		fromAmino: (object: Response) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseException": {
 		aminoType: "tendermint.abci.ResponseException",
 		toAmino: (message: ResponseException) => ({ ...message }),
-		fromAmino: (object: ResponseException) => ({ ...object }),
+		fromAmino: (object: ResponseException) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseEcho": {
 		aminoType: "tendermint.abci.ResponseEcho",
 		toAmino: (message: ResponseEcho) => ({ ...message }),
-		fromAmino: (object: ResponseEcho) => ({ ...object }),
+		fromAmino: (object: ResponseEcho) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseFlush": {
 		aminoType: "tendermint.abci.ResponseFlush",
 		toAmino: (message: ResponseFlush) => ({ ...message }),
-		fromAmino: (object: ResponseFlush) => ({ ...object }),
+		fromAmino: (object: ResponseFlush) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseInfo": {
 		aminoType: "tendermint.abci.ResponseInfo",
 		toAmino: (message: ResponseInfo) => ({ ...message }),
-		fromAmino: (object: ResponseInfo) => ({ ...object }),
+		fromAmino: (object: ResponseInfo) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseInitChain": {
 		aminoType: "tendermint.abci.ResponseInitChain",
 		toAmino: (message: ResponseInitChain) => ({ ...message }),
-		fromAmino: (object: ResponseInitChain) => ({ ...object }),
+		fromAmino: (object: ResponseInitChain) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseQuery": {
 		aminoType: "tendermint.abci.ResponseQuery",
 		toAmino: (message: ResponseQuery) => ({ ...message }),
-		fromAmino: (object: ResponseQuery) => ({ ...object }),
+		fromAmino: (object: ResponseQuery) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseCheckTx": {
 		aminoType: "tendermint.abci.ResponseCheckTx",
 		toAmino: (message: ResponseCheckTx) => ({ ...message }),
-		fromAmino: (object: ResponseCheckTx) => ({ ...object }),
+		fromAmino: (object: ResponseCheckTx) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseDeliverTx": {
 		aminoType: "tendermint.abci.ResponseDeliverTx",
 		toAmino: (message: ResponseDeliverTx) => ({ ...message }),
-		fromAmino: (object: ResponseDeliverTx) => ({ ...object }),
+		fromAmino: (object: ResponseDeliverTx) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseCommit": {
 		aminoType: "tendermint.abci.ResponseCommit",
 		toAmino: (message: ResponseCommit) => ({ ...message }),
-		fromAmino: (object: ResponseCommit) => ({ ...object }),
+		fromAmino: (object: ResponseCommit) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseListSnapshots": {
 		aminoType: "tendermint.abci.ResponseListSnapshots",
 		toAmino: (message: ResponseListSnapshots) => ({ ...message }),
-		fromAmino: (object: ResponseListSnapshots) => ({ ...object }),
+		fromAmino: (object: ResponseListSnapshots) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseOfferSnapshot": {
 		aminoType: "tendermint.abci.ResponseOfferSnapshot",
 		toAmino: (message: ResponseOfferSnapshot) => ({ ...message }),
-		fromAmino: (object: ResponseOfferSnapshot) => ({ ...object }),
+		fromAmino: (object: ResponseOfferSnapshot) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponsePrepareProposal": {
 		aminoType: "tendermint.abci.ResponsePrepareProposal",
 		toAmino: (message: ResponsePrepareProposal) => ({ ...message }),
-		fromAmino: (object: ResponsePrepareProposal) => ({ ...object }),
+		fromAmino: (object: ResponsePrepareProposal) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseProcessProposal": {
 		aminoType: "tendermint.abci.ResponseProcessProposal",
 		toAmino: (message: ResponseProcessProposal) => ({ ...message }),
-		fromAmino: (object: ResponseProcessProposal) => ({ ...object }),
+		fromAmino: (object: ResponseProcessProposal) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseExtendVote": {
 		aminoType: "tendermint.abci.ResponseExtendVote",
 		toAmino: (message: ResponseExtendVote) => ({ ...message }),
-		fromAmino: (object: ResponseExtendVote) => ({ ...object }),
+		fromAmino: (object: ResponseExtendVote) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseFinalizeBlock": {
 		aminoType: "tendermint.abci.ResponseFinalizeBlock",
 		toAmino: (message: ResponseFinalizeBlock) => ({ ...message }),
-		fromAmino: (object: ResponseFinalizeBlock) => ({ ...object }),
+		fromAmino: (object: ResponseFinalizeBlock) => ({ ...object })
 	},
 
 	"/tendermint.abci.CommitInfo": {
 		aminoType: "tendermint.abci.CommitInfo",
 		toAmino: (message: CommitInfo) => ({ ...message }),
-		fromAmino: (object: CommitInfo) => ({ ...object }),
+		fromAmino: (object: CommitInfo) => ({ ...object })
 	},
 
 	"/tendermint.abci.ExtendedCommitInfo": {
 		aminoType: "tendermint.abci.ExtendedCommitInfo",
 		toAmino: (message: ExtendedCommitInfo) => ({ ...message }),
-		fromAmino: (object: ExtendedCommitInfo) => ({ ...object }),
+		fromAmino: (object: ExtendedCommitInfo) => ({ ...object })
 	},
 
 	"/tendermint.abci.Event": {
 		aminoType: "tendermint.abci.Event",
 		toAmino: (message: Event) => ({ ...message }),
-		fromAmino: (object: Event) => ({ ...object }),
+		fromAmino: (object: Event) => ({ ...object })
 	},
 
 	"/tendermint.abci.EventAttribute": {
 		aminoType: "tendermint.abci.EventAttribute",
 		toAmino: (message: EventAttribute) => ({ ...message }),
-		fromAmino: (object: EventAttribute) => ({ ...object }),
+		fromAmino: (object: EventAttribute) => ({ ...object })
 	},
 
 	"/tendermint.abci.ExecTxResult": {
 		aminoType: "tendermint.abci.ExecTxResult",
 		toAmino: (message: ExecTxResult) => ({ ...message }),
-		fromAmino: (object: ExecTxResult) => ({ ...object }),
+		fromAmino: (object: ExecTxResult) => ({ ...object })
 	},
 
 	"/tendermint.abci.TxResult": {
 		aminoType: "tendermint.abci.TxResult",
 		toAmino: (message: TxResult) => ({ ...message }),
-		fromAmino: (object: TxResult) => ({ ...object }),
+		fromAmino: (object: TxResult) => ({ ...object })
 	},
 
 	"/tendermint.abci.TxRecord": {
 		aminoType: "tendermint.abci.TxRecord",
 		toAmino: (message: TxRecord) => ({ ...message }),
-		fromAmino: (object: TxRecord) => ({ ...object }),
+		fromAmino: (object: TxRecord) => ({ ...object })
 	},
 
 	"/tendermint.abci.Validator": {
 		aminoType: "tendermint.abci.Validator",
 		toAmino: (message: Validator) => ({ ...message }),
-		fromAmino: (object: Validator) => ({ ...object }),
+		fromAmino: (object: Validator) => ({ ...object })
 	},
 
 	"/tendermint.abci.ValidatorUpdate": {
 		aminoType: "tendermint.abci.ValidatorUpdate",
 		toAmino: (message: ValidatorUpdate) => ({ ...message }),
-		fromAmino: (object: ValidatorUpdate) => ({ ...object }),
+		fromAmino: (object: ValidatorUpdate) => ({ ...object })
 	},
 
 	"/tendermint.abci.VoteInfo": {
 		aminoType: "tendermint.abci.VoteInfo",
 		toAmino: (message: VoteInfo) => ({ ...message }),
-		fromAmino: (object: VoteInfo) => ({ ...object }),
+		fromAmino: (object: VoteInfo) => ({ ...object })
 	},
 
 	"/tendermint.abci.ExtendedVoteInfo": {
 		aminoType: "tendermint.abci.ExtendedVoteInfo",
 		toAmino: (message: ExtendedVoteInfo) => ({ ...message }),
-		fromAmino: (object: ExtendedVoteInfo) => ({ ...object }),
+		fromAmino: (object: ExtendedVoteInfo) => ({ ...object })
 	},
 
 	"/tendermint.abci.Misbehavior": {
 		aminoType: "tendermint.abci.Misbehavior",
 		toAmino: (message: Misbehavior) => ({ ...message }),
-		fromAmino: (object: Misbehavior) => ({ ...object }),
+		fromAmino: (object: Misbehavior) => ({ ...object })
 	},
 
 	"/tendermint.abci.Snapshot": {
 		aminoType: "tendermint.abci.Snapshot",
 		toAmino: (message: Snapshot) => ({ ...message }),
-		fromAmino: (object: Snapshot) => ({ ...object }),
-	},
+		fromAmino: (object: Snapshot) => ({ ...object })
+	}
 };

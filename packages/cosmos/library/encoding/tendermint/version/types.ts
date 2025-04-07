@@ -55,7 +55,7 @@ export const App: MessageFns<App, "tendermint.version.App"> = {
 	fromJSON(object: any): App {
 		return {
 			protocol: isSet(object.protocol) ? globalThis.Number(object.protocol) : 0,
-			software: isSet(object.software) ? globalThis.String(object.software) : "",
+			software: isSet(object.software) ? globalThis.String(object.software) : ""
 		};
 	},
 
@@ -78,7 +78,7 @@ export const App: MessageFns<App, "tendermint.version.App"> = {
 		message.protocol = object.protocol ?? 0;
 		message.software = object.software ?? "";
 		return message;
-	},
+	}
 };
 
 export const Consensus: MessageFns<Consensus, "tendermint.version.Consensus"> = {
@@ -127,7 +127,7 @@ export const Consensus: MessageFns<Consensus, "tendermint.version.Consensus"> = 
 	fromJSON(object: any): Consensus {
 		return {
 			block: isSet(object.block) ? globalThis.Number(object.block) : 0,
-			app: isSet(object.app) ? globalThis.Number(object.app) : 0,
+			app: isSet(object.app) ? globalThis.Number(object.app) : 0
 		};
 	},
 
@@ -150,7 +150,7 @@ export const Consensus: MessageFns<Consensus, "tendermint.version.Consensus"> = 
 		message.block = object.block ?? 0;
 		message.app = object.app ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseApp(): App {
@@ -177,18 +177,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.version.App", App as never],
-	["/tendermint.version.Consensus", Consensus as never],
+	["/tendermint.version.Consensus", Consensus as never]
 ];
 export const aminoConverters = {
 	"/tendermint.version.App": {
 		aminoType: "tendermint.version.App",
 		toAmino: (message: App) => ({ ...message }),
-		fromAmino: (object: App) => ({ ...object }),
+		fromAmino: (object: App) => ({ ...object })
 	},
 
 	"/tendermint.version.Consensus": {
 		aminoType: "tendermint.version.Consensus",
 		toAmino: (message: Consensus) => ({ ...message }),
-		fromAmino: (object: Consensus) => ({ ...object }),
-	},
+		fromAmino: (object: Consensus) => ({ ...object })
+	}
 };

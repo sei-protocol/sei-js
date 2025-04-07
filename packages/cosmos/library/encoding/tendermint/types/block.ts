@@ -80,7 +80,7 @@ export const Block: MessageFns<Block, "tendermint.types.Block"> = {
 			header: isSet(object.header) ? Header.fromJSON(object.header) : undefined,
 			data: isSet(object.data) ? Data.fromJSON(object.data) : undefined,
 			evidence: isSet(object.evidence) ? EvidenceList.fromJSON(object.evidence) : undefined,
-			last_commit: isSet(object.last_commit) ? Commit.fromJSON(object.last_commit) : undefined,
+			last_commit: isSet(object.last_commit) ? Commit.fromJSON(object.last_commit) : undefined
 		};
 	},
 
@@ -111,7 +111,7 @@ export const Block: MessageFns<Block, "tendermint.types.Block"> = {
 		message.evidence = object.evidence !== undefined && object.evidence !== null ? EvidenceList.fromPartial(object.evidence) : undefined;
 		message.last_commit = object.last_commit !== undefined && object.last_commit !== null ? Commit.fromPartial(object.last_commit) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseBlock(): Block {
@@ -126,6 +126,6 @@ export const aminoConverters = {
 	"/tendermint.types.Block": {
 		aminoType: "tendermint.types.Block",
 		toAmino: (message: Block) => ({ ...message }),
-		fromAmino: (object: Block) => ({ ...object }),
-	},
+		fromAmino: (object: Block) => ({ ...object })
+	}
 };

@@ -24,7 +24,7 @@ import type {
 	MsgRegisterPointerResponse as MsgRegisterPointerResponse_type,
 	MsgRegisterPointer as MsgRegisterPointer_type,
 	MsgSendResponse as MsgSendResponse_type,
-	MsgSend as MsgSend_type,
+	MsgSend as MsgSend_type
 } from "../../types/evm";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -90,7 +90,7 @@ export const MsgEVMTransaction: MessageFns<MsgEVMTransaction, "seiprotocol.seich
 	fromJSON(object: any): MsgEVMTransaction {
 		return {
 			data: isSet(object.data) ? Any.fromJSON(object.data) : undefined,
-			derived: isSet(object.derived) ? bytesFromBase64(object.derived) : new Uint8Array(0),
+			derived: isSet(object.derived) ? bytesFromBase64(object.derived) : new Uint8Array(0)
 		};
 	},
 
@@ -113,7 +113,7 @@ export const MsgEVMTransaction: MessageFns<MsgEVMTransaction, "seiprotocol.seich
 		message.data = object.data !== undefined && object.data !== null ? Any.fromPartial(object.data) : undefined;
 		message.derived = object.derived ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const MsgEVMTransactionResponse: MessageFns<MsgEVMTransactionResponse, "seiprotocol.seichain.evm.MsgEVMTransactionResponse"> = {
@@ -195,7 +195,7 @@ export const MsgEVMTransactionResponse: MessageFns<MsgEVMTransactionResponse, "s
 			vm_error: isSet(object.vm_error) ? globalThis.String(object.vm_error) : "",
 			return_data: isSet(object.return_data) ? bytesFromBase64(object.return_data) : new Uint8Array(0),
 			hash: isSet(object.hash) ? globalThis.String(object.hash) : "",
-			logs: globalThis.Array.isArray(object?.logs) ? object.logs.map((e: any) => Log.fromJSON(e)) : [],
+			logs: globalThis.Array.isArray(object?.logs) ? object.logs.map((e: any) => Log.fromJSON(e)) : []
 		};
 	},
 
@@ -230,7 +230,7 @@ export const MsgEVMTransactionResponse: MessageFns<MsgEVMTransactionResponse, "s
 		message.hash = object.hash ?? "";
 		message.logs = object.logs?.map((e) => Log.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgInternalEVMCall: MessageFns<MsgInternalEVMCall, "seiprotocol.seichain.evm.MsgInternalEVMCall"> = {
@@ -301,7 +301,7 @@ export const MsgInternalEVMCall: MessageFns<MsgInternalEVMCall, "seiprotocol.sei
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
 			value: isSet(object.value) ? globalThis.String(object.value) : "",
 			to: isSet(object.to) ? globalThis.String(object.to) : "",
-			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
+			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0)
 		};
 	},
 
@@ -332,7 +332,7 @@ export const MsgInternalEVMCall: MessageFns<MsgInternalEVMCall, "seiprotocol.sei
 		message.to = object.to ?? "";
 		message.data = object.data ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const MsgInternalEVMCallResponse: MessageFns<MsgInternalEVMCallResponse, "seiprotocol.seichain.evm.MsgInternalEVMCallResponse"> = {
@@ -373,7 +373,7 @@ export const MsgInternalEVMCallResponse: MessageFns<MsgInternalEVMCallResponse, 
 	fromPartial<I extends Exact<DeepPartial<MsgInternalEVMCallResponse>, I>>(_: I): MsgInternalEVMCallResponse {
 		const message = createBaseMsgInternalEVMCallResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgInternalEVMDelegateCall: MessageFns<MsgInternalEVMDelegateCall, "seiprotocol.seichain.evm.MsgInternalEVMDelegateCall"> = {
@@ -455,7 +455,7 @@ export const MsgInternalEVMDelegateCall: MessageFns<MsgInternalEVMDelegateCall, 
 			codeHash: isSet(object.codeHash) ? bytesFromBase64(object.codeHash) : new Uint8Array(0),
 			to: isSet(object.to) ? globalThis.String(object.to) : "",
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
-			fromContract: isSet(object.fromContract) ? globalThis.String(object.fromContract) : "",
+			fromContract: isSet(object.fromContract) ? globalThis.String(object.fromContract) : ""
 		};
 	},
 
@@ -490,7 +490,7 @@ export const MsgInternalEVMDelegateCall: MessageFns<MsgInternalEVMDelegateCall, 
 		message.data = object.data ?? new Uint8Array(0);
 		message.fromContract = object.fromContract ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgInternalEVMDelegateCallResponse: MessageFns<MsgInternalEVMDelegateCallResponse, "seiprotocol.seichain.evm.MsgInternalEVMDelegateCallResponse"> =
@@ -532,7 +532,7 @@ export const MsgInternalEVMDelegateCallResponse: MessageFns<MsgInternalEVMDelega
 		fromPartial<I extends Exact<DeepPartial<MsgInternalEVMDelegateCallResponse>, I>>(_: I): MsgInternalEVMDelegateCallResponse {
 			const message = createBaseMsgInternalEVMDelegateCallResponse();
 			return message;
-		},
+		}
 	};
 
 export const MsgSend: MessageFns<MsgSend, "seiprotocol.seichain.evm.MsgSend"> = {
@@ -592,7 +592,7 @@ export const MsgSend: MessageFns<MsgSend, "seiprotocol.seichain.evm.MsgSend"> = 
 		return {
 			from_address: isSet(object.from_address) ? globalThis.String(object.from_address) : "",
 			to_address: isSet(object.to_address) ? globalThis.String(object.to_address) : "",
-			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
+			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -619,7 +619,7 @@ export const MsgSend: MessageFns<MsgSend, "seiprotocol.seichain.evm.MsgSend"> = 
 		message.to_address = object.to_address ?? "";
 		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgSendResponse: MessageFns<MsgSendResponse, "seiprotocol.seichain.evm.MsgSendResponse"> = {
@@ -660,7 +660,7 @@ export const MsgSendResponse: MessageFns<MsgSendResponse, "seiprotocol.seichain.
 	fromPartial<I extends Exact<DeepPartial<MsgSendResponse>, I>>(_: I): MsgSendResponse {
 		const message = createBaseMsgSendResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgRegisterPointer: MessageFns<MsgRegisterPointer, "seiprotocol.seichain.evm.MsgRegisterPointer"> = {
@@ -720,7 +720,7 @@ export const MsgRegisterPointer: MessageFns<MsgRegisterPointer, "seiprotocol.sei
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
 			pointer_type: isSet(object.pointer_type) ? pointerTypeFromJSON(object.pointer_type) : 0,
-			erc_address: isSet(object.erc_address) ? globalThis.String(object.erc_address) : "",
+			erc_address: isSet(object.erc_address) ? globalThis.String(object.erc_address) : ""
 		};
 	},
 
@@ -747,7 +747,7 @@ export const MsgRegisterPointer: MessageFns<MsgRegisterPointer, "seiprotocol.sei
 		message.pointer_type = object.pointer_type ?? 0;
 		message.erc_address = object.erc_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgRegisterPointerResponse: MessageFns<MsgRegisterPointerResponse, "seiprotocol.seichain.evm.MsgRegisterPointerResponse"> = {
@@ -802,7 +802,7 @@ export const MsgRegisterPointerResponse: MessageFns<MsgRegisterPointerResponse, 
 		const message = createBaseMsgRegisterPointerResponse();
 		message.pointer_address = object.pointer_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgAssociateContractAddress: MessageFns<MsgAssociateContractAddress, "seiprotocol.seichain.evm.MsgAssociateContractAddress"> = {
@@ -851,7 +851,7 @@ export const MsgAssociateContractAddress: MessageFns<MsgAssociateContractAddress
 	fromJSON(object: any): MsgAssociateContractAddress {
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			address: isSet(object.address) ? globalThis.String(object.address) : "",
+			address: isSet(object.address) ? globalThis.String(object.address) : ""
 		};
 	},
 
@@ -874,7 +874,7 @@ export const MsgAssociateContractAddress: MessageFns<MsgAssociateContractAddress
 		message.sender = object.sender ?? "";
 		message.address = object.address ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgAssociateContractAddressResponse: MessageFns<
@@ -918,7 +918,7 @@ export const MsgAssociateContractAddressResponse: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<MsgAssociateContractAddressResponse>, I>>(_: I): MsgAssociateContractAddressResponse {
 		const message = createBaseMsgAssociateContractAddressResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgAssociate: MessageFns<MsgAssociate, "seiprotocol.seichain.evm.MsgAssociate"> = {
@@ -967,7 +967,7 @@ export const MsgAssociate: MessageFns<MsgAssociate, "seiprotocol.seichain.evm.Ms
 	fromJSON(object: any): MsgAssociate {
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			custom_message: isSet(object.custom_message) ? globalThis.String(object.custom_message) : "",
+			custom_message: isSet(object.custom_message) ? globalThis.String(object.custom_message) : ""
 		};
 	},
 
@@ -990,7 +990,7 @@ export const MsgAssociate: MessageFns<MsgAssociate, "seiprotocol.seichain.evm.Ms
 		message.sender = object.sender ?? "";
 		message.custom_message = object.custom_message ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgAssociateResponse: MessageFns<MsgAssociateResponse, "seiprotocol.seichain.evm.MsgAssociateResponse"> = {
@@ -1031,7 +1031,7 @@ export const MsgAssociateResponse: MessageFns<MsgAssociateResponse, "seiprotocol
 	fromPartial<I extends Exact<DeepPartial<MsgAssociateResponse>, I>>(_: I): MsgAssociateResponse {
 		const message = createBaseMsgAssociateResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgEVMTransaction(): MsgEVMTransaction {
@@ -1136,48 +1136,48 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.MsgSendResponse", MsgSendResponse as never],
 	["/seiprotocol.seichain.evm.MsgRegisterPointer", MsgRegisterPointer as never],
 	["/seiprotocol.seichain.evm.MsgAssociate", MsgAssociate as never],
-	["/seiprotocol.seichain.evm.MsgAssociateResponse", MsgAssociateResponse as never],
+	["/seiprotocol.seichain.evm.MsgAssociateResponse", MsgAssociateResponse as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.MsgEVMTransaction": {
 		aminoType: "evm/MsgEVMTransaction",
 		toAmino: (message: MsgEVMTransaction) => ({ ...message }),
-		fromAmino: (object: MsgEVMTransaction) => ({ ...object }),
+		fromAmino: (object: MsgEVMTransaction) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgInternalEVMCall": {
 		aminoType: "evm/MsgInternalEVMCall",
 		toAmino: (message: MsgInternalEVMCall) => ({ ...message }),
-		fromAmino: (object: MsgInternalEVMCall) => ({ ...object }),
+		fromAmino: (object: MsgInternalEVMCall) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgSend": {
 		aminoType: "evm/MsgSend",
 		toAmino: (message: MsgSend) => ({ ...message }),
-		fromAmino: (object: MsgSend) => ({ ...object }),
+		fromAmino: (object: MsgSend) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgSendResponse": {
 		aminoType: "evm/MsgSendResponse",
 		toAmino: (message: MsgSendResponse) => ({ ...message }),
-		fromAmino: (object: MsgSendResponse) => ({ ...object }),
+		fromAmino: (object: MsgSendResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgRegisterPointer": {
 		aminoType: "evm/MsgRegisterPointer",
 		toAmino: (message: MsgRegisterPointer) => ({ ...message }),
-		fromAmino: (object: MsgRegisterPointer) => ({ ...object }),
+		fromAmino: (object: MsgRegisterPointer) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgAssociate": {
 		aminoType: "evm/MsgAssociate",
 		toAmino: (message: MsgAssociate) => ({ ...message }),
-		fromAmino: (object: MsgAssociate) => ({ ...object }),
+		fromAmino: (object: MsgAssociate) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgAssociateResponse": {
 		aminoType: "evm/MsgAssociateResponse",
 		toAmino: (message: MsgAssociateResponse) => ({ ...message }),
-		fromAmino: (object: MsgAssociateResponse) => ({ ...object }),
-	},
+		fromAmino: (object: MsgAssociateResponse) => ({ ...object })
+	}
 };

@@ -58,7 +58,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.auth.v1beta1.Genesis
 	fromJSON(object: any): GenesisState {
 		return {
 			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-			accounts: globalThis.Array.isArray(object?.accounts) ? object.accounts.map((e: any) => Any.fromJSON(e)) : [],
+			accounts: globalThis.Array.isArray(object?.accounts) ? object.accounts.map((e: any) => Any.fromJSON(e)) : []
 		};
 	},
 
@@ -81,7 +81,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.auth.v1beta1.Genesis
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		message.accounts = object.accounts?.map((e) => Any.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -96,6 +96,6 @@ export const aminoConverters = {
 	"/cosmos.auth.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

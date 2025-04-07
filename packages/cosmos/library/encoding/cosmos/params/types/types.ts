@@ -7,7 +7,7 @@ import { DecCoin } from "../../base/v1beta1/coin";
 import type {
 	CosmosGasParams as CosmosGasParams_type,
 	FeesParams as FeesParams_type,
-	GenesisState as GenesisState_type,
+	GenesisState as GenesisState_type
 } from "../../../../types/cosmos/params/types";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -64,7 +64,7 @@ export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParam
 			global_minimum_gas_prices: globalThis.Array.isArray(object?.global_minimum_gas_prices)
 				? object.global_minimum_gas_prices.map((e: any) => DecCoin.fromJSON(e))
 				: [],
-			allowed_fee_denoms: globalThis.Array.isArray(object?.allowed_fee_denoms) ? object.allowed_fee_denoms.map((e: any) => globalThis.String(e)) : [],
+			allowed_fee_denoms: globalThis.Array.isArray(object?.allowed_fee_denoms) ? object.allowed_fee_denoms.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -87,7 +87,7 @@ export const FeesParams: MessageFns<FeesParams, "cosmos.params.v1beta1.FeesParam
 		message.global_minimum_gas_prices = object.global_minimum_gas_prices?.map((e) => DecCoin.fromPartial(e)) || [];
 		message.allowed_fee_denoms = object.allowed_fee_denoms?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const CosmosGasParams: MessageFns<CosmosGasParams, "cosmos.params.v1beta1.CosmosGasParams"> = {
@@ -136,7 +136,7 @@ export const CosmosGasParams: MessageFns<CosmosGasParams, "cosmos.params.v1beta1
 	fromJSON(object: any): CosmosGasParams {
 		return {
 			cosmos_gas_multiplier_numerator: isSet(object.cosmos_gas_multiplier_numerator) ? globalThis.Number(object.cosmos_gas_multiplier_numerator) : 0,
-			cosmos_gas_multiplier_denominator: isSet(object.cosmos_gas_multiplier_denominator) ? globalThis.Number(object.cosmos_gas_multiplier_denominator) : 0,
+			cosmos_gas_multiplier_denominator: isSet(object.cosmos_gas_multiplier_denominator) ? globalThis.Number(object.cosmos_gas_multiplier_denominator) : 0
 		};
 	},
 
@@ -159,7 +159,7 @@ export const CosmosGasParams: MessageFns<CosmosGasParams, "cosmos.params.v1beta1
 		message.cosmos_gas_multiplier_numerator = object.cosmos_gas_multiplier_numerator ?? 0;
 		message.cosmos_gas_multiplier_denominator = object.cosmos_gas_multiplier_denominator ?? 0;
 		return message;
-	},
+	}
 };
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.params.v1beta1.GenesisState"> = {
@@ -208,7 +208,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.params.v1beta1.Genes
 	fromJSON(object: any): GenesisState {
 		return {
 			fees_params: isSet(object.fees_params) ? FeesParams.fromJSON(object.fees_params) : undefined,
-			cosmos_gas_params: isSet(object.cosmos_gas_params) ? CosmosGasParams.fromJSON(object.cosmos_gas_params) : undefined,
+			cosmos_gas_params: isSet(object.cosmos_gas_params) ? CosmosGasParams.fromJSON(object.cosmos_gas_params) : undefined
 		};
 	},
 
@@ -232,7 +232,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.params.v1beta1.Genes
 		message.cosmos_gas_params =
 			object.cosmos_gas_params !== undefined && object.cosmos_gas_params !== null ? CosmosGasParams.fromPartial(object.cosmos_gas_params) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseFeesParams(): FeesParams {
@@ -264,24 +264,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.params.v1beta1.FeesParams", FeesParams as never],
 	["/cosmos.params.v1beta1.CosmosGasParams", CosmosGasParams as never],
-	["/cosmos.params.v1beta1.GenesisState", GenesisState as never],
+	["/cosmos.params.v1beta1.GenesisState", GenesisState as never]
 ];
 export const aminoConverters = {
 	"/cosmos.params.v1beta1.FeesParams": {
 		aminoType: "cosmos-sdk/FeesParams",
 		toAmino: (message: FeesParams) => ({ ...message }),
-		fromAmino: (object: FeesParams) => ({ ...object }),
+		fromAmino: (object: FeesParams) => ({ ...object })
 	},
 
 	"/cosmos.params.v1beta1.CosmosGasParams": {
 		aminoType: "cosmos-sdk/CosmosGasParams",
 		toAmino: (message: CosmosGasParams) => ({ ...message }),
-		fromAmino: (object: CosmosGasParams) => ({ ...object }),
+		fromAmino: (object: CosmosGasParams) => ({ ...object })
 	},
 
 	"/cosmos.params.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

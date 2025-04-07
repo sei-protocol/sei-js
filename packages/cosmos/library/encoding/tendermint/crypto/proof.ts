@@ -7,7 +7,7 @@ import type {
 	ProofOp as ProofOp_type,
 	ProofOps as ProofOps_type,
 	Proof as Proof_type,
-	ValueOp as ValueOp_type,
+	ValueOp as ValueOp_type
 } from "../../../types/tendermint/crypto";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -86,7 +86,7 @@ export const Proof: MessageFns<Proof, "tendermint.crypto.Proof"> = {
 			total: isSet(object.total) ? globalThis.Number(object.total) : 0,
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
 			leaf_hash: isSet(object.leaf_hash) ? bytesFromBase64(object.leaf_hash) : new Uint8Array(0),
-			aunts: globalThis.Array.isArray(object?.aunts) ? object.aunts.map((e: any) => bytesFromBase64(e)) : [],
+			aunts: globalThis.Array.isArray(object?.aunts) ? object.aunts.map((e: any) => bytesFromBase64(e)) : []
 		};
 	},
 
@@ -117,7 +117,7 @@ export const Proof: MessageFns<Proof, "tendermint.crypto.Proof"> = {
 		message.leaf_hash = object.leaf_hash ?? new Uint8Array(0);
 		message.aunts = object.aunts?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const ValueOp: MessageFns<ValueOp, "tendermint.crypto.ValueOp"> = {
@@ -166,7 +166,7 @@ export const ValueOp: MessageFns<ValueOp, "tendermint.crypto.ValueOp"> = {
 	fromJSON(object: any): ValueOp {
 		return {
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
-			proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined,
+			proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined
 		};
 	},
 
@@ -189,7 +189,7 @@ export const ValueOp: MessageFns<ValueOp, "tendermint.crypto.ValueOp"> = {
 		message.key = object.key ?? new Uint8Array(0);
 		message.proof = object.proof !== undefined && object.proof !== null ? Proof.fromPartial(object.proof) : undefined;
 		return message;
-	},
+	}
 };
 
 export const DominoOp: MessageFns<DominoOp, "tendermint.crypto.DominoOp"> = {
@@ -249,7 +249,7 @@ export const DominoOp: MessageFns<DominoOp, "tendermint.crypto.DominoOp"> = {
 		return {
 			key: isSet(object.key) ? globalThis.String(object.key) : "",
 			input: isSet(object.input) ? globalThis.String(object.input) : "",
-			output: isSet(object.output) ? globalThis.String(object.output) : "",
+			output: isSet(object.output) ? globalThis.String(object.output) : ""
 		};
 	},
 
@@ -276,7 +276,7 @@ export const DominoOp: MessageFns<DominoOp, "tendermint.crypto.DominoOp"> = {
 		message.input = object.input ?? "";
 		message.output = object.output ?? "";
 		return message;
-	},
+	}
 };
 
 export const ProofOp: MessageFns<ProofOp, "tendermint.crypto.ProofOp"> = {
@@ -336,7 +336,7 @@ export const ProofOp: MessageFns<ProofOp, "tendermint.crypto.ProofOp"> = {
 		return {
 			type: isSet(object.type) ? globalThis.String(object.type) : "",
 			key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
-			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
+			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0)
 		};
 	},
 
@@ -363,7 +363,7 @@ export const ProofOp: MessageFns<ProofOp, "tendermint.crypto.ProofOp"> = {
 		message.key = object.key ?? new Uint8Array(0);
 		message.data = object.data ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ProofOps: MessageFns<ProofOps, "tendermint.crypto.ProofOps"> = {
@@ -418,7 +418,7 @@ export const ProofOps: MessageFns<ProofOps, "tendermint.crypto.ProofOps"> = {
 		const message = createBaseProofOps();
 		message.ops = object.ops?.map((e) => ProofOp.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseProof(): Proof {
@@ -485,36 +485,36 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.crypto.ValueOp", ValueOp as never],
 	["/tendermint.crypto.DominoOp", DominoOp as never],
 	["/tendermint.crypto.ProofOp", ProofOp as never],
-	["/tendermint.crypto.ProofOps", ProofOps as never],
+	["/tendermint.crypto.ProofOps", ProofOps as never]
 ];
 export const aminoConverters = {
 	"/tendermint.crypto.Proof": {
 		aminoType: "tendermint.crypto.Proof",
 		toAmino: (message: Proof) => ({ ...message }),
-		fromAmino: (object: Proof) => ({ ...object }),
+		fromAmino: (object: Proof) => ({ ...object })
 	},
 
 	"/tendermint.crypto.ValueOp": {
 		aminoType: "tendermint.crypto.ValueOp",
 		toAmino: (message: ValueOp) => ({ ...message }),
-		fromAmino: (object: ValueOp) => ({ ...object }),
+		fromAmino: (object: ValueOp) => ({ ...object })
 	},
 
 	"/tendermint.crypto.DominoOp": {
 		aminoType: "tendermint.crypto.DominoOp",
 		toAmino: (message: DominoOp) => ({ ...message }),
-		fromAmino: (object: DominoOp) => ({ ...object }),
+		fromAmino: (object: DominoOp) => ({ ...object })
 	},
 
 	"/tendermint.crypto.ProofOp": {
 		aminoType: "tendermint.crypto.ProofOp",
 		toAmino: (message: ProofOp) => ({ ...message }),
-		fromAmino: (object: ProofOp) => ({ ...object }),
+		fromAmino: (object: ProofOp) => ({ ...object })
 	},
 
 	"/tendermint.crypto.ProofOps": {
 		aminoType: "tendermint.crypto.ProofOps",
 		toAmino: (message: ProofOps) => ({ ...message }),
-		fromAmino: (object: ProofOps) => ({ ...object }),
-	},
+		fromAmino: (object: ProofOps) => ({ ...object })
+	}
 };

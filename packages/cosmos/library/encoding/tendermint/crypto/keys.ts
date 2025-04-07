@@ -65,7 +65,7 @@ export const PublicKey: MessageFns<PublicKey, "tendermint.crypto.PublicKey"> = {
 		return {
 			ed25519: isSet(object.ed25519) ? bytesFromBase64(object.ed25519) : undefined,
 			secp256k1: isSet(object.secp256k1) ? bytesFromBase64(object.secp256k1) : undefined,
-			sr25519: isSet(object.sr25519) ? bytesFromBase64(object.sr25519) : undefined,
+			sr25519: isSet(object.sr25519) ? bytesFromBase64(object.sr25519) : undefined
 		};
 	},
 
@@ -92,7 +92,7 @@ export const PublicKey: MessageFns<PublicKey, "tendermint.crypto.PublicKey"> = {
 		message.secp256k1 = object.secp256k1 ?? undefined;
 		message.sr25519 = object.sr25519 ?? undefined;
 		return message;
-	},
+	}
 };
 
 function createBasePublicKey(): PublicKey {
@@ -132,6 +132,6 @@ export const aminoConverters = {
 	"/tendermint.crypto.PublicKey": {
 		aminoType: "tendermint.crypto.PublicKey",
 		toAmino: (message: PublicKey) => ({ ...message }),
-		fromAmino: (object: PublicKey) => ({ ...object }),
-	},
+		fromAmino: (object: PublicKey) => ({ ...object })
+	}
 };

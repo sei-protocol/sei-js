@@ -1,3 +1,3 @@
 // @ts-nocheck
 
-export * from './proofs';
+export * from "./proofs";

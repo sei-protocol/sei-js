@@ -67,7 +67,7 @@ export const HttpBody: MessageFns<HttpBody, "google.api.HttpBody"> = {
 		return {
 			content_type: isSet(object.content_type) ? globalThis.String(object.content_type) : "",
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
-			extensions: globalThis.Array.isArray(object?.extensions) ? object.extensions.map((e: any) => Any.fromJSON(e)) : [],
+			extensions: globalThis.Array.isArray(object?.extensions) ? object.extensions.map((e: any) => Any.fromJSON(e)) : []
 		};
 	},
 
@@ -94,7 +94,7 @@ export const HttpBody: MessageFns<HttpBody, "google.api.HttpBody"> = {
 		message.data = object.data ?? new Uint8Array(0);
 		message.extensions = object.extensions?.map((e) => Any.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseHttpBody(): HttpBody {
@@ -134,6 +134,6 @@ export const aminoConverters = {
 	"/google.api.HttpBody": {
 		aminoType: "google.api.HttpBody",
 		toAmino: (message: HttpBody) => ({ ...message }),
-		fromAmino: (object: HttpBody) => ({ ...object }),
-	},
+		fromAmino: (object: HttpBody) => ({ ...object })
+	}
 };

@@ -10,7 +10,7 @@ import type {
 	QueryEpochRequest as QueryEpochRequest_type,
 	QueryEpochResponse as QueryEpochResponse_type,
 	QueryParamsRequest as QueryParamsRequest_type,
-	QueryParamsResponse as QueryParamsResponse_type,
+	QueryParamsResponse as QueryParamsResponse_type
 } from "../../types/epoch";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -58,7 +58,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "seiprotocol.sei
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.seichain.epoch.QueryParamsResponse"> = {
@@ -113,7 +113,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "seiprotocol.s
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryEpochRequest: MessageFns<QueryEpochRequest, "seiprotocol.seichain.epoch.QueryEpochRequest"> = {
@@ -154,7 +154,7 @@ export const QueryEpochRequest: MessageFns<QueryEpochRequest, "seiprotocol.seich
 	fromPartial<I extends Exact<DeepPartial<QueryEpochRequest>, I>>(_: I): QueryEpochRequest {
 		const message = createBaseQueryEpochRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryEpochResponse: MessageFns<QueryEpochResponse, "seiprotocol.seichain.epoch.QueryEpochResponse"> = {
@@ -209,7 +209,7 @@ export const QueryEpochResponse: MessageFns<QueryEpochResponse, "seiprotocol.sei
 		const message = createBaseQueryEpochResponse();
 		message.epoch = object.epoch !== undefined && object.epoch !== null ? Epoch.fromPartial(object.epoch) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -235,30 +235,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.epoch.QueryParamsRequest", QueryParamsRequest as never],
 	["/seiprotocol.seichain.epoch.QueryParamsResponse", QueryParamsResponse as never],
 	["/seiprotocol.seichain.epoch.QueryEpochRequest", QueryEpochRequest as never],
-	["/seiprotocol.seichain.epoch.QueryEpochResponse", QueryEpochResponse as never],
+	["/seiprotocol.seichain.epoch.QueryEpochResponse", QueryEpochResponse as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.epoch.QueryParamsRequest": {
 		aminoType: "epoch/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.epoch.QueryParamsResponse": {
 		aminoType: "epoch/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.epoch.QueryEpochRequest": {
 		aminoType: "epoch/QueryEpochRequest",
 		toAmino: (message: QueryEpochRequest) => ({ ...message }),
-		fromAmino: (object: QueryEpochRequest) => ({ ...object }),
+		fromAmino: (object: QueryEpochRequest) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.epoch.QueryEpochResponse": {
 		aminoType: "epoch/QueryEpochResponse",
 		toAmino: (message: QueryEpochResponse) => ({ ...message }),
-		fromAmino: (object: QueryEpochResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryEpochResponse) => ({ ...object })
+	}
 };

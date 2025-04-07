@@ -4,7 +4,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
 	MsgVerifyInvariantResponse as MsgVerifyInvariantResponse_type,
-	MsgVerifyInvariant as MsgVerifyInvariant_type,
+	MsgVerifyInvariant as MsgVerifyInvariant_type
 } from "../../../../types/cosmos/crisis/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -69,7 +69,7 @@ export const MsgVerifyInvariant: MessageFns<MsgVerifyInvariant, "cosmos.crisis.v
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
 			invariant_module_name: isSet(object.invariant_module_name) ? globalThis.String(object.invariant_module_name) : "",
-			invariant_route: isSet(object.invariant_route) ? globalThis.String(object.invariant_route) : "",
+			invariant_route: isSet(object.invariant_route) ? globalThis.String(object.invariant_route) : ""
 		};
 	},
 
@@ -96,7 +96,7 @@ export const MsgVerifyInvariant: MessageFns<MsgVerifyInvariant, "cosmos.crisis.v
 		message.invariant_module_name = object.invariant_module_name ?? "";
 		message.invariant_route = object.invariant_route ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgVerifyInvariantResponse: MessageFns<MsgVerifyInvariantResponse, "cosmos.crisis.v1beta1.MsgVerifyInvariantResponse"> = {
@@ -137,7 +137,7 @@ export const MsgVerifyInvariantResponse: MessageFns<MsgVerifyInvariantResponse, 
 	fromPartial<I extends Exact<DeepPartial<MsgVerifyInvariantResponse>, I>>(_: I): MsgVerifyInvariantResponse {
 		const message = createBaseMsgVerifyInvariantResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgVerifyInvariant(): MsgVerifyInvariant {
@@ -156,6 +156,6 @@ export const aminoConverters = {
 	"/cosmos.crisis.v1beta1.MsgVerifyInvariant": {
 		aminoType: "cosmos-sdk/MsgVerifyInvariant",
 		toAmino: (message: MsgVerifyInvariant) => ({ ...message }),
-		fromAmino: (object: MsgVerifyInvariant) => ({ ...object }),
-	},
+		fromAmino: (object: MsgVerifyInvariant) => ({ ...object })
+	}
 };

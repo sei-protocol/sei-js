@@ -111,7 +111,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.gov.v1beta1.GenesisS
 			proposals: globalThis.Array.isArray(object?.proposals) ? object.proposals.map((e: any) => Proposal.fromJSON(e)) : [],
 			deposit_params: isSet(object.deposit_params) ? DepositParams.fromJSON(object.deposit_params) : undefined,
 			voting_params: isSet(object.voting_params) ? VotingParams.fromJSON(object.voting_params) : undefined,
-			tally_params: isSet(object.tally_params) ? TallyParams.fromJSON(object.tally_params) : undefined,
+			tally_params: isSet(object.tally_params) ? TallyParams.fromJSON(object.tally_params) : undefined
 		};
 	},
 
@@ -155,7 +155,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.gov.v1beta1.GenesisS
 		message.voting_params = object.voting_params !== undefined && object.voting_params !== null ? VotingParams.fromPartial(object.voting_params) : undefined;
 		message.tally_params = object.tally_params !== undefined && object.tally_params !== null ? TallyParams.fromPartial(object.tally_params) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -166,7 +166,7 @@ function createBaseGenesisState(): GenesisState {
 		proposals: [],
 		deposit_params: undefined,
 		voting_params: undefined,
-		tally_params: undefined,
+		tally_params: undefined
 	};
 }
 
@@ -189,6 +189,6 @@ export const aminoConverters = {
 	"/cosmos.gov.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
-	},
+		fromAmino: (object: GenesisState) => ({ ...object })
+	}
 };

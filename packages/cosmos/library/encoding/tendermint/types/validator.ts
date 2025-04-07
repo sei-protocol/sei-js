@@ -69,7 +69,7 @@ export const ValidatorSet: MessageFns<ValidatorSet, "tendermint.types.ValidatorS
 		return {
 			validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e: any) => Validator.fromJSON(e)) : [],
 			proposer: isSet(object.proposer) ? Validator.fromJSON(object.proposer) : undefined,
-			total_voting_power: isSet(object.total_voting_power) ? globalThis.Number(object.total_voting_power) : 0,
+			total_voting_power: isSet(object.total_voting_power) ? globalThis.Number(object.total_voting_power) : 0
 		};
 	},
 
@@ -96,7 +96,7 @@ export const ValidatorSet: MessageFns<ValidatorSet, "tendermint.types.ValidatorS
 		message.proposer = object.proposer !== undefined && object.proposer !== null ? Validator.fromPartial(object.proposer) : undefined;
 		message.total_voting_power = object.total_voting_power ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Validator: MessageFns<Validator, "tendermint.types.Validator"> = {
@@ -167,7 +167,7 @@ export const Validator: MessageFns<Validator, "tendermint.types.Validator"> = {
 			address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(0),
 			pub_key: isSet(object.pub_key) ? PublicKey.fromJSON(object.pub_key) : undefined,
 			voting_power: isSet(object.voting_power) ? globalThis.Number(object.voting_power) : 0,
-			proposer_priority: isSet(object.proposer_priority) ? globalThis.Number(object.proposer_priority) : 0,
+			proposer_priority: isSet(object.proposer_priority) ? globalThis.Number(object.proposer_priority) : 0
 		};
 	},
 
@@ -198,7 +198,7 @@ export const Validator: MessageFns<Validator, "tendermint.types.Validator"> = {
 		message.voting_power = object.voting_power ?? 0;
 		message.proposer_priority = object.proposer_priority ?? 0;
 		return message;
-	},
+	}
 };
 
 export const SimpleValidator: MessageFns<SimpleValidator, "tendermint.types.SimpleValidator"> = {
@@ -247,7 +247,7 @@ export const SimpleValidator: MessageFns<SimpleValidator, "tendermint.types.Simp
 	fromJSON(object: any): SimpleValidator {
 		return {
 			pub_key: isSet(object.pub_key) ? PublicKey.fromJSON(object.pub_key) : undefined,
-			voting_power: isSet(object.voting_power) ? globalThis.Number(object.voting_power) : 0,
+			voting_power: isSet(object.voting_power) ? globalThis.Number(object.voting_power) : 0
 		};
 	},
 
@@ -270,7 +270,7 @@ export const SimpleValidator: MessageFns<SimpleValidator, "tendermint.types.Simp
 		message.pub_key = object.pub_key !== undefined && object.pub_key !== null ? PublicKey.fromPartial(object.pub_key) : undefined;
 		message.voting_power = object.voting_power ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseValidatorSet(): ValidatorSet {
@@ -327,24 +327,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.types.ValidatorSet", ValidatorSet as never],
 	["/tendermint.types.Validator", Validator as never],
-	["/tendermint.types.SimpleValidator", SimpleValidator as never],
+	["/tendermint.types.SimpleValidator", SimpleValidator as never]
 ];
 export const aminoConverters = {
 	"/tendermint.types.ValidatorSet": {
 		aminoType: "tendermint.types.ValidatorSet",
 		toAmino: (message: ValidatorSet) => ({ ...message }),
-		fromAmino: (object: ValidatorSet) => ({ ...object }),
+		fromAmino: (object: ValidatorSet) => ({ ...object })
 	},
 
 	"/tendermint.types.Validator": {
 		aminoType: "tendermint.types.Validator",
 		toAmino: (message: Validator) => ({ ...message }),
-		fromAmino: (object: Validator) => ({ ...object }),
+		fromAmino: (object: Validator) => ({ ...object })
 	},
 
 	"/tendermint.types.SimpleValidator": {
 		aminoType: "tendermint.types.SimpleValidator",
 		toAmino: (message: SimpleValidator) => ({ ...message }),
-		fromAmino: (object: SimpleValidator) => ({ ...object }),
-	},
+		fromAmino: (object: SimpleValidator) => ({ ...object })
+	}
 };

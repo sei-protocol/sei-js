@@ -4,7 +4,7 @@ import type {
 	MsgAggregateExchangeRateVoteResponse as MsgAggregateExchangeRateVoteResponse_type,
 	MsgAggregateExchangeRateVote as MsgAggregateExchangeRateVote_type,
 	MsgDelegateFeedConsentResponse as MsgDelegateFeedConsentResponse_type,
-	MsgDelegateFeedConsent as MsgDelegateFeedConsent_type,
+	MsgDelegateFeedConsent as MsgDelegateFeedConsent_type
 } from "../../types/oracle";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -71,7 +71,7 @@ export const MsgAggregateExchangeRateVote: MessageFns<MsgAggregateExchangeRateVo
 		return {
 			exchange_rates: isSet(object.exchange_rates) ? globalThis.String(object.exchange_rates) : "",
 			feeder: isSet(object.feeder) ? globalThis.String(object.feeder) : "",
-			validator: isSet(object.validator) ? globalThis.String(object.validator) : "",
+			validator: isSet(object.validator) ? globalThis.String(object.validator) : ""
 		};
 	},
 
@@ -98,7 +98,7 @@ export const MsgAggregateExchangeRateVote: MessageFns<MsgAggregateExchangeRateVo
 		message.feeder = object.feeder ?? "";
 		message.validator = object.validator ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgAggregateExchangeRateVoteResponse: MessageFns<
@@ -142,7 +142,7 @@ export const MsgAggregateExchangeRateVoteResponse: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<MsgAggregateExchangeRateVoteResponse>, I>>(_: I): MsgAggregateExchangeRateVoteResponse {
 		const message = createBaseMsgAggregateExchangeRateVoteResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgDelegateFeedConsent: MessageFns<MsgDelegateFeedConsent, "seiprotocol.seichain.oracle.MsgDelegateFeedConsent"> = {
@@ -191,7 +191,7 @@ export const MsgDelegateFeedConsent: MessageFns<MsgDelegateFeedConsent, "seiprot
 	fromJSON(object: any): MsgDelegateFeedConsent {
 		return {
 			operator: isSet(object.operator) ? globalThis.String(object.operator) : "",
-			delegate: isSet(object.delegate) ? globalThis.String(object.delegate) : "",
+			delegate: isSet(object.delegate) ? globalThis.String(object.delegate) : ""
 		};
 	},
 
@@ -214,7 +214,7 @@ export const MsgDelegateFeedConsent: MessageFns<MsgDelegateFeedConsent, "seiprot
 		message.operator = object.operator ?? "";
 		message.delegate = object.delegate ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgDelegateFeedConsentResponse: MessageFns<MsgDelegateFeedConsentResponse, "seiprotocol.seichain.oracle.MsgDelegateFeedConsentResponse"> = {
@@ -255,7 +255,7 @@ export const MsgDelegateFeedConsentResponse: MessageFns<MsgDelegateFeedConsentRe
 	fromPartial<I extends Exact<DeepPartial<MsgDelegateFeedConsentResponse>, I>>(_: I): MsgDelegateFeedConsentResponse {
 		const message = createBaseMsgDelegateFeedConsentResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgAggregateExchangeRateVote(): MsgAggregateExchangeRateVote {

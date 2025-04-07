@@ -3,7 +3,7 @@ export enum AccessType {
 	READ = 1,
 	WRITE = 2,
 	COMMIT = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum AccessOperationSelectorType {
@@ -17,7 +17,7 @@ export enum AccessOperationSelectorType {
 	JQ_MESSAGE_CONDITIONAL = 7,
 	CONSTANT_STRING_TO_HEX = 8,
 	CONTRACT_REFERENCE = 9,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum ResourceType {
@@ -184,11 +184,11 @@ export enum ResourceType {
 	KV_CT = 111,
 	/** KV_CT_ACCOUNT - child of KV_CT */
 	KV_CT_ACCOUNT = 112,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum WasmMessageSubtype {
 	QUERY = 0,
 	EXECUTE = 1,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }

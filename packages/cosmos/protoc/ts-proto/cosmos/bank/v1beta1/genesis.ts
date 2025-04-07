@@ -13,21 +13,19 @@ export const protobufPackage = "cosmos.bank.v1beta1";
 
 /** GenesisState defines the bank module's genesis state. */
 export interface GenesisState {
-  /** params defines all the paramaters of the module. */
-  params?:
-    | Params
-    | undefined;
-  /** balances is an array containing the balances of all the accounts. */
-  balances: Balance[];
-  /**
-   * supply represents the total supply. If it is left empty, then supply will be calculated based on the provided
-   * balances. Otherwise, it will be used to validate that the sum of the balances equals this amount.
-   */
-  supply: Coin[];
-  /** denom_metadata defines the metadata of the differents coins. */
-  denom_metadata: Metadata[];
-  /** wei balances */
-  wei_balances: WeiBalance[];
+	/** params defines all the paramaters of the module. */
+	params?: Params | undefined;
+	/** balances is an array containing the balances of all the accounts. */
+	balances: Balance[];
+	/**
+	 * supply represents the total supply. If it is left empty, then supply will be calculated based on the provided
+	 * balances. Otherwise, it will be used to validate that the sum of the balances equals this amount.
+	 */
+	supply: Coin[];
+	/** denom_metadata defines the metadata of the differents coins. */
+	denom_metadata: Metadata[];
+	/** wei balances */
+	wei_balances: WeiBalance[];
 }
 
 /**
@@ -35,320 +33,317 @@ export interface GenesisState {
  * genesis state.
  */
 export interface Balance {
-  /** address is the address of the balance holder. */
-  address: string;
-  /** coins defines the different coins this balance holds. */
-  coins: Coin[];
+	/** address is the address of the balance holder. */
+	address: string;
+	/** coins defines the different coins this balance holds. */
+	coins: Coin[];
 }
 
 export interface WeiBalance {
-  /** address is the address of the balance holder. */
-  address: string;
-  /** wei balance amount. */
-  amount: string;
+	/** address is the address of the balance holder. */
+	address: string;
+	/** wei balance amount. */
+	amount: string;
 }
 
 function createBaseGenesisState(): GenesisState {
-  return { params: undefined, balances: [], supply: [], denom_metadata: [], wei_balances: [] };
+	return { params: undefined, balances: [], supply: [], denom_metadata: [], wei_balances: [] };
 }
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.bank.v1beta1.GenesisState"> = {
-  $type: "cosmos.bank.v1beta1.GenesisState" as const,
+	$type: "cosmos.bank.v1beta1.GenesisState" as const,
 
-  encode(message: GenesisState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.params !== undefined) {
-      Params.encode(message.params, writer.uint32(10).fork()).join();
-    }
-    for (const v of message.balances) {
-      Balance.encode(v!, writer.uint32(18).fork()).join();
-    }
-    for (const v of message.supply) {
-      Coin.encode(v!, writer.uint32(26).fork()).join();
-    }
-    for (const v of message.denom_metadata) {
-      Metadata.encode(v!, writer.uint32(34).fork()).join();
-    }
-    for (const v of message.wei_balances) {
-      WeiBalance.encode(v!, writer.uint32(42).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: GenesisState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.params !== undefined) {
+			Params.encode(message.params, writer.uint32(10).fork()).join();
+		}
+		for (const v of message.balances) {
+			Balance.encode(v!, writer.uint32(18).fork()).join();
+		}
+		for (const v of message.supply) {
+			Coin.encode(v!, writer.uint32(26).fork()).join();
+		}
+		for (const v of message.denom_metadata) {
+			Metadata.encode(v!, writer.uint32(34).fork()).join();
+		}
+		for (const v of message.wei_balances) {
+			WeiBalance.encode(v!, writer.uint32(42).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGenesisState();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseGenesisState();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.params = Params.decode(reader, reader.uint32());
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.params = Params.decode(reader, reader.uint32());
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.balances.push(Balance.decode(reader, reader.uint32()));
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
+					message.balances.push(Balance.decode(reader, reader.uint32()));
+					continue;
+				case 3:
+					if (tag !== 26) {
+						break;
+					}
 
-          message.supply.push(Coin.decode(reader, reader.uint32()));
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
+					message.supply.push(Coin.decode(reader, reader.uint32()));
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
 
-          message.denom_metadata.push(Metadata.decode(reader, reader.uint32()));
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
+					message.denom_metadata.push(Metadata.decode(reader, reader.uint32()));
+					continue;
+				case 5:
+					if (tag !== 42) {
+						break;
+					}
 
-          message.wei_balances.push(WeiBalance.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.wei_balances.push(WeiBalance.decode(reader, reader.uint32()));
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): GenesisState {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-      balances: globalThis.Array.isArray(object?.balances) ? object.balances.map((e: any) => Balance.fromJSON(e)) : [],
-      supply: globalThis.Array.isArray(object?.supply) ? object.supply.map((e: any) => Coin.fromJSON(e)) : [],
-      denom_metadata: globalThis.Array.isArray(object?.denom_metadata)
-        ? object.denom_metadata.map((e: any) => Metadata.fromJSON(e))
-        : [],
-      wei_balances: globalThis.Array.isArray(object?.wei_balances)
-        ? object.wei_balances.map((e: any) => WeiBalance.fromJSON(e))
-        : [],
-    };
-  },
+	fromJSON(object: any): GenesisState {
+		return {
+			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+			balances: globalThis.Array.isArray(object?.balances) ? object.balances.map((e: any) => Balance.fromJSON(e)) : [],
+			supply: globalThis.Array.isArray(object?.supply) ? object.supply.map((e: any) => Coin.fromJSON(e)) : [],
+			denom_metadata: globalThis.Array.isArray(object?.denom_metadata) ? object.denom_metadata.map((e: any) => Metadata.fromJSON(e)) : [],
+			wei_balances: globalThis.Array.isArray(object?.wei_balances) ? object.wei_balances.map((e: any) => WeiBalance.fromJSON(e)) : []
+		};
+	},
 
-  toJSON(message: GenesisState): unknown {
-    const obj: any = {};
-    if (message.params !== undefined) {
-      obj.params = Params.toJSON(message.params);
-    }
-    if (message.balances?.length) {
-      obj.balances = message.balances.map((e) => Balance.toJSON(e));
-    }
-    if (message.supply?.length) {
-      obj.supply = message.supply.map((e) => Coin.toJSON(e));
-    }
-    if (message.denom_metadata?.length) {
-      obj.denom_metadata = message.denom_metadata.map((e) => Metadata.toJSON(e));
-    }
-    if (message.wei_balances?.length) {
-      obj.wei_balances = message.wei_balances.map((e) => WeiBalance.toJSON(e));
-    }
-    return obj;
-  },
+	toJSON(message: GenesisState): unknown {
+		const obj: any = {};
+		if (message.params !== undefined) {
+			obj.params = Params.toJSON(message.params);
+		}
+		if (message.balances?.length) {
+			obj.balances = message.balances.map((e) => Balance.toJSON(e));
+		}
+		if (message.supply?.length) {
+			obj.supply = message.supply.map((e) => Coin.toJSON(e));
+		}
+		if (message.denom_metadata?.length) {
+			obj.denom_metadata = message.denom_metadata.map((e) => Metadata.toJSON(e));
+		}
+		if (message.wei_balances?.length) {
+			obj.wei_balances = message.wei_balances.map((e) => WeiBalance.toJSON(e));
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<GenesisState>, I>>(base?: I): GenesisState {
-    return GenesisState.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<GenesisState>, I>>(object: I): GenesisState {
-    const message = createBaseGenesisState();
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
-    message.balances = object.balances?.map((e) => Balance.fromPartial(e)) || [];
-    message.supply = object.supply?.map((e) => Coin.fromPartial(e)) || [];
-    message.denom_metadata = object.denom_metadata?.map((e) => Metadata.fromPartial(e)) || [];
-    message.wei_balances = object.wei_balances?.map((e) => WeiBalance.fromPartial(e)) || [];
-    return message;
-  },
+	create<I extends Exact<DeepPartial<GenesisState>, I>>(base?: I): GenesisState {
+		return GenesisState.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<GenesisState>, I>>(object: I): GenesisState {
+		const message = createBaseGenesisState();
+		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
+		message.balances = object.balances?.map((e) => Balance.fromPartial(e)) || [];
+		message.supply = object.supply?.map((e) => Coin.fromPartial(e)) || [];
+		message.denom_metadata = object.denom_metadata?.map((e) => Metadata.fromPartial(e)) || [];
+		message.wei_balances = object.wei_balances?.map((e) => WeiBalance.fromPartial(e)) || [];
+		return message;
+	}
 };
 
 function createBaseBalance(): Balance {
-  return { address: "", coins: [] };
+	return { address: "", coins: [] };
 }
 
 export const Balance: MessageFns<Balance, "cosmos.bank.v1beta1.Balance"> = {
-  $type: "cosmos.bank.v1beta1.Balance" as const,
+	$type: "cosmos.bank.v1beta1.Balance" as const,
 
-  encode(message: Balance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.address !== "") {
-      writer.uint32(10).string(message.address);
-    }
-    for (const v of message.coins) {
-      Coin.encode(v!, writer.uint32(18).fork()).join();
-    }
-    return writer;
-  },
+	encode(message: Balance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.address !== "") {
+			writer.uint32(10).string(message.address);
+		}
+		for (const v of message.coins) {
+			Coin.encode(v!, writer.uint32(18).fork()).join();
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): Balance {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseBalance();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): Balance {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseBalance();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.address = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.address = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.coins.push(Coin.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.coins.push(Coin.decode(reader, reader.uint32()));
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): Balance {
-    return {
-      address: isSet(object.address) ? globalThis.String(object.address) : "",
-      coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : [],
-    };
-  },
+	fromJSON(object: any): Balance {
+		return {
+			address: isSet(object.address) ? globalThis.String(object.address) : "",
+			coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : []
+		};
+	},
 
-  toJSON(message: Balance): unknown {
-    const obj: any = {};
-    if (message.address !== "") {
-      obj.address = message.address;
-    }
-    if (message.coins?.length) {
-      obj.coins = message.coins.map((e) => Coin.toJSON(e));
-    }
-    return obj;
-  },
+	toJSON(message: Balance): unknown {
+		const obj: any = {};
+		if (message.address !== "") {
+			obj.address = message.address;
+		}
+		if (message.coins?.length) {
+			obj.coins = message.coins.map((e) => Coin.toJSON(e));
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<Balance>, I>>(base?: I): Balance {
-    return Balance.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<Balance>, I>>(object: I): Balance {
-    const message = createBaseBalance();
-    message.address = object.address ?? "";
-    message.coins = object.coins?.map((e) => Coin.fromPartial(e)) || [];
-    return message;
-  },
+	create<I extends Exact<DeepPartial<Balance>, I>>(base?: I): Balance {
+		return Balance.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<Balance>, I>>(object: I): Balance {
+		const message = createBaseBalance();
+		message.address = object.address ?? "";
+		message.coins = object.coins?.map((e) => Coin.fromPartial(e)) || [];
+		return message;
+	}
 };
 
 function createBaseWeiBalance(): WeiBalance {
-  return { address: "", amount: "" };
+	return { address: "", amount: "" };
 }
 
 export const WeiBalance: MessageFns<WeiBalance, "cosmos.bank.v1beta1.WeiBalance"> = {
-  $type: "cosmos.bank.v1beta1.WeiBalance" as const,
+	$type: "cosmos.bank.v1beta1.WeiBalance" as const,
 
-  encode(message: WeiBalance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.address !== "") {
-      writer.uint32(10).string(message.address);
-    }
-    if (message.amount !== "") {
-      writer.uint32(18).string(message.amount);
-    }
-    return writer;
-  },
+	encode(message: WeiBalance, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.address !== "") {
+			writer.uint32(10).string(message.address);
+		}
+		if (message.amount !== "") {
+			writer.uint32(18).string(message.amount);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): WeiBalance {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseWeiBalance();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): WeiBalance {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseWeiBalance();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.address = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.address = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.amount = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.amount = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): WeiBalance {
-    return {
-      address: isSet(object.address) ? globalThis.String(object.address) : "",
-      amount: isSet(object.amount) ? globalThis.String(object.amount) : "",
-    };
-  },
+	fromJSON(object: any): WeiBalance {
+		return {
+			address: isSet(object.address) ? globalThis.String(object.address) : "",
+			amount: isSet(object.amount) ? globalThis.String(object.amount) : ""
+		};
+	},
 
-  toJSON(message: WeiBalance): unknown {
-    const obj: any = {};
-    if (message.address !== "") {
-      obj.address = message.address;
-    }
-    if (message.amount !== "") {
-      obj.amount = message.amount;
-    }
-    return obj;
-  },
+	toJSON(message: WeiBalance): unknown {
+		const obj: any = {};
+		if (message.address !== "") {
+			obj.address = message.address;
+		}
+		if (message.amount !== "") {
+			obj.amount = message.amount;
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<WeiBalance>, I>>(base?: I): WeiBalance {
-    return WeiBalance.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<WeiBalance>, I>>(object: I): WeiBalance {
-    const message = createBaseWeiBalance();
-    message.address = object.address ?? "";
-    message.amount = object.amount ?? "";
-    return message;
-  },
+	create<I extends Exact<DeepPartial<WeiBalance>, I>>(base?: I): WeiBalance {
+		return WeiBalance.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<WeiBalance>, I>>(object: I): WeiBalance {
+		const message = createBaseWeiBalance();
+		message.address = object.address ?? "";
+		message.amount = object.amount ?? "";
+		return message;
+	}
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+	? T
+	: T extends globalThis.Array<infer U>
+		? globalThis.Array<DeepPartial<U>>
+		: T extends ReadonlyArray<infer U>
+			? ReadonlyArray<DeepPartial<U>>
+			: T extends {}
+				? { [K in keyof T]?: DeepPartial<T[K]> }
+				: Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
+	return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-  readonly $type: V;
-  encode(message: T, writer?: BinaryWriter): BinaryWriter;
-  decode(input: BinaryReader | Uint8Array, length?: number): T;
-  fromJSON(object: any): T;
-  toJSON(message: T): unknown;
-  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+	readonly $type: V;
+	encode(message: T, writer?: BinaryWriter): BinaryWriter;
+	decode(input: BinaryReader | Uint8Array, length?: number): T;
+	fromJSON(object: any): T;
+	toJSON(message: T): unknown;
+	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

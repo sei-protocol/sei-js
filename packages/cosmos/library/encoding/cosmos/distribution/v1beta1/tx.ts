@@ -10,7 +10,7 @@ import type {
 	MsgWithdrawDelegatorRewardResponse as MsgWithdrawDelegatorRewardResponse_type,
 	MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_type,
 	MsgWithdrawValidatorCommissionResponse as MsgWithdrawValidatorCommissionResponse_type,
-	MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_type,
+	MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_type
 } from "../../../../types/cosmos/distribution/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -70,7 +70,7 @@ export const MsgSetWithdrawAddress: MessageFns<MsgSetWithdrawAddress, "cosmos.di
 	fromJSON(object: any): MsgSetWithdrawAddress {
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
-			withdraw_address: isSet(object.withdraw_address) ? globalThis.String(object.withdraw_address) : "",
+			withdraw_address: isSet(object.withdraw_address) ? globalThis.String(object.withdraw_address) : ""
 		};
 	},
 
@@ -93,7 +93,7 @@ export const MsgSetWithdrawAddress: MessageFns<MsgSetWithdrawAddress, "cosmos.di
 		message.delegator_address = object.delegator_address ?? "";
 		message.withdraw_address = object.withdraw_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgSetWithdrawAddressResponse: MessageFns<MsgSetWithdrawAddressResponse, "cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse"> = {
@@ -134,7 +134,7 @@ export const MsgSetWithdrawAddressResponse: MessageFns<MsgSetWithdrawAddressResp
 	fromPartial<I extends Exact<DeepPartial<MsgSetWithdrawAddressResponse>, I>>(_: I): MsgSetWithdrawAddressResponse {
 		const message = createBaseMsgSetWithdrawAddressResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgWithdrawDelegatorReward: MessageFns<MsgWithdrawDelegatorReward, "cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward"> = {
@@ -183,7 +183,7 @@ export const MsgWithdrawDelegatorReward: MessageFns<MsgWithdrawDelegatorReward, 
 	fromJSON(object: any): MsgWithdrawDelegatorReward {
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
-			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
+			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : ""
 		};
 	},
 
@@ -206,7 +206,7 @@ export const MsgWithdrawDelegatorReward: MessageFns<MsgWithdrawDelegatorReward, 
 		message.delegator_address = object.delegator_address ?? "";
 		message.validator_address = object.validator_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgWithdrawDelegatorRewardResponse: MessageFns<
@@ -250,7 +250,7 @@ export const MsgWithdrawDelegatorRewardResponse: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<MsgWithdrawDelegatorRewardResponse>, I>>(_: I): MsgWithdrawDelegatorRewardResponse {
 		const message = createBaseMsgWithdrawDelegatorRewardResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgWithdrawValidatorCommission: MessageFns<MsgWithdrawValidatorCommission, "cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission"> = {
@@ -305,7 +305,7 @@ export const MsgWithdrawValidatorCommission: MessageFns<MsgWithdrawValidatorComm
 		const message = createBaseMsgWithdrawValidatorCommission();
 		message.validator_address = object.validator_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgWithdrawValidatorCommissionResponse: MessageFns<
@@ -349,7 +349,7 @@ export const MsgWithdrawValidatorCommissionResponse: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<MsgWithdrawValidatorCommissionResponse>, I>>(_: I): MsgWithdrawValidatorCommissionResponse {
 		const message = createBaseMsgWithdrawValidatorCommissionResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgFundCommunityPool: MessageFns<MsgFundCommunityPool, "cosmos.distribution.v1beta1.MsgFundCommunityPool"> = {
@@ -398,7 +398,7 @@ export const MsgFundCommunityPool: MessageFns<MsgFundCommunityPool, "cosmos.dist
 	fromJSON(object: any): MsgFundCommunityPool {
 		return {
 			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
-			depositor: isSet(object.depositor) ? globalThis.String(object.depositor) : "",
+			depositor: isSet(object.depositor) ? globalThis.String(object.depositor) : ""
 		};
 	},
 
@@ -421,7 +421,7 @@ export const MsgFundCommunityPool: MessageFns<MsgFundCommunityPool, "cosmos.dist
 		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
 		message.depositor = object.depositor ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgFundCommunityPoolResponse: MessageFns<MsgFundCommunityPoolResponse, "cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse"> = {
@@ -462,7 +462,7 @@ export const MsgFundCommunityPoolResponse: MessageFns<MsgFundCommunityPoolRespon
 	fromPartial<I extends Exact<DeepPartial<MsgFundCommunityPoolResponse>, I>>(_: I): MsgFundCommunityPoolResponse {
 		const message = createBaseMsgFundCommunityPoolResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgSetWithdrawAddress(): MsgSetWithdrawAddress {

@@ -7,7 +7,7 @@ import type {
 	ValidatorAccumulatedCommission,
 	ValidatorCurrentRewards,
 	ValidatorHistoricalRewards,
-	ValidatorSlashEvent,
+	ValidatorSlashEvent
 } from "./distribution";
 
 export interface DelegatorWithdrawInfo {

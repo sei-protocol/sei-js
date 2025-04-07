@@ -61,7 +61,7 @@ export const PubKey: MessageFns<PubKey, "cosmos.crypto.ed25519.PubKey"> = {
 		const message = createBasePubKey();
 		message.key = object.key ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const PrivKey: MessageFns<PrivKey, "cosmos.crypto.ed25519.PrivKey"> = {
@@ -116,7 +116,7 @@ export const PrivKey: MessageFns<PrivKey, "cosmos.crypto.ed25519.PrivKey"> = {
 		const message = createBasePrivKey();
 		message.key = object.key ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBasePubKey(): PubKey {
@@ -157,18 +157,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.crypto.ed25519.PubKey", PubKey as never],
-	["/cosmos.crypto.ed25519.PrivKey", PrivKey as never],
+	["/cosmos.crypto.ed25519.PrivKey", PrivKey as never]
 ];
 export const aminoConverters = {
 	"/cosmos.crypto.ed25519.PubKey": {
 		aminoType: "cosmos-sdk/PubKey",
 		toAmino: (message: PubKey) => ({ ...message }),
-		fromAmino: (object: PubKey) => ({ ...object }),
+		fromAmino: (object: PubKey) => ({ ...object })
 	},
 
 	"/cosmos.crypto.ed25519.PrivKey": {
 		aminoType: "cosmos-sdk/PrivKey",
 		toAmino: (message: PrivKey) => ({ ...message }),
-		fromAmino: (object: PrivKey) => ({ ...object }),
-	},
+		fromAmino: (object: PrivKey) => ({ ...object })
+	}
 };

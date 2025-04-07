@@ -12,7 +12,7 @@ import type {
 	Output as Output_type,
 	Params as Params_type,
 	SendEnabled as SendEnabled_type,
-	Supply as Supply_type,
+	Supply as Supply_type
 } from "../../../../types/cosmos/bank/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -72,7 +72,7 @@ export const Params: MessageFns<Params, "cosmos.bank.v1beta1.Params"> = {
 	fromJSON(object: any): Params {
 		return {
 			send_enabled: globalThis.Array.isArray(object?.send_enabled) ? object.send_enabled.map((e: any) => SendEnabled.fromJSON(e)) : [],
-			default_send_enabled: isSet(object.default_send_enabled) ? globalThis.Boolean(object.default_send_enabled) : false,
+			default_send_enabled: isSet(object.default_send_enabled) ? globalThis.Boolean(object.default_send_enabled) : false
 		};
 	},
 
@@ -95,7 +95,7 @@ export const Params: MessageFns<Params, "cosmos.bank.v1beta1.Params"> = {
 		message.send_enabled = object.send_enabled?.map((e) => SendEnabled.fromPartial(e)) || [];
 		message.default_send_enabled = object.default_send_enabled ?? false;
 		return message;
-	},
+	}
 };
 
 export const SendEnabled: MessageFns<SendEnabled, "cosmos.bank.v1beta1.SendEnabled"> = {
@@ -144,7 +144,7 @@ export const SendEnabled: MessageFns<SendEnabled, "cosmos.bank.v1beta1.SendEnabl
 	fromJSON(object: any): SendEnabled {
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			enabled: isSet(object.enabled) ? globalThis.Boolean(object.enabled) : false,
+			enabled: isSet(object.enabled) ? globalThis.Boolean(object.enabled) : false
 		};
 	},
 
@@ -167,7 +167,7 @@ export const SendEnabled: MessageFns<SendEnabled, "cosmos.bank.v1beta1.SendEnabl
 		message.denom = object.denom ?? "";
 		message.enabled = object.enabled ?? false;
 		return message;
-	},
+	}
 };
 
 export const Input: MessageFns<Input, "cosmos.bank.v1beta1.Input"> = {
@@ -216,7 +216,7 @@ export const Input: MessageFns<Input, "cosmos.bank.v1beta1.Input"> = {
 	fromJSON(object: any): Input {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : [],
+			coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -239,7 +239,7 @@ export const Input: MessageFns<Input, "cosmos.bank.v1beta1.Input"> = {
 		message.address = object.address ?? "";
 		message.coins = object.coins?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Output: MessageFns<Output, "cosmos.bank.v1beta1.Output"> = {
@@ -288,7 +288,7 @@ export const Output: MessageFns<Output, "cosmos.bank.v1beta1.Output"> = {
 	fromJSON(object: any): Output {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : [],
+			coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -311,7 +311,7 @@ export const Output: MessageFns<Output, "cosmos.bank.v1beta1.Output"> = {
 		message.address = object.address ?? "";
 		message.coins = object.coins?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Supply: MessageFns<Supply, "cosmos.bank.v1beta1.Supply"> = {
@@ -366,7 +366,7 @@ export const Supply: MessageFns<Supply, "cosmos.bank.v1beta1.Supply"> = {
 		const message = createBaseSupply();
 		message.total = object.total?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const DenomUnit: MessageFns<DenomUnit, "cosmos.bank.v1beta1.DenomUnit"> = {
@@ -426,7 +426,7 @@ export const DenomUnit: MessageFns<DenomUnit, "cosmos.bank.v1beta1.DenomUnit"> =
 		return {
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
 			exponent: isSet(object.exponent) ? globalThis.Number(object.exponent) : 0,
-			aliases: globalThis.Array.isArray(object?.aliases) ? object.aliases.map((e: any) => globalThis.String(e)) : [],
+			aliases: globalThis.Array.isArray(object?.aliases) ? object.aliases.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -453,7 +453,7 @@ export const DenomUnit: MessageFns<DenomUnit, "cosmos.bank.v1beta1.DenomUnit"> =
 		message.exponent = object.exponent ?? 0;
 		message.aliases = object.aliases?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const Metadata: MessageFns<Metadata, "cosmos.bank.v1beta1.Metadata"> = {
@@ -546,7 +546,7 @@ export const Metadata: MessageFns<Metadata, "cosmos.bank.v1beta1.Metadata"> = {
 			base: isSet(object.base) ? globalThis.String(object.base) : "",
 			display: isSet(object.display) ? globalThis.String(object.display) : "",
 			name: isSet(object.name) ? globalThis.String(object.name) : "",
-			symbol: isSet(object.symbol) ? globalThis.String(object.symbol) : "",
+			symbol: isSet(object.symbol) ? globalThis.String(object.symbol) : ""
 		};
 	},
 
@@ -585,7 +585,7 @@ export const Metadata: MessageFns<Metadata, "cosmos.bank.v1beta1.Metadata"> = {
 		message.name = object.name ?? "";
 		message.symbol = object.symbol ?? "";
 		return message;
-	},
+	}
 };
 
 export const AllowList: MessageFns<AllowList, "cosmos.bank.v1beta1.AllowList"> = {
@@ -623,7 +623,7 @@ export const AllowList: MessageFns<AllowList, "cosmos.bank.v1beta1.AllowList"> =
 
 	fromJSON(object: any): AllowList {
 		return {
-			addresses: globalThis.Array.isArray(object?.addresses) ? object.addresses.map((e: any) => globalThis.String(e)) : [],
+			addresses: globalThis.Array.isArray(object?.addresses) ? object.addresses.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -642,7 +642,7 @@ export const AllowList: MessageFns<AllowList, "cosmos.bank.v1beta1.AllowList"> =
 		const message = createBaseAllowList();
 		message.addresses = object.addresses?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseParams(): Params {
@@ -688,54 +688,54 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.bank.v1beta1.Supply", Supply as never],
 	["/cosmos.bank.v1beta1.DenomUnit", DenomUnit as never],
 	["/cosmos.bank.v1beta1.Metadata", Metadata as never],
-	["/cosmos.bank.v1beta1.AllowList", AllowList as never],
+	["/cosmos.bank.v1beta1.AllowList", AllowList as never]
 ];
 export const aminoConverters = {
 	"/cosmos.bank.v1beta1.Params": {
 		aminoType: "cosmos-sdk/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
+		fromAmino: (object: Params) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.SendEnabled": {
 		aminoType: "cosmos-sdk/SendEnabled",
 		toAmino: (message: SendEnabled) => ({ ...message }),
-		fromAmino: (object: SendEnabled) => ({ ...object }),
+		fromAmino: (object: SendEnabled) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.Input": {
 		aminoType: "cosmos-sdk/Input",
 		toAmino: (message: Input) => ({ ...message }),
-		fromAmino: (object: Input) => ({ ...object }),
+		fromAmino: (object: Input) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.Output": {
 		aminoType: "cosmos-sdk/Output",
 		toAmino: (message: Output) => ({ ...message }),
-		fromAmino: (object: Output) => ({ ...object }),
+		fromAmino: (object: Output) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.Supply": {
 		aminoType: "cosmos-sdk/Supply",
 		toAmino: (message: Supply) => ({ ...message }),
-		fromAmino: (object: Supply) => ({ ...object }),
+		fromAmino: (object: Supply) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.DenomUnit": {
 		aminoType: "cosmos-sdk/DenomUnit",
 		toAmino: (message: DenomUnit) => ({ ...message }),
-		fromAmino: (object: DenomUnit) => ({ ...object }),
+		fromAmino: (object: DenomUnit) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.Metadata": {
 		aminoType: "cosmos-sdk/Metadata",
 		toAmino: (message: Metadata) => ({ ...message }),
-		fromAmino: (object: Metadata) => ({ ...object }),
+		fromAmino: (object: Metadata) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.AllowList": {
 		aminoType: "cosmos-sdk/AllowList",
 		toAmino: (message: AllowList) => ({ ...message }),
-		fromAmino: (object: AllowList) => ({ ...object }),
-	},
+		fromAmino: (object: AllowList) => ({ ...object })
+	}
 };

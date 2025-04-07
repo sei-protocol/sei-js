@@ -58,7 +58,7 @@ export const DenomAuthorityMetadata: MessageFns<DenomAuthorityMetadata, "seiprot
 		const message = createBaseDenomAuthorityMetadata();
 		message.admin = object.admin ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseDenomAuthorityMetadata(): DenomAuthorityMetadata {

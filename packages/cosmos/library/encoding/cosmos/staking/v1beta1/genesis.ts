@@ -127,7 +127,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.staking.v1beta1.Gene
 				? object.unbonding_delegations.map((e: any) => UnbondingDelegation.fromJSON(e))
 				: [],
 			redelegations: globalThis.Array.isArray(object?.redelegations) ? object.redelegations.map((e: any) => Redelegation.fromJSON(e)) : [],
-			exported: isSet(object.exported) ? globalThis.Boolean(object.exported) : false,
+			exported: isSet(object.exported) ? globalThis.Boolean(object.exported) : false
 		};
 	},
 
@@ -174,7 +174,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.staking.v1beta1.Gene
 		message.redelegations = object.redelegations?.map((e) => Redelegation.fromPartial(e)) || [];
 		message.exported = object.exported ?? false;
 		return message;
-	},
+	}
 };
 
 export const LastValidatorPower: MessageFns<LastValidatorPower, "cosmos.staking.v1beta1.LastValidatorPower"> = {
@@ -223,7 +223,7 @@ export const LastValidatorPower: MessageFns<LastValidatorPower, "cosmos.staking.
 	fromJSON(object: any): LastValidatorPower {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			power: isSet(object.power) ? globalThis.Number(object.power) : 0,
+			power: isSet(object.power) ? globalThis.Number(object.power) : 0
 		};
 	},
 
@@ -246,7 +246,7 @@ export const LastValidatorPower: MessageFns<LastValidatorPower, "cosmos.staking.
 		message.address = object.address ?? "";
 		message.power = object.power ?? 0;
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -258,7 +258,7 @@ function createBaseGenesisState(): GenesisState {
 		delegations: [],
 		unbonding_delegations: [],
 		redelegations: [],
-		exported: false,
+		exported: false
 	};
 }
 
@@ -307,18 +307,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.staking.v1beta1.GenesisState", GenesisState as never],
-	["/cosmos.staking.v1beta1.LastValidatorPower", LastValidatorPower as never],
+	["/cosmos.staking.v1beta1.LastValidatorPower", LastValidatorPower as never]
 ];
 export const aminoConverters = {
 	"/cosmos.staking.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
+		fromAmino: (object: GenesisState) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.LastValidatorPower": {
 		aminoType: "cosmos-sdk/LastValidatorPower",
 		toAmino: (message: LastValidatorPower) => ({ ...message }),
-		fromAmino: (object: LastValidatorPower) => ({ ...object }),
-	},
+		fromAmino: (object: LastValidatorPower) => ({ ...object })
+	}
 };

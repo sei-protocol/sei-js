@@ -16,7 +16,7 @@ import type {
 	MsgVoteResponse as MsgVoteResponse_type,
 	MsgVoteWeightedResponse as MsgVoteWeightedResponse_type,
 	MsgVoteWeighted as MsgVoteWeighted_type,
-	MsgVote as MsgVote_type,
+	MsgVote as MsgVote_type
 } from "../../../../types/cosmos/gov/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -98,7 +98,7 @@ export const MsgSubmitProposal: MessageFns<MsgSubmitProposal, "cosmos.gov.v1beta
 			content: isSet(object.content) ? Any.fromJSON(object.content) : undefined,
 			initial_deposit: globalThis.Array.isArray(object?.initial_deposit) ? object.initial_deposit.map((e: any) => Coin.fromJSON(e)) : [],
 			proposer: isSet(object.proposer) ? globalThis.String(object.proposer) : "",
-			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false,
+			is_expedited: isSet(object.is_expedited) ? globalThis.Boolean(object.is_expedited) : false
 		};
 	},
 
@@ -129,7 +129,7 @@ export const MsgSubmitProposal: MessageFns<MsgSubmitProposal, "cosmos.gov.v1beta
 		message.proposer = object.proposer ?? "";
 		message.is_expedited = object.is_expedited ?? false;
 		return message;
-	},
+	}
 };
 
 export const MsgSubmitProposalResponse: MessageFns<MsgSubmitProposalResponse, "cosmos.gov.v1beta1.MsgSubmitProposalResponse"> = {
@@ -184,7 +184,7 @@ export const MsgSubmitProposalResponse: MessageFns<MsgSubmitProposalResponse, "c
 		const message = createBaseMsgSubmitProposalResponse();
 		message.proposal_id = object.proposal_id ?? 0;
 		return message;
-	},
+	}
 };
 
 export const MsgVote: MessageFns<MsgVote, "cosmos.gov.v1beta1.MsgVote"> = {
@@ -244,7 +244,7 @@ export const MsgVote: MessageFns<MsgVote, "cosmos.gov.v1beta1.MsgVote"> = {
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
 			voter: isSet(object.voter) ? globalThis.String(object.voter) : "",
-			option: isSet(object.option) ? voteOptionFromJSON(object.option) : 0,
+			option: isSet(object.option) ? voteOptionFromJSON(object.option) : 0
 		};
 	},
 
@@ -271,7 +271,7 @@ export const MsgVote: MessageFns<MsgVote, "cosmos.gov.v1beta1.MsgVote"> = {
 		message.voter = object.voter ?? "";
 		message.option = object.option ?? 0;
 		return message;
-	},
+	}
 };
 
 export const MsgVoteResponse: MessageFns<MsgVoteResponse, "cosmos.gov.v1beta1.MsgVoteResponse"> = {
@@ -312,7 +312,7 @@ export const MsgVoteResponse: MessageFns<MsgVoteResponse, "cosmos.gov.v1beta1.Ms
 	fromPartial<I extends Exact<DeepPartial<MsgVoteResponse>, I>>(_: I): MsgVoteResponse {
 		const message = createBaseMsgVoteResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgVoteWeighted: MessageFns<MsgVoteWeighted, "cosmos.gov.v1beta1.MsgVoteWeighted"> = {
@@ -372,7 +372,7 @@ export const MsgVoteWeighted: MessageFns<MsgVoteWeighted, "cosmos.gov.v1beta1.Ms
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
 			voter: isSet(object.voter) ? globalThis.String(object.voter) : "",
-			options: globalThis.Array.isArray(object?.options) ? object.options.map((e: any) => WeightedVoteOption.fromJSON(e)) : [],
+			options: globalThis.Array.isArray(object?.options) ? object.options.map((e: any) => WeightedVoteOption.fromJSON(e)) : []
 		};
 	},
 
@@ -399,7 +399,7 @@ export const MsgVoteWeighted: MessageFns<MsgVoteWeighted, "cosmos.gov.v1beta1.Ms
 		message.voter = object.voter ?? "";
 		message.options = object.options?.map((e) => WeightedVoteOption.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgVoteWeightedResponse: MessageFns<MsgVoteWeightedResponse, "cosmos.gov.v1beta1.MsgVoteWeightedResponse"> = {
@@ -440,7 +440,7 @@ export const MsgVoteWeightedResponse: MessageFns<MsgVoteWeightedResponse, "cosmo
 	fromPartial<I extends Exact<DeepPartial<MsgVoteWeightedResponse>, I>>(_: I): MsgVoteWeightedResponse {
 		const message = createBaseMsgVoteWeightedResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgDeposit: MessageFns<MsgDeposit, "cosmos.gov.v1beta1.MsgDeposit"> = {
@@ -500,7 +500,7 @@ export const MsgDeposit: MessageFns<MsgDeposit, "cosmos.gov.v1beta1.MsgDeposit">
 		return {
 			proposal_id: isSet(object.proposal_id) ? globalThis.Number(object.proposal_id) : 0,
 			depositor: isSet(object.depositor) ? globalThis.String(object.depositor) : "",
-			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
+			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -527,7 +527,7 @@ export const MsgDeposit: MessageFns<MsgDeposit, "cosmos.gov.v1beta1.MsgDeposit">
 		message.depositor = object.depositor ?? "";
 		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgDepositResponse: MessageFns<MsgDepositResponse, "cosmos.gov.v1beta1.MsgDepositResponse"> = {
@@ -568,7 +568,7 @@ export const MsgDepositResponse: MessageFns<MsgDepositResponse, "cosmos.gov.v1be
 	fromPartial<I extends Exact<DeepPartial<MsgDepositResponse>, I>>(_: I): MsgDepositResponse {
 		const message = createBaseMsgDepositResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgSubmitProposal(): MsgSubmitProposal {
@@ -623,42 +623,42 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.gov.v1beta1.MsgVoteResponse", MsgVoteResponse as never],
 	["/cosmos.gov.v1beta1.MsgVoteWeighted", MsgVoteWeighted as never],
 	["/cosmos.gov.v1beta1.MsgDeposit", MsgDeposit as never],
-	["/cosmos.gov.v1beta1.MsgDepositResponse", MsgDepositResponse as never],
+	["/cosmos.gov.v1beta1.MsgDepositResponse", MsgDepositResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.gov.v1beta1.MsgSubmitProposal": {
 		aminoType: "cosmos-sdk/MsgSubmitProposal",
 		toAmino: (message: MsgSubmitProposal) => ({ ...message }),
-		fromAmino: (object: MsgSubmitProposal) => ({ ...object }),
+		fromAmino: (object: MsgSubmitProposal) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.MsgVote": {
 		aminoType: "cosmos-sdk/MsgVote",
 		toAmino: (message: MsgVote) => ({ ...message }),
-		fromAmino: (object: MsgVote) => ({ ...object }),
+		fromAmino: (object: MsgVote) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.MsgVoteResponse": {
 		aminoType: "cosmos-sdk/MsgVoteResponse",
 		toAmino: (message: MsgVoteResponse) => ({ ...message }),
-		fromAmino: (object: MsgVoteResponse) => ({ ...object }),
+		fromAmino: (object: MsgVoteResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.MsgVoteWeighted": {
 		aminoType: "cosmos-sdk/MsgVoteWeighted",
 		toAmino: (message: MsgVoteWeighted) => ({ ...message }),
-		fromAmino: (object: MsgVoteWeighted) => ({ ...object }),
+		fromAmino: (object: MsgVoteWeighted) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.MsgDeposit": {
 		aminoType: "cosmos-sdk/MsgDeposit",
 		toAmino: (message: MsgDeposit) => ({ ...message }),
-		fromAmino: (object: MsgDeposit) => ({ ...object }),
+		fromAmino: (object: MsgDeposit) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.MsgDepositResponse": {
 		aminoType: "cosmos-sdk/MsgDepositResponse",
 		toAmino: (message: MsgDepositResponse) => ({ ...message }),
-		fromAmino: (object: MsgDepositResponse) => ({ ...object }),
-	},
+		fromAmino: (object: MsgDepositResponse) => ({ ...object })
+	}
 };

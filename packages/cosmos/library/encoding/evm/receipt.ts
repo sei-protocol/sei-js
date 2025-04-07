@@ -88,7 +88,7 @@ export const Log: MessageFns<Log, "seiprotocol.seichain.evm.Log"> = {
 			topics: globalThis.Array.isArray(object?.topics) ? object.topics.map((e: any) => globalThis.String(e)) : [],
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
-			synthetic: isSet(object.synthetic) ? globalThis.Boolean(object.synthetic) : false,
+			synthetic: isSet(object.synthetic) ? globalThis.Boolean(object.synthetic) : false
 		};
 	},
 
@@ -123,7 +123,7 @@ export const Log: MessageFns<Log, "seiprotocol.seichain.evm.Log"> = {
 		message.index = object.index ?? 0;
 		message.synthetic = object.synthetic ?? false;
 		return message;
-	},
+	}
 };
 
 export const Receipt: MessageFns<Receipt, "seiprotocol.seichain.evm.Receipt"> = {
@@ -304,7 +304,7 @@ export const Receipt: MessageFns<Receipt, "seiprotocol.seichain.evm.Receipt"> = 
 			to: isSet(object.to) ? globalThis.String(object.to) : "",
 			vm_error: isSet(object.vm_error) ? globalThis.String(object.vm_error) : "",
 			logs: globalThis.Array.isArray(object?.logs) ? object.logs.map((e: any) => Log.fromJSON(e)) : [],
-			logsBloom: isSet(object.logsBloom) ? bytesFromBase64(object.logsBloom) : new Uint8Array(0),
+			logsBloom: isSet(object.logsBloom) ? bytesFromBase64(object.logsBloom) : new Uint8Array(0)
 		};
 	},
 
@@ -375,7 +375,7 @@ export const Receipt: MessageFns<Receipt, "seiprotocol.seichain.evm.Receipt"> = 
 		message.logs = object.logs?.map((e) => Log.fromPartial(e)) || [];
 		message.logsBloom = object.logsBloom ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseLog(): Log {
@@ -397,7 +397,7 @@ function createBaseReceipt(): Receipt {
 		to: "",
 		vm_error: "",
 		logs: [],
-		logsBloom: new Uint8Array(0),
+		logsBloom: new Uint8Array(0)
 	};
 }
 
@@ -442,18 +442,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.Log", Log as never],
-	["/seiprotocol.seichain.evm.Receipt", Receipt as never],
+	["/seiprotocol.seichain.evm.Receipt", Receipt as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.Log": {
 		aminoType: "evm/Log",
 		toAmino: (message: Log) => ({ ...message }),
-		fromAmino: (object: Log) => ({ ...object }),
+		fromAmino: (object: Log) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.Receipt": {
 		aminoType: "evm/Receipt",
 		toAmino: (message: Receipt) => ({ ...message }),
-		fromAmino: (object: Receipt) => ({ ...object }),
-	},
+		fromAmino: (object: Receipt) => ({ ...object })
+	}
 };

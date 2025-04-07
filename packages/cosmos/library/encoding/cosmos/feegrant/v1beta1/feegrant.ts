@@ -14,7 +14,7 @@ import type {
 	AllowedMsgAllowance as AllowedMsgAllowance_type,
 	BasicAllowance as BasicAllowance_type,
 	Grant as Grant_type,
-	PeriodicAllowance as PeriodicAllowance_type,
+	PeriodicAllowance as PeriodicAllowance_type
 } from "../../../../types/cosmos/feegrant/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -70,7 +70,7 @@ export const BasicAllowance: MessageFns<BasicAllowance, "cosmos.feegrant.v1beta1
 	fromJSON(object: any): BasicAllowance {
 		return {
 			spend_limit: globalThis.Array.isArray(object?.spend_limit) ? object.spend_limit.map((e: any) => Coin.fromJSON(e)) : [],
-			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined,
+			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined
 		};
 	},
 
@@ -93,7 +93,7 @@ export const BasicAllowance: MessageFns<BasicAllowance, "cosmos.feegrant.v1beta1
 		message.spend_limit = object.spend_limit?.map((e) => Coin.fromPartial(e)) || [];
 		message.expiration = object.expiration ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const PeriodicAllowance: MessageFns<PeriodicAllowance, "cosmos.feegrant.v1beta1.PeriodicAllowance"> = {
@@ -175,7 +175,7 @@ export const PeriodicAllowance: MessageFns<PeriodicAllowance, "cosmos.feegrant.v
 			period: isSet(object.period) ? Duration.fromJSON(object.period) : undefined,
 			period_spend_limit: globalThis.Array.isArray(object?.period_spend_limit) ? object.period_spend_limit.map((e: any) => Coin.fromJSON(e)) : [],
 			period_can_spend: globalThis.Array.isArray(object?.period_can_spend) ? object.period_can_spend.map((e: any) => Coin.fromJSON(e)) : [],
-			period_reset: isSet(object.period_reset) ? fromJsonTimestamp(object.period_reset) : undefined,
+			period_reset: isSet(object.period_reset) ? fromJsonTimestamp(object.period_reset) : undefined
 		};
 	},
 
@@ -210,7 +210,7 @@ export const PeriodicAllowance: MessageFns<PeriodicAllowance, "cosmos.feegrant.v
 		message.period_can_spend = object.period_can_spend?.map((e) => Coin.fromPartial(e)) || [];
 		message.period_reset = object.period_reset ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const AllowedMsgAllowance: MessageFns<AllowedMsgAllowance, "cosmos.feegrant.v1beta1.AllowedMsgAllowance"> = {
@@ -259,7 +259,7 @@ export const AllowedMsgAllowance: MessageFns<AllowedMsgAllowance, "cosmos.feegra
 	fromJSON(object: any): AllowedMsgAllowance {
 		return {
 			allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined,
-			allowed_messages: globalThis.Array.isArray(object?.allowed_messages) ? object.allowed_messages.map((e: any) => globalThis.String(e)) : [],
+			allowed_messages: globalThis.Array.isArray(object?.allowed_messages) ? object.allowed_messages.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -282,7 +282,7 @@ export const AllowedMsgAllowance: MessageFns<AllowedMsgAllowance, "cosmos.feegra
 		message.allowance = object.allowance !== undefined && object.allowance !== null ? Any.fromPartial(object.allowance) : undefined;
 		message.allowed_messages = object.allowed_messages?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const Grant: MessageFns<Grant, "cosmos.feegrant.v1beta1.Grant"> = {
@@ -342,7 +342,7 @@ export const Grant: MessageFns<Grant, "cosmos.feegrant.v1beta1.Grant"> = {
 		return {
 			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
 			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined,
+			allowance: isSet(object.allowance) ? Any.fromJSON(object.allowance) : undefined
 		};
 	},
 
@@ -369,7 +369,7 @@ export const Grant: MessageFns<Grant, "cosmos.feegrant.v1beta1.Grant"> = {
 		message.grantee = object.grantee ?? "";
 		message.allowance = object.allowance !== undefined && object.allowance !== null ? Any.fromPartial(object.allowance) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseBasicAllowance(): BasicAllowance {
@@ -417,30 +417,30 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.feegrant.v1beta1.BasicAllowance", BasicAllowance as never],
 	["/cosmos.feegrant.v1beta1.PeriodicAllowance", PeriodicAllowance as never],
 	["/cosmos.feegrant.v1beta1.AllowedMsgAllowance", AllowedMsgAllowance as never],
-	["/cosmos.feegrant.v1beta1.Grant", Grant as never],
+	["/cosmos.feegrant.v1beta1.Grant", Grant as never]
 ];
 export const aminoConverters = {
 	"/cosmos.feegrant.v1beta1.BasicAllowance": {
 		aminoType: "cosmos-sdk/BasicAllowance",
 		toAmino: (message: BasicAllowance) => ({ ...message }),
-		fromAmino: (object: BasicAllowance) => ({ ...object }),
+		fromAmino: (object: BasicAllowance) => ({ ...object })
 	},
 
 	"/cosmos.feegrant.v1beta1.PeriodicAllowance": {
 		aminoType: "cosmos-sdk/PeriodicAllowance",
 		toAmino: (message: PeriodicAllowance) => ({ ...message }),
-		fromAmino: (object: PeriodicAllowance) => ({ ...object }),
+		fromAmino: (object: PeriodicAllowance) => ({ ...object })
 	},
 
 	"/cosmos.feegrant.v1beta1.AllowedMsgAllowance": {
 		aminoType: "cosmos-sdk/AllowedMsgAllowance",
 		toAmino: (message: AllowedMsgAllowance) => ({ ...message }),
-		fromAmino: (object: AllowedMsgAllowance) => ({ ...object }),
+		fromAmino: (object: AllowedMsgAllowance) => ({ ...object })
 	},
 
 	"/cosmos.feegrant.v1beta1.Grant": {
 		aminoType: "cosmos-sdk/Grant",
 		toAmino: (message: Grant) => ({ ...message }),
-		fromAmino: (object: Grant) => ({ ...object }),
-	},
+		fromAmino: (object: Grant) => ({ ...object })
+	}
 };

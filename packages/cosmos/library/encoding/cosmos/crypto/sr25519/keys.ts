@@ -60,7 +60,7 @@ export const PubKey: MessageFns<PubKey, "cosmos.crypto.sr25519.PubKey"> = {
 		const message = createBasePubKey();
 		message.key = object.key ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBasePubKey(): PubKey {
@@ -100,6 +100,6 @@ export const aminoConverters = {
 	"/cosmos.crypto.sr25519.PubKey": {
 		aminoType: "cosmos-sdk/PubKey",
 		toAmino: (message: PubKey) => ({ ...message }),
-		fromAmino: (object: PubKey) => ({ ...object }),
-	},
+		fromAmino: (object: PubKey) => ({ ...object })
+	}
 };

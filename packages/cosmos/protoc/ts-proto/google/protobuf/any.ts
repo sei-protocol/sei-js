@@ -90,163 +90,166 @@ export const protobufPackage = "google.protobuf";
  *     }
  */
 export interface Any {
-  /**
-   * A URL/resource name that uniquely identifies the type of the serialized
-   * protocol buffer message. This string must contain at least
-   * one "/" character. The last segment of the URL's path must represent
-   * the fully qualified name of the type (as in
-   * `path/google.protobuf.Duration`). The name should be in a canonical form
-   * (e.g., leading "." is not accepted).
-   *
-   * In practice, teams usually precompile into the binary all types that they
-   * expect it to use in the context of Any. However, for URLs which use the
-   * scheme `http`, `https`, or no scheme, one can optionally set up a type
-   * server that maps type URLs to message definitions as follows:
-   *
-   * * If no scheme is provided, `https` is assumed.
-   * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
-   *   value in binary format, or produce an error.
-   * * Applications are allowed to cache lookup results based on the
-   *   URL, or have them precompiled into a binary to avoid any
-   *   lookup. Therefore, binary compatibility needs to be preserved
-   *   on changes to types. (Use versioned type names to manage
-   *   breaking changes.)
-   *
-   * Note: this functionality is not currently available in the official
-   * protobuf release, and it is not used for type URLs beginning with
-   * type.googleapis.com.
-   *
-   * Schemes other than `http`, `https` (or the empty scheme) might be
-   * used with implementation specific semantics.
-   */
-  type_url: string;
-  /** Must be a valid serialized protocol buffer of the above specified type. */
-  value: Uint8Array;
+	/**
+	 * A URL/resource name that uniquely identifies the type of the serialized
+	 * protocol buffer message. This string must contain at least
+	 * one "/" character. The last segment of the URL's path must represent
+	 * the fully qualified name of the type (as in
+	 * `path/google.protobuf.Duration`). The name should be in a canonical form
+	 * (e.g., leading "." is not accepted).
+	 *
+	 * In practice, teams usually precompile into the binary all types that they
+	 * expect it to use in the context of Any. However, for URLs which use the
+	 * scheme `http`, `https`, or no scheme, one can optionally set up a type
+	 * server that maps type URLs to message definitions as follows:
+	 *
+	 * * If no scheme is provided, `https` is assumed.
+	 * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+	 *   value in binary format, or produce an error.
+	 * * Applications are allowed to cache lookup results based on the
+	 *   URL, or have them precompiled into a binary to avoid any
+	 *   lookup. Therefore, binary compatibility needs to be preserved
+	 *   on changes to types. (Use versioned type names to manage
+	 *   breaking changes.)
+	 *
+	 * Note: this functionality is not currently available in the official
+	 * protobuf release, and it is not used for type URLs beginning with
+	 * type.googleapis.com.
+	 *
+	 * Schemes other than `http`, `https` (or the empty scheme) might be
+	 * used with implementation specific semantics.
+	 */
+	type_url: string;
+	/** Must be a valid serialized protocol buffer of the above specified type. */
+	value: Uint8Array;
 }
 
 function createBaseAny(): Any {
-  return { type_url: "", value: new Uint8Array(0) };
+	return { type_url: "", value: new Uint8Array(0) };
 }
 
 export const Any: MessageFns<Any, "google.protobuf.Any"> = {
-  $type: "google.protobuf.Any" as const,
+	$type: "google.protobuf.Any" as const,
 
-  encode(message: Any, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.type_url !== "") {
-      writer.uint32(10).string(message.type_url);
-    }
-    if (message.value.length !== 0) {
-      writer.uint32(18).bytes(message.value);
-    }
-    return writer;
-  },
+	encode(message: Any, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.type_url !== "") {
+			writer.uint32(10).string(message.type_url);
+		}
+		if (message.value.length !== 0) {
+			writer.uint32(18).bytes(message.value);
+		}
+		return writer;
+	},
 
-  decode(input: BinaryReader | Uint8Array, length?: number): Any {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAny();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
+	decode(input: BinaryReader | Uint8Array, length?: number): Any {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAny();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
 
-          message.type_url = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
+					message.type_url = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
 
-          message.value = reader.bytes();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+					message.value = reader.bytes();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
 
-  fromJSON(object: any): Any {
-    return {
-      type_url: isSet(object.type_url) ? globalThis.String(object.type_url) : "",
-      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
-    };
-  },
+	fromJSON(object: any): Any {
+		return {
+			type_url: isSet(object.type_url) ? globalThis.String(object.type_url) : "",
+			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0)
+		};
+	},
 
-  toJSON(message: Any): unknown {
-    const obj: any = {};
-    if (message.type_url !== "") {
-      obj.type_url = message.type_url;
-    }
-    if (message.value.length !== 0) {
-      obj.value = base64FromBytes(message.value);
-    }
-    return obj;
-  },
+	toJSON(message: Any): unknown {
+		const obj: any = {};
+		if (message.type_url !== "") {
+			obj.type_url = message.type_url;
+		}
+		if (message.value.length !== 0) {
+			obj.value = base64FromBytes(message.value);
+		}
+		return obj;
+	},
 
-  create<I extends Exact<DeepPartial<Any>, I>>(base?: I): Any {
-    return Any.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<Any>, I>>(object: I): Any {
-    const message = createBaseAny();
-    message.type_url = object.type_url ?? "";
-    message.value = object.value ?? new Uint8Array(0);
-    return message;
-  },
+	create<I extends Exact<DeepPartial<Any>, I>>(base?: I): Any {
+		return Any.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<Any>, I>>(object: I): Any {
+		const message = createBaseAny();
+		message.type_url = object.type_url ?? "";
+		message.value = object.value ?? new Uint8Array(0);
+		return message;
+	}
 };
 
 function bytesFromBase64(b64: string): Uint8Array {
-  if ((globalThis as any).Buffer) {
-    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
-  } else {
-    const bin = globalThis.atob(b64);
-    const arr = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; ++i) {
-      arr[i] = bin.charCodeAt(i);
-    }
-    return arr;
-  }
+	if ((globalThis as any).Buffer) {
+		return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+	} else {
+		const bin = globalThis.atob(b64);
+		const arr = new Uint8Array(bin.length);
+		for (let i = 0; i < bin.length; ++i) {
+			arr[i] = bin.charCodeAt(i);
+		}
+		return arr;
+	}
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-  if ((globalThis as any).Buffer) {
-    return globalThis.Buffer.from(arr).toString("base64");
-  } else {
-    const bin: string[] = [];
-    arr.forEach((byte) => {
-      bin.push(globalThis.String.fromCharCode(byte));
-    });
-    return globalThis.btoa(bin.join(""));
-  }
+	if ((globalThis as any).Buffer) {
+		return globalThis.Buffer.from(arr).toString("base64");
+	} else {
+		const bin: string[] = [];
+		arr.forEach((byte) => {
+			bin.push(globalThis.String.fromCharCode(byte));
+		});
+		return globalThis.btoa(bin.join(""));
+	}
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+	? T
+	: T extends globalThis.Array<infer U>
+		? globalThis.Array<DeepPartial<U>>
+		: T extends ReadonlyArray<infer U>
+			? ReadonlyArray<DeepPartial<U>>
+			: T extends {}
+				? { [K in keyof T]?: DeepPartial<T[K]> }
+				: Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
+	return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-  readonly $type: V;
-  encode(message: T, writer?: BinaryWriter): BinaryWriter;
-  decode(input: BinaryReader | Uint8Array, length?: number): T;
-  fromJSON(object: any): T;
-  toJSON(message: T): unknown;
-  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+	readonly $type: V;
+	encode(message: T, writer?: BinaryWriter): BinaryWriter;
+	decode(input: BinaryReader | Uint8Array, length?: number): T;
+	fromJSON(object: any): T;
+	toJSON(message: T): unknown;
+	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

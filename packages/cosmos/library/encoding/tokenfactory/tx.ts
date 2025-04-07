@@ -18,7 +18,7 @@ import type {
 	MsgSetDenomMetadataResponse as MsgSetDenomMetadataResponse_type,
 	MsgSetDenomMetadata as MsgSetDenomMetadata_type,
 	MsgUpdateDenomResponse as MsgUpdateDenomResponse_type,
-	MsgUpdateDenom as MsgUpdateDenom_type,
+	MsgUpdateDenom as MsgUpdateDenom_type
 } from "../../types/tokenfactory";
 
 import type { DeepPartial, Exact, MessageFns } from "../common";
@@ -93,7 +93,7 @@ export const MsgCreateDenom: MessageFns<MsgCreateDenom, "seiprotocol.seichain.to
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
 			subdenom: isSet(object.subdenom) ? globalThis.String(object.subdenom) : "",
-			allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined,
+			allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined
 		};
 	},
 
@@ -120,7 +120,7 @@ export const MsgCreateDenom: MessageFns<MsgCreateDenom, "seiprotocol.seichain.to
 		message.subdenom = object.subdenom ?? "";
 		message.allow_list = object.allow_list !== undefined && object.allow_list !== null ? AllowList.fromPartial(object.allow_list) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgCreateDenomResponse: MessageFns<MsgCreateDenomResponse, "seiprotocol.seichain.tokenfactory.MsgCreateDenomResponse"> = {
@@ -175,7 +175,7 @@ export const MsgCreateDenomResponse: MessageFns<MsgCreateDenomResponse, "seiprot
 		const message = createBaseMsgCreateDenomResponse();
 		message.new_token_denom = object.new_token_denom ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgMint: MessageFns<MsgMint, "seiprotocol.seichain.tokenfactory.MsgMint"> = {
@@ -224,7 +224,7 @@ export const MsgMint: MessageFns<MsgMint, "seiprotocol.seichain.tokenfactory.Msg
 	fromJSON(object: any): MsgMint {
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
 		};
 	},
 
@@ -247,7 +247,7 @@ export const MsgMint: MessageFns<MsgMint, "seiprotocol.seichain.tokenfactory.Msg
 		message.sender = object.sender ?? "";
 		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgMintResponse: MessageFns<MsgMintResponse, "seiprotocol.seichain.tokenfactory.MsgMintResponse"> = {
@@ -288,7 +288,7 @@ export const MsgMintResponse: MessageFns<MsgMintResponse, "seiprotocol.seichain.
 	fromPartial<I extends Exact<DeepPartial<MsgMintResponse>, I>>(_: I): MsgMintResponse {
 		const message = createBaseMsgMintResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgBurn: MessageFns<MsgBurn, "seiprotocol.seichain.tokenfactory.MsgBurn"> = {
@@ -337,7 +337,7 @@ export const MsgBurn: MessageFns<MsgBurn, "seiprotocol.seichain.tokenfactory.Msg
 	fromJSON(object: any): MsgBurn {
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
 		};
 	},
 
@@ -360,7 +360,7 @@ export const MsgBurn: MessageFns<MsgBurn, "seiprotocol.seichain.tokenfactory.Msg
 		message.sender = object.sender ?? "";
 		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgBurnResponse: MessageFns<MsgBurnResponse, "seiprotocol.seichain.tokenfactory.MsgBurnResponse"> = {
@@ -401,7 +401,7 @@ export const MsgBurnResponse: MessageFns<MsgBurnResponse, "seiprotocol.seichain.
 	fromPartial<I extends Exact<DeepPartial<MsgBurnResponse>, I>>(_: I): MsgBurnResponse {
 		const message = createBaseMsgBurnResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgChangeAdmin: MessageFns<MsgChangeAdmin, "seiprotocol.seichain.tokenfactory.MsgChangeAdmin"> = {
@@ -461,7 +461,7 @@ export const MsgChangeAdmin: MessageFns<MsgChangeAdmin, "seiprotocol.seichain.to
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			new_admin: isSet(object.new_admin) ? globalThis.String(object.new_admin) : "",
+			new_admin: isSet(object.new_admin) ? globalThis.String(object.new_admin) : ""
 		};
 	},
 
@@ -488,7 +488,7 @@ export const MsgChangeAdmin: MessageFns<MsgChangeAdmin, "seiprotocol.seichain.to
 		message.denom = object.denom ?? "";
 		message.new_admin = object.new_admin ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgChangeAdminResponse: MessageFns<MsgChangeAdminResponse, "seiprotocol.seichain.tokenfactory.MsgChangeAdminResponse"> = {
@@ -529,7 +529,7 @@ export const MsgChangeAdminResponse: MessageFns<MsgChangeAdminResponse, "seiprot
 	fromPartial<I extends Exact<DeepPartial<MsgChangeAdminResponse>, I>>(_: I): MsgChangeAdminResponse {
 		const message = createBaseMsgChangeAdminResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgSetDenomMetadata: MessageFns<MsgSetDenomMetadata, "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata"> = {
@@ -578,7 +578,7 @@ export const MsgSetDenomMetadata: MessageFns<MsgSetDenomMetadata, "seiprotocol.s
 	fromJSON(object: any): MsgSetDenomMetadata {
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined,
+			metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined
 		};
 	},
 
@@ -601,7 +601,7 @@ export const MsgSetDenomMetadata: MessageFns<MsgSetDenomMetadata, "seiprotocol.s
 		message.sender = object.sender ?? "";
 		message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgSetDenomMetadataResponse: MessageFns<MsgSetDenomMetadataResponse, "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse"> = {
@@ -642,7 +642,7 @@ export const MsgSetDenomMetadataResponse: MessageFns<MsgSetDenomMetadataResponse
 	fromPartial<I extends Exact<DeepPartial<MsgSetDenomMetadataResponse>, I>>(_: I): MsgSetDenomMetadataResponse {
 		const message = createBaseMsgSetDenomMetadataResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgUpdateDenom: MessageFns<MsgUpdateDenom, "seiprotocol.seichain.tokenfactory.MsgUpdateDenom"> = {
@@ -702,7 +702,7 @@ export const MsgUpdateDenom: MessageFns<MsgUpdateDenom, "seiprotocol.seichain.to
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
 			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined,
+			allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined
 		};
 	},
 
@@ -729,7 +729,7 @@ export const MsgUpdateDenom: MessageFns<MsgUpdateDenom, "seiprotocol.seichain.to
 		message.denom = object.denom ?? "";
 		message.allow_list = object.allow_list !== undefined && object.allow_list !== null ? AllowList.fromPartial(object.allow_list) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgUpdateDenomResponse: MessageFns<MsgUpdateDenomResponse, "seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse"> = {
@@ -770,7 +770,7 @@ export const MsgUpdateDenomResponse: MessageFns<MsgUpdateDenomResponse, "seiprot
 	fromPartial<I extends Exact<DeepPartial<MsgUpdateDenomResponse>, I>>(_: I): MsgUpdateDenomResponse {
 		const message = createBaseMsgUpdateDenomResponse();
 		return message;
-	},
+	}
 };
 
 function createBaseMsgCreateDenom(): MsgCreateDenom {
@@ -831,48 +831,48 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.tokenfactory.MsgBurn", MsgBurn as never],
 	["/seiprotocol.seichain.tokenfactory.MsgBurnResponse", MsgBurnResponse as never],
 	["/seiprotocol.seichain.tokenfactory.MsgChangeAdmin", MsgChangeAdmin as never],
-	["/seiprotocol.seichain.tokenfactory.MsgUpdateDenom", MsgUpdateDenom as never],
+	["/seiprotocol.seichain.tokenfactory.MsgUpdateDenom", MsgUpdateDenom as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.tokenfactory.MsgCreateDenom": {
 		aminoType: "tokenfactory/MsgCreateDenom",
 		toAmino: (message: MsgCreateDenom) => ({ ...message }),
-		fromAmino: (object: MsgCreateDenom) => ({ ...object }),
+		fromAmino: (object: MsgCreateDenom) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgMint": {
 		aminoType: "tokenfactory/MsgMint",
 		toAmino: (message: MsgMint) => ({ ...message }),
-		fromAmino: (object: MsgMint) => ({ ...object }),
+		fromAmino: (object: MsgMint) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgMintResponse": {
 		aminoType: "tokenfactory/MsgMintResponse",
 		toAmino: (message: MsgMintResponse) => ({ ...message }),
-		fromAmino: (object: MsgMintResponse) => ({ ...object }),
+		fromAmino: (object: MsgMintResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgBurn": {
 		aminoType: "tokenfactory/MsgBurn",
 		toAmino: (message: MsgBurn) => ({ ...message }),
-		fromAmino: (object: MsgBurn) => ({ ...object }),
+		fromAmino: (object: MsgBurn) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgBurnResponse": {
 		aminoType: "tokenfactory/MsgBurnResponse",
 		toAmino: (message: MsgBurnResponse) => ({ ...message }),
-		fromAmino: (object: MsgBurnResponse) => ({ ...object }),
+		fromAmino: (object: MsgBurnResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgChangeAdmin": {
 		aminoType: "tokenfactory/MsgChangeAdmin",
 		toAmino: (message: MsgChangeAdmin) => ({ ...message }),
-		fromAmino: (object: MsgChangeAdmin) => ({ ...object }),
+		fromAmino: (object: MsgChangeAdmin) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgUpdateDenom": {
 		aminoType: "tokenfactory/MsgUpdateDenom",
 		toAmino: (message: MsgUpdateDenom) => ({ ...message }),
-		fromAmino: (object: MsgUpdateDenom) => ({ ...object }),
-	},
+		fromAmino: (object: MsgUpdateDenom) => ({ ...object })
+	}
 };

@@ -6,7 +6,7 @@ import { Any } from "../../../google/protobuf/any";
 
 import type {
 	MsgSubmitEvidenceResponse as MsgSubmitEvidenceResponse_type,
-	MsgSubmitEvidence as MsgSubmitEvidence_type,
+	MsgSubmitEvidence as MsgSubmitEvidence_type
 } from "../../../../types/cosmos/evidence/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -60,7 +60,7 @@ export const MsgSubmitEvidence: MessageFns<MsgSubmitEvidence, "cosmos.evidence.v
 	fromJSON(object: any): MsgSubmitEvidence {
 		return {
 			submitter: isSet(object.submitter) ? globalThis.String(object.submitter) : "",
-			evidence: isSet(object.evidence) ? Any.fromJSON(object.evidence) : undefined,
+			evidence: isSet(object.evidence) ? Any.fromJSON(object.evidence) : undefined
 		};
 	},
 
@@ -83,7 +83,7 @@ export const MsgSubmitEvidence: MessageFns<MsgSubmitEvidence, "cosmos.evidence.v
 		message.submitter = object.submitter ?? "";
 		message.evidence = object.evidence !== undefined && object.evidence !== null ? Any.fromPartial(object.evidence) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgSubmitEvidenceResponse: MessageFns<MsgSubmitEvidenceResponse, "cosmos.evidence.v1beta1.MsgSubmitEvidenceResponse"> = {
@@ -138,7 +138,7 @@ export const MsgSubmitEvidenceResponse: MessageFns<MsgSubmitEvidenceResponse, "c
 		const message = createBaseMsgSubmitEvidenceResponse();
 		message.hash = object.hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseMsgSubmitEvidence(): MsgSubmitEvidence {
@@ -182,6 +182,6 @@ export const aminoConverters = {
 	"/cosmos.evidence.v1beta1.MsgSubmitEvidence": {
 		aminoType: "cosmos-sdk/MsgSubmitEvidence",
 		toAmino: (message: MsgSubmitEvidence) => ({ ...message }),
-		fromAmino: (object: MsgSubmitEvidence) => ({ ...object }),
-	},
+		fromAmino: (object: MsgSubmitEvidence) => ({ ...object })
+	}
 };

@@ -20,7 +20,7 @@ import type {
 	MsgEditValidatorResponse as MsgEditValidatorResponse_type,
 	MsgEditValidator as MsgEditValidator_type,
 	MsgUndelegateResponse as MsgUndelegateResponse_type,
-	MsgUndelegate as MsgUndelegate_type,
+	MsgUndelegate as MsgUndelegate_type
 } from "../../../../types/cosmos/staking/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -137,7 +137,7 @@ export const MsgCreateValidator: MessageFns<MsgCreateValidator, "cosmos.staking.
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
 			pubkey: isSet(object.pubkey) ? Any.fromJSON(object.pubkey) : undefined,
-			value: isSet(object.value) ? Coin.fromJSON(object.value) : undefined,
+			value: isSet(object.value) ? Coin.fromJSON(object.value) : undefined
 		};
 	},
 
@@ -180,7 +180,7 @@ export const MsgCreateValidator: MessageFns<MsgCreateValidator, "cosmos.staking.
 		message.pubkey = object.pubkey !== undefined && object.pubkey !== null ? Any.fromPartial(object.pubkey) : undefined;
 		message.value = object.value !== undefined && object.value !== null ? Coin.fromPartial(object.value) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgCreateValidatorResponse: MessageFns<MsgCreateValidatorResponse, "cosmos.staking.v1beta1.MsgCreateValidatorResponse"> = {
@@ -221,7 +221,7 @@ export const MsgCreateValidatorResponse: MessageFns<MsgCreateValidatorResponse, 
 	fromPartial<I extends Exact<DeepPartial<MsgCreateValidatorResponse>, I>>(_: I): MsgCreateValidatorResponse {
 		const message = createBaseMsgCreateValidatorResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgEditValidator: MessageFns<MsgEditValidator, "cosmos.staking.v1beta1.MsgEditValidator"> = {
@@ -292,7 +292,7 @@ export const MsgEditValidator: MessageFns<MsgEditValidator, "cosmos.staking.v1be
 			description: isSet(object.description) ? Description.fromJSON(object.description) : undefined,
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
 			commission_rate: isSet(object.commission_rate) ? globalThis.String(object.commission_rate) : "",
-			min_self_delegation: isSet(object.min_self_delegation) ? globalThis.String(object.min_self_delegation) : "",
+			min_self_delegation: isSet(object.min_self_delegation) ? globalThis.String(object.min_self_delegation) : ""
 		};
 	},
 
@@ -323,7 +323,7 @@ export const MsgEditValidator: MessageFns<MsgEditValidator, "cosmos.staking.v1be
 		message.commission_rate = object.commission_rate ?? "";
 		message.min_self_delegation = object.min_self_delegation ?? "";
 		return message;
-	},
+	}
 };
 
 export const MsgEditValidatorResponse: MessageFns<MsgEditValidatorResponse, "cosmos.staking.v1beta1.MsgEditValidatorResponse"> = {
@@ -364,7 +364,7 @@ export const MsgEditValidatorResponse: MessageFns<MsgEditValidatorResponse, "cos
 	fromPartial<I extends Exact<DeepPartial<MsgEditValidatorResponse>, I>>(_: I): MsgEditValidatorResponse {
 		const message = createBaseMsgEditValidatorResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgDelegate: MessageFns<MsgDelegate, "cosmos.staking.v1beta1.MsgDelegate"> = {
@@ -424,7 +424,7 @@ export const MsgDelegate: MessageFns<MsgDelegate, "cosmos.staking.v1beta1.MsgDel
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
 		};
 	},
 
@@ -451,7 +451,7 @@ export const MsgDelegate: MessageFns<MsgDelegate, "cosmos.staking.v1beta1.MsgDel
 		message.validator_address = object.validator_address ?? "";
 		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgDelegateResponse: MessageFns<MsgDelegateResponse, "cosmos.staking.v1beta1.MsgDelegateResponse"> = {
@@ -492,7 +492,7 @@ export const MsgDelegateResponse: MessageFns<MsgDelegateResponse, "cosmos.stakin
 	fromPartial<I extends Exact<DeepPartial<MsgDelegateResponse>, I>>(_: I): MsgDelegateResponse {
 		const message = createBaseMsgDelegateResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgBeginRedelegate: MessageFns<MsgBeginRedelegate, "cosmos.staking.v1beta1.MsgBeginRedelegate"> = {
@@ -563,7 +563,7 @@ export const MsgBeginRedelegate: MessageFns<MsgBeginRedelegate, "cosmos.staking.
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_src_address: isSet(object.validator_src_address) ? globalThis.String(object.validator_src_address) : "",
 			validator_dst_address: isSet(object.validator_dst_address) ? globalThis.String(object.validator_dst_address) : "",
-			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
 		};
 	},
 
@@ -594,7 +594,7 @@ export const MsgBeginRedelegate: MessageFns<MsgBeginRedelegate, "cosmos.staking.
 		message.validator_dst_address = object.validator_dst_address ?? "";
 		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgBeginRedelegateResponse: MessageFns<MsgBeginRedelegateResponse, "cosmos.staking.v1beta1.MsgBeginRedelegateResponse"> = {
@@ -649,7 +649,7 @@ export const MsgBeginRedelegateResponse: MessageFns<MsgBeginRedelegateResponse, 
 		const message = createBaseMsgBeginRedelegateResponse();
 		message.completion_time = object.completion_time ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgUndelegate: MessageFns<MsgUndelegate, "cosmos.staking.v1beta1.MsgUndelegate"> = {
@@ -709,7 +709,7 @@ export const MsgUndelegate: MessageFns<MsgUndelegate, "cosmos.staking.v1beta1.Ms
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
 		};
 	},
 
@@ -736,7 +736,7 @@ export const MsgUndelegate: MessageFns<MsgUndelegate, "cosmos.staking.v1beta1.Ms
 		message.validator_address = object.validator_address ?? "";
 		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgUndelegateResponse: MessageFns<MsgUndelegateResponse, "cosmos.staking.v1beta1.MsgUndelegateResponse"> = {
@@ -791,7 +791,7 @@ export const MsgUndelegateResponse: MessageFns<MsgUndelegateResponse, "cosmos.st
 		const message = createBaseMsgUndelegateResponse();
 		message.completion_time = object.completion_time ?? undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseMsgCreateValidator(): MsgCreateValidator {
@@ -802,7 +802,7 @@ function createBaseMsgCreateValidator(): MsgCreateValidator {
 		delegator_address: "",
 		validator_address: "",
 		pubkey: undefined,
-		value: undefined,
+		value: undefined
 	};
 }
 
@@ -874,48 +874,48 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.staking.v1beta1.MsgDelegateResponse", MsgDelegateResponse as never],
 	["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate as never],
 	["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate as never],
-	["/cosmos.staking.v1beta1.MsgUndelegateResponse", MsgUndelegateResponse as never],
+	["/cosmos.staking.v1beta1.MsgUndelegateResponse", MsgUndelegateResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.staking.v1beta1.MsgCreateValidator": {
 		aminoType: "cosmos-sdk/MsgCreateValidator",
 		toAmino: (message: MsgCreateValidator) => ({ ...message }),
-		fromAmino: (object: MsgCreateValidator) => ({ ...object }),
+		fromAmino: (object: MsgCreateValidator) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgEditValidator": {
 		aminoType: "cosmos-sdk/MsgEditValidator",
 		toAmino: (message: MsgEditValidator) => ({ ...message }),
-		fromAmino: (object: MsgEditValidator) => ({ ...object }),
+		fromAmino: (object: MsgEditValidator) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgDelegate": {
 		aminoType: "cosmos-sdk/MsgDelegate",
 		toAmino: (message: MsgDelegate) => ({ ...message }),
-		fromAmino: (object: MsgDelegate) => ({ ...object }),
+		fromAmino: (object: MsgDelegate) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgDelegateResponse": {
 		aminoType: "cosmos-sdk/MsgDelegateResponse",
 		toAmino: (message: MsgDelegateResponse) => ({ ...message }),
-		fromAmino: (object: MsgDelegateResponse) => ({ ...object }),
+		fromAmino: (object: MsgDelegateResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgBeginRedelegate": {
 		aminoType: "cosmos-sdk/MsgBeginRedelegate",
 		toAmino: (message: MsgBeginRedelegate) => ({ ...message }),
-		fromAmino: (object: MsgBeginRedelegate) => ({ ...object }),
+		fromAmino: (object: MsgBeginRedelegate) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgUndelegate": {
 		aminoType: "cosmos-sdk/MsgUndelegate",
 		toAmino: (message: MsgUndelegate) => ({ ...message }),
-		fromAmino: (object: MsgUndelegate) => ({ ...object }),
+		fromAmino: (object: MsgUndelegate) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgUndelegateResponse": {
 		aminoType: "cosmos-sdk/MsgUndelegateResponse",
 		toAmino: (message: MsgUndelegateResponse) => ({ ...message }),
-		fromAmino: (object: MsgUndelegateResponse) => ({ ...object }),
-	},
+		fromAmino: (object: MsgUndelegateResponse) => ({ ...object })
+	}
 };

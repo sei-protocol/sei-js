@@ -13,7 +13,7 @@ import type {
 	SynchronyParams as SynchronyParams_type,
 	TimeoutParams as TimeoutParams_type,
 	ValidatorParams as ValidatorParams_type,
-	VersionParams as VersionParams_type,
+	VersionParams as VersionParams_type
 } from "../../../types/tendermint/types";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -129,7 +129,7 @@ export const ConsensusParams: MessageFns<ConsensusParams, "tendermint.types.Cons
 			version: isSet(object.version) ? VersionParams.fromJSON(object.version) : undefined,
 			synchrony: isSet(object.synchrony) ? SynchronyParams.fromJSON(object.synchrony) : undefined,
 			timeout: isSet(object.timeout) ? TimeoutParams.fromJSON(object.timeout) : undefined,
-			abci: isSet(object.abci) ? ABCIParams.fromJSON(object.abci) : undefined,
+			abci: isSet(object.abci) ? ABCIParams.fromJSON(object.abci) : undefined
 		};
 	},
 
@@ -172,7 +172,7 @@ export const ConsensusParams: MessageFns<ConsensusParams, "tendermint.types.Cons
 		message.timeout = object.timeout !== undefined && object.timeout !== null ? TimeoutParams.fromPartial(object.timeout) : undefined;
 		message.abci = object.abci !== undefined && object.abci !== null ? ABCIParams.fromPartial(object.abci) : undefined;
 		return message;
-	},
+	}
 };
 
 export const BlockParams: MessageFns<BlockParams, "tendermint.types.BlockParams"> = {
@@ -221,7 +221,7 @@ export const BlockParams: MessageFns<BlockParams, "tendermint.types.BlockParams"
 	fromJSON(object: any): BlockParams {
 		return {
 			max_bytes: isSet(object.max_bytes) ? globalThis.Number(object.max_bytes) : 0,
-			max_gas: isSet(object.max_gas) ? globalThis.Number(object.max_gas) : 0,
+			max_gas: isSet(object.max_gas) ? globalThis.Number(object.max_gas) : 0
 		};
 	},
 
@@ -244,7 +244,7 @@ export const BlockParams: MessageFns<BlockParams, "tendermint.types.BlockParams"
 		message.max_bytes = object.max_bytes ?? 0;
 		message.max_gas = object.max_gas ?? 0;
 		return message;
-	},
+	}
 };
 
 export const EvidenceParams: MessageFns<EvidenceParams, "tendermint.types.EvidenceParams"> = {
@@ -304,7 +304,7 @@ export const EvidenceParams: MessageFns<EvidenceParams, "tendermint.types.Eviden
 		return {
 			max_age_num_blocks: isSet(object.max_age_num_blocks) ? globalThis.Number(object.max_age_num_blocks) : 0,
 			max_age_duration: isSet(object.max_age_duration) ? Duration.fromJSON(object.max_age_duration) : undefined,
-			max_bytes: isSet(object.max_bytes) ? globalThis.Number(object.max_bytes) : 0,
+			max_bytes: isSet(object.max_bytes) ? globalThis.Number(object.max_bytes) : 0
 		};
 	},
 
@@ -332,7 +332,7 @@ export const EvidenceParams: MessageFns<EvidenceParams, "tendermint.types.Eviden
 			object.max_age_duration !== undefined && object.max_age_duration !== null ? Duration.fromPartial(object.max_age_duration) : undefined;
 		message.max_bytes = object.max_bytes ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ValidatorParams: MessageFns<ValidatorParams, "tendermint.types.ValidatorParams"> = {
@@ -370,7 +370,7 @@ export const ValidatorParams: MessageFns<ValidatorParams, "tendermint.types.Vali
 
 	fromJSON(object: any): ValidatorParams {
 		return {
-			pub_key_types: globalThis.Array.isArray(object?.pub_key_types) ? object.pub_key_types.map((e: any) => globalThis.String(e)) : [],
+			pub_key_types: globalThis.Array.isArray(object?.pub_key_types) ? object.pub_key_types.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -389,7 +389,7 @@ export const ValidatorParams: MessageFns<ValidatorParams, "tendermint.types.Vali
 		const message = createBaseValidatorParams();
 		message.pub_key_types = object.pub_key_types?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const VersionParams: MessageFns<VersionParams, "tendermint.types.VersionParams"> = {
@@ -444,7 +444,7 @@ export const VersionParams: MessageFns<VersionParams, "tendermint.types.VersionP
 		const message = createBaseVersionParams();
 		message.app_version = object.app_version ?? 0;
 		return message;
-	},
+	}
 };
 
 export const HashedParams: MessageFns<HashedParams, "tendermint.types.HashedParams"> = {
@@ -493,7 +493,7 @@ export const HashedParams: MessageFns<HashedParams, "tendermint.types.HashedPara
 	fromJSON(object: any): HashedParams {
 		return {
 			block_max_bytes: isSet(object.block_max_bytes) ? globalThis.Number(object.block_max_bytes) : 0,
-			block_max_gas: isSet(object.block_max_gas) ? globalThis.Number(object.block_max_gas) : 0,
+			block_max_gas: isSet(object.block_max_gas) ? globalThis.Number(object.block_max_gas) : 0
 		};
 	},
 
@@ -516,7 +516,7 @@ export const HashedParams: MessageFns<HashedParams, "tendermint.types.HashedPara
 		message.block_max_bytes = object.block_max_bytes ?? 0;
 		message.block_max_gas = object.block_max_gas ?? 0;
 		return message;
-	},
+	}
 };
 
 export const SynchronyParams: MessageFns<SynchronyParams, "tendermint.types.SynchronyParams"> = {
@@ -565,7 +565,7 @@ export const SynchronyParams: MessageFns<SynchronyParams, "tendermint.types.Sync
 	fromJSON(object: any): SynchronyParams {
 		return {
 			message_delay: isSet(object.message_delay) ? Duration.fromJSON(object.message_delay) : undefined,
-			precision: isSet(object.precision) ? Duration.fromJSON(object.precision) : undefined,
+			precision: isSet(object.precision) ? Duration.fromJSON(object.precision) : undefined
 		};
 	},
 
@@ -588,7 +588,7 @@ export const SynchronyParams: MessageFns<SynchronyParams, "tendermint.types.Sync
 		message.message_delay = object.message_delay !== undefined && object.message_delay !== null ? Duration.fromPartial(object.message_delay) : undefined;
 		message.precision = object.precision !== undefined && object.precision !== null ? Duration.fromPartial(object.precision) : undefined;
 		return message;
-	},
+	}
 };
 
 export const TimeoutParams: MessageFns<TimeoutParams, "tendermint.types.TimeoutParams"> = {
@@ -681,7 +681,7 @@ export const TimeoutParams: MessageFns<TimeoutParams, "tendermint.types.TimeoutP
 			vote: isSet(object.vote) ? Duration.fromJSON(object.vote) : undefined,
 			vote_delta: isSet(object.vote_delta) ? Duration.fromJSON(object.vote_delta) : undefined,
 			commit: isSet(object.commit) ? Duration.fromJSON(object.commit) : undefined,
-			bypass_commit_timeout: isSet(object.bypass_commit_timeout) ? globalThis.Boolean(object.bypass_commit_timeout) : false,
+			bypass_commit_timeout: isSet(object.bypass_commit_timeout) ? globalThis.Boolean(object.bypass_commit_timeout) : false
 		};
 	},
 
@@ -720,7 +720,7 @@ export const TimeoutParams: MessageFns<TimeoutParams, "tendermint.types.TimeoutP
 		message.commit = object.commit !== undefined && object.commit !== null ? Duration.fromPartial(object.commit) : undefined;
 		message.bypass_commit_timeout = object.bypass_commit_timeout ?? false;
 		return message;
-	},
+	}
 };
 
 export const ABCIParams: MessageFns<ABCIParams, "tendermint.types.ABCIParams"> = {
@@ -769,7 +769,7 @@ export const ABCIParams: MessageFns<ABCIParams, "tendermint.types.ABCIParams"> =
 	fromJSON(object: any): ABCIParams {
 		return {
 			vote_extensions_enable_height: isSet(object.vote_extensions_enable_height) ? globalThis.Number(object.vote_extensions_enable_height) : 0,
-			recheck_tx: isSet(object.recheck_tx) ? globalThis.Boolean(object.recheck_tx) : false,
+			recheck_tx: isSet(object.recheck_tx) ? globalThis.Boolean(object.recheck_tx) : false
 		};
 	},
 
@@ -792,7 +792,7 @@ export const ABCIParams: MessageFns<ABCIParams, "tendermint.types.ABCIParams"> =
 		message.vote_extensions_enable_height = object.vote_extensions_enable_height ?? 0;
 		message.recheck_tx = object.recheck_tx ?? false;
 		return message;
-	},
+	}
 };
 
 function createBaseConsensusParams(): ConsensusParams {
@@ -803,7 +803,7 @@ function createBaseConsensusParams(): ConsensusParams {
 		version: undefined,
 		synchrony: undefined,
 		timeout: undefined,
-		abci: undefined,
+		abci: undefined
 	};
 }
 
@@ -838,7 +838,7 @@ function createBaseTimeoutParams(): TimeoutParams {
 		vote: undefined,
 		vote_delta: undefined,
 		commit: undefined,
-		bypass_commit_timeout: false,
+		bypass_commit_timeout: false
 	};
 }
 
@@ -869,60 +869,60 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.types.HashedParams", HashedParams as never],
 	["/tendermint.types.SynchronyParams", SynchronyParams as never],
 	["/tendermint.types.TimeoutParams", TimeoutParams as never],
-	["/tendermint.types.ABCIParams", ABCIParams as never],
+	["/tendermint.types.ABCIParams", ABCIParams as never]
 ];
 export const aminoConverters = {
 	"/tendermint.types.ConsensusParams": {
 		aminoType: "tendermint.types.ConsensusParams",
 		toAmino: (message: ConsensusParams) => ({ ...message }),
-		fromAmino: (object: ConsensusParams) => ({ ...object }),
+		fromAmino: (object: ConsensusParams) => ({ ...object })
 	},
 
 	"/tendermint.types.BlockParams": {
 		aminoType: "tendermint.types.BlockParams",
 		toAmino: (message: BlockParams) => ({ ...message }),
-		fromAmino: (object: BlockParams) => ({ ...object }),
+		fromAmino: (object: BlockParams) => ({ ...object })
 	},
 
 	"/tendermint.types.EvidenceParams": {
 		aminoType: "tendermint.types.EvidenceParams",
 		toAmino: (message: EvidenceParams) => ({ ...message }),
-		fromAmino: (object: EvidenceParams) => ({ ...object }),
+		fromAmino: (object: EvidenceParams) => ({ ...object })
 	},
 
 	"/tendermint.types.ValidatorParams": {
 		aminoType: "tendermint.types.ValidatorParams",
 		toAmino: (message: ValidatorParams) => ({ ...message }),
-		fromAmino: (object: ValidatorParams) => ({ ...object }),
+		fromAmino: (object: ValidatorParams) => ({ ...object })
 	},
 
 	"/tendermint.types.VersionParams": {
 		aminoType: "tendermint.types.VersionParams",
 		toAmino: (message: VersionParams) => ({ ...message }),
-		fromAmino: (object: VersionParams) => ({ ...object }),
+		fromAmino: (object: VersionParams) => ({ ...object })
 	},
 
 	"/tendermint.types.HashedParams": {
 		aminoType: "tendermint.types.HashedParams",
 		toAmino: (message: HashedParams) => ({ ...message }),
-		fromAmino: (object: HashedParams) => ({ ...object }),
+		fromAmino: (object: HashedParams) => ({ ...object })
 	},
 
 	"/tendermint.types.SynchronyParams": {
 		aminoType: "tendermint.types.SynchronyParams",
 		toAmino: (message: SynchronyParams) => ({ ...message }),
-		fromAmino: (object: SynchronyParams) => ({ ...object }),
+		fromAmino: (object: SynchronyParams) => ({ ...object })
 	},
 
 	"/tendermint.types.TimeoutParams": {
 		aminoType: "tendermint.types.TimeoutParams",
 		toAmino: (message: TimeoutParams) => ({ ...message }),
-		fromAmino: (object: TimeoutParams) => ({ ...object }),
+		fromAmino: (object: TimeoutParams) => ({ ...object })
 	},
 
 	"/tendermint.types.ABCIParams": {
 		aminoType: "tendermint.types.ABCIParams",
 		toAmino: (message: ABCIParams) => ({ ...message }),
-		fromAmino: (object: ABCIParams) => ({ ...object }),
-	},
+		fromAmino: (object: ABCIParams) => ({ ...object })
+	}
 };

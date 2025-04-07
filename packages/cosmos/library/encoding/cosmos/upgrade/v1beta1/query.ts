@@ -10,7 +10,7 @@ import type {
 	QueryModuleVersionsRequest as QueryModuleVersionsRequest_type,
 	QueryModuleVersionsResponse as QueryModuleVersionsResponse_type,
 	QueryUpgradedConsensusStateRequest as QueryUpgradedConsensusStateRequest_type,
-	QueryUpgradedConsensusStateResponse as QueryUpgradedConsensusStateResponse_type,
+	QueryUpgradedConsensusStateResponse as QueryUpgradedConsensusStateResponse_type
 } from "../../../../types/cosmos/upgrade/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -62,7 +62,7 @@ export const QueryCurrentPlanRequest: MessageFns<QueryCurrentPlanRequest, "cosmo
 	fromPartial<I extends Exact<DeepPartial<QueryCurrentPlanRequest>, I>>(_: I): QueryCurrentPlanRequest {
 		const message = createBaseQueryCurrentPlanRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryCurrentPlanResponse: MessageFns<QueryCurrentPlanResponse, "cosmos.upgrade.v1beta1.QueryCurrentPlanResponse"> = {
@@ -117,7 +117,7 @@ export const QueryCurrentPlanResponse: MessageFns<QueryCurrentPlanResponse, "cos
 		const message = createBaseQueryCurrentPlanResponse();
 		message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryAppliedPlanRequest: MessageFns<QueryAppliedPlanRequest, "cosmos.upgrade.v1beta1.QueryAppliedPlanRequest"> = {
@@ -172,7 +172,7 @@ export const QueryAppliedPlanRequest: MessageFns<QueryAppliedPlanRequest, "cosmo
 		const message = createBaseQueryAppliedPlanRequest();
 		message.name = object.name ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryAppliedPlanResponse: MessageFns<QueryAppliedPlanResponse, "cosmos.upgrade.v1beta1.QueryAppliedPlanResponse"> = {
@@ -227,7 +227,7 @@ export const QueryAppliedPlanResponse: MessageFns<QueryAppliedPlanResponse, "cos
 		const message = createBaseQueryAppliedPlanResponse();
 		message.height = object.height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryUpgradedConsensusStateRequest: MessageFns<QueryUpgradedConsensusStateRequest, "cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest"> = {
@@ -282,7 +282,7 @@ export const QueryUpgradedConsensusStateRequest: MessageFns<QueryUpgradedConsens
 		const message = createBaseQueryUpgradedConsensusStateRequest();
 		message.last_height = object.last_height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryUpgradedConsensusStateResponse: MessageFns<
@@ -323,7 +323,7 @@ export const QueryUpgradedConsensusStateResponse: MessageFns<
 
 	fromJSON(object: any): QueryUpgradedConsensusStateResponse {
 		return {
-			upgraded_consensus_state: isSet(object.upgraded_consensus_state) ? bytesFromBase64(object.upgraded_consensus_state) : new Uint8Array(0),
+			upgraded_consensus_state: isSet(object.upgraded_consensus_state) ? bytesFromBase64(object.upgraded_consensus_state) : new Uint8Array(0)
 		};
 	},
 
@@ -342,7 +342,7 @@ export const QueryUpgradedConsensusStateResponse: MessageFns<
 		const message = createBaseQueryUpgradedConsensusStateResponse();
 		message.upgraded_consensus_state = object.upgraded_consensus_state ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const QueryModuleVersionsRequest: MessageFns<QueryModuleVersionsRequest, "cosmos.upgrade.v1beta1.QueryModuleVersionsRequest"> = {
@@ -397,7 +397,7 @@ export const QueryModuleVersionsRequest: MessageFns<QueryModuleVersionsRequest, 
 		const message = createBaseQueryModuleVersionsRequest();
 		message.module_name = object.module_name ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryModuleVersionsResponse: MessageFns<QueryModuleVersionsResponse, "cosmos.upgrade.v1beta1.QueryModuleVersionsResponse"> = {
@@ -435,7 +435,7 @@ export const QueryModuleVersionsResponse: MessageFns<QueryModuleVersionsResponse
 
 	fromJSON(object: any): QueryModuleVersionsResponse {
 		return {
-			module_versions: globalThis.Array.isArray(object?.module_versions) ? object.module_versions.map((e: any) => ModuleVersion.fromJSON(e)) : [],
+			module_versions: globalThis.Array.isArray(object?.module_versions) ? object.module_versions.map((e: any) => ModuleVersion.fromJSON(e)) : []
 		};
 	},
 
@@ -454,7 +454,7 @@ export const QueryModuleVersionsResponse: MessageFns<QueryModuleVersionsResponse
 		const message = createBaseQueryModuleVersionsResponse();
 		message.module_versions = object.module_versions?.map((e) => ModuleVersion.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseQueryCurrentPlanRequest(): QueryCurrentPlanRequest {

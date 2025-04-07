@@ -54,7 +54,7 @@ export const Any: MessageFns<Any, "google.protobuf.Any"> = {
 	fromJSON(object: any): Any {
 		return {
 			type_url: isSet(object.type_url) ? globalThis.String(object.type_url) : "",
-			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
+			value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0)
 		};
 	},
 
@@ -77,7 +77,7 @@ export const Any: MessageFns<Any, "google.protobuf.Any"> = {
 		message.type_url = object.type_url ?? "";
 		message.value = object.value ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 function createBaseAny(): Any {
@@ -117,6 +117,6 @@ export const aminoConverters = {
 	"/google.protobuf.Any": {
 		aminoType: "google.protobuf.Any",
 		toAmino: (message: Any) => ({ ...message }),
-		fromAmino: (object: Any) => ({ ...object }),
-	},
+		fromAmino: (object: Any) => ({ ...object })
+	}
 };

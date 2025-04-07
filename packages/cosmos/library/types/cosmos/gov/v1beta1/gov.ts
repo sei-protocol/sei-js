@@ -15,7 +15,7 @@ export enum VoteOption {
 	VOTE_OPTION_NO = 3,
 	/** VOTE_OPTION_NO_WITH_VETO - VOTE_OPTION_NO_WITH_VETO defines a no with veto vote option. */
 	VOTE_OPTION_NO_WITH_VETO = 4,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum ProposalStatus {
@@ -46,7 +46,7 @@ export enum ProposalStatus {
 	 * failed.
 	 */
 	PROPOSAL_STATUS_FAILED = 5,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface WeightedVoteOption {

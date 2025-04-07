@@ -16,7 +16,7 @@ import type {
 	ValidatorHistoricalRewards as ValidatorHistoricalRewards_type,
 	ValidatorOutstandingRewards as ValidatorOutstandingRewards_type,
 	ValidatorSlashEvent as ValidatorSlashEvent_type,
-	ValidatorSlashEvents as ValidatorSlashEvents_type,
+	ValidatorSlashEvents as ValidatorSlashEvents_type
 } from "../../../../types/cosmos/distribution/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -102,7 +102,7 @@ export const Params: MessageFns<Params, "cosmos.distribution.v1beta1.Params"> = 
 			community_tax: isSet(object.community_tax) ? globalThis.String(object.community_tax) : "",
 			base_proposer_reward: isSet(object.base_proposer_reward) ? globalThis.String(object.base_proposer_reward) : "",
 			bonus_proposer_reward: isSet(object.bonus_proposer_reward) ? globalThis.String(object.bonus_proposer_reward) : "",
-			withdraw_addr_enabled: isSet(object.withdraw_addr_enabled) ? globalThis.Boolean(object.withdraw_addr_enabled) : false,
+			withdraw_addr_enabled: isSet(object.withdraw_addr_enabled) ? globalThis.Boolean(object.withdraw_addr_enabled) : false
 		};
 	},
 
@@ -133,7 +133,7 @@ export const Params: MessageFns<Params, "cosmos.distribution.v1beta1.Params"> = 
 		message.bonus_proposer_reward = object.bonus_proposer_reward ?? "";
 		message.withdraw_addr_enabled = object.withdraw_addr_enabled ?? false;
 		return message;
-	},
+	}
 };
 
 export const ValidatorHistoricalRewards: MessageFns<ValidatorHistoricalRewards, "cosmos.distribution.v1beta1.ValidatorHistoricalRewards"> = {
@@ -184,7 +184,7 @@ export const ValidatorHistoricalRewards: MessageFns<ValidatorHistoricalRewards, 
 			cumulative_reward_ratio: globalThis.Array.isArray(object?.cumulative_reward_ratio)
 				? object.cumulative_reward_ratio.map((e: any) => DecCoin.fromJSON(e))
 				: [],
-			reference_count: isSet(object.reference_count) ? globalThis.Number(object.reference_count) : 0,
+			reference_count: isSet(object.reference_count) ? globalThis.Number(object.reference_count) : 0
 		};
 	},
 
@@ -207,7 +207,7 @@ export const ValidatorHistoricalRewards: MessageFns<ValidatorHistoricalRewards, 
 		message.cumulative_reward_ratio = object.cumulative_reward_ratio?.map((e) => DecCoin.fromPartial(e)) || [];
 		message.reference_count = object.reference_count ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ValidatorCurrentRewards: MessageFns<ValidatorCurrentRewards, "cosmos.distribution.v1beta1.ValidatorCurrentRewards"> = {
@@ -256,7 +256,7 @@ export const ValidatorCurrentRewards: MessageFns<ValidatorCurrentRewards, "cosmo
 	fromJSON(object: any): ValidatorCurrentRewards {
 		return {
 			rewards: globalThis.Array.isArray(object?.rewards) ? object.rewards.map((e: any) => DecCoin.fromJSON(e)) : [],
-			period: isSet(object.period) ? globalThis.Number(object.period) : 0,
+			period: isSet(object.period) ? globalThis.Number(object.period) : 0
 		};
 	},
 
@@ -279,7 +279,7 @@ export const ValidatorCurrentRewards: MessageFns<ValidatorCurrentRewards, "cosmo
 		message.rewards = object.rewards?.map((e) => DecCoin.fromPartial(e)) || [];
 		message.period = object.period ?? 0;
 		return message;
-	},
+	}
 };
 
 export const ValidatorAccumulatedCommission: MessageFns<ValidatorAccumulatedCommission, "cosmos.distribution.v1beta1.ValidatorAccumulatedCommission"> = {
@@ -317,7 +317,7 @@ export const ValidatorAccumulatedCommission: MessageFns<ValidatorAccumulatedComm
 
 	fromJSON(object: any): ValidatorAccumulatedCommission {
 		return {
-			commission: globalThis.Array.isArray(object?.commission) ? object.commission.map((e: any) => DecCoin.fromJSON(e)) : [],
+			commission: globalThis.Array.isArray(object?.commission) ? object.commission.map((e: any) => DecCoin.fromJSON(e)) : []
 		};
 	},
 
@@ -336,7 +336,7 @@ export const ValidatorAccumulatedCommission: MessageFns<ValidatorAccumulatedComm
 		const message = createBaseValidatorAccumulatedCommission();
 		message.commission = object.commission?.map((e) => DecCoin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ValidatorOutstandingRewards: MessageFns<ValidatorOutstandingRewards, "cosmos.distribution.v1beta1.ValidatorOutstandingRewards"> = {
@@ -374,7 +374,7 @@ export const ValidatorOutstandingRewards: MessageFns<ValidatorOutstandingRewards
 
 	fromJSON(object: any): ValidatorOutstandingRewards {
 		return {
-			rewards: globalThis.Array.isArray(object?.rewards) ? object.rewards.map((e: any) => DecCoin.fromJSON(e)) : [],
+			rewards: globalThis.Array.isArray(object?.rewards) ? object.rewards.map((e: any) => DecCoin.fromJSON(e)) : []
 		};
 	},
 
@@ -393,7 +393,7 @@ export const ValidatorOutstandingRewards: MessageFns<ValidatorOutstandingRewards
 		const message = createBaseValidatorOutstandingRewards();
 		message.rewards = object.rewards?.map((e) => DecCoin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ValidatorSlashEvent: MessageFns<ValidatorSlashEvent, "cosmos.distribution.v1beta1.ValidatorSlashEvent"> = {
@@ -442,7 +442,7 @@ export const ValidatorSlashEvent: MessageFns<ValidatorSlashEvent, "cosmos.distri
 	fromJSON(object: any): ValidatorSlashEvent {
 		return {
 			validator_period: isSet(object.validator_period) ? globalThis.Number(object.validator_period) : 0,
-			fraction: isSet(object.fraction) ? globalThis.String(object.fraction) : "",
+			fraction: isSet(object.fraction) ? globalThis.String(object.fraction) : ""
 		};
 	},
 
@@ -465,7 +465,7 @@ export const ValidatorSlashEvent: MessageFns<ValidatorSlashEvent, "cosmos.distri
 		message.validator_period = object.validator_period ?? 0;
 		message.fraction = object.fraction ?? "";
 		return message;
-	},
+	}
 };
 
 export const ValidatorSlashEvents: MessageFns<ValidatorSlashEvents, "cosmos.distribution.v1beta1.ValidatorSlashEvents"> = {
@@ -505,7 +505,7 @@ export const ValidatorSlashEvents: MessageFns<ValidatorSlashEvents, "cosmos.dist
 		return {
 			validator_slash_events: globalThis.Array.isArray(object?.validator_slash_events)
 				? object.validator_slash_events.map((e: any) => ValidatorSlashEvent.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -524,7 +524,7 @@ export const ValidatorSlashEvents: MessageFns<ValidatorSlashEvents, "cosmos.dist
 		const message = createBaseValidatorSlashEvents();
 		message.validator_slash_events = object.validator_slash_events?.map((e) => ValidatorSlashEvent.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const FeePool: MessageFns<FeePool, "cosmos.distribution.v1beta1.FeePool"> = {
@@ -562,7 +562,7 @@ export const FeePool: MessageFns<FeePool, "cosmos.distribution.v1beta1.FeePool">
 
 	fromJSON(object: any): FeePool {
 		return {
-			community_pool: globalThis.Array.isArray(object?.community_pool) ? object.community_pool.map((e: any) => DecCoin.fromJSON(e)) : [],
+			community_pool: globalThis.Array.isArray(object?.community_pool) ? object.community_pool.map((e: any) => DecCoin.fromJSON(e)) : []
 		};
 	},
 
@@ -581,7 +581,7 @@ export const FeePool: MessageFns<FeePool, "cosmos.distribution.v1beta1.FeePool">
 		const message = createBaseFeePool();
 		message.community_pool = object.community_pool?.map((e) => DecCoin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const CommunityPoolSpendProposal: MessageFns<CommunityPoolSpendProposal, "cosmos.distribution.v1beta1.CommunityPoolSpendProposal"> = {
@@ -652,7 +652,7 @@ export const CommunityPoolSpendProposal: MessageFns<CommunityPoolSpendProposal, 
 			title: isSet(object.title) ? globalThis.String(object.title) : "",
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			recipient: isSet(object.recipient) ? globalThis.String(object.recipient) : "",
-			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : [],
+			amount: globalThis.Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -683,7 +683,7 @@ export const CommunityPoolSpendProposal: MessageFns<CommunityPoolSpendProposal, 
 		message.recipient = object.recipient ?? "";
 		message.amount = object.amount?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const DelegatorStartingInfo: MessageFns<DelegatorStartingInfo, "cosmos.distribution.v1beta1.DelegatorStartingInfo"> = {
@@ -743,7 +743,7 @@ export const DelegatorStartingInfo: MessageFns<DelegatorStartingInfo, "cosmos.di
 		return {
 			previous_period: isSet(object.previous_period) ? globalThis.Number(object.previous_period) : 0,
 			stake: isSet(object.stake) ? globalThis.String(object.stake) : "",
-			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
+			height: isSet(object.height) ? globalThis.Number(object.height) : 0
 		};
 	},
 
@@ -770,7 +770,7 @@ export const DelegatorStartingInfo: MessageFns<DelegatorStartingInfo, "cosmos.di
 		message.stake = object.stake ?? "";
 		message.height = object.height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const DelegationDelegatorReward: MessageFns<DelegationDelegatorReward, "cosmos.distribution.v1beta1.DelegationDelegatorReward"> = {
@@ -819,7 +819,7 @@ export const DelegationDelegatorReward: MessageFns<DelegationDelegatorReward, "c
 	fromJSON(object: any): DelegationDelegatorReward {
 		return {
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			reward: globalThis.Array.isArray(object?.reward) ? object.reward.map((e: any) => DecCoin.fromJSON(e)) : [],
+			reward: globalThis.Array.isArray(object?.reward) ? object.reward.map((e: any) => DecCoin.fromJSON(e)) : []
 		};
 	},
 
@@ -842,7 +842,7 @@ export const DelegationDelegatorReward: MessageFns<DelegationDelegatorReward, "c
 		message.validator_address = object.validator_address ?? "";
 		message.reward = object.reward?.map((e) => DecCoin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const CommunityPoolSpendProposalWithDeposit: MessageFns<
@@ -927,7 +927,7 @@ export const CommunityPoolSpendProposalWithDeposit: MessageFns<
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			recipient: isSet(object.recipient) ? globalThis.String(object.recipient) : "",
 			amount: isSet(object.amount) ? globalThis.String(object.amount) : "",
-			deposit: isSet(object.deposit) ? globalThis.String(object.deposit) : "",
+			deposit: isSet(object.deposit) ? globalThis.String(object.deposit) : ""
 		};
 	},
 
@@ -962,7 +962,7 @@ export const CommunityPoolSpendProposalWithDeposit: MessageFns<
 		message.amount = object.amount ?? "";
 		message.deposit = object.deposit ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseParams(): Params {
@@ -1030,24 +1030,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.distribution.v1beta1.Params", Params as never],
 	["/cosmos.distribution.v1beta1.ValidatorSlashEvent", ValidatorSlashEvent as never],
-	["/cosmos.distribution.v1beta1.FeePool", FeePool as never],
+	["/cosmos.distribution.v1beta1.FeePool", FeePool as never]
 ];
 export const aminoConverters = {
 	"/cosmos.distribution.v1beta1.Params": {
 		aminoType: "cosmos-sdk/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
+		fromAmino: (object: Params) => ({ ...object })
 	},
 
 	"/cosmos.distribution.v1beta1.ValidatorSlashEvent": {
 		aminoType: "cosmos-sdk/ValidatorSlashEvent",
 		toAmino: (message: ValidatorSlashEvent) => ({ ...message }),
-		fromAmino: (object: ValidatorSlashEvent) => ({ ...object }),
+		fromAmino: (object: ValidatorSlashEvent) => ({ ...object })
 	},
 
 	"/cosmos.distribution.v1beta1.FeePool": {
 		aminoType: "cosmos-sdk/FeePool",
 		toAmino: (message: FeePool) => ({ ...message }),
-		fromAmino: (object: FeePool) => ({ ...object }),
-	},
+		fromAmino: (object: FeePool) => ({ ...object })
+	}
 };

@@ -5,7 +5,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import type {
 	CapabilityOwners as CapabilityOwners_type,
 	Capability as Capability_type,
-	Owner as Owner_type,
+	Owner as Owner_type
 } from "../../../../types/cosmos/capability/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -66,7 +66,7 @@ export const Capability: MessageFns<Capability, "cosmos.capability.v1beta1.Capab
 		const message = createBaseCapability();
 		message.index = object.index ?? 0;
 		return message;
-	},
+	}
 };
 
 export const Owner: MessageFns<Owner, "cosmos.capability.v1beta1.Owner"> = {
@@ -115,7 +115,7 @@ export const Owner: MessageFns<Owner, "cosmos.capability.v1beta1.Owner"> = {
 	fromJSON(object: any): Owner {
 		return {
 			module: isSet(object.module) ? globalThis.String(object.module) : "",
-			name: isSet(object.name) ? globalThis.String(object.name) : "",
+			name: isSet(object.name) ? globalThis.String(object.name) : ""
 		};
 	},
 
@@ -138,7 +138,7 @@ export const Owner: MessageFns<Owner, "cosmos.capability.v1beta1.Owner"> = {
 		message.module = object.module ?? "";
 		message.name = object.name ?? "";
 		return message;
-	},
+	}
 };
 
 export const CapabilityOwners: MessageFns<CapabilityOwners, "cosmos.capability.v1beta1.CapabilityOwners"> = {
@@ -193,7 +193,7 @@ export const CapabilityOwners: MessageFns<CapabilityOwners, "cosmos.capability.v
 		const message = createBaseCapabilityOwners();
 		message.owners = object.owners?.map((e) => Owner.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseCapability(): Capability {
@@ -225,24 +225,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.capability.v1beta1.Capability", Capability as never],
 	["/cosmos.capability.v1beta1.Owner", Owner as never],
-	["/cosmos.capability.v1beta1.CapabilityOwners", CapabilityOwners as never],
+	["/cosmos.capability.v1beta1.CapabilityOwners", CapabilityOwners as never]
 ];
 export const aminoConverters = {
 	"/cosmos.capability.v1beta1.Capability": {
 		aminoType: "cosmos-sdk/Capability",
 		toAmino: (message: Capability) => ({ ...message }),
-		fromAmino: (object: Capability) => ({ ...object }),
+		fromAmino: (object: Capability) => ({ ...object })
 	},
 
 	"/cosmos.capability.v1beta1.Owner": {
 		aminoType: "cosmos-sdk/Owner",
 		toAmino: (message: Owner) => ({ ...message }),
-		fromAmino: (object: Owner) => ({ ...object }),
+		fromAmino: (object: Owner) => ({ ...object })
 	},
 
 	"/cosmos.capability.v1beta1.CapabilityOwners": {
 		aminoType: "cosmos-sdk/CapabilityOwners",
 		toAmino: (message: CapabilityOwners) => ({ ...message }),
-		fromAmino: (object: CapabilityOwners) => ({ ...object }),
-	},
+		fromAmino: (object: CapabilityOwners) => ({ ...object })
+	}
 };

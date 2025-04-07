@@ -9,7 +9,7 @@ export enum BlockIDFlag {
 	BLOCK_ID_FLAG_ABSENT = 1,
 	BLOCK_ID_FLAG_COMMIT = 2,
 	BLOCK_ID_FLAG_NIL = 3,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum SignedMsgType {
@@ -19,7 +19,7 @@ export enum SignedMsgType {
 	SIGNED_MSG_TYPE_PRECOMMIT = 2,
 	/** SIGNED_MSG_TYPE_PROPOSAL - Proposals */
 	SIGNED_MSG_TYPE_PROPOSAL = 32,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface PartSetHeader {

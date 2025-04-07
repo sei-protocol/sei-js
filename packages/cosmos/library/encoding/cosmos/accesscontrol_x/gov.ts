@@ -7,7 +7,7 @@ import type {
 	MsgUpdateResourceDependencyMappingProposalResponse as MsgUpdateResourceDependencyMappingProposalResponse_type,
 	MsgUpdateResourceDependencyMappingProposal as MsgUpdateResourceDependencyMappingProposal_type,
 	MsgUpdateWasmDependencyMappingProposalJsonFile as MsgUpdateWasmDependencyMappingProposalJsonFile_type,
-	MsgUpdateWasmDependencyMappingProposal as MsgUpdateWasmDependencyMappingProposal_type,
+	MsgUpdateWasmDependencyMappingProposal as MsgUpdateWasmDependencyMappingProposal_type
 } from "../../../types/cosmos/accesscontrol_x";
 
 import type { DeepPartial, Exact, MessageFns } from "../../common";
@@ -80,7 +80,7 @@ export const MsgUpdateResourceDependencyMappingProposal: MessageFns<
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			message_dependency_mapping: globalThis.Array.isArray(object?.message_dependency_mapping)
 				? object.message_dependency_mapping.map((e: any) => MessageDependencyMapping.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -107,7 +107,7 @@ export const MsgUpdateResourceDependencyMappingProposal: MessageFns<
 		message.description = object.description ?? "";
 		message.message_dependency_mapping = object.message_dependency_mapping?.map((e) => MessageDependencyMapping.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgUpdateResourceDependencyMappingProposalJsonFile: MessageFns<
@@ -183,7 +183,7 @@ export const MsgUpdateResourceDependencyMappingProposalJsonFile: MessageFns<
 			deposit: isSet(object.deposit) ? globalThis.String(object.deposit) : "",
 			message_dependency_mapping: globalThis.Array.isArray(object?.message_dependency_mapping)
 				? object.message_dependency_mapping.map((e: any) => MessageDependencyMapping.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -208,7 +208,7 @@ export const MsgUpdateResourceDependencyMappingProposalJsonFile: MessageFns<
 		return MsgUpdateResourceDependencyMappingProposalJsonFile.fromPartial(base ?? ({} as any));
 	},
 	fromPartial<I extends Exact<DeepPartial<MsgUpdateResourceDependencyMappingProposalJsonFile>, I>>(
-		object: I,
+		object: I
 	): MsgUpdateResourceDependencyMappingProposalJsonFile {
 		const message = createBaseMsgUpdateResourceDependencyMappingProposalJsonFile();
 		message.title = object.title ?? "";
@@ -216,7 +216,7 @@ export const MsgUpdateResourceDependencyMappingProposalJsonFile: MessageFns<
 		message.deposit = object.deposit ?? "";
 		message.message_dependency_mapping = object.message_dependency_mapping?.map((e) => MessageDependencyMapping.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const MsgUpdateResourceDependencyMappingProposalResponse: MessageFns<
@@ -260,7 +260,7 @@ export const MsgUpdateResourceDependencyMappingProposalResponse: MessageFns<
 	fromPartial<I extends Exact<DeepPartial<MsgUpdateResourceDependencyMappingProposalResponse>, I>>(_: I): MsgUpdateResourceDependencyMappingProposalResponse {
 		const message = createBaseMsgUpdateResourceDependencyMappingProposalResponse();
 		return message;
-	},
+	}
 };
 
 export const MsgUpdateWasmDependencyMappingProposal: MessageFns<
@@ -334,7 +334,7 @@ export const MsgUpdateWasmDependencyMappingProposal: MessageFns<
 			title: isSet(object.title) ? globalThis.String(object.title) : "",
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : "",
-			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined,
+			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined
 		};
 	},
 
@@ -368,7 +368,7 @@ export const MsgUpdateWasmDependencyMappingProposal: MessageFns<
 				? WasmDependencyMapping.fromPartial(object.wasm_dependency_mapping)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 export const MsgUpdateWasmDependencyMappingProposalJsonFile: MessageFns<
@@ -453,7 +453,7 @@ export const MsgUpdateWasmDependencyMappingProposalJsonFile: MessageFns<
 			description: isSet(object.description) ? globalThis.String(object.description) : "",
 			deposit: isSet(object.deposit) ? globalThis.String(object.deposit) : "",
 			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : "",
-			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined,
+			wasm_dependency_mapping: isSet(object.wasm_dependency_mapping) ? WasmDependencyMapping.fromJSON(object.wasm_dependency_mapping) : undefined
 		};
 	},
 
@@ -491,7 +491,7 @@ export const MsgUpdateWasmDependencyMappingProposalJsonFile: MessageFns<
 				? WasmDependencyMapping.fromPartial(object.wasm_dependency_mapping)
 				: undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseMsgUpdateResourceDependencyMappingProposal(): MsgUpdateResourceDependencyMappingProposal {

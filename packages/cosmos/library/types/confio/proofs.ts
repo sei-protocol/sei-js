@@ -7,7 +7,7 @@ export enum HashOp {
 	RIPEMD160 = 4,
 	/** BITCOIN - ripemd160(sha256(x)) */
 	BITCOIN = 5,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export enum LengthOp {
@@ -29,7 +29,7 @@ export enum LengthOp {
 	REQUIRE_32_BYTES = 7,
 	/** REQUIRE_64_BYTES - REQUIRE_64_BYTES is like NONE, but will fail if the input is not exactly 64 bytes (sha512 output) */
 	REQUIRE_64_BYTES = 8,
-	UNRECOGNIZED = -1,
+	UNRECOGNIZED = -1
 }
 
 export interface ExistenceProof {

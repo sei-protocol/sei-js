@@ -34,7 +34,7 @@ import type {
 	QueryValidatorUnbondingDelegationsRequest as QueryValidatorUnbondingDelegationsRequest_type,
 	QueryValidatorUnbondingDelegationsResponse as QueryValidatorUnbondingDelegationsResponse_type,
 	QueryValidatorsRequest as QueryValidatorsRequest_type,
-	QueryValidatorsResponse as QueryValidatorsResponse_type,
+	QueryValidatorsResponse as QueryValidatorsResponse_type
 } from "../../../../types/cosmos/staking/v1beta1";
 
 import type { DeepPartial, Exact, MessageFns } from "../../../common";
@@ -114,7 +114,7 @@ export const QueryValidatorsRequest: MessageFns<QueryValidatorsRequest, "cosmos.
 	fromJSON(object: any): QueryValidatorsRequest {
 		return {
 			status: isSet(object.status) ? globalThis.String(object.status) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -137,7 +137,7 @@ export const QueryValidatorsRequest: MessageFns<QueryValidatorsRequest, "cosmos.
 		message.status = object.status ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryValidatorsResponse: MessageFns<QueryValidatorsResponse, "cosmos.staking.v1beta1.QueryValidatorsResponse"> = {
@@ -186,7 +186,7 @@ export const QueryValidatorsResponse: MessageFns<QueryValidatorsResponse, "cosmo
 	fromJSON(object: any): QueryValidatorsResponse {
 		return {
 			validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e: any) => Validator.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -209,7 +209,7 @@ export const QueryValidatorsResponse: MessageFns<QueryValidatorsResponse, "cosmo
 		message.validators = object.validators?.map((e) => Validator.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryValidatorRequest: MessageFns<QueryValidatorRequest, "cosmos.staking.v1beta1.QueryValidatorRequest"> = {
@@ -264,7 +264,7 @@ export const QueryValidatorRequest: MessageFns<QueryValidatorRequest, "cosmos.st
 		const message = createBaseQueryValidatorRequest();
 		message.validator_addr = object.validator_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryValidatorResponse: MessageFns<QueryValidatorResponse, "cosmos.staking.v1beta1.QueryValidatorResponse"> = {
@@ -319,7 +319,7 @@ export const QueryValidatorResponse: MessageFns<QueryValidatorResponse, "cosmos.
 		const message = createBaseQueryValidatorResponse();
 		message.validator = object.validator !== undefined && object.validator !== null ? Validator.fromPartial(object.validator) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryValidatorDelegationsRequest: MessageFns<QueryValidatorDelegationsRequest, "cosmos.staking.v1beta1.QueryValidatorDelegationsRequest"> = {
@@ -368,7 +368,7 @@ export const QueryValidatorDelegationsRequest: MessageFns<QueryValidatorDelegati
 	fromJSON(object: any): QueryValidatorDelegationsRequest {
 		return {
 			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -391,7 +391,7 @@ export const QueryValidatorDelegationsRequest: MessageFns<QueryValidatorDelegati
 		message.validator_addr = object.validator_addr ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryValidatorDelegationsResponse: MessageFns<QueryValidatorDelegationsResponse, "cosmos.staking.v1beta1.QueryValidatorDelegationsResponse"> = {
@@ -442,7 +442,7 @@ export const QueryValidatorDelegationsResponse: MessageFns<QueryValidatorDelegat
 			delegation_responses: globalThis.Array.isArray(object?.delegation_responses)
 				? object.delegation_responses.map((e: any) => DelegationResponse.fromJSON(e))
 				: [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -465,7 +465,7 @@ export const QueryValidatorDelegationsResponse: MessageFns<QueryValidatorDelegat
 		message.delegation_responses = object.delegation_responses?.map((e) => DelegationResponse.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryValidatorUnbondingDelegationsRequest: MessageFns<
@@ -517,7 +517,7 @@ export const QueryValidatorUnbondingDelegationsRequest: MessageFns<
 	fromJSON(object: any): QueryValidatorUnbondingDelegationsRequest {
 		return {
 			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -540,7 +540,7 @@ export const QueryValidatorUnbondingDelegationsRequest: MessageFns<
 		message.validator_addr = object.validator_addr ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryValidatorUnbondingDelegationsResponse: MessageFns<
@@ -594,7 +594,7 @@ export const QueryValidatorUnbondingDelegationsResponse: MessageFns<
 			unbonding_responses: globalThis.Array.isArray(object?.unbonding_responses)
 				? object.unbonding_responses.map((e: any) => UnbondingDelegation.fromJSON(e))
 				: [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -617,7 +617,7 @@ export const QueryValidatorUnbondingDelegationsResponse: MessageFns<
 		message.unbonding_responses = object.unbonding_responses?.map((e) => UnbondingDelegation.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegationRequest: MessageFns<QueryDelegationRequest, "cosmos.staking.v1beta1.QueryDelegationRequest"> = {
@@ -666,7 +666,7 @@ export const QueryDelegationRequest: MessageFns<QueryDelegationRequest, "cosmos.
 	fromJSON(object: any): QueryDelegationRequest {
 		return {
 			delegator_addr: isSet(object.delegator_addr) ? globalThis.String(object.delegator_addr) : "",
-			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : "",
+			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : ""
 		};
 	},
 
@@ -689,7 +689,7 @@ export const QueryDelegationRequest: MessageFns<QueryDelegationRequest, "cosmos.
 		message.delegator_addr = object.delegator_addr ?? "";
 		message.validator_addr = object.validator_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDelegationResponse: MessageFns<QueryDelegationResponse, "cosmos.staking.v1beta1.QueryDelegationResponse"> = {
@@ -727,7 +727,7 @@ export const QueryDelegationResponse: MessageFns<QueryDelegationResponse, "cosmo
 
 	fromJSON(object: any): QueryDelegationResponse {
 		return {
-			delegation_response: isSet(object.delegation_response) ? DelegationResponse.fromJSON(object.delegation_response) : undefined,
+			delegation_response: isSet(object.delegation_response) ? DelegationResponse.fromJSON(object.delegation_response) : undefined
 		};
 	},
 
@@ -747,7 +747,7 @@ export const QueryDelegationResponse: MessageFns<QueryDelegationResponse, "cosmo
 		message.delegation_response =
 			object.delegation_response !== undefined && object.delegation_response !== null ? DelegationResponse.fromPartial(object.delegation_response) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryUnbondingDelegationRequest: MessageFns<QueryUnbondingDelegationRequest, "cosmos.staking.v1beta1.QueryUnbondingDelegationRequest"> = {
@@ -796,7 +796,7 @@ export const QueryUnbondingDelegationRequest: MessageFns<QueryUnbondingDelegatio
 	fromJSON(object: any): QueryUnbondingDelegationRequest {
 		return {
 			delegator_addr: isSet(object.delegator_addr) ? globalThis.String(object.delegator_addr) : "",
-			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : "",
+			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : ""
 		};
 	},
 
@@ -819,7 +819,7 @@ export const QueryUnbondingDelegationRequest: MessageFns<QueryUnbondingDelegatio
 		message.delegator_addr = object.delegator_addr ?? "";
 		message.validator_addr = object.validator_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryUnbondingDelegationResponse: MessageFns<QueryUnbondingDelegationResponse, "cosmos.staking.v1beta1.QueryUnbondingDelegationResponse"> = {
@@ -874,7 +874,7 @@ export const QueryUnbondingDelegationResponse: MessageFns<QueryUnbondingDelegati
 		const message = createBaseQueryUnbondingDelegationResponse();
 		message.unbond = object.unbond !== undefined && object.unbond !== null ? UnbondingDelegation.fromPartial(object.unbond) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorDelegationsRequest: MessageFns<QueryDelegatorDelegationsRequest, "cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest"> = {
@@ -923,7 +923,7 @@ export const QueryDelegatorDelegationsRequest: MessageFns<QueryDelegatorDelegati
 	fromJSON(object: any): QueryDelegatorDelegationsRequest {
 		return {
 			delegator_addr: isSet(object.delegator_addr) ? globalThis.String(object.delegator_addr) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -946,7 +946,7 @@ export const QueryDelegatorDelegationsRequest: MessageFns<QueryDelegatorDelegati
 		message.delegator_addr = object.delegator_addr ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorDelegationsResponse: MessageFns<QueryDelegatorDelegationsResponse, "cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse"> = {
@@ -997,7 +997,7 @@ export const QueryDelegatorDelegationsResponse: MessageFns<QueryDelegatorDelegat
 			delegation_responses: globalThis.Array.isArray(object?.delegation_responses)
 				? object.delegation_responses.map((e: any) => DelegationResponse.fromJSON(e))
 				: [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1020,7 +1020,7 @@ export const QueryDelegatorDelegationsResponse: MessageFns<QueryDelegatorDelegat
 		message.delegation_responses = object.delegation_responses?.map((e) => DelegationResponse.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorUnbondingDelegationsRequest: MessageFns<
@@ -1072,7 +1072,7 @@ export const QueryDelegatorUnbondingDelegationsRequest: MessageFns<
 	fromJSON(object: any): QueryDelegatorUnbondingDelegationsRequest {
 		return {
 			delegator_addr: isSet(object.delegator_addr) ? globalThis.String(object.delegator_addr) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1095,7 +1095,7 @@ export const QueryDelegatorUnbondingDelegationsRequest: MessageFns<
 		message.delegator_addr = object.delegator_addr ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorUnbondingDelegationsResponse: MessageFns<
@@ -1149,7 +1149,7 @@ export const QueryDelegatorUnbondingDelegationsResponse: MessageFns<
 			unbonding_responses: globalThis.Array.isArray(object?.unbonding_responses)
 				? object.unbonding_responses.map((e: any) => UnbondingDelegation.fromJSON(e))
 				: [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1172,7 +1172,7 @@ export const QueryDelegatorUnbondingDelegationsResponse: MessageFns<
 		message.unbonding_responses = object.unbonding_responses?.map((e) => UnbondingDelegation.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryRedelegationsRequest: MessageFns<QueryRedelegationsRequest, "cosmos.staking.v1beta1.QueryRedelegationsRequest"> = {
@@ -1243,7 +1243,7 @@ export const QueryRedelegationsRequest: MessageFns<QueryRedelegationsRequest, "c
 			delegator_addr: isSet(object.delegator_addr) ? globalThis.String(object.delegator_addr) : "",
 			src_validator_addr: isSet(object.src_validator_addr) ? globalThis.String(object.src_validator_addr) : "",
 			dst_validator_addr: isSet(object.dst_validator_addr) ? globalThis.String(object.dst_validator_addr) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1274,7 +1274,7 @@ export const QueryRedelegationsRequest: MessageFns<QueryRedelegationsRequest, "c
 		message.dst_validator_addr = object.dst_validator_addr ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryRedelegationsResponse: MessageFns<QueryRedelegationsResponse, "cosmos.staking.v1beta1.QueryRedelegationsResponse"> = {
@@ -1325,7 +1325,7 @@ export const QueryRedelegationsResponse: MessageFns<QueryRedelegationsResponse, 
 			redelegation_responses: globalThis.Array.isArray(object?.redelegation_responses)
 				? object.redelegation_responses.map((e: any) => RedelegationResponse.fromJSON(e))
 				: [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1348,7 +1348,7 @@ export const QueryRedelegationsResponse: MessageFns<QueryRedelegationsResponse, 
 		message.redelegation_responses = object.redelegation_responses?.map((e) => RedelegationResponse.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorValidatorsRequest: MessageFns<QueryDelegatorValidatorsRequest, "cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest"> = {
@@ -1397,7 +1397,7 @@ export const QueryDelegatorValidatorsRequest: MessageFns<QueryDelegatorValidator
 	fromJSON(object: any): QueryDelegatorValidatorsRequest {
 		return {
 			delegator_addr: isSet(object.delegator_addr) ? globalThis.String(object.delegator_addr) : "",
-			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1420,7 +1420,7 @@ export const QueryDelegatorValidatorsRequest: MessageFns<QueryDelegatorValidator
 		message.delegator_addr = object.delegator_addr ?? "";
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorValidatorsResponse: MessageFns<QueryDelegatorValidatorsResponse, "cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse"> = {
@@ -1469,7 +1469,7 @@ export const QueryDelegatorValidatorsResponse: MessageFns<QueryDelegatorValidato
 	fromJSON(object: any): QueryDelegatorValidatorsResponse {
 		return {
 			validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e: any) => Validator.fromJSON(e)) : [],
-			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+			pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
 		};
 	},
 
@@ -1492,7 +1492,7 @@ export const QueryDelegatorValidatorsResponse: MessageFns<QueryDelegatorValidato
 		message.validators = object.validators?.map((e) => Validator.fromPartial(e)) || [];
 		message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorValidatorRequest: MessageFns<QueryDelegatorValidatorRequest, "cosmos.staking.v1beta1.QueryDelegatorValidatorRequest"> = {
@@ -1541,7 +1541,7 @@ export const QueryDelegatorValidatorRequest: MessageFns<QueryDelegatorValidatorR
 	fromJSON(object: any): QueryDelegatorValidatorRequest {
 		return {
 			delegator_addr: isSet(object.delegator_addr) ? globalThis.String(object.delegator_addr) : "",
-			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : "",
+			validator_addr: isSet(object.validator_addr) ? globalThis.String(object.validator_addr) : ""
 		};
 	},
 
@@ -1564,7 +1564,7 @@ export const QueryDelegatorValidatorRequest: MessageFns<QueryDelegatorValidatorR
 		message.delegator_addr = object.delegator_addr ?? "";
 		message.validator_addr = object.validator_addr ?? "";
 		return message;
-	},
+	}
 };
 
 export const QueryDelegatorValidatorResponse: MessageFns<QueryDelegatorValidatorResponse, "cosmos.staking.v1beta1.QueryDelegatorValidatorResponse"> = {
@@ -1619,7 +1619,7 @@ export const QueryDelegatorValidatorResponse: MessageFns<QueryDelegatorValidator
 		const message = createBaseQueryDelegatorValidatorResponse();
 		message.validator = object.validator !== undefined && object.validator !== null ? Validator.fromPartial(object.validator) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryHistoricalInfoRequest: MessageFns<QueryHistoricalInfoRequest, "cosmos.staking.v1beta1.QueryHistoricalInfoRequest"> = {
@@ -1674,7 +1674,7 @@ export const QueryHistoricalInfoRequest: MessageFns<QueryHistoricalInfoRequest, 
 		const message = createBaseQueryHistoricalInfoRequest();
 		message.height = object.height ?? 0;
 		return message;
-	},
+	}
 };
 
 export const QueryHistoricalInfoResponse: MessageFns<QueryHistoricalInfoResponse, "cosmos.staking.v1beta1.QueryHistoricalInfoResponse"> = {
@@ -1729,7 +1729,7 @@ export const QueryHistoricalInfoResponse: MessageFns<QueryHistoricalInfoResponse
 		const message = createBaseQueryHistoricalInfoResponse();
 		message.hist = object.hist !== undefined && object.hist !== null ? HistoricalInfo.fromPartial(object.hist) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryPoolRequest: MessageFns<QueryPoolRequest, "cosmos.staking.v1beta1.QueryPoolRequest"> = {
@@ -1770,7 +1770,7 @@ export const QueryPoolRequest: MessageFns<QueryPoolRequest, "cosmos.staking.v1be
 	fromPartial<I extends Exact<DeepPartial<QueryPoolRequest>, I>>(_: I): QueryPoolRequest {
 		const message = createBaseQueryPoolRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryPoolResponse: MessageFns<QueryPoolResponse, "cosmos.staking.v1beta1.QueryPoolResponse"> = {
@@ -1825,7 +1825,7 @@ export const QueryPoolResponse: MessageFns<QueryPoolResponse, "cosmos.staking.v1
 		const message = createBaseQueryPoolResponse();
 		message.pool = object.pool !== undefined && object.pool !== null ? Pool.fromPartial(object.pool) : undefined;
 		return message;
-	},
+	}
 };
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.staking.v1beta1.QueryParamsRequest"> = {
@@ -1866,7 +1866,7 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.staking.
 	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
 		const message = createBaseQueryParamsRequest();
 		return message;
-	},
+	}
 };
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.staking.v1beta1.QueryParamsResponse"> = {
@@ -1921,7 +1921,7 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.stakin
 		const message = createBaseQueryParamsResponse();
 		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
 		return message;
-	},
+	}
 };
 
 function createBaseQueryValidatorsRequest(): QueryValidatorsRequest {
@@ -2055,36 +2055,36 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.staking.v1beta1.QueryPoolRequest", QueryPoolRequest as never],
 	["/cosmos.staking.v1beta1.QueryPoolResponse", QueryPoolResponse as never],
 	["/cosmos.staking.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.staking.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.staking.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.staking.v1beta1.QueryValidatorRequest": {
 		aminoType: "cosmos-sdk/QueryValidatorRequest",
 		toAmino: (message: QueryValidatorRequest) => ({ ...message }),
-		fromAmino: (object: QueryValidatorRequest) => ({ ...object }),
+		fromAmino: (object: QueryValidatorRequest) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.QueryPoolRequest": {
 		aminoType: "cosmos-sdk/QueryPoolRequest",
 		toAmino: (message: QueryPoolRequest) => ({ ...message }),
-		fromAmino: (object: QueryPoolRequest) => ({ ...object }),
+		fromAmino: (object: QueryPoolRequest) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.QueryPoolResponse": {
 		aminoType: "cosmos-sdk/QueryPoolResponse",
 		toAmino: (message: QueryPoolResponse) => ({ ...message }),
-		fromAmino: (object: QueryPoolResponse) => ({ ...object }),
+		fromAmino: (object: QueryPoolResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
-		fromAmino: (object: QueryParamsRequest) => ({ ...object }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.QueryParamsResponse": {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
-		fromAmino: (object: QueryParamsResponse) => ({ ...object }),
-	},
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	}
 };

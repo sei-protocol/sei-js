@@ -138,7 +138,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 				? globalThis.String(object.max_dynamic_base_fee_downward_adjustment)
 				: "",
 			target_gas_used_per_block: isSet(object.target_gas_used_per_block) ? globalThis.Number(object.target_gas_used_per_block) : 0,
-			maximum_fee_per_gas: isSet(object.maximum_fee_per_gas) ? globalThis.String(object.maximum_fee_per_gas) : "",
+			maximum_fee_per_gas: isSet(object.maximum_fee_per_gas) ? globalThis.String(object.maximum_fee_per_gas) : ""
 		};
 	},
 
@@ -189,7 +189,7 @@ export const Params: MessageFns<Params, "seiprotocol.seichain.evm.Params"> = {
 		message.target_gas_used_per_block = object.target_gas_used_per_block ?? 0;
 		message.maximum_fee_per_gas = object.maximum_fee_per_gas ?? "";
 		return message;
-	},
+	}
 };
 
 export const ParamsPreV580: MessageFns<ParamsPreV580, "seiprotocol.seichain.evm.ParamsPreV580"> = {
@@ -262,7 +262,7 @@ export const ParamsPreV580: MessageFns<ParamsPreV580, "seiprotocol.seichain.evm.
 			minimum_fee_per_gas: isSet(object.minimum_fee_per_gas) ? globalThis.String(object.minimum_fee_per_gas) : "",
 			whitelisted_cw_code_hashes_for_delegate_call: globalThis.Array.isArray(object?.whitelisted_cw_code_hashes_for_delegate_call)
 				? object.whitelisted_cw_code_hashes_for_delegate_call.map((e: any) => bytesFromBase64(e))
-				: [],
+				: []
 		};
 	},
 
@@ -293,7 +293,7 @@ export const ParamsPreV580: MessageFns<ParamsPreV580, "seiprotocol.seichain.evm.
 		message.minimum_fee_per_gas = object.minimum_fee_per_gas ?? "";
 		message.whitelisted_cw_code_hashes_for_delegate_call = object.whitelisted_cw_code_hashes_for_delegate_call?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 function createBaseParams(): Params {
@@ -306,7 +306,7 @@ function createBaseParams(): Params {
 		max_dynamic_base_fee_upward_adjustment: "",
 		max_dynamic_base_fee_downward_adjustment: "",
 		target_gas_used_per_block: 0,
-		maximum_fee_per_gas: "",
+		maximum_fee_per_gas: ""
 	};
 }
 
@@ -315,7 +315,7 @@ function createBaseParamsPreV580(): ParamsPreV580 {
 		priority_normalizer: "",
 		base_fee_per_gas: "",
 		minimum_fee_per_gas: "",
-		whitelisted_cw_code_hashes_for_delegate_call: [],
+		whitelisted_cw_code_hashes_for_delegate_call: []
 	};
 }
 
@@ -360,18 +360,18 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.Params", Params as never],
-	["/seiprotocol.seichain.evm.ParamsPreV580", ParamsPreV580 as never],
+	["/seiprotocol.seichain.evm.ParamsPreV580", ParamsPreV580 as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.evm.Params": {
 		aminoType: "evm/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
+		fromAmino: (object: Params) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.ParamsPreV580": {
 		aminoType: "evm/ParamsPreV580",
 		toAmino: (message: ParamsPreV580) => ({ ...message }),
-		fromAmino: (object: ParamsPreV580) => ({ ...object }),
-	},
+		fromAmino: (object: ParamsPreV580) => ({ ...object })
+	}
 };

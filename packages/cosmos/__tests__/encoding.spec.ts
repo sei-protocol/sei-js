@@ -6,7 +6,7 @@ describe("Encoder", () => {
 		const msgSend = Encoder.cosmos.bank.v1beta1.MsgSend.fromPartial({
 			from_address: "sei1hafptm4zxy5nw8rd2pxyg83c5ls2v62tstzuv2",
 			to_address: "sei1v6459sl87jyfkvzmy6y8a6j2fj8k5r6x2n2l9",
-			amount: [{ denom: "usei", amount: "100" }],
+			amount: [{ denom: "usei", amount: "100" }]
 		});
 
 		// Encode the message

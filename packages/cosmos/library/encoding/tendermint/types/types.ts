@@ -25,7 +25,7 @@ import type {
 	Proposal as Proposal_type,
 	SignedHeader as SignedHeader_type,
 	TxProof as TxProof_type,
-	Vote as Vote_type,
+	Vote as Vote_type
 } from "../../../types/tendermint/types";
 
 import { BlockIDFlag, SignedMsgType } from "../../../types/tendermint/types";
@@ -94,7 +94,7 @@ export const PartSetHeader: MessageFns<PartSetHeader, "tendermint.types.PartSetH
 	fromJSON(object: any): PartSetHeader {
 		return {
 			total: isSet(object.total) ? globalThis.Number(object.total) : 0,
-			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
+			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0)
 		};
 	},
 
@@ -117,7 +117,7 @@ export const PartSetHeader: MessageFns<PartSetHeader, "tendermint.types.PartSetH
 		message.total = object.total ?? 0;
 		message.hash = object.hash ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Part: MessageFns<Part, "tendermint.types.Part"> = {
@@ -177,7 +177,7 @@ export const Part: MessageFns<Part, "tendermint.types.Part"> = {
 		return {
 			index: isSet(object.index) ? globalThis.Number(object.index) : 0,
 			bytes: isSet(object.bytes) ? bytesFromBase64(object.bytes) : new Uint8Array(0),
-			proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined,
+			proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined
 		};
 	},
 
@@ -204,7 +204,7 @@ export const Part: MessageFns<Part, "tendermint.types.Part"> = {
 		message.bytes = object.bytes ?? new Uint8Array(0);
 		message.proof = object.proof !== undefined && object.proof !== null ? Proof.fromPartial(object.proof) : undefined;
 		return message;
-	},
+	}
 };
 
 export const BlockID: MessageFns<BlockID, "tendermint.types.BlockID"> = {
@@ -253,7 +253,7 @@ export const BlockID: MessageFns<BlockID, "tendermint.types.BlockID"> = {
 	fromJSON(object: any): BlockID {
 		return {
 			hash: isSet(object.hash) ? bytesFromBase64(object.hash) : new Uint8Array(0),
-			part_set_header: isSet(object.part_set_header) ? PartSetHeader.fromJSON(object.part_set_header) : undefined,
+			part_set_header: isSet(object.part_set_header) ? PartSetHeader.fromJSON(object.part_set_header) : undefined
 		};
 	},
 
@@ -277,7 +277,7 @@ export const BlockID: MessageFns<BlockID, "tendermint.types.BlockID"> = {
 		message.part_set_header =
 			object.part_set_header !== undefined && object.part_set_header !== null ? PartSetHeader.fromPartial(object.part_set_header) : undefined;
 		return message;
-	},
+	}
 };
 
 export const Header: MessageFns<Header, "tendermint.types.Header"> = {
@@ -458,7 +458,7 @@ export const Header: MessageFns<Header, "tendermint.types.Header"> = {
 			app_hash: isSet(object.app_hash) ? bytesFromBase64(object.app_hash) : new Uint8Array(0),
 			last_results_hash: isSet(object.last_results_hash) ? bytesFromBase64(object.last_results_hash) : new Uint8Array(0),
 			evidence_hash: isSet(object.evidence_hash) ? bytesFromBase64(object.evidence_hash) : new Uint8Array(0),
-			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0),
+			proposer_address: isSet(object.proposer_address) ? bytesFromBase64(object.proposer_address) : new Uint8Array(0)
 		};
 	},
 
@@ -529,7 +529,7 @@ export const Header: MessageFns<Header, "tendermint.types.Header"> = {
 		message.evidence_hash = object.evidence_hash ?? new Uint8Array(0);
 		message.proposer_address = object.proposer_address ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Data: MessageFns<Data, "tendermint.types.Data"> = {
@@ -584,7 +584,7 @@ export const Data: MessageFns<Data, "tendermint.types.Data"> = {
 		const message = createBaseData();
 		message.txs = object.txs?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const Vote: MessageFns<Vote, "tendermint.types.Vote"> = {
@@ -721,7 +721,7 @@ export const Vote: MessageFns<Vote, "tendermint.types.Vote"> = {
 			validator_index: isSet(object.validator_index) ? globalThis.Number(object.validator_index) : 0,
 			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0),
 			extension: isSet(object.extension) ? bytesFromBase64(object.extension) : new Uint8Array(0),
-			extension_signature: isSet(object.extension_signature) ? bytesFromBase64(object.extension_signature) : new Uint8Array(0),
+			extension_signature: isSet(object.extension_signature) ? bytesFromBase64(object.extension_signature) : new Uint8Array(0)
 		};
 	},
 
@@ -776,7 +776,7 @@ export const Vote: MessageFns<Vote, "tendermint.types.Vote"> = {
 		message.extension = object.extension ?? new Uint8Array(0);
 		message.extension_signature = object.extension_signature ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Commit: MessageFns<Commit, "tendermint.types.Commit"> = {
@@ -847,7 +847,7 @@ export const Commit: MessageFns<Commit, "tendermint.types.Commit"> = {
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			round: isSet(object.round) ? globalThis.Number(object.round) : 0,
 			block_id: isSet(object.block_id) ? BlockID.fromJSON(object.block_id) : undefined,
-			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => CommitSig.fromJSON(e)) : [],
+			signatures: globalThis.Array.isArray(object?.signatures) ? object.signatures.map((e: any) => CommitSig.fromJSON(e)) : []
 		};
 	},
 
@@ -878,7 +878,7 @@ export const Commit: MessageFns<Commit, "tendermint.types.Commit"> = {
 		message.block_id = object.block_id !== undefined && object.block_id !== null ? BlockID.fromPartial(object.block_id) : undefined;
 		message.signatures = object.signatures?.map((e) => CommitSig.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const CommitSig: MessageFns<CommitSig, "tendermint.types.CommitSig"> = {
@@ -949,7 +949,7 @@ export const CommitSig: MessageFns<CommitSig, "tendermint.types.CommitSig"> = {
 			block_id_flag: isSet(object.block_id_flag) ? blockIDFlagFromJSON(object.block_id_flag) : 0,
 			validator_address: isSet(object.validator_address) ? bytesFromBase64(object.validator_address) : new Uint8Array(0),
 			timestamp: isSet(object.timestamp) ? fromJsonTimestamp(object.timestamp) : undefined,
-			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0),
+			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0)
 		};
 	},
 
@@ -980,7 +980,7 @@ export const CommitSig: MessageFns<CommitSig, "tendermint.types.CommitSig"> = {
 		message.timestamp = object.timestamp ?? undefined;
 		message.signature = object.signature ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const ExtendedCommit: MessageFns<ExtendedCommit, "tendermint.types.ExtendedCommit"> = {
@@ -1053,7 +1053,7 @@ export const ExtendedCommit: MessageFns<ExtendedCommit, "tendermint.types.Extend
 			block_id: isSet(object.block_id) ? BlockID.fromJSON(object.block_id) : undefined,
 			extended_signatures: globalThis.Array.isArray(object?.extended_signatures)
 				? object.extended_signatures.map((e: any) => ExtendedCommitSig.fromJSON(e))
-				: [],
+				: []
 		};
 	},
 
@@ -1084,7 +1084,7 @@ export const ExtendedCommit: MessageFns<ExtendedCommit, "tendermint.types.Extend
 		message.block_id = object.block_id !== undefined && object.block_id !== null ? BlockID.fromPartial(object.block_id) : undefined;
 		message.extended_signatures = object.extended_signatures?.map((e) => ExtendedCommitSig.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const ExtendedCommitSig: MessageFns<ExtendedCommitSig, "tendermint.types.ExtendedCommitSig"> = {
@@ -1177,7 +1177,7 @@ export const ExtendedCommitSig: MessageFns<ExtendedCommitSig, "tendermint.types.
 			timestamp: isSet(object.timestamp) ? fromJsonTimestamp(object.timestamp) : undefined,
 			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0),
 			extension: isSet(object.extension) ? bytesFromBase64(object.extension) : new Uint8Array(0),
-			extension_signature: isSet(object.extension_signature) ? bytesFromBase64(object.extension_signature) : new Uint8Array(0),
+			extension_signature: isSet(object.extension_signature) ? bytesFromBase64(object.extension_signature) : new Uint8Array(0)
 		};
 	},
 
@@ -1216,7 +1216,7 @@ export const ExtendedCommitSig: MessageFns<ExtendedCommitSig, "tendermint.types.
 		message.extension = object.extension ?? new Uint8Array(0);
 		message.extension_signature = object.extension_signature ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const Proposal: MessageFns<Proposal, "tendermint.types.Proposal"> = {
@@ -1320,7 +1320,7 @@ export const Proposal: MessageFns<Proposal, "tendermint.types.Proposal"> = {
 			pol_round: isSet(object.pol_round) ? globalThis.Number(object.pol_round) : 0,
 			block_id: isSet(object.block_id) ? BlockID.fromJSON(object.block_id) : undefined,
 			timestamp: isSet(object.timestamp) ? fromJsonTimestamp(object.timestamp) : undefined,
-			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0),
+			signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0)
 		};
 	},
 
@@ -1363,7 +1363,7 @@ export const Proposal: MessageFns<Proposal, "tendermint.types.Proposal"> = {
 		message.timestamp = object.timestamp ?? undefined;
 		message.signature = object.signature ?? new Uint8Array(0);
 		return message;
-	},
+	}
 };
 
 export const SignedHeader: MessageFns<SignedHeader, "tendermint.types.SignedHeader"> = {
@@ -1412,7 +1412,7 @@ export const SignedHeader: MessageFns<SignedHeader, "tendermint.types.SignedHead
 	fromJSON(object: any): SignedHeader {
 		return {
 			header: isSet(object.header) ? Header.fromJSON(object.header) : undefined,
-			commit: isSet(object.commit) ? Commit.fromJSON(object.commit) : undefined,
+			commit: isSet(object.commit) ? Commit.fromJSON(object.commit) : undefined
 		};
 	},
 
@@ -1435,7 +1435,7 @@ export const SignedHeader: MessageFns<SignedHeader, "tendermint.types.SignedHead
 		message.header = object.header !== undefined && object.header !== null ? Header.fromPartial(object.header) : undefined;
 		message.commit = object.commit !== undefined && object.commit !== null ? Commit.fromPartial(object.commit) : undefined;
 		return message;
-	},
+	}
 };
 
 export const LightBlock: MessageFns<LightBlock, "tendermint.types.LightBlock"> = {
@@ -1484,7 +1484,7 @@ export const LightBlock: MessageFns<LightBlock, "tendermint.types.LightBlock"> =
 	fromJSON(object: any): LightBlock {
 		return {
 			signed_header: isSet(object.signed_header) ? SignedHeader.fromJSON(object.signed_header) : undefined,
-			validator_set: isSet(object.validator_set) ? ValidatorSet.fromJSON(object.validator_set) : undefined,
+			validator_set: isSet(object.validator_set) ? ValidatorSet.fromJSON(object.validator_set) : undefined
 		};
 	},
 
@@ -1507,7 +1507,7 @@ export const LightBlock: MessageFns<LightBlock, "tendermint.types.LightBlock"> =
 		message.signed_header = object.signed_header !== undefined && object.signed_header !== null ? SignedHeader.fromPartial(object.signed_header) : undefined;
 		message.validator_set = object.validator_set !== undefined && object.validator_set !== null ? ValidatorSet.fromPartial(object.validator_set) : undefined;
 		return message;
-	},
+	}
 };
 
 export const BlockMeta: MessageFns<BlockMeta, "tendermint.types.BlockMeta"> = {
@@ -1578,7 +1578,7 @@ export const BlockMeta: MessageFns<BlockMeta, "tendermint.types.BlockMeta"> = {
 			block_id: isSet(object.block_id) ? BlockID.fromJSON(object.block_id) : undefined,
 			block_size: isSet(object.block_size) ? globalThis.Number(object.block_size) : 0,
 			header: isSet(object.header) ? Header.fromJSON(object.header) : undefined,
-			num_txs: isSet(object.num_txs) ? globalThis.Number(object.num_txs) : 0,
+			num_txs: isSet(object.num_txs) ? globalThis.Number(object.num_txs) : 0
 		};
 	},
 
@@ -1609,7 +1609,7 @@ export const BlockMeta: MessageFns<BlockMeta, "tendermint.types.BlockMeta"> = {
 		message.header = object.header !== undefined && object.header !== null ? Header.fromPartial(object.header) : undefined;
 		message.num_txs = object.num_txs ?? 0;
 		return message;
-	},
+	}
 };
 
 export const TxProof: MessageFns<TxProof, "tendermint.types.TxProof"> = {
@@ -1669,7 +1669,7 @@ export const TxProof: MessageFns<TxProof, "tendermint.types.TxProof"> = {
 		return {
 			root_hash: isSet(object.root_hash) ? bytesFromBase64(object.root_hash) : new Uint8Array(0),
 			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
-			proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined,
+			proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined
 		};
 	},
 
@@ -1696,7 +1696,7 @@ export const TxProof: MessageFns<TxProof, "tendermint.types.TxProof"> = {
 		message.data = object.data ?? new Uint8Array(0);
 		message.proof = object.proof !== undefined && object.proof !== null ? Proof.fromPartial(object.proof) : undefined;
 		return message;
-	},
+	}
 };
 
 export function blockIDFlagFromJSON(object: any): BlockIDFlag {
@@ -1800,7 +1800,7 @@ function createBaseHeader(): Header {
 		app_hash: new Uint8Array(0),
 		last_results_hash: new Uint8Array(0),
 		evidence_hash: new Uint8Array(0),
-		proposer_address: new Uint8Array(0),
+		proposer_address: new Uint8Array(0)
 	};
 }
 
@@ -1819,7 +1819,7 @@ function createBaseVote(): Vote {
 		validator_index: 0,
 		signature: new Uint8Array(0),
 		extension: new Uint8Array(0),
-		extension_signature: new Uint8Array(0),
+		extension_signature: new Uint8Array(0)
 	};
 }
 
@@ -1842,7 +1842,7 @@ function createBaseExtendedCommitSig(): ExtendedCommitSig {
 		timestamp: undefined,
 		signature: new Uint8Array(0),
 		extension: new Uint8Array(0),
-		extension_signature: new Uint8Array(0),
+		extension_signature: new Uint8Array(0)
 	};
 }
 
@@ -1854,7 +1854,7 @@ function createBaseProposal(): Proposal {
 		pol_round: 0,
 		block_id: undefined,
 		timestamp: undefined,
-		signature: new Uint8Array(0),
+		signature: new Uint8Array(0)
 	};
 }
 
@@ -1950,96 +1950,96 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.types.SignedHeader", SignedHeader as never],
 	["/tendermint.types.LightBlock", LightBlock as never],
 	["/tendermint.types.BlockMeta", BlockMeta as never],
-	["/tendermint.types.TxProof", TxProof as never],
+	["/tendermint.types.TxProof", TxProof as never]
 ];
 export const aminoConverters = {
 	"/tendermint.types.PartSetHeader": {
 		aminoType: "tendermint.types.PartSetHeader",
 		toAmino: (message: PartSetHeader) => ({ ...message }),
-		fromAmino: (object: PartSetHeader) => ({ ...object }),
+		fromAmino: (object: PartSetHeader) => ({ ...object })
 	},
 
 	"/tendermint.types.Part": {
 		aminoType: "tendermint.types.Part",
 		toAmino: (message: Part) => ({ ...message }),
-		fromAmino: (object: Part) => ({ ...object }),
+		fromAmino: (object: Part) => ({ ...object })
 	},
 
 	"/tendermint.types.BlockID": {
 		aminoType: "tendermint.types.BlockID",
 		toAmino: (message: BlockID) => ({ ...message }),
-		fromAmino: (object: BlockID) => ({ ...object }),
+		fromAmino: (object: BlockID) => ({ ...object })
 	},
 
 	"/tendermint.types.Header": {
 		aminoType: "tendermint.types.Header",
 		toAmino: (message: Header) => ({ ...message }),
-		fromAmino: (object: Header) => ({ ...object }),
+		fromAmino: (object: Header) => ({ ...object })
 	},
 
 	"/tendermint.types.Data": {
 		aminoType: "tendermint.types.Data",
 		toAmino: (message: Data) => ({ ...message }),
-		fromAmino: (object: Data) => ({ ...object }),
+		fromAmino: (object: Data) => ({ ...object })
 	},
 
 	"/tendermint.types.Vote": {
 		aminoType: "tendermint.types.Vote",
 		toAmino: (message: Vote) => ({ ...message }),
-		fromAmino: (object: Vote) => ({ ...object }),
+		fromAmino: (object: Vote) => ({ ...object })
 	},
 
 	"/tendermint.types.Commit": {
 		aminoType: "tendermint.types.Commit",
 		toAmino: (message: Commit) => ({ ...message }),
-		fromAmino: (object: Commit) => ({ ...object }),
+		fromAmino: (object: Commit) => ({ ...object })
 	},
 
 	"/tendermint.types.CommitSig": {
 		aminoType: "tendermint.types.CommitSig",
 		toAmino: (message: CommitSig) => ({ ...message }),
-		fromAmino: (object: CommitSig) => ({ ...object }),
+		fromAmino: (object: CommitSig) => ({ ...object })
 	},
 
 	"/tendermint.types.ExtendedCommit": {
 		aminoType: "tendermint.types.ExtendedCommit",
 		toAmino: (message: ExtendedCommit) => ({ ...message }),
-		fromAmino: (object: ExtendedCommit) => ({ ...object }),
+		fromAmino: (object: ExtendedCommit) => ({ ...object })
 	},
 
 	"/tendermint.types.ExtendedCommitSig": {
 		aminoType: "tendermint.types.ExtendedCommitSig",
 		toAmino: (message: ExtendedCommitSig) => ({ ...message }),
-		fromAmino: (object: ExtendedCommitSig) => ({ ...object }),
+		fromAmino: (object: ExtendedCommitSig) => ({ ...object })
 	},
 
 	"/tendermint.types.Proposal": {
 		aminoType: "tendermint.types.Proposal",
 		toAmino: (message: Proposal) => ({ ...message }),
-		fromAmino: (object: Proposal) => ({ ...object }),
+		fromAmino: (object: Proposal) => ({ ...object })
 	},
 
 	"/tendermint.types.SignedHeader": {
 		aminoType: "tendermint.types.SignedHeader",
 		toAmino: (message: SignedHeader) => ({ ...message }),
-		fromAmino: (object: SignedHeader) => ({ ...object }),
+		fromAmino: (object: SignedHeader) => ({ ...object })
 	},
 
 	"/tendermint.types.LightBlock": {
 		aminoType: "tendermint.types.LightBlock",
 		toAmino: (message: LightBlock) => ({ ...message }),
-		fromAmino: (object: LightBlock) => ({ ...object }),
+		fromAmino: (object: LightBlock) => ({ ...object })
 	},
 
 	"/tendermint.types.BlockMeta": {
 		aminoType: "tendermint.types.BlockMeta",
 		toAmino: (message: BlockMeta) => ({ ...message }),
-		fromAmino: (object: BlockMeta) => ({ ...object }),
+		fromAmino: (object: BlockMeta) => ({ ...object })
 	},
 
 	"/tendermint.types.TxProof": {
 		aminoType: "tendermint.types.TxProof",
 		toAmino: (message: TxProof) => ({ ...message }),
-		fromAmino: (object: TxProof) => ({ ...object }),
-	},
+		fromAmino: (object: TxProof) => ({ ...object })
+	}
 };

@@ -1,3 +1,4 @@
+import { Query as confidentialtransfers } from "./confidentialtransfers/query";
 import { Query as cosmos_accesscontrol_x } from "./cosmos/accesscontrol_x/query";
 import { Query as cosmos_auth_v1beta1 } from "./cosmos/auth/v1beta1/query";
 import { Query as cosmos_authz_v1beta1 } from "./cosmos/authz/v1beta1/query";
@@ -18,6 +19,7 @@ import { Query as oracle } from "./oracle/query";
 import { Query as tokenfactory } from "./tokenfactory/query";
 
 export const Querier = {
+	confidentialtransfers: confidentialtransfers,
 	cosmos: {
 		accesscontrol_x: cosmos_accesscontrol_x,
 		auth: { v1beta1: cosmos_auth_v1beta1 },
@@ -31,11 +33,11 @@ export const Querier = {
 		params: { v1beta1: cosmos_params_v1beta1 },
 		slashing: { v1beta1: cosmos_slashing_v1beta1 },
 		staking: { v1beta1: cosmos_staking_v1beta1 },
-		upgrade: { v1beta1: cosmos_upgrade_v1beta1 },
+		upgrade: { v1beta1: cosmos_upgrade_v1beta1 }
 	},
 	epoch: epoch,
 	evm: evm,
 	mint: { v1beta1: mint_v1beta1 },
 	oracle: oracle,
-	tokenfactory: tokenfactory,
+	tokenfactory: tokenfactory
 };

@@ -78,7 +78,7 @@ export const Equivocation: MessageFns<Equivocation, "cosmos.evidence.v1beta1.Equ
 			height: isSet(object.height) ? globalThis.Number(object.height) : 0,
 			time: isSet(object.time) ? fromJsonTimestamp(object.time) : undefined,
 			power: isSet(object.power) ? globalThis.Number(object.power) : 0,
-			consensus_address: isSet(object.consensus_address) ? globalThis.String(object.consensus_address) : "",
+			consensus_address: isSet(object.consensus_address) ? globalThis.String(object.consensus_address) : ""
 		};
 	},
 
@@ -109,7 +109,7 @@ export const Equivocation: MessageFns<Equivocation, "cosmos.evidence.v1beta1.Equ
 		message.power = object.power ?? 0;
 		message.consensus_address = object.consensus_address ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseEquivocation(): Equivocation {
@@ -157,6 +157,6 @@ export const aminoConverters = {
 	"/cosmos.evidence.v1beta1.Equivocation": {
 		aminoType: "cosmos-sdk/Equivocation",
 		toAmino: (message: Equivocation) => ({ ...message }),
-		fromAmino: (object: Equivocation) => ({ ...object }),
-	},
+		fromAmino: (object: Equivocation) => ({ ...object })
+	}
 };

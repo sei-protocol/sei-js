@@ -93,7 +93,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.bank.v1beta1.Genesis
 			balances: globalThis.Array.isArray(object?.balances) ? object.balances.map((e: any) => Balance.fromJSON(e)) : [],
 			supply: globalThis.Array.isArray(object?.supply) ? object.supply.map((e: any) => Coin.fromJSON(e)) : [],
 			denom_metadata: globalThis.Array.isArray(object?.denom_metadata) ? object.denom_metadata.map((e: any) => Metadata.fromJSON(e)) : [],
-			wei_balances: globalThis.Array.isArray(object?.wei_balances) ? object.wei_balances.map((e: any) => WeiBalance.fromJSON(e)) : [],
+			wei_balances: globalThis.Array.isArray(object?.wei_balances) ? object.wei_balances.map((e: any) => WeiBalance.fromJSON(e)) : []
 		};
 	},
 
@@ -128,7 +128,7 @@ export const GenesisState: MessageFns<GenesisState, "cosmos.bank.v1beta1.Genesis
 		message.denom_metadata = object.denom_metadata?.map((e) => Metadata.fromPartial(e)) || [];
 		message.wei_balances = object.wei_balances?.map((e) => WeiBalance.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Balance: MessageFns<Balance, "cosmos.bank.v1beta1.Balance"> = {
@@ -177,7 +177,7 @@ export const Balance: MessageFns<Balance, "cosmos.bank.v1beta1.Balance"> = {
 	fromJSON(object: any): Balance {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : [],
+			coins: globalThis.Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromJSON(e)) : []
 		};
 	},
 
@@ -200,7 +200,7 @@ export const Balance: MessageFns<Balance, "cosmos.bank.v1beta1.Balance"> = {
 		message.address = object.address ?? "";
 		message.coins = object.coins?.map((e) => Coin.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const WeiBalance: MessageFns<WeiBalance, "cosmos.bank.v1beta1.WeiBalance"> = {
@@ -249,7 +249,7 @@ export const WeiBalance: MessageFns<WeiBalance, "cosmos.bank.v1beta1.WeiBalance"
 	fromJSON(object: any): WeiBalance {
 		return {
 			address: isSet(object.address) ? globalThis.String(object.address) : "",
-			amount: isSet(object.amount) ? globalThis.String(object.amount) : "",
+			amount: isSet(object.amount) ? globalThis.String(object.amount) : ""
 		};
 	},
 
@@ -272,7 +272,7 @@ export const WeiBalance: MessageFns<WeiBalance, "cosmos.bank.v1beta1.WeiBalance"
 		message.address = object.address ?? "";
 		message.amount = object.amount ?? "";
 		return message;
-	},
+	}
 };
 
 function createBaseGenesisState(): GenesisState {
@@ -293,24 +293,24 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.bank.v1beta1.GenesisState", GenesisState as never],
 	["/cosmos.bank.v1beta1.Balance", Balance as never],
-	["/cosmos.bank.v1beta1.WeiBalance", WeiBalance as never],
+	["/cosmos.bank.v1beta1.WeiBalance", WeiBalance as never]
 ];
 export const aminoConverters = {
 	"/cosmos.bank.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
-		fromAmino: (object: GenesisState) => ({ ...object }),
+		fromAmino: (object: GenesisState) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.Balance": {
 		aminoType: "cosmos-sdk/Balance",
 		toAmino: (message: Balance) => ({ ...message }),
-		fromAmino: (object: Balance) => ({ ...object }),
+		fromAmino: (object: Balance) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.WeiBalance": {
 		aminoType: "cosmos-sdk/WeiBalance",
 		toAmino: (message: WeiBalance) => ({ ...message }),
-		fromAmino: (object: WeiBalance) => ({ ...object }),
-	},
+		fromAmino: (object: WeiBalance) => ({ ...object })
+	}
 };

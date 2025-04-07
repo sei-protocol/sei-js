@@ -1,3 +1,9 @@
+import { registry as confidentialtransfers_confidential_registry } from "./confidentialtransfers/confidential";
+import { registry as confidentialtransfers_cryptography_registry } from "./confidentialtransfers/cryptography";
+import { registry as confidentialtransfers_genesis_registry } from "./confidentialtransfers/genesis";
+import { registry as confidentialtransfers_params_registry } from "./confidentialtransfers/params";
+import { registry as confidentialtransfers_tx_registry } from "./confidentialtransfers/tx";
+import { registry as confidentialtransfers_zk_registry } from "./confidentialtransfers/zk";
 import { registry as confio_proofs_registry } from "./confio/proofs";
 import { registry as cosmos_accesscontrol_accesscontrol_registry } from "./cosmos/accesscontrol/accesscontrol";
 import { registry as cosmos_accesscontrol_x_genesis_registry } from "./cosmos/accesscontrol_x/genesis";
@@ -111,6 +117,12 @@ import { registry as tokenfactory_params_registry } from "./tokenfactory/params"
 import { registry as tokenfactory_tx_registry } from "./tokenfactory/tx";
 
 export const seiProtoRegistry = [
+	...confidentialtransfers_confidential_registry,
+	...confidentialtransfers_cryptography_registry,
+	...confidentialtransfers_genesis_registry,
+	...confidentialtransfers_params_registry,
+	...confidentialtransfers_tx_registry,
+	...confidentialtransfers_zk_registry,
 	...confio_proofs_registry,
 	...cosmos_accesscontrol_x_genesis_registry,
 	...cosmos_accesscontrol_x_query_registry,
@@ -221,5 +233,5 @@ export const seiProtoRegistry = [
 	...tendermint_version_types_registry,
 	...tokenfactory_genesis_registry,
 	...tokenfactory_params_registry,
-	...tokenfactory_tx_registry,
+	...tokenfactory_tx_registry
 ];

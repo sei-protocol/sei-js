@@ -32,7 +32,7 @@ import type {
 	UnbondingDelegationEntry as UnbondingDelegationEntry_type,
 	UnbondingDelegation as UnbondingDelegation_type,
 	ValAddresses as ValAddresses_type,
-	Validator as Validator_type,
+	Validator as Validator_type
 } from "../../../../types/cosmos/staking/v1beta1";
 
 import { BondStatus } from "../../../../types/cosmos/staking/v1beta1";
@@ -106,7 +106,7 @@ export const HistoricalInfo: MessageFns<HistoricalInfo, "cosmos.staking.v1beta1.
 	fromJSON(object: any): HistoricalInfo {
 		return {
 			header: isSet(object.header) ? Header.fromJSON(object.header) : undefined,
-			valset: globalThis.Array.isArray(object?.valset) ? object.valset.map((e: any) => Validator.fromJSON(e)) : [],
+			valset: globalThis.Array.isArray(object?.valset) ? object.valset.map((e: any) => Validator.fromJSON(e)) : []
 		};
 	},
 
@@ -129,7 +129,7 @@ export const HistoricalInfo: MessageFns<HistoricalInfo, "cosmos.staking.v1beta1.
 		message.header = object.header !== undefined && object.header !== null ? Header.fromPartial(object.header) : undefined;
 		message.valset = object.valset?.map((e) => Validator.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const CommissionRates: MessageFns<CommissionRates, "cosmos.staking.v1beta1.CommissionRates"> = {
@@ -189,7 +189,7 @@ export const CommissionRates: MessageFns<CommissionRates, "cosmos.staking.v1beta
 		return {
 			rate: isSet(object.rate) ? globalThis.String(object.rate) : "",
 			max_rate: isSet(object.max_rate) ? globalThis.String(object.max_rate) : "",
-			max_change_rate: isSet(object.max_change_rate) ? globalThis.String(object.max_change_rate) : "",
+			max_change_rate: isSet(object.max_change_rate) ? globalThis.String(object.max_change_rate) : ""
 		};
 	},
 
@@ -216,7 +216,7 @@ export const CommissionRates: MessageFns<CommissionRates, "cosmos.staking.v1beta
 		message.max_rate = object.max_rate ?? "";
 		message.max_change_rate = object.max_change_rate ?? "";
 		return message;
-	},
+	}
 };
 
 export const Commission: MessageFns<Commission, "cosmos.staking.v1beta1.Commission"> = {
@@ -265,7 +265,7 @@ export const Commission: MessageFns<Commission, "cosmos.staking.v1beta1.Commissi
 	fromJSON(object: any): Commission {
 		return {
 			commission_rates: isSet(object.commission_rates) ? CommissionRates.fromJSON(object.commission_rates) : undefined,
-			update_time: isSet(object.update_time) ? fromJsonTimestamp(object.update_time) : undefined,
+			update_time: isSet(object.update_time) ? fromJsonTimestamp(object.update_time) : undefined
 		};
 	},
 
@@ -289,7 +289,7 @@ export const Commission: MessageFns<Commission, "cosmos.staking.v1beta1.Commissi
 			object.commission_rates !== undefined && object.commission_rates !== null ? CommissionRates.fromPartial(object.commission_rates) : undefined;
 		message.update_time = object.update_time ?? undefined;
 		return message;
-	},
+	}
 };
 
 export const Description: MessageFns<Description, "cosmos.staking.v1beta1.Description"> = {
@@ -371,7 +371,7 @@ export const Description: MessageFns<Description, "cosmos.staking.v1beta1.Descri
 			identity: isSet(object.identity) ? globalThis.String(object.identity) : "",
 			website: isSet(object.website) ? globalThis.String(object.website) : "",
 			security_contact: isSet(object.security_contact) ? globalThis.String(object.security_contact) : "",
-			details: isSet(object.details) ? globalThis.String(object.details) : "",
+			details: isSet(object.details) ? globalThis.String(object.details) : ""
 		};
 	},
 
@@ -406,7 +406,7 @@ export const Description: MessageFns<Description, "cosmos.staking.v1beta1.Descri
 		message.security_contact = object.security_contact ?? "";
 		message.details = object.details ?? "";
 		return message;
-	},
+	}
 };
 
 export const Validator: MessageFns<Validator, "cosmos.staking.v1beta1.Validator"> = {
@@ -554,7 +554,7 @@ export const Validator: MessageFns<Validator, "cosmos.staking.v1beta1.Validator"
 			unbonding_height: isSet(object.unbonding_height) ? globalThis.Number(object.unbonding_height) : 0,
 			unbonding_time: isSet(object.unbonding_time) ? fromJsonTimestamp(object.unbonding_time) : undefined,
 			commission: isSet(object.commission) ? Commission.fromJSON(object.commission) : undefined,
-			min_self_delegation: isSet(object.min_self_delegation) ? globalThis.String(object.min_self_delegation) : "",
+			min_self_delegation: isSet(object.min_self_delegation) ? globalThis.String(object.min_self_delegation) : ""
 		};
 	},
 
@@ -613,7 +613,7 @@ export const Validator: MessageFns<Validator, "cosmos.staking.v1beta1.Validator"
 		message.commission = object.commission !== undefined && object.commission !== null ? Commission.fromPartial(object.commission) : undefined;
 		message.min_self_delegation = object.min_self_delegation ?? "";
 		return message;
-	},
+	}
 };
 
 export const ValAddresses: MessageFns<ValAddresses, "cosmos.staking.v1beta1.ValAddresses"> = {
@@ -651,7 +651,7 @@ export const ValAddresses: MessageFns<ValAddresses, "cosmos.staking.v1beta1.ValA
 
 	fromJSON(object: any): ValAddresses {
 		return {
-			addresses: globalThis.Array.isArray(object?.addresses) ? object.addresses.map((e: any) => globalThis.String(e)) : [],
+			addresses: globalThis.Array.isArray(object?.addresses) ? object.addresses.map((e: any) => globalThis.String(e)) : []
 		};
 	},
 
@@ -670,7 +670,7 @@ export const ValAddresses: MessageFns<ValAddresses, "cosmos.staking.v1beta1.ValA
 		const message = createBaseValAddresses();
 		message.addresses = object.addresses?.map((e) => e) || [];
 		return message;
-	},
+	}
 };
 
 export const DVPair: MessageFns<DVPair, "cosmos.staking.v1beta1.DVPair"> = {
@@ -719,7 +719,7 @@ export const DVPair: MessageFns<DVPair, "cosmos.staking.v1beta1.DVPair"> = {
 	fromJSON(object: any): DVPair {
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
-			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
+			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : ""
 		};
 	},
 
@@ -742,7 +742,7 @@ export const DVPair: MessageFns<DVPair, "cosmos.staking.v1beta1.DVPair"> = {
 		message.delegator_address = object.delegator_address ?? "";
 		message.validator_address = object.validator_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const DVPairs: MessageFns<DVPairs, "cosmos.staking.v1beta1.DVPairs"> = {
@@ -797,7 +797,7 @@ export const DVPairs: MessageFns<DVPairs, "cosmos.staking.v1beta1.DVPairs"> = {
 		const message = createBaseDVPairs();
 		message.pairs = object.pairs?.map((e) => DVPair.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const DVVTriplet: MessageFns<DVVTriplet, "cosmos.staking.v1beta1.DVVTriplet"> = {
@@ -857,7 +857,7 @@ export const DVVTriplet: MessageFns<DVVTriplet, "cosmos.staking.v1beta1.DVVTripl
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_src_address: isSet(object.validator_src_address) ? globalThis.String(object.validator_src_address) : "",
-			validator_dst_address: isSet(object.validator_dst_address) ? globalThis.String(object.validator_dst_address) : "",
+			validator_dst_address: isSet(object.validator_dst_address) ? globalThis.String(object.validator_dst_address) : ""
 		};
 	},
 
@@ -884,7 +884,7 @@ export const DVVTriplet: MessageFns<DVVTriplet, "cosmos.staking.v1beta1.DVVTripl
 		message.validator_src_address = object.validator_src_address ?? "";
 		message.validator_dst_address = object.validator_dst_address ?? "";
 		return message;
-	},
+	}
 };
 
 export const DVVTriplets: MessageFns<DVVTriplets, "cosmos.staking.v1beta1.DVVTriplets"> = {
@@ -922,7 +922,7 @@ export const DVVTriplets: MessageFns<DVVTriplets, "cosmos.staking.v1beta1.DVVTri
 
 	fromJSON(object: any): DVVTriplets {
 		return {
-			triplets: globalThis.Array.isArray(object?.triplets) ? object.triplets.map((e: any) => DVVTriplet.fromJSON(e)) : [],
+			triplets: globalThis.Array.isArray(object?.triplets) ? object.triplets.map((e: any) => DVVTriplet.fromJSON(e)) : []
 		};
 	},
 
@@ -941,7 +941,7 @@ export const DVVTriplets: MessageFns<DVVTriplets, "cosmos.staking.v1beta1.DVVTri
 		const message = createBaseDVVTriplets();
 		message.triplets = object.triplets?.map((e) => DVVTriplet.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Delegation: MessageFns<Delegation, "cosmos.staking.v1beta1.Delegation"> = {
@@ -1001,7 +1001,7 @@ export const Delegation: MessageFns<Delegation, "cosmos.staking.v1beta1.Delegati
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			shares: isSet(object.shares) ? globalThis.String(object.shares) : "",
+			shares: isSet(object.shares) ? globalThis.String(object.shares) : ""
 		};
 	},
 
@@ -1028,7 +1028,7 @@ export const Delegation: MessageFns<Delegation, "cosmos.staking.v1beta1.Delegati
 		message.validator_address = object.validator_address ?? "";
 		message.shares = object.shares ?? "";
 		return message;
-	},
+	}
 };
 
 export const UnbondingDelegation: MessageFns<UnbondingDelegation, "cosmos.staking.v1beta1.UnbondingDelegation"> = {
@@ -1088,7 +1088,7 @@ export const UnbondingDelegation: MessageFns<UnbondingDelegation, "cosmos.stakin
 		return {
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_address: isSet(object.validator_address) ? globalThis.String(object.validator_address) : "",
-			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => UnbondingDelegationEntry.fromJSON(e)) : [],
+			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => UnbondingDelegationEntry.fromJSON(e)) : []
 		};
 	},
 
@@ -1115,7 +1115,7 @@ export const UnbondingDelegation: MessageFns<UnbondingDelegation, "cosmos.stakin
 		message.validator_address = object.validator_address ?? "";
 		message.entries = object.entries?.map((e) => UnbondingDelegationEntry.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const UnbondingDelegationEntry: MessageFns<UnbondingDelegationEntry, "cosmos.staking.v1beta1.UnbondingDelegationEntry"> = {
@@ -1186,7 +1186,7 @@ export const UnbondingDelegationEntry: MessageFns<UnbondingDelegationEntry, "cos
 			creation_height: isSet(object.creation_height) ? globalThis.Number(object.creation_height) : 0,
 			completion_time: isSet(object.completion_time) ? fromJsonTimestamp(object.completion_time) : undefined,
 			initial_balance: isSet(object.initial_balance) ? globalThis.String(object.initial_balance) : "",
-			balance: isSet(object.balance) ? globalThis.String(object.balance) : "",
+			balance: isSet(object.balance) ? globalThis.String(object.balance) : ""
 		};
 	},
 
@@ -1217,7 +1217,7 @@ export const UnbondingDelegationEntry: MessageFns<UnbondingDelegationEntry, "cos
 		message.initial_balance = object.initial_balance ?? "";
 		message.balance = object.balance ?? "";
 		return message;
-	},
+	}
 };
 
 export const RedelegationEntry: MessageFns<RedelegationEntry, "cosmos.staking.v1beta1.RedelegationEntry"> = {
@@ -1288,7 +1288,7 @@ export const RedelegationEntry: MessageFns<RedelegationEntry, "cosmos.staking.v1
 			creation_height: isSet(object.creation_height) ? globalThis.Number(object.creation_height) : 0,
 			completion_time: isSet(object.completion_time) ? fromJsonTimestamp(object.completion_time) : undefined,
 			initial_balance: isSet(object.initial_balance) ? globalThis.String(object.initial_balance) : "",
-			shares_dst: isSet(object.shares_dst) ? globalThis.String(object.shares_dst) : "",
+			shares_dst: isSet(object.shares_dst) ? globalThis.String(object.shares_dst) : ""
 		};
 	},
 
@@ -1319,7 +1319,7 @@ export const RedelegationEntry: MessageFns<RedelegationEntry, "cosmos.staking.v1
 		message.initial_balance = object.initial_balance ?? "";
 		message.shares_dst = object.shares_dst ?? "";
 		return message;
-	},
+	}
 };
 
 export const Redelegation: MessageFns<Redelegation, "cosmos.staking.v1beta1.Redelegation"> = {
@@ -1390,7 +1390,7 @@ export const Redelegation: MessageFns<Redelegation, "cosmos.staking.v1beta1.Rede
 			delegator_address: isSet(object.delegator_address) ? globalThis.String(object.delegator_address) : "",
 			validator_src_address: isSet(object.validator_src_address) ? globalThis.String(object.validator_src_address) : "",
 			validator_dst_address: isSet(object.validator_dst_address) ? globalThis.String(object.validator_dst_address) : "",
-			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => RedelegationEntry.fromJSON(e)) : [],
+			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => RedelegationEntry.fromJSON(e)) : []
 		};
 	},
 
@@ -1421,7 +1421,7 @@ export const Redelegation: MessageFns<Redelegation, "cosmos.staking.v1beta1.Rede
 		message.validator_dst_address = object.validator_dst_address ?? "";
 		message.entries = object.entries?.map((e) => RedelegationEntry.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Params: MessageFns<Params, "cosmos.staking.v1beta1.Params"> = {
@@ -1538,7 +1538,7 @@ export const Params: MessageFns<Params, "cosmos.staking.v1beta1.Params"> = {
 			max_voting_power_ratio: isSet(object.max_voting_power_ratio) ? globalThis.String(object.max_voting_power_ratio) : "",
 			max_voting_power_enforcement_threshold: isSet(object.max_voting_power_enforcement_threshold)
 				? globalThis.String(object.max_voting_power_enforcement_threshold)
-				: "",
+				: ""
 		};
 	},
 
@@ -1585,7 +1585,7 @@ export const Params: MessageFns<Params, "cosmos.staking.v1beta1.Params"> = {
 		message.max_voting_power_ratio = object.max_voting_power_ratio ?? "";
 		message.max_voting_power_enforcement_threshold = object.max_voting_power_enforcement_threshold ?? "";
 		return message;
-	},
+	}
 };
 
 export const DelegationResponse: MessageFns<DelegationResponse, "cosmos.staking.v1beta1.DelegationResponse"> = {
@@ -1634,7 +1634,7 @@ export const DelegationResponse: MessageFns<DelegationResponse, "cosmos.staking.
 	fromJSON(object: any): DelegationResponse {
 		return {
 			delegation: isSet(object.delegation) ? Delegation.fromJSON(object.delegation) : undefined,
-			balance: isSet(object.balance) ? Coin.fromJSON(object.balance) : undefined,
+			balance: isSet(object.balance) ? Coin.fromJSON(object.balance) : undefined
 		};
 	},
 
@@ -1657,7 +1657,7 @@ export const DelegationResponse: MessageFns<DelegationResponse, "cosmos.staking.
 		message.delegation = object.delegation !== undefined && object.delegation !== null ? Delegation.fromPartial(object.delegation) : undefined;
 		message.balance = object.balance !== undefined && object.balance !== null ? Coin.fromPartial(object.balance) : undefined;
 		return message;
-	},
+	}
 };
 
 export const RedelegationEntryResponse: MessageFns<RedelegationEntryResponse, "cosmos.staking.v1beta1.RedelegationEntryResponse"> = {
@@ -1706,7 +1706,7 @@ export const RedelegationEntryResponse: MessageFns<RedelegationEntryResponse, "c
 	fromJSON(object: any): RedelegationEntryResponse {
 		return {
 			redelegation_entry: isSet(object.redelegation_entry) ? RedelegationEntry.fromJSON(object.redelegation_entry) : undefined,
-			balance: isSet(object.balance) ? globalThis.String(object.balance) : "",
+			balance: isSet(object.balance) ? globalThis.String(object.balance) : ""
 		};
 	},
 
@@ -1730,7 +1730,7 @@ export const RedelegationEntryResponse: MessageFns<RedelegationEntryResponse, "c
 			object.redelegation_entry !== undefined && object.redelegation_entry !== null ? RedelegationEntry.fromPartial(object.redelegation_entry) : undefined;
 		message.balance = object.balance ?? "";
 		return message;
-	},
+	}
 };
 
 export const RedelegationResponse: MessageFns<RedelegationResponse, "cosmos.staking.v1beta1.RedelegationResponse"> = {
@@ -1779,7 +1779,7 @@ export const RedelegationResponse: MessageFns<RedelegationResponse, "cosmos.stak
 	fromJSON(object: any): RedelegationResponse {
 		return {
 			redelegation: isSet(object.redelegation) ? Redelegation.fromJSON(object.redelegation) : undefined,
-			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => RedelegationEntryResponse.fromJSON(e)) : [],
+			entries: globalThis.Array.isArray(object?.entries) ? object.entries.map((e: any) => RedelegationEntryResponse.fromJSON(e)) : []
 		};
 	},
 
@@ -1802,7 +1802,7 @@ export const RedelegationResponse: MessageFns<RedelegationResponse, "cosmos.stak
 		message.redelegation = object.redelegation !== undefined && object.redelegation !== null ? Redelegation.fromPartial(object.redelegation) : undefined;
 		message.entries = object.entries?.map((e) => RedelegationEntryResponse.fromPartial(e)) || [];
 		return message;
-	},
+	}
 };
 
 export const Pool: MessageFns<Pool, "cosmos.staking.v1beta1.Pool"> = {
@@ -1851,7 +1851,7 @@ export const Pool: MessageFns<Pool, "cosmos.staking.v1beta1.Pool"> = {
 	fromJSON(object: any): Pool {
 		return {
 			not_bonded_tokens: isSet(object.not_bonded_tokens) ? globalThis.String(object.not_bonded_tokens) : "",
-			bonded_tokens: isSet(object.bonded_tokens) ? globalThis.String(object.bonded_tokens) : "",
+			bonded_tokens: isSet(object.bonded_tokens) ? globalThis.String(object.bonded_tokens) : ""
 		};
 	},
 
@@ -1874,7 +1874,7 @@ export const Pool: MessageFns<Pool, "cosmos.staking.v1beta1.Pool"> = {
 		message.not_bonded_tokens = object.not_bonded_tokens ?? "";
 		message.bonded_tokens = object.bonded_tokens ?? "";
 		return message;
-	},
+	}
 };
 
 export function bondStatusFromJSON(object: any): BondStatus {
@@ -1942,7 +1942,7 @@ function createBaseValidator(): Validator {
 		unbonding_height: 0,
 		unbonding_time: undefined,
 		commission: undefined,
-		min_self_delegation: "",
+		min_self_delegation: ""
 	};
 }
 
@@ -1995,7 +1995,7 @@ function createBaseParams(): Params {
 		bond_denom: "",
 		min_commission_rate: "",
 		max_voting_power_ratio: "",
-		max_voting_power_enforcement_threshold: "",
+		max_voting_power_enforcement_threshold: ""
 	};
 }
 
@@ -2069,114 +2069,114 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.staking.v1beta1.Params", Params as never],
 	["/cosmos.staking.v1beta1.DelegationResponse", DelegationResponse as never],
 	["/cosmos.staking.v1beta1.RedelegationResponse", RedelegationResponse as never],
-	["/cosmos.staking.v1beta1.Pool", Pool as never],
+	["/cosmos.staking.v1beta1.Pool", Pool as never]
 ];
 export const aminoConverters = {
 	"/cosmos.staking.v1beta1.HistoricalInfo": {
 		aminoType: "cosmos-sdk/HistoricalInfo",
 		toAmino: (message: HistoricalInfo) => ({ ...message }),
-		fromAmino: (object: HistoricalInfo) => ({ ...object }),
+		fromAmino: (object: HistoricalInfo) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.CommissionRates": {
 		aminoType: "cosmos-sdk/CommissionRates",
 		toAmino: (message: CommissionRates) => ({ ...message }),
-		fromAmino: (object: CommissionRates) => ({ ...object }),
+		fromAmino: (object: CommissionRates) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.Commission": {
 		aminoType: "cosmos-sdk/Commission",
 		toAmino: (message: Commission) => ({ ...message }),
-		fromAmino: (object: Commission) => ({ ...object }),
+		fromAmino: (object: Commission) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.Description": {
 		aminoType: "cosmos-sdk/Description",
 		toAmino: (message: Description) => ({ ...message }),
-		fromAmino: (object: Description) => ({ ...object }),
+		fromAmino: (object: Description) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.Validator": {
 		aminoType: "cosmos-sdk/Validator",
 		toAmino: (message: Validator) => ({ ...message }),
-		fromAmino: (object: Validator) => ({ ...object }),
+		fromAmino: (object: Validator) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.ValAddresses": {
 		aminoType: "cosmos-sdk/ValAddresses",
 		toAmino: (message: ValAddresses) => ({ ...message }),
-		fromAmino: (object: ValAddresses) => ({ ...object }),
+		fromAmino: (object: ValAddresses) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.DVPair": {
 		aminoType: "cosmos-sdk/DVPair",
 		toAmino: (message: DVPair) => ({ ...message }),
-		fromAmino: (object: DVPair) => ({ ...object }),
+		fromAmino: (object: DVPair) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.DVPairs": {
 		aminoType: "cosmos-sdk/DVPairs",
 		toAmino: (message: DVPairs) => ({ ...message }),
-		fromAmino: (object: DVPairs) => ({ ...object }),
+		fromAmino: (object: DVPairs) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.DVVTriplet": {
 		aminoType: "cosmos-sdk/DVVTriplet",
 		toAmino: (message: DVVTriplet) => ({ ...message }),
-		fromAmino: (object: DVVTriplet) => ({ ...object }),
+		fromAmino: (object: DVVTriplet) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.DVVTriplets": {
 		aminoType: "cosmos-sdk/DVVTriplets",
 		toAmino: (message: DVVTriplets) => ({ ...message }),
-		fromAmino: (object: DVVTriplets) => ({ ...object }),
+		fromAmino: (object: DVVTriplets) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.Delegation": {
 		aminoType: "cosmos-sdk/Delegation",
 		toAmino: (message: Delegation) => ({ ...message }),
-		fromAmino: (object: Delegation) => ({ ...object }),
+		fromAmino: (object: Delegation) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.UnbondingDelegation": {
 		aminoType: "cosmos-sdk/UnbondingDelegation",
 		toAmino: (message: UnbondingDelegation) => ({ ...message }),
-		fromAmino: (object: UnbondingDelegation) => ({ ...object }),
+		fromAmino: (object: UnbondingDelegation) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.RedelegationEntry": {
 		aminoType: "cosmos-sdk/RedelegationEntry",
 		toAmino: (message: RedelegationEntry) => ({ ...message }),
-		fromAmino: (object: RedelegationEntry) => ({ ...object }),
+		fromAmino: (object: RedelegationEntry) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.Redelegation": {
 		aminoType: "cosmos-sdk/Redelegation",
 		toAmino: (message: Redelegation) => ({ ...message }),
-		fromAmino: (object: Redelegation) => ({ ...object }),
+		fromAmino: (object: Redelegation) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.Params": {
 		aminoType: "cosmos-sdk/Params",
 		toAmino: (message: Params) => ({ ...message }),
-		fromAmino: (object: Params) => ({ ...object }),
+		fromAmino: (object: Params) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.DelegationResponse": {
 		aminoType: "cosmos-sdk/DelegationResponse",
 		toAmino: (message: DelegationResponse) => ({ ...message }),
-		fromAmino: (object: DelegationResponse) => ({ ...object }),
+		fromAmino: (object: DelegationResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.RedelegationResponse": {
 		aminoType: "cosmos-sdk/RedelegationResponse",
 		toAmino: (message: RedelegationResponse) => ({ ...message }),
-		fromAmino: (object: RedelegationResponse) => ({ ...object }),
+		fromAmino: (object: RedelegationResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.Pool": {
 		aminoType: "cosmos-sdk/Pool",
 		toAmino: (message: Pool) => ({ ...message }),
-		fromAmino: (object: Pool) => ({ ...object }),
-	},
+		fromAmino: (object: Pool) => ({ ...object })
+	}
 };
