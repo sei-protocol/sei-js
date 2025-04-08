@@ -754,7 +754,12 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.accesscontrol.v1beta1.AccessOperation", AccessOperation as never],
-	["/cosmos.accesscontrol.v1beta1.WasmAccessOperation", WasmAccessOperation as never]
+	["/cosmos.accesscontrol.v1beta1.WasmAccessOperation", WasmAccessOperation as never],
+	["/cosmos.accesscontrol.v1beta1.WasmContractReference", WasmContractReference as never],
+	["/cosmos.accesscontrol.v1beta1.WasmContractReferences", WasmContractReferences as never],
+	["/cosmos.accesscontrol.v1beta1.WasmAccessOperations", WasmAccessOperations as never],
+	["/cosmos.accesscontrol.v1beta1.MessageDependencyMapping", MessageDependencyMapping as never],
+	["/cosmos.accesscontrol.v1beta1.WasmDependencyMapping", WasmDependencyMapping as never]
 ];
 export const aminoConverters = {
 	"/cosmos.accesscontrol.v1beta1.AccessOperation": {
@@ -767,5 +772,35 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/WasmAccessOperation",
 		toAmino: (message: WasmAccessOperation) => ({ ...message }),
 		fromAmino: (object: WasmAccessOperation) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.WasmContractReference": {
+		aminoType: "cosmos-sdk/WasmContractReference",
+		toAmino: (message: WasmContractReference) => ({ ...message }),
+		fromAmino: (object: WasmContractReference) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.WasmContractReferences": {
+		aminoType: "cosmos-sdk/WasmContractReferences",
+		toAmino: (message: WasmContractReferences) => ({ ...message }),
+		fromAmino: (object: WasmContractReferences) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.WasmAccessOperations": {
+		aminoType: "cosmos-sdk/WasmAccessOperations",
+		toAmino: (message: WasmAccessOperations) => ({ ...message }),
+		fromAmino: (object: WasmAccessOperations) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.MessageDependencyMapping": {
+		aminoType: "cosmos-sdk/MessageDependencyMapping",
+		toAmino: (message: MessageDependencyMapping) => ({ ...message }),
+		fromAmino: (object: MessageDependencyMapping) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.WasmDependencyMapping": {
+		aminoType: "cosmos-sdk/WasmDependencyMapping",
+		toAmino: (message: WasmDependencyMapping) => ({ ...message }),
+		fromAmino: (object: WasmDependencyMapping) => ({ ...object })
 	}
 };

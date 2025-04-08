@@ -280,7 +280,9 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.feegrant.v1beta1.MsgGrantAllowance", MsgGrantAllowance as never],
-	["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance as never]
+	["/cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse", MsgGrantAllowanceResponse as never],
+	["/cosmos.feegrant.v1beta1.MsgRevokeAllowance", MsgRevokeAllowance as never],
+	["/cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse", MsgRevokeAllowanceResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.feegrant.v1beta1.MsgGrantAllowance": {
@@ -289,9 +291,21 @@ export const aminoConverters = {
 		fromAmino: (object: MsgGrantAllowance) => ({ ...object })
 	},
 
+	"/cosmos.feegrant.v1beta1.MsgGrantAllowanceResponse": {
+		aminoType: "cosmos-sdk/MsgGrantAllowanceResponse",
+		toAmino: (message: MsgGrantAllowanceResponse) => ({ ...message }),
+		fromAmino: (object: MsgGrantAllowanceResponse) => ({ ...object })
+	},
+
 	"/cosmos.feegrant.v1beta1.MsgRevokeAllowance": {
 		aminoType: "cosmos-sdk/MsgRevokeAllowance",
 		toAmino: (message: MsgRevokeAllowance) => ({ ...message }),
 		fromAmino: (object: MsgRevokeAllowance) => ({ ...object })
+	},
+
+	"/cosmos.feegrant.v1beta1.MsgRevokeAllowanceResponse": {
+		aminoType: "cosmos-sdk/MsgRevokeAllowanceResponse",
+		toAmino: (message: MsgRevokeAllowanceResponse) => ({ ...message }),
+		fromAmino: (object: MsgRevokeAllowanceResponse) => ({ ...object })
 	}
 };

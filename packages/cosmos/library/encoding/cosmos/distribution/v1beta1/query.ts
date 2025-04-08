@@ -1223,7 +1223,23 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.distribution.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.distribution.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
+	["/cosmos.distribution.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsRequest", QueryValidatorOutstandingRewardsRequest as never],
+	["/cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse", QueryValidatorOutstandingRewardsResponse as never],
+	["/cosmos.distribution.v1beta1.QueryValidatorCommissionRequest", QueryValidatorCommissionRequest as never],
+	["/cosmos.distribution.v1beta1.QueryValidatorCommissionResponse", QueryValidatorCommissionResponse as never],
+	["/cosmos.distribution.v1beta1.QueryValidatorSlashesRequest", QueryValidatorSlashesRequest as never],
+	["/cosmos.distribution.v1beta1.QueryValidatorSlashesResponse", QueryValidatorSlashesResponse as never],
+	["/cosmos.distribution.v1beta1.QueryDelegationRewardsRequest", QueryDelegationRewardsRequest as never],
+	["/cosmos.distribution.v1beta1.QueryDelegationRewardsResponse", QueryDelegationRewardsResponse as never],
+	["/cosmos.distribution.v1beta1.QueryDelegationTotalRewardsRequest", QueryDelegationTotalRewardsRequest as never],
+	["/cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse", QueryDelegationTotalRewardsResponse as never],
+	["/cosmos.distribution.v1beta1.QueryDelegatorValidatorsRequest", QueryDelegatorValidatorsRequest as never],
+	["/cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse", QueryDelegatorValidatorsResponse as never],
+	["/cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressRequest", QueryDelegatorWithdrawAddressRequest as never],
+	["/cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse", QueryDelegatorWithdrawAddressResponse as never],
+	["/cosmos.distribution.v1beta1.QueryCommunityPoolRequest", QueryCommunityPoolRequest as never],
+	["/cosmos.distribution.v1beta1.QueryCommunityPoolResponse", QueryCommunityPoolResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.distribution.v1beta1.QueryParamsRequest": {
@@ -1236,5 +1252,101 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
 		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsRequest": {
+		aminoType: "cosmos-sdk/QueryValidatorOutstandingRewardsRequest",
+		toAmino: (message: QueryValidatorOutstandingRewardsRequest) => ({ ...message }),
+		fromAmino: (object: QueryValidatorOutstandingRewardsRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse": {
+		aminoType: "cosmos-sdk/QueryValidatorOutstandingRewardsResponse",
+		toAmino: (message: QueryValidatorOutstandingRewardsResponse) => ({ ...message }),
+		fromAmino: (object: QueryValidatorOutstandingRewardsResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryValidatorCommissionRequest": {
+		aminoType: "cosmos-sdk/QueryValidatorCommissionRequest",
+		toAmino: (message: QueryValidatorCommissionRequest) => ({ ...message }),
+		fromAmino: (object: QueryValidatorCommissionRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryValidatorCommissionResponse": {
+		aminoType: "cosmos-sdk/QueryValidatorCommissionResponse",
+		toAmino: (message: QueryValidatorCommissionResponse) => ({ ...message }),
+		fromAmino: (object: QueryValidatorCommissionResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryValidatorSlashesRequest": {
+		aminoType: "cosmos-sdk/QueryValidatorSlashesRequest",
+		toAmino: (message: QueryValidatorSlashesRequest) => ({ ...message }),
+		fromAmino: (object: QueryValidatorSlashesRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryValidatorSlashesResponse": {
+		aminoType: "cosmos-sdk/QueryValidatorSlashesResponse",
+		toAmino: (message: QueryValidatorSlashesResponse) => ({ ...message }),
+		fromAmino: (object: QueryValidatorSlashesResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegationRewardsRequest": {
+		aminoType: "cosmos-sdk/QueryDelegationRewardsRequest",
+		toAmino: (message: QueryDelegationRewardsRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegationRewardsRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegationRewardsResponse": {
+		aminoType: "cosmos-sdk/QueryDelegationRewardsResponse",
+		toAmino: (message: QueryDelegationRewardsResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegationRewardsResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegationTotalRewardsRequest": {
+		aminoType: "cosmos-sdk/QueryDelegationTotalRewardsRequest",
+		toAmino: (message: QueryDelegationTotalRewardsRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegationTotalRewardsRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse": {
+		aminoType: "cosmos-sdk/QueryDelegationTotalRewardsResponse",
+		toAmino: (message: QueryDelegationTotalRewardsResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegationTotalRewardsResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegatorValidatorsRequest": {
+		aminoType: "cosmos-sdk/QueryDelegatorValidatorsRequest",
+		toAmino: (message: QueryDelegatorValidatorsRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorValidatorsRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse": {
+		aminoType: "cosmos-sdk/QueryDelegatorValidatorsResponse",
+		toAmino: (message: QueryDelegatorValidatorsResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorValidatorsResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressRequest": {
+		aminoType: "cosmos-sdk/QueryDelegatorWithdrawAddressRequest",
+		toAmino: (message: QueryDelegatorWithdrawAddressRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorWithdrawAddressRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse": {
+		aminoType: "cosmos-sdk/QueryDelegatorWithdrawAddressResponse",
+		toAmino: (message: QueryDelegatorWithdrawAddressResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorWithdrawAddressResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryCommunityPoolRequest": {
+		aminoType: "cosmos-sdk/QueryCommunityPoolRequest",
+		toAmino: (message: QueryCommunityPoolRequest) => ({ ...message }),
+		fromAmino: (object: QueryCommunityPoolRequest) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.QueryCommunityPoolResponse": {
+		aminoType: "cosmos-sdk/QueryCommunityPoolResponse",
+		toAmino: (message: QueryCommunityPoolResponse) => ({ ...message }),
+		fromAmino: (object: QueryCommunityPoolResponse) => ({ ...object })
 	}
 };

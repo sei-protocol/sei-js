@@ -1215,7 +1215,9 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.gov.v1beta1.QueryDepositRequest", QueryDepositRequest as never],
 	["/cosmos.gov.v1beta1.QueryDepositResponse", QueryDepositResponse as never],
 	["/cosmos.gov.v1beta1.QueryDepositsRequest", QueryDepositsRequest as never],
-	["/cosmos.gov.v1beta1.QueryDepositsResponse", QueryDepositsResponse as never]
+	["/cosmos.gov.v1beta1.QueryDepositsResponse", QueryDepositsResponse as never],
+	["/cosmos.gov.v1beta1.QueryTallyResultRequest", QueryTallyResultRequest as never],
+	["/cosmos.gov.v1beta1.QueryTallyResultResponse", QueryTallyResultResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.gov.v1beta1.QueryProposalRequest": {
@@ -1300,5 +1302,17 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryDepositsResponse",
 		toAmino: (message: QueryDepositsResponse) => ({ ...message }),
 		fromAmino: (object: QueryDepositsResponse) => ({ ...object })
+	},
+
+	"/cosmos.gov.v1beta1.QueryTallyResultRequest": {
+		aminoType: "cosmos-sdk/QueryTallyResultRequest",
+		toAmino: (message: QueryTallyResultRequest) => ({ ...message }),
+		fromAmino: (object: QueryTallyResultRequest) => ({ ...object })
+	},
+
+	"/cosmos.gov.v1beta1.QueryTallyResultResponse": {
+		aminoType: "cosmos-sdk/QueryTallyResultResponse",
+		toAmino: (message: QueryTallyResultResponse) => ({ ...message }),
+		fromAmino: (object: QueryTallyResultResponse) => ({ ...object })
 	}
 };

@@ -619,9 +619,11 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.gov.v1beta1.MsgSubmitProposal", MsgSubmitProposal as never],
+	["/cosmos.gov.v1beta1.MsgSubmitProposalResponse", MsgSubmitProposalResponse as never],
 	["/cosmos.gov.v1beta1.MsgVote", MsgVote as never],
 	["/cosmos.gov.v1beta1.MsgVoteResponse", MsgVoteResponse as never],
 	["/cosmos.gov.v1beta1.MsgVoteWeighted", MsgVoteWeighted as never],
+	["/cosmos.gov.v1beta1.MsgVoteWeightedResponse", MsgVoteWeightedResponse as never],
 	["/cosmos.gov.v1beta1.MsgDeposit", MsgDeposit as never],
 	["/cosmos.gov.v1beta1.MsgDepositResponse", MsgDepositResponse as never]
 ];
@@ -630,6 +632,12 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/MsgSubmitProposal",
 		toAmino: (message: MsgSubmitProposal) => ({ ...message }),
 		fromAmino: (object: MsgSubmitProposal) => ({ ...object })
+	},
+
+	"/cosmos.gov.v1beta1.MsgSubmitProposalResponse": {
+		aminoType: "cosmos-sdk/MsgSubmitProposalResponse",
+		toAmino: (message: MsgSubmitProposalResponse) => ({ ...message }),
+		fromAmino: (object: MsgSubmitProposalResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.MsgVote": {
@@ -648,6 +656,12 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/MsgVoteWeighted",
 		toAmino: (message: MsgVoteWeighted) => ({ ...message }),
 		fromAmino: (object: MsgVoteWeighted) => ({ ...object })
+	},
+
+	"/cosmos.gov.v1beta1.MsgVoteWeightedResponse": {
+		aminoType: "cosmos-sdk/MsgVoteWeightedResponse",
+		toAmino: (message: MsgVoteWeightedResponse) => ({ ...message }),
+		fromAmino: (object: MsgVoteWeightedResponse) => ({ ...object })
 	},
 
 	"/cosmos.gov.v1beta1.MsgDeposit": {

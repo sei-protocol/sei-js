@@ -1029,8 +1029,17 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.distribution.v1beta1.Params", Params as never],
+	["/cosmos.distribution.v1beta1.ValidatorHistoricalRewards", ValidatorHistoricalRewards as never],
+	["/cosmos.distribution.v1beta1.ValidatorCurrentRewards", ValidatorCurrentRewards as never],
+	["/cosmos.distribution.v1beta1.ValidatorAccumulatedCommission", ValidatorAccumulatedCommission as never],
+	["/cosmos.distribution.v1beta1.ValidatorOutstandingRewards", ValidatorOutstandingRewards as never],
 	["/cosmos.distribution.v1beta1.ValidatorSlashEvent", ValidatorSlashEvent as never],
-	["/cosmos.distribution.v1beta1.FeePool", FeePool as never]
+	["/cosmos.distribution.v1beta1.ValidatorSlashEvents", ValidatorSlashEvents as never],
+	["/cosmos.distribution.v1beta1.FeePool", FeePool as never],
+	["/cosmos.distribution.v1beta1.CommunityPoolSpendProposal", CommunityPoolSpendProposal as never],
+	["/cosmos.distribution.v1beta1.DelegatorStartingInfo", DelegatorStartingInfo as never],
+	["/cosmos.distribution.v1beta1.DelegationDelegatorReward", DelegationDelegatorReward as never],
+	["/cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit", CommunityPoolSpendProposalWithDeposit as never]
 ];
 export const aminoConverters = {
 	"/cosmos.distribution.v1beta1.Params": {
@@ -1039,15 +1048,69 @@ export const aminoConverters = {
 		fromAmino: (object: Params) => ({ ...object })
 	},
 
+	"/cosmos.distribution.v1beta1.ValidatorHistoricalRewards": {
+		aminoType: "cosmos-sdk/ValidatorHistoricalRewards",
+		toAmino: (message: ValidatorHistoricalRewards) => ({ ...message }),
+		fromAmino: (object: ValidatorHistoricalRewards) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorCurrentRewards": {
+		aminoType: "cosmos-sdk/ValidatorCurrentRewards",
+		toAmino: (message: ValidatorCurrentRewards) => ({ ...message }),
+		fromAmino: (object: ValidatorCurrentRewards) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorAccumulatedCommission": {
+		aminoType: "cosmos-sdk/ValidatorAccumulatedCommission",
+		toAmino: (message: ValidatorAccumulatedCommission) => ({ ...message }),
+		fromAmino: (object: ValidatorAccumulatedCommission) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorOutstandingRewards": {
+		aminoType: "cosmos-sdk/ValidatorOutstandingRewards",
+		toAmino: (message: ValidatorOutstandingRewards) => ({ ...message }),
+		fromAmino: (object: ValidatorOutstandingRewards) => ({ ...object })
+	},
+
 	"/cosmos.distribution.v1beta1.ValidatorSlashEvent": {
 		aminoType: "cosmos-sdk/ValidatorSlashEvent",
 		toAmino: (message: ValidatorSlashEvent) => ({ ...message }),
 		fromAmino: (object: ValidatorSlashEvent) => ({ ...object })
 	},
 
+	"/cosmos.distribution.v1beta1.ValidatorSlashEvents": {
+		aminoType: "cosmos-sdk/ValidatorSlashEvents",
+		toAmino: (message: ValidatorSlashEvents) => ({ ...message }),
+		fromAmino: (object: ValidatorSlashEvents) => ({ ...object })
+	},
+
 	"/cosmos.distribution.v1beta1.FeePool": {
 		aminoType: "cosmos-sdk/FeePool",
 		toAmino: (message: FeePool) => ({ ...message }),
 		fromAmino: (object: FeePool) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.CommunityPoolSpendProposal": {
+		aminoType: "cosmos-sdk/CommunityPoolSpendProposal",
+		toAmino: (message: CommunityPoolSpendProposal) => ({ ...message }),
+		fromAmino: (object: CommunityPoolSpendProposal) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.DelegatorStartingInfo": {
+		aminoType: "cosmos-sdk/DelegatorStartingInfo",
+		toAmino: (message: DelegatorStartingInfo) => ({ ...message }),
+		fromAmino: (object: DelegatorStartingInfo) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.DelegationDelegatorReward": {
+		aminoType: "cosmos-sdk/DelegationDelegatorReward",
+		toAmino: (message: DelegationDelegatorReward) => ({ ...message }),
+		fromAmino: (object: DelegationDelegatorReward) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit": {
+		aminoType: "cosmos-sdk/CommunityPoolSpendProposalWithDeposit",
+		toAmino: (message: CommunityPoolSpendProposalWithDeposit) => ({ ...message }),
+		fromAmino: (object: CommunityPoolSpendProposalWithDeposit) => ({ ...object })
 	}
 };

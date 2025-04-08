@@ -826,18 +826,29 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.tokenfactory.MsgCreateDenom", MsgCreateDenom as never],
+	["/seiprotocol.seichain.tokenfactory.MsgCreateDenomResponse", MsgCreateDenomResponse as never],
 	["/seiprotocol.seichain.tokenfactory.MsgMint", MsgMint as never],
 	["/seiprotocol.seichain.tokenfactory.MsgMintResponse", MsgMintResponse as never],
 	["/seiprotocol.seichain.tokenfactory.MsgBurn", MsgBurn as never],
 	["/seiprotocol.seichain.tokenfactory.MsgBurnResponse", MsgBurnResponse as never],
 	["/seiprotocol.seichain.tokenfactory.MsgChangeAdmin", MsgChangeAdmin as never],
-	["/seiprotocol.seichain.tokenfactory.MsgUpdateDenom", MsgUpdateDenom as never]
+	["/seiprotocol.seichain.tokenfactory.MsgChangeAdminResponse", MsgChangeAdminResponse as never],
+	["/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata", MsgSetDenomMetadata as never],
+	["/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse", MsgSetDenomMetadataResponse as never],
+	["/seiprotocol.seichain.tokenfactory.MsgUpdateDenom", MsgUpdateDenom as never],
+	["/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse", MsgUpdateDenomResponse as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.tokenfactory.MsgCreateDenom": {
 		aminoType: "tokenfactory/MsgCreateDenom",
 		toAmino: (message: MsgCreateDenom) => ({ ...message }),
 		fromAmino: (object: MsgCreateDenom) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.MsgCreateDenomResponse": {
+		aminoType: "tokenfactory/MsgCreateDenomResponse",
+		toAmino: (message: MsgCreateDenomResponse) => ({ ...message }),
+		fromAmino: (object: MsgCreateDenomResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.tokenfactory.MsgMint": {
@@ -870,9 +881,33 @@ export const aminoConverters = {
 		fromAmino: (object: MsgChangeAdmin) => ({ ...object })
 	},
 
+	"/seiprotocol.seichain.tokenfactory.MsgChangeAdminResponse": {
+		aminoType: "tokenfactory/MsgChangeAdminResponse",
+		toAmino: (message: MsgChangeAdminResponse) => ({ ...message }),
+		fromAmino: (object: MsgChangeAdminResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata": {
+		aminoType: "tokenfactory/MsgSetDenomMetadata",
+		toAmino: (message: MsgSetDenomMetadata) => ({ ...message }),
+		fromAmino: (object: MsgSetDenomMetadata) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse": {
+		aminoType: "tokenfactory/MsgSetDenomMetadataResponse",
+		toAmino: (message: MsgSetDenomMetadataResponse) => ({ ...message }),
+		fromAmino: (object: MsgSetDenomMetadataResponse) => ({ ...object })
+	},
+
 	"/seiprotocol.seichain.tokenfactory.MsgUpdateDenom": {
 		aminoType: "tokenfactory/MsgUpdateDenom",
 		toAmino: (message: MsgUpdateDenom) => ({ ...message }),
 		fromAmino: (object: MsgUpdateDenom) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse": {
+		aminoType: "tokenfactory/MsgUpdateDenomResponse",
+		toAmino: (message: MsgUpdateDenomResponse) => ({ ...message }),
+		fromAmino: (object: MsgUpdateDenomResponse) => ({ ...object })
 	}
 };

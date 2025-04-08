@@ -7,21 +7,28 @@ import { readSourceFile, runBiomeFix, traverseNodes, writeToFile } from "../comm
 const COMMON_TYPES = new Set(["Builtin", "DeepPartial", "Exact", "KeysOfUnion", "MessageFns"]);
 
 const parseRegistryAndAmino = (node: ts.Node, registryEntries: string[], aminoConverters: string[], processedEntries: Set<string>) => {
-	const nodeText = node.getText().trim();
-	const messageMatch = nodeText.match(/MessageFns<(\w+), "(.*?)">/);
-	if (messageMatch) {
-		const [_, messageName, typeUrl] = messageMatch;
+	if (!ts.isVariableStatement(node)) return;
 
-		// Check if this typeUrl has already been processed to avoid duplicates
-		if (processedEntries.has(typeUrl)) {
-			return; // Skip if this typeUrl has already been added
-		}
+	for (const decl of node.declarationList.declarations) {
+		if (!ts.isVariableDeclaration(decl) || !decl.type) continue;
+
+		// Check if it matches MessageFns<...>
+		if (!ts.isTypeReferenceNode(decl.type) || decl.type.typeName.getText() !== "MessageFns") continue;
+
+		const [typeArg, typeUrlArg] = decl.type.typeArguments ?? [];
+		if (!typeArg || !ts.isTypeReferenceNode(typeArg)) continue;
+		if (!typeUrlArg || !ts.isLiteralTypeNode(typeUrlArg) || !ts.isStringLiteral(typeUrlArg.literal)) continue;
+
+		const messageName = typeArg.typeName.getText();
+		const typeUrl = typeUrlArg.literal.text;
+
+		if (processedEntries.has(typeUrl)) return;
 		processedEntries.add(typeUrl);
 
-		// Generate registry entry
+		// Registry entry
 		registryEntries.push(`["/${typeUrl}", ${messageName} as never]`);
 
-		// Calculate aminoType
+		// Amino entry
 		let aminoType = typeUrl;
 		if (typeUrl.startsWith("cosmos")) {
 			const msgType = typeUrl.split(".").pop();
@@ -30,11 +37,9 @@ const parseRegistryAndAmino = (node: ts.Node, registryEntries: string[], aminoCo
 			const split = typeUrl.split(".");
 			const msgType = split.pop();
 			const module = split.pop();
-
 			aminoType = `${module}/${msgType}`;
 		}
 
-		// Generate Amino converters
 		aminoConverters.push(`
   "/${typeUrl}": {
     aminoType: "${aminoType}",

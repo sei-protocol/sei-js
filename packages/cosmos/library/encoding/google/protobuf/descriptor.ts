@@ -5129,26 +5129,36 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/google.protobuf.FileDescriptorSet", FileDescriptorSet as never],
 	["/google.protobuf.FileDescriptorProto", FileDescriptorProto as never],
 	["/google.protobuf.DescriptorProto", DescriptorProto as never],
+	["/google.protobuf.DescriptorProto.ExtensionRange", DescriptorProtoExtensionRange as never],
+	["/google.protobuf.DescriptorProto.ReservedRange", DescriptorProtoReservedRange as never],
 	["/google.protobuf.ExtensionRangeOptions", ExtensionRangeOptions as never],
+	["/google.protobuf.ExtensionRangeOptions.Declaration", ExtensionRangeOptionsDeclaration as never],
 	["/google.protobuf.FieldDescriptorProto", FieldDescriptorProto as never],
 	["/google.protobuf.OneofDescriptorProto", OneofDescriptorProto as never],
 	["/google.protobuf.EnumDescriptorProto", EnumDescriptorProto as never],
+	["/google.protobuf.EnumDescriptorProto.EnumReservedRange", EnumDescriptorProtoEnumReservedRange as never],
+	["/google.protobuf.EnumValueDescriptorProto", EnumValueDescriptorProto as never],
 	["/google.protobuf.ServiceDescriptorProto", ServiceDescriptorProto as never],
 	["/google.protobuf.MethodDescriptorProto", MethodDescriptorProto as never],
 	["/google.protobuf.FileOptions", FileOptions as never],
 	["/google.protobuf.MessageOptions", MessageOptions as never],
 	["/google.protobuf.FieldOptions", FieldOptions as never],
+	["/google.protobuf.FieldOptions.EditionDefault", FieldOptionsEditionDefault as never],
+	["/google.protobuf.FieldOptions.FeatureSupport", FieldOptionsFeatureSupport as never],
 	["/google.protobuf.OneofOptions", OneofOptions as never],
 	["/google.protobuf.EnumOptions", EnumOptions as never],
 	["/google.protobuf.EnumValueOptions", EnumValueOptions as never],
 	["/google.protobuf.ServiceOptions", ServiceOptions as never],
 	["/google.protobuf.MethodOptions", MethodOptions as never],
 	["/google.protobuf.UninterpretedOption", UninterpretedOption as never],
+	["/google.protobuf.UninterpretedOption.NamePart", UninterpretedOptionNamePart as never],
 	["/google.protobuf.FeatureSet", FeatureSet as never],
 	["/google.protobuf.FeatureSetDefaults", FeatureSetDefaults as never],
+	["/google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault", FeatureSetDefaultsFeatureSetEditionDefault as never],
 	["/google.protobuf.SourceCodeInfo", SourceCodeInfo as never],
 	["/google.protobuf.SourceCodeInfo.Location", SourceCodeInfoLocation as never],
-	["/google.protobuf.GeneratedCodeInfo", GeneratedCodeInfo as never]
+	["/google.protobuf.GeneratedCodeInfo", GeneratedCodeInfo as never],
+	["/google.protobuf.GeneratedCodeInfo.Annotation", GeneratedCodeInfoAnnotation as never]
 ];
 export const aminoConverters = {
 	"/google.protobuf.FileDescriptorSet": {
@@ -5169,10 +5179,28 @@ export const aminoConverters = {
 		fromAmino: (object: DescriptorProto) => ({ ...object })
 	},
 
+	"/google.protobuf.DescriptorProto.ExtensionRange": {
+		aminoType: "google.protobuf.DescriptorProto.ExtensionRange",
+		toAmino: (message: DescriptorProtoExtensionRange) => ({ ...message }),
+		fromAmino: (object: DescriptorProtoExtensionRange) => ({ ...object })
+	},
+
+	"/google.protobuf.DescriptorProto.ReservedRange": {
+		aminoType: "google.protobuf.DescriptorProto.ReservedRange",
+		toAmino: (message: DescriptorProtoReservedRange) => ({ ...message }),
+		fromAmino: (object: DescriptorProtoReservedRange) => ({ ...object })
+	},
+
 	"/google.protobuf.ExtensionRangeOptions": {
 		aminoType: "google.protobuf.ExtensionRangeOptions",
 		toAmino: (message: ExtensionRangeOptions) => ({ ...message }),
 		fromAmino: (object: ExtensionRangeOptions) => ({ ...object })
+	},
+
+	"/google.protobuf.ExtensionRangeOptions.Declaration": {
+		aminoType: "google.protobuf.ExtensionRangeOptions.Declaration",
+		toAmino: (message: ExtensionRangeOptionsDeclaration) => ({ ...message }),
+		fromAmino: (object: ExtensionRangeOptionsDeclaration) => ({ ...object })
 	},
 
 	"/google.protobuf.FieldDescriptorProto": {
@@ -5191,6 +5219,18 @@ export const aminoConverters = {
 		aminoType: "google.protobuf.EnumDescriptorProto",
 		toAmino: (message: EnumDescriptorProto) => ({ ...message }),
 		fromAmino: (object: EnumDescriptorProto) => ({ ...object })
+	},
+
+	"/google.protobuf.EnumDescriptorProto.EnumReservedRange": {
+		aminoType: "google.protobuf.EnumDescriptorProto.EnumReservedRange",
+		toAmino: (message: EnumDescriptorProtoEnumReservedRange) => ({ ...message }),
+		fromAmino: (object: EnumDescriptorProtoEnumReservedRange) => ({ ...object })
+	},
+
+	"/google.protobuf.EnumValueDescriptorProto": {
+		aminoType: "google.protobuf.EnumValueDescriptorProto",
+		toAmino: (message: EnumValueDescriptorProto) => ({ ...message }),
+		fromAmino: (object: EnumValueDescriptorProto) => ({ ...object })
 	},
 
 	"/google.protobuf.ServiceDescriptorProto": {
@@ -5221,6 +5261,18 @@ export const aminoConverters = {
 		aminoType: "google.protobuf.FieldOptions",
 		toAmino: (message: FieldOptions) => ({ ...message }),
 		fromAmino: (object: FieldOptions) => ({ ...object })
+	},
+
+	"/google.protobuf.FieldOptions.EditionDefault": {
+		aminoType: "google.protobuf.FieldOptions.EditionDefault",
+		toAmino: (message: FieldOptionsEditionDefault) => ({ ...message }),
+		fromAmino: (object: FieldOptionsEditionDefault) => ({ ...object })
+	},
+
+	"/google.protobuf.FieldOptions.FeatureSupport": {
+		aminoType: "google.protobuf.FieldOptions.FeatureSupport",
+		toAmino: (message: FieldOptionsFeatureSupport) => ({ ...message }),
+		fromAmino: (object: FieldOptionsFeatureSupport) => ({ ...object })
 	},
 
 	"/google.protobuf.OneofOptions": {
@@ -5259,6 +5311,12 @@ export const aminoConverters = {
 		fromAmino: (object: UninterpretedOption) => ({ ...object })
 	},
 
+	"/google.protobuf.UninterpretedOption.NamePart": {
+		aminoType: "google.protobuf.UninterpretedOption.NamePart",
+		toAmino: (message: UninterpretedOptionNamePart) => ({ ...message }),
+		fromAmino: (object: UninterpretedOptionNamePart) => ({ ...object })
+	},
+
 	"/google.protobuf.FeatureSet": {
 		aminoType: "google.protobuf.FeatureSet",
 		toAmino: (message: FeatureSet) => ({ ...message }),
@@ -5269,6 +5327,12 @@ export const aminoConverters = {
 		aminoType: "google.protobuf.FeatureSetDefaults",
 		toAmino: (message: FeatureSetDefaults) => ({ ...message }),
 		fromAmino: (object: FeatureSetDefaults) => ({ ...object })
+	},
+
+	"/google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault": {
+		aminoType: "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault",
+		toAmino: (message: FeatureSetDefaultsFeatureSetEditionDefault) => ({ ...message }),
+		fromAmino: (object: FeatureSetDefaultsFeatureSetEditionDefault) => ({ ...object })
 	},
 
 	"/google.protobuf.SourceCodeInfo": {
@@ -5287,5 +5351,11 @@ export const aminoConverters = {
 		aminoType: "google.protobuf.GeneratedCodeInfo",
 		toAmino: (message: GeneratedCodeInfo) => ({ ...message }),
 		fromAmino: (object: GeneratedCodeInfo) => ({ ...object })
+	},
+
+	"/google.protobuf.GeneratedCodeInfo.Annotation": {
+		aminoType: "google.protobuf.GeneratedCodeInfo.Annotation",
+		toAmino: (message: GeneratedCodeInfoAnnotation) => ({ ...message }),
+		fromAmino: (object: GeneratedCodeInfoAnnotation) => ({ ...object })
 	}
 };

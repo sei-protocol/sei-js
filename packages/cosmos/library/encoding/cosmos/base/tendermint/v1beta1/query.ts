@@ -1235,18 +1235,75 @@ function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
 export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.base.tendermint.v1beta1.GetValidatorSetByHeightRequest", GetValidatorSetByHeightRequest as never],
+	["/cosmos.base.tendermint.v1beta1.GetValidatorSetByHeightResponse", GetValidatorSetByHeightResponse as never],
+	["/cosmos.base.tendermint.v1beta1.GetLatestValidatorSetRequest", GetLatestValidatorSetRequest as never],
+	["/cosmos.base.tendermint.v1beta1.GetLatestValidatorSetResponse", GetLatestValidatorSetResponse as never],
 	["/cosmos.base.tendermint.v1beta1.Validator", Validator as never],
+	["/cosmos.base.tendermint.v1beta1.GetBlockByHeightRequest", GetBlockByHeightRequest as never],
+	["/cosmos.base.tendermint.v1beta1.GetBlockByHeightResponse", GetBlockByHeightResponse as never],
+	["/cosmos.base.tendermint.v1beta1.GetLatestBlockRequest", GetLatestBlockRequest as never],
+	["/cosmos.base.tendermint.v1beta1.GetLatestBlockResponse", GetLatestBlockResponse as never],
 	["/cosmos.base.tendermint.v1beta1.GetSyncingRequest", GetSyncingRequest as never],
 	["/cosmos.base.tendermint.v1beta1.GetSyncingResponse", GetSyncingResponse as never],
 	["/cosmos.base.tendermint.v1beta1.GetNodeInfoRequest", GetNodeInfoRequest as never],
+	["/cosmos.base.tendermint.v1beta1.GetNodeInfoResponse", GetNodeInfoResponse as never],
 	["/cosmos.base.tendermint.v1beta1.VersionInfo", VersionInfo as never],
 	["/cosmos.base.tendermint.v1beta1.Module", Module as never]
 ];
 export const aminoConverters = {
+	"/cosmos.base.tendermint.v1beta1.GetValidatorSetByHeightRequest": {
+		aminoType: "cosmos-sdk/GetValidatorSetByHeightRequest",
+		toAmino: (message: GetValidatorSetByHeightRequest) => ({ ...message }),
+		fromAmino: (object: GetValidatorSetByHeightRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetValidatorSetByHeightResponse": {
+		aminoType: "cosmos-sdk/GetValidatorSetByHeightResponse",
+		toAmino: (message: GetValidatorSetByHeightResponse) => ({ ...message }),
+		fromAmino: (object: GetValidatorSetByHeightResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetLatestValidatorSetRequest": {
+		aminoType: "cosmos-sdk/GetLatestValidatorSetRequest",
+		toAmino: (message: GetLatestValidatorSetRequest) => ({ ...message }),
+		fromAmino: (object: GetLatestValidatorSetRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetLatestValidatorSetResponse": {
+		aminoType: "cosmos-sdk/GetLatestValidatorSetResponse",
+		toAmino: (message: GetLatestValidatorSetResponse) => ({ ...message }),
+		fromAmino: (object: GetLatestValidatorSetResponse) => ({ ...object })
+	},
+
 	"/cosmos.base.tendermint.v1beta1.Validator": {
 		aminoType: "cosmos-sdk/Validator",
 		toAmino: (message: Validator) => ({ ...message }),
 		fromAmino: (object: Validator) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetBlockByHeightRequest": {
+		aminoType: "cosmos-sdk/GetBlockByHeightRequest",
+		toAmino: (message: GetBlockByHeightRequest) => ({ ...message }),
+		fromAmino: (object: GetBlockByHeightRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetBlockByHeightResponse": {
+		aminoType: "cosmos-sdk/GetBlockByHeightResponse",
+		toAmino: (message: GetBlockByHeightResponse) => ({ ...message }),
+		fromAmino: (object: GetBlockByHeightResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetLatestBlockRequest": {
+		aminoType: "cosmos-sdk/GetLatestBlockRequest",
+		toAmino: (message: GetLatestBlockRequest) => ({ ...message }),
+		fromAmino: (object: GetLatestBlockRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetLatestBlockResponse": {
+		aminoType: "cosmos-sdk/GetLatestBlockResponse",
+		toAmino: (message: GetLatestBlockResponse) => ({ ...message }),
+		fromAmino: (object: GetLatestBlockResponse) => ({ ...object })
 	},
 
 	"/cosmos.base.tendermint.v1beta1.GetSyncingRequest": {
@@ -1265,6 +1322,12 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/GetNodeInfoRequest",
 		toAmino: (message: GetNodeInfoRequest) => ({ ...message }),
 		fromAmino: (object: GetNodeInfoRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.tendermint.v1beta1.GetNodeInfoResponse": {
+		aminoType: "cosmos-sdk/GetNodeInfoResponse",
+		toAmino: (message: GetNodeInfoResponse) => ({ ...message }),
+		fromAmino: (object: GetNodeInfoResponse) => ({ ...object })
 	},
 
 	"/cosmos.base.tendermint.v1beta1.VersionInfo": {

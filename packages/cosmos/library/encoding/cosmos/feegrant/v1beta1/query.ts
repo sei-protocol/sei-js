@@ -466,11 +466,48 @@ function createBaseQueryAllowancesByGranterResponse(): QueryAllowancesByGranterR
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
-export const registry: Array<[string, GeneratedType]> = [["/cosmos.feegrant.v1beta1.QueryAllowanceRequest", QueryAllowanceRequest as never]];
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.feegrant.v1beta1.QueryAllowanceRequest", QueryAllowanceRequest as never],
+	["/cosmos.feegrant.v1beta1.QueryAllowanceResponse", QueryAllowanceResponse as never],
+	["/cosmos.feegrant.v1beta1.QueryAllowancesRequest", QueryAllowancesRequest as never],
+	["/cosmos.feegrant.v1beta1.QueryAllowancesResponse", QueryAllowancesResponse as never],
+	["/cosmos.feegrant.v1beta1.QueryAllowancesByGranterRequest", QueryAllowancesByGranterRequest as never],
+	["/cosmos.feegrant.v1beta1.QueryAllowancesByGranterResponse", QueryAllowancesByGranterResponse as never]
+];
 export const aminoConverters = {
 	"/cosmos.feegrant.v1beta1.QueryAllowanceRequest": {
 		aminoType: "cosmos-sdk/QueryAllowanceRequest",
 		toAmino: (message: QueryAllowanceRequest) => ({ ...message }),
 		fromAmino: (object: QueryAllowanceRequest) => ({ ...object })
+	},
+
+	"/cosmos.feegrant.v1beta1.QueryAllowanceResponse": {
+		aminoType: "cosmos-sdk/QueryAllowanceResponse",
+		toAmino: (message: QueryAllowanceResponse) => ({ ...message }),
+		fromAmino: (object: QueryAllowanceResponse) => ({ ...object })
+	},
+
+	"/cosmos.feegrant.v1beta1.QueryAllowancesRequest": {
+		aminoType: "cosmos-sdk/QueryAllowancesRequest",
+		toAmino: (message: QueryAllowancesRequest) => ({ ...message }),
+		fromAmino: (object: QueryAllowancesRequest) => ({ ...object })
+	},
+
+	"/cosmos.feegrant.v1beta1.QueryAllowancesResponse": {
+		aminoType: "cosmos-sdk/QueryAllowancesResponse",
+		toAmino: (message: QueryAllowancesResponse) => ({ ...message }),
+		fromAmino: (object: QueryAllowancesResponse) => ({ ...object })
+	},
+
+	"/cosmos.feegrant.v1beta1.QueryAllowancesByGranterRequest": {
+		aminoType: "cosmos-sdk/QueryAllowancesByGranterRequest",
+		toAmino: (message: QueryAllowancesByGranterRequest) => ({ ...message }),
+		fromAmino: (object: QueryAllowancesByGranterRequest) => ({ ...object })
+	},
+
+	"/cosmos.feegrant.v1beta1.QueryAllowancesByGranterResponse": {
+		aminoType: "cosmos-sdk/QueryAllowancesByGranterResponse",
+		toAmino: (message: QueryAllowancesByGranterResponse) => ({ ...message }),
+		fromAmino: (object: QueryAllowancesByGranterResponse) => ({ ...object })
 	}
 };

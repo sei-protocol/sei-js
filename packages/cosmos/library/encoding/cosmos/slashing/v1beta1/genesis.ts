@@ -631,8 +631,10 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.slashing.v1beta1.GenesisState", GenesisState as never],
+	["/cosmos.slashing.v1beta1.GenesisStateLegacyMissingHeights", GenesisStateLegacyMissingHeights as never],
 	["/cosmos.slashing.v1beta1.GenesisStateLegacyV43", GenesisStateLegacyV43 as never],
 	["/cosmos.slashing.v1beta1.SigningInfo", SigningInfo as never],
+	["/cosmos.slashing.v1beta1.SigningInfoLegacyMissedHeights", SigningInfoLegacyMissedHeights as never],
 	["/cosmos.slashing.v1beta1.ValidatorMissedBlocks", ValidatorMissedBlocks as never],
 	["/cosmos.slashing.v1beta1.MissedBlock", MissedBlock as never]
 ];
@@ -641,6 +643,12 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),
 		fromAmino: (object: GenesisState) => ({ ...object })
+	},
+
+	"/cosmos.slashing.v1beta1.GenesisStateLegacyMissingHeights": {
+		aminoType: "cosmos-sdk/GenesisStateLegacyMissingHeights",
+		toAmino: (message: GenesisStateLegacyMissingHeights) => ({ ...message }),
+		fromAmino: (object: GenesisStateLegacyMissingHeights) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.GenesisStateLegacyV43": {
@@ -653,6 +661,12 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/SigningInfo",
 		toAmino: (message: SigningInfo) => ({ ...message }),
 		fromAmino: (object: SigningInfo) => ({ ...object })
+	},
+
+	"/cosmos.slashing.v1beta1.SigningInfoLegacyMissedHeights": {
+		aminoType: "cosmos-sdk/SigningInfoLegacyMissedHeights",
+		toAmino: (message: SigningInfoLegacyMissedHeights) => ({ ...message }),
+		fromAmino: (object: SigningInfoLegacyMissedHeights) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.ValidatorMissedBlocks": {

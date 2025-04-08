@@ -617,11 +617,76 @@ function createBaseListWasmDependencyMappingResponse(): ListWasmDependencyMappin
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
-export const registry: Array<[string, GeneratedType]> = [["/cosmos.accesscontrol_x.v1beta1.QueryParamsRequest", QueryParamsRequest as never]];
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.accesscontrol_x.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
+	["/cosmos.accesscontrol_x.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.accesscontrol_x.v1beta1.ResourceDependencyMappingFromMessageKeyRequest", ResourceDependencyMappingFromMessageKeyRequest as never],
+	["/cosmos.accesscontrol_x.v1beta1.ResourceDependencyMappingFromMessageKeyResponse", ResourceDependencyMappingFromMessageKeyResponse as never],
+	["/cosmos.accesscontrol_x.v1beta1.WasmDependencyMappingRequest", WasmDependencyMappingRequest as never],
+	["/cosmos.accesscontrol_x.v1beta1.WasmDependencyMappingResponse", WasmDependencyMappingResponse as never],
+	["/cosmos.accesscontrol_x.v1beta1.ListResourceDependencyMappingRequest", ListResourceDependencyMappingRequest as never],
+	["/cosmos.accesscontrol_x.v1beta1.ListResourceDependencyMappingResponse", ListResourceDependencyMappingResponse as never],
+	["/cosmos.accesscontrol_x.v1beta1.ListWasmDependencyMappingRequest", ListWasmDependencyMappingRequest as never],
+	["/cosmos.accesscontrol_x.v1beta1.ListWasmDependencyMappingResponse", ListWasmDependencyMappingResponse as never]
+];
 export const aminoConverters = {
 	"/cosmos.accesscontrol_x.v1beta1.QueryParamsRequest": {
 		aminoType: "cosmos-sdk/QueryParamsRequest",
 		toAmino: (message: QueryParamsRequest) => ({ ...message }),
 		fromAmino: (object: QueryParamsRequest) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.QueryParamsResponse": {
+		aminoType: "cosmos-sdk/QueryParamsResponse",
+		toAmino: (message: QueryParamsResponse) => ({ ...message }),
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.ResourceDependencyMappingFromMessageKeyRequest": {
+		aminoType: "cosmos-sdk/ResourceDependencyMappingFromMessageKeyRequest",
+		toAmino: (message: ResourceDependencyMappingFromMessageKeyRequest) => ({ ...message }),
+		fromAmino: (object: ResourceDependencyMappingFromMessageKeyRequest) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.ResourceDependencyMappingFromMessageKeyResponse": {
+		aminoType: "cosmos-sdk/ResourceDependencyMappingFromMessageKeyResponse",
+		toAmino: (message: ResourceDependencyMappingFromMessageKeyResponse) => ({ ...message }),
+		fromAmino: (object: ResourceDependencyMappingFromMessageKeyResponse) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.WasmDependencyMappingRequest": {
+		aminoType: "cosmos-sdk/WasmDependencyMappingRequest",
+		toAmino: (message: WasmDependencyMappingRequest) => ({ ...message }),
+		fromAmino: (object: WasmDependencyMappingRequest) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.WasmDependencyMappingResponse": {
+		aminoType: "cosmos-sdk/WasmDependencyMappingResponse",
+		toAmino: (message: WasmDependencyMappingResponse) => ({ ...message }),
+		fromAmino: (object: WasmDependencyMappingResponse) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.ListResourceDependencyMappingRequest": {
+		aminoType: "cosmos-sdk/ListResourceDependencyMappingRequest",
+		toAmino: (message: ListResourceDependencyMappingRequest) => ({ ...message }),
+		fromAmino: (object: ListResourceDependencyMappingRequest) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.ListResourceDependencyMappingResponse": {
+		aminoType: "cosmos-sdk/ListResourceDependencyMappingResponse",
+		toAmino: (message: ListResourceDependencyMappingResponse) => ({ ...message }),
+		fromAmino: (object: ListResourceDependencyMappingResponse) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.ListWasmDependencyMappingRequest": {
+		aminoType: "cosmos-sdk/ListWasmDependencyMappingRequest",
+		toAmino: (message: ListWasmDependencyMappingRequest) => ({ ...message }),
+		fromAmino: (object: ListWasmDependencyMappingRequest) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.ListWasmDependencyMappingResponse": {
+		aminoType: "cosmos-sdk/ListWasmDependencyMappingResponse",
+		toAmino: (message: ListWasmDependencyMappingResponse) => ({ ...message }),
+		fromAmino: (object: ListWasmDependencyMappingResponse) => ({ ...object })
 	}
 };

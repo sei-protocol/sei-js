@@ -869,10 +869,13 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator as never],
+	["/cosmos.staking.v1beta1.MsgCreateValidatorResponse", MsgCreateValidatorResponse as never],
 	["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator as never],
+	["/cosmos.staking.v1beta1.MsgEditValidatorResponse", MsgEditValidatorResponse as never],
 	["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate as never],
 	["/cosmos.staking.v1beta1.MsgDelegateResponse", MsgDelegateResponse as never],
 	["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate as never],
+	["/cosmos.staking.v1beta1.MsgBeginRedelegateResponse", MsgBeginRedelegateResponse as never],
 	["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate as never],
 	["/cosmos.staking.v1beta1.MsgUndelegateResponse", MsgUndelegateResponse as never]
 ];
@@ -883,10 +886,22 @@ export const aminoConverters = {
 		fromAmino: (object: MsgCreateValidator) => ({ ...object })
 	},
 
+	"/cosmos.staking.v1beta1.MsgCreateValidatorResponse": {
+		aminoType: "cosmos-sdk/MsgCreateValidatorResponse",
+		toAmino: (message: MsgCreateValidatorResponse) => ({ ...message }),
+		fromAmino: (object: MsgCreateValidatorResponse) => ({ ...object })
+	},
+
 	"/cosmos.staking.v1beta1.MsgEditValidator": {
 		aminoType: "cosmos-sdk/MsgEditValidator",
 		toAmino: (message: MsgEditValidator) => ({ ...message }),
 		fromAmino: (object: MsgEditValidator) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.MsgEditValidatorResponse": {
+		aminoType: "cosmos-sdk/MsgEditValidatorResponse",
+		toAmino: (message: MsgEditValidatorResponse) => ({ ...message }),
+		fromAmino: (object: MsgEditValidatorResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgDelegate": {
@@ -905,6 +920,12 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/MsgBeginRedelegate",
 		toAmino: (message: MsgBeginRedelegate) => ({ ...message }),
 		fromAmino: (object: MsgBeginRedelegate) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.MsgBeginRedelegateResponse": {
+		aminoType: "cosmos-sdk/MsgBeginRedelegateResponse",
+		toAmino: (message: MsgBeginRedelegateResponse) => ({ ...message }),
+		fromAmino: (object: MsgBeginRedelegateResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.MsgUndelegate": {

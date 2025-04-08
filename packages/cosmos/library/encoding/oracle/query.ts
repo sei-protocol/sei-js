@@ -1265,17 +1265,93 @@ function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
 export const registry: Array<[string, GeneratedType]> = [
+	["/seiprotocol.seichain.oracle.QueryExchangeRateRequest", QueryExchangeRateRequest as never],
+	["/seiprotocol.seichain.oracle.QueryExchangeRateResponse", QueryExchangeRateResponse as never],
+	["/seiprotocol.seichain.oracle.QueryExchangeRatesRequest", QueryExchangeRatesRequest as never],
+	["/seiprotocol.seichain.oracle.DenomOracleExchangeRatePair", DenomOracleExchangeRatePair as never],
+	["/seiprotocol.seichain.oracle.QueryExchangeRatesResponse", QueryExchangeRatesResponse as never],
 	["/seiprotocol.seichain.oracle.QueryActivesRequest", QueryActivesRequest as never],
+	["/seiprotocol.seichain.oracle.QueryActivesResponse", QueryActivesResponse as never],
+	["/seiprotocol.seichain.oracle.QueryVoteTargetsRequest", QueryVoteTargetsRequest as never],
+	["/seiprotocol.seichain.oracle.QueryVoteTargetsResponse", QueryVoteTargetsResponse as never],
+	["/seiprotocol.seichain.oracle.QueryPriceSnapshotHistoryRequest", QueryPriceSnapshotHistoryRequest as never],
+	["/seiprotocol.seichain.oracle.QueryPriceSnapshotHistoryResponse", QueryPriceSnapshotHistoryResponse as never],
 	["/seiprotocol.seichain.oracle.QueryTwapsRequest", QueryTwapsRequest as never],
 	["/seiprotocol.seichain.oracle.QueryTwapsResponse", QueryTwapsResponse as never],
+	["/seiprotocol.seichain.oracle.QueryFeederDelegationRequest", QueryFeederDelegationRequest as never],
+	["/seiprotocol.seichain.oracle.QueryFeederDelegationResponse", QueryFeederDelegationResponse as never],
+	["/seiprotocol.seichain.oracle.QueryVotePenaltyCounterRequest", QueryVotePenaltyCounterRequest as never],
+	["/seiprotocol.seichain.oracle.QueryVotePenaltyCounterResponse", QueryVotePenaltyCounterResponse as never],
+	["/seiprotocol.seichain.oracle.QuerySlashWindowRequest", QuerySlashWindowRequest as never],
+	["/seiprotocol.seichain.oracle.QuerySlashWindowResponse", QuerySlashWindowResponse as never],
 	["/seiprotocol.seichain.oracle.QueryParamsRequest", QueryParamsRequest as never],
 	["/seiprotocol.seichain.oracle.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
+	"/seiprotocol.seichain.oracle.QueryExchangeRateRequest": {
+		aminoType: "oracle/QueryExchangeRateRequest",
+		toAmino: (message: QueryExchangeRateRequest) => ({ ...message }),
+		fromAmino: (object: QueryExchangeRateRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryExchangeRateResponse": {
+		aminoType: "oracle/QueryExchangeRateResponse",
+		toAmino: (message: QueryExchangeRateResponse) => ({ ...message }),
+		fromAmino: (object: QueryExchangeRateResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryExchangeRatesRequest": {
+		aminoType: "oracle/QueryExchangeRatesRequest",
+		toAmino: (message: QueryExchangeRatesRequest) => ({ ...message }),
+		fromAmino: (object: QueryExchangeRatesRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.DenomOracleExchangeRatePair": {
+		aminoType: "oracle/DenomOracleExchangeRatePair",
+		toAmino: (message: DenomOracleExchangeRatePair) => ({ ...message }),
+		fromAmino: (object: DenomOracleExchangeRatePair) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryExchangeRatesResponse": {
+		aminoType: "oracle/QueryExchangeRatesResponse",
+		toAmino: (message: QueryExchangeRatesResponse) => ({ ...message }),
+		fromAmino: (object: QueryExchangeRatesResponse) => ({ ...object })
+	},
+
 	"/seiprotocol.seichain.oracle.QueryActivesRequest": {
 		aminoType: "oracle/QueryActivesRequest",
 		toAmino: (message: QueryActivesRequest) => ({ ...message }),
 		fromAmino: (object: QueryActivesRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryActivesResponse": {
+		aminoType: "oracle/QueryActivesResponse",
+		toAmino: (message: QueryActivesResponse) => ({ ...message }),
+		fromAmino: (object: QueryActivesResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryVoteTargetsRequest": {
+		aminoType: "oracle/QueryVoteTargetsRequest",
+		toAmino: (message: QueryVoteTargetsRequest) => ({ ...message }),
+		fromAmino: (object: QueryVoteTargetsRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryVoteTargetsResponse": {
+		aminoType: "oracle/QueryVoteTargetsResponse",
+		toAmino: (message: QueryVoteTargetsResponse) => ({ ...message }),
+		fromAmino: (object: QueryVoteTargetsResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryPriceSnapshotHistoryRequest": {
+		aminoType: "oracle/QueryPriceSnapshotHistoryRequest",
+		toAmino: (message: QueryPriceSnapshotHistoryRequest) => ({ ...message }),
+		fromAmino: (object: QueryPriceSnapshotHistoryRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryPriceSnapshotHistoryResponse": {
+		aminoType: "oracle/QueryPriceSnapshotHistoryResponse",
+		toAmino: (message: QueryPriceSnapshotHistoryResponse) => ({ ...message }),
+		fromAmino: (object: QueryPriceSnapshotHistoryResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.QueryTwapsRequest": {
@@ -1288,6 +1364,42 @@ export const aminoConverters = {
 		aminoType: "oracle/QueryTwapsResponse",
 		toAmino: (message: QueryTwapsResponse) => ({ ...message }),
 		fromAmino: (object: QueryTwapsResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryFeederDelegationRequest": {
+		aminoType: "oracle/QueryFeederDelegationRequest",
+		toAmino: (message: QueryFeederDelegationRequest) => ({ ...message }),
+		fromAmino: (object: QueryFeederDelegationRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryFeederDelegationResponse": {
+		aminoType: "oracle/QueryFeederDelegationResponse",
+		toAmino: (message: QueryFeederDelegationResponse) => ({ ...message }),
+		fromAmino: (object: QueryFeederDelegationResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryVotePenaltyCounterRequest": {
+		aminoType: "oracle/QueryVotePenaltyCounterRequest",
+		toAmino: (message: QueryVotePenaltyCounterRequest) => ({ ...message }),
+		fromAmino: (object: QueryVotePenaltyCounterRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QueryVotePenaltyCounterResponse": {
+		aminoType: "oracle/QueryVotePenaltyCounterResponse",
+		toAmino: (message: QueryVotePenaltyCounterResponse) => ({ ...message }),
+		fromAmino: (object: QueryVotePenaltyCounterResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QuerySlashWindowRequest": {
+		aminoType: "oracle/QuerySlashWindowRequest",
+		toAmino: (message: QuerySlashWindowRequest) => ({ ...message }),
+		fromAmino: (object: QuerySlashWindowRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.QuerySlashWindowResponse": {
+		aminoType: "oracle/QuerySlashWindowResponse",
+		toAmino: (message: QuerySlashWindowResponse) => ({ ...message }),
+		fromAmino: (object: QuerySlashWindowResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.QueryParamsRequest": {

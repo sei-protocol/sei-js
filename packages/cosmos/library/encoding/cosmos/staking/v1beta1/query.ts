@@ -2051,17 +2051,178 @@ function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
 export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.staking.v1beta1.QueryValidatorsRequest", QueryValidatorsRequest as never],
+	["/cosmos.staking.v1beta1.QueryValidatorsResponse", QueryValidatorsResponse as never],
 	["/cosmos.staking.v1beta1.QueryValidatorRequest", QueryValidatorRequest as never],
+	["/cosmos.staking.v1beta1.QueryValidatorResponse", QueryValidatorResponse as never],
+	["/cosmos.staking.v1beta1.QueryValidatorDelegationsRequest", QueryValidatorDelegationsRequest as never],
+	["/cosmos.staking.v1beta1.QueryValidatorDelegationsResponse", QueryValidatorDelegationsResponse as never],
+	["/cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest", QueryValidatorUnbondingDelegationsRequest as never],
+	["/cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse", QueryValidatorUnbondingDelegationsResponse as never],
+	["/cosmos.staking.v1beta1.QueryDelegationRequest", QueryDelegationRequest as never],
+	["/cosmos.staking.v1beta1.QueryDelegationResponse", QueryDelegationResponse as never],
+	["/cosmos.staking.v1beta1.QueryUnbondingDelegationRequest", QueryUnbondingDelegationRequest as never],
+	["/cosmos.staking.v1beta1.QueryUnbondingDelegationResponse", QueryUnbondingDelegationResponse as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest", QueryDelegatorDelegationsRequest as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse", QueryDelegatorDelegationsResponse as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest", QueryDelegatorUnbondingDelegationsRequest as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse", QueryDelegatorUnbondingDelegationsResponse as never],
+	["/cosmos.staking.v1beta1.QueryRedelegationsRequest", QueryRedelegationsRequest as never],
+	["/cosmos.staking.v1beta1.QueryRedelegationsResponse", QueryRedelegationsResponse as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest", QueryDelegatorValidatorsRequest as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse", QueryDelegatorValidatorsResponse as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorValidatorRequest", QueryDelegatorValidatorRequest as never],
+	["/cosmos.staking.v1beta1.QueryDelegatorValidatorResponse", QueryDelegatorValidatorResponse as never],
+	["/cosmos.staking.v1beta1.QueryHistoricalInfoRequest", QueryHistoricalInfoRequest as never],
+	["/cosmos.staking.v1beta1.QueryHistoricalInfoResponse", QueryHistoricalInfoResponse as never],
 	["/cosmos.staking.v1beta1.QueryPoolRequest", QueryPoolRequest as never],
 	["/cosmos.staking.v1beta1.QueryPoolResponse", QueryPoolResponse as never],
 	["/cosmos.staking.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
 	["/cosmos.staking.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
 ];
 export const aminoConverters = {
+	"/cosmos.staking.v1beta1.QueryValidatorsRequest": {
+		aminoType: "cosmos-sdk/QueryValidatorsRequest",
+		toAmino: (message: QueryValidatorsRequest) => ({ ...message }),
+		fromAmino: (object: QueryValidatorsRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryValidatorsResponse": {
+		aminoType: "cosmos-sdk/QueryValidatorsResponse",
+		toAmino: (message: QueryValidatorsResponse) => ({ ...message }),
+		fromAmino: (object: QueryValidatorsResponse) => ({ ...object })
+	},
+
 	"/cosmos.staking.v1beta1.QueryValidatorRequest": {
 		aminoType: "cosmos-sdk/QueryValidatorRequest",
 		toAmino: (message: QueryValidatorRequest) => ({ ...message }),
 		fromAmino: (object: QueryValidatorRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryValidatorResponse": {
+		aminoType: "cosmos-sdk/QueryValidatorResponse",
+		toAmino: (message: QueryValidatorResponse) => ({ ...message }),
+		fromAmino: (object: QueryValidatorResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryValidatorDelegationsRequest": {
+		aminoType: "cosmos-sdk/QueryValidatorDelegationsRequest",
+		toAmino: (message: QueryValidatorDelegationsRequest) => ({ ...message }),
+		fromAmino: (object: QueryValidatorDelegationsRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryValidatorDelegationsResponse": {
+		aminoType: "cosmos-sdk/QueryValidatorDelegationsResponse",
+		toAmino: (message: QueryValidatorDelegationsResponse) => ({ ...message }),
+		fromAmino: (object: QueryValidatorDelegationsResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest": {
+		aminoType: "cosmos-sdk/QueryValidatorUnbondingDelegationsRequest",
+		toAmino: (message: QueryValidatorUnbondingDelegationsRequest) => ({ ...message }),
+		fromAmino: (object: QueryValidatorUnbondingDelegationsRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse": {
+		aminoType: "cosmos-sdk/QueryValidatorUnbondingDelegationsResponse",
+		toAmino: (message: QueryValidatorUnbondingDelegationsResponse) => ({ ...message }),
+		fromAmino: (object: QueryValidatorUnbondingDelegationsResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegationRequest": {
+		aminoType: "cosmos-sdk/QueryDelegationRequest",
+		toAmino: (message: QueryDelegationRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegationRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegationResponse": {
+		aminoType: "cosmos-sdk/QueryDelegationResponse",
+		toAmino: (message: QueryDelegationResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegationResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryUnbondingDelegationRequest": {
+		aminoType: "cosmos-sdk/QueryUnbondingDelegationRequest",
+		toAmino: (message: QueryUnbondingDelegationRequest) => ({ ...message }),
+		fromAmino: (object: QueryUnbondingDelegationRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryUnbondingDelegationResponse": {
+		aminoType: "cosmos-sdk/QueryUnbondingDelegationResponse",
+		toAmino: (message: QueryUnbondingDelegationResponse) => ({ ...message }),
+		fromAmino: (object: QueryUnbondingDelegationResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest": {
+		aminoType: "cosmos-sdk/QueryDelegatorDelegationsRequest",
+		toAmino: (message: QueryDelegatorDelegationsRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorDelegationsRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse": {
+		aminoType: "cosmos-sdk/QueryDelegatorDelegationsResponse",
+		toAmino: (message: QueryDelegatorDelegationsResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorDelegationsResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest": {
+		aminoType: "cosmos-sdk/QueryDelegatorUnbondingDelegationsRequest",
+		toAmino: (message: QueryDelegatorUnbondingDelegationsRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorUnbondingDelegationsRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse": {
+		aminoType: "cosmos-sdk/QueryDelegatorUnbondingDelegationsResponse",
+		toAmino: (message: QueryDelegatorUnbondingDelegationsResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorUnbondingDelegationsResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryRedelegationsRequest": {
+		aminoType: "cosmos-sdk/QueryRedelegationsRequest",
+		toAmino: (message: QueryRedelegationsRequest) => ({ ...message }),
+		fromAmino: (object: QueryRedelegationsRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryRedelegationsResponse": {
+		aminoType: "cosmos-sdk/QueryRedelegationsResponse",
+		toAmino: (message: QueryRedelegationsResponse) => ({ ...message }),
+		fromAmino: (object: QueryRedelegationsResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest": {
+		aminoType: "cosmos-sdk/QueryDelegatorValidatorsRequest",
+		toAmino: (message: QueryDelegatorValidatorsRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorValidatorsRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse": {
+		aminoType: "cosmos-sdk/QueryDelegatorValidatorsResponse",
+		toAmino: (message: QueryDelegatorValidatorsResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorValidatorsResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorValidatorRequest": {
+		aminoType: "cosmos-sdk/QueryDelegatorValidatorRequest",
+		toAmino: (message: QueryDelegatorValidatorRequest) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorValidatorRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryDelegatorValidatorResponse": {
+		aminoType: "cosmos-sdk/QueryDelegatorValidatorResponse",
+		toAmino: (message: QueryDelegatorValidatorResponse) => ({ ...message }),
+		fromAmino: (object: QueryDelegatorValidatorResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryHistoricalInfoRequest": {
+		aminoType: "cosmos-sdk/QueryHistoricalInfoRequest",
+		toAmino: (message: QueryHistoricalInfoRequest) => ({ ...message }),
+		fromAmino: (object: QueryHistoricalInfoRequest) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.QueryHistoricalInfoResponse": {
+		aminoType: "cosmos-sdk/QueryHistoricalInfoResponse",
+		toAmino: (message: QueryHistoricalInfoResponse) => ({ ...message }),
+		fromAmino: (object: QueryHistoricalInfoResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.QueryPoolRequest": {

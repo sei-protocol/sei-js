@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { ModuleVersion, Plan } from "./upgrade";
@@ -528,3 +530,62 @@ function longToNumber(int64: { toString(): string }): number {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.upgrade.v1beta1.QueryCurrentPlanRequest", QueryCurrentPlanRequest as never],
+	["/cosmos.upgrade.v1beta1.QueryCurrentPlanResponse", QueryCurrentPlanResponse as never],
+	["/cosmos.upgrade.v1beta1.QueryAppliedPlanRequest", QueryAppliedPlanRequest as never],
+	["/cosmos.upgrade.v1beta1.QueryAppliedPlanResponse", QueryAppliedPlanResponse as never],
+	["/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest", QueryUpgradedConsensusStateRequest as never],
+	["/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateResponse", QueryUpgradedConsensusStateResponse as never],
+	["/cosmos.upgrade.v1beta1.QueryModuleVersionsRequest", QueryModuleVersionsRequest as never],
+	["/cosmos.upgrade.v1beta1.QueryModuleVersionsResponse", QueryModuleVersionsResponse as never]
+];
+export const aminoConverters = {
+	"/cosmos.upgrade.v1beta1.QueryCurrentPlanRequest": {
+		aminoType: "cosmos-sdk/QueryCurrentPlanRequest",
+		toAmino: (message: QueryCurrentPlanRequest) => ({ ...message }),
+		fromAmino: (object: QueryCurrentPlanRequest) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.QueryCurrentPlanResponse": {
+		aminoType: "cosmos-sdk/QueryCurrentPlanResponse",
+		toAmino: (message: QueryCurrentPlanResponse) => ({ ...message }),
+		fromAmino: (object: QueryCurrentPlanResponse) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.QueryAppliedPlanRequest": {
+		aminoType: "cosmos-sdk/QueryAppliedPlanRequest",
+		toAmino: (message: QueryAppliedPlanRequest) => ({ ...message }),
+		fromAmino: (object: QueryAppliedPlanRequest) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.QueryAppliedPlanResponse": {
+		aminoType: "cosmos-sdk/QueryAppliedPlanResponse",
+		toAmino: (message: QueryAppliedPlanResponse) => ({ ...message }),
+		fromAmino: (object: QueryAppliedPlanResponse) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest": {
+		aminoType: "cosmos-sdk/QueryUpgradedConsensusStateRequest",
+		toAmino: (message: QueryUpgradedConsensusStateRequest) => ({ ...message }),
+		fromAmino: (object: QueryUpgradedConsensusStateRequest) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateResponse": {
+		aminoType: "cosmos-sdk/QueryUpgradedConsensusStateResponse",
+		toAmino: (message: QueryUpgradedConsensusStateResponse) => ({ ...message }),
+		fromAmino: (object: QueryUpgradedConsensusStateResponse) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.QueryModuleVersionsRequest": {
+		aminoType: "cosmos-sdk/QueryModuleVersionsRequest",
+		toAmino: (message: QueryModuleVersionsRequest) => ({ ...message }),
+		fromAmino: (object: QueryModuleVersionsRequest) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.QueryModuleVersionsResponse": {
+		aminoType: "cosmos-sdk/QueryModuleVersionsResponse",
+		toAmino: (message: QueryModuleVersionsResponse) => ({ ...message }),
+		fromAmino: (object: QueryModuleVersionsResponse) => ({ ...object })
+	}
+};

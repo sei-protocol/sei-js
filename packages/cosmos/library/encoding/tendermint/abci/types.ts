@@ -5647,9 +5647,12 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.abci.RequestCommit", RequestCommit as never],
 	["/tendermint.abci.RequestListSnapshots", RequestListSnapshots as never],
 	["/tendermint.abci.RequestOfferSnapshot", RequestOfferSnapshot as never],
+	["/tendermint.abci.RequestLoadSnapshotChunk", RequestLoadSnapshotChunk as never],
+	["/tendermint.abci.RequestApplySnapshotChunk", RequestApplySnapshotChunk as never],
 	["/tendermint.abci.RequestPrepareProposal", RequestPrepareProposal as never],
 	["/tendermint.abci.RequestProcessProposal", RequestProcessProposal as never],
 	["/tendermint.abci.RequestExtendVote", RequestExtendVote as never],
+	["/tendermint.abci.RequestVerifyVoteExtension", RequestVerifyVoteExtension as never],
 	["/tendermint.abci.RequestFinalizeBlock", RequestFinalizeBlock as never],
 	["/tendermint.abci.Response", Response as never],
 	["/tendermint.abci.ResponseException", ResponseException as never],
@@ -5663,9 +5666,12 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.abci.ResponseCommit", ResponseCommit as never],
 	["/tendermint.abci.ResponseListSnapshots", ResponseListSnapshots as never],
 	["/tendermint.abci.ResponseOfferSnapshot", ResponseOfferSnapshot as never],
+	["/tendermint.abci.ResponseLoadSnapshotChunk", ResponseLoadSnapshotChunk as never],
+	["/tendermint.abci.ResponseApplySnapshotChunk", ResponseApplySnapshotChunk as never],
 	["/tendermint.abci.ResponsePrepareProposal", ResponsePrepareProposal as never],
 	["/tendermint.abci.ResponseProcessProposal", ResponseProcessProposal as never],
 	["/tendermint.abci.ResponseExtendVote", ResponseExtendVote as never],
+	["/tendermint.abci.ResponseVerifyVoteExtension", ResponseVerifyVoteExtension as never],
 	["/tendermint.abci.ResponseFinalizeBlock", ResponseFinalizeBlock as never],
 	["/tendermint.abci.CommitInfo", CommitInfo as never],
 	["/tendermint.abci.ExtendedCommitInfo", ExtendedCommitInfo as never],
@@ -5742,6 +5748,18 @@ export const aminoConverters = {
 		fromAmino: (object: RequestOfferSnapshot) => ({ ...object })
 	},
 
+	"/tendermint.abci.RequestLoadSnapshotChunk": {
+		aminoType: "tendermint.abci.RequestLoadSnapshotChunk",
+		toAmino: (message: RequestLoadSnapshotChunk) => ({ ...message }),
+		fromAmino: (object: RequestLoadSnapshotChunk) => ({ ...object })
+	},
+
+	"/tendermint.abci.RequestApplySnapshotChunk": {
+		aminoType: "tendermint.abci.RequestApplySnapshotChunk",
+		toAmino: (message: RequestApplySnapshotChunk) => ({ ...message }),
+		fromAmino: (object: RequestApplySnapshotChunk) => ({ ...object })
+	},
+
 	"/tendermint.abci.RequestPrepareProposal": {
 		aminoType: "tendermint.abci.RequestPrepareProposal",
 		toAmino: (message: RequestPrepareProposal) => ({ ...message }),
@@ -5758,6 +5776,12 @@ export const aminoConverters = {
 		aminoType: "tendermint.abci.RequestExtendVote",
 		toAmino: (message: RequestExtendVote) => ({ ...message }),
 		fromAmino: (object: RequestExtendVote) => ({ ...object })
+	},
+
+	"/tendermint.abci.RequestVerifyVoteExtension": {
+		aminoType: "tendermint.abci.RequestVerifyVoteExtension",
+		toAmino: (message: RequestVerifyVoteExtension) => ({ ...message }),
+		fromAmino: (object: RequestVerifyVoteExtension) => ({ ...object })
 	},
 
 	"/tendermint.abci.RequestFinalizeBlock": {
@@ -5838,6 +5862,18 @@ export const aminoConverters = {
 		fromAmino: (object: ResponseOfferSnapshot) => ({ ...object })
 	},
 
+	"/tendermint.abci.ResponseLoadSnapshotChunk": {
+		aminoType: "tendermint.abci.ResponseLoadSnapshotChunk",
+		toAmino: (message: ResponseLoadSnapshotChunk) => ({ ...message }),
+		fromAmino: (object: ResponseLoadSnapshotChunk) => ({ ...object })
+	},
+
+	"/tendermint.abci.ResponseApplySnapshotChunk": {
+		aminoType: "tendermint.abci.ResponseApplySnapshotChunk",
+		toAmino: (message: ResponseApplySnapshotChunk) => ({ ...message }),
+		fromAmino: (object: ResponseApplySnapshotChunk) => ({ ...object })
+	},
+
 	"/tendermint.abci.ResponsePrepareProposal": {
 		aminoType: "tendermint.abci.ResponsePrepareProposal",
 		toAmino: (message: ResponsePrepareProposal) => ({ ...message }),
@@ -5854,6 +5890,12 @@ export const aminoConverters = {
 		aminoType: "tendermint.abci.ResponseExtendVote",
 		toAmino: (message: ResponseExtendVote) => ({ ...message }),
 		fromAmino: (object: ResponseExtendVote) => ({ ...object })
+	},
+
+	"/tendermint.abci.ResponseVerifyVoteExtension": {
+		aminoType: "tendermint.abci.ResponseVerifyVoteExtension",
+		toAmino: (message: ResponseVerifyVoteExtension) => ({ ...message }),
+		fromAmino: (object: ResponseVerifyVoteExtension) => ({ ...object })
 	},
 
 	"/tendermint.abci.ResponseFinalizeBlock": {

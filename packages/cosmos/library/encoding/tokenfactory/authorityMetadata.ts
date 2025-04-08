@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type { DenomAuthorityMetadata as DenomAuthorityMetadata_type } from "../../types/tokenfactory";
@@ -68,3 +70,11 @@ function createBaseDenomAuthorityMetadata(): DenomAuthorityMetadata {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [["/seiprotocol.seichain.tokenfactory.DenomAuthorityMetadata", DenomAuthorityMetadata as never]];
+export const aminoConverters = {
+	"/seiprotocol.seichain.tokenfactory.DenomAuthorityMetadata": {
+		aminoType: "tokenfactory/DenomAuthorityMetadata",
+		toAmino: (message: DenomAuthorityMetadata) => ({ ...message }),
+		fromAmino: (object: DenomAuthorityMetadata) => ({ ...object })
+	}
+};

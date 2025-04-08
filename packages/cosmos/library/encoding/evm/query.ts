@@ -956,12 +956,56 @@ function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
 export const registry: Array<[string, GeneratedType]> = [
+	["/seiprotocol.seichain.evm.QuerySeiAddressByEVMAddressRequest", QuerySeiAddressByEVMAddressRequest as never],
+	["/seiprotocol.seichain.evm.QuerySeiAddressByEVMAddressResponse", QuerySeiAddressByEVMAddressResponse as never],
+	["/seiprotocol.seichain.evm.QueryEVMAddressBySeiAddressRequest", QueryEVMAddressBySeiAddressRequest as never],
+	["/seiprotocol.seichain.evm.QueryEVMAddressBySeiAddressResponse", QueryEVMAddressBySeiAddressResponse as never],
+	["/seiprotocol.seichain.evm.QueryStaticCallRequest", QueryStaticCallRequest as never],
+	["/seiprotocol.seichain.evm.QueryStaticCallResponse", QueryStaticCallResponse as never],
 	["/seiprotocol.seichain.evm.QueryPointerRequest", QueryPointerRequest as never],
 	["/seiprotocol.seichain.evm.QueryPointerResponse", QueryPointerResponse as never],
+	["/seiprotocol.seichain.evm.QueryPointerVersionRequest", QueryPointerVersionRequest as never],
+	["/seiprotocol.seichain.evm.QueryPointerVersionResponse", QueryPointerVersionResponse as never],
 	["/seiprotocol.seichain.evm.QueryPointeeRequest", QueryPointeeRequest as never],
 	["/seiprotocol.seichain.evm.QueryPointeeResponse", QueryPointeeResponse as never]
 ];
 export const aminoConverters = {
+	"/seiprotocol.seichain.evm.QuerySeiAddressByEVMAddressRequest": {
+		aminoType: "evm/QuerySeiAddressByEVMAddressRequest",
+		toAmino: (message: QuerySeiAddressByEVMAddressRequest) => ({ ...message }),
+		fromAmino: (object: QuerySeiAddressByEVMAddressRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.QuerySeiAddressByEVMAddressResponse": {
+		aminoType: "evm/QuerySeiAddressByEVMAddressResponse",
+		toAmino: (message: QuerySeiAddressByEVMAddressResponse) => ({ ...message }),
+		fromAmino: (object: QuerySeiAddressByEVMAddressResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.QueryEVMAddressBySeiAddressRequest": {
+		aminoType: "evm/QueryEVMAddressBySeiAddressRequest",
+		toAmino: (message: QueryEVMAddressBySeiAddressRequest) => ({ ...message }),
+		fromAmino: (object: QueryEVMAddressBySeiAddressRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.QueryEVMAddressBySeiAddressResponse": {
+		aminoType: "evm/QueryEVMAddressBySeiAddressResponse",
+		toAmino: (message: QueryEVMAddressBySeiAddressResponse) => ({ ...message }),
+		fromAmino: (object: QueryEVMAddressBySeiAddressResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.QueryStaticCallRequest": {
+		aminoType: "evm/QueryStaticCallRequest",
+		toAmino: (message: QueryStaticCallRequest) => ({ ...message }),
+		fromAmino: (object: QueryStaticCallRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.QueryStaticCallResponse": {
+		aminoType: "evm/QueryStaticCallResponse",
+		toAmino: (message: QueryStaticCallResponse) => ({ ...message }),
+		fromAmino: (object: QueryStaticCallResponse) => ({ ...object })
+	},
+
 	"/seiprotocol.seichain.evm.QueryPointerRequest": {
 		aminoType: "evm/QueryPointerRequest",
 		toAmino: (message: QueryPointerRequest) => ({ ...message }),
@@ -972,6 +1016,18 @@ export const aminoConverters = {
 		aminoType: "evm/QueryPointerResponse",
 		toAmino: (message: QueryPointerResponse) => ({ ...message }),
 		fromAmino: (object: QueryPointerResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.QueryPointerVersionRequest": {
+		aminoType: "evm/QueryPointerVersionRequest",
+		toAmino: (message: QueryPointerVersionRequest) => ({ ...message }),
+		fromAmino: (object: QueryPointerVersionRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.QueryPointerVersionResponse": {
+		aminoType: "evm/QueryPointerVersionResponse",
+		toAmino: (message: QueryPointerVersionResponse) => ({ ...message }),
+		fromAmino: (object: QueryPointerVersionResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.QueryPointeeRequest": {

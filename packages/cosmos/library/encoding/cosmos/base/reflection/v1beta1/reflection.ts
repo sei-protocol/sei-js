@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
@@ -245,3 +247,34 @@ function createBaseListImplementationsResponse(): ListImplementationsResponse {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.base.reflection.v1beta1.ListAllInterfacesRequest", ListAllInterfacesRequest as never],
+	["/cosmos.base.reflection.v1beta1.ListAllInterfacesResponse", ListAllInterfacesResponse as never],
+	["/cosmos.base.reflection.v1beta1.ListImplementationsRequest", ListImplementationsRequest as never],
+	["/cosmos.base.reflection.v1beta1.ListImplementationsResponse", ListImplementationsResponse as never]
+];
+export const aminoConverters = {
+	"/cosmos.base.reflection.v1beta1.ListAllInterfacesRequest": {
+		aminoType: "cosmos-sdk/ListAllInterfacesRequest",
+		toAmino: (message: ListAllInterfacesRequest) => ({ ...message }),
+		fromAmino: (object: ListAllInterfacesRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v1beta1.ListAllInterfacesResponse": {
+		aminoType: "cosmos-sdk/ListAllInterfacesResponse",
+		toAmino: (message: ListAllInterfacesResponse) => ({ ...message }),
+		fromAmino: (object: ListAllInterfacesResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v1beta1.ListImplementationsRequest": {
+		aminoType: "cosmos-sdk/ListImplementationsRequest",
+		toAmino: (message: ListImplementationsRequest) => ({ ...message }),
+		fromAmino: (object: ListImplementationsRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v1beta1.ListImplementationsResponse": {
+		aminoType: "cosmos-sdk/ListImplementationsResponse",
+		toAmino: (message: ListImplementationsResponse) => ({ ...message }),
+		fromAmino: (object: ListImplementationsResponse) => ({ ...object })
+	}
+};

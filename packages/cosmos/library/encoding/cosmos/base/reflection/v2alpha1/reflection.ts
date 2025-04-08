@@ -1798,9 +1798,29 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.reflection.v2alpha1.AppDescriptor", AppDescriptor as never],
 	["/cosmos.base.reflection.v2alpha1.TxDescriptor", TxDescriptor as never],
 	["/cosmos.base.reflection.v2alpha1.AuthnDescriptor", AuthnDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.SigningModeDescriptor", SigningModeDescriptor as never],
 	["/cosmos.base.reflection.v2alpha1.ChainDescriptor", ChainDescriptor as never],
 	["/cosmos.base.reflection.v2alpha1.CodecDescriptor", CodecDescriptor as never],
-	["/cosmos.base.reflection.v2alpha1.MsgDescriptor", MsgDescriptor as never]
+	["/cosmos.base.reflection.v2alpha1.InterfaceDescriptor", InterfaceDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.InterfaceImplementerDescriptor", InterfaceImplementerDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.InterfaceAcceptingMessageDescriptor", InterfaceAcceptingMessageDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.ConfigurationDescriptor", ConfigurationDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.MsgDescriptor", MsgDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorRequest", GetAuthnDescriptorRequest as never],
+	["/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorResponse", GetAuthnDescriptorResponse as never],
+	["/cosmos.base.reflection.v2alpha1.GetChainDescriptorRequest", GetChainDescriptorRequest as never],
+	["/cosmos.base.reflection.v2alpha1.GetChainDescriptorResponse", GetChainDescriptorResponse as never],
+	["/cosmos.base.reflection.v2alpha1.GetCodecDescriptorRequest", GetCodecDescriptorRequest as never],
+	["/cosmos.base.reflection.v2alpha1.GetCodecDescriptorResponse", GetCodecDescriptorResponse as never],
+	["/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorRequest", GetConfigurationDescriptorRequest as never],
+	["/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorResponse", GetConfigurationDescriptorResponse as never],
+	["/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorRequest", GetQueryServicesDescriptorRequest as never],
+	["/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorResponse", GetQueryServicesDescriptorResponse as never],
+	["/cosmos.base.reflection.v2alpha1.GetTxDescriptorRequest", GetTxDescriptorRequest as never],
+	["/cosmos.base.reflection.v2alpha1.GetTxDescriptorResponse", GetTxDescriptorResponse as never],
+	["/cosmos.base.reflection.v2alpha1.QueryServicesDescriptor", QueryServicesDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.QueryServiceDescriptor", QueryServiceDescriptor as never],
+	["/cosmos.base.reflection.v2alpha1.QueryMethodDescriptor", QueryMethodDescriptor as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.reflection.v2alpha1.AppDescriptor": {
@@ -1821,6 +1841,12 @@ export const aminoConverters = {
 		fromAmino: (object: AuthnDescriptor) => ({ ...object })
 	},
 
+	"/cosmos.base.reflection.v2alpha1.SigningModeDescriptor": {
+		aminoType: "cosmos-sdk/SigningModeDescriptor",
+		toAmino: (message: SigningModeDescriptor) => ({ ...message }),
+		fromAmino: (object: SigningModeDescriptor) => ({ ...object })
+	},
+
 	"/cosmos.base.reflection.v2alpha1.ChainDescriptor": {
 		aminoType: "cosmos-sdk/ChainDescriptor",
 		toAmino: (message: ChainDescriptor) => ({ ...message }),
@@ -1833,9 +1859,123 @@ export const aminoConverters = {
 		fromAmino: (object: CodecDescriptor) => ({ ...object })
 	},
 
+	"/cosmos.base.reflection.v2alpha1.InterfaceDescriptor": {
+		aminoType: "cosmos-sdk/InterfaceDescriptor",
+		toAmino: (message: InterfaceDescriptor) => ({ ...message }),
+		fromAmino: (object: InterfaceDescriptor) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.InterfaceImplementerDescriptor": {
+		aminoType: "cosmos-sdk/InterfaceImplementerDescriptor",
+		toAmino: (message: InterfaceImplementerDescriptor) => ({ ...message }),
+		fromAmino: (object: InterfaceImplementerDescriptor) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.InterfaceAcceptingMessageDescriptor": {
+		aminoType: "cosmos-sdk/InterfaceAcceptingMessageDescriptor",
+		toAmino: (message: InterfaceAcceptingMessageDescriptor) => ({ ...message }),
+		fromAmino: (object: InterfaceAcceptingMessageDescriptor) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.ConfigurationDescriptor": {
+		aminoType: "cosmos-sdk/ConfigurationDescriptor",
+		toAmino: (message: ConfigurationDescriptor) => ({ ...message }),
+		fromAmino: (object: ConfigurationDescriptor) => ({ ...object })
+	},
+
 	"/cosmos.base.reflection.v2alpha1.MsgDescriptor": {
 		aminoType: "cosmos-sdk/MsgDescriptor",
 		toAmino: (message: MsgDescriptor) => ({ ...message }),
 		fromAmino: (object: MsgDescriptor) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorRequest": {
+		aminoType: "cosmos-sdk/GetAuthnDescriptorRequest",
+		toAmino: (message: GetAuthnDescriptorRequest) => ({ ...message }),
+		fromAmino: (object: GetAuthnDescriptorRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetAuthnDescriptorResponse": {
+		aminoType: "cosmos-sdk/GetAuthnDescriptorResponse",
+		toAmino: (message: GetAuthnDescriptorResponse) => ({ ...message }),
+		fromAmino: (object: GetAuthnDescriptorResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetChainDescriptorRequest": {
+		aminoType: "cosmos-sdk/GetChainDescriptorRequest",
+		toAmino: (message: GetChainDescriptorRequest) => ({ ...message }),
+		fromAmino: (object: GetChainDescriptorRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetChainDescriptorResponse": {
+		aminoType: "cosmos-sdk/GetChainDescriptorResponse",
+		toAmino: (message: GetChainDescriptorResponse) => ({ ...message }),
+		fromAmino: (object: GetChainDescriptorResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetCodecDescriptorRequest": {
+		aminoType: "cosmos-sdk/GetCodecDescriptorRequest",
+		toAmino: (message: GetCodecDescriptorRequest) => ({ ...message }),
+		fromAmino: (object: GetCodecDescriptorRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetCodecDescriptorResponse": {
+		aminoType: "cosmos-sdk/GetCodecDescriptorResponse",
+		toAmino: (message: GetCodecDescriptorResponse) => ({ ...message }),
+		fromAmino: (object: GetCodecDescriptorResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorRequest": {
+		aminoType: "cosmos-sdk/GetConfigurationDescriptorRequest",
+		toAmino: (message: GetConfigurationDescriptorRequest) => ({ ...message }),
+		fromAmino: (object: GetConfigurationDescriptorRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetConfigurationDescriptorResponse": {
+		aminoType: "cosmos-sdk/GetConfigurationDescriptorResponse",
+		toAmino: (message: GetConfigurationDescriptorResponse) => ({ ...message }),
+		fromAmino: (object: GetConfigurationDescriptorResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorRequest": {
+		aminoType: "cosmos-sdk/GetQueryServicesDescriptorRequest",
+		toAmino: (message: GetQueryServicesDescriptorRequest) => ({ ...message }),
+		fromAmino: (object: GetQueryServicesDescriptorRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetQueryServicesDescriptorResponse": {
+		aminoType: "cosmos-sdk/GetQueryServicesDescriptorResponse",
+		toAmino: (message: GetQueryServicesDescriptorResponse) => ({ ...message }),
+		fromAmino: (object: GetQueryServicesDescriptorResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetTxDescriptorRequest": {
+		aminoType: "cosmos-sdk/GetTxDescriptorRequest",
+		toAmino: (message: GetTxDescriptorRequest) => ({ ...message }),
+		fromAmino: (object: GetTxDescriptorRequest) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.GetTxDescriptorResponse": {
+		aminoType: "cosmos-sdk/GetTxDescriptorResponse",
+		toAmino: (message: GetTxDescriptorResponse) => ({ ...message }),
+		fromAmino: (object: GetTxDescriptorResponse) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.QueryServicesDescriptor": {
+		aminoType: "cosmos-sdk/QueryServicesDescriptor",
+		toAmino: (message: QueryServicesDescriptor) => ({ ...message }),
+		fromAmino: (object: QueryServicesDescriptor) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.QueryServiceDescriptor": {
+		aminoType: "cosmos-sdk/QueryServiceDescriptor",
+		toAmino: (message: QueryServiceDescriptor) => ({ ...message }),
+		fromAmino: (object: QueryServiceDescriptor) => ({ ...object })
+	},
+
+	"/cosmos.base.reflection.v2alpha1.QueryMethodDescriptor": {
+		aminoType: "cosmos-sdk/QueryMethodDescriptor",
+		toAmino: (message: QueryMethodDescriptor) => ({ ...message }),
+		fromAmino: (object: QueryMethodDescriptor) => ({ ...object })
 	}
 };

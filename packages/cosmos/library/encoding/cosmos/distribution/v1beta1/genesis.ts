@@ -872,8 +872,59 @@ function longToNumber(int64: { toString(): string }): number {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
-export const registry: Array<[string, GeneratedType]> = [["/cosmos.distribution.v1beta1.GenesisState", GenesisState as never]];
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.distribution.v1beta1.DelegatorWithdrawInfo", DelegatorWithdrawInfo as never],
+	["/cosmos.distribution.v1beta1.ValidatorOutstandingRewardsRecord", ValidatorOutstandingRewardsRecord as never],
+	["/cosmos.distribution.v1beta1.ValidatorAccumulatedCommissionRecord", ValidatorAccumulatedCommissionRecord as never],
+	["/cosmos.distribution.v1beta1.ValidatorHistoricalRewardsRecord", ValidatorHistoricalRewardsRecord as never],
+	["/cosmos.distribution.v1beta1.ValidatorCurrentRewardsRecord", ValidatorCurrentRewardsRecord as never],
+	["/cosmos.distribution.v1beta1.DelegatorStartingInfoRecord", DelegatorStartingInfoRecord as never],
+	["/cosmos.distribution.v1beta1.ValidatorSlashEventRecord", ValidatorSlashEventRecord as never],
+	["/cosmos.distribution.v1beta1.GenesisState", GenesisState as never]
+];
 export const aminoConverters = {
+	"/cosmos.distribution.v1beta1.DelegatorWithdrawInfo": {
+		aminoType: "cosmos-sdk/DelegatorWithdrawInfo",
+		toAmino: (message: DelegatorWithdrawInfo) => ({ ...message }),
+		fromAmino: (object: DelegatorWithdrawInfo) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorOutstandingRewardsRecord": {
+		aminoType: "cosmos-sdk/ValidatorOutstandingRewardsRecord",
+		toAmino: (message: ValidatorOutstandingRewardsRecord) => ({ ...message }),
+		fromAmino: (object: ValidatorOutstandingRewardsRecord) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorAccumulatedCommissionRecord": {
+		aminoType: "cosmos-sdk/ValidatorAccumulatedCommissionRecord",
+		toAmino: (message: ValidatorAccumulatedCommissionRecord) => ({ ...message }),
+		fromAmino: (object: ValidatorAccumulatedCommissionRecord) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorHistoricalRewardsRecord": {
+		aminoType: "cosmos-sdk/ValidatorHistoricalRewardsRecord",
+		toAmino: (message: ValidatorHistoricalRewardsRecord) => ({ ...message }),
+		fromAmino: (object: ValidatorHistoricalRewardsRecord) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorCurrentRewardsRecord": {
+		aminoType: "cosmos-sdk/ValidatorCurrentRewardsRecord",
+		toAmino: (message: ValidatorCurrentRewardsRecord) => ({ ...message }),
+		fromAmino: (object: ValidatorCurrentRewardsRecord) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.DelegatorStartingInfoRecord": {
+		aminoType: "cosmos-sdk/DelegatorStartingInfoRecord",
+		toAmino: (message: DelegatorStartingInfoRecord) => ({ ...message }),
+		fromAmino: (object: DelegatorStartingInfoRecord) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.ValidatorSlashEventRecord": {
+		aminoType: "cosmos-sdk/ValidatorSlashEventRecord",
+		toAmino: (message: ValidatorSlashEventRecord) => ({ ...message }),
+		fromAmino: (object: ValidatorSlashEventRecord) => ({ ...object })
+	},
+
 	"/cosmos.distribution.v1beta1.GenesisState": {
 		aminoType: "cosmos-sdk/GenesisState",
 		toAmino: (message: GenesisState) => ({ ...message }),

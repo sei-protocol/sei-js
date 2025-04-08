@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Coin } from "../../base/v1beta1/coin";
@@ -500,3 +502,62 @@ function createBaseMsgFundCommunityPoolResponse(): MsgFundCommunityPoolResponse 
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress as never],
+	["/cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse", MsgSetWithdrawAddressResponse as never],
+	["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward as never],
+	["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse", MsgWithdrawDelegatorRewardResponse as never],
+	["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission as never],
+	["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse", MsgWithdrawValidatorCommissionResponse as never],
+	["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool as never],
+	["/cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse", MsgFundCommunityPoolResponse as never]
+];
+export const aminoConverters = {
+	"/cosmos.distribution.v1beta1.MsgSetWithdrawAddress": {
+		aminoType: "cosmos-sdk/MsgSetWithdrawAddress",
+		toAmino: (message: MsgSetWithdrawAddress) => ({ ...message }),
+		fromAmino: (object: MsgSetWithdrawAddress) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse": {
+		aminoType: "cosmos-sdk/MsgSetWithdrawAddressResponse",
+		toAmino: (message: MsgSetWithdrawAddressResponse) => ({ ...message }),
+		fromAmino: (object: MsgSetWithdrawAddressResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward": {
+		aminoType: "cosmos-sdk/MsgWithdrawDelegatorReward",
+		toAmino: (message: MsgWithdrawDelegatorReward) => ({ ...message }),
+		fromAmino: (object: MsgWithdrawDelegatorReward) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse": {
+		aminoType: "cosmos-sdk/MsgWithdrawDelegatorRewardResponse",
+		toAmino: (message: MsgWithdrawDelegatorRewardResponse) => ({ ...message }),
+		fromAmino: (object: MsgWithdrawDelegatorRewardResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission": {
+		aminoType: "cosmos-sdk/MsgWithdrawValidatorCommission",
+		toAmino: (message: MsgWithdrawValidatorCommission) => ({ ...message }),
+		fromAmino: (object: MsgWithdrawValidatorCommission) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse": {
+		aminoType: "cosmos-sdk/MsgWithdrawValidatorCommissionResponse",
+		toAmino: (message: MsgWithdrawValidatorCommissionResponse) => ({ ...message }),
+		fromAmino: (object: MsgWithdrawValidatorCommissionResponse) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.MsgFundCommunityPool": {
+		aminoType: "cosmos-sdk/MsgFundCommunityPool",
+		toAmino: (message: MsgFundCommunityPool) => ({ ...message }),
+		fromAmino: (object: MsgFundCommunityPool) => ({ ...object })
+	},
+
+	"/cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse": {
+		aminoType: "cosmos-sdk/MsgFundCommunityPoolResponse",
+		toAmino: (message: MsgFundCommunityPoolResponse) => ({ ...message }),
+		fromAmino: (object: MsgFundCommunityPoolResponse) => ({ ...object })
+	}
+};

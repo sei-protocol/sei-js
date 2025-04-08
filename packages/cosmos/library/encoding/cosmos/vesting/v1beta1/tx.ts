@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { Coin } from "../../base/v1beta1/coin";
@@ -207,3 +209,20 @@ function longToNumber(int64: { toString(): string }): number {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.vesting.v1beta1.MsgCreateVestingAccount", MsgCreateVestingAccount as never],
+	["/cosmos.vesting.v1beta1.MsgCreateVestingAccountResponse", MsgCreateVestingAccountResponse as never]
+];
+export const aminoConverters = {
+	"/cosmos.vesting.v1beta1.MsgCreateVestingAccount": {
+		aminoType: "cosmos-sdk/MsgCreateVestingAccount",
+		toAmino: (message: MsgCreateVestingAccount) => ({ ...message }),
+		fromAmino: (object: MsgCreateVestingAccount) => ({ ...object })
+	},
+
+	"/cosmos.vesting.v1beta1.MsgCreateVestingAccountResponse": {
+		aminoType: "cosmos-sdk/MsgCreateVestingAccountResponse",
+		toAmino: (message: MsgCreateVestingAccountResponse) => ({ ...message }),
+		fromAmino: (object: MsgCreateVestingAccountResponse) => ({ ...object })
+	}
+};

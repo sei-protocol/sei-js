@@ -861,6 +861,7 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.oracle.Params", Params as never],
 	["/seiprotocol.seichain.oracle.Denom", Denom as never],
+	["/seiprotocol.seichain.oracle.AggregateExchangeRateVote", AggregateExchangeRateVote as never],
 	["/seiprotocol.seichain.oracle.ExchangeRateTuple", ExchangeRateTuple as never],
 	["/seiprotocol.seichain.oracle.OracleExchangeRate", OracleExchangeRate as never],
 	["/seiprotocol.seichain.oracle.PriceSnapshotItem", PriceSnapshotItem as never],
@@ -879,6 +880,12 @@ export const aminoConverters = {
 		aminoType: "oracle/Denom",
 		toAmino: (message: Denom) => ({ ...message }),
 		fromAmino: (object: Denom) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.AggregateExchangeRateVote": {
+		aminoType: "oracle/AggregateExchangeRateVote",
+		toAmino: (message: AggregateExchangeRateVote) => ({ ...message }),
+		fromAmino: (object: AggregateExchangeRateVote) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.oracle.ExchangeRateTuple": {

@@ -151,11 +151,20 @@ function createBaseMsgVerifyInvariantResponse(): MsgVerifyInvariantResponse {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
-export const registry: Array<[string, GeneratedType]> = [["/cosmos.crisis.v1beta1.MsgVerifyInvariant", MsgVerifyInvariant as never]];
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.crisis.v1beta1.MsgVerifyInvariant", MsgVerifyInvariant as never],
+	["/cosmos.crisis.v1beta1.MsgVerifyInvariantResponse", MsgVerifyInvariantResponse as never]
+];
 export const aminoConverters = {
 	"/cosmos.crisis.v1beta1.MsgVerifyInvariant": {
 		aminoType: "cosmos-sdk/MsgVerifyInvariant",
 		toAmino: (message: MsgVerifyInvariant) => ({ ...message }),
 		fromAmino: (object: MsgVerifyInvariant) => ({ ...object })
+	},
+
+	"/cosmos.crisis.v1beta1.MsgVerifyInvariantResponse": {
+		aminoType: "cosmos-sdk/MsgVerifyInvariantResponse",
+		toAmino: (message: MsgVerifyInvariantResponse) => ({ ...message }),
+		fromAmino: (object: MsgVerifyInvariantResponse) => ({ ...object })
 	}
 };

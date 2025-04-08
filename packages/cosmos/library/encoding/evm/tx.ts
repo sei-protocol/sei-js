@@ -1131,10 +1131,17 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.MsgEVMTransaction", MsgEVMTransaction as never],
+	["/seiprotocol.seichain.evm.MsgEVMTransactionResponse", MsgEVMTransactionResponse as never],
 	["/seiprotocol.seichain.evm.MsgInternalEVMCall", MsgInternalEVMCall as never],
+	["/seiprotocol.seichain.evm.MsgInternalEVMCallResponse", MsgInternalEVMCallResponse as never],
+	["/seiprotocol.seichain.evm.MsgInternalEVMDelegateCall", MsgInternalEVMDelegateCall as never],
+	["/seiprotocol.seichain.evm.MsgInternalEVMDelegateCallResponse", MsgInternalEVMDelegateCallResponse as never],
 	["/seiprotocol.seichain.evm.MsgSend", MsgSend as never],
 	["/seiprotocol.seichain.evm.MsgSendResponse", MsgSendResponse as never],
 	["/seiprotocol.seichain.evm.MsgRegisterPointer", MsgRegisterPointer as never],
+	["/seiprotocol.seichain.evm.MsgRegisterPointerResponse", MsgRegisterPointerResponse as never],
+	["/seiprotocol.seichain.evm.MsgAssociateContractAddress", MsgAssociateContractAddress as never],
+	["/seiprotocol.seichain.evm.MsgAssociateContractAddressResponse", MsgAssociateContractAddressResponse as never],
 	["/seiprotocol.seichain.evm.MsgAssociate", MsgAssociate as never],
 	["/seiprotocol.seichain.evm.MsgAssociateResponse", MsgAssociateResponse as never]
 ];
@@ -1145,10 +1152,34 @@ export const aminoConverters = {
 		fromAmino: (object: MsgEVMTransaction) => ({ ...object })
 	},
 
+	"/seiprotocol.seichain.evm.MsgEVMTransactionResponse": {
+		aminoType: "evm/MsgEVMTransactionResponse",
+		toAmino: (message: MsgEVMTransactionResponse) => ({ ...message }),
+		fromAmino: (object: MsgEVMTransactionResponse) => ({ ...object })
+	},
+
 	"/seiprotocol.seichain.evm.MsgInternalEVMCall": {
 		aminoType: "evm/MsgInternalEVMCall",
 		toAmino: (message: MsgInternalEVMCall) => ({ ...message }),
 		fromAmino: (object: MsgInternalEVMCall) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.MsgInternalEVMCallResponse": {
+		aminoType: "evm/MsgInternalEVMCallResponse",
+		toAmino: (message: MsgInternalEVMCallResponse) => ({ ...message }),
+		fromAmino: (object: MsgInternalEVMCallResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.MsgInternalEVMDelegateCall": {
+		aminoType: "evm/MsgInternalEVMDelegateCall",
+		toAmino: (message: MsgInternalEVMDelegateCall) => ({ ...message }),
+		fromAmino: (object: MsgInternalEVMDelegateCall) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.MsgInternalEVMDelegateCallResponse": {
+		aminoType: "evm/MsgInternalEVMDelegateCallResponse",
+		toAmino: (message: MsgInternalEVMDelegateCallResponse) => ({ ...message }),
+		fromAmino: (object: MsgInternalEVMDelegateCallResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgSend": {
@@ -1167,6 +1198,24 @@ export const aminoConverters = {
 		aminoType: "evm/MsgRegisterPointer",
 		toAmino: (message: MsgRegisterPointer) => ({ ...message }),
 		fromAmino: (object: MsgRegisterPointer) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.MsgRegisterPointerResponse": {
+		aminoType: "evm/MsgRegisterPointerResponse",
+		toAmino: (message: MsgRegisterPointerResponse) => ({ ...message }),
+		fromAmino: (object: MsgRegisterPointerResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.MsgAssociateContractAddress": {
+		aminoType: "evm/MsgAssociateContractAddress",
+		toAmino: (message: MsgAssociateContractAddress) => ({ ...message }),
+		fromAmino: (object: MsgAssociateContractAddress) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.MsgAssociateContractAddressResponse": {
+		aminoType: "evm/MsgAssociateContractAddressResponse",
+		toAmino: (message: MsgAssociateContractAddressResponse) => ({ ...message }),
+		fromAmino: (object: MsgAssociateContractAddressResponse) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgAssociate": {

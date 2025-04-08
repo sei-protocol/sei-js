@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { AccessOperation } from "./accesscontrol";
@@ -217,3 +219,20 @@ function createBaseLegacyWasmDependencyMapping(): LegacyWasmDependencyMapping {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.accesscontrol.v1beta1.LegacyAccessOperationWithSelector", LegacyAccessOperationWithSelector as never],
+	["/cosmos.accesscontrol.v1beta1.LegacyWasmDependencyMapping", LegacyWasmDependencyMapping as never]
+];
+export const aminoConverters = {
+	"/cosmos.accesscontrol.v1beta1.LegacyAccessOperationWithSelector": {
+		aminoType: "cosmos-sdk/LegacyAccessOperationWithSelector",
+		toAmino: (message: LegacyAccessOperationWithSelector) => ({ ...message }),
+		fromAmino: (object: LegacyAccessOperationWithSelector) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.LegacyWasmDependencyMapping": {
+		aminoType: "cosmos-sdk/LegacyWasmDependencyMapping",
+		toAmino: (message: LegacyWasmDependencyMapping) => ({ ...message }),
+		fromAmino: (object: LegacyWasmDependencyMapping) => ({ ...object })
+	}
+};
