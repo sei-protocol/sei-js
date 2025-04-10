@@ -1,5 +1,6 @@
 export * from './addressPrecompile';
 export * from './bankPrecompile';
+export * from './confidentialTransfersPrecompile';
 export * from './distributionPrecompile';
 export * from './governancePrecompile';
 export * from './ibcPrecompile';
