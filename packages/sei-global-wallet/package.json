@@ -53,8 +53,12 @@
 	},
 	"typesVersions": {
 		"*": {
-			"eip6963": ["./dist/types/eip6963.d.ts"],
-			"solana-standard": ["./dist/types/solana-standard.d.ts"]
+			"eip6963": [
+				"./dist/types/eip6963.d.ts"
+			],
+			"solana-standard": [
+				"./dist/types/solana-standard.d.ts"
+			]
 		}
 	},
 	"exports": {
