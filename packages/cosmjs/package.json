@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/cosmjs",
-	"version": "1.0.10",
+	"version": "1.0.11",
 	"description": "TypeScript library for CosmJS interactions on the Sei blockchain",
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
@@ -15,7 +15,12 @@
 		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": ["sei", "javascript", "typescript", "react"],
+	"keywords": [
+		"sei",
+		"javascript",
+		"typescript",
+		"react"
+	],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"publishConfig": {
@@ -30,7 +35,7 @@
 		"@cosmjs/proto-signing": "^0.33.1",
 		"@cosmjs/stargate": "^0.33.1",
 		"@cosmjs/tendermint-rpc": "^0.33.1",
-		"@sei-js/cosmos": "^1.0.4",
+		"@sei-js/cosmos": "^1.0.5",
 		"bech32": "^2.0.0",
 		"elliptic": "^6.5.4",
 		"moment": "^2.30.1",

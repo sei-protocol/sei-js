@@ -1,5 +1,11 @@
 # @sei-js/cosmos
 
+## 1.0.5
+
+### Patch Changes
+
+- f259f6c: Add all encode-able objects to Stargate registry and Amino exports
+
 ## 1.0.4
 
 ### Patch Changes
