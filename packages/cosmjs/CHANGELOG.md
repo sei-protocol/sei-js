@@ -1,5 +1,13 @@
 # @sei-js/cosmjs
 
+## 1.0.11
+
+### Patch Changes
+
+- ed08243: Replace @sei-js/proto with @sei-js/cosmos for cosmjs amino and registries used in the StargateSigningClient
+- Updated dependencies [f259f6c]
+  - @sei-js/cosmos@1.0.5
+
 ## 1.0.10
 
 ### Patch Changes
