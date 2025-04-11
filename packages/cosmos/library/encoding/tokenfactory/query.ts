@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { AllowList, Metadata } from "../cosmos/bank/v1beta1/bank";
@@ -622,3 +624,76 @@ function createBaseQueryDenomAllowListResponse(): QueryDenomAllowListResponse {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/seiprotocol.seichain.tokenfactory.QueryParamsRequest", QueryParamsRequest as never],
+	["/seiprotocol.seichain.tokenfactory.QueryParamsResponse", QueryParamsResponse as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataRequest", QueryDenomAuthorityMetadataRequest as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse", QueryDenomAuthorityMetadataResponse as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorRequest", QueryDenomsFromCreatorRequest as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse", QueryDenomsFromCreatorResponse as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest", QueryDenomMetadataRequest as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse", QueryDenomMetadataResponse as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest", QueryDenomAllowListRequest as never],
+	["/seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse", QueryDenomAllowListResponse as never]
+];
+export const aminoConverters = {
+	"/seiprotocol.seichain.tokenfactory.QueryParamsRequest": {
+		aminoType: "tokenfactory/QueryParamsRequest",
+		toAmino: (message: QueryParamsRequest) => ({ ...message }),
+		fromAmino: (object: QueryParamsRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryParamsResponse": {
+		aminoType: "tokenfactory/QueryParamsResponse",
+		toAmino: (message: QueryParamsResponse) => ({ ...message }),
+		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataRequest": {
+		aminoType: "tokenfactory/QueryDenomAuthorityMetadataRequest",
+		toAmino: (message: QueryDenomAuthorityMetadataRequest) => ({ ...message }),
+		fromAmino: (object: QueryDenomAuthorityMetadataRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomAuthorityMetadataResponse": {
+		aminoType: "tokenfactory/QueryDenomAuthorityMetadataResponse",
+		toAmino: (message: QueryDenomAuthorityMetadataResponse) => ({ ...message }),
+		fromAmino: (object: QueryDenomAuthorityMetadataResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorRequest": {
+		aminoType: "tokenfactory/QueryDenomsFromCreatorRequest",
+		toAmino: (message: QueryDenomsFromCreatorRequest) => ({ ...message }),
+		fromAmino: (object: QueryDenomsFromCreatorRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomsFromCreatorResponse": {
+		aminoType: "tokenfactory/QueryDenomsFromCreatorResponse",
+		toAmino: (message: QueryDenomsFromCreatorResponse) => ({ ...message }),
+		fromAmino: (object: QueryDenomsFromCreatorResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomMetadataRequest": {
+		aminoType: "tokenfactory/QueryDenomMetadataRequest",
+		toAmino: (message: QueryDenomMetadataRequest) => ({ ...message }),
+		fromAmino: (object: QueryDenomMetadataRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomMetadataResponse": {
+		aminoType: "tokenfactory/QueryDenomMetadataResponse",
+		toAmino: (message: QueryDenomMetadataResponse) => ({ ...message }),
+		fromAmino: (object: QueryDenomMetadataResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomAllowListRequest": {
+		aminoType: "tokenfactory/QueryDenomAllowListRequest",
+		toAmino: (message: QueryDenomAllowListRequest) => ({ ...message }),
+		fromAmino: (object: QueryDenomAllowListRequest) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.tokenfactory.QueryDenomAllowListResponse": {
+		aminoType: "tokenfactory/QueryDenomAllowListResponse",
+		toAmino: (message: QueryDenomAllowListResponse) => ({ ...message }),
+		fromAmino: (object: QueryDenomAllowListResponse) => ({ ...object })
+	}
+};

@@ -1,5 +1,6 @@
 export * from './address';
 export * from './bank';
+export * from './confidential_transfers';
 export * from './distribution';
 export * from './governance';
 export * from './ibc';

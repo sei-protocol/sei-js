@@ -83,15 +83,16 @@ console.log(amount); // 1000000000000000000
 ## Interoperability with Cosmos
 Sei v2 supports both EVM JSON-RPC and Cosmos RPC interfaces. In order to easily interact with certain Cosmos modules, Sei v2 has a set of precompiled contracts that can be called from the EVM.
 
-| Precompile                                          | Description                                                                                  |
-|-----------------------------------------------------|----------------------------------------------------------------------------------------------|
-| [Address Precompile](#address-precompile)           | Enables the retrieval of associated EVM addresses for given Cosmos addresses and vice versa. |
-| [Bank Precompile](#bank-precompile)                 | Provides functionalities for managing balances, supply, symbols, and more.                   |
-| [Distribution Precompile](#distribution-precompile) | Facilitates operations related to rewards withdrawal and distribution.                       |
-| [Governance Precompile](#governance-precompile)     | Supports actions such as depositing funds into proposals and voting.                         |
-| [JSON Precompile](#json-precompile)                 | Facilitates interoperability between the EVM and Cosmos.                                     |
-| [Staking Precompile](#staking-precompile)           | Enables staking functionalities like delegation and undelegation.                            |
-| [WASM Precompile](#wasm-precompile)                 | Provides functionalities for executing WebAssembly (WASM) code.                              |
+| Precompile                                                                | Description                                                                                  |
+|---------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| [Address Precompile](#address-precompile)                                 | Enables the retrieval of associated EVM addresses for given Cosmos addresses and vice versa. |
+| [Bank Precompile](#bank-precompile)                                       | Provides functionalities for managing balances, supply, symbols, and more.                   |
+| [Confidential Transfers Precompile](#confidential-transfers-precompile)   | Used for interacting with the Confidential Transfers module.                                 |
+| [Distribution Precompile](#distribution-precompile)                       | Facilitates operations related to rewards withdrawal and distribution.                       |
+| [Governance Precompile](#governance-precompile)                           | Supports actions such as depositing funds into proposals and voting.                         |
+| [JSON Precompile](#json-precompile)                                       | Facilitates interoperability between the EVM and Cosmos.                                     |
+| [Staking Precompile](#staking-precompile)                                 | Enables staking functionalities like delegation and undelegation.                            |
+| [WASM Precompile](#wasm-precompile)                                       | Provides functionalities for executing WebAssembly (WASM) code.                              |
 
 <br>
 
@@ -138,6 +139,29 @@ The Bank precompile contract provides functionalities for managing balances, sup
 
 #### Precompile Addresses
 0x0000000000000000000000000000000000001001
+
+<br>
+<br>
+
+### Confidential Transfers Precompile
+
+The Confidential Transfers precompile contract provides functionalities for interacting with the Confidential Transfers module, including depositing, withdrawing, and transferring confidential balances.
+
+#### Functions
+
+| Function Name          | Input Parameters                                                                                                                                                                                                                                                                          | Return Value                                                                                                                                                                               | Description                                                                  |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `initializeAccount`    | `fromAddress: string`, `denom: string`, `publicKey: bytes`, `decryptableBalance: string`, `pendingBalanceLo: bytes`, `pendingBalanceHi: bytes`, `availableBalance: bytes`, `proofs: bytes`                                                                                                | `{ success: boolean }`                                                                                                                                                                     | Initializes a confidential account with balances, public key, and ZK proofs. |
+| `transfer`             | `toAddress: string`, `denom: string`, `fromAmountLo: bytes`, `fromAmountHi: bytes`, `toAmountLo: bytes`, `toAmountHi: bytes`, `remainingBalance: bytes`, `decryptableBalance: string`, `proofs: bytes`                                                                                    | `{ success: boolean }`                                                                                                                                                                     | Transfers funds confidentially from sender to receiver.                      |
+| `transferWithAuditors` | All `transfer` inputs + `auditors: Auditor[]` where each Auditor contains: `auditorAddress`, `encryptedTransferAmountLo`, `encryptedTransferAmountHi`, `transferAmountLoValidityProof`, `transferAmountHiValidityProof`, `transferAmountLoEqualityProof`, `transferAmountHiEqualityProof` | `{ success: boolean }`                                                                                                                                                                     | Transfers funds with ZK auditor verification data.                           |
+| `deposit`              | `denom: string`, `amount: uint64`                                                                                                                                                                                                                                                         | `{ success: boolean }`                                                                                                                                                                     | Deposits tokens into the confidential account.                               |
+| `applyPendingBalance`  | `denom: string`, `decryptableBalance: string`, `pendingBalanceCreditCounter: uint32`, `availableBalance: bytes`                                                                                                                                                                           | `{ success: boolean }`                                                                                                                                                                     | Applies previously received pending balance to the account.                  |
+| `withdraw`             | `denom: string`, `amount: uint256`, `decryptableBalance: string`, `remainingBalanceCommitment: bytes`, `proofs: bytes`                                                                                                                                                                    | `{ success: boolean }`                                                                                                                                                                     | Withdraws funds from a confidential account.                                 |
+| `closeAccount`         | `denom: string`, `proofs: bytes`                                                                                                                                                                                                                                                          | `{ success: boolean }`                                                                                                                                                                     | Closes a confidential account using ZK proofs.                               |
+| `account`              | `addr: string`, `denom: string`                                                                                                                                                                                                                                                           | `{ ctAccount: { publicKey: bytes; pendingBalanceLo: bytes; pendingBalanceHi: bytes; pendingBalanceCreditCounter: uint32; availableBalance: bytes; decryptableAvailableBalance: string } }` | Retrieves confidential account state.                                        |
+
+#### Precompile Address
+`0x0000000000000000000000000000000000001010`
 
 <br>
 <br>

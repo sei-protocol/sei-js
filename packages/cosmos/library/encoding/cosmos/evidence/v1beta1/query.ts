@@ -303,7 +303,9 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.evidence.v1beta1.QueryEvidenceRequest", QueryEvidenceRequest as never],
-	["/cosmos.evidence.v1beta1.QueryEvidenceResponse", QueryEvidenceResponse as never]
+	["/cosmos.evidence.v1beta1.QueryEvidenceResponse", QueryEvidenceResponse as never],
+	["/cosmos.evidence.v1beta1.QueryAllEvidenceRequest", QueryAllEvidenceRequest as never],
+	["/cosmos.evidence.v1beta1.QueryAllEvidenceResponse", QueryAllEvidenceResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.evidence.v1beta1.QueryEvidenceRequest": {
@@ -316,5 +318,17 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryEvidenceResponse",
 		toAmino: (message: QueryEvidenceResponse) => ({ ...message }),
 		fromAmino: (object: QueryEvidenceResponse) => ({ ...object })
+	},
+
+	"/cosmos.evidence.v1beta1.QueryAllEvidenceRequest": {
+		aminoType: "cosmos-sdk/QueryAllEvidenceRequest",
+		toAmino: (message: QueryAllEvidenceRequest) => ({ ...message }),
+		fromAmino: (object: QueryAllEvidenceRequest) => ({ ...object })
+	},
+
+	"/cosmos.evidence.v1beta1.QueryAllEvidenceResponse": {
+		aminoType: "cosmos-sdk/QueryAllEvidenceResponse",
+		toAmino: (message: QueryAllEvidenceResponse) => ({ ...message }),
+		fromAmino: (object: QueryAllEvidenceResponse) => ({ ...object })
 	}
 };

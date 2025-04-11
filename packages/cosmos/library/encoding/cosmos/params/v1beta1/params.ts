@@ -209,8 +209,17 @@ function createBaseParamChange(): ParamChange {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
-export const registry: Array<[string, GeneratedType]> = [["/cosmos.params.v1beta1.ParamChange", ParamChange as never]];
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.params.v1beta1.ParameterChangeProposal", ParameterChangeProposal as never],
+	["/cosmos.params.v1beta1.ParamChange", ParamChange as never]
+];
 export const aminoConverters = {
+	"/cosmos.params.v1beta1.ParameterChangeProposal": {
+		aminoType: "cosmos-sdk/ParameterChangeProposal",
+		toAmino: (message: ParameterChangeProposal) => ({ ...message }),
+		fromAmino: (object: ParameterChangeProposal) => ({ ...object })
+	},
+
 	"/cosmos.params.v1beta1.ParamChange": {
 		aminoType: "cosmos-sdk/ParamChange",
 		toAmino: (message: ParamChange) => ({ ...message }),

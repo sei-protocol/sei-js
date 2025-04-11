@@ -1328,7 +1328,8 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.eth.AccessListTx", AccessListTx as never],
 	["/seiprotocol.seichain.eth.DynamicFeeTx", DynamicFeeTx as never],
 	["/seiprotocol.seichain.eth.BlobTx", BlobTx as never],
-	["/seiprotocol.seichain.eth.BlobTxSidecar", BlobTxSidecar as never]
+	["/seiprotocol.seichain.eth.BlobTxSidecar", BlobTxSidecar as never],
+	["/seiprotocol.seichain.eth.ExtensionOptionsEthereumTx", ExtensionOptionsEthereumTx as never]
 ];
 export const aminoConverters = {
 	"/seiprotocol.seichain.eth.AccessTuple": {
@@ -1371,5 +1372,11 @@ export const aminoConverters = {
 		aminoType: "eth/BlobTxSidecar",
 		toAmino: (message: BlobTxSidecar) => ({ ...message }),
 		fromAmino: (object: BlobTxSidecar) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.eth.ExtensionOptionsEthereumTx": {
+		aminoType: "eth/ExtensionOptionsEthereumTx",
+		toAmino: (message: ExtensionOptionsEthereumTx) => ({ ...message }),
+		fromAmino: (object: ExtensionOptionsEthereumTx) => ({ ...object })
 	}
 };

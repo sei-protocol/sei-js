@@ -455,6 +455,7 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/tendermint.types.Evidence", Evidence as never],
 	["/tendermint.types.DuplicateVoteEvidence", DuplicateVoteEvidence as never],
+	["/tendermint.types.LightClientAttackEvidence", LightClientAttackEvidence as never],
 	["/tendermint.types.EvidenceList", EvidenceList as never]
 ];
 export const aminoConverters = {
@@ -468,6 +469,12 @@ export const aminoConverters = {
 		aminoType: "tendermint.types.DuplicateVoteEvidence",
 		toAmino: (message: DuplicateVoteEvidence) => ({ ...message }),
 		fromAmino: (object: DuplicateVoteEvidence) => ({ ...object })
+	},
+
+	"/tendermint.types.LightClientAttackEvidence": {
+		aminoType: "tendermint.types.LightClientAttackEvidence",
+		toAmino: (message: LightClientAttackEvidence) => ({ ...message }),
+		fromAmino: (object: LightClientAttackEvidence) => ({ ...object })
 	},
 
 	"/tendermint.types.EvidenceList": {

@@ -368,7 +368,9 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.mint.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
 	["/cosmos.mint.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
 	["/cosmos.mint.v1beta1.QueryInflationRequest", QueryInflationRequest as never],
-	["/cosmos.mint.v1beta1.QueryInflationResponse", QueryInflationResponse as never]
+	["/cosmos.mint.v1beta1.QueryInflationResponse", QueryInflationResponse as never],
+	["/cosmos.mint.v1beta1.QueryAnnualProvisionsRequest", QueryAnnualProvisionsRequest as never],
+	["/cosmos.mint.v1beta1.QueryAnnualProvisionsResponse", QueryAnnualProvisionsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.mint.v1beta1.QueryParamsRequest": {
@@ -393,5 +395,17 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryInflationResponse",
 		toAmino: (message: QueryInflationResponse) => ({ ...message }),
 		fromAmino: (object: QueryInflationResponse) => ({ ...object })
+	},
+
+	"/cosmos.mint.v1beta1.QueryAnnualProvisionsRequest": {
+		aminoType: "cosmos-sdk/QueryAnnualProvisionsRequest",
+		toAmino: (message: QueryAnnualProvisionsRequest) => ({ ...message }),
+		fromAmino: (object: QueryAnnualProvisionsRequest) => ({ ...object })
+	},
+
+	"/cosmos.mint.v1beta1.QueryAnnualProvisionsResponse": {
+		aminoType: "cosmos-sdk/QueryAnnualProvisionsResponse",
+		toAmino: (message: QueryAnnualProvisionsResponse) => ({ ...message }),
+		fromAmino: (object: QueryAnnualProvisionsResponse) => ({ ...object })
 	}
 };

@@ -487,7 +487,10 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.tx.signing.v1beta1.SignatureDescriptors", SignatureDescriptors as never],
-	["/cosmos.tx.signing.v1beta1.SignatureDescriptor", SignatureDescriptor as never]
+	["/cosmos.tx.signing.v1beta1.SignatureDescriptor", SignatureDescriptor as never],
+	["/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data", SignatureDescriptorData as never],
+	["/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single", SignatureDescriptorDataSingle as never],
+	["/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi", SignatureDescriptorDataMulti as never]
 ];
 export const aminoConverters = {
 	"/cosmos.tx.signing.v1beta1.SignatureDescriptors": {
@@ -500,5 +503,23 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/SignatureDescriptor",
 		toAmino: (message: SignatureDescriptor) => ({ ...message }),
 		fromAmino: (object: SignatureDescriptor) => ({ ...object })
+	},
+
+	"/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data": {
+		aminoType: "cosmos-sdk/Data",
+		toAmino: (message: SignatureDescriptorData) => ({ ...message }),
+		fromAmino: (object: SignatureDescriptorData) => ({ ...object })
+	},
+
+	"/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single": {
+		aminoType: "cosmos-sdk/Single",
+		toAmino: (message: SignatureDescriptorDataSingle) => ({ ...message }),
+		fromAmino: (object: SignatureDescriptorDataSingle) => ({ ...object })
+	},
+
+	"/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi": {
+		aminoType: "cosmos-sdk/Multi",
+		toAmino: (message: SignatureDescriptorDataMulti) => ({ ...message }),
+		fromAmino: (object: SignatureDescriptorDataMulti) => ({ ...object })
 	}
 };

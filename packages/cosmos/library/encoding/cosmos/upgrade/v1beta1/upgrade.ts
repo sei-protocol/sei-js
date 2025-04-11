@@ -423,6 +423,8 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.upgrade.v1beta1.Plan", Plan as never],
+	["/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal", SoftwareUpgradeProposal as never],
+	["/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal", CancelSoftwareUpgradeProposal as never],
 	["/cosmos.upgrade.v1beta1.ModuleVersion", ModuleVersion as never]
 ];
 export const aminoConverters = {
@@ -430,6 +432,18 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/Plan",
 		toAmino: (message: Plan) => ({ ...message }),
 		fromAmino: (object: Plan) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal": {
+		aminoType: "cosmos-sdk/SoftwareUpgradeProposal",
+		toAmino: (message: SoftwareUpgradeProposal) => ({ ...message }),
+		fromAmino: (object: SoftwareUpgradeProposal) => ({ ...object })
+	},
+
+	"/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal": {
+		aminoType: "cosmos-sdk/CancelSoftwareUpgradeProposal",
+		toAmino: (message: CancelSoftwareUpgradeProposal) => ({ ...message }),
+		fromAmino: (object: CancelSoftwareUpgradeProposal) => ({ ...object })
 	},
 
 	"/cosmos.upgrade.v1beta1.ModuleVersion": {

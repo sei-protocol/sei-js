@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { WasmDependencyMapping } from "../accesscontrol/accesscontrol";
@@ -208,3 +210,27 @@ function createBaseMsgRegisterWasmDependencyResponse(): MsgRegisterWasmDependenc
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.accesscontrol_x.v1beta1.RegisterWasmDependencyJSONFile", RegisterWasmDependencyJSONFile as never],
+	["/cosmos.accesscontrol_x.v1beta1.MsgRegisterWasmDependency", MsgRegisterWasmDependency as never],
+	["/cosmos.accesscontrol_x.v1beta1.MsgRegisterWasmDependencyResponse", MsgRegisterWasmDependencyResponse as never]
+];
+export const aminoConverters = {
+	"/cosmos.accesscontrol_x.v1beta1.RegisterWasmDependencyJSONFile": {
+		aminoType: "cosmos-sdk/RegisterWasmDependencyJSONFile",
+		toAmino: (message: RegisterWasmDependencyJSONFile) => ({ ...message }),
+		fromAmino: (object: RegisterWasmDependencyJSONFile) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.MsgRegisterWasmDependency": {
+		aminoType: "cosmos-sdk/MsgRegisterWasmDependency",
+		toAmino: (message: MsgRegisterWasmDependency) => ({ ...message }),
+		fromAmino: (object: MsgRegisterWasmDependency) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol_x.v1beta1.MsgRegisterWasmDependencyResponse": {
+		aminoType: "cosmos-sdk/MsgRegisterWasmDependencyResponse",
+		toAmino: (message: MsgRegisterWasmDependencyResponse) => ({ ...message }),
+		fromAmino: (object: MsgRegisterWasmDependencyResponse) => ({ ...object })
+	}
+};

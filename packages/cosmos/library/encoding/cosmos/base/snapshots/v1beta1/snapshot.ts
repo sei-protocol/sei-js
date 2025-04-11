@@ -655,7 +655,9 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.base.snapshots.v1beta1.Metadata", Metadata as never],
 	["/cosmos.base.snapshots.v1beta1.SnapshotItem", SnapshotItem as never],
 	["/cosmos.base.snapshots.v1beta1.SnapshotStoreItem", SnapshotStoreItem as never],
-	["/cosmos.base.snapshots.v1beta1.SnapshotIAVLItem", SnapshotIAVLItem as never]
+	["/cosmos.base.snapshots.v1beta1.SnapshotIAVLItem", SnapshotIAVLItem as never],
+	["/cosmos.base.snapshots.v1beta1.SnapshotExtensionMeta", SnapshotExtensionMeta as never],
+	["/cosmos.base.snapshots.v1beta1.SnapshotExtensionPayload", SnapshotExtensionPayload as never]
 ];
 export const aminoConverters = {
 	"/cosmos.base.snapshots.v1beta1.Snapshot": {
@@ -686,5 +688,17 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/SnapshotIAVLItem",
 		toAmino: (message: SnapshotIAVLItem) => ({ ...message }),
 		fromAmino: (object: SnapshotIAVLItem) => ({ ...object })
+	},
+
+	"/cosmos.base.snapshots.v1beta1.SnapshotExtensionMeta": {
+		aminoType: "cosmos-sdk/SnapshotExtensionMeta",
+		toAmino: (message: SnapshotExtensionMeta) => ({ ...message }),
+		fromAmino: (object: SnapshotExtensionMeta) => ({ ...object })
+	},
+
+	"/cosmos.base.snapshots.v1beta1.SnapshotExtensionPayload": {
+		aminoType: "cosmos-sdk/SnapshotExtensionPayload",
+		toAmino: (message: SnapshotExtensionPayload) => ({ ...message }),
+		fromAmino: (object: SnapshotExtensionPayload) => ({ ...object })
 	}
 };

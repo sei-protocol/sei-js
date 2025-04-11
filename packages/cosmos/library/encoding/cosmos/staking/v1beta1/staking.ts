@@ -2064,10 +2064,12 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.staking.v1beta1.DVVTriplets", DVVTriplets as never],
 	["/cosmos.staking.v1beta1.Delegation", Delegation as never],
 	["/cosmos.staking.v1beta1.UnbondingDelegation", UnbondingDelegation as never],
+	["/cosmos.staking.v1beta1.UnbondingDelegationEntry", UnbondingDelegationEntry as never],
 	["/cosmos.staking.v1beta1.RedelegationEntry", RedelegationEntry as never],
 	["/cosmos.staking.v1beta1.Redelegation", Redelegation as never],
 	["/cosmos.staking.v1beta1.Params", Params as never],
 	["/cosmos.staking.v1beta1.DelegationResponse", DelegationResponse as never],
+	["/cosmos.staking.v1beta1.RedelegationEntryResponse", RedelegationEntryResponse as never],
 	["/cosmos.staking.v1beta1.RedelegationResponse", RedelegationResponse as never],
 	["/cosmos.staking.v1beta1.Pool", Pool as never]
 ];
@@ -2144,6 +2146,12 @@ export const aminoConverters = {
 		fromAmino: (object: UnbondingDelegation) => ({ ...object })
 	},
 
+	"/cosmos.staking.v1beta1.UnbondingDelegationEntry": {
+		aminoType: "cosmos-sdk/UnbondingDelegationEntry",
+		toAmino: (message: UnbondingDelegationEntry) => ({ ...message }),
+		fromAmino: (object: UnbondingDelegationEntry) => ({ ...object })
+	},
+
 	"/cosmos.staking.v1beta1.RedelegationEntry": {
 		aminoType: "cosmos-sdk/RedelegationEntry",
 		toAmino: (message: RedelegationEntry) => ({ ...message }),
@@ -2166,6 +2174,12 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/DelegationResponse",
 		toAmino: (message: DelegationResponse) => ({ ...message }),
 		fromAmino: (object: DelegationResponse) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.RedelegationEntryResponse": {
+		aminoType: "cosmos-sdk/RedelegationEntryResponse",
+		toAmino: (message: RedelegationEntryResponse) => ({ ...message }),
+		fromAmino: (object: RedelegationEntryResponse) => ({ ...object })
 	},
 
 	"/cosmos.staking.v1beta1.RedelegationResponse": {

@@ -224,11 +224,20 @@ function createBaseStakeAuthorizationValidators(): StakeAuthorizationValidators 
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
-export const registry: Array<[string, GeneratedType]> = [["/cosmos.staking.v1beta1.StakeAuthorization", StakeAuthorization as never]];
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.staking.v1beta1.StakeAuthorization", StakeAuthorization as never],
+	["/cosmos.staking.v1beta1.StakeAuthorization.Validators", StakeAuthorizationValidators as never]
+];
 export const aminoConverters = {
 	"/cosmos.staking.v1beta1.StakeAuthorization": {
 		aminoType: "cosmos-sdk/StakeAuthorization",
 		toAmino: (message: StakeAuthorization) => ({ ...message }),
 		fromAmino: (object: StakeAuthorization) => ({ ...object })
+	},
+
+	"/cosmos.staking.v1beta1.StakeAuthorization.Validators": {
+		aminoType: "cosmos-sdk/Validators",
+		toAmino: (message: StakeAuthorizationValidators) => ({ ...message }),
+		fromAmino: (object: StakeAuthorizationValidators) => ({ ...object })
 	}
 };

@@ -511,7 +511,9 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.auth.v1beta1.QueryAccountRequest", QueryAccountRequest as never],
 	["/cosmos.auth.v1beta1.QueryAccountResponse", QueryAccountResponse as never],
 	["/cosmos.auth.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.auth.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
+	["/cosmos.auth.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.auth.v1beta1.QueryNextAccountNumberRequest", QueryNextAccountNumberRequest as never],
+	["/cosmos.auth.v1beta1.QueryNextAccountNumberResponse", QueryNextAccountNumberResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.auth.v1beta1.QueryAccountsRequest": {
@@ -548,5 +550,17 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
 		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	},
+
+	"/cosmos.auth.v1beta1.QueryNextAccountNumberRequest": {
+		aminoType: "cosmos-sdk/QueryNextAccountNumberRequest",
+		toAmino: (message: QueryNextAccountNumberRequest) => ({ ...message }),
+		fromAmino: (object: QueryNextAccountNumberRequest) => ({ ...object })
+	},
+
+	"/cosmos.auth.v1beta1.QueryNextAccountNumberResponse": {
+		aminoType: "cosmos-sdk/QueryNextAccountNumberResponse",
+		toAmino: (message: QueryNextAccountNumberResponse) => ({ ...message }),
+		fromAmino: (object: QueryNextAccountNumberResponse) => ({ ...object })
 	}
 };

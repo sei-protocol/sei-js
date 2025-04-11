@@ -576,14 +576,23 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.vesting.v1beta1.BaseVestingAccount", BaseVestingAccount as never],
+	["/cosmos.vesting.v1beta1.ContinuousVestingAccount", ContinuousVestingAccount as never],
 	["/cosmos.vesting.v1beta1.DelayedVestingAccount", DelayedVestingAccount as never],
-	["/cosmos.vesting.v1beta1.Period", Period as never]
+	["/cosmos.vesting.v1beta1.Period", Period as never],
+	["/cosmos.vesting.v1beta1.PeriodicVestingAccount", PeriodicVestingAccount as never],
+	["/cosmos.vesting.v1beta1.PermanentLockedAccount", PermanentLockedAccount as never]
 ];
 export const aminoConverters = {
 	"/cosmos.vesting.v1beta1.BaseVestingAccount": {
 		aminoType: "cosmos-sdk/BaseVestingAccount",
 		toAmino: (message: BaseVestingAccount) => ({ ...message }),
 		fromAmino: (object: BaseVestingAccount) => ({ ...object })
+	},
+
+	"/cosmos.vesting.v1beta1.ContinuousVestingAccount": {
+		aminoType: "cosmos-sdk/ContinuousVestingAccount",
+		toAmino: (message: ContinuousVestingAccount) => ({ ...message }),
+		fromAmino: (object: ContinuousVestingAccount) => ({ ...object })
 	},
 
 	"/cosmos.vesting.v1beta1.DelayedVestingAccount": {
@@ -596,5 +605,17 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/Period",
 		toAmino: (message: Period) => ({ ...message }),
 		fromAmino: (object: Period) => ({ ...object })
+	},
+
+	"/cosmos.vesting.v1beta1.PeriodicVestingAccount": {
+		aminoType: "cosmos-sdk/PeriodicVestingAccount",
+		toAmino: (message: PeriodicVestingAccount) => ({ ...message }),
+		fromAmino: (object: PeriodicVestingAccount) => ({ ...object })
+	},
+
+	"/cosmos.vesting.v1beta1.PermanentLockedAccount": {
+		aminoType: "cosmos-sdk/PermanentLockedAccount",
+		toAmino: (message: PermanentLockedAccount) => ({ ...message }),
+		fromAmino: (object: PermanentLockedAccount) => ({ ...object })
 	}
 };

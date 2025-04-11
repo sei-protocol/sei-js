@@ -177,11 +177,20 @@ function base64FromBytes(arr: Uint8Array): string {
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
-export const registry: Array<[string, GeneratedType]> = [["/cosmos.evidence.v1beta1.MsgSubmitEvidence", MsgSubmitEvidence as never]];
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.evidence.v1beta1.MsgSubmitEvidence", MsgSubmitEvidence as never],
+	["/cosmos.evidence.v1beta1.MsgSubmitEvidenceResponse", MsgSubmitEvidenceResponse as never]
+];
 export const aminoConverters = {
 	"/cosmos.evidence.v1beta1.MsgSubmitEvidence": {
 		aminoType: "cosmos-sdk/MsgSubmitEvidence",
 		toAmino: (message: MsgSubmitEvidence) => ({ ...message }),
 		fromAmino: (object: MsgSubmitEvidence) => ({ ...object })
+	},
+
+	"/cosmos.evidence.v1beta1.MsgSubmitEvidenceResponse": {
+		aminoType: "cosmos-sdk/MsgSubmitEvidenceResponse",
+		toAmino: (message: MsgSubmitEvidenceResponse) => ({ ...message }),
+		fromAmino: (object: MsgSubmitEvidenceResponse) => ({ ...object })
 	}
 };

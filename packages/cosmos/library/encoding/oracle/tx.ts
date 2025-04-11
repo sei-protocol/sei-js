@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
@@ -277,3 +279,34 @@ function createBaseMsgDelegateFeedConsentResponse(): MsgDelegateFeedConsentRespo
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote", MsgAggregateExchangeRateVote as never],
+	["/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVoteResponse", MsgAggregateExchangeRateVoteResponse as never],
+	["/seiprotocol.seichain.oracle.MsgDelegateFeedConsent", MsgDelegateFeedConsent as never],
+	["/seiprotocol.seichain.oracle.MsgDelegateFeedConsentResponse", MsgDelegateFeedConsentResponse as never]
+];
+export const aminoConverters = {
+	"/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVote": {
+		aminoType: "oracle/MsgAggregateExchangeRateVote",
+		toAmino: (message: MsgAggregateExchangeRateVote) => ({ ...message }),
+		fromAmino: (object: MsgAggregateExchangeRateVote) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.MsgAggregateExchangeRateVoteResponse": {
+		aminoType: "oracle/MsgAggregateExchangeRateVoteResponse",
+		toAmino: (message: MsgAggregateExchangeRateVoteResponse) => ({ ...message }),
+		fromAmino: (object: MsgAggregateExchangeRateVoteResponse) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.MsgDelegateFeedConsent": {
+		aminoType: "oracle/MsgDelegateFeedConsent",
+		toAmino: (message: MsgDelegateFeedConsent) => ({ ...message }),
+		fromAmino: (object: MsgDelegateFeedConsent) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.oracle.MsgDelegateFeedConsentResponse": {
+		aminoType: "oracle/MsgDelegateFeedConsentResponse",
+		toAmino: (message: MsgDelegateFeedConsentResponse) => ({ ...message }),
+		fromAmino: (object: MsgDelegateFeedConsentResponse) => ({ ...object })
+	}
+};

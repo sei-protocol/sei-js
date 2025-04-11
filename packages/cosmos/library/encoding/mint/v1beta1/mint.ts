@@ -640,8 +640,10 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.mint.Minter", Minter as never],
+	["/seiprotocol.seichain.mint.ScheduledTokenRelease", ScheduledTokenRelease as never],
 	["/seiprotocol.seichain.mint.Params", Params as never],
 	["/seiprotocol.seichain.mint.Version2Minter", Version2Minter as never],
+	["/seiprotocol.seichain.mint.Version2ScheduledTokenRelease", Version2ScheduledTokenRelease as never],
 	["/seiprotocol.seichain.mint.Version2Params", Version2Params as never]
 ];
 export const aminoConverters = {
@@ -649,6 +651,12 @@ export const aminoConverters = {
 		aminoType: "mint/Minter",
 		toAmino: (message: Minter) => ({ ...message }),
 		fromAmino: (object: Minter) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.mint.ScheduledTokenRelease": {
+		aminoType: "mint/ScheduledTokenRelease",
+		toAmino: (message: ScheduledTokenRelease) => ({ ...message }),
+		fromAmino: (object: ScheduledTokenRelease) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.Params": {
@@ -661,6 +669,12 @@ export const aminoConverters = {
 		aminoType: "mint/Version2Minter",
 		toAmino: (message: Version2Minter) => ({ ...message }),
 		fromAmino: (object: Version2Minter) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.mint.Version2ScheduledTokenRelease": {
+		aminoType: "mint/Version2ScheduledTokenRelease",
+		toAmino: (message: Version2ScheduledTokenRelease) => ({ ...message }),
+		fromAmino: (object: Version2ScheduledTokenRelease) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.mint.Version2Params": {

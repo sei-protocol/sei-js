@@ -673,14 +673,35 @@ function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
 export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.slashing.v1beta1.ValidatorSigningInfoLegacyMissedHeights", ValidatorSigningInfoLegacyMissedHeights as never],
 	["/cosmos.slashing.v1beta1.ValidatorSigningInfo", ValidatorSigningInfo as never],
+	["/cosmos.slashing.v1beta1.ValidatorMissedBlockArrayLegacyMissedHeights", ValidatorMissedBlockArrayLegacyMissedHeights as never],
+	["/cosmos.slashing.v1beta1.ValidatorMissedBlockArray", ValidatorMissedBlockArray as never],
 	["/cosmos.slashing.v1beta1.Params", Params as never]
 ];
 export const aminoConverters = {
+	"/cosmos.slashing.v1beta1.ValidatorSigningInfoLegacyMissedHeights": {
+		aminoType: "cosmos-sdk/ValidatorSigningInfoLegacyMissedHeights",
+		toAmino: (message: ValidatorSigningInfoLegacyMissedHeights) => ({ ...message }),
+		fromAmino: (object: ValidatorSigningInfoLegacyMissedHeights) => ({ ...object })
+	},
+
 	"/cosmos.slashing.v1beta1.ValidatorSigningInfo": {
 		aminoType: "cosmos-sdk/ValidatorSigningInfo",
 		toAmino: (message: ValidatorSigningInfo) => ({ ...message }),
 		fromAmino: (object: ValidatorSigningInfo) => ({ ...object })
+	},
+
+	"/cosmos.slashing.v1beta1.ValidatorMissedBlockArrayLegacyMissedHeights": {
+		aminoType: "cosmos-sdk/ValidatorMissedBlockArrayLegacyMissedHeights",
+		toAmino: (message: ValidatorMissedBlockArrayLegacyMissedHeights) => ({ ...message }),
+		fromAmino: (object: ValidatorMissedBlockArrayLegacyMissedHeights) => ({ ...object })
+	},
+
+	"/cosmos.slashing.v1beta1.ValidatorMissedBlockArray": {
+		aminoType: "cosmos-sdk/ValidatorMissedBlockArray",
+		toAmino: (message: ValidatorMissedBlockArray) => ({ ...message }),
+		fromAmino: (object: ValidatorMissedBlockArray) => ({ ...object })
 	},
 
 	"/cosmos.slashing.v1beta1.Params": {

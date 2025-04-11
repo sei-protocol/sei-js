@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import type {
@@ -1008,3 +1010,62 @@ function createBaseAddERCNativePointerProposalV2(): AddERCNativePointerProposalV
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/seiprotocol.seichain.evm.AddERCNativePointerProposal", AddERCNativePointerProposal as never],
+	["/seiprotocol.seichain.evm.AddERCCW20PointerProposal", AddERCCW20PointerProposal as never],
+	["/seiprotocol.seichain.evm.AddERCCW721PointerProposal", AddERCCW721PointerProposal as never],
+	["/seiprotocol.seichain.evm.AddERCCW1155PointerProposal", AddERCCW1155PointerProposal as never],
+	["/seiprotocol.seichain.evm.AddCWERC20PointerProposal", AddCWERC20PointerProposal as never],
+	["/seiprotocol.seichain.evm.AddCWERC721PointerProposal", AddCWERC721PointerProposal as never],
+	["/seiprotocol.seichain.evm.AddCWERC1155PointerProposal", AddCWERC1155PointerProposal as never],
+	["/seiprotocol.seichain.evm.AddERCNativePointerProposalV2", AddERCNativePointerProposalV2 as never]
+];
+export const aminoConverters = {
+	"/seiprotocol.seichain.evm.AddERCNativePointerProposal": {
+		aminoType: "evm/AddERCNativePointerProposal",
+		toAmino: (message: AddERCNativePointerProposal) => ({ ...message }),
+		fromAmino: (object: AddERCNativePointerProposal) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.AddERCCW20PointerProposal": {
+		aminoType: "evm/AddERCCW20PointerProposal",
+		toAmino: (message: AddERCCW20PointerProposal) => ({ ...message }),
+		fromAmino: (object: AddERCCW20PointerProposal) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.AddERCCW721PointerProposal": {
+		aminoType: "evm/AddERCCW721PointerProposal",
+		toAmino: (message: AddERCCW721PointerProposal) => ({ ...message }),
+		fromAmino: (object: AddERCCW721PointerProposal) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.AddERCCW1155PointerProposal": {
+		aminoType: "evm/AddERCCW1155PointerProposal",
+		toAmino: (message: AddERCCW1155PointerProposal) => ({ ...message }),
+		fromAmino: (object: AddERCCW1155PointerProposal) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.AddCWERC20PointerProposal": {
+		aminoType: "evm/AddCWERC20PointerProposal",
+		toAmino: (message: AddCWERC20PointerProposal) => ({ ...message }),
+		fromAmino: (object: AddCWERC20PointerProposal) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.AddCWERC721PointerProposal": {
+		aminoType: "evm/AddCWERC721PointerProposal",
+		toAmino: (message: AddCWERC721PointerProposal) => ({ ...message }),
+		fromAmino: (object: AddCWERC721PointerProposal) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.AddCWERC1155PointerProposal": {
+		aminoType: "evm/AddCWERC1155PointerProposal",
+		toAmino: (message: AddCWERC1155PointerProposal) => ({ ...message }),
+		fromAmino: (object: AddCWERC1155PointerProposal) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.AddERCNativePointerProposalV2": {
+		aminoType: "evm/AddERCNativePointerProposalV2",
+		toAmino: (message: AddERCNativePointerProposalV2) => ({ ...message }),
+		fromAmino: (object: AddERCNativePointerProposalV2) => ({ ...object })
+	}
+};

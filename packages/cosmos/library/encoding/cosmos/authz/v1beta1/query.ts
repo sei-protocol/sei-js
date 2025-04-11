@@ -515,7 +515,11 @@ function isSet(value: any): boolean {
 }
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.authz.v1beta1.QueryGrantsRequest", QueryGrantsRequest as never],
-	["/cosmos.authz.v1beta1.QueryGrantsResponse", QueryGrantsResponse as never]
+	["/cosmos.authz.v1beta1.QueryGrantsResponse", QueryGrantsResponse as never],
+	["/cosmos.authz.v1beta1.QueryGranterGrantsRequest", QueryGranterGrantsRequest as never],
+	["/cosmos.authz.v1beta1.QueryGranterGrantsResponse", QueryGranterGrantsResponse as never],
+	["/cosmos.authz.v1beta1.QueryGranteeGrantsRequest", QueryGranteeGrantsRequest as never],
+	["/cosmos.authz.v1beta1.QueryGranteeGrantsResponse", QueryGranteeGrantsResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.authz.v1beta1.QueryGrantsRequest": {
@@ -528,5 +532,29 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryGrantsResponse",
 		toAmino: (message: QueryGrantsResponse) => ({ ...message }),
 		fromAmino: (object: QueryGrantsResponse) => ({ ...object })
+	},
+
+	"/cosmos.authz.v1beta1.QueryGranterGrantsRequest": {
+		aminoType: "cosmos-sdk/QueryGranterGrantsRequest",
+		toAmino: (message: QueryGranterGrantsRequest) => ({ ...message }),
+		fromAmino: (object: QueryGranterGrantsRequest) => ({ ...object })
+	},
+
+	"/cosmos.authz.v1beta1.QueryGranterGrantsResponse": {
+		aminoType: "cosmos-sdk/QueryGranterGrantsResponse",
+		toAmino: (message: QueryGranterGrantsResponse) => ({ ...message }),
+		fromAmino: (object: QueryGranterGrantsResponse) => ({ ...object })
+	},
+
+	"/cosmos.authz.v1beta1.QueryGranteeGrantsRequest": {
+		aminoType: "cosmos-sdk/QueryGranteeGrantsRequest",
+		toAmino: (message: QueryGranteeGrantsRequest) => ({ ...message }),
+		fromAmino: (object: QueryGranteeGrantsRequest) => ({ ...object })
+	},
+
+	"/cosmos.authz.v1beta1.QueryGranteeGrantsResponse": {
+		aminoType: "cosmos-sdk/QueryGranteeGrantsResponse",
+		toAmino: (message: QueryGranteeGrantsResponse) => ({ ...message }),
+		fromAmino: (object: QueryGranteeGrantsResponse) => ({ ...object })
 	}
 };

@@ -1,3 +1,5 @@
+import type { GeneratedType } from "@cosmjs/proto-signing";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 import { MessageDependencyMapping, WasmDependencyMapping } from "../accesscontrol/accesscontrol";
@@ -517,3 +519,41 @@ function createBaseMsgUpdateWasmDependencyMappingProposalJsonFile(): MsgUpdateWa
 function isSet(value: any): boolean {
 	return value !== null && value !== undefined;
 }
+export const registry: Array<[string, GeneratedType]> = [
+	["/cosmos.accesscontrol.v1beta1.MsgUpdateResourceDependencyMappingProposal", MsgUpdateResourceDependencyMappingProposal as never],
+	["/cosmos.accesscontrol.v1beta1.MsgUpdateResourceDependencyMappingProposalJsonFile", MsgUpdateResourceDependencyMappingProposalJsonFile as never],
+	["/cosmos.accesscontrol.v1beta1.MsgUpdateResourceDependencyMappingProposalResponse", MsgUpdateResourceDependencyMappingProposalResponse as never],
+	["/cosmos.accesscontrol.v1beta1.MsgUpdateWasmDependencyMappingProposal", MsgUpdateWasmDependencyMappingProposal as never],
+	["/cosmos.accesscontrol.v1beta1.MsgUpdateWasmDependencyMappingProposalJsonFile", MsgUpdateWasmDependencyMappingProposalJsonFile as never]
+];
+export const aminoConverters = {
+	"/cosmos.accesscontrol.v1beta1.MsgUpdateResourceDependencyMappingProposal": {
+		aminoType: "cosmos-sdk/MsgUpdateResourceDependencyMappingProposal",
+		toAmino: (message: MsgUpdateResourceDependencyMappingProposal) => ({ ...message }),
+		fromAmino: (object: MsgUpdateResourceDependencyMappingProposal) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.MsgUpdateResourceDependencyMappingProposalJsonFile": {
+		aminoType: "cosmos-sdk/MsgUpdateResourceDependencyMappingProposalJsonFile",
+		toAmino: (message: MsgUpdateResourceDependencyMappingProposalJsonFile) => ({ ...message }),
+		fromAmino: (object: MsgUpdateResourceDependencyMappingProposalJsonFile) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.MsgUpdateResourceDependencyMappingProposalResponse": {
+		aminoType: "cosmos-sdk/MsgUpdateResourceDependencyMappingProposalResponse",
+		toAmino: (message: MsgUpdateResourceDependencyMappingProposalResponse) => ({ ...message }),
+		fromAmino: (object: MsgUpdateResourceDependencyMappingProposalResponse) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.MsgUpdateWasmDependencyMappingProposal": {
+		aminoType: "cosmos-sdk/MsgUpdateWasmDependencyMappingProposal",
+		toAmino: (message: MsgUpdateWasmDependencyMappingProposal) => ({ ...message }),
+		fromAmino: (object: MsgUpdateWasmDependencyMappingProposal) => ({ ...object })
+	},
+
+	"/cosmos.accesscontrol.v1beta1.MsgUpdateWasmDependencyMappingProposalJsonFile": {
+		aminoType: "cosmos-sdk/MsgUpdateWasmDependencyMappingProposalJsonFile",
+		toAmino: (message: MsgUpdateWasmDependencyMappingProposalJsonFile) => ({ ...message }),
+		fromAmino: (object: MsgUpdateWasmDependencyMappingProposalJsonFile) => ({ ...object })
+	}
+};

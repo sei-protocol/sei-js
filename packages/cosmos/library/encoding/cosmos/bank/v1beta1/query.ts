@@ -1101,10 +1101,20 @@ function isSet(value: any): boolean {
 export const registry: Array<[string, GeneratedType]> = [
 	["/cosmos.bank.v1beta1.QueryBalanceRequest", QueryBalanceRequest as never],
 	["/cosmos.bank.v1beta1.QueryBalanceResponse", QueryBalanceResponse as never],
+	["/cosmos.bank.v1beta1.QueryAllBalancesRequest", QueryAllBalancesRequest as never],
+	["/cosmos.bank.v1beta1.QueryAllBalancesResponse", QueryAllBalancesResponse as never],
+	["/cosmos.bank.v1beta1.QuerySpendableBalancesRequest", QuerySpendableBalancesRequest as never],
+	["/cosmos.bank.v1beta1.QuerySpendableBalancesResponse", QuerySpendableBalancesResponse as never],
+	["/cosmos.bank.v1beta1.QueryTotalSupplyRequest", QueryTotalSupplyRequest as never],
+	["/cosmos.bank.v1beta1.QueryTotalSupplyResponse", QueryTotalSupplyResponse as never],
 	["/cosmos.bank.v1beta1.QuerySupplyOfRequest", QuerySupplyOfRequest as never],
 	["/cosmos.bank.v1beta1.QuerySupplyOfResponse", QuerySupplyOfResponse as never],
 	["/cosmos.bank.v1beta1.QueryParamsRequest", QueryParamsRequest as never],
-	["/cosmos.bank.v1beta1.QueryParamsResponse", QueryParamsResponse as never]
+	["/cosmos.bank.v1beta1.QueryParamsResponse", QueryParamsResponse as never],
+	["/cosmos.bank.v1beta1.QueryDenomsMetadataRequest", QueryDenomsMetadataRequest as never],
+	["/cosmos.bank.v1beta1.QueryDenomsMetadataResponse", QueryDenomsMetadataResponse as never],
+	["/cosmos.bank.v1beta1.QueryDenomMetadataRequest", QueryDenomMetadataRequest as never],
+	["/cosmos.bank.v1beta1.QueryDenomMetadataResponse", QueryDenomMetadataResponse as never]
 ];
 export const aminoConverters = {
 	"/cosmos.bank.v1beta1.QueryBalanceRequest": {
@@ -1117,6 +1127,42 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryBalanceResponse",
 		toAmino: (message: QueryBalanceResponse) => ({ ...message }),
 		fromAmino: (object: QueryBalanceResponse) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryAllBalancesRequest": {
+		aminoType: "cosmos-sdk/QueryAllBalancesRequest",
+		toAmino: (message: QueryAllBalancesRequest) => ({ ...message }),
+		fromAmino: (object: QueryAllBalancesRequest) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryAllBalancesResponse": {
+		aminoType: "cosmos-sdk/QueryAllBalancesResponse",
+		toAmino: (message: QueryAllBalancesResponse) => ({ ...message }),
+		fromAmino: (object: QueryAllBalancesResponse) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QuerySpendableBalancesRequest": {
+		aminoType: "cosmos-sdk/QuerySpendableBalancesRequest",
+		toAmino: (message: QuerySpendableBalancesRequest) => ({ ...message }),
+		fromAmino: (object: QuerySpendableBalancesRequest) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QuerySpendableBalancesResponse": {
+		aminoType: "cosmos-sdk/QuerySpendableBalancesResponse",
+		toAmino: (message: QuerySpendableBalancesResponse) => ({ ...message }),
+		fromAmino: (object: QuerySpendableBalancesResponse) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryTotalSupplyRequest": {
+		aminoType: "cosmos-sdk/QueryTotalSupplyRequest",
+		toAmino: (message: QueryTotalSupplyRequest) => ({ ...message }),
+		fromAmino: (object: QueryTotalSupplyRequest) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryTotalSupplyResponse": {
+		aminoType: "cosmos-sdk/QueryTotalSupplyResponse",
+		toAmino: (message: QueryTotalSupplyResponse) => ({ ...message }),
+		fromAmino: (object: QueryTotalSupplyResponse) => ({ ...object })
 	},
 
 	"/cosmos.bank.v1beta1.QuerySupplyOfRequest": {
@@ -1141,5 +1187,29 @@ export const aminoConverters = {
 		aminoType: "cosmos-sdk/QueryParamsResponse",
 		toAmino: (message: QueryParamsResponse) => ({ ...message }),
 		fromAmino: (object: QueryParamsResponse) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryDenomsMetadataRequest": {
+		aminoType: "cosmos-sdk/QueryDenomsMetadataRequest",
+		toAmino: (message: QueryDenomsMetadataRequest) => ({ ...message }),
+		fromAmino: (object: QueryDenomsMetadataRequest) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryDenomsMetadataResponse": {
+		aminoType: "cosmos-sdk/QueryDenomsMetadataResponse",
+		toAmino: (message: QueryDenomsMetadataResponse) => ({ ...message }),
+		fromAmino: (object: QueryDenomsMetadataResponse) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryDenomMetadataRequest": {
+		aminoType: "cosmos-sdk/QueryDenomMetadataRequest",
+		toAmino: (message: QueryDenomMetadataRequest) => ({ ...message }),
+		fromAmino: (object: QueryDenomMetadataRequest) => ({ ...object })
+	},
+
+	"/cosmos.bank.v1beta1.QueryDenomMetadataResponse": {
+		aminoType: "cosmos-sdk/QueryDenomMetadataResponse",
+		toAmino: (message: QueryDenomMetadataResponse) => ({ ...message }),
+		fromAmino: (object: QueryDenomMetadataResponse) => ({ ...object })
 	}
 };
