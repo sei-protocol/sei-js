@@ -1,5 +1,11 @@
 # @sei-js/evm
 
+## 2.0.4
+
+### Patch Changes
+
+- c4f90d3: Add condiential transfers precompiles
+
 ## 2.0.3
 
 ### Patch Changes
