@@ -1,51 +1,44 @@
 {
-  "name": "confidential-transfers",
-  "version": "0.1.0",
-  "description": "A TypeScript library for the Confidential Transfers Module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "files": [
-    "dist",
-    "confidentialWasm/ct.wasm"
-  ],
-  "scripts": {
-    "build": "vite build && yarn tsc",
-    "dev": "vite",
-    "prepublishOnly": "yarn build",
-    "test": "npx tsx src/test/test.ts",
-    "testjs": "node test.js",
-    "build-wasm": "bash scripts/build-wasm.sh",
-    "build-protos": "cd confidentialWasm && buf generate --template buf.gen.gogo.yaml"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.2",
-    "mocha": "^11.0.1",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.19.2",
-    "typechain": "^8.3.2",
-    "typescript": "^5.7.2",
-    "vite": "^5.0.5",
-    "vite-plugin-static-copy": "^2.2.0",
-    "vite-plugin-top-level-await": "^1.4.4",
-    "vite-plugin-wasm": "^3.4.1"
-  },
-  "type": "module",
-  "dependencies": {
-    "@bufbuild/protobuf": "^2.2.3",
-    "@sei-js/cosmos": "0.0.0-internal-20250414203224",
-    "@sei-js/evm": "^2.0.4",
-    "axios": "^1.7.9",
-    "ethers": "^6.13.5",
-    "node-fetch": "^3.3.2",
-    "stream-browserify": "^3.0.0",
-    "viem": "^2.26.5",
-    "vite-plugin-node-polyfills": "^0.22.0"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+	"name": "confidential-transfers",
+	"version": "0.1.0",
+	"description": "A TypeScript library for the Confidential Transfers Module",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/types/index.d.ts",
+	"files": ["dist", "confidentialWasm/ct.wasm"],
+	"scripts": {
+		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
+		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
+		"build:esm": "tsc --outDir dist/esm --module esnext",
+		"build:types": "tsc --project ./tsconfig.declaration.json",
+		"dev": "vite",
+		"prepublishOnly": "yarn build",
+		"test": "npx tsx src/test/test.ts",
+		"testjs": "node test.js",
+		"build-wasm": "bash scripts/build-wasm.sh",
+		"build-protos": "cd confidentialWasm && buf generate --template buf.gen.gogo.yaml"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.2",
+		"mocha": "^11.0.1",
+		"ts-node": "^10.9.2",
+		"tsx": "^4.19.2",
+		"typechain": "^8.3.2",
+		"typescript": "^5.7.2",
+		"vite": "^5.0.5",
+		"vite-plugin-static-copy": "^2.2.0",
+		"vite-plugin-top-level-await": "^1.4.4",
+		"vite-plugin-wasm": "^3.4.1"
+	},
+	"dependencies": {
+		"@bufbuild/protobuf": "^2.2.3",
+		"@sei-js/cosmos": "0.0.0-internal-20250414203224",
+		"@sei-js/evm": "^2.0.4",
+		"axios": "^1.7.9",
+		"ethers": "^6.13.5",
+		"node-fetch": "^3.3.2",
+		"stream-browserify": "^3.0.0",
+		"viem": "^2.26.5",
+		"vite-plugin-node-polyfills": "^0.22.0"
+	}
 }
