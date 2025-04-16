@@ -1,0 +1,150 @@
+# @sei-js/confidential-transfers
+
+## 0.0.0-internal-20250416212233
+
+### Major Changes
+
+- test2
+
+## 0.0.0-internal-20250416211424
+
+### Major Changes
+
+- test
+  ;
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  testcopy
+  testcopy
+  testcopy
+
+  test
+  ;
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  ~
+  -- INSERT --
+
+  fd
+
+## 0.0.0-internal-20250416210143
+
+### Major Changes
+
+- First draft
