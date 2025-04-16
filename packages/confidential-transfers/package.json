@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/confidential-transfers",
-	"version": "0.1.0",
+	"version": "0.0.0-internal-20250416212233",
 	"description": "A TypeScript library for the Confidential Transfers Module",
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
@@ -11,10 +11,11 @@
 		"confidentialWasm/ct.wasm"
 	],
 	"scripts": {
-		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
+		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm && yarn copy-assets",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
+		"copy-assets": "shx mkdir -p dist/esm/payload dist/cjs/payload && shx cp src/payload/wasm_exec.cjs dist/esm/payload/ && shx cp src/payload/wasm_exec.cjs dist/cjs/payload/",
 		"dev": "vite",
 		"prepublishOnly": "yarn build",
 		"test": "npx tsx src/test/test.ts",
@@ -32,6 +33,7 @@
 	"devDependencies": {
 		"@types/node": "^22.10.2",
 		"mocha": "^11.0.1",
+		"shx": "^0.4.0",
 		"ts-node": "^10.9.2",
 		"tsx": "^4.19.2",
 		"typechain": "^8.3.2",
