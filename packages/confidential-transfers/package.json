@@ -15,8 +15,6 @@
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"dev": "vite",
-		"prepublishOnly": "yarn build",
 		"test": "npx tsx src/test/test.ts",
 		"testjs": "node test.js",
 		"build-wasm": "bash scripts/build-wasm.sh",
