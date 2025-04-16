@@ -5,7 +5,10 @@
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
 	"types": "./dist/types/index.d.ts",
-	"files": ["dist", "confidentialWasm/ct.wasm"],
+	"files": [
+		"dist",
+		"confidentialWasm/ct.wasm"
+	],
 	"scripts": {
 		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
