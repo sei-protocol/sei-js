@@ -1,10 +1,11 @@
 {
-	"name": "confidential-transfers",
+	"name": "@sei-js/confidential-transfers",
 	"version": "0.1.0",
 	"description": "A TypeScript library for the Confidential Transfers Module",
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
 	"types": "./dist/types/index.d.ts",
+	"sideEffects": false,
 	"files": [
 		"dist",
 		"confidentialWasm/ct.wasm"
@@ -21,6 +22,13 @@
 		"build-wasm": "bash scripts/build-wasm.sh",
 		"build-protos": "cd confidentialWasm && buf generate --template buf.gen.gogo.yaml"
 	},
+	"homepage": "https://github.com/sei-protocol/sei-js#readme",
+	"keywords": [
+		"sei",
+		"javascript",
+		"typescript",
+		"confidential transfers"
+	],
 	"devDependencies": {
 		"@types/node": "^22.10.2",
 		"mocha": "^11.0.1",
@@ -43,5 +51,10 @@
 		"stream-browserify": "^3.0.0",
 		"viem": "^2.26.5",
 		"vite-plugin-node-polyfills": "^0.22.0"
+	},
+	"repository": "git@github.com:sei-protocol/sei-js.git",
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
 	}
 }
