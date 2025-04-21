@@ -8,7 +8,6 @@ describe('ConfidentialTransfersWrapper', () => {
   let wrapper: ConfidentialTransfersWrapper;
   let account: CtAccount;
   let signedDenom: Uint8Array;
-  let recipientAddress: string;
   let recipientPubkey: Uint8Array;
 
   beforeEach(async () => {
@@ -34,7 +33,6 @@ describe('ConfidentialTransfersWrapper', () => {
     } as CtAccount;
 
     signedDenom = getBytes(sampleAccount.signedDenom);
-    recipientAddress = sampleAccount.recipientAddress;
     recipientPubkey = new Uint8Array(sampleAccount.recipientPubkey);
   });
 
