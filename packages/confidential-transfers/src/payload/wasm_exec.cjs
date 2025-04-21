@@ -152,7 +152,7 @@
   }
   
   if (!globalContext.crypto) {
-    console.warn("globalContext.crypto is not available. Adding a polyfill.");
+    console.log("globalContext.crypto is not available. Adding a polyfill.");
 	try {
 		const { webcrypto } = require("crypto");
 		globalThis.crypto = webcrypto;
