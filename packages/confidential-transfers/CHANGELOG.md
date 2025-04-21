@@ -1,5 +1,11 @@
 # @sei-js/confidential-transfers
 
+## 0.0.0-internal-20250417043704
+
+### Major Changes
+
+- yes
+
 ## 0.0.0-internal-20250416212233
 
 ### Major Changes

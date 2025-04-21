@@ -29,7 +29,7 @@ async function main() {
     const denomHash = getDenomToSignEthers(denom)
 
     const signedDenom = await testWallet.signMessage(denomHash);
-
+    console.log("Signed Denom:", signedDenom);
 /// INITIALIZE TEST
     // 5) Create the initialize object using the wasm library
     const api = new ConfidentialTransfers();

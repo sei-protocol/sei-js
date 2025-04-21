@@ -1,10 +1,9 @@
-import { Contract, ContractRunner, getBytes, keccak256, toUtf8Bytes } from "ethers";
-import { MsgApplyPendingBalance, MsgCloseAccount, MsgInitializeAccount, MsgTransfer, MsgWithdraw, CloseAccountMsgProofs, InitializeAccountMsgProofs, TransferMsgProofs, WithdrawMsgProofs } from "@sei-js/cosmos/types/confidentialtransfers";
+import { ContractRunner, getBytes, isAddress, keccak256, toUtf8Bytes } from "ethers";
+import { MsgApplyPendingBalance, MsgCloseAccount, MsgInitializeAccount, MsgTransfer, MsgWithdraw } from "@sei-js/cosmos/types/confidentialtransfers";
 import { Encoder } from '@sei-js/cosmos/encoding';
 import { CtAccount } from "@sei-js/cosmos/types/confidentialtransfers";
 import { ConfidentialTransfersWrapper } from "../payload/confidentialApi";
 import { getConfidentialTransfersPrecompileEthersV6Contract } from "@sei-js/evm";
-import { toBytes } from "viem";
 import { DecryptedAccount, DecryptedPendingBalances } from "./types";
 
 /**
@@ -16,6 +15,14 @@ import { DecryptedAccount, DecryptedPendingBalances } from "./types";
  * @returns A CtAccount object if found, or null if the account is not initialized.
  */
 export async function queryAccountEthers(address: string, denom: string, contractRunner: ContractRunner): Promise<CtAccount | null> {
+    // Sanity checks
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+
     const confidentialPrecompile = getConfidentialTransfersPrecompileEthersV6Contract(contractRunner)
     
     let account
@@ -64,9 +71,14 @@ export async function queryAccountEthers(address: string, denom: string, contrac
  * @returns The lo and hi decrypted balances and the combined total.
  */
 export async function decryptPendingBalancesEthers(signedDenom: string, ctAccount: CtAccount): Promise<DecryptedPendingBalances> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
-    const signedDenomArray = toBytes(signedDenom)
+    const signedDenomArray = getBytes(signedDenom)
 
     let encodedPendingBalanceLo = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.pending_balance_lo!).finish()
     let encodedPendingBalanceHi = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.pending_balance_hi!).finish()
@@ -90,9 +102,14 @@ export async function decryptPendingBalancesEthers(signedDenom: string, ctAccoun
  */
 
 export async function decryptDecryptableAvailableBalanceEthers(signedDenom: string, ctAccount: CtAccount): Promise<bigint> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
-    const signedDenomArray = toBytes(signedDenom)
+    const signedDenomArray = getBytes(signedDenom)
     
     const decryptableAvailableBalance = api.decryptAesCiphertext(signedDenomArray, ctAccount.decryptable_available_balance)
     return decryptableAvailableBalance
@@ -108,9 +125,14 @@ export async function decryptDecryptableAvailableBalanceEthers(signedDenom: stri
  */
 
 export async function decryptAvailableBalanceEthers(signedDenom: string, ctAccount: CtAccount): Promise<bigint> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
-    const signedDenomArray = toBytes(signedDenom)
+    const signedDenomArray = getBytes(signedDenom)
     
     let encodedAvailableBalance = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.available_balance!).finish()
 
@@ -128,6 +150,11 @@ export async function decryptAvailableBalanceEthers(signedDenom: string, ctAccou
  */
 
 export async function decryptAccountEthers(signedDenom: string, ctAccount: CtAccount, decryptFullAvailableBalance: boolean): Promise<DecryptedAccount> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
 
@@ -161,17 +188,28 @@ export async function decryptAccountEthers(signedDenom: string, ctAccount: CtAcc
  * @returns The transaction receipt of the initializeAccount call.
  */
 export async function initializeAccountEthers(signedDenom: string, address: string, denom: string, contractRunner: ContractRunner) {
+    // Sanity checks
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper();
     await api.initialize();
 
-    const signedDenomArray = getBytes(signedDenom)
+    const signedDenomArray = getBytes(signedDenom);
     const initializePayload = api.createInitialize(
         signedDenomArray,
         address,
         denom,
     );
 
-    return executeInitialize(initializePayload, contractRunner)
+    return executeInitialize(initializePayload, contractRunner);
 }
 
 async function executeInitialize(initializePayload: MsgInitializeAccount, contractRunner: ContractRunner) {
@@ -223,14 +261,22 @@ async function executeInitialize(initializePayload: MsgInitializeAccount, contra
  * @returns The transaction receipt.
  */
 export async function depositEthers(denom: string, amount: number, contractRunner: ContractRunner) {
-    const confidentialPrecompile = getConfidentialTransfersPrecompileEthersV6Contract(contractRunner)
+    // Sanity checks
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (amount <= 0) {
+        throw new Error('Amount must be a positive number');
+    }
+
+    const confidentialPrecompile = getConfidentialTransfersPrecompileEthersV6Contract(contractRunner);
 
     const estimatedGas = await confidentialPrecompile.deposit.estimateGas(
         denom,
         amount
-    )
+    );
 
-    const gasLimit = estimatedGas * BigInt(110) / BigInt(100)
+    const gasLimit = estimatedGas * BigInt(110) / BigInt(100);
 
     const deposit_tx = await confidentialPrecompile.deposit(
         denom,
@@ -242,7 +288,7 @@ export async function depositEthers(denom: string, amount: number, contractRunne
 
     const receipt = await deposit_tx.wait();
 
-    return receipt
+    return receipt;
 }
 
 /**
@@ -255,19 +301,30 @@ export async function depositEthers(denom: string, amount: number, contractRunne
  * @returns The transaction receipt or null if account is missing.
  */
 export async function applyPendingBalanceEthers(address: string, denom: string, signedDenom: string, contractRunner: ContractRunner) {
+    // Sanity checks
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper();
     await api.initialize();
 
-    const ctAccount = await queryAccountEthers(address, denom, contractRunner)
+    const ctAccount = await queryAccountEthers(address, denom, contractRunner);
     if (ctAccount == null) {
-        return null
+        return null;
     }
 
-    let availableBalanceBase64 = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.available_balance!).finish()
-    let pendingBalanceLoBase64 = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.pending_balance_lo!).finish()
-    let pendingBalanceHiBase64 = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.pending_balance_hi!).finish()
+    let availableBalanceBase64 = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.available_balance!).finish();
+    let pendingBalanceLoBase64 = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.pending_balance_lo!).finish();
+    let pendingBalanceHiBase64 = Encoder.confidentialtransfers.Ciphertext.encode(ctAccount.pending_balance_hi!).finish();
 
-    const signedDenomArray = getBytes(signedDenom)
+    const signedDenomArray = getBytes(signedDenom);
     const applyPendingBalancePayload = api.createApplyPendingBalance(
         signedDenomArray,
         address,
@@ -279,7 +336,7 @@ export async function applyPendingBalanceEthers(address: string, denom: string, 
         pendingBalanceHiBase64
     );
 
-    return executeApplyPendingBalance(applyPendingBalancePayload, contractRunner)
+    return executeApplyPendingBalance(applyPendingBalancePayload, contractRunner);
 }
 
 async function executeApplyPendingBalance(applyPendingBalancePayload: MsgApplyPendingBalance, contractRunner: ContractRunner) {
@@ -312,7 +369,7 @@ async function executeApplyPendingBalance(applyPendingBalancePayload: MsgApplyPe
 /**
  * Withdraws a specified amount from the available balance.
  *
- * @param address - 0x or sei address to withdraw from.
+ * @param address - 0x address to withdraw from.
  * @param denom - The denomination (e.g., "usei").
  * @param amount - Amount to withdraw in base units.
  * @param signedDenom - Signature over the hashed denom generated by getDenomToSignEthers.
@@ -320,6 +377,20 @@ async function executeApplyPendingBalance(applyPendingBalancePayload: MsgApplyPe
  * @returns Transaction receipt or null if account not found.
  */
 export async function withdrawEthers(address: string, denom: string, amount: number, signedDenom: string, contractRunner: ContractRunner) {
+    // Sanity checks
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (amount <= 0) {
+        throw new Error('Amount must be a positive number');
+    }
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper();
     await api.initialize();
 
@@ -386,22 +457,39 @@ async function executeWithdraw(withdrawPayload: MsgWithdraw, contractRunner: Con
  * @returns Transaction receipt or null if accounts not found.
  */
 export async function transferEthers(senderAddress: string, recipientAddress: string, denom: string, amount: number, signedDenom: string, contractRunner: ContractRunner) {
+    // Sanity checks
+    if (!isAddress(senderAddress)) {
+        throw new Error('Invalid sender address format');
+    }
+    if (!isAddress(recipientAddress)) {
+        throw new Error('Invalid recipient address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Invalid denomination');
+    }
+    if (amount <= 0) {
+        throw new Error('Amount must be a positive number');
+    }
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper();
     await api.initialize();
 
-    const senderAccount = await queryAccountEthers(senderAddress, denom, contractRunner)
+    const senderAccount = await queryAccountEthers(senderAddress, denom, contractRunner);
     if (senderAccount == null) {
-        return null
+        return null;
     }
 
-    const recipientAccount = await queryAccountEthers(recipientAddress, denom, contractRunner)
+    const recipientAccount = await queryAccountEthers(recipientAddress, denom, contractRunner);
     if (recipientAccount == null) {
-        return null
+        return null;
     }
 
-    let availableBalanceBase64 = Encoder.confidentialtransfers.Ciphertext.encode(senderAccount.available_balance!).finish()
+    let availableBalanceBase64 = Encoder.confidentialtransfers.Ciphertext.encode(senderAccount.available_balance!).finish();
 
-    const signedDenomArray = getBytes(signedDenom)
+    const signedDenomArray = getBytes(signedDenom);
     const transferPayload = api.createTransfer(
         signedDenomArray,
         amount,
@@ -413,7 +501,7 @@ export async function transferEthers(senderAddress: string, recipientAddress: st
         recipientAccount.public_key
     );
 
-    return executeTransfer(transferPayload, contractRunner)
+    return executeTransfer(transferPayload, contractRunner);
 }
 
 async function executeTransfer(transferPayload: MsgTransfer, contractRunner: ContractRunner) {
@@ -470,6 +558,17 @@ async function executeTransfer(transferPayload: MsgTransfer, contractRunner: Con
  * @returns Transaction receipt or null if the account does not exist.
  */
 export async function closeAccountEthers(address: string, denom: string, signedDenom: string, contractRunner: ContractRunner) {
+    // Sanity checks
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+
     const api = new ConfidentialTransfersWrapper();
     await api.initialize();
 
@@ -527,6 +626,9 @@ async function executeCloseAccount(closeAccountPayload: MsgCloseAccount, contrac
  * @returns A keccak256 hash of the prefixed denom, ready to sign.
  */
 export function getDenomToSignEthers(denom: string) {
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
     const appendedDenom = "ct:" + denom
     const result = keccak256(toUtf8Bytes(appendedDenom))
     return result;

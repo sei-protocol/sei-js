@@ -1,7 +1,7 @@
-import { MsgApplyPendingBalance, MsgInitializeAccount, MsgTransfer, MsgWithdraw } from "@sei-js/cosmos/dist/types/encoding/confidentialtransfers"
+import { MsgApplyPendingBalance, MsgTransfer, MsgWithdraw } from "@sei-js/cosmos/dist/types/encoding/confidentialtransfers"
 import { Encoder } from "@sei-js/cosmos/encoding"
 import { CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI, CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS } from "@sei-js/evm"
-import { bytesToHex, hexToBytes, keccak256, parseEther, PublicClient, toBytes } from "viem"
+import { bytesToHex, hexToBytes, keccak256, parseEther, PublicClient, toBytes, isAddress } from "viem"
 import { ConfidentialTransfersWrapper } from "../payload/confidentialApi"
 import { DecryptedAccount, DecryptedPendingBalances } from "./types"
 
@@ -27,6 +27,13 @@ export async function queryAccountViem(
     address: string | `0x${string}`,
     denom: string,
   ): Promise<CtAccountResponse | null> {
+    // Sanity checks
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
     let account;
   
     try {
@@ -52,6 +59,10 @@ export async function queryAccountViem(
  * @returns The low, high, and combined pending balances.
  */
 export async function decryptPendingBalancesViem(signedDenom: `0x${string}`, ctAccount: CtAccountResponse): Promise<DecryptedPendingBalances> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
     const signedDenomArray = hexToBytes(signedDenom)
@@ -73,6 +84,10 @@ export async function decryptPendingBalancesViem(signedDenom: `0x${string}`, ctA
  * @returns The decrypted available balance.
  */
 export async function decryptDecryptableAvailableBalanceViem(signedDenom: `0x${string}`, ctAccount: CtAccountResponse): Promise<bigint> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
     const signedDenomArray = hexToBytes(signedDenom)
@@ -90,6 +105,10 @@ export async function decryptDecryptableAvailableBalanceViem(signedDenom: `0x${s
  * @returns The decrypted available balance.
  */
 export async function decryptAvailableBalanceViem(signedDenom: `0x${string}`, ctAccount: CtAccountResponse): Promise<bigint> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
     const signedDenomArray = hexToBytes(signedDenom)
@@ -107,6 +126,10 @@ export async function decryptAvailableBalanceViem(signedDenom: `0x${string}`, ct
  * @returns A DecryptedAccount object.
  */
 export async function decryptAccountViem(signedDenom: `0x${string}`, ctAccount: CtAccountResponse, decryptFullAvailableBalance: boolean): Promise<DecryptedAccount> {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
     const decryptedPendingBalances = await decryptPendingBalancesViem(signedDenom, ctAccount)
@@ -138,6 +161,16 @@ export async function decryptAccountViem(signedDenom: `0x${string}`, ctAccount: 
  * @returns A Viem-compatible calldata params object.
  */
 export async function getInitializeAccountViemArgs(signedDenom: `0x${string}`, address: string | `0x${string}`, denom: string) {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
     const api = new ConfidentialTransfersWrapper();
     await api.initialize();
 
@@ -187,7 +220,17 @@ export async function getInitializeAccountViemArgs(signedDenom: `0x${string}`, a
  * @param amount - Amount to deposit in base units (e.g., 1 SEI = 1_000_000).
  * @returns A Viem-compatible calldata params object.
  */
-export function getDepositViemArgs(address: string | `0x${string}` | undefined, denom: string, amount: BigInt) {
+export function getDepositViemArgs(address: string | `0x${string}` | undefined, denom: string, amount: bigint) {
+    // Sanity checks
+    if (address && !isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (amount <= BigInt(0)) {
+        throw new Error('Amount must be a positive number');
+    }
     const params = {
         account: address,
         address: CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS,
@@ -209,6 +252,16 @@ export function getDepositViemArgs(address: string | `0x${string}` | undefined, 
  * @returns A Viem-compatible calldata params object or null if the account is uninitialized.
  */
 export async function getApplyPendingBalancesViemArgs(address: string, denom: string, client: PublicClient, signedDenom: `0x${string}`) {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
 
@@ -264,6 +317,19 @@ function getApplyPendingBalancesArgs(applyPayload: MsgApplyPendingBalance) {
  * @returns A Viem-compatible calldata params object or null if the account is uninitialized.
  */
 export async function getWithdrawViemArgs(address: string, denom: string, amount: number, client: PublicClient, signedDenom: `0x${string}`) {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+    if (!isAddress(address)) {
+        throw new Error('Invalid address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (amount <= 0) {
+        throw new Error('Amount must be a positive number');
+    }
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
 
@@ -319,6 +385,22 @@ function getWithdrawArgs(withdrawPayload: MsgWithdraw) {
  * @returns A Viem-compatible calldata params object or null if either account is uninitialized.
  */
 export async function getTransferViemArgs(senderAddress: string, recipientAddress: string, denom: string, amount: number, client: PublicClient, signedDenom: `0x${string}`) {
+    // Sanity checks
+    if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
+        throw new Error('Invalid signedDenom format');
+    }
+    if (!isAddress(senderAddress)) {
+        throw new Error('Invalid sender address format');
+    }
+    if (!isAddress(recipientAddress)) {
+        throw new Error('Invalid recipient address format');
+    }
+    if (denom.trim() === '') {
+        throw new Error('Denom cannot be empty');
+    }
+    if (amount <= 0) {
+        throw new Error('Amount must be a positive number');
+    }
     const api = new ConfidentialTransfersWrapper()
     await api.initialize();
     
