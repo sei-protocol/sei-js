@@ -5,10 +5,10 @@ import {
   decryptAvailableBalanceViem,
   decryptAccountViem,
   getInitializeAccountViemArgs,
-  getDepositViemArgs,
+  getDepositToPrivateBalanceViemArgs,
   getApplyPendingBalancesViemArgs,
-  getWithdrawViemArgs,
-  getTransferViemArgs,
+  getWithdrawFromPrivateBalanceViemArgs,
+  getConfidentialTransferViemArgs,
   CtAccountResponse,
 } from '../interface/viem'
 import { PublicClient } from 'viem'
@@ -71,13 +71,13 @@ describe('Sanity checks for viem.ts functions', () => {
     })
   })
 
-  describe('getDepositViemArgs', () => {
+  describe('getDepositToPrivateBalanceViemArgs', () => {
     test('throws on invalid amount', () => {
-      expect(() => getDepositViemArgs(validAddress, validDenom, invalidAmount)).toThrow('Amount must be a positive number')
+      expect(() => getDepositToPrivateBalanceViemArgs(validAddress, validDenom, invalidAmount)).toThrow('Amount must be a positive number')
     })
 
     test('throws on empty denom', () => {
-      expect(() => getDepositViemArgs(validAddress, '', validAmount)).toThrow('Denom cannot be empty')
+      expect(() => getDepositToPrivateBalanceViemArgs(validAddress, '', validAmount)).toThrow('Denom cannot be empty')
     })
   })
 
@@ -91,39 +91,39 @@ describe('Sanity checks for viem.ts functions', () => {
     })
   })
 
-  describe('getWithdrawViemArgs', () => {
+  describe('getWithdrawFromPrivateBalanceViemArgs', () => {
     test('throws on zero amount', async () => {
-      await expect(getWithdrawViemArgs(validAddress, validDenom, 0, mockClient, validSignedDenom)).rejects.toThrow('Amount must be a positive number')
+      await expect(getWithdrawFromPrivateBalanceViemArgs(validAddress, validDenom, 0, mockClient, validSignedDenom)).rejects.toThrow('Amount must be a positive number')
     })
 
     test('throws on empty denom', async () => {
-      await expect(getWithdrawViemArgs(validAddress, '', 100, mockClient, validSignedDenom)).rejects.toThrow('Denom cannot be empty')
+      await expect(getWithdrawFromPrivateBalanceViemArgs(validAddress, '', 100, mockClient, validSignedDenom)).rejects.toThrow('Denom cannot be empty')
     })
 
     test('throws on invalid signedDenom', async () => {
-      await expect(getWithdrawViemArgs(validAddress, validDenom, 100, mockClient, invalidSignedDenom)).rejects.toThrow('Invalid signedDenom format')
+      await expect(getWithdrawFromPrivateBalanceViemArgs(validAddress, validDenom, 100, mockClient, invalidSignedDenom)).rejects.toThrow('Invalid signedDenom format')
     })
   })
 
-  describe('getTransferViemArgs', () => {
+  describe('getConfidentialTransferViemArgs', () => {
     test('throws on invalid sender address', async () => {
-      await expect(getTransferViemArgs(invalidAddress, validAddress, validDenom, 100, mockClient, validSignedDenom)).rejects.toThrow('Invalid sender address format')
+      await expect(getConfidentialTransferViemArgs(invalidAddress, validAddress, validDenom, 100, mockClient, validSignedDenom)).rejects.toThrow('Invalid sender address format')
     })
 
     test('throws on invalid recipient address', async () => {
-      await expect(getTransferViemArgs(validAddress, invalidAddress, validDenom, 100, mockClient, validSignedDenom)).rejects.toThrow('Invalid recipient address format')
+      await expect(getConfidentialTransferViemArgs(validAddress, invalidAddress, validDenom, 100, mockClient, validSignedDenom)).rejects.toThrow('Invalid recipient address format')
     })
 
     test('throws on invalid signedDenom', async () => {
-      await expect(getTransferViemArgs(validAddress, validAddress, validDenom, 100, mockClient, invalidSignedDenom)).rejects.toThrow('Invalid signedDenom format')
+      await expect(getConfidentialTransferViemArgs(validAddress, validAddress, validDenom, 100, mockClient, invalidSignedDenom)).rejects.toThrow('Invalid signedDenom format')
     })
 
     test('throws on empty denom', async () => {
-      await expect(getTransferViemArgs(validAddress, validAddress, '', 100, mockClient, validSignedDenom)).rejects.toThrow('Denom cannot be empty')
+      await expect(getConfidentialTransferViemArgs(validAddress, validAddress, '', 100, mockClient, validSignedDenom)).rejects.toThrow('Denom cannot be empty')
     })
 
     test('throws on zero amount', async () => {
-      await expect(getTransferViemArgs(validAddress, validAddress, validDenom, 0, mockClient, validSignedDenom)).rejects.toThrow('Amount must be a positive number')
+      await expect(getConfidentialTransferViemArgs(validAddress, validAddress, validDenom, 0, mockClient, validSignedDenom)).rejects.toThrow('Amount must be a positive number')
     })
   })
 })

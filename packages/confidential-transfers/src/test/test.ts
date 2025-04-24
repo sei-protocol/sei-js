@@ -2,7 +2,7 @@ import { ethers, toUtf8Bytes } from "ethers";
 
 import { fundAddress } from "./testUtils";
 import { ConfidentialTransfers } from "../payload/confidentialTransfers";
-import { applyPendingBalanceEthers, closeAccountEthers, depositEthers, initializeAccountEthers, queryAccountEthers, transferEthers, withdrawEthers, getDenomToSignEthers, decryptAccountEthers } from "../interface/ethers";
+import { applyPendingBalanceEthers, closeAccountEthers, depositToPrivateBalanceEthers, initializeAccountEthers, queryAccountEthers, confidentialTransferEthers, withdrawFromPrivateBalanceEthers, getDenomToSignEthers, decryptAccountEthers } from "../interface/ethers";
 
 async function main() {
     // 1) Initialize an ethers provider (local chain at 8545)
@@ -51,7 +51,7 @@ async function main() {
 
 /// DEPOSIT TEST
     const depositAmount = 100000
-    await depositEthers(denom, depositAmount, testWallet)
+    await depositToPrivateBalanceEthers(denom, depositAmount, testWallet)
     account = await queryAccountEthers(testWallet.address, denom, testWallet)
     if (account == null) {
         console.log("TEST FAILED: Unexpected Error: Could not query account")
@@ -74,7 +74,7 @@ async function main() {
 
 /// WITHDRAW TEST
     const withdrawAmount = 10000
-    await withdrawEthers(testWallet.address, denom, withdrawAmount, signedDenom, testWallet)
+    await withdrawFromPrivateBalanceEthers(testWallet.address, denom, withdrawAmount, signedDenom, testWallet)
 
     account = await queryAccountEthers(testWallet.address, denom, testWallet)
     if (account == null) {
@@ -112,7 +112,7 @@ async function main() {
     
     console.log("OtherAccount on chain:", otherAccount)
 
-    await transferEthers(testWallet.address, otherWallet.address, denom, depositAmount-withdrawAmount, signedDenom, testWallet)
+    await confidentialTransferEthers(testWallet.address, otherWallet.address, denom, depositAmount-withdrawAmount, signedDenom, testWallet)
 
     otherAccount = await queryAccountEthers(otherWallet.address, denom, testWallet)
     if (otherAccount == null) {

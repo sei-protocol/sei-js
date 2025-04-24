@@ -145,7 +145,7 @@ export async function decryptAccountViem(signedDenom: `0x${string}`, ctAccount: 
     }
 
     if (decryptFullAvailableBalance) {
-        const decryptedAvailableBalance = decryptAvailableBalanceViem(signedDenom, ctAccount)
+        const decryptedAvailableBalance = await decryptAvailableBalanceViem(signedDenom, ctAccount)
         data.availableBalance = decryptedAvailableBalance.toString()
     }
 
@@ -220,7 +220,7 @@ export async function getInitializeAccountViemArgs(signedDenom: `0x${string}`, a
  * @param amount - Amount to deposit in base units (e.g., 1 SEI = 1_000_000).
  * @returns A Viem-compatible calldata params object.
  */
-export function getDepositViemArgs(address: string | `0x${string}` | undefined, denom: string, amount: bigint) {
+export function getDepositToPrivateBalanceViemArgs(address: string | `0x${string}` | undefined, denom: string, amount: bigint) {
     // Sanity checks
     if (address && !isAddress(address)) {
         throw new Error('Invalid address format');
@@ -316,7 +316,7 @@ function getApplyPendingBalancesArgs(applyPayload: MsgApplyPendingBalance) {
  * @param signedDenom - The signed hash of the denom.
  * @returns A Viem-compatible calldata params object or null if the account is uninitialized.
  */
-export async function getWithdrawViemArgs(address: string, denom: string, amount: number, client: PublicClient, signedDenom: `0x${string}`) {
+export async function getWithdrawFromPrivateBalanceViemArgs(address: string, denom: string, amount: number, client: PublicClient, signedDenom: `0x${string}`) {
     // Sanity checks
     if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
         throw new Error('Invalid signedDenom format');
@@ -384,7 +384,7 @@ function getWithdrawArgs(withdrawPayload: MsgWithdraw) {
  * @param signedDenom - The signed hash of the denom.
  * @returns A Viem-compatible calldata params object or null if either account is uninitialized.
  */
-export async function getTransferViemArgs(senderAddress: string, recipientAddress: string, denom: string, amount: number, client: PublicClient, signedDenom: `0x${string}`) {
+export async function getConfidentialTransferViemArgs(senderAddress: string, recipientAddress: string, denom: string, amount: number, client: PublicClient, signedDenom: `0x${string}`) {
     // Sanity checks
     if (!/^0x[0-9a-fA-F]+$/.test(signedDenom) || signedDenom.length !== 132) {
         throw new Error('Invalid signedDenom format');

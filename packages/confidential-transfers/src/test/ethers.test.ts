@@ -5,10 +5,10 @@ import {
     decryptAvailableBalanceEthers,
     decryptAccountEthers,
     initializeAccountEthers,
-    depositEthers,
+    depositToPrivateBalanceEthers,
     applyPendingBalanceEthers,
-    withdrawEthers,
-    transferEthers,
+    withdrawFromPrivateBalanceEthers,
+    confidentialTransferEthers,
     closeAccountEthers,
     getDenomToSignEthers
 } from '../interface/ethers'
@@ -78,13 +78,13 @@ describe('Sanity checks for ethers.ts functions', () => {
         })
     })
 
-    describe('depositEthers', () => {
+    describe('depositToPrivateBalanceEthers', () => {
         test('throws on empty denom', async () => {
-            await expect(depositEthers(invalidDenom, validAmount, mockContractRunner)).rejects.toThrow('Denom cannot be empty')
+            await expect(depositToPrivateBalanceEthers(invalidDenom, validAmount, mockContractRunner)).rejects.toThrow('Denom cannot be empty')
         })
 
         test('throws on invalid amount', async () => {
-            await expect(depositEthers(validDenom, invalidAmount, mockContractRunner)).rejects.toThrow('Amount must be a positive number')
+            await expect(depositToPrivateBalanceEthers(validDenom, invalidAmount, mockContractRunner)).rejects.toThrow('Amount must be a positive number')
         })
     })
 
@@ -102,43 +102,43 @@ describe('Sanity checks for ethers.ts functions', () => {
         })
     })
 
-    describe('withdrawEthers', () => {
+    describe('withdrawFromPrivateBalanceEthers', () => {
         test('throws on invalid address', async () => {
-            await expect(withdrawEthers(invalidAddress, validDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid address format')
+            await expect(withdrawFromPrivateBalanceEthers(invalidAddress, validDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid address format')
         })
 
         test('throws on empty denom', async () => {
-            await expect(withdrawEthers(validAddress, invalidDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Denom cannot be empty')
+            await expect(withdrawFromPrivateBalanceEthers(validAddress, invalidDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Denom cannot be empty')
         })
 
         test('throws on invalid amount', async () => {
-            await expect(withdrawEthers(validAddress, validDenom, invalidAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Amount must be a positive number')
+            await expect(withdrawFromPrivateBalanceEthers(validAddress, validDenom, invalidAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Amount must be a positive number')
         })
 
         test('throws on invalid signedDenom', async () => {
-            await expect(withdrawEthers(validAddress, validDenom, validAmount, invalidSignedDenom, mockContractRunner)).rejects.toThrow('Invalid signedDenom format')
+            await expect(withdrawFromPrivateBalanceEthers(validAddress, validDenom, validAmount, invalidSignedDenom, mockContractRunner)).rejects.toThrow('Invalid signedDenom format')
         })
     })
 
-    describe('transferEthers', () => {
+    describe('confidentialTransferEthers', () => {
         test('throws on invalid sender address', async () => {
-            await expect(transferEthers(invalidAddress, validAddress, validDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid sender address format')
+            await expect(confidentialTransferEthers(invalidAddress, validAddress, validDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid sender address format')
         })
 
         test('throws on invalid recipient address', async () => {
-            await expect(transferEthers(validAddress, invalidAddress, validDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid recipient address format')
+            await expect(confidentialTransferEthers(validAddress, invalidAddress, validDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid recipient address format')
         })
 
         test('throws on empty denom', async () => {
-            await expect(transferEthers(validAddress, validAddress, invalidDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid denomination')
+            await expect(confidentialTransferEthers(validAddress, validAddress, invalidDenom, validAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Invalid denomination')
         })
 
         test('throws on invalid amount', async () => {
-            await expect(transferEthers(validAddress, validAddress, validDenom, invalidAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Amount must be a positive number')
+            await expect(confidentialTransferEthers(validAddress, validAddress, validDenom, invalidAmount, validSignedDenom, mockContractRunner)).rejects.toThrow('Amount must be a positive number')
         })
 
         test('throws on invalid signedDenom', async () => {
-            await expect(transferEthers(validAddress, validAddress, validDenom, validAmount, invalidSignedDenom, mockContractRunner)).rejects.toThrow('Invalid signedDenom format')
+            await expect(confidentialTransferEthers(validAddress, validAddress, validDenom, validAmount, invalidSignedDenom, mockContractRunner)).rejects.toThrow('Invalid signedDenom format')
         })
     })
 

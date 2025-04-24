@@ -171,7 +171,7 @@ export async function decryptAccountEthers(signedDenom: string, ctAccount: CtAcc
     }
 
     if (decryptFullAvailableBalance) {
-        const decryptedAvailableBalance = decryptAvailableBalanceEthers(signedDenom, ctAccount)
+        const decryptedAvailableBalance = await decryptAvailableBalanceEthers(signedDenom, ctAccount)
         data.availableBalance = decryptedAvailableBalance.toString()
     }
 
@@ -260,7 +260,7 @@ async function executeInitialize(initializePayload: MsgInitializeAccount, contra
  * @param contractRunner - The signer to send the transaction.
  * @returns The transaction receipt.
  */
-export async function depositEthers(denom: string, amount: number, contractRunner: ContractRunner) {
+export async function depositToPrivateBalanceEthers(denom: string, amount: number, contractRunner: ContractRunner) {
     // Sanity checks
     if (denom.trim() === '') {
         throw new Error('Denom cannot be empty');
@@ -376,7 +376,7 @@ async function executeApplyPendingBalance(applyPendingBalancePayload: MsgApplyPe
  * @param contractRunner - Signer to submit the transaction.
  * @returns Transaction receipt or null if account not found.
  */
-export async function withdrawEthers(address: string, denom: string, amount: number, signedDenom: string, contractRunner: ContractRunner) {
+export async function withdrawFromPrivateBalanceEthers(address: string, denom: string, amount: number, signedDenom: string, contractRunner: ContractRunner) {
     // Sanity checks
     if (!isAddress(address)) {
         throw new Error('Invalid address format');
@@ -456,7 +456,7 @@ async function executeWithdraw(withdrawPayload: MsgWithdraw, contractRunner: Con
  * @param contractRunner - Signer to send the transaction.
  * @returns Transaction receipt or null if accounts not found.
  */
-export async function transferEthers(senderAddress: string, recipientAddress: string, denom: string, amount: number, signedDenom: string, contractRunner: ContractRunner) {
+export async function confidentialTransferEthers(senderAddress: string, recipientAddress: string, denom: string, amount: number, signedDenom: string, contractRunner: ContractRunner) {
     // Sanity checks
     if (!isAddress(senderAddress)) {
         throw new Error('Invalid sender address format');

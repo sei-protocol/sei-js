@@ -86,10 +86,10 @@ console.log("Decrypted balances:", decrypted);
 Initiates a confidential deposit of the specified amount into the account.
 NOTE: The deposit amount is in the native decimal place (6 decimals for `usei`)
 ```ts
-import { depositEthers } from "confidential-ts";
+import { depositToPrivateBalanceEthers } from "confidential-ts";
 
 const depositAmount = 1000000 // 1 SEI
-await depositEthers(denom, depositAmount, wallet);
+await depositToPrivateBalanceEthers(denom, depositAmount, wallet);
 ```
 
 #### 6. Apply Pending Balance
@@ -110,10 +110,10 @@ Withdraws a specified amount from the confidential balance.
 
 NOTE: The withdraw amount is in the native decimal place (6 decimals for `usei`)
 ```ts
-import { withdrawEthers } from "confidential-ts";
+import { withdrawFromPrivateBalanceEthers } from "confidential-ts";
 
 const withdrawAmount = 1000000 // 1 SEI
-await withdrawEthers(wallet.address, denom, withdrawAmount, signedDenom, wallet);
+await withdrawFromPrivateBalanceEthers(wallet.address, denom, withdrawAmount, signedDenom, wallet);
 ```
 
 #### 8. Transfer Between Accounts
@@ -124,10 +124,10 @@ Transfers a confidential balance from one account to another. The recipient must
 NOTE: The deposit amount is in the native decimal place (6 decimals for `usei`)
 
 ```ts
-import { transferEthers } from "confidential-ts";
+import { confidentialTransferEthers } from "confidential-ts";
 
 const transferAmount = 500000 // 0.5 SEI
-await transferEthers(wallet.address, recipientAddress, denom, transferAmount, signedDenom, wallet);
+await confidentialTransferEthers(wallet.address, recipientAddress, denom, transferAmount, signedDenom, wallet);
 ```
 
 #### 9. Close Account
@@ -217,10 +217,10 @@ Set the last parameter to `true` to also decrypt the full available balance (exp
 Send tokens into your confidential account.
 
 ```ts
-import { getDepositViemArgs } from "sei-confidential";
+import { getDepositToPrivateBalanceViemArgs } from "sei-confidential";
 
 const amount = BigInt(1_000_000); // 1 SEI = 1_000_000 microsei
-const depositParams = getDepositViemArgs(address, "usei", amount);
+const depositParams = getDepositToPrivateBalanceViemArgs(address, "usei", amount);
 const estimatedGas = await publicClient.estimateContractGas(depositParams);
 await writeContractAsync({ ...depositParams, gas: estimatedGas });
 ```
@@ -242,9 +242,9 @@ await writeContractAsync({ ...applyParams, gas: estimatedGas });
 Withdraw from your confidential balance.
 
 ```ts
-import { getWithdrawViemArgs } from "sei-confidential";
+import { getWithdrawFromPrivateBalanceViemArgs } from "sei-confidential";
 
-const withdrawParams = await getWithdrawViemArgs(address, "usei", 500000, publicClient, signedDenom);
+const withdrawParams = await getWithdrawFromPrivateBalanceViemArgs(address, "usei", 500000, publicClient, signedDenom);
 const estimatedGas = await publicClient.estimateContractGas(withdrawParams);
 await writeContractAsync({ ...withdrawParams, gas: estimatedGas });
 ```
@@ -254,9 +254,9 @@ await writeContractAsync({ ...withdrawParams, gas: estimatedGas });
 Send confidential tokens to another account.
 
 ```ts
-import { getTransferViemArgs } from "sei-confidential";
+import { getConfidentialTransferViemArgs } from "sei-confidential";
 
-const transferParams = await getTransferViemArgs(address, recipient, "usei", 500000, publicClient, signedDenom);
+const transferParams = await getConfidentialTransferViemArgs(address, recipient, "usei", 500000, publicClient, signedDenom);
 const estimatedGas = await publicClient.estimateContractGas(transferParams);
 await writeContractAsync({ ...transferParams, gas: estimatedGas });
 ```
