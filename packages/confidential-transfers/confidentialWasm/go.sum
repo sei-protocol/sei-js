@@ -55,6 +55,8 @@ github.com/sei-protocol/sei-cryptography v0.0.0-20250415200957-b4877e8cee96 h1:N
 github.com/sei-protocol/sei-cryptography v0.0.0-20250415200957-b4877e8cee96/go.mod h1:H7Ad3fxXBd49rO4hD6mnV+13j+0xYdCBp7FqrjEWirA=
 github.com/sei-protocol/sei-cryptography v0.0.0-20250415220047-643268c81e84 h1:4k9yyQvxmaJVqxJBuWZIfrlEgZ55QaIWY+fgfZWAvyY=
 github.com/sei-protocol/sei-cryptography v0.0.0-20250415220047-643268c81e84/go.mod h1:H7Ad3fxXBd49rO4hD6mnV+13j+0xYdCBp7FqrjEWirA=
+github.com/sei-protocol/sei-cryptography v0.0.0-20250501183956-1ab45f607616 h1:F6rioyW77At6NtNwcaf5rCfiyuU19vmSPa8fzr061C8=
+github.com/sei-protocol/sei-cryptography v0.0.0-20250501183956-1ab45f607616/go.mod h1:H7Ad3fxXBd49rO4hD6mnV+13j+0xYdCBp7FqrjEWirA=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

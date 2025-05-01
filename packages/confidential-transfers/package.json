@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/confidential-transfers",
-	"version": "0.0.0-internal-20250422232131",
+	"version": "1.0.0",
 	"description": "A TypeScript library for the Confidential Transfers Module",
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",

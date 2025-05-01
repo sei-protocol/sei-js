@@ -25,7 +25,7 @@ replace (
 require (
 	github.com/coinbase/kryptology v1.8.0
 	github.com/gogo/protobuf v1.3.3
-	github.com/sei-protocol/sei-cryptography v0.0.0-20250415200957-b4877e8cee96
+	github.com/sei-protocol/sei-cryptography v0.0.0-20250501183956-1ab45f607616
 )
 
 require (
