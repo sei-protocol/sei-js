@@ -28,7 +28,7 @@ Cosmos based Sei Applications interact with the CosmWasm VM on the chain. Use th
 If you think your app might require interaction with native Cosmos modules, you should check the list of [precompiles](https://www.docs.sei.io/dev-interoperability/precompiles/addr) to determine if the same support can be offered by the EVM.
 
 Cosmos Applications use
-- [CosmosKit](https://cosmology.zone/products/cosmos-kit)
+- [CosmosKit](https://hyperweb.io/stack/cosmos-kit)
 - [@sei-js/cosmjs](https://sei-protocol.github.io/sei-js/modules/cosmjs.html)
 - [Cosmjs](https://github.com/cosmos/cosmjs)
 
