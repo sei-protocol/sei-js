@@ -8,7 +8,7 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { Coin } from "../cosmos/base/v1beta1/coin";
 import { Any } from "../google/protobuf/any";
-import { PointerType, pointerTypeFromJSON, pointerTypeToJSON } from "./enums";
+import { AssetType, assetTypeFromJSON, assetTypeToJSON, PointerType, pointerTypeFromJSON, pointerTypeToJSON } from "./enums";
 import { Log } from "./receipt";
 
 export const protobufPackage = "seiprotocol.seichain.evm";
@@ -76,6 +76,18 @@ export interface MsgAssociate {
 }
 
 export interface MsgAssociateResponse {}
+
+export interface MsgClaim {
+	sender: string;
+	claimer: string;
+}
+
+export interface MsgClaimSpecific {
+	sender: string;
+	claimer: string;
+	asset_type: AssetType;
+	identifier: string;
+}
 
 function createBaseMsgEVMTransaction(): MsgEVMTransaction {
 	return { data: undefined, derived: new Uint8Array(0) };
@@ -1119,6 +1131,188 @@ export const MsgAssociateResponse: MessageFns<MsgAssociateResponse, "seiprotocol
 	},
 	fromPartial<I extends Exact<DeepPartial<MsgAssociateResponse>, I>>(_: I): MsgAssociateResponse {
 		const message = createBaseMsgAssociateResponse();
+		return message;
+	}
+};
+
+function createBaseMsgClaim(): MsgClaim {
+	return { sender: "", claimer: "" };
+}
+
+export const MsgClaim: MessageFns<MsgClaim, "seiprotocol.seichain.evm.MsgClaim"> = {
+	$type: "seiprotocol.seichain.evm.MsgClaim" as const,
+
+	encode(message: MsgClaim, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.sender !== "") {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.claimer !== "") {
+			writer.uint32(18).string(message.claimer);
+		}
+		return writer;
+	},
+
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgClaim {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgClaim();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
+
+					message.sender = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
+
+					message.claimer = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
+
+	fromJSON(object: any): MsgClaim {
+		return {
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			claimer: isSet(object.claimer) ? globalThis.String(object.claimer) : ""
+		};
+	},
+
+	toJSON(message: MsgClaim): unknown {
+		const obj: any = {};
+		if (message.sender !== "") {
+			obj.sender = message.sender;
+		}
+		if (message.claimer !== "") {
+			obj.claimer = message.claimer;
+		}
+		return obj;
+	},
+
+	create<I extends Exact<DeepPartial<MsgClaim>, I>>(base?: I): MsgClaim {
+		return MsgClaim.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgClaim>, I>>(object: I): MsgClaim {
+		const message = createBaseMsgClaim();
+		message.sender = object.sender ?? "";
+		message.claimer = object.claimer ?? "";
+		return message;
+	}
+};
+
+function createBaseMsgClaimSpecific(): MsgClaimSpecific {
+	return { sender: "", claimer: "", asset_type: 0, identifier: "" };
+}
+
+export const MsgClaimSpecific: MessageFns<MsgClaimSpecific, "seiprotocol.seichain.evm.MsgClaimSpecific"> = {
+	$type: "seiprotocol.seichain.evm.MsgClaimSpecific" as const,
+
+	encode(message: MsgClaimSpecific, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.sender !== "") {
+			writer.uint32(10).string(message.sender);
+		}
+		if (message.claimer !== "") {
+			writer.uint32(18).string(message.claimer);
+		}
+		if (message.asset_type !== 0) {
+			writer.uint32(24).int32(message.asset_type);
+		}
+		if (message.identifier !== "") {
+			writer.uint32(34).string(message.identifier);
+		}
+		return writer;
+	},
+
+	decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimSpecific {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		let end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseMsgClaimSpecific();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 10) {
+						break;
+					}
+
+					message.sender = reader.string();
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
+
+					message.claimer = reader.string();
+					continue;
+				case 3:
+					if (tag !== 24) {
+						break;
+					}
+
+					message.asset_type = reader.int32() as any;
+					continue;
+				case 4:
+					if (tag !== 34) {
+						break;
+					}
+
+					message.identifier = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
+
+	fromJSON(object: any): MsgClaimSpecific {
+		return {
+			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+			claimer: isSet(object.claimer) ? globalThis.String(object.claimer) : "",
+			asset_type: isSet(object.asset_type) ? assetTypeFromJSON(object.asset_type) : 0,
+			identifier: isSet(object.identifier) ? globalThis.String(object.identifier) : ""
+		};
+	},
+
+	toJSON(message: MsgClaimSpecific): unknown {
+		const obj: any = {};
+		if (message.sender !== "") {
+			obj.sender = message.sender;
+		}
+		if (message.claimer !== "") {
+			obj.claimer = message.claimer;
+		}
+		if (message.asset_type !== 0) {
+			obj.asset_type = assetTypeToJSON(message.asset_type);
+		}
+		if (message.identifier !== "") {
+			obj.identifier = message.identifier;
+		}
+		return obj;
+	},
+
+	create<I extends Exact<DeepPartial<MsgClaimSpecific>, I>>(base?: I): MsgClaimSpecific {
+		return MsgClaimSpecific.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<MsgClaimSpecific>, I>>(object: I): MsgClaimSpecific {
+		const message = createBaseMsgClaimSpecific();
+		message.sender = object.sender ?? "";
+		message.claimer = object.claimer ?? "";
+		message.asset_type = object.asset_type ?? 0;
+		message.identifier = object.identifier ?? "";
 		return message;
 	}
 };

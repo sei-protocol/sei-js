@@ -13,3 +13,8 @@ export enum PointerType {
 	ERC1155 = "ERC1155",
 	CW1155 = "CW1155"
 }
+
+export enum AssetType {
+	TYPECW20 = "TYPECW20",
+	TYPECW721 = "TYPECW721"
+}

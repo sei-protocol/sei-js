@@ -70,3 +70,36 @@ export function pointerTypeToJSON(object: PointerType): string {
 			return "UNRECOGNIZED";
 	}
 }
+
+export enum AssetType {
+	TYPECW20 = 0,
+	TYPECW721 = 1,
+	UNRECOGNIZED = -1
+}
+
+export function assetTypeFromJSON(object: any): AssetType {
+	switch (object) {
+		case 0:
+		case "TYPECW20":
+			return AssetType.TYPECW20;
+		case 1:
+		case "TYPECW721":
+			return AssetType.TYPECW721;
+		case -1:
+		case "UNRECOGNIZED":
+		default:
+			return AssetType.UNRECOGNIZED;
+	}
+}
+
+export function assetTypeToJSON(object: AssetType): string {
+	switch (object) {
+		case AssetType.TYPECW20:
+			return "TYPECW20";
+		case AssetType.TYPECW721:
+			return "TYPECW721";
+		case AssetType.UNRECOGNIZED:
+		default:
+			return "UNRECOGNIZED";
+	}
+}

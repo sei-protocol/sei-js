@@ -73,6 +73,18 @@ export type MsgAssociate = {
 
 export type MsgAssociateResponse = {};
 
+export type MsgClaim = {
+	sender?: string;
+	claimer?: string;
+};
+
+export type MsgClaimSpecific = {
+	sender?: string;
+	claimer?: string;
+	asset_type?: SeiprotocolSeichainEvmEnums.AssetType;
+	identifier?: string;
+};
+
 export class Msg {
 	static EVMTransaction(req: MsgEVMTransaction, initReq?: fm.InitReq): Promise<MsgEVMTransactionResponse> {
 		return fm.fetchReq<MsgEVMTransaction, MsgEVMTransactionResponse>(`/seiprotocol.seichain.evm.Msg/EVMTransaction`, {

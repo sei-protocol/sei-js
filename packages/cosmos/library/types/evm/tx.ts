@@ -2,7 +2,7 @@ import type { Coin } from "../cosmos/base/v1beta1/coin";
 
 import type { Any } from "../google/protobuf/any";
 
-import type { PointerType } from "./enums";
+import type { AssetType, PointerType } from "./enums";
 
 import type { Log } from "./receipt";
 
@@ -69,3 +69,15 @@ export interface MsgAssociate {
 }
 
 export type MsgAssociateResponse = {};
+
+export interface MsgClaim {
+	sender: string;
+	claimer: string;
+}
+
+export interface MsgClaimSpecific {
+	sender: string;
+	claimer: string;
+	asset_type: AssetType;
+	identifier: string;
+}
