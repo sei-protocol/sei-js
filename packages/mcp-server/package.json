@@ -2,7 +2,7 @@
   "name": "@sei-js/mcp-server",
   "description": "Model Context Protocol (MCP) server for interacting with EVM-compatible networks",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.0.0-internal-20250523230335",
   "bin": "./bin/cli.js",
   "main": "./dist/esm/index.js",
   "module": "./dist/esm/index.js",

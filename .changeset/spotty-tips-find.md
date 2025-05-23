@@ -2,4 +2,4 @@
 "@sei-js/mcp-server": patch
 ---
 
-Initial testing on NPM
+No console.logs in stdio
