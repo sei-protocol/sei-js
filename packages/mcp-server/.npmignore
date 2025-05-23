@@ -1,0 +1,32 @@
+# Source code (since we're publishing built files)
+src/
+
+# Development files
+.git/
+.github/
+.vscode/
+.idea/
+.cursor/
+mcp-context/
+*.tsbuildinfo
+
+# Temp files
+tmp/
+temp/
+
+# Test files
+test/
+tests/
+__tests__/
+*.spec.ts
+*.test.ts
+
+# Docs (except README.md which is included in "files")
+docs/
+
+# Build artifacts
+node_modules/
+coverage/
+bun.lock
+yarn.lock
+package-lock.json 
