@@ -10,17 +10,21 @@ jest.mock('../../../core/config.js');
 describe('Transfer Service', () => {
 	const mockPublicClient = {
 		readContract: jest.fn((params: { functionName: string }) => {
-			if (params.functionName === 'decimals') return 18;
-			if (params.functionName === 'symbol') return 'TEST';
-			if (params.functionName === 'name') return 'Test NFT';
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'decimals') return 18;
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'symbol') return 'TEST';
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'name') return 'Test NFT';
 			return null;
 		}),
 		getContract: jest.fn()
 	};
 
+	// Define a properly typed hash value
+	const defaultMockHash: Hash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
+
+	// Define the mock wallet client with properly typed mock functions
 	const mockWalletClient = {
-		sendTransaction: jest.fn().mockReturnValue('0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' as Hash),
-		writeContract: jest.fn().mockReturnValue('0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' as Hash),
+		sendTransaction: jest.fn().mockImplementation(() => Promise.resolve(defaultMockHash)),
+		writeContract: jest.fn().mockImplementation(() => Promise.resolve(defaultMockHash)),
 		account: { address: '0x1234567890123456789012345678901234567890' },
 		chain: { id: 1 }
 	};
@@ -40,7 +44,7 @@ describe('Transfer Service', () => {
 	describe('transferSei', () => {
 		test('should transfer SEI tokens successfully', async () => {
 			const mockHash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' as Hash;
-			(mockWalletClient.sendTransaction as jest.Mock).mockResolvedValue(mockHash);
+			(mockWalletClient.sendTransaction as jest.Mock).mockImplementation(() => Promise.resolve(mockHash));
 
 			const result = await transferSei('0x1234567890123456789012345678901234567890', '1.0', 'sei');
 
@@ -66,13 +70,13 @@ describe('Transfer Service', () => {
 			const mockDecimals = 18;
 			const mockSymbol = 'TEST';
 
-			(mockPublicClient.readContract as jest.Mock).mockImplementation((params: { functionName: string }) => {
-				if (params.functionName === 'decimals') return mockDecimals;
-				if (params.functionName === 'symbol') return mockSymbol;
+			(mockPublicClient.readContract as jest.Mock).mockImplementation((params: unknown) => {
+				if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'decimals') return mockDecimals;
+				if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'symbol') return mockSymbol;
 				return null;
 			});
 
-			(mockWalletClient.writeContract as jest.Mock).mockResolvedValue(mockHash);
+			(mockWalletClient.writeContract as jest.Mock).mockImplementation(() => Promise.resolve(mockHash));
 
 			const result = await transferERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0');
 
@@ -96,13 +100,13 @@ describe('Transfer Service', () => {
 			const mockDecimals = 18;
 			const mockSymbol = 'TEST';
 
-			(mockPublicClient.readContract as jest.Mock).mockImplementation((params: { functionName: string }) => {
-				if (params.functionName === 'decimals') return mockDecimals;
-				if (params.functionName === 'symbol') return mockSymbol;
+			(mockPublicClient.readContract as jest.Mock).mockImplementation((params: unknown) => {
+				if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'decimals') return mockDecimals;
+				if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'symbol') return mockSymbol;
 				return null;
 			});
 
-			(mockWalletClient.writeContract as jest.Mock).mockResolvedValue(mockHash);
+			(mockWalletClient.writeContract as jest.Mock).mockImplementation(() => Promise.resolve(mockHash));
 
 			const result = await approveERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0');
 
@@ -126,13 +130,13 @@ describe('Transfer Service', () => {
 			const mockName = 'Test NFT';
 			const mockSymbol = 'TNFT';
 
-			(mockPublicClient.readContract as jest.Mock).mockImplementation((params: { functionName: string }) => {
-				if (params.functionName === 'name') return mockName;
-				if (params.functionName === 'symbol') return mockSymbol;
+			(mockPublicClient.readContract as jest.Mock).mockImplementation((params: unknown) => {
+				if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'name') return mockName;
+				if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'symbol') return mockSymbol;
 				return null;
 			});
 
-			(mockWalletClient.writeContract as jest.Mock).mockResolvedValue(mockHash);
+			(mockWalletClient.writeContract as jest.Mock).mockImplementation(() => Promise.resolve(mockHash));
 
 			const result = await transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n);
 
@@ -149,9 +153,11 @@ describe('Transfer Service', () => {
 
 	describe('transferERC1155', () => {
 		test('should transfer ERC1155 token successfully', async () => {
+			// Define the hash with the correct Hash type
 			const mockHash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' as Hash;
 
-			(mockWalletClient.writeContract as jest.Mock).mockResolvedValue(mockHash);
+			// Reset the mock implementation to ensure it returns the expected value
+			(mockWalletClient.writeContract as jest.Mock).mockImplementation(() => Promise.resolve(mockHash));
 
 			const result = await transferERC1155('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n, '1');
 

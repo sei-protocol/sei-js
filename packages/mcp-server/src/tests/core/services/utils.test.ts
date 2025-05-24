@@ -1,4 +1,4 @@
-import { describe, test, expect } from '@jest/globals';
+import { describe, expect, test } from '@jest/globals';
 import { utils } from '../../../core/services/utils.js';
 
 describe('Utils Module', () => {

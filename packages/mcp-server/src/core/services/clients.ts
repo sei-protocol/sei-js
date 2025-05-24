@@ -1,4 +1,4 @@
-import { createPublicClient, createWalletClient, http, type PublicClient, type WalletClient, type Hex, type Address } from 'viem';
+import { http, type Address, type Hex, type PublicClient, type WalletClient, createPublicClient, createWalletClient } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { DEFAULT_NETWORK, getChain, getRpcUrl } from '../chains.js';
 
@@ -13,7 +13,12 @@ export function getPublicClient(network = DEFAULT_NETWORK): PublicClient {
 
 	// Return cached client if available
 	if (clientCache.has(cacheKey)) {
-		return clientCache.get(cacheKey)!;
+		const cachedClient = clientCache.get(cacheKey);
+		// This should never happen as we just checked with has(), but better to be safe
+		if (!cachedClient) {
+			throw new Error(`Client cache inconsistency for network ${network}`);
+		}
+		return cachedClient;
 	}
 
 	// Create a new client

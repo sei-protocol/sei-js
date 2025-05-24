@@ -1,9 +1,9 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { Abi, Address, Chain, Hash, Hex, WriteContractParameters } from 'viem';
 import { z } from 'zod';
-import { getSupportedNetworks, getRpcUrl, DEFAULT_NETWORK } from './chains.js';
-import * as services from './services/index.js';
-import { type Address, type Hex, type Hash, WriteContractParameters, Abi } from 'viem';
+import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
 import { getPrivateKeyAsHex } from './config.js';
+import * as services from './services/index.js';
 
 /**
  * Register all EVM-related tools with the MCP server
@@ -389,7 +389,7 @@ export function registerEVMTools(server: McpServer) {
 		},
 		async ({ to, value, data, network = DEFAULT_NETWORK }) => {
 			try {
-				const params: any = { to: to as Address };
+				const params: { to: Address; value?: bigint; data?: `0x${string}` } = { to: to as Address };
 
 				if (value) {
 					params.value = services.helpers.parseEther(value);
@@ -797,11 +797,13 @@ export function registerEVMTools(server: McpServer) {
 				// Parse ABI if it's a string
 				const parsedAbi = typeof abi === 'string' ? JSON.parse(abi) : abi;
 
-				const contractParams: Record<string, any> = {
+				const contractParams: WriteContractParameters = {
 					address: contractAddress as Address,
 					abi: parsedAbi,
 					functionName,
-					args
+					args,
+					chain: null, // This will use the default chain from the client
+					account: null // This will use the default account from the client
 				};
 
 				const txHash = await services.writeContract(contractParams, network);

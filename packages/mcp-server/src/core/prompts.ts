@@ -64,7 +64,7 @@ export function registerEVMPrompts(server: McpServer) {
 				role: 'user',
 				content: {
 					type: 'text',
-					text: `Please retrieve my wallet EVM address using tools get_address_from_private_key via MCP server.`
+					text: 'Please retrieve my wallet EVM address using tools get_address_from_private_key via MCP server.'
 				}
 			}
 		]

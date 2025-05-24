@@ -1,6 +1,6 @@
-import type { Hash, Block } from 'viem';
-import { getPublicClient } from './clients.js';
+import type { Block, Hash } from 'viem';
 import { DEFAULT_NETWORK } from '../chains.js';
+import { getPublicClient } from './clients.js';
 
 /**
  * Get the current block number for a specific network

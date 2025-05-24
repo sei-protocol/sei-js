@@ -1,7 +1,7 @@
 import { type McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { getSupportedNetworks, getRpcUrl, DEFAULT_NETWORK } from './chains.js';
-import * as services from './services/index.js';
 import type { Address, Hash } from 'viem';
+import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
+import * as services from './services/index.js';
 
 /**
  * Register all EVM-related resources

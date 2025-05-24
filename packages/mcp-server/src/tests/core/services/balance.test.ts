@@ -1,5 +1,5 @@
-import { describe, test, expect, afterEach, jest } from '@jest/globals';
-import { getBalance, getERC20Balance, isNFTOwner, getERC721Balance, getERC1155Balance } from '../../../core/services';
+import { afterEach, describe, expect, jest, test } from '@jest/globals';
+import { getBalance, getERC20Balance, getERC721Balance, getERC1155Balance, isNFTOwner } from '../../../core/services';
 
 // Create valid test addresses with proper type assertions
 const VALID_ADDRESS = '0x1234567890123456789012345678901234567890' as `0x${string}`;

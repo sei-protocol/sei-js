@@ -1,4 +1,4 @@
-import { parseEther, type Address } from 'viem';
+import { type Address, parseEther } from 'viem';
 
 /**
  * Utility functions for formatting and parsing values

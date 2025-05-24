@@ -1,6 +1,6 @@
-import type { Address, Hash, TransactionReceipt, EstimateGasParameters } from 'viem';
-import { getPublicClient } from './clients.js';
+import type { Address, EstimateGasParameters, Hash, TransactionReceipt } from 'viem';
 import { DEFAULT_NETWORK } from '../chains.js';
+import { getPublicClient } from './clients.js';
 
 /**
  * Get a transaction by hash for a specific network

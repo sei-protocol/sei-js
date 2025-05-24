@@ -1,8 +1,8 @@
-import type { Hash, Hex, ReadContractParameters, GetLogsParameters, Log } from 'viem';
+import type { GetLogsParameters, Hash, Hex, Log, ReadContractParameters, WriteContractParameters } from 'viem';
+import { DEFAULT_NETWORK } from '../chains.js';
+import { getPrivateKeyAsHex } from '../config.js';
 import { getPublicClient, getWalletClient } from './clients.js';
 import * as services from './index.js';
-import { getPrivateKeyAsHex } from '../config.js';
-import { DEFAULT_NETWORK } from '../chains.js';
 
 /**
  * Read from a contract for a specific network
@@ -19,7 +19,7 @@ export async function readContract(params: ReadContractParameters, network = DEF
  * @returns Transaction hash
  * @throws Error if no private key is available
  */
-export async function writeContract(params: Record<string, any>, network = DEFAULT_NETWORK): Promise<Hash> {
+export async function writeContract(params: WriteContractParameters, network = DEFAULT_NETWORK): Promise<Hash> {
 	// Get private key from environment
 	const key = getPrivateKeyAsHex();
 
@@ -28,7 +28,7 @@ export async function writeContract(params: Record<string, any>, network = DEFAU
 	}
 
 	const client = getWalletClient(key, network);
-	return await client.writeContract(params as any);
+	return await client.writeContract(params);
 }
 
 /**

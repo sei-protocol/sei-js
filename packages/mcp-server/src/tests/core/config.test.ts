@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, test } from '@jest/globals';
 import { config, getPrivateKeyAsHex } from '../../core/config.js';
 
 describe('Config Module', () => {
@@ -8,7 +8,7 @@ describe('Config Module', () => {
 	// Reset environment before each test
 	beforeEach(() => {
 		// Clear any environment variables that might affect tests
-		delete process.env.PRIVATE_KEY;
+		process.env.PRIVATE_KEY = undefined;
 	});
 
 	// Restore original environment after each test

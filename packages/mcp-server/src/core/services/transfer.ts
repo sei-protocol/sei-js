@@ -1,8 +1,8 @@
-import { parseEther, parseUnits, type Address, type Hash, type Hex, getContract } from 'viem';
+import { type Address, type Hash, type Hex, getContract, parseEther, parseUnits } from 'viem';
+import { DEFAULT_NETWORK } from '../chains.js';
+import { getPrivateKeyAsHex } from '../config.js';
 import { getPublicClient, getWalletClient } from './clients.js';
 import * as services from './index.js';
-import { getPrivateKeyAsHex } from '../config.js';
-import { DEFAULT_NETWORK } from '../chains.js';
 
 // Standard ERC20 ABI for transfers
 const erc20TransferAbi = [
@@ -129,10 +129,15 @@ export async function transferSei(
 	const client = getWalletClient(privateKey, network);
 	const amountWei = parseEther(amount);
 
+	// Ensure account exists before using it
+	if (!client.account) {
+		throw new Error('Wallet account not initialized properly');
+	}
+
 	return client.sendTransaction({
 		to: validatedToAddress,
 		value: amountWei,
-		account: client.account!,
+		account: client.account,
 		chain: client.chain
 	});
 }
@@ -190,13 +195,18 @@ export async function transferERC20(
 	// Create wallet client for sending the transaction
 	const walletClient = getWalletClient(privateKey, network);
 
+	// Ensure account exists before using it
+	if (!walletClient.account) {
+		throw new Error('Wallet account not initialized properly');
+	}
+
 	// Send the transaction
 	const hash = await walletClient.writeContract({
 		address: validatedTokenAddress,
 		abi: erc20TransferAbi,
 		functionName: 'transfer',
 		args: [validatedToAddress, rawAmount],
-		account: walletClient.account!,
+		account: walletClient.account,
 		chain: walletClient.chain
 	});
 
@@ -265,13 +275,18 @@ export async function approveERC20(
 	// Create wallet client for sending the transaction
 	const walletClient = getWalletClient(privateKey, network);
 
+	// Ensure account exists before using it
+	if (!walletClient.account) {
+		throw new Error('Wallet account not initialized properly');
+	}
+
 	// Send the transaction
 	const hash = await walletClient.writeContract({
 		address: validatedTokenAddress,
 		abi: erc20TransferAbi,
 		functionName: 'approve',
 		args: [validatedSpenderAddress, rawAmount],
-		account: walletClient.account!,
+		account: walletClient.account,
 		chain: walletClient.chain
 	});
 
@@ -321,7 +336,13 @@ export async function transferERC721(
 
 	// Create wallet client for sending the transaction
 	const walletClient = getWalletClient(privateKey, network);
-	const fromAddress = walletClient.account!.address;
+
+	// Ensure account exists before using it
+	if (!walletClient.account) {
+		throw new Error('Wallet account not initialized properly');
+	}
+
+	const fromAddress = walletClient.account.address;
 
 	// Send the transaction
 	const hash = await walletClient.writeContract({
@@ -329,7 +350,7 @@ export async function transferERC721(
 		abi: erc721TransferAbi,
 		functionName: 'transferFrom',
 		args: [fromAddress, validatedToAddress, tokenId],
-		account: walletClient.account!,
+		account: walletClient.account,
 		chain: walletClient.chain
 	});
 
@@ -393,7 +414,13 @@ export async function transferERC1155(
 
 	// Create wallet client for sending the transaction
 	const walletClient = getWalletClient(privateKey, network);
-	const fromAddress = walletClient.account!.address;
+
+	// Ensure account exists before using it
+	if (!walletClient.account) {
+		throw new Error('Wallet account not initialized properly');
+	}
+
+	const fromAddress = walletClient.account.address;
 
 	// Parse amount to bigint
 	const amountBigInt = BigInt(amount);
@@ -404,7 +431,7 @@ export async function transferERC1155(
 		abi: erc1155TransferAbi,
 		functionName: 'safeTransferFrom',
 		args: [fromAddress, validatedToAddress, tokenId, amountBigInt, '0x'],
-		account: walletClient.account!,
+		account: walletClient.account,
 		chain: walletClient.chain
 	});
 
