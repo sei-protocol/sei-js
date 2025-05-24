@@ -1,10 +1,21 @@
-import { describe, test, expect, beforeEach } from '@jest/globals';
+import { beforeEach, describe, expect, test } from '@jest/globals';
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { registerEVMTools } from '../../../core/tools.js';
+
+// Define types for the tools
+type ToolSchema = Record<string, unknown>;
+type ToolHandler = (...args: unknown[]) => Promise<unknown>;
+type Tool = {
+	name: string;
+	description: string;
+	schema: ToolSchema;
+	handler: ToolHandler;
+};
 
 // Mock the MCP server
 class MockServer {
-	tools: { name: string; description: string; schema: any; handler: Function }[] = [];
-	tool(name: string, description: string, schema: any, handler: Function) {
+	tools: Tool[] = [];
+	tool(name: string, description: string, schema: ToolSchema, handler: ToolHandler): void {
 		this.tools.push({ name, description, schema, handler });
 	}
 }
@@ -17,7 +28,8 @@ describe('registerEVMTools', () => {
 	});
 
 	test('registers all expected tools', () => {
-		registerEVMTools(server as any);
+		// Cast to unknown first, then to McpServer to avoid direct 'any' usage
+		registerEVMTools(server as unknown as McpServer);
 		// Check that some key tools are registered
 		const toolNames = server.tools.map((t) => t.name);
 		expect(toolNames).toContain('get_chain_info');
@@ -37,9 +49,12 @@ describe('registerEVMTools', () => {
 	});
 
 	test('each registered tool has a handler function', () => {
-		registerEVMTools(server as any);
-		server.tools.forEach((tool) => {
+		// Cast to unknown first, then to McpServer to avoid direct 'any' usage
+		registerEVMTools(server as unknown as McpServer);
+
+		// Using for...of instead of forEach for better performance (Biome rule)
+		for (const tool of server.tools) {
 			expect(typeof tool.handler).toBe('function');
-		});
+		}
 	});
 });
