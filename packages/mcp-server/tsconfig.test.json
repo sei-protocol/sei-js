@@ -1,0 +1,13 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"types": ["jest", "node"],
+		"esModuleInterop": true,
+		"allowJs": true,
+		"checkJs": false,
+		"noImplicitAny": false,
+		"isolatedModules": true,
+		"resolveJsonModule": true
+	},
+	"include": ["src/**/*.ts", "src/**/*.test.ts"]
+}

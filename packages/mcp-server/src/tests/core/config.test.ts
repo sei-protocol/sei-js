@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach } from 'bun:test';
+import { describe, test, expect, beforeEach, afterEach } from '@jest/globals';
 import { config, getPrivateKeyAsHex } from '../../core/config.js';
 
 describe('Config Module', () => {

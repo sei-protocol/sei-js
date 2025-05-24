@@ -1,4 +1,4 @@
-import { describe, test, expect, mock, spyOn, afterEach } from 'bun:test';
+import { describe, test, expect, afterEach, jest, beforeEach } from '@jest/globals';
 import { 
   getBalance, 
   getERC20Balance, 
@@ -7,40 +7,52 @@ import {
   getERC1155Balance 
 } from '../../../core/services/balance.js';
 
-// Create valid test addresses
-const VALID_ADDRESS = '0x1234567890123456789012345678901234567890';
-const VALID_TOKEN_ADDRESS = '0xabcdef1234567890123456789012345678901234';
-const VALID_OWNER_ADDRESS = '0x0987654321098765432109876543210987654321';
+// Create valid test addresses with proper type assertions
+const VALID_ADDRESS = '0x1234567890123456789012345678901234567890' as `0x${string}`;
+const VALID_TOKEN_ADDRESS = '0xabcdef1234567890123456789012345678901234' as `0x${string}`;
+const VALID_OWNER_ADDRESS = '0x0987654321098765432109876543210987654321' as `0x${string}`;
+
+// Mock modules
+jest.mock('../../../core/services/clients.js', () => ({
+  getPublicClient: jest.fn()
+}));
+
+jest.mock('../../../core/services/utils.js', () => ({
+  utils: {
+    validateAddress: jest.fn(address => address)
+  }
+}));
+
+jest.mock('../../../core/services/contracts.js', () => ({
+  readContract: jest.fn()
+}));
+
+jest.mock('viem', () => ({
+  formatEther: jest.fn(() => '1'),
+  getContract: jest.fn(),
+  formatUnits: jest.fn(() => '1')
+}));
 
 describe('Balance Service', () => {
   // Reset all mocks after each test
   afterEach(() => {
-    mock.restore();
+    jest.resetAllMocks();
   });
 
   describe('getBalance', () => {
     test('should return the native token balance', async () => {
-      // Mock the getPublicClient function
+      // Import mocked modules
+      const { getPublicClient } = await import('../../../core/services/clients.js');
+      const { formatEther } = await import('viem');
+      
+      // Setup mock client with proper type casting
       const mockClient = {
-        getBalance: () => Promise.resolve(1000000000000000000n)
+        getBalance: jest.fn().mockImplementation(() => Promise.resolve(BigInt('1000000000000000000')))
       };
       
-      // Mock the modules
-      mock.module('../../../core/services/clients.js', () => ({
-        getPublicClient: () => mockClient
-      }));
-      
-      mock.module('../../../core/services/utils.js', () => ({
-        helpers: {
-          validateAddress: (address: string) => address
-        }
-      }));
-      
-      mock.module('viem', () => ({
-        formatEther: () => '1',
-        getContract: () => ({}),
-        formatUnits: () => ''
-      }));
+      // Configure mocks for this test
+      (getPublicClient as jest.Mock).mockReturnValue(mockClient);
+      (formatEther as jest.Mock).mockReturnValue('1');
       
       // Call the function
       const result = await getBalance(VALID_ADDRESS);
@@ -55,27 +67,22 @@ describe('Balance Service', () => {
 
   describe('getERC20Balance', () => {
     test('should return the ERC20 token balance with metadata', async () => {
-      // Mock the contract object
+      // Import mocked modules
+      const { getContract } = await import('viem');
+      const { formatUnits } = await import('viem');
+      
+      // Setup mock contract
       const mockContract = {
         read: {
-          balanceOf: () => Promise.resolve(1000000000n),
-          symbol: () => Promise.resolve('TOKEN'),
-          decimals: () => Promise.resolve(9)
+          balanceOf: jest.fn().mockImplementation(() => Promise.resolve(BigInt('1000000000'))),
+          symbol: jest.fn().mockImplementation(() => Promise.resolve('TOKEN')),
+          decimals: jest.fn().mockImplementation(() => Promise.resolve(9))
         }
       };
       
-      // Mock the modules
-      mock.module('viem', () => ({
-        getContract: () => mockContract,
-        formatUnits: () => '1',
-        formatEther: () => ''
-      }));
-      
-      mock.module('../../../core/services/utils.js', () => ({
-        helpers: {
-          validateAddress: (address: string) => address
-        }
-      }));
+      // Configure mocks for this test
+      (getContract as jest.Mock).mockReturnValue(mockContract);
+      (formatUnits as jest.Mock).mockReturnValue('1');
       
       // Call the function
       const result = await getERC20Balance(
@@ -97,16 +104,13 @@ describe('Balance Service', () => {
 
   describe('isNFTOwner', () => {
     test('should return true if address owns the NFT', async () => {
-      // Mock the modules
-      mock.module('../../../core/services/contracts.js', () => ({
-        readContract: () => Promise.resolve(VALID_OWNER_ADDRESS)
-      }));
+      // Import mocked modules
+      const { readContract } = await import('../../../core/services/contracts.js');
+      const { utils } = await import('../../../core/services/utils.js');
       
-      mock.module('../../../core/services/utils.js', () => ({
-        helpers: {
-          validateAddress: (address: string) => address
-        }
-      }));
+      // Configure mocks for this test
+      (readContract as jest.Mock).mockImplementation(() => Promise.resolve(VALID_OWNER_ADDRESS));
+      (utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
       
       // Call the function
       const result = await isNFTOwner(
@@ -120,16 +124,13 @@ describe('Balance Service', () => {
     });
     
     test('should return false if address does not own the NFT', async () => {
-      // Mock the modules
-      mock.module('../../../core/services/contracts.js', () => ({
-        readContract: () => Promise.resolve('0xDifferentAddress')
-      }));
+      // Import mocked modules
+      const { readContract } = await import('../../../core/services/contracts.js');
+      const { utils } = await import('../../../core/services/utils.js');
       
-      mock.module('../../../core/services/utils.js', () => ({
-        helpers: {
-          validateAddress: (address: string) => address
-        }
-      }));
+      // Configure mocks for this test
+      (readContract as jest.Mock).mockImplementation(() => Promise.resolve('0xDifferentAddress' as `0x${string}`));
+      (utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
       
       // Call the function
       const result = await isNFTOwner(
@@ -143,18 +144,15 @@ describe('Balance Service', () => {
     });
     
     test('should return false if there is an error', async () => {
-      // Mock the modules
-      mock.module('../../../core/services/contracts.js', () => ({
-        readContract: () => {
-          throw new Error('NFT does not exist');
-        }
-      }));
+      // Import mocked modules
+      const { readContract } = await import('../../../core/services/contracts.js');
+      const { utils } = await import('../../../core/services/utils.js');
       
-      mock.module('../../../core/services/utils.js', () => ({
-        helpers: {
-          validateAddress: (address: string) => address
-        }
-      }));
+      // Configure mocks for this test
+      (readContract as jest.Mock).mockImplementation(() => {
+        throw new Error('NFT does not exist');
+      });
+      (utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
       
       // Mock console.error to avoid cluttering test output
       const originalConsoleError = console.error;
@@ -176,17 +174,14 @@ describe('Balance Service', () => {
   });
 
   describe('getERC721Balance', () => {
-    test('should return the number of NFTs owned', async () => {
-      // Mock the modules
-      mock.module('../../../core/services/contracts.js', () => ({
-        readContract: () => Promise.resolve(5n)
-      }));
+    test('should return the ERC721 token balance with metadata', async () => {
+      // Import mocked modules
+      const { readContract } = await import('../../../core/services/contracts.js');
+      const { utils } = await import('../../../core/services/utils.js');
       
-      mock.module('../../../core/services/utils.js', () => ({
-        helpers: {
-          validateAddress: (address: string) => address
-        }
-      }));
+      // Configure mocks for this test
+      (readContract as jest.Mock).mockResolvedValue(BigInt('5'));
+      (utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
       
       // Call the function
       const result = await getERC721Balance(
@@ -201,16 +196,13 @@ describe('Balance Service', () => {
 
   describe('getERC1155Balance', () => {
     test('should return the balance of the ERC1155 token', async () => {
-      // Mock the modules
-      mock.module('../../../core/services/contracts.js', () => ({
-        readContract: () => Promise.resolve(10n)
-      }));
+      // Import mocked modules
+      const { readContract } = await import('../../../core/services/contracts.js');
+      const { utils } = await import('../../../core/services/utils.js');
       
-      mock.module('../../../core/services/utils.js', () => ({
-        helpers: {
-          validateAddress: (address: string) => address
-        }
-      }));
+      // Configure mocks for this test
+      (readContract as jest.Mock).mockImplementation(() => Promise.resolve(BigInt('10')));
+      (utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
       
       // Call the function
       const result = await getERC1155Balance(

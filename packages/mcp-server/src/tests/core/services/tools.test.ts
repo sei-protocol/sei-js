@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach } from 'bun:test';
+import { describe, test, expect, beforeEach } from '@jest/globals';
 import { registerEVMTools } from '../../../core/tools.js';
 
 // Mock the MCP server
