@@ -88,21 +88,18 @@ discover and use blockchain functionality.
 
 ## 🛠️ Prerequisites
 
-- [Bun](https://bun.sh/) 1.0.0 or higher
-- Node.js 18.0.0 or higher (if not using Bun)
+- Yarn Package Manager
+- Node.js 18.0.0 or higher
 
 ## 📦 Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/sei-protocol/sei-mcp-server.git
-cd sei-mcp-server
+git clone https://github.com/sei-protocol/sei-js.git
+cd sei-js/packages/mcp-server
 
-# Install dependencies with Bun
-bun install
-
-# Or with npm
-npm install
+# Install dependencies with Yarn
+yarn install
 ```
 
 ## ⚙️ Server Configuration
@@ -147,7 +144,7 @@ PRIVATE_KEY=your_private_key_here
       "command": "npx",
       "args": [
         "-y",
-        "@sei-protocol/sei-mcp-server"
+        "@sei-js/mcp-server"
       ],
       "env": {
         "PRIVATE_KEY": "your_private_key_here"
