@@ -10,10 +10,10 @@ export { utils as helpers } from './utils.js';
 
 // Re-export common types for convenience
 export type {
-  Address,
-  Hash,
-  Hex,
-  Block,
-  TransactionReceipt,
-  Log
+	Address,
+	Hash,
+	Hex,
+	Block,
+	TransactionReceipt,
+	Log
 } from 'viem';
