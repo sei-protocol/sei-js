@@ -6,7 +6,7 @@
 	},
 	"typedocOptions": {
 		"readme": "./README.md",
-		"name": "evm",
+		"name": "mcp-server",
 		"entryPoints": ["src/index.ts"],
 		"exclude": ["node_modules"]
 	}
