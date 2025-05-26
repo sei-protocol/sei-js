@@ -62,6 +62,17 @@ describe('Transfer Service', () => {
 
 			await expect(transferSei('0x1234567890123456789012345678901234567890', '1.0')).rejects.toThrow('Private key not available');
 		});
+
+		test('should throw error when wallet account is not initialized', async () => {
+			// Mock wallet client without an account
+			const mockWalletClientWithoutAccount = {
+				...mockWalletClient,
+				account: null
+			};
+			(getWalletClient as jest.Mock).mockReturnValue(mockWalletClientWithoutAccount);
+
+			await expect(transferSei('0x1234567890123456789012345678901234567890', '1.0')).rejects.toThrow('Wallet account not initialized properly');
+		});
 	});
 
 	describe('transferERC20', () => {
@@ -91,6 +102,23 @@ describe('Transfer Service', () => {
 					decimals: mockDecimals
 				}
 			});
+		});
+
+		test('should throw error when private key is not available', async () => {
+			(getPrivateKeyAsHex as jest.Mock).mockReturnValue(null);
+
+			await expect(transferERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Private key not available');
+		});
+
+		test('should throw error when wallet account is not initialized', async () => {
+			// Mock wallet client without an account
+			const mockWalletClientWithoutAccount = {
+				...mockWalletClient,
+				account: null
+			};
+			(getWalletClient as jest.Mock).mockReturnValue(mockWalletClientWithoutAccount);
+
+			await expect(transferERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Wallet account not initialized properly');
 		});
 	});
 
@@ -122,6 +150,23 @@ describe('Transfer Service', () => {
 				}
 			});
 		});
+
+		test('should throw error when private key is not available', async () => {
+			(getPrivateKeyAsHex as jest.Mock).mockReturnValue(null);
+
+			await expect(approveERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Private key not available');
+		});
+
+		test('should throw error when wallet account is not initialized', async () => {
+			// Mock wallet client without an account
+			const mockWalletClientWithoutAccount = {
+				...mockWalletClient,
+				account: null
+			};
+			(getWalletClient as jest.Mock).mockReturnValue(mockWalletClientWithoutAccount);
+
+			await expect(approveERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Wallet account not initialized properly');
+		});
 	});
 
 	describe('transferERC721', () => {
@@ -149,6 +194,47 @@ describe('Transfer Service', () => {
 				}
 			});
 		});
+
+		test('should throw error when private key is not available', async () => {
+			(getPrivateKeyAsHex as jest.Mock).mockReturnValue(null);
+
+			await expect(transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n)).rejects.toThrow('Private key not available');
+		});
+
+		test('should throw error when wallet account is not initialized', async () => {
+			// Mock wallet client without an account
+			const mockWalletClientWithoutAccount = {
+				...mockWalletClient,
+				account: null
+			};
+			(getWalletClient as jest.Mock).mockReturnValue(mockWalletClientWithoutAccount);
+
+			await expect(transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n)).rejects.toThrow('Wallet account not initialized properly');
+		});
+
+		test('should handle errors when fetching NFT metadata', async () => {
+			const mockHash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' as Hash;
+			
+			// Mock successful transaction but failed metadata fetch
+			(mockWalletClient.writeContract as jest.Mock).mockImplementation(() => Promise.resolve(mockHash));
+			
+			// Mock read contract to throw error for metadata
+			(mockPublicClient.readContract as jest.Mock).mockImplementation(() => {
+				throw new Error('Failed to fetch metadata');
+			});
+
+			// Should still complete but with default values
+			const result = await transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n);
+
+			expect(result).toEqual({
+				txHash: mockHash,
+				tokenId: '1',
+				token: {
+					name: 'Unknown',
+					symbol: 'NFT'
+				}
+			});
+		});
 	});
 
 	describe('transferERC1155', () => {
@@ -166,6 +252,23 @@ describe('Transfer Service', () => {
 				tokenId: '1',
 				amount: '1'
 			});
+		});
+
+		test('should throw error when private key is not available', async () => {
+			(getPrivateKeyAsHex as jest.Mock).mockReturnValue(null);
+
+			await expect(transferERC1155('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n, '1')).rejects.toThrow('Private key not available');
+		});
+
+		test('should throw error when wallet account is not initialized', async () => {
+			// Mock wallet client without an account
+			const mockWalletClientWithoutAccount = {
+				...mockWalletClient,
+				account: null
+			};
+			(getWalletClient as jest.Mock).mockReturnValue(mockWalletClientWithoutAccount);
+
+			await expect(transferERC1155('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n, '1')).rejects.toThrow('Wallet account not initialized properly');
 		});
 	});
 });

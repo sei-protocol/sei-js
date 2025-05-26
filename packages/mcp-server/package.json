@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && tsc --outDir dist/esm --module esnext",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
