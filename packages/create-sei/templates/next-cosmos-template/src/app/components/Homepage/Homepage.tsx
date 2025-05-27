@@ -33,7 +33,7 @@ const helpItems: HelpItem[] = [
 	{
 		title: 'CosmosKit',
 		description: "Learn about CosmosKit and it's hooks for chain interaction.",
-		link: 'https://docs.cosmology.zone/cosmos-kit/get-started'
+		link: 'https://hyperweb.io/stack/cosmos-kit'
 	},
 	{
 		title: 'sei-js',
