@@ -13,19 +13,20 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "rimraf dist && tsc --outDir dist/esm --module esnext",
+    "build": "rm -rf dist && tsc --outDir dist/esm --module esnext",
     "test": "jest"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
-    "viem": "^2.23.9",
+    "viem": "^2.30.5",
     "zod": "^3.24.2"
   },
   "keywords": [

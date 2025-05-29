@@ -2,7 +2,8 @@
 	"extends": "../../tsconfig.base.json",
 	"include": ["src"],
 	"compilerOptions": {
-		"outDir": "./dist/types"
+		"outDir": "./dist/types",
+		"moduleResolution": "bundler"
 	},
 	"typedocOptions": {
 		"readme": "./README.md",
