@@ -1,58 +1,46 @@
 {
-  "name": "@sei-js/mcp-server",
-  "description": "Model Context Protocol (MCP) server for interacting with EVM-compatible networks",
-  "type": "module",
-  "version": "0.1.0",
-  "bin": "./bin/cli.js",
-  "main": "./dist/esm/index.js",
-  "module": "./dist/esm/index.js",
-  "files": [
-    "dist/",
-    "bin/",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "build": "rimraf dist && tsc --outDir dist/esm --module esnext",
-    "test": "NODE_ENV=test jest"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.7.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "express": "^4.21.2",
-    "viem": "^2.23.9",
-    "zod": "^3.24.2"
-  },
-  "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "evm",
-    "blockchain",
-    "sei",
-    "web3",
-    "smart-contracts",
-    "ai",
-    "agent"
-  ],
-  "author": "Etheral <etheral.eth.dev@gmail.com>",
-  "license": "MIT",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sei-protocol/sei-mcp-server"
-  },
-  "bugs": {
-    "url": "https://github.com/sei-protocol/sei-mcp-server/issues"
-  },
-  "homepage": "https://github.com/sei-protocol/sei-mcp-server#readme",
-  "publishConfig": {
-    "access": "public"
-  }
+	"name": "@sei-js/mcp-server",
+	"description": "Model Context Protocol (MCP) server for interacting with EVM-compatible networks",
+	"type": "module",
+	"version": "0.1.0",
+	"bin": "./bin/cli.js",
+	"main": "./dist/esm/index.js",
+	"module": "./dist/esm/index.js",
+	"files": ["dist/", "bin/", "README.md", "LICENSE"],
+	"scripts": {
+		"build": "rm -rf dist && tsc --outDir dist/esm --module esnext",
+		"start": "node dist/esm/index.js",
+		"dev": "tsx src/index.ts",
+		"test": "jest"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.17",
+		"@types/express": "^5.0.0",
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.7.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.5.0",
+		"express": "^4.21.2",
+		"viem": "^2.30.5",
+		"zod": "^3.24.2"
+	},
+	"keywords": ["mcp", "model-context-protocol", "evm", "blockchain", "sei", "web3", "smart-contracts", "ai", "agent"],
+	"author": "Etheral <etheral.eth.dev@gmail.com>",
+	"license": "MIT",
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sei-protocol/sei-mcp-server"
+	},
+	"bugs": {
+		"url": "https://github.com/sei-protocol/sei-mcp-server/issues"
+	},
+	"homepage": "https://github.com/sei-protocol/sei-mcp-server#readme",
+	"publishConfig": {
+		"access": "public"
+	}
 }
