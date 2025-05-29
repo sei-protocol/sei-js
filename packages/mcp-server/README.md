@@ -91,7 +91,7 @@ discover and use blockchain functionality.
 - Yarn Package Manager
 - Node.js 18.0.0 or higher
 
-## 📦 Installation
+## 📦 Local Development
 
 ```bash
 # Clone the repository
@@ -176,10 +176,10 @@ You can run the Sei MCP Server directly without installation using npx:
 
 ```bash
 # Run the server in stdio mode (for CLI tools)
-npx @sei-protocol/sei-mcp-server
+npx @sei-protocol/mcp-server
 
 # Run the server in HTTP mode (for web applications)
-npx @sei-protocol/sei-mcp-server --http
+npx @sei-protocol/mcp-server --http
 ```
 
 ### Running the Server Locally
@@ -188,20 +188,20 @@ Start the server using stdio (for embedding in CLI tools):
 
 ```bash
 # Start the stdio server
-bun start
+yarn start
 
 # Development mode with auto-reload
-bun dev
+yarn dev
 ```
 
 Or start the HTTP server with SSE for web applications:
 
 ```bash
 # Start the HTTP server
-bun start:http
+yarn start:http
 
 # Development mode with auto-reload
-bun dev:http
+yarn dev:http
 ```
 
 ### Connecting to the Server
@@ -224,7 +224,7 @@ To connect to the MCP server from Cursor:
       "command": "npx",
       "args": [
         "-y",
-        "@sei-protocol/sei-mcp-server"
+        "@sei-js/mcp-server"
       ],
       "env": {
         "PRIVATE_KEY": "your_private_key_here"
@@ -303,9 +303,15 @@ The MCP server handles all the blockchain communication while allowing Cursor to
 
 If you're using Claude CLI, you can connect to the MCP server with just two commands:
 
+Install the Claude CLI with the following command:
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+
 ```bash
 # Add the MCP server
-claude mcp add evm-mcp-server npx @sei-protocol/sei-mcp-server
+claude mcp add sei-mcp-server npx @sei-js/mcp-server
 
 # Start Claude with the MCP server enabled
 claude
@@ -406,7 +412,8 @@ The server exposes blockchain data through the following MCP resource URIs.
 ## 📁 Project Structure
 
 ```
-mcp-evm-server/
+...
+mcp-server/
 ├── src/
 │   ├── index.ts                # Main stdio server entry point
 │   ├── server/                 # Server-related files

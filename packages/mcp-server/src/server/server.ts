@@ -19,9 +19,7 @@ async function startServer() {
 		registerEVMPrompts(server);
 
 		// Log server information
-		console.error('EVM MCP Server initialized');
-		console.error(`Supported networks: ${getSupportedNetworks().join(', ')}`);
-		console.error('Server is ready to handle requests');
+		console.error(`EVM MCP Server initialized for networks: ${getSupportedNetworks().join(', ')}`);
 
 		return server;
 	} catch (error) {
