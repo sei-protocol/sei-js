@@ -797,13 +797,11 @@ export function registerEVMTools(server: McpServer) {
 				// Parse ABI if it's a string
 				const parsedAbi = typeof abi === 'string' ? JSON.parse(abi) : abi;
 
-				const contractParams: WriteContractParameters = {
+				const contractParams: Record<string, any> = {
 					address: contractAddress as Address,
 					abi: parsedAbi,
 					functionName,
-					args,
-					chain: null, // This will use the default chain from the client
-					account: null // This will use the default account from the client
+					args
 				};
 
 				const txHash = await services.writeContract(contractParams, network);
