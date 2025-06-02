@@ -1968,7 +1968,7 @@ describe('EVM Tools', () => {
           address: writeParams.contractAddress,
           abi: writeParams.abi,
           functionName: writeParams.functionName,
-          args: writeParams.args
+          args: writeParams.args,
         },
         'sei' // DEFAULT_NETWORK
       );
