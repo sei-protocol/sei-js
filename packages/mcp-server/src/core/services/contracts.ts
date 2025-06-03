@@ -19,7 +19,7 @@ export async function readContract(params: ReadContractParameters, network = DEF
  * @returns Transaction hash
  * @throws Error if no private key is available
  */
-export async function writeContract(params: WriteContractParameters, network = DEFAULT_NETWORK): Promise<Hash> {
+export async function writeContract(params: Record<string, any>, network = DEFAULT_NETWORK): Promise<Hash> {
 	// Get private key from environment
 	const key = getPrivateKeyAsHex();
 
@@ -28,7 +28,7 @@ export async function writeContract(params: WriteContractParameters, network = D
 	}
 
 	const client = getWalletClient(key, network);
-	return await client.writeContract(params);
+	return await client.writeContract(params as any);
 }
 
 /**
