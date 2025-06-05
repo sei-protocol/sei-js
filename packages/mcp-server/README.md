@@ -24,8 +24,6 @@ This server enables AI assistants and agents to interact via unified interface.
 - [Project Structure](#project-structure)
 - [Development](#development)
 - [License](#license)
-- [Contract Deployment](#contract-deployment)
-  - [deploy_contract](#deploy_contract)
 
 ## 🔭 Overview
 
@@ -366,15 +364,16 @@ The server provides the following MCP tools for agents.
 
 #### Blockchain services
 
-| Tool Name         | Description | Key Parameters |
-|-------------------|-------------|----------------|
-| `get-chain-info`  | Get network information | `network` |
-| `get-balance`     | Get native token balance | `address` (address), `network` |
-| `transfer-sei`    | Send native tokens | `to` (address), `amount`, `network` |
-| `get-transaction` | Get transaction details | `txHash`, `network` |
-| `read-contract`   | Read smart contract state | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
-| `write-contract`  | Write to smart contract | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
-| `is-contract`     | Check if address is a contract | `address` (address), `network` |
+| Tool Name         | Description                    | Key Parameters                                          |
+|-------------------|--------------------------------|---------------------------------------------------------|
+| `get-chain-info`  | Get network information        | `network`                                               |
+| `get-balance`     | Get native token balance       | `address` (address), `network`                          |
+| `transfer-sei`    | Send native tokens             | `to` (address), `amount`, `network`                     |
+| `get-transaction` | Get transaction details        | `txHash`, `network`                                     |
+| `read-contract`   | Read smart contract state      | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
+| `deploy-contract` | Deplly smart contract          | `bytecode`, `abi`, `args`, `network` |
+| `write-contract`  | Write to smart contract        | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
+| `is-contract`     | Check if address is a contract | `address` (address), `network`                          |
 
 ### Resources
 
@@ -455,44 +454,3 @@ To modify or extend the server:
 ## 📄 License
 
 This project is licensed under the terms of the [MIT License](./LICENSE).
-
-## Contract Deployment
-
-The MCP server now supports deploying smart contracts to the Sei network.
-
-### deploy_contract
-
-Deploy a new smart contract to the blockchain.
-
-**Parameters:**
-- `bytecode` (string): The compiled contract bytecode as a hex string
-- `abi` (array): The contract ABI as a JSON array (needed for constructor)
-- `args` (array, optional): Constructor arguments
-- `network` (string, optional): Network name or chain ID
-
-**Example:**
-```json
-{
-  "bytecode": "0x608060405234801561001057600080fd5b50...",
-  "abi": [
-    {
-      "inputs": [{"name": "initialValue", "type": "uint256"}],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    }
-  ],
-  "args": ["1000"],
-  "network": "sei"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "network": "sei",
-  "contractAddress": "0x1234567890123456789012345678901234567890",
-  "transactionHash": "0xabcdef...",
-  "message": "Contract deployed successfully"
-}
-```
