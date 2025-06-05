@@ -364,15 +364,16 @@ The server provides the following MCP tools for agents.
 
 #### Blockchain services
 
-| Tool Name         | Description | Key Parameters |
-|-------------------|-------------|----------------|
-| `get-chain-info`  | Get network information | `network` |
-| `get-balance`     | Get native token balance | `address` (address), `network` |
-| `transfer-sei`    | Send native tokens | `to` (address), `amount`, `network` |
-| `get-transaction` | Get transaction details | `txHash`, `network` |
-| `read-contract`   | Read smart contract state | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
-| `write-contract`  | Write to smart contract | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
-| `is-contract`     | Check if address is a contract | `address` (address), `network` |
+| Tool Name         | Description                    | Key Parameters                                          |
+|-------------------|--------------------------------|---------------------------------------------------------|
+| `get-chain-info`  | Get network information        | `network`                                               |
+| `get-balance`     | Get native token balance       | `address` (address), `network`                          |
+| `transfer-sei`    | Send native tokens             | `to` (address), `amount`, `network`                     |
+| `get-transaction` | Get transaction details        | `txHash`, `network`                                     |
+| `read-contract`   | Read smart contract state      | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
+| `deploy-contract` | Deploy smart contract          | `bytecode`, `abi`, `args`, `network` |
+| `write-contract`  | Write to smart contract        | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
+| `is-contract`     | Check if address is a contract | `address` (address), `network`                          |
 
 ### Resources
 
