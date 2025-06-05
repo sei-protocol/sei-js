@@ -371,7 +371,7 @@ The server provides the following MCP tools for agents.
 | `transfer-sei`    | Send native tokens             | `to` (address), `amount`, `network`                     |
 | `get-transaction` | Get transaction details        | `txHash`, `network`                                     |
 | `read-contract`   | Read smart contract state      | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
-| `deploy-contract` | Deplly smart contract          | `bytecode`, `abi`, `args`, `network` |
+| `deploy-contract` | Deploy smart contract          | `bytecode`, `abi`, `args`, `network` |
 | `write-contract`  | Write to smart contract        | `contractAddress` (address), `abi`, `functionName`, `args` (optional), `network` |
 | `is-contract`     | Check if address is a contract | `address` (address), `network`                          |
 
