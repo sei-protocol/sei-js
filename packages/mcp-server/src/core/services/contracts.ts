@@ -52,3 +52,54 @@ export async function isContract(address: string, network = DEFAULT_NETWORK): Pr
 	const code = await client.getBytecode({ address: validatedAddress });
 	return code !== undefined && code !== '0x';
 }
+
+/**
+ * Deploy a new contract
+ * @param bytecode Contract bytecode as hex string
+ * @param abi Contract ABI for constructor
+ * @param args Constructor arguments (optional)
+ * @param network Network name or chain ID
+ * @returns Object with contract address and transaction hash
+ * @throws Error if no private key is available or deployment fails
+ */
+export async function deployContract(
+	bytecode: Hex,
+	abi: any[],
+	args?: any[],
+	network = DEFAULT_NETWORK
+): Promise<{ address: Hash; transactionHash: Hash }> {
+	// Get private key from environment
+	const key = getPrivateKeyAsHex();
+
+	if (!key) {
+		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
+	}
+
+	const client = getWalletClient(key, network);
+	
+	if (!client.account) {
+		throw new Error('Wallet client account not available for contract deployment.');
+	}
+	
+	// Deploy the contract
+	const hash = await client.deployContract({
+		abi,
+		bytecode,
+		args: args || [],
+		account: client.account,
+		chain: client.chain,
+	});
+
+	// Wait for the transaction to be mined and get the contract address
+	const publicClient = getPublicClient(network);
+	const receipt = await publicClient.waitForTransactionReceipt({ hash });
+	
+	if (!receipt.contractAddress) {
+		throw new Error('Contract deployment failed - no contract address returned');
+	}
+
+	return {
+		address: receipt.contractAddress,
+		transactionHash: hash,
+	};
+}

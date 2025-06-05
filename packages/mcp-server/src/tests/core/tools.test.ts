@@ -844,6 +844,7 @@ describe('EVM Tools', () => {
     // Verify contract interaction tools
     expect(registeredTools.has('read_contract')).toBe(true);
     expect(registeredTools.has('write_contract')).toBe(true);
+    expect(registeredTools.has('deploy_contract')).toBe(true);
   });
 
   // Group 4: Transaction Tools
@@ -2500,5 +2501,212 @@ describe('EVM Tools', () => {
       
       verifyErrorResponse(response, 'Error checking if address is a contract: Test error');
     });
+  });
+
+  test('write_contract - error with non-Error object', async () => {
+    const tool = checkToolExists('write_contract');
+    if (!tool) return;
+    
+    const params = {
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      abi: [
+        {
+          inputs: [{ name: 'to', type: 'address' }, { name: 'value', type: 'uint256' }],
+          name: 'transfer',
+          outputs: [{ name: '', type: 'bool' }],
+          stateMutability: 'nonpayable',
+          type: 'function'
+        }
+      ],
+      functionName: 'transfer',
+      args: ['0x0987654321098765432109876543210987654321', '1000000000000000000'],
+      network: mockNetwork
+    };
+    
+    const nonErrorObject = "This is a string error";
+    
+    (services.writeContract as jest.Mock).mockImplementationOnce(() => {
+      throw nonErrorObject;
+    });
+    
+    const response = await tool.handler(params);
+    
+    expect(response).toHaveProperty('isError', true);
+    expect(response.content[0].text).toContain('Error writing to contract: This is a string error');
+  });
+
+  test('deploy_contract - success path', async () => {
+    const tool = checkToolExists('deploy_contract');
+    if (!tool) return;
+    
+    const mockDeployResult = {
+      address: '0x1234567890123456789012345678901234567890' as `0x${string}`,
+      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890' as `0x${string}`
+    };
+    
+    // Mock the deployContract function before calling testToolSuccess
+    (services.deployContract as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve(mockDeployResult);
+    });
+    
+    const params = {
+      bytecode: '0x608060405234801561001057600080fd5b50',
+      abi: [
+        {
+          inputs: [{ name: 'initialValue', type: 'uint256' }],
+          stateMutability: 'nonpayable',
+          type: 'constructor'
+        }
+      ],
+      args: ['1000'],
+      network: mockNetwork
+    };
+    
+    const response = await testToolSuccess(tool, params);
+    
+    expect(services.deployContract).toHaveBeenCalledWith(
+      '0x608060405234801561001057600080fd5b50',
+      params.abi,
+      params.args,
+      mockNetwork
+    );
+    
+    expect(response).toHaveProperty('content');
+    expect(response.content[0]).toHaveProperty('type', 'text');
+    
+    const responseData = JSON.parse(response.content[0].text);
+    expect(responseData).toMatchObject({
+      success: true,
+      network: mockNetwork,
+      contractAddress: mockDeployResult.address,
+      transactionHash: mockDeployResult.transactionHash,
+      message: 'Contract deployed successfully'
+    });
+  });
+
+  test('deploy_contract - success path without 0x prefix in bytecode', async () => {
+    const tool = checkToolExists('deploy_contract');
+    if (!tool) return;
+    
+    const mockDeployResult = {
+      address: '0x1234567890123456789012345678901234567890' as `0x${string}`,
+      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890' as `0x${string}`
+    };
+    
+    // Mock the deployContract function before calling testToolSuccess
+    (services.deployContract as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve(mockDeployResult);
+    });
+    
+    const params = {
+      bytecode: '608060405234801561001057600080fd5b50', // Without 0x prefix
+      abi: [
+        {
+          inputs: [],
+          stateMutability: 'nonpayable',
+          type: 'constructor'
+        }
+      ],
+      network: mockNetwork
+    };
+    
+    const response = await testToolSuccess(tool, params);
+    
+    expect(services.deployContract).toHaveBeenCalledWith(
+      '0x608060405234801561001057600080fd5b50', // Should be formatted with 0x
+      params.abi,
+      [],
+      mockNetwork
+    );
+    
+    expect(response).toHaveProperty('content');
+    expect(response.content[0]).toHaveProperty('type', 'text');
+  });
+
+  test('deploy_contract - success path with default network and no args', async () => {
+    const tool = checkToolExists('deploy_contract');
+    if (!tool) return;
+    
+    const mockDeployResult = {
+      address: '0x1234567890123456789012345678901234567890' as `0x${string}`,
+      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890' as `0x${string}`
+    };
+    
+    // Mock the deployContract function before calling testToolSuccess
+    (services.deployContract as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve(mockDeployResult);
+    });
+    
+    const params = {
+      bytecode: '0x608060405234801561001057600080fd5b50',
+      abi: [
+        {
+          inputs: [],
+          stateMutability: 'nonpayable',
+          type: 'constructor'
+        }
+      ]
+    };
+    
+    const response = await testToolSuccess(tool, params);
+    
+    expect(services.deployContract).toHaveBeenCalledWith(
+      params.bytecode,
+      params.abi,
+      [],
+      'sei' // DEFAULT_NETWORK
+    );
+    
+    expect(response).toHaveProperty('content');
+    expect(response.content[0]).toHaveProperty('type', 'text');
+  });
+
+  test('deploy_contract - error path', async () => {
+    const tool = checkToolExists('deploy_contract');
+    if (!tool) return;
+    
+    const params = {
+      bytecode: '0x608060405234801561001057600080fd5b50',
+      abi: [
+        {
+          inputs: [],
+          stateMutability: 'nonpayable',
+          type: 'constructor'
+        }
+      ],
+      network: mockNetwork
+    };
+    
+    const response = await testToolError(tool, params, services.deployContract as jest.Mock, mockError);
+    
+    verifyErrorResponse(response, 'Error deploying contract: Test error');
+  });
+
+  test('deploy_contract - error with non-Error object', async () => {
+    const tool = checkToolExists('deploy_contract');
+    if (!tool) return;
+    
+    const params = {
+      bytecode: '0x608060405234801561001057600080fd5b50',
+      abi: [
+        {
+          inputs: [],
+          stateMutability: 'nonpayable',
+          type: 'constructor'
+        }
+      ],
+      network: mockNetwork
+    };
+    
+    const nonErrorObject = "This is a string error";
+    
+    (services.deployContract as jest.Mock).mockImplementationOnce(() => {
+      throw nonErrorObject;
+    });
+    
+    const response = await tool.handler(params);
+    
+    expect(response).toHaveProperty('isError', true);
+    expect(response.content[0].text).toContain('Error deploying contract: This is a string error');
   });
 });

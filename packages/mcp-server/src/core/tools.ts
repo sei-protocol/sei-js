@@ -836,6 +836,58 @@ export function registerEVMTools(server: McpServer) {
 		}
 	);
 
+	// Deploy contract
+	server.tool(
+		'deploy_contract',
+		'Deploy a new smart contract to the blockchain. This creates a new contract instance and returns both the deployment transaction hash and the deployed contract address.',
+		{
+			bytecode: z.string().describe("The compiled contract bytecode as a hex string (e.g., '0x608060405234801561001057600080fd5b50...')"),
+			abi: z.array(z.any()).describe('The contract ABI (Application Binary Interface) as a JSON array, needed for constructor function'),
+			args: z.array(z.any()).optional().describe("The constructor arguments to pass during deployment, as an array (e.g., ['param1', 'param2']). Leave empty if constructor has no parameters."),
+			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+		},
+		async ({ bytecode, abi, args = [], network = DEFAULT_NETWORK }) => {
+			try {
+				// Parse ABI if it's a string
+				const parsedAbi = typeof abi === 'string' ? JSON.parse(abi) : abi;
+
+				// Ensure bytecode is a proper hex string
+				const formattedBytecode = bytecode.startsWith('0x') ? bytecode as Hex : `0x${bytecode}` as Hex;
+
+				const result = await services.deployContract(formattedBytecode, parsedAbi, args, network);
+
+				return {
+					content: [
+						{
+							type: 'text',
+							text: JSON.stringify(
+								{
+									success: true,
+									network,
+									contractAddress: result.address,
+									transactionHash: result.transactionHash,
+									message: 'Contract deployed successfully'
+								},
+								null,
+								2
+							)
+						}
+					]
+				};
+			} catch (error) {
+				return {
+					content: [
+						{
+							type: 'text',
+							text: `Error deploying contract: ${error instanceof Error ? error.message : String(error)}`
+						}
+					],
+					isError: true
+				};
+			}
+		}
+	);
+
 	// Check if address is a contract
 	server.tool(
 		'is_contract',
