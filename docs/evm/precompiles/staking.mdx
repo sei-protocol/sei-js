@@ -1,0 +1,451 @@
+---
+title: 'Staking Precompile'
+description: 'Manage validator delegations and staking operations through the Staking precompile contract'
+---
+
+## Overview
+
+The Staking precompile provides access to Sei's native staking functionality, allowing you to delegate tokens to validators, redelegate between validators, undelegate tokens, and query delegation information directly from EVM contracts.
+
+**Contract Address:** `0x0000000000000000000000000000000000001005`
+
+## Key Features
+
+- **Delegation Management**: Delegate SEI tokens to validators to earn rewards
+- **Redelegation**: Move delegations between validators without unbonding period
+- **Undelegation**: Withdraw delegated tokens (subject to unbonding period)
+- **Delegation Queries**: Check delegation amounts and details
+
+## Available Functions
+
+### State-Changing Functions
+
+<AccordionGroup>
+  <Accordion title="delegate(string) → bool">
+    Delegate SEI tokens to a validator.
+    
+    **Parameters:**
+    - `valAddress` (string): The validator's operator address
+    
+    **Returns:** Success boolean
+    
+    **Note:** This function is payable - send SEI with the transaction to delegate
+    
+    ```typescript
+    const success = await stakingContract.delegate(
+      "seivaloper1...", 
+      { value: parseEther("100") } // Delegate 100 SEI
+    );
+    ```
+  </Accordion>
+
+  <Accordion title="redelegate(string, string, uint256) → bool">
+    Redelegate tokens from one validator to another without unbonding.
+    
+    **Parameters:**
+    - `srcAddress` (string): Source validator address
+    - `dstAddress` (string): Destination validator address  
+    - `amount` (uint256): Amount to redelegate (in wei)
+    
+    **Returns:** Success boolean
+    
+    ```typescript
+    const success = await stakingContract.redelegate(
+      "seivaloper1source...",
+      "seivaloper1destination...", 
+      parseEther("50") // Redelegate 50 SEI
+    );
+    ```
+  </Accordion>
+
+  <Accordion title="undelegate(string, uint256) → bool">
+    Undelegate tokens from a validator (starts unbonding period).
+    
+    **Parameters:**
+    - `valAddress` (string): The validator's operator address
+    - `amount` (uint256): Amount to undelegate (in wei)
+    
+    **Returns:** Success boolean
+    
+    **Note:** Undelegated tokens are subject to a 21-day unbonding period
+    
+    ```typescript
+    const success = await stakingContract.undelegate(
+      "seivaloper1...",
+      parseEther("25") // Undelegate 25 SEI
+    );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### View Functions
+
+<AccordionGroup>
+  <Accordion title="delegation(address, string) → Delegation">
+    Get delegation information for a delegator and validator pair.
+    
+    **Parameters:**
+    - `delegator` (address): The delegator's EVM address
+    - `valAddress` (string): The validator's operator address
+    
+    **Returns:** Delegation struct with balance and details
+    
+    **Return Structure:**
+    ```typescript
+    interface Delegation {
+      balance: {
+        amount: bigint;
+        denom: string;
+      };
+      delegation: {
+        delegator_address: string;
+        shares: bigint;
+        decimals: bigint;
+        validator_address: string;
+      };
+    }
+    ```
+    
+    ```typescript
+    const delegation = await stakingContract.delegation(
+      "0x742d35Cc6634C0532925a3b8D6Ac0c2fb15d8d2A",
+      "seivaloper1..."
+    );
+    
+    console.log('Delegated amount:', formatEther(delegation.balance.amount));
+    console.log('Shares:', delegation.delegation.shares);
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Usage Examples
+
+<Tabs>
+  <Tab title="Viem">
+    ```typescript
+    import { createPublicClient, createWalletClient, http, parseEther, formatEther } from 'viem';
+    import { privateKeyToAccount } from 'viem/accounts';
+    import { 
+      seiTestnet,
+      STAKING_PRECOMPILE_ABI,
+      STAKING_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles/viem';
+
+    const publicClient = createPublicClient({
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    const account = privateKeyToAccount('0x...');
+    const walletClient = createWalletClient({
+      account,
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    // Delegate tokens to a validator
+    async function delegateToValidator(validatorAddress: string, amount: string) {
+      const hash = await walletClient.writeContract({
+        address: STAKING_PRECOMPILE_ADDRESS,
+        abi: STAKING_PRECOMPILE_ABI,
+        functionName: 'delegate',
+        args: [validatorAddress],
+        value: parseEther(amount)
+      });
+      
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Check delegation amount
+    async function getDelegation(delegatorAddress: string, validatorAddress: string) {
+      const delegation = await publicClient.readContract({
+        address: STAKING_PRECOMPILE_ADDRESS,
+        abi: STAKING_PRECOMPILE_ABI,
+        functionName: 'delegation',
+        args: [delegatorAddress, validatorAddress]
+      });
+      
+      return {
+        amount: formatEther(delegation.balance.amount),
+        denom: delegation.balance.denom,
+        shares: delegation.delegation.shares,
+        validatorAddress: delegation.delegation.validator_address
+      };
+    }
+
+    // Redelegate between validators
+    async function redelegateTokens(
+      fromValidator: string,
+      toValidator: string, 
+      amount: string
+    ) {
+      const hash = await walletClient.writeContract({
+        address: STAKING_PRECOMPILE_ADDRESS,
+        abi: STAKING_PRECOMPILE_ABI,
+        functionName: 'redelegate',
+        args: [fromValidator, toValidator, parseEther(amount)]
+      });
+      
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Undelegate tokens
+    async function undelegateTokens(validatorAddress: string, amount: string) {
+      const hash = await walletClient.writeContract({
+        address: STAKING_PRECOMPILE_ADDRESS,
+        abi: STAKING_PRECOMPILE_ABI,
+        functionName: 'undelegate',
+        args: [validatorAddress, parseEther(amount)]
+      });
+      
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Get all delegations for an address (requires multiple calls)
+    async function getAllDelegations(
+      delegatorAddress: string, 
+      validatorAddresses: string[]
+    ) {
+      const delegationPromises = validatorAddresses.map(validator =>
+        getDelegation(delegatorAddress, validator)
+      );
+      
+      const delegations = await Promise.all(delegationPromises);
+      
+      return delegations.filter(d => parseFloat(d.amount) > 0);
+    }
+    ```
+  </Tab>
+
+  <Tab title="Ethers.js">
+    ```typescript
+    import { ethers } from 'ethers';
+    import { getStakingPrecompileEthersContract } from '@sei-js/precompiles/ethers';
+
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
+    const signer = new ethers.Wallet('0x...', provider);
+    const stakingContract = getStakingPrecompileEthersContract(provider);
+
+    // Delegate tokens to a validator
+    async function delegateToValidator(validatorAddress: string, amount: string) {
+      const stakingWithSigner = stakingContract.connect(signer);
+      
+      const tx = await stakingWithSigner.delegate(validatorAddress, {
+        value: ethers.parseEther(amount)
+      });
+      
+      return await tx.wait();
+    }
+
+    // Check delegation
+    async function getDelegation(delegatorAddress: string, validatorAddress: string) {
+      const delegation = await stakingContract.delegation(delegatorAddress, validatorAddress);
+      
+      return {
+        amount: ethers.formatEther(delegation.balance.amount),
+        denom: delegation.balance.denom,
+        shares: delegation.delegation.shares.toString(),
+        validatorAddress: delegation.delegation.validator_address
+      };
+    }
+
+    // Redelegate between validators
+    async function redelegateTokens(
+      fromValidator: string,
+      toValidator: string,
+      amount: string
+    ) {
+      const stakingWithSigner = stakingContract.connect(signer);
+      
+      const tx = await stakingWithSigner.redelegate(
+        fromValidator,
+        toValidator,
+        ethers.parseEther(amount)
+      );
+      
+      return await tx.wait();
+    }
+
+    // Undelegate tokens
+    async function undelegateTokens(validatorAddress: string, amount: string) {
+      const stakingWithSigner = stakingContract.connect(signer);
+      
+      const tx = await stakingWithSigner.undelegate(
+        validatorAddress,
+        ethers.parseEther(amount)
+      );
+      
+      return await tx.wait();
+    }
+
+    // Portfolio management helper
+    async function manageStakingPortfolio(delegatorAddress: string) {
+      // This would require knowing validator addresses
+      // In practice, you'd get these from a validator registry
+      const validatorAddresses = [
+        'seivaloper1...',
+        'seivaloper2...',
+        // ... more validators
+      ];
+      
+      const delegations = [];
+      
+      for (const validator of validatorAddresses) {
+        try {
+          const delegation = await getDelegation(delegatorAddress, validator);
+          if (parseFloat(delegation.amount) > 0) {
+            delegations.push({ validator, ...delegation });
+          }
+        } catch (error) {
+          // No delegation to this validator
+        }
+      }
+      
+      return delegations;
+    }
+    ```
+  </Tab>
+
+  <Tab title="Manual">
+    ```typescript
+    import { 
+      STAKING_PRECOMPILE_ABI, 
+      STAKING_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles';
+
+    // Using with web3.js
+    import Web3 from 'web3';
+    
+    const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
+    const stakingContract = new web3.eth.Contract(
+      STAKING_PRECOMPILE_ABI,
+      STAKING_PRECOMPILE_ADDRESS
+    );
+
+    // Get delegation info
+    const delegation = await stakingContract.methods
+      .delegation('0x742d35Cc6634C0532925a3b8D6Ac0c2fb15d8d2A', 'seivaloper1...')
+      .call();
+
+    // Delegate tokens (requires account setup)
+    const account = web3.eth.accounts.privateKeyToAccount('0x...');
+    web3.eth.accounts.wallet.add(account);
+
+    const tx = await stakingContract.methods
+      .delegate('seivaloper1...')
+      .send({
+        from: account.address,
+        value: web3.utils.toWei('100', 'ether'), // 100 SEI
+        gas: 200000
+      });
+    ```
+  </Tab>
+</Tabs>
+
+## Common Use Cases
+
+### Liquid Staking Protocols
+- **Auto-Delegation**: Automatically delegate user deposits to optimal validators
+- **Rebalancing**: Redelegate between validators based on performance metrics
+- **Yield Optimization**: Monitor and adjust delegations for maximum rewards
+
+### Staking-as-a-Service
+- **Portfolio Management**: Manage delegations across multiple validators
+- **Risk Distribution**: Spread delegations to reduce validator risk
+- **Performance Tracking**: Monitor delegation performance and rewards
+
+### DeFi Integration
+- **Collateral Management**: Use staked tokens as collateral in lending protocols
+- **Governance Participation**: Delegate to validators aligned with protocol governance
+- **Yield Strategies**: Combine staking with other DeFi yield opportunities
+
+## Validator Selection Strategies
+
+### Performance-Based Selection
+```typescript
+// Example: Select validators based on commission and uptime
+interface ValidatorMetrics {
+  address: string;
+  commission: number;
+  uptime: number;
+  votingPower: bigint;
+}
+
+function selectOptimalValidators(
+  validators: ValidatorMetrics[],
+  maxValidators: number = 5
+): string[] {
+  return validators
+    .filter(v => v.uptime > 0.95) // 95% uptime minimum
+    .filter(v => v.commission < 0.1) // Max 10% commission
+    .sort((a, b) => a.commission - b.commission) // Prefer lower commission
+    .slice(0, maxValidators)
+    .map(v => v.address);
+}
+```
+
+### Diversification Strategy
+```typescript
+// Spread delegations across multiple validators
+async function diversifyDelegations(
+  totalAmount: string,
+  validatorAddresses: string[]
+) {
+  const amountPerValidator = parseEther(totalAmount) / BigInt(validatorAddresses.length);
+  
+  const delegationPromises = validatorAddresses.map(validator =>
+    delegateToValidator(validator, formatEther(amountPerValidator))
+  );
+  
+  return await Promise.all(delegationPromises);
+}
+```
+
+## Error Handling
+
+Common errors when using the Staking precompile:
+
+- **Insufficient balance**: Not enough SEI to delegate
+- **Invalid validator**: Validator address doesn't exist or is jailed
+- **Delegation not found**: No existing delegation to query/modify
+- **Minimum delegation**: Some validators may have minimum delegation requirements
+
+```typescript
+try {
+  await delegateToValidator('seivaloper1...', '100');
+} catch (error) {
+  if (error.message.includes('insufficient funds')) {
+    console.error('Not enough SEI to delegate');
+  } else if (error.message.includes('validator not found')) {
+    console.error('Invalid validator address');
+  } else if (error.message.includes('delegation not found')) {
+    console.error('No existing delegation found');
+  } else {
+    console.error('Unexpected error:', error);
+  }
+}
+```
+
+## Unbonding Period
+
+When undelegating tokens, they enter a 21-day unbonding period:
+
+- **Tokens are locked**: Cannot be transferred or re-delegated during unbonding
+- **No rewards**: Unbonding tokens don't earn staking rewards
+- **Slashing risk**: Tokens can still be slashed if validator misbehaves during unbonding
+
+```typescript
+// Check unbonding delegations (requires additional queries to Cosmos SDK)
+// This would typically be done through the Bank precompile or REST API
+async function getUnbondingDelegations(delegatorAddress: string) {
+  // Implementation would depend on additional precompiles or API calls
+  // This is a placeholder for the concept
+  console.log('Unbonding delegations require additional API calls');
+}
+```
+
+## Related Precompiles
+
+- **[Distribution](/evm/precompiles/distribution)**: Claim staking rewards from delegations
+- **[Bank](/evm/precompiles/bank)**: Check SEI balance before delegating
+- **[Governance](/evm/precompiles/governance)**: Participate in network governance
