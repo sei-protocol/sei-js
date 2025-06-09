@@ -1,0 +1,411 @@
+---
+title: 'Confidential Transfers Precompile'
+description: 'Privacy-preserving token transfers using zero-knowledge proofs through the Confidential Transfers precompile contract'
+---
+
+## Overview
+
+The Confidential Transfers precompile enables privacy-preserving token transfers using zero-knowledge proofs and homomorphic encryption. This allows users to transfer tokens while keeping amounts and balances private from external observers.
+
+**Contract Address:** `0x0000000000000000000000000000000000001010`
+
+## Key Features
+
+- **Private Transfers**: Transfer tokens with encrypted amounts
+- **Zero-Knowledge Proofs**: Validate transfers without revealing amounts
+- **Account Management**: Initialize and manage confidential accounts
+- **Auditor Support**: Optional auditor access for compliance
+- **Balance Privacy**: Keep balances encrypted and private
+
+## Available Functions
+
+### Account Management
+
+<AccordionGroup>
+  <Accordion title="initializeAccount(...) → bool">
+    Initialize a new confidential transfer account for a specific token.
+    
+    **Parameters:**
+    - `fromAddress` (string): Account address to initialize
+    - `denom` (string): Token denomination
+    - `publicKey` (bytes): Encryption public key
+    - `decryptableBalance` (string): Initial encrypted balance
+    - `pendingBalanceLo` (bytes): Low bits of pending balance
+    - `pendingBalanceHi` (bytes): High bits of pending balance
+    - `availableBalance` (bytes): Available balance commitment
+    - `proofs` (bytes): Zero-knowledge proofs
+    
+    **Returns:**
+    - `success` (bool): Whether initialization succeeded
+  </Accordion>
+
+  <Accordion title="account(string, string) → CtAccount">
+    Query confidential account information.
+    
+    **Parameters:**
+    - `addr` (string): Account address
+    - `denom` (string): Token denomination
+    
+    **Returns:**
+    - `ctAccount` (CtAccount): Account data with encrypted balances
+  </Accordion>
+
+  <Accordion title="closeAccount(string, bytes) → bool">
+    Close a confidential transfer account.
+    
+    **Parameters:**
+    - `denom` (string): Token denomination
+    - `proofs` (bytes): Closure proofs
+    
+    **Returns:**
+    - `success` (bool): Whether closure succeeded
+  </Accordion>
+</AccordionGroup>
+
+### Transfer Functions
+
+<AccordionGroup>
+  <Accordion title="transfer(...) → bool">
+    Execute a private transfer between accounts.
+    
+    **Parameters:**
+    - `toAddress` (string): Recipient address
+    - `denom` (string): Token denomination
+    - `fromAmountLo/Hi` (bytes): Encrypted sender amounts
+    - `toAmountLo/Hi` (bytes): Encrypted recipient amounts
+    - `remainingBalance` (bytes): Remaining balance commitment
+    - `decryptableBalance` (string): Updated encrypted balance
+    - `proofs` (bytes): Transfer validity proofs
+    
+    **Returns:**
+    - `success` (bool): Whether transfer succeeded
+  </Accordion>
+
+  <Accordion title="transferWithAuditors(...) → bool">
+    Execute a private transfer with auditor oversight.
+    
+    **Parameters:**
+    - Same as `transfer` plus:
+    - `auditors` (Auditor[]): Array of auditor data structures
+    
+    **Returns:**
+    - `success` (bool): Whether transfer succeeded
+  </Accordion>
+</AccordionGroup>
+
+### Balance Management
+
+<AccordionGroup>
+  <Accordion title="deposit(string, uint64) → bool">
+    Deposit tokens into confidential account.
+    
+    **Parameters:**
+    - `denom` (string): Token denomination
+    - `amount` (uint64): Amount to deposit
+    
+    **Returns:**
+    - `success` (bool): Whether deposit succeeded
+  </Accordion>
+
+  <Accordion title="withdraw(...) → bool">
+    Withdraw tokens from confidential account.
+    
+    **Parameters:**
+    - `denom` (string): Token denomination
+    - `amount` (uint256): Amount to withdraw
+    - `decryptableBalance` (string): Updated balance
+    - `remainingBalanceCommitment` (bytes): Remaining balance proof
+    - `proofs` (bytes): Withdrawal proofs
+    
+    **Returns:**
+    - `success` (bool): Whether withdrawal succeeded
+  </Accordion>
+
+  <Accordion title="applyPendingBalance(...) → bool">
+    Apply pending balance changes to account.
+    
+    **Parameters:**
+    - `denom` (string): Token denomination
+    - `decryptableBalance` (string): Updated balance
+    - `pendingBalanceCreditCounter` (uint32): Credit counter
+    - `availableBalance` (bytes): Available balance commitment
+    
+    **Returns:**
+    - `success` (bool): Whether application succeeded
+  </Accordion>
+</AccordionGroup>
+
+## Usage Examples
+
+<Tabs>
+  <Tab title="Viem">
+    ```typescript
+    import { createWalletClient, createPublicClient, http } from 'viem';
+    import { privateKeyToAccount } from 'viem/accounts';
+    import { 
+      seiTestnet,
+      CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI,
+      CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles/viem';
+
+    const account = privateKeyToAccount('0x...');
+    
+    const walletClient = createWalletClient({
+      account,
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    const publicClient = createPublicClient({
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    // Initialize confidential account
+    async function initializeConfidentialAccount(
+      fromAddress: string,
+      denom: string,
+      publicKey: `0x${string}`,
+      initialBalance: string
+    ) {
+      const { request } = await publicClient.simulateContract({
+        address: CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS,
+        abi: CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI,
+        functionName: 'initializeAccount',
+        args: [
+          fromAddress,
+          denom,
+          publicKey,
+          initialBalance,
+          '0x', // pendingBalanceLo
+          '0x', // pendingBalanceHi
+          '0x', // availableBalance
+          '0x'  // proofs
+        ],
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Query account
+    async function getConfidentialAccount(addr: string, denom: string) {
+      return await publicClient.readContract({
+        address: CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS,
+        abi: CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI,
+        functionName: 'account',
+        args: [addr, denom]
+      });
+    }
+
+    // Deposit tokens
+    async function depositToConfidential(denom: string, amount: bigint) {
+      const { request } = await publicClient.simulateContract({
+        address: CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS,
+        abi: CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI,
+        functionName: 'deposit',
+        args: [denom, amount],
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+    ```
+  </Tab>
+
+  <Tab title="Ethers.js">
+    ```typescript
+    import { ethers } from 'ethers';
+    import { getConfidentialTransfersPrecompileEthersContract } from '@sei-js/precompiles/ethers';
+
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
+    const wallet = new ethers.Wallet('0x...', provider);
+    const ctContract = getConfidentialTransfersPrecompileEthersContract(wallet);
+
+    // Initialize account
+    async function initializeAccount(
+      fromAddress: string,
+      denom: string,
+      publicKey: string,
+      initialBalance: string
+    ) {
+      const tx = await ctContract.initializeAccount(
+        fromAddress,
+        denom,
+        publicKey,
+        initialBalance,
+        '0x', // pendingBalanceLo
+        '0x', // pendingBalanceHi
+        '0x', // availableBalance
+        '0x'  // proofs
+      );
+      
+      return await tx.wait();
+    }
+
+    // Query account
+    async function getAccount(addr: string, denom: string) {
+      return await ctContract.account(addr, denom);
+    }
+
+    // Deposit
+    async function deposit(denom: string, amount: number) {
+      const tx = await ctContract.deposit(denom, amount);
+      return await tx.wait();
+    }
+
+    // Private transfer
+    async function privateTransfer(
+      toAddress: string,
+      denom: string,
+      transferData: {
+        fromAmountLo: string;
+        fromAmountHi: string;
+        toAmountLo: string;
+        toAmountHi: string;
+        remainingBalance: string;
+        decryptableBalance: string;
+        proofs: string;
+      }
+    ) {
+      const tx = await ctContract.transfer(
+        toAddress,
+        denom,
+        transferData.fromAmountLo,
+        transferData.fromAmountHi,
+        transferData.toAmountLo,
+        transferData.toAmountHi,
+        transferData.remainingBalance,
+        transferData.decryptableBalance,
+        transferData.proofs
+      );
+      
+      return await tx.wait();
+    }
+    ```
+  </Tab>
+
+  <Tab title="Manual">
+    ```typescript
+    import { 
+      CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI, 
+      CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles';
+
+    // Using with web3.js
+    import Web3 from 'web3';
+    
+    const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
+    const account = web3.eth.accounts.privateKeyToAccount('0x...');
+    web3.eth.accounts.wallet.add(account);
+    
+    const ctContract = new web3.eth.Contract(
+      CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI,
+      CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS
+    );
+
+    // Query account
+    const accountData = await ctContract.methods
+      .account('sei1...', 'usei')
+      .call();
+    
+    console.log('Confidential Account:', accountData);
+
+    // Deposit
+    const depositTx = await ctContract.methods
+      .deposit('usei', 1000000)
+      .send({
+        from: account.address,
+        gas: 300000
+      });
+    
+    console.log('Deposit completed:', depositTx.transactionHash);
+    ```
+  </Tab>
+</Tabs>
+
+## Privacy Features
+
+### Zero-Knowledge Proofs
+- **Range Proofs**: Prove amounts are within valid ranges
+- **Equality Proofs**: Prove encrypted values are equal
+- **Validity Proofs**: Prove transfers are mathematically valid
+
+### Encryption Schemes
+- **ElGamal Encryption**: Homomorphic encryption for balances
+- **Twisted ElGamal**: Enhanced encryption for amounts
+- **Public Key Cryptography**: Secure key management
+
+### Auditor Support
+- **Compliance Integration**: Optional auditor oversight
+- **Encrypted Auditor Data**: Auditors receive encrypted transfer amounts
+- **Selective Disclosure**: Choose which transfers to audit
+
+## Common Use Cases
+
+### Private DeFi
+- **Anonymous Trading**: Trade without revealing amounts
+- **Private Liquidity**: Provide liquidity privately
+- **Confidential Lending**: Borrow/lend with privacy
+
+### Enterprise Privacy
+- **Corporate Transfers**: Keep business transactions private
+- **Payroll Privacy**: Private salary payments
+- **Supply Chain**: Confidential payment flows
+
+### Personal Privacy
+- **Private Payments**: Keep personal transactions confidential
+- **Savings Privacy**: Hide savings amounts
+- **Investment Privacy**: Private portfolio management
+
+## Security Considerations
+
+### Proof Verification
+- Always verify zero-knowledge proofs are valid
+- Ensure range proofs prevent negative amounts
+- Validate encryption parameters
+
+### Key Management
+- Securely store encryption private keys
+- Use hardware security modules when possible
+- Implement key rotation strategies
+
+### Auditor Trust
+- Carefully select trusted auditors
+- Verify auditor public keys
+- Monitor auditor access patterns
+
+## Error Handling
+
+```typescript
+async function safeConfidentialTransfer(transferParams: any) {
+  try {
+    // Validate proofs before submission
+    const proofsValid = await validateProofs(transferParams.proofs);
+    if (!proofsValid) {
+      throw new Error('Invalid zero-knowledge proofs');
+    }
+    
+    // Execute transfer
+    const result = await privateTransfer(transferParams);
+    
+    return {
+      success: true,
+      transactionHash: result.transactionHash,
+      gasUsed: result.gasUsed
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message
+    };
+  }
+}
+```
+
+## Related Precompiles
+
+- **[Bank](/evm/precompiles/bank)**: Manage token balances and transfers
+- **[Address](/evm/precompiles/address)**: Convert between address formats
