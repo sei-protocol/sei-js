@@ -1,0 +1,122 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "@sei-js/ledger",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
+  },
+  "versions": [
+    {
+      "name": "Overview",
+      "url": "https://docs.sei-js.com"
+    },
+    {
+      "name": "@sei-js/cosmos",
+      "url": "https://cosmos.sei-js.com"
+    },
+    {
+      "name": "@sei-js/evm",
+      "url": "https://evm.sei-js.com"
+    },
+    {
+      "name": "@sei-js/cosmjs",
+      "url": "https://cosmjs.sei-js.com"
+    },
+    {
+      "name": "@sei-js/create-sei",
+      "url": "https://create-sei.sei-js.com"
+    },
+    {
+      "name": "@sei-js/ledger",
+      "url": "https://ledger.sei-js.com"
+    },
+    {
+      "name": "@sei-js/registry",
+      "url": "https://registry.sei-js.com"
+    },
+    {
+      "name": "@sei-js/sei-global-wallet",
+      "url": "https://sei-global-wallet.sei-js.com"
+    },
+    {
+      "name": "@sei-js/confidential-transfers",
+      "url": "https://confidential-transfers.sei-js.com"
+    }
+  ],
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/sei-protocol/sei-js"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "/introduction"
+  },
+  "anchors": [
+    {
+      "name": "Documentation",
+      "icon": "book-open-cover",
+      "url": "https://docs.sei.io"
+    },
+    {
+      "name": "Community",
+      "icon": "slack",
+      "url": "https://discord.gg/sei"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/sei-protocol/sei-js"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "prerequisites",
+        "quick-start"
+      ]
+    },
+    {
+      "group": "Core Functions",
+      "pages": [
+        "transport-app",
+        "addresses",
+        "signer"
+      ]
+    },
+    {
+      "group": "Advanced Usage",
+      "pages": [
+        "transactions",
+        "web-integration",
+        "utilities"
+      ]
+    },
+    {
+      "group": "Reference",
+      "pages": [
+        "best-practices",
+        "troubleshooting",
+        "examples"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/SeiNetwork",
+    "github": "https://github.com/sei-protocol/sei-js",
+    "linkedin": "https://www.linkedin.com/company/sei-protocol"
+  }
+}

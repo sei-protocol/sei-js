@@ -1,0 +1,475 @@
+---
+title: '@sei-js/evm'
+description: 'TypeScript library for interacting with the EVM on Sei'
+---
+
+## Overview
+
+The `@sei-js/evm` package provides comprehensive TypeScript utilities for interacting with the Ethereum Virtual Machine (EVM) on Sei. It offers seamless integration with popular Ethereum development tools like Wagmi, Viem, and Ethers.js.
+
+<CardGroup cols={2}>
+  <Card
+    title="Wagmi Integration"
+    icon="react"
+  >
+    React hooks and providers for wallet connection and blockchain interaction
+  </Card>
+  <Card
+    title="Viem Support"
+    icon="zap"
+  >
+    Low-level Ethereum library integration with type safety
+  </Card>
+  <Card
+    title="Ethers.js Compatible"
+    icon="ethereum"
+  >
+    Support for the popular Ethers.js library
+  </Card>
+  <Card
+    title="Precompiled Contracts"
+    icon="microchip"
+  >
+    Access to Sei's Cosmos-EVM interoperability features
+  </Card>
+</CardGroup>
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @sei-js/evm ethers viem
+```
+
+```bash yarn
+yarn add @sei-js/evm ethers viem
+```
+
+```bash pnpm
+pnpm add @sei-js/evm ethers viem
+```
+
+</CodeGroup>
+
+## Quick Start
+
+### Wagmi Setup
+
+<CodeGroup>
+
+```tsx Provider Setup
+import { ReactNode } from 'react';
+import { WagmiProvider } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ARCTIC_1_VIEM_CHAIN, createWagmiConfig } from '@sei-js/evm';
+
+const queryClient = new QueryClient();
+
+export const WalletProvider = ({ children }: { children: ReactNode }) => {
+  return (
+    <WagmiProvider config={createWagmiConfig([ARCTIC_1_VIEM_CHAIN])}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+};
+```
+
+```tsx Using Hooks
+import { useAccount, useBalance, useConnect } from 'wagmi';
+
+export function WalletInfo() {
+  const { address, isConnected } = useAccount();
+  const { data: balance } = useBalance({ address });
+  const { connect, connectors } = useConnect();
+
+  if (!isConnected) {
+    return (
+      <button onClick={() => connect({ connector: connectors[0] })}>
+        Connect Wallet
+      </button>
+    );
+  }
+
+  return (
+    <div>
+      <p>Address: {address}</p>
+      <p>Balance: {balance?.formatted} {balance?.symbol}</p>
+    </div>
+  );
+}
+```
+
+</CodeGroup>
+
+### Ethers.js Integration
+
+<CodeGroup>
+
+```typescript Basic Setup
+import { ADDRESS_PRECOMPILE_ADDRESS, getAddressPrecompileEthersV6Contract } from '@sei-js/evm';
+import { ethers } from 'ethers';
+
+const provider = new ethers.BrowserProvider(window.ethereum);
+const signer = await provider.getSigner();
+
+// Request account access
+const accounts = await provider.send('eth_requestAccounts', []);
+
+// Use precompiled contracts
+const contract = getAddressPrecompileEthersV6Contract(ADDRESS_PRECOMPILE_ADDRESS, signer);
+const cosmosAddress = await contract.getSeiAddr(accounts[0]);
+```
+
+```typescript Send Transaction
+import { ethers } from 'ethers';
+
+const provider = new ethers.BrowserProvider(window.ethereum);
+const signer = await provider.getSigner();
+
+const tx = await signer.sendTransaction({
+  to: '0x...',
+  value: ethers.parseEther('1.0'),
+  gasLimit: 21000,
+});
+
+console.log('Transaction hash:', tx.hash);
+const receipt = await tx.wait();
+console.log('Transaction confirmed:', receipt);
+```
+
+</CodeGroup>
+
+## Network Configuration
+
+### Supported Networks
+
+| Network | Chain ID | RPC Endpoint |
+|---------|----------|--------------|
+| Sei Mainnet (Pacific-1) | 1329 | https://evm-rpc.sei-apis.com |
+| Sei Testnet (Atlantic-2) | 1328 | https://evm-rpc-testnet.sei-apis.com |
+| Sei Devnet | 713715 | https://evm-rpc-arctic-1.sei-apis.com |
+
+### Chain Configurations
+
+<CodeGroup>
+
+```typescript Mainnet
+import { SEI_MAINNET } from '@sei-js/evm';
+
+const config = createWagmiConfig([SEI_MAINNET]);
+```
+
+```typescript Testnet
+import { ATLANTIC_2_VIEM_CHAIN } from '@sei-js/evm';
+
+const config = createWagmiConfig([ATLANTIC_2_VIEM_CHAIN]);
+```
+
+```typescript Devnet
+import { ARCTIC_1_VIEM_CHAIN } from '@sei-js/evm';
+
+const config = createWagmiConfig([ARCTIC_1_VIEM_CHAIN]);
+```
+
+</CodeGroup>
+
+## Utility Functions
+
+### Amount Parsing
+
+<CodeGroup>
+
+```typescript parseSei
+import { parseSei } from '@sei-js/evm';
+
+// Convert SEI to wei (smallest unit)
+const amount = parseSei('1.5'); // 1.5 SEI
+console.log(amount); // 1500000000000000000n (BigInt)
+```
+
+```typescript formatSei
+import { formatSei } from '@sei-js/evm';
+
+// Convert wei to SEI
+const formatted = formatSei(1500000000000000000n);
+console.log(formatted); // "1.5"
+```
+
+</CodeGroup>
+
+## Precompiled Contracts
+
+Sei v2 provides precompiled contracts that enable interoperability between EVM and Cosmos modules:
+
+<AccordionGroup>
+  <Accordion title="Address Precompile">
+    **Purpose**: Convert between EVM and Cosmos addresses
+    
+    ```typescript
+    import { ADDRESS_PRECOMPILE_ADDRESS, getAddressPrecompileEthersV6Contract } from '@sei-js/evm';
+    
+    const contract = getAddressPrecompileEthersV6Contract(ADDRESS_PRECOMPILE_ADDRESS, signer);
+    
+    // Get Cosmos address from EVM address
+    const cosmosAddr = await contract.getSeiAddr(evmAddress);
+    
+    // Get EVM address from Cosmos address
+    const evmAddr = await contract.getEvmAddr(cosmosAddress);
+    ```
+  </Accordion>
+
+  <Accordion title="Bank Precompile">
+    **Purpose**: Manage token balances and supply
+    
+    ```typescript
+    import { BANK_PRECOMPILE_ADDRESS, getBankPrecompileEthersV6Contract } from '@sei-js/evm';
+    
+    const contract = getBankPrecompileEthersV6Contract(BANK_PRECOMPILE_ADDRESS, signer);
+    
+    // Get balance
+    const balance = await contract.balance(address, 'usei');
+    
+    // Get total supply
+    const supply = await contract.supply('usei');
+    ```
+  </Accordion>
+
+  <Accordion title="Staking Precompile">
+    **Purpose**: Delegate and manage staking operations
+    
+    ```typescript
+    import { STAKING_PRECOMPILE_ADDRESS, getStakingPrecompileEthersV6Contract } from '@sei-js/evm';
+    
+    const contract = getStakingPrecompileEthersV6Contract(STAKING_PRECOMPILE_ADDRESS, signer);
+    
+    // Delegate tokens
+    await contract.delegate(validatorAddress, amount);
+    
+    // Undelegate tokens
+    await contract.undelegate(validatorAddress, amount);
+    ```
+  </Accordion>
+
+  <Accordion title="Distribution Precompile">
+    **Purpose**: Withdraw staking rewards
+    
+    ```typescript
+    import { DISTRIBUTION_PRECOMPILE_ADDRESS, getDistributionPrecompileEthersV6Contract } from '@sei-js/evm';
+    
+    const contract = getDistributionPrecompileEthersV6Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, signer);
+    
+    // Withdraw rewards
+    await contract.withdrawDelegatorReward(validatorAddress);
+    
+    // Set withdraw address
+    await contract.setWithdrawAddress(withdrawAddress);
+    ```
+  </Accordion>
+
+  <Accordion title="Governance Precompile">
+    **Purpose**: Participate in governance
+    
+    ```typescript
+    import { GOV_PRECOMPILE_ADDRESS, getGovPrecompileEthersV6Contract } from '@sei-js/evm';
+    
+    const contract = getGovPrecompileEthersV6Contract(GOV_PRECOMPILE_ADDRESS, signer);
+    
+    // Vote on proposal
+    await contract.vote(proposalId, voteOption);
+    
+    // Deposit to proposal
+    await contract.deposit(proposalId, amount);
+    ```
+  </Accordion>
+
+  <Accordion title="WASM Precompile">
+    **Purpose**: Execute CosmWasm contracts from EVM
+    
+    ```typescript
+    import { WASM_PRECOMPILE_ADDRESS, getWasmPrecompileEthersV6Contract } from '@sei-js/evm';
+    
+    const contract = getWasmPrecompileEthersV6Contract(WASM_PRECOMPILE_ADDRESS, signer);
+    
+    // Execute contract
+    await contract.execute(contractAddress, msg, funds);
+    
+    // Query contract
+    const result = await contract.query(contractAddress, queryMsg);
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Usage
+
+### Custom RPC Provider
+
+<CodeGroup>
+
+```typescript Custom Provider
+import { createWagmiConfig } from '@sei-js/evm';
+import { http } from 'viem';
+
+const config = createWagmiConfig([
+  {
+    id: 1329,
+    name: 'Sei Mainnet',
+    network: 'sei',
+    nativeCurrency: {
+      decimals: 18,
+      name: 'Sei',
+      symbol: 'SEI',
+    },
+    rpcUrls: {
+      default: {
+        http: ['https://your-custom-rpc.com'],
+      },
+      public: {
+        http: ['https://evm-rpc.sei-apis.com'],
+      },
+    },
+  }
+]);
+```
+
+```typescript With Transport Options
+import { createWagmiConfig } from '@sei-js/evm';
+import { http } from 'viem';
+
+const config = createWagmiConfig([SEI_MAINNET], {
+  transports: {
+    [SEI_MAINNET.id]: http('https://your-rpc.com', {
+      batch: true,
+      fetchOptions: {
+        headers: {
+          'Authorization': 'Bearer your-token'
+        }
+      }
+    })
+  }
+});
+```
+
+</CodeGroup>
+
+### Error Handling
+
+<CodeGroup>
+
+```typescript Try-Catch Pattern
+import { ethers } from 'ethers';
+
+try {
+  const tx = await signer.sendTransaction({
+    to: recipientAddress,
+    value: ethers.parseEther('1.0')
+  });
+  
+  const receipt = await tx.wait();
+  console.log('Success:', receipt.hash);
+} catch (error) {
+  if (error.code === 'INSUFFICIENT_FUNDS') {
+    console.error('Insufficient balance');
+  } else if (error.code === 'USER_REJECTED') {
+    console.error('User rejected transaction');
+  } else {
+    console.error('Transaction failed:', error.message);
+  }
+}
+```
+
+```typescript Wagmi Error Handling
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+
+function SendTransaction() {
+  const { writeContract, data: hash, error, isPending } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
+    hash,
+  });
+
+  const handleSend = () => {
+    writeContract({
+      address: '0x...',
+      abi: contractAbi,
+      functionName: 'transfer',
+      args: [recipientAddress, amount],
+    });
+  };
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <button onClick={handleSend} disabled={isPending || isConfirming}>
+      {isPending ? 'Confirming...' : isConfirming ? 'Waiting...' : 'Send'}
+    </button>
+  );
+}
+```
+
+</CodeGroup>
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Performance Optimization">
+    - Use `useMemo` for expensive computations
+    - Implement proper loading states
+    - Cache contract instances
+    - Use batch requests when possible
+  </Accordion>
+
+  <Accordion title="Security">
+    - Always validate user inputs
+    - Use proper error boundaries
+    - Implement transaction confirmations
+    - Never expose private keys
+  </Accordion>
+
+  <Accordion title="User Experience">
+    - Provide clear transaction status
+    - Show gas estimates
+    - Handle wallet connection states
+    - Implement retry mechanisms
+  </Accordion>
+</AccordionGroup>
+
+## Examples
+
+<CardGroup cols={2}>
+  <Card
+    title="Token Transfer"
+    icon="arrow-right-arrow-left"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/evm-token-transfer"
+  >
+    Complete example of transferring tokens using EVM
+  </Card>
+  <Card
+    title="NFT Marketplace"
+    icon="image"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/evm-nft-marketplace"
+  >
+    Build an NFT marketplace with Wagmi and Sei
+  </Card>
+  <Card
+    title="DeFi Integration"
+    icon="coins"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/evm-defi"
+  >
+    Integrate with DeFi protocols on Sei
+  </Card>
+  <Card
+    title="Staking Interface"
+    icon="layer-group"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/evm-staking"
+  >
+    Build a staking interface using precompiles
+  </Card>
+</CardGroup>
+
+## API Reference
+
+For complete API documentation, see the [TypeDoc reference](https://sei-protocol.github.io/sei-js/modules/evm.html).

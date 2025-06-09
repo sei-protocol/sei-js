@@ -1,0 +1,270 @@
+---
+title: 'Development'
+description: 'Learn how to contribute to SeiJS and set up your development environment'
+---
+
+## Development Setup
+
+To contribute to SeiJS or build from source, follow these steps:
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- Yarn (recommended package manager)
+- Git
+
+### Clone and Setup
+
+```bash
+git clone https://github.com/sei-protocol/sei-js.git
+cd sei-js
+yarn install
+```
+
+### Build All Packages
+
+To build all packages and documentation:
+
+```bash
+yarn build:all
+```
+
+This command will:
+- Build all packages in the correct topological order
+- Generate TypeScript declarations
+- Create distribution bundles
+
+### Project Structure
+
+```
+sei-js/
+├── packages/
+│   ├── cosmjs/          # CosmJS integration
+│   ├── cosmos/          # Cosmos SDK utilities
+│   ├── create-sei/      # CLI scaffolding tool
+│   ├── evm/             # EVM integration
+│   ├── ledger/          # Ledger hardware wallet
+│   ├── registry/        # Chain registry
+│   └── sei-global-wallet/ # Global wallet provider
+├── docs/                # Documentation (this site)
+└── ...
+```
+
+## Development Workflow
+
+### Running Tests
+
+Run tests for all packages:
+
+```bash
+yarn test:all
+```
+
+Run tests with coverage:
+
+```bash
+yarn test:coverage
+```
+
+### Working with Individual Packages
+
+Navigate to a specific package to work on it:
+
+```bash
+cd packages/evm
+yarn build
+yarn test
+```
+
+### Documentation
+
+Generate TypeDoc documentation:
+
+```bash
+yarn docs
+```
+
+This will create comprehensive API documentation from TypeScript comments.
+
+## Contributing Guidelines
+
+### Code Style
+
+We use Biome for code formatting and linting:
+
+```bash
+# Check formatting
+yarn biome check
+
+# Fix formatting issues
+yarn biome check --apply
+```
+
+### Commit Convention
+
+We follow conventional commits:
+
+- `feat:` - New features
+- `fix:` - Bug fixes
+- `docs:` - Documentation changes
+- `refactor:` - Code refactoring
+- `test:` - Test additions/changes
+
+### Pull Request Process
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass: `yarn test:all`
+6. Update documentation if needed
+7. Submit a pull request
+
+### Release Process
+
+We use Changesets for version management:
+
+```bash
+# Add a changeset
+yarn changeset
+
+# Version packages
+yarn changeset version
+
+# Publish to npm
+yarn release
+```
+
+## Package Development
+
+### Creating a New Package
+
+1. Create a new directory in `packages/`
+2. Initialize with `package.json`:
+
+```json
+{
+  "name": "@sei-js/your-package",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  }
+}
+```
+
+3. Add TypeScript configuration
+4. Implement your package
+5. Add tests
+6. Update the main README
+
+### Dependencies
+
+- **Shared dependencies** go in the root `package.json`
+- **Package-specific dependencies** go in individual package `package.json` files
+- Use workspace protocol for internal dependencies: `"@sei-js/core": "workspace:*"`
+
+## Testing
+
+### Unit Tests
+
+Each package should have comprehensive unit tests:
+
+```typescript
+// Example test structure
+describe('MyFunction', () => {
+  it('should handle valid input', () => {
+    expect(myFunction('valid')).toBe('expected');
+  });
+
+  it('should throw on invalid input', () => {
+    expect(() => myFunction('invalid')).toThrow();
+  });
+});
+```
+
+### Integration Tests
+
+Test real blockchain interactions in integration tests:
+
+```typescript
+describe('Blockchain Integration', () => {
+  it('should connect to testnet', async () => {
+    const client = await getClient('testnet');
+    expect(client).toBeDefined();
+  });
+});
+```
+
+## Debugging
+
+### Common Issues
+
+<AccordionGroup>
+  <Accordion title="Build Failures">
+    - Check TypeScript version compatibility
+    - Ensure all dependencies are installed
+    - Verify workspace dependencies are correctly linked
+  </Accordion>
+
+  <Accordion title="Test Failures">
+    - Check if you need to update snapshots
+    - Verify test environment setup
+    - Ensure mocks are properly configured
+  </Accordion>
+
+  <Accordion title="Dependency Issues">
+    - Run `yarn install` to refresh dependencies
+    - Check for version conflicts
+    - Clear node_modules and reinstall if needed
+  </Accordion>
+</AccordionGroup>
+
+### Debugging Tools
+
+- Use `yarn why <package>` to understand dependency resolution
+- Use `yarn workspaces info` to see workspace structure
+- Enable verbose logging with `DEBUG=* yarn command`
+
+## Documentation
+
+### Writing Documentation
+
+- Use clear, concise language
+- Include code examples
+- Add JSDoc comments for all public APIs
+- Update README files when adding features
+
+### API Documentation
+
+We use TypeDoc to generate API documentation. Add comprehensive JSDoc comments:
+
+```typescript
+/**
+ * Connects to a Sei wallet and returns a signing client
+ * @param config - Configuration options
+ * @param config.rpcEndpoint - RPC endpoint URL
+ * @param config.signer - Wallet signer instance
+ * @returns Promise that resolves to a signing client
+ * @example
+ * ```typescript
+ * const client = await getSigningClient({
+ *   rpcEndpoint: 'https://rpc.sei.io',
+ *   signer: wallet
+ * });
+ * ```
+ */
+export async function getSigningClient(config: ClientConfig): Promise<SigningClient> {
+  // Implementation
+}
+```
+
+## Community
+
+Join our development community:
+
+- **Discord**: [https://discord.gg/sei](https://discord.gg/sei)
+- **GitHub Discussions**: Share ideas and ask questions
+- **Issues**: Report bugs and request features

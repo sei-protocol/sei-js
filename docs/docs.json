@@ -1,0 +1,109 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "SeiJS Documentation",
+  "theme": "mint",
+  "logo": {
+    "dark": "https://cdn.sei.io/sei.svg",
+    "light": "https://cdn.sei.io/sei.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#9E1F19",
+    "light": "#B52A2A",
+    "dark": "#780000"
+  },
+  "contextual": {
+   "options": [
+     "copy",
+     "chatgpt",
+     "claude"
+   ]
+ },
+  "navigation": {
+    "dropdowns": [
+      {
+        "dropdown": "Getting Started",
+        "icon": "book-open",
+        "pages": [
+          "introduction",
+          "overview",
+          "quickstart",
+          "development",
+          "api-reference"
+        ]
+      },
+      {
+        "dropdown": "@sei-js/precompiles",
+        "icon": "microchip",
+        "pages": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "evm/index",
+              "evm/quick-start"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "evm/precompiles/viem",
+              "evm/precompiles/ethers"
+            ]
+          },
+          {
+            "group": "Precompiles",
+            "pages": [
+              "evm/precompiles/address",
+              "evm/precompiles/bank",
+              "evm/precompiles/confidential-transfers",
+              "evm/precompiles/distribution",
+              "evm/precompiles/governance",
+              "evm/precompiles/ibc",
+              "evm/precompiles/json",
+              "evm/precompiles/oracle",
+              "evm/precompiles/pointer",
+              "evm/precompiles/pointerview",
+              "evm/precompiles/staking",
+              "evm/precompiles/wasm"
+            ]
+          }
+        ]
+      },
+      {
+        "dropdown": "@sei-js/create-sei",
+        "icon": "hammer",
+        "pages": [
+          "create-sei/introduction"
+        ]
+      },
+      {
+        "dropdown": "@sei-js/ledger",
+        "icon": "shield",
+        "pages": [
+          "ledger/introduction"
+        ]
+      },
+      {
+        "dropdown": "@sei-js/registry",
+        "icon": "database",
+        "pages": [
+          "registry/introduction"
+        ]
+      },
+      {
+        "dropdown": "@sei-js/sei-global-wallet",
+        "icon": "wallet",
+        "pages": [
+          "sei-global-wallet/introduction"
+        ]
+      },
+      {
+        "dropdown": "@sei-js/confidential-transfers",
+        "icon": "eye-slash",
+        "pages": [
+          "confidential-transfers/introduction"
+        ]
+      }
+    ]
+  }
+}

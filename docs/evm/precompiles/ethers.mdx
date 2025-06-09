@@ -1,0 +1,254 @@
+---
+title: 'Ethers.js'
+description: 'Using @sei-js/precompiles with Ethers.js for seamless precompile contract integration'
+---
+
+## Precompiles with Ethers.js
+
+The `@sei-js/precompiles` package provides comprehensive Ethers.js integration with contract factories, typed interfaces, and utilities specifically designed for Sei's precompile contracts.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @sei-js/precompiles ethers
+```
+
+```bash yarn
+yarn add @sei-js/precompiles ethers
+```
+
+```bash pnpm
+pnpm add @sei-js/precompiles ethers
+```
+
+</CodeGroup>
+
+## Basic Setup
+
+```typescript
+import { JsonRpcProvider, Wallet, BrowserProvider } from 'ethers';
+import { 
+  getBankPrecompileEthers,
+  getOraclePrecompileEthers,
+  getStakingPrecompileEthers
+} from '@sei-js/precompiles/ethers';
+
+// Setup provider
+const provider = new JsonRpcProvider('https://evm-rpc.sei-apis.com');
+
+// For browser wallets
+const browserProvider = new BrowserProvider(window.ethereum);
+const signer = await browserProvider.getSigner();
+```
+
+## Import Patterns
+
+### Contract Factory Imports
+
+```typescript
+// Import contract factory functions
+import { 
+  getBankPrecompileEthers,
+  getOraclePrecompileEthers,
+  getStakingPrecompileEthers
+} from '@sei-js/precompiles/ethers';
+```
+
+### Manual Contract Setup Imports
+
+```typescript
+// Import addresses and ABIs for manual setup
+import { 
+  BANK_PRECOMPILE_ADDRESS,
+  BANK_PRECOMPILE_ABI,
+  ORACLE_PRECOMPILE_ADDRESS,
+  ORACLE_PRECOMPILE_ABI,
+  STAKING_PRECOMPILE_ADDRESS,
+  STAKING_PRECOMPILE_ABI 
+} from '@sei-js/precompiles/ethers';
+```
+
+## Basic Usage Examples
+
+### Using Contract Factories
+
+```typescript
+import { 
+  getBankPrecompileEthers
+} from '@sei-js/precompiles/ethers';
+
+// Read-only contract
+const bankContract = getBankPrecompileEthers(provider);
+
+// Read-write contract
+const bankContractWithSigner = getBankPrecompileEthers(signer);
+
+// Get balance
+const balance = await bankContract.balance('0x...', 'usei');
+console.log('Balance:', balance.toString());
+
+// Send tokens
+const tx = await bankContractWithSigner.send(
+  '0x...', 
+  ethers.utils.parseEther('10'), 
+  'usei'
+);
+await tx.wait();
+```
+
+### Manual Contract Setup
+
+For advanced use cases, create contracts manually:
+
+```typescript
+import { ethers } from 'ethers';
+import { 
+  BANK_PRECOMPILE_ADDRESS,
+  BANK_PRECOMPILE_ABI 
+} from '@sei-js/precompiles/ethers';
+
+const bankContract = new ethers.Contract(
+  BANK_PRECOMPILE_ADDRESS,
+  BANK_PRECOMPILE_ABI,
+  provider
+);
+
+// With signer for write operations
+const bankContractWithSigner = bankContract.connect(signer);
+```
+
+## Writing to Precompiles
+
+```typescript
+import { getStakingPrecompileEthers } from '@sei-js/precompiles/ethers';
+
+const stakingContract = getStakingPrecompileEthers(signer);
+
+// Delegate tokens
+const tx = await stakingContract.delegate(
+  'seivaloper...', 
+  ethers.utils.parseEther('100')
+);
+await tx.wait();
+```
+
+## Event Handling
+
+Listen to precompile contract events:
+
+```typescript
+// Listen to Bank transfers
+bankContract.on('Transfer', (from, to, amount, denom, event) => {
+  console.log('Transfer:', {
+    from,
+    to,
+    amount: amount.toString(),
+    denom,
+    txHash: event.transactionHash
+  });
+});
+
+// Listen to Staking delegations
+stakingContract.on('Delegate', (delegator, validator, amount, event) => {
+  console.log('Delegation:', {
+    delegator,
+    validator,
+    amount: amount.toString(),
+    txHash: event.transactionHash
+  });
+});
+
+// Remove listeners
+bankContract.removeAllListeners('Transfer');
+```
+
+## Gas Estimation
+
+Estimate gas before transactions:
+
+```typescript
+try {
+  const gasEstimate = await stakingContract.delegate.estimateGas(
+    'seivaloper...', 
+    ethers.utils.parseEther('100')
+  );
+  
+  console.log('Estimated gas:', gasEstimate.toString());
+  
+  // Execute with custom gas limit
+  const tx = await stakingContract.delegate(
+    'seivaloper...', 
+    ethers.utils.parseEther('100'),
+    { gasLimit: gasEstimate.mul(12).div(10) } // 20% buffer
+  );
+  
+  await tx.wait();
+} catch (error) {
+  console.error('Gas estimation failed:', error);
+}
+```
+
+## Error Handling
+
+```typescript
+try {
+  const tx = await stakingContract.delegate('seivaloper...', ethers.utils.parseEther('100'));
+  const receipt = await tx.wait();
+  console.log('Transaction successful:', receipt.transactionHash);
+} catch (error) {
+  if (error.code === 'ACTION_REJECTED') {
+    console.log('User rejected the transaction');
+  } else if (error.code === 'INSUFFICIENT_FUNDS') {
+    console.log('Insufficient funds for transaction');
+  } else if (error.code === 'UNPREDICTABLE_GAS_LIMIT') {
+    console.log('Transaction would fail, gas estimation failed');
+  } else {
+    console.error('Transaction failed:', error.message);
+  }
+}
+```
+
+## Best Practices
+
+### Transaction Monitoring
+
+```typescript
+async function waitForTransaction(txHash: string) {
+  const receipt = await provider.waitForTransaction(txHash);
+  
+  if (receipt.status === 1) {
+    console.log('Transaction successful');
+  } else {
+    console.log('Transaction failed');
+  }
+  
+  return receipt;
+}
+```
+
+1. **Use Contract Factories** for simplified setup
+2. **Handle Errors** gracefully with proper error codes
+3. **Estimate Gas** before transactions
+4. **Use Ethers utilities** like `parseEther` and `formatEther`
+5. **Monitor Transactions** for completion status
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Complete Reference"
+    icon="book"
+    href="/evm/precompiles/reference"
+  >
+    View all precompile contracts, addresses, and functions
+  </Card>
+  <Card
+    title="Viem Integration"
+    icon="sparkles"
+    href="/evm/precompiles/viem"
+  >
+    Use precompiles with Viem
+  </Card>
+</CardGroup>

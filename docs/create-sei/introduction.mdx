@@ -1,0 +1,505 @@
+---
+title: '@sei-js/create-sei'
+description: 'CLI tool for scaffolding Sei applications'
+---
+
+## Overview
+
+The `@sei-js/create-sei` package is a command-line interface (CLI) tool that helps you quickly scaffold Sei applications. It provides various templates for both EVM and Cosmos development, supporting popular frameworks like Next.js and Vite.js.
+
+<CardGroup cols={2}>
+  <Card
+    title="Interactive Setup"
+    icon="terminal"
+  >
+    Guided CLI wizard for project configuration
+  </Card>
+  <Card
+    title="Multiple Frameworks"
+    icon="layer-group"
+  >
+    Support for Next.js, Vite.js, and more
+  </Card>
+  <Card
+    title="EVM & Cosmos"
+    icon="code-branch"
+  >
+    Templates for both development ecosystems
+  </Card>
+  <Card
+    title="Best Practices"
+    icon="star"
+  >
+    Pre-configured with industry standards
+  </Card>
+</CardGroup>
+
+## Installation
+
+You don't need to install this package globally. Use it directly with npx:
+
+<CodeGroup>
+
+```bash npx
+npx @sei-js/create-sei app
+```
+
+```bash yarn
+yarn create @sei-js/create-sei app
+```
+
+```bash pnpm
+pnpm create @sei-js/create-sei app
+```
+
+</CodeGroup>
+
+## Quick Start
+
+### Interactive Setup
+
+Run the CLI tool and follow the interactive prompts:
+
+```bash
+npx @sei-js/create-sei app
+```
+
+The wizard will ask you to choose:
+
+1. **Project Name**: Your application name
+2. **Framework**: Next.js or Vite.js
+3. **Ecosystem**: EVM or Cosmos
+4. **Wallet Library**: Wagmi/Viem or Ethers.js (for EVM)
+5. **Styling**: CSS framework preferences
+6. **Additional Features**: TypeScript, ESLint, etc.
+
+### Direct Template Selection
+
+You can also specify options directly:
+
+<CodeGroup>
+
+```bash Next.js + EVM + Wagmi
+npx @sei-js/create-sei app my-sei-app --template nextjs-evm-wagmi
+```
+
+```bash Vite + EVM + Ethers
+npx @sei-js/create-sei app my-sei-app --template vite-evm-ethers
+```
+
+```bash Next.js + Cosmos
+npx @sei-js/create-sei app my-sei-app --template nextjs-cosmos
+```
+
+</CodeGroup>
+
+## Available Templates
+
+### EVM Templates (Recommended)
+
+<AccordionGroup>
+  <Accordion title="Next.js + Wagmi + Viem">
+    **Template**: `nextjs-evm-wagmi`
+    
+    **Features**:
+    - Next.js 14 with App Router
+    - Wagmi v2 for wallet connection
+    - Viem for Ethereum interactions
+    - TanStack Query for data fetching
+    - Tailwind CSS for styling
+    - TypeScript support
+    
+    **Best for**: Modern React applications with the latest EVM tooling
+    
+    ```bash
+    npx @sei-js/create-sei app --template nextjs-evm-wagmi
+    ```
+  </Accordion>
+
+  <Accordion title="Next.js + Ethers.js">
+    **Template**: `nextjs-evm-ethers`
+    
+    **Features**:
+    - Next.js 14 with App Router
+    - Ethers.js v6 for blockchain interaction
+    - React hooks for wallet management
+    - Tailwind CSS for styling
+    - TypeScript support
+    
+    **Best for**: Developers familiar with Ethers.js
+    
+    ```bash
+    npx @sei-js/create-sei app --template nextjs-evm-ethers
+    ```
+  </Accordion>
+
+  <Accordion title="Vite + Wagmi + Viem">
+    **Template**: `vite-evm-wagmi`
+    
+    **Features**:
+    - Vite for fast development
+    - React 18 with modern hooks
+    - Wagmi v2 for wallet connection
+    - Viem for type-safe Ethereum interactions
+    - Tailwind CSS for styling
+    
+    **Best for**: Lightweight, fast-loading applications
+    
+    ```bash
+    npx @sei-js/create-sei app --template vite-evm-wagmi
+    ```
+  </Accordion>
+
+  <Accordion title="Vite + Ethers.js">
+    **Template**: `vite-evm-ethers`
+    
+    **Features**:
+    - Vite for fast development
+    - Ethers.js v6 integration
+    - React 18 support
+    - CSS Modules or Tailwind
+    
+    **Best for**: Simple, fast applications with Ethers.js
+    
+    ```bash
+    npx @sei-js/create-sei app --template vite-evm-ethers
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Cosmos Templates
+
+<AccordionGroup>
+  <Accordion title="Next.js + CosmJS">
+    **Template**: `nextjs-cosmos`
+    
+    **Features**:
+    - Next.js 14 with App Router
+    - @sei-js/cosmjs integration
+    - Cosmos Kit for wallet connection
+    - CosmWasm smart contract support
+    - Tailwind CSS for styling
+    
+    **Best for**: Cosmos-native applications
+    
+    ```bash
+    npx @sei-js/create-sei app --template nextjs-cosmos
+    ```
+  </Accordion>
+
+  <Accordion title="Vite + CosmJS">
+    **Template**: `vite-cosmos`
+    
+    **Features**:
+    - Vite for fast development
+    - @sei-js/cosmjs integration
+    - Cosmos Kit wallet support
+    - React 18 with modern patterns
+    
+    **Best for**: Lightweight Cosmos applications
+    
+    ```bash
+    npx @sei-js/create-sei app --template vite-cosmos
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Template Features
+
+### Common Features
+
+All templates include:
+
+- **TypeScript**: Full type safety out of the box
+- **ESLint & Prettier**: Code formatting and linting
+- **Tailwind CSS**: Utility-first CSS framework
+- **Environment Variables**: Pre-configured for different networks
+- **Wallet Connection**: Ready-to-use wallet integration
+- **Network Switching**: Support for mainnet, testnet, and devnet
+- **Error Handling**: Comprehensive error boundaries and handling
+- **Loading States**: Proper loading and pending states
+- **Responsive Design**: Mobile-first responsive layouts
+
+### EVM-Specific Features
+
+- **Wagmi Integration**: React hooks for Ethereum
+- **Viem Support**: Type-safe, lightweight Ethereum library
+- **Ethers.js Option**: Popular Ethereum library support
+- **Smart Contract Interaction**: Pre-built contract interaction patterns
+- **Token Operations**: Send, receive, and manage tokens
+- **Transaction Handling**: Comprehensive transaction management
+
+### Cosmos-Specific Features
+
+- **Cosmos Kit**: Multi-wallet support for Cosmos ecosystem
+- **CosmWasm Integration**: Smart contract interaction utilities
+- **IBC Support**: Inter-blockchain communication helpers
+- **Staking Operations**: Delegation and reward management
+- **Governance**: Proposal voting and participation tools
+
+## Project Structure
+
+### EVM Project Structure
+
+```
+my-sei-app/
+├── src/
+│   ├── components/
+│   │   ├── WalletConnection.tsx
+│   │   ├── TokenBalance.tsx
+│   │   └── TransactionForm.tsx
+│   ├── hooks/
+│   │   ├── useWallet.ts
+│   │   └── useContract.ts
+│   ├── lib/
+│   │   ├── wagmi.ts
+│   │   └── contracts.ts
+│   ├── pages/ (or app/ for App Router)
+│   └── styles/
+├── public/
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+└── README.md
+```
+
+### Cosmos Project Structure
+
+```
+my-sei-app/
+├── src/
+│   ├── components/
+│   │   ├── WalletProvider.tsx
+│   │   ├── ChainInfo.tsx
+│   │   └── StakingInterface.tsx
+│   ├── hooks/
+│   │   ├── useCosmosWallet.ts
+│   │   └── useStaking.ts
+│   ├── lib/
+│   │   ├── cosmjs.ts
+│   │   └── chains.ts
+│   ├── pages/
+│   └── styles/
+├── public/
+├── package.json
+└── README.md
+```
+
+## Customization
+
+### Adding Custom Components
+
+After scaffolding, you can add custom components:
+
+<CodeGroup>
+
+```tsx Custom Token Transfer (EVM)
+// src/components/TokenTransfer.tsx
+import { useAccount, useWriteContract } from 'wagmi';
+import { parseEther } from 'viem';
+
+export function TokenTransfer() {
+  const { address } = useAccount();
+  const { writeContract } = useWriteContract();
+
+  const handleTransfer = () => {
+    writeContract({
+      address: '0x...',
+      abi: tokenAbi,
+      functionName: 'transfer',
+      args: [recipientAddress, parseEther('1.0')]
+    });
+  };
+
+  return (
+    <button onClick={handleTransfer}>
+      Transfer Token
+    </button>
+  );
+}
+```
+
+```tsx Custom Staking Component (Cosmos)
+// src/components/StakingDashboard.tsx
+import { useChain } from '@cosmos-kit/react';
+import { useStaking } from '../hooks/useStaking';
+
+export function StakingDashboard() {
+  const { address } = useChain('sei');
+  const { delegations, rewards } = useStaking(address);
+
+  return (
+    <div className="space-y-4">
+      <h2>Staking Dashboard</h2>
+      <div>Total Delegated: {delegations.total}</div>
+      <div>Pending Rewards: {rewards.total}</div>
+    </div>
+  );
+}
+```
+
+</CodeGroup>
+
+## Development Workflow
+
+### Getting Started
+
+After creating your project:
+
+<CodeGroup>
+
+```bash Install Dependencies
+cd my-sei-app
+npm install
+```
+
+```bash Start Development Server
+npm run dev
+```
+
+```bash Build for Production
+npm run build
+```
+
+</CodeGroup>
+
+### Available Scripts
+
+All templates include these npm scripts:
+
+- `dev`: Start development server
+- `build`: Build for production
+- `start`: Start production server
+- `lint`: Run ESLint
+- `lint:fix`: Fix ESLint errors
+- `type-check`: Run TypeScript compiler check
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Project Setup">
+    - Choose EVM for Ethereum-style development
+    - Choose Cosmos for native Sei features
+    - Use TypeScript for better developer experience
+    - Configure environment variables for different networks
+  </Accordion>
+
+  <Accordion title="Development">
+    - Start with testnet for development
+    - Implement proper error handling
+    - Use loading states for better UX
+    - Test on multiple wallet providers
+  </Accordion>
+
+  <Accordion title="Production">
+    - Enable production optimizations
+    - Configure proper CSP headers
+    - Implement analytics and monitoring
+    - Test thoroughly on mainnet
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Installation Issues">
+    **Problem**: CLI fails to create project
+    
+    **Solutions**:
+    - Ensure Node.js version ≥16
+    - Clear npm/yarn cache
+    - Check network connectivity
+    - Try with different package manager
+  </Accordion>
+
+  <Accordion title="Template Issues">
+    **Problem**: Template doesn't work as expected
+    
+    **Solutions**:
+    - Update to latest @sei-js packages
+    - Check environment variable configuration
+    - Verify wallet extension is installed
+    - Review console for error messages
+  </Accordion>
+
+  <Accordion title="Build Issues">
+    **Problem**: Build fails in production
+    
+    **Solutions**:
+    - Check TypeScript errors
+    - Verify all dependencies are installed
+    - Review environment variable setup
+    - Check for missing public assets
+  </Accordion>
+</AccordionGroup>
+
+## Migration Guide
+
+### From v1 to v2
+
+<Steps>
+  <Step title="Update CLI">
+    ```bash
+    npx @sei-js/create-sei@latest app
+    ```
+  </Step>
+  
+  <Step title="Update Dependencies">
+    New templates use updated versions of:
+    - Wagmi v2
+    - Viem v2
+    - Next.js 14
+    - React 18
+  </Step>
+  
+  <Step title="Update Configuration">
+    Review and update:
+    - Wagmi configuration
+    - Chain configurations
+    - Environment variables
+  </Step>
+</Steps>
+
+## Examples
+
+<CardGroup cols={2}>
+  <Card
+    title="DeFi Dashboard"
+    icon="chart-line"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/defi-dashboard"
+  >
+    Complete DeFi application with staking and swaps
+  </Card>
+  <Card
+    title="NFT Marketplace"
+    icon="image"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/nft-marketplace"
+  >
+    Full-featured NFT marketplace application
+  </Card>
+  <Card
+    title="Token Launcher"
+    icon="rocket"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/token-launcher"
+  >
+    Create and manage custom tokens
+  </Card>
+  <Card
+    title="Governance Portal"
+    icon="vote-yea"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/governance-portal"
+  >
+    Participate in on-chain governance
+  </Card>
+</CardGroup>
+
+## Contributing
+
+Help improve the templates by:
+
+- Reporting issues with existing templates
+- Suggesting new template ideas
+- Contributing code improvements
+- Updating documentation
+
+Visit our [GitHub repository](https://github.com/sei-protocol/sei-js) to contribute.
