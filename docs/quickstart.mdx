@@ -1,0 +1,191 @@
+---
+title: 'Quickstart'
+description: 'Start building on Sei in under 5 minutes'
+---
+
+## Setup your development environment
+
+Learn how to update your docs locally and deploy them to the public.
+
+### Prerequisites
+
+Before you start, make sure you have:
+- Node.js (v16 or higher)
+- npm, yarn, or pnpm
+- A code editor (VS Code recommended)
+
+### Create a new project
+
+The fastest way to get started is using our CLI tool:
+
+<CodeGroup>
+
+```bash npm
+npx @sei-js/create-sei app
+```
+
+```bash yarn
+yarn create @sei-js/create-sei app
+```
+
+```bash pnpm
+pnpm create @sei-js/create-sei app
+```
+
+</CodeGroup>
+
+This will launch an interactive setup wizard where you can choose:
+- **Framework**: Next.js or Vite.js
+- **Ecosystem**: EVM (recommended) or Cosmos
+- **Wallet Library**: Wagmi/Viem or Ethers.js
+
+### Manual Installation
+
+If you prefer to add SeiJS to an existing project:
+
+<CodeGroup>
+
+```bash EVM Development
+npm install @sei-js/evm ethers viem wagmi
+```
+
+```bash Cosmos Development
+npm install @sei-js/cosmjs @cosmjs/stargate
+```
+
+```bash Both Ecosystems
+npm install @sei-js/evm @sei-js/cosmjs ethers viem
+```
+
+</CodeGroup>
+
+## Basic Usage
+
+### EVM Development
+
+<CodeGroup>
+
+```tsx Wagmi Setup
+import { ReactNode } from 'react';
+import { WagmiProvider } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ARCTIC_1_VIEM_CHAIN, createWagmiConfig } from '@sei-js/evm';
+
+const queryClient = new QueryClient();
+
+const config = createWagmiConfig({
+  chains: [ARCTIC_1_VIEM_CHAIN],
+  projectId: 'your-project-id'
+});
+
+export function App({ children }: { children: ReactNode }) {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+}
+```
+
+```tsx Reading Data
+import { useBalance, useAccount } from 'wagmi';
+
+export function WalletInfo() {
+  const { address } = useAccount();
+  const { data: balance } = useBalance({ address });
+
+  return (
+    <div>
+      <p>Address: {address}</p>
+      <p>Balance: {balance?.formatted} {balance?.symbol}</p>
+    </div>
+  );
+}
+```
+
+</CodeGroup>
+
+### Cosmos Development
+
+<CodeGroup>
+
+```typescript Signing Client
+import { getSigningCosmWasmClient } from '@sei-js/cosmjs';
+
+const client = await getSigningCosmWasmClient({
+  rpcEndpoint: 'https://rpc.sei.io',
+  signer: wallet
+});
+
+// Query balance
+const balance = await client.getBalance(address, 'usei');
+console.log('Balance:', balance);
+```
+
+```typescript Send Transaction
+import { calculateFee } from '@cosmjs/stargate';
+
+const fee = calculateFee(200000, '0.1usei');
+
+const result = await client.sendTokens(
+  senderAddress,
+  recipientAddress,
+  [{ denom: 'usei', amount: '1000000' }],
+  fee
+);
+
+console.log('Transaction hash:', result.transactionHash);
+```
+
+</CodeGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Explore Packages"
+    icon="package"
+    href="/packages/overview"
+  >
+    Learn about all available packages and their capabilities
+  </Card>
+  <Card
+    title="Wallet Connection"
+    icon="wallet"
+    href="/guides/wallet-connection"
+  >
+    Implement wallet connection in your application
+  </Card>
+  <Card
+    title="Smart Contracts"
+    icon="file-contract"
+    href="/guides/smart-contracts"
+  >
+    Interact with smart contracts on Sei
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/introduction"
+  >
+    Detailed API documentation for all packages
+  </Card>
+</CardGroup>
+
+## Need Help?
+
+<AccordionGroup>
+  <Accordion title="Common Issues">
+    - **Wallet not connecting**: Make sure your wallet has the Sei network configured
+    - **Transaction failing**: Check if you have sufficient balance for gas fees
+    - **Type errors**: Ensure you're using the latest version of TypeScript
+  </Accordion>
+
+  <Accordion title="Getting Support">
+    - Join our [Discord](https://discord.gg/sei) for community support
+    - Check [GitHub Issues](https://github.com/sei-protocol/sei-js/issues) for known problems
+    - Read the [official docs](https://docs.sei.io) for detailed guides
+  </Accordion>
+</AccordionGroup>

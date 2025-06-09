@@ -1,0 +1,347 @@
+---
+title: 'SeiJS Overview'
+description: 'Complete TypeScript SDK for building on Sei Network'
+---
+
+## Welcome to SeiJS
+
+SeiJS is a comprehensive TypeScript SDK for building applications on Sei Network. It provides everything you need to interact with both Cosmos and EVM ecosystems on Sei, from wallet management to advanced DeFi integrations.
+
+<CardGroup cols={2}>
+  <Card
+    title="Cosmos SDK Integration"
+    icon="atom"
+    href="/cosmos/introduction"
+  >
+    Native Cosmos functionality with CosmJS integration
+  </Card>
+  <Card
+    title="EVM Compatibility"
+    icon="ethereum"
+    href="/evm/introduction"
+  >
+    Full Ethereum tooling support with Wagmi, Viem, and Ethers
+  </Card>
+  <Card
+    title="Developer Tools"
+    icon="hammer"
+    href="/create-sei/introduction"
+  >
+    CLI scaffolding and project templates
+  </Card>
+  <Card
+    title="Hardware Wallets"
+    icon="shield"
+    href="/ledger/introduction"
+  >
+    Secure Ledger hardware wallet integration
+  </Card>
+</CardGroup>
+
+## Package Ecosystem
+
+SeiJS is organized as a monorepo with specialized packages for different use cases:
+
+### Core Packages
+
+<AccordionGroup>
+  <Accordion title="@sei-js/cosmos" icon="atom">
+    **Core Cosmos SDK Integration**
+    
+    Essential types, encoding utilities, and REST client for Cosmos ecosystem development.
+    
+    - TypeScript definitions for Sei modules
+    - Protobuf encoding/decoding
+    - REST API client
+    - Transaction utilities
+    
+    [View Documentation →](/cosmos/introduction)
+  </Accordion>
+
+  <Accordion title="@sei-js/evm" icon="ethereum">
+    **EVM Development Tools**
+    
+    Complete EVM integration with popular Ethereum development tools.
+    
+    - Wagmi React hooks
+    - Viem and Ethers.js support
+    - Precompiled contract addresses
+    - Chain configurations
+    
+    [View Documentation →](/evm/introduction)
+  </Accordion>
+
+  <Accordion title="@sei-js/cosmjs" icon="signature">
+    **CosmJS Helper Functions**
+    
+    Enhanced CosmJS integration with Sei-specific utilities.
+    
+    - Wallet management
+    - Transaction signing
+    - RPC querying
+    - Address utilities
+    
+    [View Documentation →](/cosmjs/introduction)
+  </Accordion>
+</AccordionGroup>
+
+### Specialized Packages
+
+<AccordionGroup>
+  <Accordion title="@sei-js/create-sei" icon="hammer">
+    **Project Scaffolding CLI**
+    
+    Command-line tool for creating new Sei projects with templates.
+    
+    - EVM and Cosmos templates
+    - Next.js integration
+    - Best practices setup
+    - Development workflows
+    
+    [View Documentation →](/create-sei/introduction)
+  </Accordion>
+
+  <Accordion title="@sei-js/ledger" icon="shield">
+    **Hardware Wallet Integration**
+    
+    Secure Ledger hardware wallet support for Sei applications.
+    
+    - Transport layer management
+    - Address derivation
+    - Transaction signing
+    - Multi-account support
+    
+    [View Documentation →](/ledger/introduction)
+  </Accordion>
+
+  <Accordion title="@sei-js/registry" icon="database">
+    **Asset Registry**
+    
+    Comprehensive registry of tokens, networks, and protocol information.
+    
+    - Token metadata
+    - Network configurations
+    - IBC channel information
+    - Gas fee data
+    
+    [View Documentation →](/registry/introduction)
+  </Accordion>
+
+  <Accordion title="@sei-js/sei-global-wallet" icon="wallet">
+    **EIP-6963 Wallet Standard**
+    
+    Modern wallet discovery and connection using EIP-6963 standard.
+    
+    - Standardized wallet interface
+    - Dynamic wallet discovery
+    - Framework integrations
+    - Best practices implementation
+    
+    [View Documentation →](/sei-global-wallet/introduction)
+  </Accordion>
+
+  <Accordion title="@sei-js/confidential-transfers" icon="eye-slash">
+    **Privacy-Preserving Transactions**
+    
+    Advanced privacy features for confidential token transfers.
+    
+    - Encrypted balance queries
+    - Confidential transfers
+    - Multi-denomination support
+    - Ethers.js and Viem integration
+    
+    [View Documentation →](/confidential-transfers/introduction)
+  </Accordion>
+</AccordionGroup>
+
+## Architecture Overview
+
+SeiJS is designed with modularity and flexibility in mind:
+
+```mermaid
+graph TB
+    A[Your Application] --> B[@sei-js/evm]
+    A --> C[@sei-js/cosmjs]
+    A --> D[@sei-js/cosmos]
+    
+    B --> E[Wagmi/Viem/Ethers]
+    C --> F[CosmJS]
+    D --> G[Sei Modules]
+    
+    H[@sei-js/create-sei] --> A
+    I[@sei-js/ledger] --> B
+    I --> C
+    J[@sei-js/registry] --> B
+    J --> C
+    K[@sei-js/sei-global-wallet] --> B
+    L[@sei-js/confidential-transfers] --> B
+```
+
+## Getting Started
+
+### Choose Your Development Path
+
+<CardGroup cols={2}>
+  <Card
+    title="EVM Development"
+    icon="ethereum"
+    href="/evm/introduction"
+  >
+    **Best for:** Ethereum developers, DeFi applications, existing dApp migration
+    
+    - Familiar Ethereum tooling
+    - Wagmi, Viem, Ethers.js support
+    - Solidity smart contracts
+    - MetaMask compatibility
+  </Card>
+  <Card
+    title="Cosmos Development"
+    icon="atom"
+    href="/cosmos/introduction"
+  >
+    **Best for:** Cosmos ecosystem apps, IBC transfers, native Sei features
+    
+    - CosmJS integration
+    - Native Cosmos modules
+    - IBC functionality
+    - Keplr wallet support
+  </Card>
+</CardGroup>
+
+### Quick Installation
+
+<CodeGroup>
+
+```bash All Packages
+npm install @sei-js/cosmos @sei-js/evm @sei-js/cosmjs
+```
+
+```bash EVM Only
+npm install @sei-js/evm ethers viem wagmi
+```
+
+```bash Cosmos Only
+npm install @sei-js/cosmos @sei-js/cosmjs @cosmjs/stargate
+```
+
+```bash CLI Tool
+npm install -g @sei-js/create-sei
+```
+
+</CodeGroup>
+
+### Create Your First Project
+
+<Steps>
+  <Step title="Install CLI">
+    ```bash
+    npm install -g @sei-js/create-sei
+    ```
+  </Step>
+  
+  <Step title="Create Project">
+    ```bash
+    create-sei my-sei-app
+    ```
+  </Step>
+  
+  <Step title="Choose Template">
+    Select from available templates:
+    - **Next.js + EVM**: React app with Ethereum tooling
+    - **Next.js + Cosmos**: React app with CosmJS
+    - **Vanilla TypeScript**: Pure TypeScript project
+  </Step>
+  
+  <Step title="Start Building">
+    ```bash
+    cd my-sei-app
+    npm run dev
+    ```
+  </Step>
+</Steps>
+
+## Key Features
+
+### 🔗 **Dual Ecosystem Support**
+Build on both Cosmos and EVM with a single SDK, enabling unique cross-ecosystem applications.
+
+### 🛠️ **Developer Experience**
+Full TypeScript support, comprehensive documentation, and familiar tooling patterns.
+
+### 🔒 **Security First**
+Hardware wallet support, secure key management, and battle-tested cryptographic implementations.
+
+### ⚡ **Performance Optimized**
+Efficient RPC handling, smart caching, and optimized for Sei's high-performance blockchain.
+
+### 🌐 **Framework Agnostic**
+Works with React, Vue, Angular, or vanilla JavaScript/TypeScript applications.
+
+## Community Examples
+
+<CardGroup cols={2}>
+  <Card
+    title="DeFi Dashboard"
+    icon="chart-line"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/defi-dashboard"
+  >
+    Complete DeFi application with swaps, staking, and portfolio tracking
+  </Card>
+  <Card
+    title="NFT Marketplace"
+    icon="image"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/nft-marketplace"
+  >
+    Full-featured NFT marketplace with minting and trading
+  </Card>
+  <Card
+    title="Cross-Chain Bridge"
+    icon="bridge"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/bridge"
+  >
+    IBC and EVM bridge implementation
+  </Card>
+  <Card
+    title="Governance Portal"
+    icon="vote-yea"
+    href="https://github.com/sei-protocol/sei-js/tree/main/examples/governance"
+  >
+    Cosmos governance participation interface
+  </Card>
+</CardGroup>
+
+## Support & Resources
+
+<CardGroup cols={3}>
+  <Card
+    title="GitHub"
+    icon="github"
+    href="https://github.com/sei-protocol/sei-js"
+  >
+    Source code, issues, and contributions
+  </Card>
+  <Card
+    title="Discord"
+    icon="discord"
+    href="https://discord.gg/sei"
+  >
+    Community support and discussions
+  </Card>
+  <Card
+    title="Documentation"
+    icon="book"
+    href="https://docs.sei.io"
+  >
+    Official Sei Network documentation
+  </Card>
+</CardGroup>
+
+## What's Next?
+
+1. **[Choose your development path](/overview#choose-your-development-path)** - EVM or Cosmos
+2. **[Install the packages](/overview#quick-installation)** you need
+3. **[Create your first project](/overview#create-your-first-project)** with our CLI
+4. **[Explore the examples](/overview#community-examples)** for inspiration
+5. **[Join the community](/overview#support--resources)** for support
+
+Ready to build the future of decentralized applications on Sei? Let's get started! 🚀
