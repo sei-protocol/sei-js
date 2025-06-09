@@ -1,0 +1,259 @@
+---
+title: 'API Reference'
+description: 'Complete API documentation for all SeiJS packages'
+---
+
+## API Documentation
+
+Complete TypeScript API documentation for all SeiJS packages is available through TypeDoc. Each package provides detailed type definitions, function signatures, and usage examples.
+
+<CardGroup cols={2}>
+  <Card
+    title="@sei-js/cosmos"
+    icon="atom"
+    href="https://sei-protocol.github.io/sei-js/modules/cosmos.html"
+  >
+    Core Cosmos SDK types and utilities
+  </Card>
+  <Card
+    title="@sei-js/evm"
+    icon="ethereum"
+    href="https://sei-protocol.github.io/sei-js/modules/evm.html"
+  >
+    EVM integration and tooling
+  </Card>
+  <Card
+    title="@sei-js/cosmjs"
+    icon="signature"
+    href="https://sei-protocol.github.io/sei-js/modules/cosmjs.html"
+  >
+    CosmJS helper functions
+  </Card>
+  <Card
+    title="@sei-js/create-sei"
+    icon="hammer"
+    href="https://sei-protocol.github.io/sei-js/modules/create_sei.html"
+  >
+    CLI scaffolding tool
+  </Card>
+  <Card
+    title="@sei-js/ledger"
+    icon="shield"
+    href="https://sei-protocol.github.io/sei-js/modules/ledger.html"
+  >
+    Hardware wallet integration
+  </Card>
+  <Card
+    title="@sei-js/registry"
+    icon="database"
+    href="https://sei-protocol.github.io/sei-js/modules/registry.html"
+  >
+    Asset and network registry
+  </Card>
+  <Card
+    title="@sei-js/sei-global-wallet"
+    icon="wallet"
+    href="https://sei-protocol.github.io/sei-js/modules/sei_global_wallet.html"
+  >
+    EIP-6963 wallet standard
+  </Card>
+  <Card
+    title="@sei-js/confidential-transfers"
+    icon="eye-slash"
+    href="https://sei-protocol.github.io/sei-js/modules/confidential_transfers.html"
+  >
+    Privacy-preserving transactions
+  </Card>
+</CardGroup>
+
+## Package Overview
+
+### Core Packages
+
+<AccordionGroup>
+  <Accordion title="@sei-js/cosmos">
+    **Core Cosmos SDK Integration**
+    
+    Essential types, encoding utilities, and REST client for Cosmos ecosystem development.
+    
+    Key exports:
+    - `SeiCosmosClient` - REST API client
+    - `EncodingUtils` - Protobuf encoding/decoding
+    - `TransactionBuilder` - Transaction construction utilities
+    - Type definitions for all Sei modules
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/cosmos.html)
+  </Accordion>
+
+  <Accordion title="@sei-js/evm">
+    **EVM Development Tools**
+    
+    Complete EVM integration with popular Ethereum development tools.
+    
+    Key exports:
+    - `createWagmiConfig` - Wagmi configuration helper
+    - `PACIFIC_1_VIEM_CHAIN`, `ARCTIC_1_VIEM_CHAIN` - Chain configurations
+    - `ADDRESS_PRECOMPILE_ADDRESS` - Precompiled contract addresses
+    - Utility functions for address conversion
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/evm.html)
+  </Accordion>
+
+  <Accordion title="@sei-js/cosmjs">
+    **CosmJS Helper Functions**
+    
+    Enhanced CosmJS integration with Sei-specific utilities.
+    
+    Key exports:
+    - `getSigningStargateClient` - Enhanced signing client
+    - `deriveAddressesFromPrivateKey` - Address derivation
+    - `isValidSeiCosmosAddress` - Address validation
+    - Signing and serialization utilities
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/cosmjs.html)
+  </Accordion>
+</AccordionGroup>
+
+### Specialized Packages
+
+<AccordionGroup>
+  <Accordion title="@sei-js/create-sei">
+    **Project Scaffolding CLI**
+    
+    Command-line tool for creating new Sei projects with templates.
+    
+    Key features:
+    - Interactive project creation
+    - Multiple template options
+    - Dependency management
+    - Best practices setup
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/create_sei.html)
+  </Accordion>
+
+  <Accordion title="@sei-js/ledger">
+    **Hardware Wallet Integration**
+    
+    Secure Ledger hardware wallet support for Sei applications.
+    
+    Key exports:
+    - `createTransportAndApp` - Ledger connection setup
+    - `getAddresses` - Address derivation from Ledger
+    - `SeiLedgerSigner` - Transaction signing with Ledger
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/ledger.html)
+  </Accordion>
+
+  <Accordion title="@sei-js/registry">
+    **Asset Registry**
+    
+    Comprehensive registry of tokens, networks, and protocol information.
+    
+    Key exports:
+    - `tokens` - Token metadata registry
+    - `networks` - Network configuration data
+    - `ibcChannels` - IBC channel information
+    - `gasPrices` - Gas fee data
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/registry.html)
+  </Accordion>
+
+  <Accordion title="@sei-js/sei-global-wallet">
+    **EIP-6963 Wallet Standard**
+    
+    Modern wallet discovery and connection using EIP-6963 standard.
+    
+    Key exports:
+    - `SeiGlobalWallet` - Main wallet interface
+    - `discoverWallets` - Wallet discovery function
+    - Provider interfaces and types
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/sei_global_wallet.html)
+  </Accordion>
+
+  <Accordion title="@sei-js/confidential-transfers">
+    **Privacy-Preserving Transactions**
+    
+    Advanced privacy features for confidential token transfers.
+    
+    Key exports:
+    - `ConfidentialTransferClient` - Main client interface
+    - Encryption and decryption utilities
+    - Balance querying functions
+    - Transfer execution methods
+    
+    [View Full API →](https://sei-protocol.github.io/sei-js/modules/confidential_transfers.html)
+  </Accordion>
+</AccordionGroup>
+
+## Type Definitions
+
+All packages include comprehensive TypeScript type definitions. Key type categories:
+
+### Transaction Types
+- `TxResponse` - Transaction execution results
+- `SignDoc` - Transaction signing documents
+- `Fee` - Gas fee structures
+- `Coin` - Token amount representations
+
+### Client Types
+- `SigningStargateClient` - Enhanced CosmJS client
+- `SeiCosmosClient` - REST API client
+- `ConfidentialTransferClient` - Privacy client
+
+### Utility Types
+- `Address` - Address validation and conversion
+- `PubKey` - Public key representations
+- `Signature` - Cryptographic signatures
+
+## Error Handling
+
+All packages provide structured error types:
+
+```typescript
+// Common error patterns
+try {
+  const result = await client.sendTokens(/* ... */);
+} catch (error) {
+  if (error instanceof InsufficientFundsError) {
+    // Handle insufficient balance
+  } else if (error instanceof NetworkError) {
+    // Handle network issues
+  } else {
+    // Handle other errors
+  }
+}
+```
+
+## Contributing
+
+The API documentation is automatically generated from TypeScript source code. To contribute:
+
+1. **Fork the repository** on GitHub
+2. **Make your changes** with proper TypeScript documentation
+3. **Run tests** to ensure compatibility
+4. **Submit a pull request** with detailed description
+
+### Documentation Standards
+
+- Use JSDoc comments for all public APIs
+- Include usage examples in documentation
+- Provide type definitions for all parameters
+- Document error conditions and handling
+
+## Support
+
+For API-specific questions:
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/sei-protocol/sei-js/issues)
+- **Discord**: [Join the community discussion](https://discord.gg/sei)
+- **Documentation**: [Browse the full TypeDoc reference](https://sei-protocol.github.io/sei-js/)
+
+## Version Compatibility
+
+| Package Version | Sei Network | Node.js | TypeScript |
+|----------------|-------------|---------|------------|
+| 2.x.x          | v5.x.x+     | 18+     | 4.5+       |
+| 1.x.x          | v4.x.x      | 16+     | 4.0+       |
+
+Always use the latest version for the best features and security updates.
