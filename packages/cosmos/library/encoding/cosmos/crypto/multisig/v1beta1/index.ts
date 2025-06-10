@@ -1,3 +1,3 @@
 // @ts-nocheck
 
-export * from "./multisig";
+export * from './multisig';

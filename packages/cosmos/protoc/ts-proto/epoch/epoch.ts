@@ -12,198 +12,199 @@ import { Timestamp } from "../google/protobuf/timestamp";
 export const protobufPackage = "seiprotocol.seichain.epoch";
 
 export interface Epoch {
-	genesis_time?: Date | undefined;
-	epoch_duration?: Duration | undefined;
-	current_epoch: number;
-	current_epoch_start_time?: Date | undefined;
-	current_epoch_height: number;
+  genesis_time?: Date | undefined;
+  epoch_duration?: Duration | undefined;
+  current_epoch: number;
+  current_epoch_start_time?: Date | undefined;
+  current_epoch_height: number;
 }
 
 function createBaseEpoch(): Epoch {
-	return {
-		genesis_time: undefined,
-		epoch_duration: undefined,
-		current_epoch: 0,
-		current_epoch_start_time: undefined,
-		current_epoch_height: 0
-	};
+  return {
+    genesis_time: undefined,
+    epoch_duration: undefined,
+    current_epoch: 0,
+    current_epoch_start_time: undefined,
+    current_epoch_height: 0,
+  };
 }
 
 export const Epoch: MessageFns<Epoch, "seiprotocol.seichain.epoch.Epoch"> = {
-	$type: "seiprotocol.seichain.epoch.Epoch" as const,
+  $type: "seiprotocol.seichain.epoch.Epoch" as const,
 
-	encode(message: Epoch, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.genesis_time !== undefined) {
-			Timestamp.encode(toTimestamp(message.genesis_time), writer.uint32(10).fork()).join();
-		}
-		if (message.epoch_duration !== undefined) {
-			Duration.encode(message.epoch_duration, writer.uint32(18).fork()).join();
-		}
-		if (message.current_epoch !== 0) {
-			writer.uint32(24).uint64(message.current_epoch);
-		}
-		if (message.current_epoch_start_time !== undefined) {
-			Timestamp.encode(toTimestamp(message.current_epoch_start_time), writer.uint32(34).fork()).join();
-		}
-		if (message.current_epoch_height !== 0) {
-			writer.uint32(40).int64(message.current_epoch_height);
-		}
-		return writer;
-	},
+  encode(message: Epoch, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.genesis_time !== undefined) {
+      Timestamp.encode(toTimestamp(message.genesis_time), writer.uint32(10).fork()).join();
+    }
+    if (message.epoch_duration !== undefined) {
+      Duration.encode(message.epoch_duration, writer.uint32(18).fork()).join();
+    }
+    if (message.current_epoch !== 0) {
+      writer.uint32(24).uint64(message.current_epoch);
+    }
+    if (message.current_epoch_start_time !== undefined) {
+      Timestamp.encode(toTimestamp(message.current_epoch_start_time), writer.uint32(34).fork()).join();
+    }
+    if (message.current_epoch_height !== 0) {
+      writer.uint32(40).int64(message.current_epoch_height);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): Epoch {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseEpoch();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): Epoch {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseEpoch();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.genesis_time = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.genesis_time = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.epoch_duration = Duration.decode(reader, reader.uint32());
-					continue;
-				case 3:
-					if (tag !== 24) {
-						break;
-					}
+          message.epoch_duration = Duration.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
 
-					message.current_epoch = longToNumber(reader.uint64());
-					continue;
-				case 4:
-					if (tag !== 34) {
-						break;
-					}
+          message.current_epoch = longToNumber(reader.uint64());
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
 
-					message.current_epoch_start_time = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-					continue;
-				case 5:
-					if (tag !== 40) {
-						break;
-					}
+          message.current_epoch_start_time = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
 
-					message.current_epoch_height = longToNumber(reader.int64());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.current_epoch_height = longToNumber(reader.int64());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): Epoch {
-		return {
-			genesis_time: isSet(object.genesis_time) ? fromJsonTimestamp(object.genesis_time) : undefined,
-			epoch_duration: isSet(object.epoch_duration) ? Duration.fromJSON(object.epoch_duration) : undefined,
-			current_epoch: isSet(object.current_epoch) ? globalThis.Number(object.current_epoch) : 0,
-			current_epoch_start_time: isSet(object.current_epoch_start_time) ? fromJsonTimestamp(object.current_epoch_start_time) : undefined,
-			current_epoch_height: isSet(object.current_epoch_height) ? globalThis.Number(object.current_epoch_height) : 0
-		};
-	},
+  fromJSON(object: any): Epoch {
+    return {
+      genesis_time: isSet(object.genesis_time) ? fromJsonTimestamp(object.genesis_time) : undefined,
+      epoch_duration: isSet(object.epoch_duration) ? Duration.fromJSON(object.epoch_duration) : undefined,
+      current_epoch: isSet(object.current_epoch) ? globalThis.Number(object.current_epoch) : 0,
+      current_epoch_start_time: isSet(object.current_epoch_start_time)
+        ? fromJsonTimestamp(object.current_epoch_start_time)
+        : undefined,
+      current_epoch_height: isSet(object.current_epoch_height) ? globalThis.Number(object.current_epoch_height) : 0,
+    };
+  },
 
-	toJSON(message: Epoch): unknown {
-		const obj: any = {};
-		if (message.genesis_time !== undefined) {
-			obj.genesis_time = message.genesis_time.toISOString();
-		}
-		if (message.epoch_duration !== undefined) {
-			obj.epoch_duration = Duration.toJSON(message.epoch_duration);
-		}
-		if (message.current_epoch !== 0) {
-			obj.current_epoch = Math.round(message.current_epoch);
-		}
-		if (message.current_epoch_start_time !== undefined) {
-			obj.current_epoch_start_time = message.current_epoch_start_time.toISOString();
-		}
-		if (message.current_epoch_height !== 0) {
-			obj.current_epoch_height = Math.round(message.current_epoch_height);
-		}
-		return obj;
-	},
+  toJSON(message: Epoch): unknown {
+    const obj: any = {};
+    if (message.genesis_time !== undefined) {
+      obj.genesis_time = message.genesis_time.toISOString();
+    }
+    if (message.epoch_duration !== undefined) {
+      obj.epoch_duration = Duration.toJSON(message.epoch_duration);
+    }
+    if (message.current_epoch !== 0) {
+      obj.current_epoch = Math.round(message.current_epoch);
+    }
+    if (message.current_epoch_start_time !== undefined) {
+      obj.current_epoch_start_time = message.current_epoch_start_time.toISOString();
+    }
+    if (message.current_epoch_height !== 0) {
+      obj.current_epoch_height = Math.round(message.current_epoch_height);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<Epoch>, I>>(base?: I): Epoch {
-		return Epoch.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<Epoch>, I>>(object: I): Epoch {
-		const message = createBaseEpoch();
-		message.genesis_time = object.genesis_time ?? undefined;
-		message.epoch_duration = object.epoch_duration !== undefined && object.epoch_duration !== null ? Duration.fromPartial(object.epoch_duration) : undefined;
-		message.current_epoch = object.current_epoch ?? 0;
-		message.current_epoch_start_time = object.current_epoch_start_time ?? undefined;
-		message.current_epoch_height = object.current_epoch_height ?? 0;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<Epoch>, I>>(base?: I): Epoch {
+    return Epoch.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Epoch>, I>>(object: I): Epoch {
+    const message = createBaseEpoch();
+    message.genesis_time = object.genesis_time ?? undefined;
+    message.epoch_duration = (object.epoch_duration !== undefined && object.epoch_duration !== null)
+      ? Duration.fromPartial(object.epoch_duration)
+      : undefined;
+    message.current_epoch = object.current_epoch ?? 0;
+    message.current_epoch_start_time = object.current_epoch_start_time ?? undefined;
+    message.current_epoch_height = object.current_epoch_height ?? 0;
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function toTimestamp(date: Date): Timestamp {
-	const seconds = Math.trunc(date.getTime() / 1_000);
-	const nanos = (date.getTime() % 1_000) * 1_000_000;
-	return { seconds, nanos };
+  const seconds = Math.trunc(date.getTime() / 1_000);
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
 }
 
 function fromTimestamp(t: Timestamp): Date {
-	let millis = (t.seconds || 0) * 1_000;
-	millis += (t.nanos || 0) / 1_000_000;
-	return new globalThis.Date(millis);
+  let millis = (t.seconds || 0) * 1_000;
+  millis += (t.nanos || 0) / 1_000_000;
+  return new globalThis.Date(millis);
 }
 
 function fromJsonTimestamp(o: any): Date {
-	if (o instanceof globalThis.Date) {
-		return o;
-	} else if (typeof o === "string") {
-		return new globalThis.Date(o);
-	} else {
-		return fromTimestamp(Timestamp.fromJSON(o));
-	}
+  if (o instanceof globalThis.Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new globalThis.Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
 }
 
 function longToNumber(int64: { toString(): string }): number {
-	const num = globalThis.Number(int64.toString());
-	if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-		throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-	}
-	if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-		throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-	}
-	return num;
+  const num = globalThis.Number(int64.toString());
+  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
+    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
+  }
+  return num;
 }
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

@@ -41,6 +41,7 @@ import type {
 import {
 	Edition,
 	ExtensionRangeOptionsVerificationState,
+	FeatureSetEnforceNamingStyle,
 	FeatureSetEnumType,
 	FeatureSetFieldPresence,
 	FeatureSetJsonFormat,
@@ -3465,6 +3466,9 @@ export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = 
 		if (message.json_format !== undefined && message.json_format !== 0) {
 			writer.uint32(48).int32(message.json_format);
 		}
+		if (message.enforce_naming_style !== undefined && message.enforce_naming_style !== 0) {
+			writer.uint32(56).int32(message.enforce_naming_style);
+		}
 		return writer;
 	},
 
@@ -3517,6 +3521,13 @@ export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = 
 
 					message.json_format = reader.int32() as any;
 					continue;
+				case 7:
+					if (tag !== 56) {
+						break;
+					}
+
+					message.enforce_naming_style = reader.int32() as any;
+					continue;
 			}
 			if ((tag & 7) === 4 || tag === 0) {
 				break;
@@ -3533,7 +3544,8 @@ export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = 
 			repeated_field_encoding: isSet(object.repeated_field_encoding) ? featureSetRepeatedFieldEncodingFromJSON(object.repeated_field_encoding) : 0,
 			utf8_validation: isSet(object.utf8_validation) ? featureSetUtf8ValidationFromJSON(object.utf8_validation) : 0,
 			message_encoding: isSet(object.message_encoding) ? featureSetMessageEncodingFromJSON(object.message_encoding) : 0,
-			json_format: isSet(object.json_format) ? featureSetJsonFormatFromJSON(object.json_format) : 0
+			json_format: isSet(object.json_format) ? featureSetJsonFormatFromJSON(object.json_format) : 0,
+			enforce_naming_style: isSet(object.enforce_naming_style) ? featureSetEnforceNamingStyleFromJSON(object.enforce_naming_style) : 0
 		};
 	},
 
@@ -3557,6 +3569,9 @@ export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = 
 		if (message.json_format !== undefined && message.json_format !== 0) {
 			obj.json_format = featureSetJsonFormatToJSON(message.json_format);
 		}
+		if (message.enforce_naming_style !== undefined && message.enforce_naming_style !== 0) {
+			obj.enforce_naming_style = featureSetEnforceNamingStyleToJSON(message.enforce_naming_style);
+		}
 		return obj;
 	},
 
@@ -3571,6 +3586,7 @@ export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = 
 		message.utf8_validation = object.utf8_validation ?? 0;
 		message.message_encoding = object.message_encoding ?? 0;
 		message.json_format = object.json_format ?? 0;
+		message.enforce_naming_style = object.enforce_naming_style ?? 0;
 		return message;
 	}
 };
@@ -4806,6 +4822,38 @@ export function featureSetJsonFormatToJSON(object: FeatureSetJsonFormat): string
 	}
 }
 
+export function featureSetEnforceNamingStyleFromJSON(object: any): FeatureSetEnforceNamingStyle {
+	switch (object) {
+		case 0:
+		case "ENFORCE_NAMING_STYLE_UNKNOWN":
+			return FeatureSetEnforceNamingStyle.ENFORCE_NAMING_STYLE_UNKNOWN;
+		case 1:
+		case "STYLE2024":
+			return FeatureSetEnforceNamingStyle.STYLE2024;
+		case 2:
+		case "STYLE_LEGACY":
+			return FeatureSetEnforceNamingStyle.STYLE_LEGACY;
+		case -1:
+		case "UNRECOGNIZED":
+		default:
+			return FeatureSetEnforceNamingStyle.UNRECOGNIZED;
+	}
+}
+
+export function featureSetEnforceNamingStyleToJSON(object: FeatureSetEnforceNamingStyle): string {
+	switch (object) {
+		case FeatureSetEnforceNamingStyle.ENFORCE_NAMING_STYLE_UNKNOWN:
+			return "ENFORCE_NAMING_STYLE_UNKNOWN";
+		case FeatureSetEnforceNamingStyle.STYLE2024:
+			return "STYLE2024";
+		case FeatureSetEnforceNamingStyle.STYLE_LEGACY:
+			return "STYLE_LEGACY";
+		case FeatureSetEnforceNamingStyle.UNRECOGNIZED:
+		default:
+			return "UNRECOGNIZED";
+	}
+}
+
 export function generatedCodeInfoAnnotationSemanticFromJSON(object: any): GeneratedCodeInfoAnnotationSemantic {
 	switch (object) {
 		case 0:
@@ -5058,7 +5106,8 @@ function createBaseFeatureSet(): FeatureSet {
 		repeated_field_encoding: 0,
 		utf8_validation: 0,
 		message_encoding: 0,
-		json_format: 0
+		json_format: 0,
+		enforce_naming_style: 0
 	};
 }
 

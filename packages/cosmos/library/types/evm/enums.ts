@@ -8,3 +8,9 @@ export enum PointerType {
 	CW1155 = 6,
 	UNRECOGNIZED = -1
 }
+
+export enum AssetType {
+	TYPECW20 = 0,
+	TYPECW721 = 1,
+	UNRECOGNIZED = -1
+}

@@ -8,6 +8,7 @@ export * from './jsonPrecompile';
 export * from './oraclePrecompile';
 export * from './pointerPrecompile';
 export * from './pointerviewPrecompile';
+export * from './soloPrecompile';
 export * from './stakingPrecompile';
 export * from './wasmPrecompile';
 

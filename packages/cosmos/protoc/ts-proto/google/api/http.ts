@@ -15,21 +15,21 @@ export const protobufPackage = "google.api";
  * to one or more HTTP REST API methods.
  */
 export interface Http {
-	/**
-	 * A list of HTTP configuration rules that apply to individual API methods.
-	 *
-	 * **NOTE:** All service configuration rules follow "last one wins" order.
-	 */
-	rules: HttpRule[];
-	/**
-	 * When set to true, URL path parmeters will be fully URI-decoded except in
-	 * cases of single segment matches in reserved expansion, where "%2F" will be
-	 * left encoded.
-	 *
-	 * The default behavior is to not decode RFC 6570 reserved characters in multi
-	 * segment matches.
-	 */
-	fully_decode_reserved_expansion: boolean;
+  /**
+   * A list of HTTP configuration rules that apply to individual API methods.
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   */
+  rules: HttpRule[];
+  /**
+   * When set to true, URL path parmeters will be fully URI-decoded except in
+   * cases of single segment matches in reserved expansion, where "%2F" will be
+   * left encoded.
+   *
+   * The default behavior is to not decode RFC 6570 reserved characters in multi
+   * segment matches.
+   */
+  fully_decode_reserved_expansion: boolean;
 }
 
 /**
@@ -245,442 +245,457 @@ export interface Http {
  * repeated fields or map fields.
  */
 export interface HttpRule {
-	/**
-	 * Selects methods to which this rule applies.
-	 *
-	 * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-	 */
-	selector: string;
-	/** Used for listing and getting information about resources. */
-	get?: string | undefined;
-	/** Used for updating a resource. */
-	put?: string | undefined;
-	/** Used for creating a resource. */
-	post?: string | undefined;
-	/** Used for deleting a resource. */
-	delete?: string | undefined;
-	/** Used for updating a resource. */
-	patch?: string | undefined;
-	/**
-	 * The custom pattern is used for specifying an HTTP method that is not
-	 * included in the `pattern` field, such as HEAD, or "*" to leave the
-	 * HTTP method unspecified for this rule. The wild-card rule is useful
-	 * for services that provide content to Web (HTML) clients.
-	 */
-	custom?: CustomHttpPattern | undefined;
-	/**
-	 * The name of the request field whose value is mapped to the HTTP body, or
-	 * `*` for mapping all fields not captured by the path pattern to the HTTP
-	 * body. NOTE: the referred field must not be a repeated field and must be
-	 * present at the top-level of request message type.
-	 */
-	body: string;
-	/**
-	 * Optional. The name of the response field whose value is mapped to the HTTP
-	 * body of response. Other response fields are ignored. When
-	 * not set, the response message will be used as HTTP body of response.
-	 */
-	response_body: string;
-	/**
-	 * Additional HTTP bindings for the selector. Nested bindings must
-	 * not contain an `additional_bindings` field themselves (that is,
-	 * the nesting may only be one level deep).
-	 */
-	additional_bindings: HttpRule[];
+  /**
+   * Selects methods to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   */
+  selector: string;
+  /** Used for listing and getting information about resources. */
+  get?:
+    | string
+    | undefined;
+  /** Used for updating a resource. */
+  put?:
+    | string
+    | undefined;
+  /** Used for creating a resource. */
+  post?:
+    | string
+    | undefined;
+  /** Used for deleting a resource. */
+  delete?:
+    | string
+    | undefined;
+  /** Used for updating a resource. */
+  patch?:
+    | string
+    | undefined;
+  /**
+   * The custom pattern is used for specifying an HTTP method that is not
+   * included in the `pattern` field, such as HEAD, or "*" to leave the
+   * HTTP method unspecified for this rule. The wild-card rule is useful
+   * for services that provide content to Web (HTML) clients.
+   */
+  custom?:
+    | CustomHttpPattern
+    | undefined;
+  /**
+   * The name of the request field whose value is mapped to the HTTP body, or
+   * `*` for mapping all fields not captured by the path pattern to the HTTP
+   * body. NOTE: the referred field must not be a repeated field and must be
+   * present at the top-level of request message type.
+   */
+  body: string;
+  /**
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * body of response. Other response fields are ignored. When
+   * not set, the response message will be used as HTTP body of response.
+   */
+  response_body: string;
+  /**
+   * Additional HTTP bindings for the selector. Nested bindings must
+   * not contain an `additional_bindings` field themselves (that is,
+   * the nesting may only be one level deep).
+   */
+  additional_bindings: HttpRule[];
 }
 
 /** A custom pattern is used for defining custom HTTP verb. */
 export interface CustomHttpPattern {
-	/** The name of this custom HTTP verb. */
-	kind: string;
-	/** The path matched by this custom verb. */
-	path: string;
+  /** The name of this custom HTTP verb. */
+  kind: string;
+  /** The path matched by this custom verb. */
+  path: string;
 }
 
 function createBaseHttp(): Http {
-	return { rules: [], fully_decode_reserved_expansion: false };
+  return { rules: [], fully_decode_reserved_expansion: false };
 }
 
 export const Http: MessageFns<Http, "google.api.Http"> = {
-	$type: "google.api.Http" as const,
+  $type: "google.api.Http" as const,
 
-	encode(message: Http, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		for (const v of message.rules) {
-			HttpRule.encode(v!, writer.uint32(10).fork()).join();
-		}
-		if (message.fully_decode_reserved_expansion !== false) {
-			writer.uint32(16).bool(message.fully_decode_reserved_expansion);
-		}
-		return writer;
-	},
+  encode(message: Http, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    for (const v of message.rules) {
+      HttpRule.encode(v!, writer.uint32(10).fork()).join();
+    }
+    if (message.fully_decode_reserved_expansion !== false) {
+      writer.uint32(16).bool(message.fully_decode_reserved_expansion);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): Http {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseHttp();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): Http {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseHttp();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.rules.push(HttpRule.decode(reader, reader.uint32()));
-					continue;
-				case 2:
-					if (tag !== 16) {
-						break;
-					}
+          message.rules.push(HttpRule.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
 
-					message.fully_decode_reserved_expansion = reader.bool();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.fully_decode_reserved_expansion = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): Http {
-		return {
-			rules: globalThis.Array.isArray(object?.rules) ? object.rules.map((e: any) => HttpRule.fromJSON(e)) : [],
-			fully_decode_reserved_expansion: isSet(object.fully_decode_reserved_expansion) ? globalThis.Boolean(object.fully_decode_reserved_expansion) : false
-		};
-	},
+  fromJSON(object: any): Http {
+    return {
+      rules: globalThis.Array.isArray(object?.rules) ? object.rules.map((e: any) => HttpRule.fromJSON(e)) : [],
+      fully_decode_reserved_expansion: isSet(object.fully_decode_reserved_expansion)
+        ? globalThis.Boolean(object.fully_decode_reserved_expansion)
+        : false,
+    };
+  },
 
-	toJSON(message: Http): unknown {
-		const obj: any = {};
-		if (message.rules?.length) {
-			obj.rules = message.rules.map((e) => HttpRule.toJSON(e));
-		}
-		if (message.fully_decode_reserved_expansion !== false) {
-			obj.fully_decode_reserved_expansion = message.fully_decode_reserved_expansion;
-		}
-		return obj;
-	},
+  toJSON(message: Http): unknown {
+    const obj: any = {};
+    if (message.rules?.length) {
+      obj.rules = message.rules.map((e) => HttpRule.toJSON(e));
+    }
+    if (message.fully_decode_reserved_expansion !== false) {
+      obj.fully_decode_reserved_expansion = message.fully_decode_reserved_expansion;
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<Http>, I>>(base?: I): Http {
-		return Http.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<Http>, I>>(object: I): Http {
-		const message = createBaseHttp();
-		message.rules = object.rules?.map((e) => HttpRule.fromPartial(e)) || [];
-		message.fully_decode_reserved_expansion = object.fully_decode_reserved_expansion ?? false;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<Http>, I>>(base?: I): Http {
+    return Http.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Http>, I>>(object: I): Http {
+    const message = createBaseHttp();
+    message.rules = object.rules?.map((e) => HttpRule.fromPartial(e)) || [];
+    message.fully_decode_reserved_expansion = object.fully_decode_reserved_expansion ?? false;
+    return message;
+  },
 };
 
 function createBaseHttpRule(): HttpRule {
-	return {
-		selector: "",
-		get: undefined,
-		put: undefined,
-		post: undefined,
-		delete: undefined,
-		patch: undefined,
-		custom: undefined,
-		body: "",
-		response_body: "",
-		additional_bindings: []
-	};
+  return {
+    selector: "",
+    get: undefined,
+    put: undefined,
+    post: undefined,
+    delete: undefined,
+    patch: undefined,
+    custom: undefined,
+    body: "",
+    response_body: "",
+    additional_bindings: [],
+  };
 }
 
 export const HttpRule: MessageFns<HttpRule, "google.api.HttpRule"> = {
-	$type: "google.api.HttpRule" as const,
+  $type: "google.api.HttpRule" as const,
 
-	encode(message: HttpRule, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.selector !== "") {
-			writer.uint32(10).string(message.selector);
-		}
-		if (message.get !== undefined) {
-			writer.uint32(18).string(message.get);
-		}
-		if (message.put !== undefined) {
-			writer.uint32(26).string(message.put);
-		}
-		if (message.post !== undefined) {
-			writer.uint32(34).string(message.post);
-		}
-		if (message.delete !== undefined) {
-			writer.uint32(42).string(message.delete);
-		}
-		if (message.patch !== undefined) {
-			writer.uint32(50).string(message.patch);
-		}
-		if (message.custom !== undefined) {
-			CustomHttpPattern.encode(message.custom, writer.uint32(66).fork()).join();
-		}
-		if (message.body !== "") {
-			writer.uint32(58).string(message.body);
-		}
-		if (message.response_body !== "") {
-			writer.uint32(98).string(message.response_body);
-		}
-		for (const v of message.additional_bindings) {
-			HttpRule.encode(v!, writer.uint32(90).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: HttpRule, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.selector !== "") {
+      writer.uint32(10).string(message.selector);
+    }
+    if (message.get !== undefined) {
+      writer.uint32(18).string(message.get);
+    }
+    if (message.put !== undefined) {
+      writer.uint32(26).string(message.put);
+    }
+    if (message.post !== undefined) {
+      writer.uint32(34).string(message.post);
+    }
+    if (message.delete !== undefined) {
+      writer.uint32(42).string(message.delete);
+    }
+    if (message.patch !== undefined) {
+      writer.uint32(50).string(message.patch);
+    }
+    if (message.custom !== undefined) {
+      CustomHttpPattern.encode(message.custom, writer.uint32(66).fork()).join();
+    }
+    if (message.body !== "") {
+      writer.uint32(58).string(message.body);
+    }
+    if (message.response_body !== "") {
+      writer.uint32(98).string(message.response_body);
+    }
+    for (const v of message.additional_bindings) {
+      HttpRule.encode(v!, writer.uint32(90).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): HttpRule {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseHttpRule();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): HttpRule {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseHttpRule();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.selector = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.selector = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.get = reader.string();
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.get = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.put = reader.string();
-					continue;
-				case 4:
-					if (tag !== 34) {
-						break;
-					}
+          message.put = reader.string();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
 
-					message.post = reader.string();
-					continue;
-				case 5:
-					if (tag !== 42) {
-						break;
-					}
+          message.post = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
 
-					message.delete = reader.string();
-					continue;
-				case 6:
-					if (tag !== 50) {
-						break;
-					}
+          message.delete = reader.string();
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
 
-					message.patch = reader.string();
-					continue;
-				case 8:
-					if (tag !== 66) {
-						break;
-					}
+          message.patch = reader.string();
+          continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
 
-					message.custom = CustomHttpPattern.decode(reader, reader.uint32());
-					continue;
-				case 7:
-					if (tag !== 58) {
-						break;
-					}
+          message.custom = CustomHttpPattern.decode(reader, reader.uint32());
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
 
-					message.body = reader.string();
-					continue;
-				case 12:
-					if (tag !== 98) {
-						break;
-					}
+          message.body = reader.string();
+          continue;
+        case 12:
+          if (tag !== 98) {
+            break;
+          }
 
-					message.response_body = reader.string();
-					continue;
-				case 11:
-					if (tag !== 90) {
-						break;
-					}
+          message.response_body = reader.string();
+          continue;
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
 
-					message.additional_bindings.push(HttpRule.decode(reader, reader.uint32()));
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.additional_bindings.push(HttpRule.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): HttpRule {
-		return {
-			selector: isSet(object.selector) ? globalThis.String(object.selector) : "",
-			get: isSet(object.get) ? globalThis.String(object.get) : undefined,
-			put: isSet(object.put) ? globalThis.String(object.put) : undefined,
-			post: isSet(object.post) ? globalThis.String(object.post) : undefined,
-			delete: isSet(object.delete) ? globalThis.String(object.delete) : undefined,
-			patch: isSet(object.patch) ? globalThis.String(object.patch) : undefined,
-			custom: isSet(object.custom) ? CustomHttpPattern.fromJSON(object.custom) : undefined,
-			body: isSet(object.body) ? globalThis.String(object.body) : "",
-			response_body: isSet(object.response_body) ? globalThis.String(object.response_body) : "",
-			additional_bindings: globalThis.Array.isArray(object?.additional_bindings) ? object.additional_bindings.map((e: any) => HttpRule.fromJSON(e)) : []
-		};
-	},
+  fromJSON(object: any): HttpRule {
+    return {
+      selector: isSet(object.selector) ? globalThis.String(object.selector) : "",
+      get: isSet(object.get) ? globalThis.String(object.get) : undefined,
+      put: isSet(object.put) ? globalThis.String(object.put) : undefined,
+      post: isSet(object.post) ? globalThis.String(object.post) : undefined,
+      delete: isSet(object.delete) ? globalThis.String(object.delete) : undefined,
+      patch: isSet(object.patch) ? globalThis.String(object.patch) : undefined,
+      custom: isSet(object.custom) ? CustomHttpPattern.fromJSON(object.custom) : undefined,
+      body: isSet(object.body) ? globalThis.String(object.body) : "",
+      response_body: isSet(object.response_body) ? globalThis.String(object.response_body) : "",
+      additional_bindings: globalThis.Array.isArray(object?.additional_bindings)
+        ? object.additional_bindings.map((e: any) => HttpRule.fromJSON(e))
+        : [],
+    };
+  },
 
-	toJSON(message: HttpRule): unknown {
-		const obj: any = {};
-		if (message.selector !== "") {
-			obj.selector = message.selector;
-		}
-		if (message.get !== undefined) {
-			obj.get = message.get;
-		}
-		if (message.put !== undefined) {
-			obj.put = message.put;
-		}
-		if (message.post !== undefined) {
-			obj.post = message.post;
-		}
-		if (message.delete !== undefined) {
-			obj.delete = message.delete;
-		}
-		if (message.patch !== undefined) {
-			obj.patch = message.patch;
-		}
-		if (message.custom !== undefined) {
-			obj.custom = CustomHttpPattern.toJSON(message.custom);
-		}
-		if (message.body !== "") {
-			obj.body = message.body;
-		}
-		if (message.response_body !== "") {
-			obj.response_body = message.response_body;
-		}
-		if (message.additional_bindings?.length) {
-			obj.additional_bindings = message.additional_bindings.map((e) => HttpRule.toJSON(e));
-		}
-		return obj;
-	},
+  toJSON(message: HttpRule): unknown {
+    const obj: any = {};
+    if (message.selector !== "") {
+      obj.selector = message.selector;
+    }
+    if (message.get !== undefined) {
+      obj.get = message.get;
+    }
+    if (message.put !== undefined) {
+      obj.put = message.put;
+    }
+    if (message.post !== undefined) {
+      obj.post = message.post;
+    }
+    if (message.delete !== undefined) {
+      obj.delete = message.delete;
+    }
+    if (message.patch !== undefined) {
+      obj.patch = message.patch;
+    }
+    if (message.custom !== undefined) {
+      obj.custom = CustomHttpPattern.toJSON(message.custom);
+    }
+    if (message.body !== "") {
+      obj.body = message.body;
+    }
+    if (message.response_body !== "") {
+      obj.response_body = message.response_body;
+    }
+    if (message.additional_bindings?.length) {
+      obj.additional_bindings = message.additional_bindings.map((e) => HttpRule.toJSON(e));
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<HttpRule>, I>>(base?: I): HttpRule {
-		return HttpRule.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<HttpRule>, I>>(object: I): HttpRule {
-		const message = createBaseHttpRule();
-		message.selector = object.selector ?? "";
-		message.get = object.get ?? undefined;
-		message.put = object.put ?? undefined;
-		message.post = object.post ?? undefined;
-		message.delete = object.delete ?? undefined;
-		message.patch = object.patch ?? undefined;
-		message.custom = object.custom !== undefined && object.custom !== null ? CustomHttpPattern.fromPartial(object.custom) : undefined;
-		message.body = object.body ?? "";
-		message.response_body = object.response_body ?? "";
-		message.additional_bindings = object.additional_bindings?.map((e) => HttpRule.fromPartial(e)) || [];
-		return message;
-	}
+  create<I extends Exact<DeepPartial<HttpRule>, I>>(base?: I): HttpRule {
+    return HttpRule.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<HttpRule>, I>>(object: I): HttpRule {
+    const message = createBaseHttpRule();
+    message.selector = object.selector ?? "";
+    message.get = object.get ?? undefined;
+    message.put = object.put ?? undefined;
+    message.post = object.post ?? undefined;
+    message.delete = object.delete ?? undefined;
+    message.patch = object.patch ?? undefined;
+    message.custom = (object.custom !== undefined && object.custom !== null)
+      ? CustomHttpPattern.fromPartial(object.custom)
+      : undefined;
+    message.body = object.body ?? "";
+    message.response_body = object.response_body ?? "";
+    message.additional_bindings = object.additional_bindings?.map((e) => HttpRule.fromPartial(e)) || [];
+    return message;
+  },
 };
 
 function createBaseCustomHttpPattern(): CustomHttpPattern {
-	return { kind: "", path: "" };
+  return { kind: "", path: "" };
 }
 
 export const CustomHttpPattern: MessageFns<CustomHttpPattern, "google.api.CustomHttpPattern"> = {
-	$type: "google.api.CustomHttpPattern" as const,
+  $type: "google.api.CustomHttpPattern" as const,
 
-	encode(message: CustomHttpPattern, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.kind !== "") {
-			writer.uint32(10).string(message.kind);
-		}
-		if (message.path !== "") {
-			writer.uint32(18).string(message.path);
-		}
-		return writer;
-	},
+  encode(message: CustomHttpPattern, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.kind !== "") {
+      writer.uint32(10).string(message.kind);
+    }
+    if (message.path !== "") {
+      writer.uint32(18).string(message.path);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): CustomHttpPattern {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseCustomHttpPattern();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): CustomHttpPattern {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCustomHttpPattern();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.kind = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.kind = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.path = reader.string();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.path = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): CustomHttpPattern {
-		return {
-			kind: isSet(object.kind) ? globalThis.String(object.kind) : "",
-			path: isSet(object.path) ? globalThis.String(object.path) : ""
-		};
-	},
+  fromJSON(object: any): CustomHttpPattern {
+    return {
+      kind: isSet(object.kind) ? globalThis.String(object.kind) : "",
+      path: isSet(object.path) ? globalThis.String(object.path) : "",
+    };
+  },
 
-	toJSON(message: CustomHttpPattern): unknown {
-		const obj: any = {};
-		if (message.kind !== "") {
-			obj.kind = message.kind;
-		}
-		if (message.path !== "") {
-			obj.path = message.path;
-		}
-		return obj;
-	},
+  toJSON(message: CustomHttpPattern): unknown {
+    const obj: any = {};
+    if (message.kind !== "") {
+      obj.kind = message.kind;
+    }
+    if (message.path !== "") {
+      obj.path = message.path;
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<CustomHttpPattern>, I>>(base?: I): CustomHttpPattern {
-		return CustomHttpPattern.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<CustomHttpPattern>, I>>(object: I): CustomHttpPattern {
-		const message = createBaseCustomHttpPattern();
-		message.kind = object.kind ?? "";
-		message.path = object.path ?? "";
-		return message;
-	}
+  create<I extends Exact<DeepPartial<CustomHttpPattern>, I>>(base?: I): CustomHttpPattern {
+    return CustomHttpPattern.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CustomHttpPattern>, I>>(object: I): CustomHttpPattern {
+    const message = createBaseCustomHttpPattern();
+    message.kind = object.kind ?? "";
+    message.path = object.path ?? "";
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

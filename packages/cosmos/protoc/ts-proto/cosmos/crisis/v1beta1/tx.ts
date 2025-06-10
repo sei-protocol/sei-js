@@ -11,175 +11,176 @@ export const protobufPackage = "cosmos.crisis.v1beta1";
 
 /** MsgVerifyInvariant represents a message to verify a particular invariance. */
 export interface MsgVerifyInvariant {
-	sender: string;
-	invariant_module_name: string;
-	invariant_route: string;
+  sender: string;
+  invariant_module_name: string;
+  invariant_route: string;
 }
 
 /** MsgVerifyInvariantResponse defines the Msg/VerifyInvariant response type. */
-export interface MsgVerifyInvariantResponse {}
+export interface MsgVerifyInvariantResponse {
+}
 
 function createBaseMsgVerifyInvariant(): MsgVerifyInvariant {
-	return { sender: "", invariant_module_name: "", invariant_route: "" };
+  return { sender: "", invariant_module_name: "", invariant_route: "" };
 }
 
 export const MsgVerifyInvariant: MessageFns<MsgVerifyInvariant, "cosmos.crisis.v1beta1.MsgVerifyInvariant"> = {
-	$type: "cosmos.crisis.v1beta1.MsgVerifyInvariant" as const,
+  $type: "cosmos.crisis.v1beta1.MsgVerifyInvariant" as const,
 
-	encode(message: MsgVerifyInvariant, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.sender !== "") {
-			writer.uint32(10).string(message.sender);
-		}
-		if (message.invariant_module_name !== "") {
-			writer.uint32(18).string(message.invariant_module_name);
-		}
-		if (message.invariant_route !== "") {
-			writer.uint32(26).string(message.invariant_route);
-		}
-		return writer;
-	},
+  encode(message: MsgVerifyInvariant, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.invariant_module_name !== "") {
+      writer.uint32(18).string(message.invariant_module_name);
+    }
+    if (message.invariant_route !== "") {
+      writer.uint32(26).string(message.invariant_route);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgVerifyInvariant {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgVerifyInvariant();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgVerifyInvariant {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgVerifyInvariant();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.sender = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.sender = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.invariant_module_name = reader.string();
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.invariant_module_name = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.invariant_route = reader.string();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.invariant_route = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgVerifyInvariant {
-		return {
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			invariant_module_name: isSet(object.invariant_module_name) ? globalThis.String(object.invariant_module_name) : "",
-			invariant_route: isSet(object.invariant_route) ? globalThis.String(object.invariant_route) : ""
-		};
-	},
+  fromJSON(object: any): MsgVerifyInvariant {
+    return {
+      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+      invariant_module_name: isSet(object.invariant_module_name) ? globalThis.String(object.invariant_module_name) : "",
+      invariant_route: isSet(object.invariant_route) ? globalThis.String(object.invariant_route) : "",
+    };
+  },
 
-	toJSON(message: MsgVerifyInvariant): unknown {
-		const obj: any = {};
-		if (message.sender !== "") {
-			obj.sender = message.sender;
-		}
-		if (message.invariant_module_name !== "") {
-			obj.invariant_module_name = message.invariant_module_name;
-		}
-		if (message.invariant_route !== "") {
-			obj.invariant_route = message.invariant_route;
-		}
-		return obj;
-	},
+  toJSON(message: MsgVerifyInvariant): unknown {
+    const obj: any = {};
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
+    if (message.invariant_module_name !== "") {
+      obj.invariant_module_name = message.invariant_module_name;
+    }
+    if (message.invariant_route !== "") {
+      obj.invariant_route = message.invariant_route;
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgVerifyInvariant>, I>>(base?: I): MsgVerifyInvariant {
-		return MsgVerifyInvariant.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgVerifyInvariant>, I>>(object: I): MsgVerifyInvariant {
-		const message = createBaseMsgVerifyInvariant();
-		message.sender = object.sender ?? "";
-		message.invariant_module_name = object.invariant_module_name ?? "";
-		message.invariant_route = object.invariant_route ?? "";
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgVerifyInvariant>, I>>(base?: I): MsgVerifyInvariant {
+    return MsgVerifyInvariant.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgVerifyInvariant>, I>>(object: I): MsgVerifyInvariant {
+    const message = createBaseMsgVerifyInvariant();
+    message.sender = object.sender ?? "";
+    message.invariant_module_name = object.invariant_module_name ?? "";
+    message.invariant_route = object.invariant_route ?? "";
+    return message;
+  },
 };
 
 function createBaseMsgVerifyInvariantResponse(): MsgVerifyInvariantResponse {
-	return {};
+  return {};
 }
 
-export const MsgVerifyInvariantResponse: MessageFns<MsgVerifyInvariantResponse, "cosmos.crisis.v1beta1.MsgVerifyInvariantResponse"> = {
-	$type: "cosmos.crisis.v1beta1.MsgVerifyInvariantResponse" as const,
+export const MsgVerifyInvariantResponse: MessageFns<
+  MsgVerifyInvariantResponse,
+  "cosmos.crisis.v1beta1.MsgVerifyInvariantResponse"
+> = {
+  $type: "cosmos.crisis.v1beta1.MsgVerifyInvariantResponse" as const,
 
-	encode(_: MsgVerifyInvariantResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: MsgVerifyInvariantResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgVerifyInvariantResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgVerifyInvariantResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgVerifyInvariantResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgVerifyInvariantResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): MsgVerifyInvariantResponse {
-		return {};
-	},
+  fromJSON(_: any): MsgVerifyInvariantResponse {
+    return {};
+  },
 
-	toJSON(_: MsgVerifyInvariantResponse): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: MsgVerifyInvariantResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgVerifyInvariantResponse>, I>>(base?: I): MsgVerifyInvariantResponse {
-		return MsgVerifyInvariantResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgVerifyInvariantResponse>, I>>(_: I): MsgVerifyInvariantResponse {
-		const message = createBaseMsgVerifyInvariantResponse();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgVerifyInvariantResponse>, I>>(base?: I): MsgVerifyInvariantResponse {
+    return MsgVerifyInvariantResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgVerifyInvariantResponse>, I>>(_: I): MsgVerifyInvariantResponse {
+    const message = createBaseMsgVerifyInvariantResponse();
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

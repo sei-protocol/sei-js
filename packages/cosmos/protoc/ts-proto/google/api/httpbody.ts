@@ -51,158 +51,157 @@ export const protobufPackage = "google.api";
  * handled, all other features will continue to work unchanged.
  */
 export interface HttpBody {
-	/** The HTTP Content-Type header value specifying the content type of the body. */
-	content_type: string;
-	/** The HTTP request/response body as raw binary. */
-	data: Uint8Array;
-	/**
-	 * Application specific response metadata. Must be set in the first response
-	 * for streaming APIs.
-	 */
-	extensions: Any[];
+  /** The HTTP Content-Type header value specifying the content type of the body. */
+  content_type: string;
+  /** The HTTP request/response body as raw binary. */
+  data: Uint8Array;
+  /**
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   */
+  extensions: Any[];
 }
 
 function createBaseHttpBody(): HttpBody {
-	return { content_type: "", data: new Uint8Array(0), extensions: [] };
+  return { content_type: "", data: new Uint8Array(0), extensions: [] };
 }
 
 export const HttpBody: MessageFns<HttpBody, "google.api.HttpBody"> = {
-	$type: "google.api.HttpBody" as const,
+  $type: "google.api.HttpBody" as const,
 
-	encode(message: HttpBody, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.content_type !== "") {
-			writer.uint32(10).string(message.content_type);
-		}
-		if (message.data.length !== 0) {
-			writer.uint32(18).bytes(message.data);
-		}
-		for (const v of message.extensions) {
-			Any.encode(v!, writer.uint32(26).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: HttpBody, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.content_type !== "") {
+      writer.uint32(10).string(message.content_type);
+    }
+    if (message.data.length !== 0) {
+      writer.uint32(18).bytes(message.data);
+    }
+    for (const v of message.extensions) {
+      Any.encode(v!, writer.uint32(26).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): HttpBody {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseHttpBody();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): HttpBody {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseHttpBody();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.content_type = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.content_type = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.data = reader.bytes();
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.data = reader.bytes();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.extensions.push(Any.decode(reader, reader.uint32()));
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.extensions.push(Any.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): HttpBody {
-		return {
-			content_type: isSet(object.content_type) ? globalThis.String(object.content_type) : "",
-			data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
-			extensions: globalThis.Array.isArray(object?.extensions) ? object.extensions.map((e: any) => Any.fromJSON(e)) : []
-		};
-	},
+  fromJSON(object: any): HttpBody {
+    return {
+      content_type: isSet(object.content_type) ? globalThis.String(object.content_type) : "",
+      data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0),
+      extensions: globalThis.Array.isArray(object?.extensions)
+        ? object.extensions.map((e: any) => Any.fromJSON(e))
+        : [],
+    };
+  },
 
-	toJSON(message: HttpBody): unknown {
-		const obj: any = {};
-		if (message.content_type !== "") {
-			obj.content_type = message.content_type;
-		}
-		if (message.data.length !== 0) {
-			obj.data = base64FromBytes(message.data);
-		}
-		if (message.extensions?.length) {
-			obj.extensions = message.extensions.map((e) => Any.toJSON(e));
-		}
-		return obj;
-	},
+  toJSON(message: HttpBody): unknown {
+    const obj: any = {};
+    if (message.content_type !== "") {
+      obj.content_type = message.content_type;
+    }
+    if (message.data.length !== 0) {
+      obj.data = base64FromBytes(message.data);
+    }
+    if (message.extensions?.length) {
+      obj.extensions = message.extensions.map((e) => Any.toJSON(e));
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<HttpBody>, I>>(base?: I): HttpBody {
-		return HttpBody.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<HttpBody>, I>>(object: I): HttpBody {
-		const message = createBaseHttpBody();
-		message.content_type = object.content_type ?? "";
-		message.data = object.data ?? new Uint8Array(0);
-		message.extensions = object.extensions?.map((e) => Any.fromPartial(e)) || [];
-		return message;
-	}
+  create<I extends Exact<DeepPartial<HttpBody>, I>>(base?: I): HttpBody {
+    return HttpBody.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<HttpBody>, I>>(object: I): HttpBody {
+    const message = createBaseHttpBody();
+    message.content_type = object.content_type ?? "";
+    message.data = object.data ?? new Uint8Array(0);
+    message.extensions = object.extensions?.map((e) => Any.fromPartial(e)) || [];
+    return message;
+  },
 };
 
 function bytesFromBase64(b64: string): Uint8Array {
-	if ((globalThis as any).Buffer) {
-		return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
-	} else {
-		const bin = globalThis.atob(b64);
-		const arr = new Uint8Array(bin.length);
-		for (let i = 0; i < bin.length; ++i) {
-			arr[i] = bin.charCodeAt(i);
-		}
-		return arr;
-	}
+  if ((globalThis as any).Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  } else {
+    const bin = globalThis.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+      arr[i] = bin.charCodeAt(i);
+    }
+    return arr;
+  }
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-	if ((globalThis as any).Buffer) {
-		return globalThis.Buffer.from(arr).toString("base64");
-	} else {
-		const bin: string[] = [];
-		arr.forEach((byte) => {
-			bin.push(globalThis.String.fromCharCode(byte));
-		});
-		return globalThis.btoa(bin.join(""));
-	}
+  if ((globalThis as any).Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
+  } else {
+    const bin: string[] = [];
+    arr.forEach((byte) => {
+      bin.push(globalThis.String.fromCharCode(byte));
+    });
+    return globalThis.btoa(bin.join(""));
+  }
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

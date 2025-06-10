@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-export * from "./genesis";
-export * from "./query";
-export * from "./slashing";
-export * from "./tx";
+export * from './genesis';
+export * from './query';
+export * from './slashing';
+export * from './tx';

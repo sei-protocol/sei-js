@@ -12,178 +12,177 @@ export const protobufPackage = "cosmos.params.v1beta1";
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
-	/** subspace defines the module to query the parameter for. */
-	subspace: string;
-	/** key defines the key of the parameter in the subspace. */
-	key: string;
+  /** subspace defines the module to query the parameter for. */
+  subspace: string;
+  /** key defines the key of the parameter in the subspace. */
+  key: string;
 }
 
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
-	/** param defines the queried parameter. */
-	param?: ParamChange | undefined;
+  /** param defines the queried parameter. */
+  param?: ParamChange | undefined;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
-	return { subspace: "", key: "" };
+  return { subspace: "", key: "" };
 }
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.params.v1beta1.QueryParamsRequest"> = {
-	$type: "cosmos.params.v1beta1.QueryParamsRequest" as const,
+  $type: "cosmos.params.v1beta1.QueryParamsRequest" as const,
 
-	encode(message: QueryParamsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.subspace !== "") {
-			writer.uint32(10).string(message.subspace);
-		}
-		if (message.key !== "") {
-			writer.uint32(18).string(message.key);
-		}
-		return writer;
-	},
+  encode(message: QueryParamsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.subspace !== "") {
+      writer.uint32(10).string(message.subspace);
+    }
+    if (message.key !== "") {
+      writer.uint32(18).string(message.key);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryParamsRequest();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryParamsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.subspace = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.subspace = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.key = reader.string();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.key = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): QueryParamsRequest {
-		return {
-			subspace: isSet(object.subspace) ? globalThis.String(object.subspace) : "",
-			key: isSet(object.key) ? globalThis.String(object.key) : ""
-		};
-	},
+  fromJSON(object: any): QueryParamsRequest {
+    return {
+      subspace: isSet(object.subspace) ? globalThis.String(object.subspace) : "",
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+    };
+  },
 
-	toJSON(message: QueryParamsRequest): unknown {
-		const obj: any = {};
-		if (message.subspace !== "") {
-			obj.subspace = message.subspace;
-		}
-		if (message.key !== "") {
-			obj.key = message.key;
-		}
-		return obj;
-	},
+  toJSON(message: QueryParamsRequest): unknown {
+    const obj: any = {};
+    if (message.subspace !== "") {
+      obj.subspace = message.subspace;
+    }
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
-		return QueryParamsRequest.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(object: I): QueryParamsRequest {
-		const message = createBaseQueryParamsRequest();
-		message.subspace = object.subspace ?? "";
-		message.key = object.key ?? "";
-		return message;
-	}
+  create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
+    return QueryParamsRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(object: I): QueryParamsRequest {
+    const message = createBaseQueryParamsRequest();
+    message.subspace = object.subspace ?? "";
+    message.key = object.key ?? "";
+    return message;
+  },
 };
 
 function createBaseQueryParamsResponse(): QueryParamsResponse {
-	return { param: undefined };
+  return { param: undefined };
 }
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.params.v1beta1.QueryParamsResponse"> = {
-	$type: "cosmos.params.v1beta1.QueryParamsResponse" as const,
+  $type: "cosmos.params.v1beta1.QueryParamsResponse" as const,
 
-	encode(message: QueryParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.param !== undefined) {
-			ParamChange.encode(message.param, writer.uint32(10).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: QueryParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.param !== undefined) {
+      ParamChange.encode(message.param, writer.uint32(10).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryParamsResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryParamsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.param = ParamChange.decode(reader, reader.uint32());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.param = ParamChange.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): QueryParamsResponse {
-		return { param: isSet(object.param) ? ParamChange.fromJSON(object.param) : undefined };
-	},
+  fromJSON(object: any): QueryParamsResponse {
+    return { param: isSet(object.param) ? ParamChange.fromJSON(object.param) : undefined };
+  },
 
-	toJSON(message: QueryParamsResponse): unknown {
-		const obj: any = {};
-		if (message.param !== undefined) {
-			obj.param = ParamChange.toJSON(message.param);
-		}
-		return obj;
-	},
+  toJSON(message: QueryParamsResponse): unknown {
+    const obj: any = {};
+    if (message.param !== undefined) {
+      obj.param = ParamChange.toJSON(message.param);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
-		return QueryParamsResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
-		const message = createBaseQueryParamsResponse();
-		message.param = object.param !== undefined && object.param !== null ? ParamChange.fromPartial(object.param) : undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
+    return QueryParamsResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
+    const message = createBaseQueryParamsResponse();
+    message.param = (object.param !== undefined && object.param !== null)
+      ? ParamChange.fromPartial(object.param)
+      : undefined;
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

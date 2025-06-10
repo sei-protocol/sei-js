@@ -1,4 +1,4 @@
-import { PointerType } from "../../types/evm";
+import { AssetType, PointerType } from "../../types/evm";
 
 export function pointerTypeFromJSON(object: any): PointerType {
 	switch (object) {
@@ -47,6 +47,33 @@ export function pointerTypeToJSON(object: PointerType): string {
 		case PointerType.CW1155:
 			return "CW1155";
 		case PointerType.UNRECOGNIZED:
+		default:
+			return "UNRECOGNIZED";
+	}
+}
+
+export function assetTypeFromJSON(object: any): AssetType {
+	switch (object) {
+		case 0:
+		case "TYPECW20":
+			return AssetType.TYPECW20;
+		case 1:
+		case "TYPECW721":
+			return AssetType.TYPECW721;
+		case -1:
+		case "UNRECOGNIZED":
+		default:
+			return AssetType.UNRECOGNIZED;
+	}
+}
+
+export function assetTypeToJSON(object: AssetType): string {
+	switch (object) {
+		case AssetType.TYPECW20:
+			return "TYPECW20";
+		case AssetType.TYPECW721:
+			return "TYPECW721";
+		case AssetType.UNRECOGNIZED:
 		default:
 			return "UNRECOGNIZED";
 	}

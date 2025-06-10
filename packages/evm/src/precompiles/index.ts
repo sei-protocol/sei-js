@@ -8,5 +8,6 @@ export * from './json';
 export * from './oracle';
 export * from './pointer';
 export * from './pointerview';
+export * from './solo';
 export * from './staking';
 export * from './wasm';

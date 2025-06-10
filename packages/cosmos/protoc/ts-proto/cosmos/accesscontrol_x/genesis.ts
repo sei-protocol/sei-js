@@ -11,179 +11,185 @@ import { MessageDependencyMapping, WasmDependencyMapping } from "../accesscontro
 export const protobufPackage = "cosmos.accesscontrol_x.v1beta1";
 
 export interface GenesisState {
-	params?: Params | undefined;
-	/** mapping between every message type and its predetermined resource read/write sequence */
-	message_dependency_mapping: MessageDependencyMapping[];
-	wasm_dependency_mappings: WasmDependencyMapping[];
+  params?:
+    | Params
+    | undefined;
+  /** mapping between every message type and its predetermined resource read/write sequence */
+  message_dependency_mapping: MessageDependencyMapping[];
+  wasm_dependency_mappings: WasmDependencyMapping[];
 }
 
-export interface Params {}
+export interface Params {
+}
 
 function createBaseGenesisState(): GenesisState {
-	return { params: undefined, message_dependency_mapping: [], wasm_dependency_mappings: [] };
+  return { params: undefined, message_dependency_mapping: [], wasm_dependency_mappings: [] };
 }
 
 export const GenesisState: MessageFns<GenesisState, "cosmos.accesscontrol_x.v1beta1.GenesisState"> = {
-	$type: "cosmos.accesscontrol_x.v1beta1.GenesisState" as const,
+  $type: "cosmos.accesscontrol_x.v1beta1.GenesisState" as const,
 
-	encode(message: GenesisState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.params !== undefined) {
-			Params.encode(message.params, writer.uint32(10).fork()).join();
-		}
-		for (const v of message.message_dependency_mapping) {
-			MessageDependencyMapping.encode(v!, writer.uint32(18).fork()).join();
-		}
-		for (const v of message.wasm_dependency_mappings) {
-			WasmDependencyMapping.encode(v!, writer.uint32(26).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: GenesisState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.params !== undefined) {
+      Params.encode(message.params, writer.uint32(10).fork()).join();
+    }
+    for (const v of message.message_dependency_mapping) {
+      MessageDependencyMapping.encode(v!, writer.uint32(18).fork()).join();
+    }
+    for (const v of message.wasm_dependency_mappings) {
+      WasmDependencyMapping.encode(v!, writer.uint32(26).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseGenesisState();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGenesisState();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.params = Params.decode(reader, reader.uint32());
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.params = Params.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.message_dependency_mapping.push(MessageDependencyMapping.decode(reader, reader.uint32()));
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.message_dependency_mapping.push(MessageDependencyMapping.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.wasm_dependency_mappings.push(WasmDependencyMapping.decode(reader, reader.uint32()));
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.wasm_dependency_mappings.push(WasmDependencyMapping.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): GenesisState {
-		return {
-			params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-			message_dependency_mapping: globalThis.Array.isArray(object?.message_dependency_mapping)
-				? object.message_dependency_mapping.map((e: any) => MessageDependencyMapping.fromJSON(e))
-				: [],
-			wasm_dependency_mappings: globalThis.Array.isArray(object?.wasm_dependency_mappings)
-				? object.wasm_dependency_mappings.map((e: any) => WasmDependencyMapping.fromJSON(e))
-				: []
-		};
-	},
+  fromJSON(object: any): GenesisState {
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+      message_dependency_mapping: globalThis.Array.isArray(object?.message_dependency_mapping)
+        ? object.message_dependency_mapping.map((e: any) => MessageDependencyMapping.fromJSON(e))
+        : [],
+      wasm_dependency_mappings: globalThis.Array.isArray(object?.wasm_dependency_mappings)
+        ? object.wasm_dependency_mappings.map((e: any) => WasmDependencyMapping.fromJSON(e))
+        : [],
+    };
+  },
 
-	toJSON(message: GenesisState): unknown {
-		const obj: any = {};
-		if (message.params !== undefined) {
-			obj.params = Params.toJSON(message.params);
-		}
-		if (message.message_dependency_mapping?.length) {
-			obj.message_dependency_mapping = message.message_dependency_mapping.map((e) => MessageDependencyMapping.toJSON(e));
-		}
-		if (message.wasm_dependency_mappings?.length) {
-			obj.wasm_dependency_mappings = message.wasm_dependency_mappings.map((e) => WasmDependencyMapping.toJSON(e));
-		}
-		return obj;
-	},
+  toJSON(message: GenesisState): unknown {
+    const obj: any = {};
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
+    if (message.message_dependency_mapping?.length) {
+      obj.message_dependency_mapping = message.message_dependency_mapping.map((e) =>
+        MessageDependencyMapping.toJSON(e)
+      );
+    }
+    if (message.wasm_dependency_mappings?.length) {
+      obj.wasm_dependency_mappings = message.wasm_dependency_mappings.map((e) => WasmDependencyMapping.toJSON(e));
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<GenesisState>, I>>(base?: I): GenesisState {
-		return GenesisState.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<GenesisState>, I>>(object: I): GenesisState {
-		const message = createBaseGenesisState();
-		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
-		message.message_dependency_mapping = object.message_dependency_mapping?.map((e) => MessageDependencyMapping.fromPartial(e)) || [];
-		message.wasm_dependency_mappings = object.wasm_dependency_mappings?.map((e) => WasmDependencyMapping.fromPartial(e)) || [];
-		return message;
-	}
+  create<I extends Exact<DeepPartial<GenesisState>, I>>(base?: I): GenesisState {
+    return GenesisState.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GenesisState>, I>>(object: I): GenesisState {
+    const message = createBaseGenesisState();
+    message.params = (object.params !== undefined && object.params !== null)
+      ? Params.fromPartial(object.params)
+      : undefined;
+    message.message_dependency_mapping =
+      object.message_dependency_mapping?.map((e) => MessageDependencyMapping.fromPartial(e)) || [];
+    message.wasm_dependency_mappings =
+      object.wasm_dependency_mappings?.map((e) => WasmDependencyMapping.fromPartial(e)) || [];
+    return message;
+  },
 };
 
 function createBaseParams(): Params {
-	return {};
+  return {};
 }
 
 export const Params: MessageFns<Params, "cosmos.accesscontrol_x.v1beta1.Params"> = {
-	$type: "cosmos.accesscontrol_x.v1beta1.Params" as const,
+  $type: "cosmos.accesscontrol_x.v1beta1.Params" as const,
 
-	encode(_: Params, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: Params, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): Params {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseParams();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): Params {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseParams();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): Params {
-		return {};
-	},
+  fromJSON(_: any): Params {
+    return {};
+  },
 
-	toJSON(_: Params): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: Params): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<Params>, I>>(base?: I): Params {
-		return Params.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<Params>, I>>(_: I): Params {
-		const message = createBaseParams();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<Params>, I>>(base?: I): Params {
+    return Params.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Params>, I>>(_: I): Params {
+    const message = createBaseParams();
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

@@ -23,10 +23,10 @@ export const protobufPackage = "seiprotocol.seichain.tokenfactory";
  * denom does not indicate the current admin.
  */
 export interface MsgCreateDenom {
-	sender: string;
-	/** subdenom can be up to 44 "alphanumeric" characters long. */
-	subdenom: string;
-	allow_list?: AllowList | undefined;
+  sender: string;
+  /** subdenom can be up to 44 "alphanumeric" characters long. */
+  subdenom: string;
+  allow_list?: AllowList | undefined;
 }
 
 /**
@@ -34,7 +34,7 @@ export interface MsgCreateDenom {
  * It returns the full string of the newly created denom
  */
 export interface MsgCreateDenomResponse {
-	new_token_denom: string;
+  new_token_denom: string;
 }
 
 /**
@@ -42,874 +42,901 @@ export interface MsgCreateDenomResponse {
  * more of a token.  For now, we only support minting to the sender account
  */
 export interface MsgMint {
-	sender: string;
-	amount?: Coin | undefined;
+  sender: string;
+  amount?: Coin | undefined;
 }
 
-export interface MsgMintResponse {}
+export interface MsgMintResponse {
+}
 
 /**
  * MsgBurn is the sdk.Msg type for allowing an admin account to burn
  * a token.  For now, we only support burning from the sender account.
  */
 export interface MsgBurn {
-	sender: string;
-	amount?: Coin | undefined;
+  sender: string;
+  amount?: Coin | undefined;
 }
 
-export interface MsgBurnResponse {}
+export interface MsgBurnResponse {
+}
 
 /**
  * MsgChangeAdmin is the sdk.Msg type for allowing an admin account to reassign
  * adminship of a denom to a new account
  */
 export interface MsgChangeAdmin {
-	sender: string;
-	denom: string;
-	new_admin: string;
+  sender: string;
+  denom: string;
+  new_admin: string;
 }
 
 /**
  * MsgChangeAdminResponse defines the response structure for an executed
  * MsgChangeAdmin message.
  */
-export interface MsgChangeAdminResponse {}
+export interface MsgChangeAdminResponse {
+}
 
 /**
  * MsgSetDenomMetadata is the sdk.Msg type for allowing an admin account to set
  * the denom's bank metadata
  */
 export interface MsgSetDenomMetadata {
-	sender: string;
-	metadata?: Metadata | undefined;
+  sender: string;
+  metadata?: Metadata | undefined;
 }
 
 /**
  * MsgSetDenomMetadataResponse defines the response structure for an executed
  * MsgSetDenomMetadata message.
  */
-export interface MsgSetDenomMetadataResponse {}
+export interface MsgSetDenomMetadataResponse {
+}
 
 /** MsgUpdateDenom is the sdk.Msg allowing an admin to update the denom */
 export interface MsgUpdateDenom {
-	sender: string;
-	denom: string;
-	allow_list?: AllowList | undefined;
+  sender: string;
+  denom: string;
+  allow_list?: AllowList | undefined;
 }
 
 /** MsgUpdateDenomResponse defines the response structure for an executed MsgUpdateDenom message. */
-export interface MsgUpdateDenomResponse {}
+export interface MsgUpdateDenomResponse {
+}
 
 function createBaseMsgCreateDenom(): MsgCreateDenom {
-	return { sender: "", subdenom: "", allow_list: undefined };
+  return { sender: "", subdenom: "", allow_list: undefined };
 }
 
 export const MsgCreateDenom: MessageFns<MsgCreateDenom, "seiprotocol.seichain.tokenfactory.MsgCreateDenom"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgCreateDenom" as const,
+  $type: "seiprotocol.seichain.tokenfactory.MsgCreateDenom" as const,
 
-	encode(message: MsgCreateDenom, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.sender !== "") {
-			writer.uint32(10).string(message.sender);
-		}
-		if (message.subdenom !== "") {
-			writer.uint32(18).string(message.subdenom);
-		}
-		if (message.allow_list !== undefined) {
-			AllowList.encode(message.allow_list, writer.uint32(26).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: MsgCreateDenom, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.subdenom !== "") {
+      writer.uint32(18).string(message.subdenom);
+    }
+    if (message.allow_list !== undefined) {
+      AllowList.encode(message.allow_list, writer.uint32(26).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateDenom {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgCreateDenom();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateDenom {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgCreateDenom();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.sender = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.sender = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.subdenom = reader.string();
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.subdenom = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.allow_list = AllowList.decode(reader, reader.uint32());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.allow_list = AllowList.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgCreateDenom {
-		return {
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			subdenom: isSet(object.subdenom) ? globalThis.String(object.subdenom) : "",
-			allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined
-		};
-	},
+  fromJSON(object: any): MsgCreateDenom {
+    return {
+      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+      subdenom: isSet(object.subdenom) ? globalThis.String(object.subdenom) : "",
+      allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined,
+    };
+  },
 
-	toJSON(message: MsgCreateDenom): unknown {
-		const obj: any = {};
-		if (message.sender !== "") {
-			obj.sender = message.sender;
-		}
-		if (message.subdenom !== "") {
-			obj.subdenom = message.subdenom;
-		}
-		if (message.allow_list !== undefined) {
-			obj.allow_list = AllowList.toJSON(message.allow_list);
-		}
-		return obj;
-	},
+  toJSON(message: MsgCreateDenom): unknown {
+    const obj: any = {};
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
+    if (message.subdenom !== "") {
+      obj.subdenom = message.subdenom;
+    }
+    if (message.allow_list !== undefined) {
+      obj.allow_list = AllowList.toJSON(message.allow_list);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgCreateDenom>, I>>(base?: I): MsgCreateDenom {
-		return MsgCreateDenom.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgCreateDenom>, I>>(object: I): MsgCreateDenom {
-		const message = createBaseMsgCreateDenom();
-		message.sender = object.sender ?? "";
-		message.subdenom = object.subdenom ?? "";
-		message.allow_list = object.allow_list !== undefined && object.allow_list !== null ? AllowList.fromPartial(object.allow_list) : undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgCreateDenom>, I>>(base?: I): MsgCreateDenom {
+    return MsgCreateDenom.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgCreateDenom>, I>>(object: I): MsgCreateDenom {
+    const message = createBaseMsgCreateDenom();
+    message.sender = object.sender ?? "";
+    message.subdenom = object.subdenom ?? "";
+    message.allow_list = (object.allow_list !== undefined && object.allow_list !== null)
+      ? AllowList.fromPartial(object.allow_list)
+      : undefined;
+    return message;
+  },
 };
 
 function createBaseMsgCreateDenomResponse(): MsgCreateDenomResponse {
-	return { new_token_denom: "" };
+  return { new_token_denom: "" };
 }
 
-export const MsgCreateDenomResponse: MessageFns<MsgCreateDenomResponse, "seiprotocol.seichain.tokenfactory.MsgCreateDenomResponse"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgCreateDenomResponse" as const,
+export const MsgCreateDenomResponse: MessageFns<
+  MsgCreateDenomResponse,
+  "seiprotocol.seichain.tokenfactory.MsgCreateDenomResponse"
+> = {
+  $type: "seiprotocol.seichain.tokenfactory.MsgCreateDenomResponse" as const,
 
-	encode(message: MsgCreateDenomResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.new_token_denom !== "") {
-			writer.uint32(10).string(message.new_token_denom);
-		}
-		return writer;
-	},
+  encode(message: MsgCreateDenomResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.new_token_denom !== "") {
+      writer.uint32(10).string(message.new_token_denom);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateDenomResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgCreateDenomResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateDenomResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgCreateDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.new_token_denom = reader.string();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.new_token_denom = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgCreateDenomResponse {
-		return { new_token_denom: isSet(object.new_token_denom) ? globalThis.String(object.new_token_denom) : "" };
-	},
+  fromJSON(object: any): MsgCreateDenomResponse {
+    return { new_token_denom: isSet(object.new_token_denom) ? globalThis.String(object.new_token_denom) : "" };
+  },
 
-	toJSON(message: MsgCreateDenomResponse): unknown {
-		const obj: any = {};
-		if (message.new_token_denom !== "") {
-			obj.new_token_denom = message.new_token_denom;
-		}
-		return obj;
-	},
+  toJSON(message: MsgCreateDenomResponse): unknown {
+    const obj: any = {};
+    if (message.new_token_denom !== "") {
+      obj.new_token_denom = message.new_token_denom;
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgCreateDenomResponse>, I>>(base?: I): MsgCreateDenomResponse {
-		return MsgCreateDenomResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgCreateDenomResponse>, I>>(object: I): MsgCreateDenomResponse {
-		const message = createBaseMsgCreateDenomResponse();
-		message.new_token_denom = object.new_token_denom ?? "";
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgCreateDenomResponse>, I>>(base?: I): MsgCreateDenomResponse {
+    return MsgCreateDenomResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgCreateDenomResponse>, I>>(object: I): MsgCreateDenomResponse {
+    const message = createBaseMsgCreateDenomResponse();
+    message.new_token_denom = object.new_token_denom ?? "";
+    return message;
+  },
 };
 
 function createBaseMsgMint(): MsgMint {
-	return { sender: "", amount: undefined };
+  return { sender: "", amount: undefined };
 }
 
 export const MsgMint: MessageFns<MsgMint, "seiprotocol.seichain.tokenfactory.MsgMint"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgMint" as const,
+  $type: "seiprotocol.seichain.tokenfactory.MsgMint" as const,
 
-	encode(message: MsgMint, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.sender !== "") {
-			writer.uint32(10).string(message.sender);
-		}
-		if (message.amount !== undefined) {
-			Coin.encode(message.amount, writer.uint32(18).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: MsgMint, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(18).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgMint {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgMint();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgMint {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgMint();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.sender = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.sender = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.amount = Coin.decode(reader, reader.uint32());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.amount = Coin.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgMint {
-		return {
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
-		};
-	},
+  fromJSON(object: any): MsgMint {
+    return {
+      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+      amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+    };
+  },
 
-	toJSON(message: MsgMint): unknown {
-		const obj: any = {};
-		if (message.sender !== "") {
-			obj.sender = message.sender;
-		}
-		if (message.amount !== undefined) {
-			obj.amount = Coin.toJSON(message.amount);
-		}
-		return obj;
-	},
+  toJSON(message: MsgMint): unknown {
+    const obj: any = {};
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
+    if (message.amount !== undefined) {
+      obj.amount = Coin.toJSON(message.amount);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgMint>, I>>(base?: I): MsgMint {
-		return MsgMint.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgMint>, I>>(object: I): MsgMint {
-		const message = createBaseMsgMint();
-		message.sender = object.sender ?? "";
-		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgMint>, I>>(base?: I): MsgMint {
+    return MsgMint.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgMint>, I>>(object: I): MsgMint {
+    const message = createBaseMsgMint();
+    message.sender = object.sender ?? "";
+    message.amount = (object.amount !== undefined && object.amount !== null)
+      ? Coin.fromPartial(object.amount)
+      : undefined;
+    return message;
+  },
 };
 
 function createBaseMsgMintResponse(): MsgMintResponse {
-	return {};
+  return {};
 }
 
 export const MsgMintResponse: MessageFns<MsgMintResponse, "seiprotocol.seichain.tokenfactory.MsgMintResponse"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgMintResponse" as const,
+  $type: "seiprotocol.seichain.tokenfactory.MsgMintResponse" as const,
 
-	encode(_: MsgMintResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: MsgMintResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgMintResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgMintResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgMintResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgMintResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): MsgMintResponse {
-		return {};
-	},
+  fromJSON(_: any): MsgMintResponse {
+    return {};
+  },
 
-	toJSON(_: MsgMintResponse): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: MsgMintResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgMintResponse>, I>>(base?: I): MsgMintResponse {
-		return MsgMintResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgMintResponse>, I>>(_: I): MsgMintResponse {
-		const message = createBaseMsgMintResponse();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgMintResponse>, I>>(base?: I): MsgMintResponse {
+    return MsgMintResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgMintResponse>, I>>(_: I): MsgMintResponse {
+    const message = createBaseMsgMintResponse();
+    return message;
+  },
 };
 
 function createBaseMsgBurn(): MsgBurn {
-	return { sender: "", amount: undefined };
+  return { sender: "", amount: undefined };
 }
 
 export const MsgBurn: MessageFns<MsgBurn, "seiprotocol.seichain.tokenfactory.MsgBurn"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgBurn" as const,
+  $type: "seiprotocol.seichain.tokenfactory.MsgBurn" as const,
 
-	encode(message: MsgBurn, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.sender !== "") {
-			writer.uint32(10).string(message.sender);
-		}
-		if (message.amount !== undefined) {
-			Coin.encode(message.amount, writer.uint32(18).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: MsgBurn, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(18).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgBurn {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgBurn();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgBurn {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgBurn();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.sender = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.sender = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.amount = Coin.decode(reader, reader.uint32());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.amount = Coin.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgBurn {
-		return {
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined
-		};
-	},
+  fromJSON(object: any): MsgBurn {
+    return {
+      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+      amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+    };
+  },
 
-	toJSON(message: MsgBurn): unknown {
-		const obj: any = {};
-		if (message.sender !== "") {
-			obj.sender = message.sender;
-		}
-		if (message.amount !== undefined) {
-			obj.amount = Coin.toJSON(message.amount);
-		}
-		return obj;
-	},
+  toJSON(message: MsgBurn): unknown {
+    const obj: any = {};
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
+    if (message.amount !== undefined) {
+      obj.amount = Coin.toJSON(message.amount);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgBurn>, I>>(base?: I): MsgBurn {
-		return MsgBurn.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgBurn>, I>>(object: I): MsgBurn {
-		const message = createBaseMsgBurn();
-		message.sender = object.sender ?? "";
-		message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgBurn>, I>>(base?: I): MsgBurn {
+    return MsgBurn.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgBurn>, I>>(object: I): MsgBurn {
+    const message = createBaseMsgBurn();
+    message.sender = object.sender ?? "";
+    message.amount = (object.amount !== undefined && object.amount !== null)
+      ? Coin.fromPartial(object.amount)
+      : undefined;
+    return message;
+  },
 };
 
 function createBaseMsgBurnResponse(): MsgBurnResponse {
-	return {};
+  return {};
 }
 
 export const MsgBurnResponse: MessageFns<MsgBurnResponse, "seiprotocol.seichain.tokenfactory.MsgBurnResponse"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgBurnResponse" as const,
+  $type: "seiprotocol.seichain.tokenfactory.MsgBurnResponse" as const,
 
-	encode(_: MsgBurnResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: MsgBurnResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgBurnResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgBurnResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgBurnResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgBurnResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): MsgBurnResponse {
-		return {};
-	},
+  fromJSON(_: any): MsgBurnResponse {
+    return {};
+  },
 
-	toJSON(_: MsgBurnResponse): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: MsgBurnResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgBurnResponse>, I>>(base?: I): MsgBurnResponse {
-		return MsgBurnResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgBurnResponse>, I>>(_: I): MsgBurnResponse {
-		const message = createBaseMsgBurnResponse();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgBurnResponse>, I>>(base?: I): MsgBurnResponse {
+    return MsgBurnResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgBurnResponse>, I>>(_: I): MsgBurnResponse {
+    const message = createBaseMsgBurnResponse();
+    return message;
+  },
 };
 
 function createBaseMsgChangeAdmin(): MsgChangeAdmin {
-	return { sender: "", denom: "", new_admin: "" };
+  return { sender: "", denom: "", new_admin: "" };
 }
 
 export const MsgChangeAdmin: MessageFns<MsgChangeAdmin, "seiprotocol.seichain.tokenfactory.MsgChangeAdmin"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgChangeAdmin" as const,
+  $type: "seiprotocol.seichain.tokenfactory.MsgChangeAdmin" as const,
 
-	encode(message: MsgChangeAdmin, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.sender !== "") {
-			writer.uint32(10).string(message.sender);
-		}
-		if (message.denom !== "") {
-			writer.uint32(18).string(message.denom);
-		}
-		if (message.new_admin !== "") {
-			writer.uint32(26).string(message.new_admin);
-		}
-		return writer;
-	},
+  encode(message: MsgChangeAdmin, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
+    }
+    if (message.new_admin !== "") {
+      writer.uint32(26).string(message.new_admin);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgChangeAdmin {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgChangeAdmin();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgChangeAdmin {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgChangeAdmin();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.sender = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.sender = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.denom = reader.string();
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.denom = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.new_admin = reader.string();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.new_admin = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgChangeAdmin {
-		return {
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			new_admin: isSet(object.new_admin) ? globalThis.String(object.new_admin) : ""
-		};
-	},
+  fromJSON(object: any): MsgChangeAdmin {
+    return {
+      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+      denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
+      new_admin: isSet(object.new_admin) ? globalThis.String(object.new_admin) : "",
+    };
+  },
 
-	toJSON(message: MsgChangeAdmin): unknown {
-		const obj: any = {};
-		if (message.sender !== "") {
-			obj.sender = message.sender;
-		}
-		if (message.denom !== "") {
-			obj.denom = message.denom;
-		}
-		if (message.new_admin !== "") {
-			obj.new_admin = message.new_admin;
-		}
-		return obj;
-	},
+  toJSON(message: MsgChangeAdmin): unknown {
+    const obj: any = {};
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
+    if (message.denom !== "") {
+      obj.denom = message.denom;
+    }
+    if (message.new_admin !== "") {
+      obj.new_admin = message.new_admin;
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgChangeAdmin>, I>>(base?: I): MsgChangeAdmin {
-		return MsgChangeAdmin.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgChangeAdmin>, I>>(object: I): MsgChangeAdmin {
-		const message = createBaseMsgChangeAdmin();
-		message.sender = object.sender ?? "";
-		message.denom = object.denom ?? "";
-		message.new_admin = object.new_admin ?? "";
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgChangeAdmin>, I>>(base?: I): MsgChangeAdmin {
+    return MsgChangeAdmin.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgChangeAdmin>, I>>(object: I): MsgChangeAdmin {
+    const message = createBaseMsgChangeAdmin();
+    message.sender = object.sender ?? "";
+    message.denom = object.denom ?? "";
+    message.new_admin = object.new_admin ?? "";
+    return message;
+  },
 };
 
 function createBaseMsgChangeAdminResponse(): MsgChangeAdminResponse {
-	return {};
+  return {};
 }
 
-export const MsgChangeAdminResponse: MessageFns<MsgChangeAdminResponse, "seiprotocol.seichain.tokenfactory.MsgChangeAdminResponse"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgChangeAdminResponse" as const,
+export const MsgChangeAdminResponse: MessageFns<
+  MsgChangeAdminResponse,
+  "seiprotocol.seichain.tokenfactory.MsgChangeAdminResponse"
+> = {
+  $type: "seiprotocol.seichain.tokenfactory.MsgChangeAdminResponse" as const,
 
-	encode(_: MsgChangeAdminResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: MsgChangeAdminResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgChangeAdminResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgChangeAdminResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgChangeAdminResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgChangeAdminResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): MsgChangeAdminResponse {
-		return {};
-	},
+  fromJSON(_: any): MsgChangeAdminResponse {
+    return {};
+  },
 
-	toJSON(_: MsgChangeAdminResponse): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: MsgChangeAdminResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgChangeAdminResponse>, I>>(base?: I): MsgChangeAdminResponse {
-		return MsgChangeAdminResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgChangeAdminResponse>, I>>(_: I): MsgChangeAdminResponse {
-		const message = createBaseMsgChangeAdminResponse();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgChangeAdminResponse>, I>>(base?: I): MsgChangeAdminResponse {
+    return MsgChangeAdminResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgChangeAdminResponse>, I>>(_: I): MsgChangeAdminResponse {
+    const message = createBaseMsgChangeAdminResponse();
+    return message;
+  },
 };
 
 function createBaseMsgSetDenomMetadata(): MsgSetDenomMetadata {
-	return { sender: "", metadata: undefined };
+  return { sender: "", metadata: undefined };
 }
 
-export const MsgSetDenomMetadata: MessageFns<MsgSetDenomMetadata, "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata" as const,
+export const MsgSetDenomMetadata: MessageFns<
+  MsgSetDenomMetadata,
+  "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata"
+> = {
+  $type: "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadata" as const,
 
-	encode(message: MsgSetDenomMetadata, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.sender !== "") {
-			writer.uint32(10).string(message.sender);
-		}
-		if (message.metadata !== undefined) {
-			Metadata.encode(message.metadata, writer.uint32(18).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: MsgSetDenomMetadata, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.metadata !== undefined) {
+      Metadata.encode(message.metadata, writer.uint32(18).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgSetDenomMetadata {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgSetDenomMetadata();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSetDenomMetadata {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSetDenomMetadata();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.sender = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.sender = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.metadata = Metadata.decode(reader, reader.uint32());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.metadata = Metadata.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgSetDenomMetadata {
-		return {
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined
-		};
-	},
+  fromJSON(object: any): MsgSetDenomMetadata {
+    return {
+      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+      metadata: isSet(object.metadata) ? Metadata.fromJSON(object.metadata) : undefined,
+    };
+  },
 
-	toJSON(message: MsgSetDenomMetadata): unknown {
-		const obj: any = {};
-		if (message.sender !== "") {
-			obj.sender = message.sender;
-		}
-		if (message.metadata !== undefined) {
-			obj.metadata = Metadata.toJSON(message.metadata);
-		}
-		return obj;
-	},
+  toJSON(message: MsgSetDenomMetadata): unknown {
+    const obj: any = {};
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
+    if (message.metadata !== undefined) {
+      obj.metadata = Metadata.toJSON(message.metadata);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgSetDenomMetadata>, I>>(base?: I): MsgSetDenomMetadata {
-		return MsgSetDenomMetadata.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgSetDenomMetadata>, I>>(object: I): MsgSetDenomMetadata {
-		const message = createBaseMsgSetDenomMetadata();
-		message.sender = object.sender ?? "";
-		message.metadata = object.metadata !== undefined && object.metadata !== null ? Metadata.fromPartial(object.metadata) : undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgSetDenomMetadata>, I>>(base?: I): MsgSetDenomMetadata {
+    return MsgSetDenomMetadata.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgSetDenomMetadata>, I>>(object: I): MsgSetDenomMetadata {
+    const message = createBaseMsgSetDenomMetadata();
+    message.sender = object.sender ?? "";
+    message.metadata = (object.metadata !== undefined && object.metadata !== null)
+      ? Metadata.fromPartial(object.metadata)
+      : undefined;
+    return message;
+  },
 };
 
 function createBaseMsgSetDenomMetadataResponse(): MsgSetDenomMetadataResponse {
-	return {};
+  return {};
 }
 
-export const MsgSetDenomMetadataResponse: MessageFns<MsgSetDenomMetadataResponse, "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse" as const,
+export const MsgSetDenomMetadataResponse: MessageFns<
+  MsgSetDenomMetadataResponse,
+  "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse"
+> = {
+  $type: "seiprotocol.seichain.tokenfactory.MsgSetDenomMetadataResponse" as const,
 
-	encode(_: MsgSetDenomMetadataResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: MsgSetDenomMetadataResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgSetDenomMetadataResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgSetDenomMetadataResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSetDenomMetadataResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSetDenomMetadataResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): MsgSetDenomMetadataResponse {
-		return {};
-	},
+  fromJSON(_: any): MsgSetDenomMetadataResponse {
+    return {};
+  },
 
-	toJSON(_: MsgSetDenomMetadataResponse): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: MsgSetDenomMetadataResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgSetDenomMetadataResponse>, I>>(base?: I): MsgSetDenomMetadataResponse {
-		return MsgSetDenomMetadataResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgSetDenomMetadataResponse>, I>>(_: I): MsgSetDenomMetadataResponse {
-		const message = createBaseMsgSetDenomMetadataResponse();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgSetDenomMetadataResponse>, I>>(base?: I): MsgSetDenomMetadataResponse {
+    return MsgSetDenomMetadataResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgSetDenomMetadataResponse>, I>>(_: I): MsgSetDenomMetadataResponse {
+    const message = createBaseMsgSetDenomMetadataResponse();
+    return message;
+  },
 };
 
 function createBaseMsgUpdateDenom(): MsgUpdateDenom {
-	return { sender: "", denom: "", allow_list: undefined };
+  return { sender: "", denom: "", allow_list: undefined };
 }
 
 export const MsgUpdateDenom: MessageFns<MsgUpdateDenom, "seiprotocol.seichain.tokenfactory.MsgUpdateDenom"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgUpdateDenom" as const,
+  $type: "seiprotocol.seichain.tokenfactory.MsgUpdateDenom" as const,
 
-	encode(message: MsgUpdateDenom, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.sender !== "") {
-			writer.uint32(10).string(message.sender);
-		}
-		if (message.denom !== "") {
-			writer.uint32(18).string(message.denom);
-		}
-		if (message.allow_list !== undefined) {
-			AllowList.encode(message.allow_list, writer.uint32(26).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: MsgUpdateDenom, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
+    }
+    if (message.allow_list !== undefined) {
+      AllowList.encode(message.allow_list, writer.uint32(26).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenom {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgUpdateDenom();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenom {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdateDenom();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.sender = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.sender = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.denom = reader.string();
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.denom = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.allow_list = AllowList.decode(reader, reader.uint32());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.allow_list = AllowList.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): MsgUpdateDenom {
-		return {
-			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
-			denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
-			allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined
-		};
-	},
+  fromJSON(object: any): MsgUpdateDenom {
+    return {
+      sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
+      denom: isSet(object.denom) ? globalThis.String(object.denom) : "",
+      allow_list: isSet(object.allow_list) ? AllowList.fromJSON(object.allow_list) : undefined,
+    };
+  },
 
-	toJSON(message: MsgUpdateDenom): unknown {
-		const obj: any = {};
-		if (message.sender !== "") {
-			obj.sender = message.sender;
-		}
-		if (message.denom !== "") {
-			obj.denom = message.denom;
-		}
-		if (message.allow_list !== undefined) {
-			obj.allow_list = AllowList.toJSON(message.allow_list);
-		}
-		return obj;
-	},
+  toJSON(message: MsgUpdateDenom): unknown {
+    const obj: any = {};
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
+    if (message.denom !== "") {
+      obj.denom = message.denom;
+    }
+    if (message.allow_list !== undefined) {
+      obj.allow_list = AllowList.toJSON(message.allow_list);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgUpdateDenom>, I>>(base?: I): MsgUpdateDenom {
-		return MsgUpdateDenom.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgUpdateDenom>, I>>(object: I): MsgUpdateDenom {
-		const message = createBaseMsgUpdateDenom();
-		message.sender = object.sender ?? "";
-		message.denom = object.denom ?? "";
-		message.allow_list = object.allow_list !== undefined && object.allow_list !== null ? AllowList.fromPartial(object.allow_list) : undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgUpdateDenom>, I>>(base?: I): MsgUpdateDenom {
+    return MsgUpdateDenom.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateDenom>, I>>(object: I): MsgUpdateDenom {
+    const message = createBaseMsgUpdateDenom();
+    message.sender = object.sender ?? "";
+    message.denom = object.denom ?? "";
+    message.allow_list = (object.allow_list !== undefined && object.allow_list !== null)
+      ? AllowList.fromPartial(object.allow_list)
+      : undefined;
+    return message;
+  },
 };
 
 function createBaseMsgUpdateDenomResponse(): MsgUpdateDenomResponse {
-	return {};
+  return {};
 }
 
-export const MsgUpdateDenomResponse: MessageFns<MsgUpdateDenomResponse, "seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse"> = {
-	$type: "seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse" as const,
+export const MsgUpdateDenomResponse: MessageFns<
+  MsgUpdateDenomResponse,
+  "seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse"
+> = {
+  $type: "seiprotocol.seichain.tokenfactory.MsgUpdateDenomResponse" as const,
 
-	encode(_: MsgUpdateDenomResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: MsgUpdateDenomResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenomResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseMsgUpdateDenomResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateDenomResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdateDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): MsgUpdateDenomResponse {
-		return {};
-	},
+  fromJSON(_: any): MsgUpdateDenomResponse {
+    return {};
+  },
 
-	toJSON(_: MsgUpdateDenomResponse): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: MsgUpdateDenomResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<MsgUpdateDenomResponse>, I>>(base?: I): MsgUpdateDenomResponse {
-		return MsgUpdateDenomResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<MsgUpdateDenomResponse>, I>>(_: I): MsgUpdateDenomResponse {
-		const message = createBaseMsgUpdateDenomResponse();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<MsgUpdateDenomResponse>, I>>(base?: I): MsgUpdateDenomResponse {
+    return MsgUpdateDenomResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateDenomResponse>, I>>(_: I): MsgUpdateDenomResponse {
+    const message = createBaseMsgUpdateDenomResponse();
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }
