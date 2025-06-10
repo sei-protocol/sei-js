@@ -3,6 +3,7 @@ import { getSupportedNetworks } from '../core/chains.js';
 import { registerEVMPrompts } from '../core/prompts.js';
 import { registerEVMResources } from '../core/resources.js';
 import { registerEVMTools } from '../core/tools.js';
+import { createSeiJSDocsSearchTool } from '../core/mintlify-search.js';
 
 // Create and start the MCP server
 async function startServer() {
@@ -17,7 +18,10 @@ async function startServer() {
 		registerEVMResources(server);
 		registerEVMTools(server);
 		registerEVMPrompts(server);
-
+		
+		// Register documentation search tool
+		await createSeiJSDocsSearchTool(server);
+		
 		// Log server information
 		console.error(`EVM MCP Server initialized for networks: ${getSupportedNetworks().join(', ')}`);
 
