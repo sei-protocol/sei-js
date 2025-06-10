@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/cosmos",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "A Typescript library for building on Sei generated using the official Sei proto files on buf.build.",
 	"sideEffects": false,
 	"main": "./dist/cjs/index.js",
