@@ -1,0 +1,14 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"include": ["src"],
+	"compilerOptions": {
+		"outDir": "./dist/types",
+		"moduleResolution": "bundler"
+	},
+	"typedocOptions": {
+		"readme": "./README.md",
+		"name": "mcp-server",
+		"entryPoints": ["src/index.ts"],
+		"exclude": ["node_modules"]
+	}
+}
