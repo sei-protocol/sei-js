@@ -34,50 +34,67 @@
       },
       {
         "dropdown": "@sei-js/precompiles",
+        "description": "Native blockchain function integrations",
         "icon": "microchip",
         "pages": [
           {
             "group": "Getting Started",
             "pages": [
-              "evm/index",
-              "evm/quick-start"
+              "precompiles/index",
+              "precompiles/quick-start"
             ]
           },
           {
             "group": "Integrations",
             "pages": [
-              "evm/precompiles/viem",
-              "evm/precompiles/ethers"
+              "precompiles/precompiles/viem",
+              "precompiles/precompiles/ethers"
             ]
           },
           {
             "group": "Precompiles",
             "pages": [
-              "evm/precompiles/address",
-              "evm/precompiles/bank",
-              "evm/precompiles/confidential-transfers",
-              "evm/precompiles/distribution",
-              "evm/precompiles/governance",
-              "evm/precompiles/ibc",
-              "evm/precompiles/json",
-              "evm/precompiles/oracle",
-              "evm/precompiles/pointer",
-              "evm/precompiles/pointerview",
-              "evm/precompiles/staking",
-              "evm/precompiles/wasm"
+              "precompiles/precompiles/address",
+              "precompiles/precompiles/bank",
+              "precompiles/precompiles/confidential-transfers",
+              "precompiles/precompiles/distribution",
+              "precompiles/precompiles/governance",
+              "precompiles/precompiles/ibc",
+              "precompiles/precompiles/json",
+              "precompiles/precompiles/oracle",
+              "precompiles/precompiles/pointer",
+              "precompiles/precompiles/pointerview",
+              "precompiles/precompiles/staking",
+              "precompiles/precompiles/wasm"
             ]
           }
         ]
       },
       {
         "dropdown": "@sei-js/create-sei",
+        "description": "CLI scaffolding and templates",
         "icon": "hammer",
         "pages": [
-          "create-sei/introduction"
+          {
+            "group": "Getting Started",
+            "pages": [
+              "create-sei/introduction",
+              "create-sei/quick-start",
+              "create-sei/templates"
+            ]
+          },
+          {
+            "group": "Development",
+            "pages": [
+              "create-sei/next-steps",
+              "create-sei/customization"
+            ]
+          }
         ]
       },
       {
         "dropdown": "@sei-js/ledger",
+        "description": "Hardware wallet connection support",
         "icon": "shield",
         "pages": [
           "ledger/introduction"
@@ -85,6 +102,7 @@
       },
       {
         "dropdown": "@sei-js/registry",
+        "description": "Network and asset information",
         "icon": "database",
         "pages": [
           "registry/introduction"
@@ -92,16 +110,10 @@
       },
       {
         "dropdown": "@sei-js/sei-global-wallet",
+        "description": "EIP-6963 wallet standard implementation",
         "icon": "wallet",
         "pages": [
           "sei-global-wallet/introduction"
-        ]
-      },
-      {
-        "dropdown": "@sei-js/confidential-transfers",
-        "icon": "eye-slash",
-        "pages": [
-          "confidential-transfers/introduction"
         ]
       }
     ]

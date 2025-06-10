@@ -1,0 +1,130 @@
+---
+title: 'Quick Start'
+description: 'Get started with @sei-js/create-sei in minutes'
+---
+
+## Installation
+
+You don't need to install `@sei-js/create-sei` globally. Use it directly with your preferred package manager:
+
+<CodeGroup>
+
+```bash npx
+npx @sei-js/create-sei app
+```
+
+```bash yarn
+yarn create @sei-js/create-sei app
+```
+
+```bash pnpm
+pnpm create @sei-js/create-sei app
+```
+
+</CodeGroup>
+
+## Interactive Setup
+
+The CLI provides an interactive wizard to guide you through project setup:
+
+<Steps>
+  <Step title="Run the CLI">
+    Execute the create-sei command with your project name:
+    ```bash
+    npx @sei-js/create-sei app -n my-sei-app
+    ```
+  </Step>
+  
+  <Step title="Choose Framework">
+    Select your preferred frontend framework:
+    - **Next.js** - Full-stack React framework with SSR/SSG
+    - **Vite** - Fast build tool with React
+  </Step>
+  
+  <Step title="Select Ecosystem">
+    Choose your blockchain integration:
+    - **EVM** - Ethereum-compatible development (recommended)
+    - **Cosmos** - Native Cosmos SDK (deprecated per SIP-3)
+  </Step>
+  
+  <Step title="Pick Library (EVM only)">
+    For EVM ecosystem, choose your wallet library:
+    - **Wagmi** - Type-safe React hooks for Ethereum
+    - **Ethers.js** - Traditional Ethereum library
+  </Step>
+  
+  <Step title="Project Setup">
+    The CLI automatically configures:
+    - TypeScript configuration
+    - Tailwind CSS styling
+    - ESLint configuration
+    - Prettier formatting
+    - Git initialization
+  </Step>
+</Steps>
+
+## Manual CLI Usage
+
+Skip the interactive setup by specifying all options directly:
+
+<CodeGroup>
+
+```bash Next.js + Wagmi
+npx @sei-js/create-sei app -n my-app -f next -e evm -l wagmi
+```
+
+```bash Vite + Ethers.js
+npx @sei-js/create-sei app -n my-app -f vite -e evm
+```
+
+```bash Next.js + CosmJS (Deprecated)
+npx @sei-js/create-sei app -n my-app -f next -e cosmos
+```
+
+</CodeGroup>
+
+### CLI Options
+
+| Flag | Long Form | Description | Options |
+|------|-----------|-------------|---------|
+| `-n` | `--name` | Project name (must be valid package name) | Any valid npm package name |
+| `-f` | `--framework` | Frontend framework | `vite`, `next` |
+| `-e` | `--ecosystem` | Blockchain ecosystem | `evm`, `cosmos` |
+| `-l` | `--library` | EVM library (EVM ecosystem only) | `wagmi` |
+
+<Info>
+**Template Combinations**: The CLI creates different project templates based on your flag combinations. See all available combinations on the [Templates page](/create-sei/templates).
+</Info>
+
+## What Happens Next
+
+After running the CLI, you'll have a fully configured Sei dApp with:
+
+<CardGroup cols={2}>
+  <Card title="Project Structure" icon="folder-tree">
+    Organized file structure with components, hooks, and utilities
+  </Card>
+  <Card title="Wallet Integration" icon="wallet">
+    Pre-configured wallet connections for your chosen ecosystem
+  </Card>
+  <Card title="Development Tools" icon="wrench">
+    TypeScript, ESLint, Prettier, and Tailwind CSS ready to use
+  </Card>
+  <Card title="Sei Integration" icon="link">
+    Built-in Sei network configuration and contract examples
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Set Up Your Project" href="/create-sei/next-steps" icon="play">
+    Learn how to set up your project and start building with your chosen template
+  </Card>
+  <Card title="Explore Templates" href="/create-sei/templates" icon="layer-group">
+    View all available templates and their specific features
+  </Card>
+  <Card title="Customize Your Project" href="/create-sei/customization" icon="palette">
+    Advanced customization options and development patterns
+  </Card>
+</CardGroup>

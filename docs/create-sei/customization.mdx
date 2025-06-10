@@ -1,0 +1,379 @@
+---
+title: 'Customization'
+description: 'Advanced customization and extension patterns for your @sei-js/create-sei project'
+---
+
+This guide covers advanced customization patterns for extending your Sei dApp beyond the initial template. For basic project setup and template-specific development patterns, see the [Next Steps guide](/create-sei/next-steps).
+
+## Advanced Component Patterns
+
+### Custom Hook Patterns
+
+<AccordionGroup>
+  <Accordion title="useTokenBalance Hook">
+    ```tsx
+    // src/hooks/useTokenBalance.ts
+    import { useReadContract, useAccount } from 'wagmi'
+    import { erc20Abi } from 'viem'
+    
+    export function useTokenBalance(tokenAddress: `0x${string}`) {
+      const { address } = useAccount()
+      
+      const { data: balance, isLoading, refetch } = useReadContract({
+        address: tokenAddress,
+        abi: erc20Abi,
+        functionName: 'balanceOf',
+        args: address ? [address] : undefined,
+        query: {
+          enabled: !!address,
+        },
+      })
+      
+      const { data: decimals } = useReadContract({
+        address: tokenAddress,
+        abi: erc20Abi,
+        functionName: 'decimals',
+      })
+      
+      const { data: symbol } = useReadContract({
+        address: tokenAddress,
+        abi: erc20Abi,
+        functionName: 'symbol',
+      })
+      
+      return {
+        balance,
+        decimals,
+        symbol,
+        isLoading,
+        refetch,
+        formattedBalance: balance && decimals 
+          ? (Number(balance) / Math.pow(10, decimals)).toFixed(4)
+          : '0'
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="useContractWrite Hook">
+    ```tsx
+    // src/hooks/useContractWrite.ts
+    import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+    import { useState } from 'react'
+    
+    export function useContractWrite() {
+      const [isLoading, setIsLoading] = useState(false)
+      const [error, setError] = useState<string | null>(null)
+      
+      const { data: hash, writeContract, isPending } = useWriteContract()
+      
+      const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
+        hash,
+      })
+      
+      const write = async (config: any) => {
+        try {
+          setIsLoading(true)
+          setError(null)
+          await writeContract(config)
+        } catch (err: any) {
+          setError(err.message || 'Transaction failed')
+        } finally {
+          setIsLoading(false)
+        }
+      }
+      
+      return {
+        write,
+        hash,
+        isLoading: isLoading || isPending || isConfirming,
+        isSuccess,
+        error,
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Environment Configuration
+
+### Network Configuration
+
+<CodeGroup>
+
+```env Mainnet (.env.local)
+# Sei Mainnet Configuration
+NEXT_PUBLIC_SEI_RPC_URL=https://evm-rpc.sei-apis.com
+NEXT_PUBLIC_SEI_CHAIN_ID=1329
+NEXT_PUBLIC_SEI_CHAIN_NAME=Sei
+
+# WalletConnect
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
+
+# Optional: Block Explorer
+NEXT_PUBLIC_BLOCK_EXPLORER_URL=https://seitrace.com
+```
+
+```env Testnet (.env.local)
+# Sei Atlantic-2 Testnet Configuration
+NEXT_PUBLIC_SEI_RPC_URL=https://evm-rpc-testnet.sei-apis.com
+NEXT_PUBLIC_SEI_CHAIN_ID=1328
+NEXT_PUBLIC_SEI_CHAIN_NAME=Sei Atlantic 2
+
+# WalletConnect
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
+
+# Faucet
+NEXT_PUBLIC_FAUCET_URL=https://faucet.sei-apis.com
+```
+
+```env Development (.env.local)
+# Local Development
+NEXT_PUBLIC_SEI_RPC_URL=http://localhost:8545
+NEXT_PUBLIC_SEI_CHAIN_ID=1337
+NEXT_PUBLIC_SEI_CHAIN_NAME=Sei Local
+
+# Development settings
+NEXT_PUBLIC_DEBUG=true
+```
+
+</CodeGroup>
+
+### Wagmi Configuration
+
+```tsx
+// src/lib/wagmi.ts
+import { http, createConfig } from 'wagmi'
+import { sei, seiTestnet } from 'wagmi/chains'
+import { injected, walletConnect } from 'wagmi/connectors'
+
+// Custom Sei Local chain for development
+const seiLocal = {
+  id: 1337,
+  name: 'Sei Local',
+  nativeCurrency: { name: 'Sei', symbol: 'SEI', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['http://localhost:8545'] },
+  },
+  blockExplorers: {
+    default: { name: 'Local Explorer', url: 'http://localhost:4000' },
+  },
+} as const
+
+export const config = createConfig({
+  chains: [sei, seiTestnet, seiLocal],
+  connectors: [
+    injected(),
+    walletConnect({
+      projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+    }),
+  ],
+  transports: {
+    [sei.id]: http(process.env.NEXT_PUBLIC_SEI_RPC_URL),
+    [seiTestnet.id]: http(process.env.NEXT_PUBLIC_SEI_RPC_URL),
+    [seiLocal.id]: http('http://localhost:8545'),
+  },
+})
+```
+
+## Styling Customization
+
+### Tailwind CSS
+
+Customize your Tailwind configuration:
+
+```js
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        sei: {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+          800: '#991b1b',
+          900: '#7f1d1d',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        mono: ['Fira Code', 'monospace'],
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
+}
+```
+
+### Custom CSS Components
+
+```css
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply bg-sei-600 hover:bg-sei-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors;
+  }
+  
+  .card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm p-6;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sei-500 focus:border-transparent;
+  }
+}
+```
+
+## Adding New Features
+
+### State Management with Zustand
+
+```tsx
+// src/store/useAppStore.ts
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
+interface AppState {
+  theme: 'light' | 'dark'
+  setTheme: (theme: 'light' | 'dark') => void
+  
+  favoriteTokens: string[]
+  addFavoriteToken: (address: string) => void
+  removeFavoriteToken: (address: string) => void
+  
+  transactionHistory: Transaction[]
+  addTransaction: (tx: Transaction) => void
+}
+
+interface Transaction {
+  hash: string
+  type: string
+  amount: string
+  timestamp: number
+  status: 'pending' | 'success' | 'failed'
+}
+
+export const useAppStore = create<AppState>()(
+  persist(
+    (set, get) => ({
+      theme: 'light',
+      setTheme: (theme) => set({ theme }),
+      
+      favoriteTokens: [],
+      addFavoriteToken: (address) => 
+        set((state) => ({ 
+          favoriteTokens: [...state.favoriteTokens, address] 
+        })),
+      removeFavoriteToken: (address) =>
+        set((state) => ({
+          favoriteTokens: state.favoriteTokens.filter(addr => addr !== address)
+        })),
+      
+      transactionHistory: [],
+      addTransaction: (tx) =>
+        set((state) => ({
+          transactionHistory: [tx, ...state.transactionHistory]
+        })),
+    }),
+    {
+      name: 'sei-app-storage',
+    }
+  )
+)
+```
+
+### Error Boundary
+
+```tsx
+// src/components/ErrorBoundary.tsx
+'use client'
+
+import React from 'react'
+
+interface ErrorBoundaryState {
+  hasError: boolean
+  error?: Error
+}
+
+export class ErrorBoundary extends React.Component<
+  React.PropsWithChildren<{}>,
+  ErrorBoundaryState
+> {
+  constructor(props: React.PropsWithChildren<{}>) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
+            <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
+              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <div className="mt-4 text-center">
+              <h3 className="text-lg font-medium text-gray-900">Something went wrong</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                An error occurred while loading the application.
+              </p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 btn-primary"
+              >
+                Reload Page
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return this.props.children
+  }
+}
+```
+
+## Next Steps
+
+<CardGroup cols={1}>
+  <Card title="Deployment Guide" href="/create-sei/deployment" icon="rocket">
+    Learn how to deploy your customized Sei application to production
+  </Card>
+  <Card title="Advanced Patterns" href="/create-sei/advanced" icon="code">
+    Explore advanced development patterns and optimizations
+  </Card>
+  <Card title="Testing Guide" href="/create-sei/testing" icon="flask">
+    Set up comprehensive testing for your Sei application
+  </Card>
+</CardGroup>
