@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- e1eb84a: Add deployContract tool
+
 ## 0.1.2
 
 ### Patch Changes
