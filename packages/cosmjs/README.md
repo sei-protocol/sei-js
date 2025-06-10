@@ -1,3 +1,5 @@
+> **⚠️ DEPRECATION NOTICE**: According to [SIP-3](https://github.com/sei-protocol/sei-improvement-proposals/blob/main/SIPS/sip-3.md), Cosmos functionality has been deprecated in favor of EVM. This package (`@sei-js/cosmjs`) will be deprecated in future releases. Please migrate to EVM-based solutions using `@sei-js/evm` or `@sei-js/precompiles`.
+
 # @sei-js/cosmjs
 
 The `@sei-js/cosmjs` package contains helper functions for wallet connection, transaction signing, RPC querying, and more for those using cosmjs. 
