@@ -1,5 +1,7 @@
 # @sei-js/cosmos
 
+> **⚠️ DEPRECATION NOTICE**: According to [SIP-3](https://github.com/sei-protocol/sips/blob/main/sips/sip-3.md), Cosmos functionality has been deprecated in favor of EVM. This package (`@sei-js/cosmos`) will be deprecated in future releases.
+
 `@sei-js/cosmos` is a set of TypeScript libraries for interaction with Sei, using Cosmos standards and interfaces. It provides:
 
 > **For EVM Developers**: @sei-js/cosmos/types provides TypeScript types for all custom Sei modules, simplifying integration between Cosmos and EVM ecosystems.
