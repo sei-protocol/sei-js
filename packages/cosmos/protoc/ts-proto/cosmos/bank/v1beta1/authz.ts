@@ -17,91 +17,90 @@ export const protobufPackage = "cosmos.bank.v1beta1";
  * Since: cosmos-sdk 0.43
  */
 export interface SendAuthorization {
-	spend_limit: Coin[];
+  spend_limit: Coin[];
 }
 
 function createBaseSendAuthorization(): SendAuthorization {
-	return { spend_limit: [] };
+  return { spend_limit: [] };
 }
 
 export const SendAuthorization: MessageFns<SendAuthorization, "cosmos.bank.v1beta1.SendAuthorization"> = {
-	$type: "cosmos.bank.v1beta1.SendAuthorization" as const,
+  $type: "cosmos.bank.v1beta1.SendAuthorization" as const,
 
-	encode(message: SendAuthorization, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		for (const v of message.spend_limit) {
-			Coin.encode(v!, writer.uint32(10).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: SendAuthorization, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    for (const v of message.spend_limit) {
+      Coin.encode(v!, writer.uint32(10).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): SendAuthorization {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseSendAuthorization();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): SendAuthorization {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSendAuthorization();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.spend_limit.push(Coin.decode(reader, reader.uint32()));
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.spend_limit.push(Coin.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): SendAuthorization {
-		return {
-			spend_limit: globalThis.Array.isArray(object?.spend_limit) ? object.spend_limit.map((e: any) => Coin.fromJSON(e)) : []
-		};
-	},
+  fromJSON(object: any): SendAuthorization {
+    return {
+      spend_limit: globalThis.Array.isArray(object?.spend_limit)
+        ? object.spend_limit.map((e: any) => Coin.fromJSON(e))
+        : [],
+    };
+  },
 
-	toJSON(message: SendAuthorization): unknown {
-		const obj: any = {};
-		if (message.spend_limit?.length) {
-			obj.spend_limit = message.spend_limit.map((e) => Coin.toJSON(e));
-		}
-		return obj;
-	},
+  toJSON(message: SendAuthorization): unknown {
+    const obj: any = {};
+    if (message.spend_limit?.length) {
+      obj.spend_limit = message.spend_limit.map((e) => Coin.toJSON(e));
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<SendAuthorization>, I>>(base?: I): SendAuthorization {
-		return SendAuthorization.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<SendAuthorization>, I>>(object: I): SendAuthorization {
-		const message = createBaseSendAuthorization();
-		message.spend_limit = object.spend_limit?.map((e) => Coin.fromPartial(e)) || [];
-		return message;
-	}
+  create<I extends Exact<DeepPartial<SendAuthorization>, I>>(base?: I): SendAuthorization {
+    return SendAuthorization.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SendAuthorization>, I>>(object: I): SendAuthorization {
+    const message = createBaseSendAuthorization();
+    message.spend_limit = object.spend_limit?.map((e) => Coin.fromPartial(e)) || [];
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

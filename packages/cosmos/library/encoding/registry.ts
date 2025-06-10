@@ -1,10 +1,3 @@
-import { registry as confidentialtransfers_confidential_registry } from "./confidentialtransfers/confidential";
-import { registry as confidentialtransfers_cryptography_registry } from "./confidentialtransfers/cryptography";
-import { registry as confidentialtransfers_genesis_registry } from "./confidentialtransfers/genesis";
-import { registry as confidentialtransfers_params_registry } from "./confidentialtransfers/params";
-import { registry as confidentialtransfers_query_registry } from "./confidentialtransfers/query";
-import { registry as confidentialtransfers_tx_registry } from "./confidentialtransfers/tx";
-import { registry as confidentialtransfers_zk_registry } from "./confidentialtransfers/zk";
 import { registry as confio_proofs_registry } from "./confio/proofs";
 import { registry as cosmos_accesscontrol_accesscontrol_registry } from "./cosmos/accesscontrol/accesscontrol";
 import { registry as cosmos_accesscontrol_legacy_registry } from "./cosmos/accesscontrol/legacy";
@@ -129,13 +122,6 @@ import { registry as tokenfactory_query_registry } from "./tokenfactory/query";
 import { registry as tokenfactory_tx_registry } from "./tokenfactory/tx";
 
 export const seiProtoRegistry = [
-	...confidentialtransfers_confidential_registry,
-	...confidentialtransfers_cryptography_registry,
-	...confidentialtransfers_genesis_registry,
-	...confidentialtransfers_params_registry,
-	...confidentialtransfers_query_registry,
-	...confidentialtransfers_tx_registry,
-	...confidentialtransfers_zk_registry,
 	...confio_proofs_registry,
 	...cosmos_accesscontrol_x_genesis_registry,
 	...cosmos_accesscontrol_x_gov_registry,

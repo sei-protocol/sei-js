@@ -1,3 +1,3 @@
 // @ts-nocheck
 
-export * from "./pagination";
+export * from './pagination';

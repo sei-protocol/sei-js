@@ -75,9 +75,13 @@ export interface MsgClaim {
 	claimer: string;
 }
 
+export interface Asset {
+	asset_type: AssetType;
+	contract_address: string;
+}
+
 export interface MsgClaimSpecific {
 	sender: string;
 	claimer: string;
-	asset_type: AssetType;
-	identifier: string;
+	assets: Asset[];
 }

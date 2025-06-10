@@ -11,6 +11,7 @@ import { assetTypeFromJSON, assetTypeToJSON, pointerTypeFromJSON, pointerTypeToJ
 import { Log } from "./receipt";
 
 import type {
+	Asset as Asset_type,
 	MsgAssociateContractAddressResponse as MsgAssociateContractAddressResponse_type,
 	MsgAssociateContractAddress as MsgAssociateContractAddress_type,
 	MsgAssociateResponse as MsgAssociateResponse_type,
@@ -46,6 +47,7 @@ export interface MsgAssociateContractAddressResponse extends MsgAssociateContrac
 export interface MsgAssociate extends MsgAssociate_type {}
 export interface MsgAssociateResponse extends MsgAssociateResponse_type {}
 export interface MsgClaim extends MsgClaim_type {}
+export interface Asset extends Asset_type {}
 export interface MsgClaimSpecific extends MsgClaimSpecific_type {}
 
 export const MsgEVMTransaction: MessageFns<MsgEVMTransaction, "seiprotocol.seichain.evm.MsgEVMTransaction"> = {
@@ -1110,6 +1112,78 @@ export const MsgClaim: MessageFns<MsgClaim, "seiprotocol.seichain.evm.MsgClaim">
 	}
 };
 
+export const Asset: MessageFns<Asset, "seiprotocol.seichain.evm.Asset"> = {
+	$type: "seiprotocol.seichain.evm.Asset" as const,
+
+	encode(message: Asset, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+		if (message.asset_type !== 0) {
+			writer.uint32(8).int32(message.asset_type);
+		}
+		if (message.contract_address !== "") {
+			writer.uint32(18).string(message.contract_address);
+		}
+		return writer;
+	},
+
+	decode(input: BinaryReader | Uint8Array, length?: number): Asset {
+		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+		const end = length === undefined ? reader.len : reader.pos + length;
+		const message = createBaseAsset();
+		while (reader.pos < end) {
+			const tag = reader.uint32();
+			switch (tag >>> 3) {
+				case 1:
+					if (tag !== 8) {
+						break;
+					}
+
+					message.asset_type = reader.int32() as any;
+					continue;
+				case 2:
+					if (tag !== 18) {
+						break;
+					}
+
+					message.contract_address = reader.string();
+					continue;
+			}
+			if ((tag & 7) === 4 || tag === 0) {
+				break;
+			}
+			reader.skip(tag & 7);
+		}
+		return message;
+	},
+
+	fromJSON(object: any): Asset {
+		return {
+			asset_type: isSet(object.asset_type) ? assetTypeFromJSON(object.asset_type) : 0,
+			contract_address: isSet(object.contract_address) ? globalThis.String(object.contract_address) : ""
+		};
+	},
+
+	toJSON(message: Asset): unknown {
+		const obj: any = {};
+		if (message.asset_type !== 0) {
+			obj.asset_type = assetTypeToJSON(message.asset_type);
+		}
+		if (message.contract_address !== "") {
+			obj.contract_address = message.contract_address;
+		}
+		return obj;
+	},
+
+	create<I extends Exact<DeepPartial<Asset>, I>>(base?: I): Asset {
+		return Asset.fromPartial(base ?? ({} as any));
+	},
+	fromPartial<I extends Exact<DeepPartial<Asset>, I>>(object: I): Asset {
+		const message = createBaseAsset();
+		message.asset_type = object.asset_type ?? 0;
+		message.contract_address = object.contract_address ?? "";
+		return message;
+	}
+};
+
 export const MsgClaimSpecific: MessageFns<MsgClaimSpecific, "seiprotocol.seichain.evm.MsgClaimSpecific"> = {
 	$type: "seiprotocol.seichain.evm.MsgClaimSpecific" as const,
 
@@ -1120,11 +1194,8 @@ export const MsgClaimSpecific: MessageFns<MsgClaimSpecific, "seiprotocol.seichai
 		if (message.claimer !== "") {
 			writer.uint32(18).string(message.claimer);
 		}
-		if (message.asset_type !== 0) {
-			writer.uint32(24).int32(message.asset_type);
-		}
-		if (message.identifier !== "") {
-			writer.uint32(34).string(message.identifier);
+		for (const v of message.assets) {
+			Asset.encode(v!, writer.uint32(26).fork()).join();
 		}
 		return writer;
 	},
@@ -1151,18 +1222,11 @@ export const MsgClaimSpecific: MessageFns<MsgClaimSpecific, "seiprotocol.seichai
 					message.claimer = reader.string();
 					continue;
 				case 3:
-					if (tag !== 24) {
+					if (tag !== 26) {
 						break;
 					}
 
-					message.asset_type = reader.int32() as any;
-					continue;
-				case 4:
-					if (tag !== 34) {
-						break;
-					}
-
-					message.identifier = reader.string();
+					message.assets.push(Asset.decode(reader, reader.uint32()));
 					continue;
 			}
 			if ((tag & 7) === 4 || tag === 0) {
@@ -1177,8 +1241,7 @@ export const MsgClaimSpecific: MessageFns<MsgClaimSpecific, "seiprotocol.seichai
 		return {
 			sender: isSet(object.sender) ? globalThis.String(object.sender) : "",
 			claimer: isSet(object.claimer) ? globalThis.String(object.claimer) : "",
-			asset_type: isSet(object.asset_type) ? assetTypeFromJSON(object.asset_type) : 0,
-			identifier: isSet(object.identifier) ? globalThis.String(object.identifier) : ""
+			assets: globalThis.Array.isArray(object?.assets) ? object.assets.map((e: any) => Asset.fromJSON(e)) : []
 		};
 	},
 
@@ -1190,11 +1253,8 @@ export const MsgClaimSpecific: MessageFns<MsgClaimSpecific, "seiprotocol.seichai
 		if (message.claimer !== "") {
 			obj.claimer = message.claimer;
 		}
-		if (message.asset_type !== 0) {
-			obj.asset_type = assetTypeToJSON(message.asset_type);
-		}
-		if (message.identifier !== "") {
-			obj.identifier = message.identifier;
+		if (message.assets?.length) {
+			obj.assets = message.assets.map((e) => Asset.toJSON(e));
 		}
 		return obj;
 	},
@@ -1206,8 +1266,7 @@ export const MsgClaimSpecific: MessageFns<MsgClaimSpecific, "seiprotocol.seichai
 		const message = createBaseMsgClaimSpecific();
 		message.sender = object.sender ?? "";
 		message.claimer = object.claimer ?? "";
-		message.asset_type = object.asset_type ?? 0;
-		message.identifier = object.identifier ?? "";
+		message.assets = object.assets?.map((e) => Asset.fromPartial(e)) || [];
 		return message;
 	}
 };
@@ -1272,8 +1331,12 @@ function createBaseMsgClaim(): MsgClaim {
 	return { sender: "", claimer: "" };
 }
 
+function createBaseAsset(): Asset {
+	return { asset_type: 0, contract_address: "" };
+}
+
 function createBaseMsgClaimSpecific(): MsgClaimSpecific {
-	return { sender: "", claimer: "", asset_type: 0, identifier: "" };
+	return { sender: "", claimer: "", assets: [] };
 }
 
 function bytesFromBase64(b64: string): Uint8Array {
@@ -1331,6 +1394,7 @@ export const registry: Array<[string, GeneratedType]> = [
 	["/seiprotocol.seichain.evm.MsgAssociate", MsgAssociate as never],
 	["/seiprotocol.seichain.evm.MsgAssociateResponse", MsgAssociateResponse as never],
 	["/seiprotocol.seichain.evm.MsgClaim", MsgClaim as never],
+	["/seiprotocol.seichain.evm.Asset", Asset as never],
 	["/seiprotocol.seichain.evm.MsgClaimSpecific", MsgClaimSpecific as never]
 ];
 export const aminoConverters = {
@@ -1422,6 +1486,12 @@ export const aminoConverters = {
 		aminoType: "evm/MsgClaim",
 		toAmino: (message: MsgClaim) => ({ ...message }),
 		fromAmino: (object: MsgClaim) => ({ ...object })
+	},
+
+	"/seiprotocol.seichain.evm.Asset": {
+		aminoType: "evm/Asset",
+		toAmino: (message: Asset) => ({ ...message }),
+		fromAmino: (object: Asset) => ({ ...object })
 	},
 
 	"/seiprotocol.seichain.evm.MsgClaimSpecific": {
