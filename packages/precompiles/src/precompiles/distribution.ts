@@ -6,7 +6,7 @@ export const DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000
 
 /**
  * The ABI for the Distribution precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const DISTRIBUTION_PRECOMPILE_ABI = [
 	{

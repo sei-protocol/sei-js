@@ -2813,17 +2813,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sei-js/evm@npm:^2.0.4, @sei-js/evm@workspace:packages/evm":
-  version: 0.0.0-use.local
-  resolution: "@sei-js/evm@workspace:packages/evm"
-  dependencies:
-    ethers: "npm:^6.0.0"
-    viem: "npm:2.x"
+"@sei-js/evm@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@sei-js/evm@npm:2.0.4"
   peerDependencies:
     ethers: ^6.0.0
     viem: 2.x
-  languageName: unknown
-  linkType: soft
+  checksum: 10c0/5e956a8b6ff828b63f205c1bb5f0383a340fa024ed54e7314c2f5a6a7b053e5a1c87d63afb18c14abebcc9fbdf2cfad7217207a5ef9fa5a3064e653a4e9925df
+  languageName: node
+  linkType: hard
 
 "@sei-js/ledger@workspace:packages/ledger":
   version: 0.0.0-use.local
@@ -2851,6 +2849,18 @@ __metadata:
     zod: "npm:^3.24.2"
   bin:
     mcp-server: ./bin/cli.js
+  languageName: unknown
+  linkType: soft
+
+"@sei-js/precompiles@workspace:packages/precompiles":
+  version: 0.0.0-use.local
+  resolution: "@sei-js/precompiles@workspace:packages/precompiles"
+  dependencies:
+    ethers: "npm:^6.0.0"
+    viem: "npm:2.x"
+  peerDependencies:
+    ethers: ^6.0.0
+    viem: 2.x
   languageName: unknown
   linkType: soft
 

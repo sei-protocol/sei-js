@@ -1,4 +1,4 @@
-import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
+import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
 import { GOVERNANCE_PRECOMPILE_ABI, GOVERNANCE_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
@@ -13,7 +13,7 @@ export const ETHERS_GOVERNANCE_PRECOMPILE_ABI = GOVERNANCE_PRECOMPILE_ABI as Int
  *
  * @example
  * ```tsx
- * import { getGovernancePrecompileEthersV6Contract, parseSei } from '@sei-js/evm/ethers';
+ * import { getGovernancePrecompileEthersV6Contract, parseSei } from '@sei-js/precompiles/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider

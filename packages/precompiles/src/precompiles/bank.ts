@@ -6,7 +6,7 @@ export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
 
 /**
  * The ABI for the Bank precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const BANK_PRECOMPILE_ABI = [
 	{

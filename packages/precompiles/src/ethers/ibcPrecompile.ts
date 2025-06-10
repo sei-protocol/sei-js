@@ -1,4 +1,4 @@
-import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
+import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
 import { IBC_PRECOMPILE_ABI, IBC_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
@@ -13,7 +13,7 @@ export const ETHERS_IBC_PRECOMPILE_ABI = IBC_PRECOMPILE_ABI as InterfaceAbi;
  *
  * @example
  * ```tsx
- * import { getIbcPrecompileEthersV6Contract } from '@sei-js/evm/ethers';
+ * import { getIbcPrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider

@@ -1,9 +1,9 @@
-import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
+import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
 import { ORACLE_PRECOMPILE_ABI, ORACLE_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
  * The ABI for the Oracle precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -13,7 +13,7 @@ export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as InterfaceAb
  *
  * @example
  * ```tsx
- * import { getOraclePrecompileEthersV6Contract } from '@sei-js/evm/ethers';
+ * import { getOraclePrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider

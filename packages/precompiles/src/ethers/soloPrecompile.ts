@@ -13,7 +13,7 @@ export const ETHERS_SOLO_PRECOMPILE_ABI = SOLO_PRECOMPILE_ABI as InterfaceAbi;
  *
  * @example
  * ```tsx
- * import { getSoloPrecompileEthersV6Contract } from '@sei-js/evm/ethers';
+ * import { getSoloPrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider

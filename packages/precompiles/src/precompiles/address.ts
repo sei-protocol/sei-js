@@ -7,7 +7,7 @@ export const ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000
 
 /**
  * The ABI for the Address precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ADDRESS_PRECOMPILE_ABI = [
 	{

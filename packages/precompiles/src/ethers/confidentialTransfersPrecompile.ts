@@ -13,7 +13,7 @@ export const ETHERS_CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI = CONFIDENTIAL_TRANSFE
  *
  * @example
  * ```tsx
- * import { getConfidentialTransfersPrecompileEthersV6Contract } from '@sei-js/evm/ethers';
+ * import { getConfidentialTransfersPrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider

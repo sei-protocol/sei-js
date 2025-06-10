@@ -1,9 +1,9 @@
-import { Contract, ContractRunner, InterfaceAbi } from 'ethers';
+import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
 import { WASM_PRECOMPILE_ABI, WASM_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
  * The ABI for the Wasm precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_WASM_PRECOMPILE_ABI = WASM_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -13,7 +13,7 @@ export const ETHERS_WASM_PRECOMPILE_ABI = WASM_PRECOMPILE_ABI as InterfaceAbi;
  *
  * @example
  * ```tsx
- * import { getWasmPrecompileEthersV6Contract } from '@sei-js/evm';
+ * import { getWasmPrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
  * import { ethers } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider

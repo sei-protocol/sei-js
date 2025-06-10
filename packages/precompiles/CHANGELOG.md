@@ -1,4 +1,6 @@
-# @sei-js/evm
+# @sei-js/precompiles
+
+<!-- Switched name to @sei-js/precompiles -->
 
 ## 2.0.4
 
