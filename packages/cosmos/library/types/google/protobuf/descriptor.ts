@@ -23,7 +23,7 @@ export enum Edition {
 	EDITION_2024 = 1001,
 	/**
 	 * EDITION_1_TEST_ONLY - Placeholder editions for testing feature resolution.  These should not be
-	 * used or relyed on outside of tests.
+	 * used or relied on outside of tests.
 	 */
 	EDITION_1_TEST_ONLY = 1,
 	EDITION_2_TEST_ONLY = 2,
@@ -75,9 +75,17 @@ export interface FileDescriptorProto {
 	 * The supported values are "proto2", "proto3", and "editions".
 	 *
 	 * If `edition` is present, this value must be "editions".
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
 	 */
 	syntax?: string;
-	/** The edition of the proto file. */
+	/**
+	 * The edition of the proto file.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	edition?: Edition;
 }
 
@@ -465,7 +473,12 @@ export interface FileOptions {
 	 * determining the ruby package.
 	 */
 	ruby_package?: string;
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	/**
 	 * The parser stores options it doesn't recognize here.
@@ -558,7 +571,12 @@ export interface MessageOptions {
 	 * @deprecated
 	 */
 	deprecated_legacy_json_field_conflicts?: boolean;
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	/** The parser stores options it doesn't recognize here. See above. */
 	uninterpreted_option: UninterpretedOption[];
@@ -566,12 +584,13 @@ export interface MessageOptions {
 
 export interface FieldOptions {
 	/**
+	 * NOTE: ctype is deprecated. Use `features.(pb.cpp).string_type` instead.
 	 * The ctype option instructs the C++ code generator to use a different
 	 * representation of the field than it normally would.  See the specific
 	 * options below.  This option is only implemented to support use of
 	 * [ctype=CORD] and [ctype=STRING] (the default) on non-repeated fields of
-	 * type "bytes" in the open source release -- sorry, we'll try to include
-	 * other types in a future version!
+	 * type "bytes" in the open source release.
+	 * TODO: make ctype actually deprecated.
 	 */
 	ctype?: FieldOptionsCType;
 	/**
@@ -646,7 +665,12 @@ export interface FieldOptions {
 	retention?: FieldOptionsOptionRetention;
 	targets: FieldOptionsOptionTargetType[];
 	edition_defaults: FieldOptionsEditionDefault[];
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	feature_support?: FieldOptionsFeatureSupport;
 	/** The parser stores options it doesn't recognize here. See above. */
@@ -732,7 +756,12 @@ export interface FieldOptionsFeatureSupport {
 }
 
 export interface OneofOptions {
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	/** The parser stores options it doesn't recognize here. See above. */
 	uninterpreted_option: UninterpretedOption[];
@@ -762,7 +791,12 @@ export interface EnumOptions {
 	 * @deprecated
 	 */
 	deprecated_legacy_json_field_conflicts?: boolean;
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	/** The parser stores options it doesn't recognize here. See above. */
 	uninterpreted_option: UninterpretedOption[];
@@ -776,7 +810,12 @@ export interface EnumValueOptions {
 	 * this is a formalization for deprecating enum values.
 	 */
 	deprecated?: boolean;
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	/**
 	 * Indicate that fields annotated with this enum value should not be printed
@@ -791,7 +830,12 @@ export interface EnumValueOptions {
 }
 
 export interface ServiceOptions {
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	/**
 	 * Is this service deprecated?
@@ -813,7 +857,12 @@ export interface MethodOptions {
 	 */
 	deprecated?: boolean;
 	idempotency_level?: MethodOptionsIdempotencyLevel;
-	/** Any features defined in the specific edition. */
+	/**
+	 * Any features defined in the specific edition.
+	 * WARNING: This field should only be used by protobuf plugins or special
+	 * cases like the proto compiler. Other uses are discouraged and
+	 * developers should rely on the protoreflect APIs for their client language.
+	 */
 	features?: FeatureSet;
 	/** The parser stores options it doesn't recognize here. See above. */
 	uninterpreted_option: UninterpretedOption[];
@@ -854,6 +903,7 @@ export interface FeatureSet {
 	utf8_validation?: FeatureSetUtf8Validation;
 	message_encoding?: FeatureSetMessageEncoding;
 	json_format?: FeatureSetJsonFormat;
+	enforce_naming_style?: FeatureSetEnforceNamingStyle;
 }
 
 export enum FeatureSetFieldPresence {
@@ -896,6 +946,13 @@ export enum FeatureSetJsonFormat {
 	JSON_FORMAT_UNKNOWN = 0,
 	ALLOW = 1,
 	LEGACY_BEST_EFFORT = 2,
+	UNRECOGNIZED = -1
+}
+
+export enum FeatureSetEnforceNamingStyle {
+	ENFORCE_NAMING_STYLE_UNKNOWN = 0,
+	STYLE2024 = 1,
+	STYLE_LEGACY = 2,
 	UNRECOGNIZED = -1
 }
 

@@ -9,16 +9,16 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "rimraf dist && yarn compile:all",
+		"build": "rm -rf dist && yarn compile:all",
 		"compile:all": "yarn compile:cjs && yarn compile:esm && yarn compile:declarations",
 		"compile:cjs": "tsc --outDir dist/cjs --module commonjs --project ./tsconfig.json",
 		"compile:esm": "tsc --outDir dist/esm --module esnext --project ./tsconfig.json",
 		"compile:declarations": "tsc --project ./tsconfig.declaration.json",
-		"generate": "rimraf protoc && yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party && yarn extract-libraries && yarn format",
+		"generate": "rm -rf protoc && yarn generate-sei-cosmos && yarn generate-sei-chain && yarn generate-third-party && yarn extract-libraries && yarn format",
 		"generate-sei-cosmos": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/cosmos-sdk",
 		"generate-sei-chain": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/sei-chain",
 		"generate-third-party": "buf generate --template buf.gen.yaml --debug buf.build/sei-protocol/third-party",
-		"extract-libraries": "rimraf library && tsx scripts/index.ts",
+		"extract-libraries": "rm -rf library && tsx scripts/index.ts",
 		"format": "biome format --write",
 		"test": "jest"
 	},

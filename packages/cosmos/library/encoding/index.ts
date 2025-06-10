@@ -1,4 +1,3 @@
-import * as confidentialtransfers from "./confidentialtransfers/index";
 import * as confio from "./confio/index";
 import * as cosmos_accesscontrol from "./cosmos/accesscontrol/index";
 import * as cosmos_accesscontrol_x from "./cosmos/accesscontrol_x/index";
@@ -54,7 +53,6 @@ export * from "./amino";
 export * from "./registry";
 
 export const Encoder = {
-	confidentialtransfers: confidentialtransfers,
 	confio: confio,
 	cosmos: {
 		accesscontrol: cosmos_accesscontrol,

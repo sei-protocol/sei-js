@@ -70,135 +70,132 @@ export const protobufPackage = "google.protobuf";
  * microsecond should be expressed in JSON format as "3.000001s".
  */
 export interface Duration {
-	/**
-	 * Signed seconds of the span of time. Must be from -315,576,000,000
-	 * to +315,576,000,000 inclusive. Note: these bounds are computed from:
-	 * 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
-	 */
-	seconds: number;
-	/**
-	 * Signed fractions of a second at nanosecond resolution of the span
-	 * of time. Durations less than one second are represented with a 0
-	 * `seconds` field and a positive or negative `nanos` field. For durations
-	 * of one second or more, a non-zero value for the `nanos` field must be
-	 * of the same sign as the `seconds` field. Must be from -999,999,999
-	 * to +999,999,999 inclusive.
-	 */
-	nanos: number;
+  /**
+   * Signed seconds of the span of time. Must be from -315,576,000,000
+   * to +315,576,000,000 inclusive. Note: these bounds are computed from:
+   * 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
+   */
+  seconds: number;
+  /**
+   * Signed fractions of a second at nanosecond resolution of the span
+   * of time. Durations less than one second are represented with a 0
+   * `seconds` field and a positive or negative `nanos` field. For durations
+   * of one second or more, a non-zero value for the `nanos` field must be
+   * of the same sign as the `seconds` field. Must be from -999,999,999
+   * to +999,999,999 inclusive.
+   */
+  nanos: number;
 }
 
 function createBaseDuration(): Duration {
-	return { seconds: 0, nanos: 0 };
+  return { seconds: 0, nanos: 0 };
 }
 
 export const Duration: MessageFns<Duration, "google.protobuf.Duration"> = {
-	$type: "google.protobuf.Duration" as const,
+  $type: "google.protobuf.Duration" as const,
 
-	encode(message: Duration, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.seconds !== 0) {
-			writer.uint32(8).int64(message.seconds);
-		}
-		if (message.nanos !== 0) {
-			writer.uint32(16).int32(message.nanos);
-		}
-		return writer;
-	},
+  encode(message: Duration, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.seconds !== 0) {
+      writer.uint32(8).int64(message.seconds);
+    }
+    if (message.nanos !== 0) {
+      writer.uint32(16).int32(message.nanos);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): Duration {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseDuration();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 8) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): Duration {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDuration();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
 
-					message.seconds = longToNumber(reader.int64());
-					continue;
-				case 2:
-					if (tag !== 16) {
-						break;
-					}
+          message.seconds = longToNumber(reader.int64());
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
 
-					message.nanos = reader.int32();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.nanos = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): Duration {
-		return {
-			seconds: isSet(object.seconds) ? globalThis.Number(object.seconds) : 0,
-			nanos: isSet(object.nanos) ? globalThis.Number(object.nanos) : 0
-		};
-	},
+  fromJSON(object: any): Duration {
+    return {
+      seconds: isSet(object.seconds) ? globalThis.Number(object.seconds) : 0,
+      nanos: isSet(object.nanos) ? globalThis.Number(object.nanos) : 0,
+    };
+  },
 
-	toJSON(message: Duration): unknown {
-		const obj: any = {};
-		if (message.seconds !== 0) {
-			obj.seconds = Math.round(message.seconds);
-		}
-		if (message.nanos !== 0) {
-			obj.nanos = Math.round(message.nanos);
-		}
-		return obj;
-	},
+  toJSON(message: Duration): unknown {
+    const obj: any = {};
+    if (message.seconds !== 0) {
+      obj.seconds = Math.round(message.seconds);
+    }
+    if (message.nanos !== 0) {
+      obj.nanos = Math.round(message.nanos);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<Duration>, I>>(base?: I): Duration {
-		return Duration.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<Duration>, I>>(object: I): Duration {
-		const message = createBaseDuration();
-		message.seconds = object.seconds ?? 0;
-		message.nanos = object.nanos ?? 0;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<Duration>, I>>(base?: I): Duration {
+    return Duration.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Duration>, I>>(object: I): Duration {
+    const message = createBaseDuration();
+    message.seconds = object.seconds ?? 0;
+    message.nanos = object.nanos ?? 0;
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(int64: { toString(): string }): number {
-	const num = globalThis.Number(int64.toString());
-	if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-		throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-	}
-	if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-		throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-	}
-	return num;
+  const num = globalThis.Number(int64.toString());
+  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
+    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
+  }
+  return num;
 }
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

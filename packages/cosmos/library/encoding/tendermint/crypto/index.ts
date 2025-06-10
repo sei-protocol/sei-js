@@ -1,4 +1,4 @@
 // @ts-nocheck
 
-export * from "./keys";
-export * from "./proof";
+export * from './keys';
+export * from './proof';

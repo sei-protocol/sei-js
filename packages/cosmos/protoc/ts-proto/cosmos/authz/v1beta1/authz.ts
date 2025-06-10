@@ -18,8 +18,8 @@ export const protobufPackage = "cosmos.authz.v1beta1";
  * the provided method on behalf of the granter's account.
  */
 export interface GenericAuthorization {
-	/** Msg, identified by it's type URL, to grant unrestricted permissions to execute */
-	msg: string;
+  /** Msg, identified by it's type URL, to grant unrestricted permissions to execute */
+  msg: string;
 }
 
 /**
@@ -27,8 +27,8 @@ export interface GenericAuthorization {
  * the provide method with expiration time.
  */
 export interface Grant {
-	authorization?: Any | undefined;
-	expiration?: Date | undefined;
+  authorization?: Any | undefined;
+  expiration?: Date | undefined;
 }
 
 /**
@@ -38,300 +38,301 @@ export interface Grant {
  * Since: cosmos-sdk 0.45.2
  */
 export interface GrantAuthorization {
-	granter: string;
-	grantee: string;
-	authorization?: Any | undefined;
-	expiration?: Date | undefined;
+  granter: string;
+  grantee: string;
+  authorization?: Any | undefined;
+  expiration?: Date | undefined;
 }
 
 function createBaseGenericAuthorization(): GenericAuthorization {
-	return { msg: "" };
+  return { msg: "" };
 }
 
 export const GenericAuthorization: MessageFns<GenericAuthorization, "cosmos.authz.v1beta1.GenericAuthorization"> = {
-	$type: "cosmos.authz.v1beta1.GenericAuthorization" as const,
+  $type: "cosmos.authz.v1beta1.GenericAuthorization" as const,
 
-	encode(message: GenericAuthorization, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.msg !== "") {
-			writer.uint32(10).string(message.msg);
-		}
-		return writer;
-	},
+  encode(message: GenericAuthorization, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.msg !== "") {
+      writer.uint32(10).string(message.msg);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): GenericAuthorization {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseGenericAuthorization();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): GenericAuthorization {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGenericAuthorization();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.msg = reader.string();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.msg = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): GenericAuthorization {
-		return { msg: isSet(object.msg) ? globalThis.String(object.msg) : "" };
-	},
+  fromJSON(object: any): GenericAuthorization {
+    return { msg: isSet(object.msg) ? globalThis.String(object.msg) : "" };
+  },
 
-	toJSON(message: GenericAuthorization): unknown {
-		const obj: any = {};
-		if (message.msg !== "") {
-			obj.msg = message.msg;
-		}
-		return obj;
-	},
+  toJSON(message: GenericAuthorization): unknown {
+    const obj: any = {};
+    if (message.msg !== "") {
+      obj.msg = message.msg;
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<GenericAuthorization>, I>>(base?: I): GenericAuthorization {
-		return GenericAuthorization.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<GenericAuthorization>, I>>(object: I): GenericAuthorization {
-		const message = createBaseGenericAuthorization();
-		message.msg = object.msg ?? "";
-		return message;
-	}
+  create<I extends Exact<DeepPartial<GenericAuthorization>, I>>(base?: I): GenericAuthorization {
+    return GenericAuthorization.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GenericAuthorization>, I>>(object: I): GenericAuthorization {
+    const message = createBaseGenericAuthorization();
+    message.msg = object.msg ?? "";
+    return message;
+  },
 };
 
 function createBaseGrant(): Grant {
-	return { authorization: undefined, expiration: undefined };
+  return { authorization: undefined, expiration: undefined };
 }
 
 export const Grant: MessageFns<Grant, "cosmos.authz.v1beta1.Grant"> = {
-	$type: "cosmos.authz.v1beta1.Grant" as const,
+  $type: "cosmos.authz.v1beta1.Grant" as const,
 
-	encode(message: Grant, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.authorization !== undefined) {
-			Any.encode(message.authorization, writer.uint32(10).fork()).join();
-		}
-		if (message.expiration !== undefined) {
-			Timestamp.encode(toTimestamp(message.expiration), writer.uint32(18).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: Grant, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.authorization !== undefined) {
+      Any.encode(message.authorization, writer.uint32(10).fork()).join();
+    }
+    if (message.expiration !== undefined) {
+      Timestamp.encode(toTimestamp(message.expiration), writer.uint32(18).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): Grant {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseGrant();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): Grant {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGrant();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.authorization = Any.decode(reader, reader.uint32());
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.authorization = Any.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): Grant {
-		return {
-			authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
-			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined
-		};
-	},
+  fromJSON(object: any): Grant {
+    return {
+      authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
+      expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined,
+    };
+  },
 
-	toJSON(message: Grant): unknown {
-		const obj: any = {};
-		if (message.authorization !== undefined) {
-			obj.authorization = Any.toJSON(message.authorization);
-		}
-		if (message.expiration !== undefined) {
-			obj.expiration = message.expiration.toISOString();
-		}
-		return obj;
-	},
+  toJSON(message: Grant): unknown {
+    const obj: any = {};
+    if (message.authorization !== undefined) {
+      obj.authorization = Any.toJSON(message.authorization);
+    }
+    if (message.expiration !== undefined) {
+      obj.expiration = message.expiration.toISOString();
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<Grant>, I>>(base?: I): Grant {
-		return Grant.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<Grant>, I>>(object: I): Grant {
-		const message = createBaseGrant();
-		message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
-		message.expiration = object.expiration ?? undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<Grant>, I>>(base?: I): Grant {
+    return Grant.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Grant>, I>>(object: I): Grant {
+    const message = createBaseGrant();
+    message.authorization = (object.authorization !== undefined && object.authorization !== null)
+      ? Any.fromPartial(object.authorization)
+      : undefined;
+    message.expiration = object.expiration ?? undefined;
+    return message;
+  },
 };
 
 function createBaseGrantAuthorization(): GrantAuthorization {
-	return { granter: "", grantee: "", authorization: undefined, expiration: undefined };
+  return { granter: "", grantee: "", authorization: undefined, expiration: undefined };
 }
 
 export const GrantAuthorization: MessageFns<GrantAuthorization, "cosmos.authz.v1beta1.GrantAuthorization"> = {
-	$type: "cosmos.authz.v1beta1.GrantAuthorization" as const,
+  $type: "cosmos.authz.v1beta1.GrantAuthorization" as const,
 
-	encode(message: GrantAuthorization, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.granter !== "") {
-			writer.uint32(10).string(message.granter);
-		}
-		if (message.grantee !== "") {
-			writer.uint32(18).string(message.grantee);
-		}
-		if (message.authorization !== undefined) {
-			Any.encode(message.authorization, writer.uint32(26).fork()).join();
-		}
-		if (message.expiration !== undefined) {
-			Timestamp.encode(toTimestamp(message.expiration), writer.uint32(34).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: GrantAuthorization, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.granter !== "") {
+      writer.uint32(10).string(message.granter);
+    }
+    if (message.grantee !== "") {
+      writer.uint32(18).string(message.grantee);
+    }
+    if (message.authorization !== undefined) {
+      Any.encode(message.authorization, writer.uint32(26).fork()).join();
+    }
+    if (message.expiration !== undefined) {
+      Timestamp.encode(toTimestamp(message.expiration), writer.uint32(34).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): GrantAuthorization {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseGrantAuthorization();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): GrantAuthorization {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGrantAuthorization();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.granter = reader.string();
-					continue;
-				case 2:
-					if (tag !== 18) {
-						break;
-					}
+          message.granter = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
 
-					message.grantee = reader.string();
-					continue;
-				case 3:
-					if (tag !== 26) {
-						break;
-					}
+          message.grantee = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
 
-					message.authorization = Any.decode(reader, reader.uint32());
-					continue;
-				case 4:
-					if (tag !== 34) {
-						break;
-					}
+          message.authorization = Any.decode(reader, reader.uint32());
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
 
-					message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.expiration = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): GrantAuthorization {
-		return {
-			granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
-			grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
-			authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
-			expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined
-		};
-	},
+  fromJSON(object: any): GrantAuthorization {
+    return {
+      granter: isSet(object.granter) ? globalThis.String(object.granter) : "",
+      grantee: isSet(object.grantee) ? globalThis.String(object.grantee) : "",
+      authorization: isSet(object.authorization) ? Any.fromJSON(object.authorization) : undefined,
+      expiration: isSet(object.expiration) ? fromJsonTimestamp(object.expiration) : undefined,
+    };
+  },
 
-	toJSON(message: GrantAuthorization): unknown {
-		const obj: any = {};
-		if (message.granter !== "") {
-			obj.granter = message.granter;
-		}
-		if (message.grantee !== "") {
-			obj.grantee = message.grantee;
-		}
-		if (message.authorization !== undefined) {
-			obj.authorization = Any.toJSON(message.authorization);
-		}
-		if (message.expiration !== undefined) {
-			obj.expiration = message.expiration.toISOString();
-		}
-		return obj;
-	},
+  toJSON(message: GrantAuthorization): unknown {
+    const obj: any = {};
+    if (message.granter !== "") {
+      obj.granter = message.granter;
+    }
+    if (message.grantee !== "") {
+      obj.grantee = message.grantee;
+    }
+    if (message.authorization !== undefined) {
+      obj.authorization = Any.toJSON(message.authorization);
+    }
+    if (message.expiration !== undefined) {
+      obj.expiration = message.expiration.toISOString();
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<GrantAuthorization>, I>>(base?: I): GrantAuthorization {
-		return GrantAuthorization.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<GrantAuthorization>, I>>(object: I): GrantAuthorization {
-		const message = createBaseGrantAuthorization();
-		message.granter = object.granter ?? "";
-		message.grantee = object.grantee ?? "";
-		message.authorization = object.authorization !== undefined && object.authorization !== null ? Any.fromPartial(object.authorization) : undefined;
-		message.expiration = object.expiration ?? undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<GrantAuthorization>, I>>(base?: I): GrantAuthorization {
+    return GrantAuthorization.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GrantAuthorization>, I>>(object: I): GrantAuthorization {
+    const message = createBaseGrantAuthorization();
+    message.granter = object.granter ?? "";
+    message.grantee = object.grantee ?? "";
+    message.authorization = (object.authorization !== undefined && object.authorization !== null)
+      ? Any.fromPartial(object.authorization)
+      : undefined;
+    message.expiration = object.expiration ?? undefined;
+    return message;
+  },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function toTimestamp(date: Date): Timestamp {
-	const seconds = Math.trunc(date.getTime() / 1_000);
-	const nanos = (date.getTime() % 1_000) * 1_000_000;
-	return { seconds, nanos };
+  const seconds = Math.trunc(date.getTime() / 1_000);
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
 }
 
 function fromTimestamp(t: Timestamp): Date {
-	let millis = (t.seconds || 0) * 1_000;
-	millis += (t.nanos || 0) / 1_000_000;
-	return new globalThis.Date(millis);
+  let millis = (t.seconds || 0) * 1_000;
+  millis += (t.nanos || 0) / 1_000_000;
+  return new globalThis.Date(millis);
 }
 
 function fromJsonTimestamp(o: any): Date {
-	if (o instanceof globalThis.Date) {
-		return o;
-	} else if (typeof o === "string") {
-		return new globalThis.Date(o);
-	} else {
-		return fromTimestamp(Timestamp.fromJSON(o));
-	}
+  if (o instanceof globalThis.Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new globalThis.Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
 }
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

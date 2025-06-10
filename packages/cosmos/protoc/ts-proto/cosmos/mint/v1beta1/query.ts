@@ -11,405 +11,418 @@ import { Params } from "./mint";
 export const protobufPackage = "cosmos.mint.v1beta1";
 
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
-export interface QueryParamsRequest {}
+export interface QueryParamsRequest {
+}
 
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
-	/** params defines the parameters of the module. */
-	params?: Params | undefined;
+  /** params defines the parameters of the module. */
+  params?: Params | undefined;
 }
 
 /** QueryInflationRequest is the request type for the Query/Inflation RPC method. */
-export interface QueryInflationRequest {}
+export interface QueryInflationRequest {
+}
 
 /**
  * QueryInflationResponse is the response type for the Query/Inflation RPC
  * method.
  */
 export interface QueryInflationResponse {
-	/** inflation is the current minting inflation value. */
-	inflation: Uint8Array;
+  /** inflation is the current minting inflation value. */
+  inflation: Uint8Array;
 }
 
 /**
  * QueryAnnualProvisionsRequest is the request type for the
  * Query/AnnualProvisions RPC method.
  */
-export interface QueryAnnualProvisionsRequest {}
+export interface QueryAnnualProvisionsRequest {
+}
 
 /**
  * QueryAnnualProvisionsResponse is the response type for the
  * Query/AnnualProvisions RPC method.
  */
 export interface QueryAnnualProvisionsResponse {
-	/** annual_provisions is the current minting annual provisions value. */
-	annual_provisions: Uint8Array;
+  /** annual_provisions is the current minting annual provisions value. */
+  annual_provisions: Uint8Array;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
-	return {};
+  return {};
 }
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest, "cosmos.mint.v1beta1.QueryParamsRequest"> = {
-	$type: "cosmos.mint.v1beta1.QueryParamsRequest" as const,
+  $type: "cosmos.mint.v1beta1.QueryParamsRequest" as const,
 
-	encode(_: QueryParamsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: QueryParamsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryParamsRequest();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryParamsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): QueryParamsRequest {
-		return {};
-	},
+  fromJSON(_: any): QueryParamsRequest {
+    return {};
+  },
 
-	toJSON(_: QueryParamsRequest): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: QueryParamsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
-		return QueryParamsRequest.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
-		const message = createBaseQueryParamsRequest();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
+    return QueryParamsRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
+    const message = createBaseQueryParamsRequest();
+    return message;
+  },
 };
 
 function createBaseQueryParamsResponse(): QueryParamsResponse {
-	return { params: undefined };
+  return { params: undefined };
 }
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse, "cosmos.mint.v1beta1.QueryParamsResponse"> = {
-	$type: "cosmos.mint.v1beta1.QueryParamsResponse" as const,
+  $type: "cosmos.mint.v1beta1.QueryParamsResponse" as const,
 
-	encode(message: QueryParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.params !== undefined) {
-			Params.encode(message.params, writer.uint32(10).fork()).join();
-		}
-		return writer;
-	},
+  encode(message: QueryParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.params !== undefined) {
+      Params.encode(message.params, writer.uint32(10).fork()).join();
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryParamsResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryParamsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.params = Params.decode(reader, reader.uint32());
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.params = Params.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): QueryParamsResponse {
-		return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
-	},
+  fromJSON(object: any): QueryParamsResponse {
+    return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
+  },
 
-	toJSON(message: QueryParamsResponse): unknown {
-		const obj: any = {};
-		if (message.params !== undefined) {
-			obj.params = Params.toJSON(message.params);
-		}
-		return obj;
-	},
+  toJSON(message: QueryParamsResponse): unknown {
+    const obj: any = {};
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
-		return QueryParamsResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
-		const message = createBaseQueryParamsResponse();
-		message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
-		return message;
-	}
+  create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
+    return QueryParamsResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
+    const message = createBaseQueryParamsResponse();
+    message.params = (object.params !== undefined && object.params !== null)
+      ? Params.fromPartial(object.params)
+      : undefined;
+    return message;
+  },
 };
 
 function createBaseQueryInflationRequest(): QueryInflationRequest {
-	return {};
+  return {};
 }
 
 export const QueryInflationRequest: MessageFns<QueryInflationRequest, "cosmos.mint.v1beta1.QueryInflationRequest"> = {
-	$type: "cosmos.mint.v1beta1.QueryInflationRequest" as const,
+  $type: "cosmos.mint.v1beta1.QueryInflationRequest" as const,
 
-	encode(_: QueryInflationRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: QueryInflationRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryInflationRequest {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryInflationRequest();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryInflationRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryInflationRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): QueryInflationRequest {
-		return {};
-	},
+  fromJSON(_: any): QueryInflationRequest {
+    return {};
+  },
 
-	toJSON(_: QueryInflationRequest): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: QueryInflationRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<QueryInflationRequest>, I>>(base?: I): QueryInflationRequest {
-		return QueryInflationRequest.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryInflationRequest>, I>>(_: I): QueryInflationRequest {
-		const message = createBaseQueryInflationRequest();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<QueryInflationRequest>, I>>(base?: I): QueryInflationRequest {
+    return QueryInflationRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QueryInflationRequest>, I>>(_: I): QueryInflationRequest {
+    const message = createBaseQueryInflationRequest();
+    return message;
+  },
 };
 
 function createBaseQueryInflationResponse(): QueryInflationResponse {
-	return { inflation: new Uint8Array(0) };
+  return { inflation: new Uint8Array(0) };
 }
 
-export const QueryInflationResponse: MessageFns<QueryInflationResponse, "cosmos.mint.v1beta1.QueryInflationResponse"> = {
-	$type: "cosmos.mint.v1beta1.QueryInflationResponse" as const,
+export const QueryInflationResponse: MessageFns<QueryInflationResponse, "cosmos.mint.v1beta1.QueryInflationResponse"> =
+  {
+    $type: "cosmos.mint.v1beta1.QueryInflationResponse" as const,
 
-	encode(message: QueryInflationResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.inflation.length !== 0) {
-			writer.uint32(10).bytes(message.inflation);
-		}
-		return writer;
-	},
+    encode(message: QueryInflationResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+      if (message.inflation.length !== 0) {
+        writer.uint32(10).bytes(message.inflation);
+      }
+      return writer;
+    },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryInflationResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryInflationResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+    decode(input: BinaryReader | Uint8Array, length?: number): QueryInflationResponse {
+      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+      let end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryInflationResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1:
+            if (tag !== 10) {
+              break;
+            }
 
-					message.inflation = reader.bytes();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+            message.inflation = reader.bytes();
+            continue;
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
 
-	fromJSON(object: any): QueryInflationResponse {
-		return { inflation: isSet(object.inflation) ? bytesFromBase64(object.inflation) : new Uint8Array(0) };
-	},
+    fromJSON(object: any): QueryInflationResponse {
+      return { inflation: isSet(object.inflation) ? bytesFromBase64(object.inflation) : new Uint8Array(0) };
+    },
 
-	toJSON(message: QueryInflationResponse): unknown {
-		const obj: any = {};
-		if (message.inflation.length !== 0) {
-			obj.inflation = base64FromBytes(message.inflation);
-		}
-		return obj;
-	},
+    toJSON(message: QueryInflationResponse): unknown {
+      const obj: any = {};
+      if (message.inflation.length !== 0) {
+        obj.inflation = base64FromBytes(message.inflation);
+      }
+      return obj;
+    },
 
-	create<I extends Exact<DeepPartial<QueryInflationResponse>, I>>(base?: I): QueryInflationResponse {
-		return QueryInflationResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryInflationResponse>, I>>(object: I): QueryInflationResponse {
-		const message = createBaseQueryInflationResponse();
-		message.inflation = object.inflation ?? new Uint8Array(0);
-		return message;
-	}
-};
+    create<I extends Exact<DeepPartial<QueryInflationResponse>, I>>(base?: I): QueryInflationResponse {
+      return QueryInflationResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryInflationResponse>, I>>(object: I): QueryInflationResponse {
+      const message = createBaseQueryInflationResponse();
+      message.inflation = object.inflation ?? new Uint8Array(0);
+      return message;
+    },
+  };
 
 function createBaseQueryAnnualProvisionsRequest(): QueryAnnualProvisionsRequest {
-	return {};
+  return {};
 }
 
-export const QueryAnnualProvisionsRequest: MessageFns<QueryAnnualProvisionsRequest, "cosmos.mint.v1beta1.QueryAnnualProvisionsRequest"> = {
-	$type: "cosmos.mint.v1beta1.QueryAnnualProvisionsRequest" as const,
+export const QueryAnnualProvisionsRequest: MessageFns<
+  QueryAnnualProvisionsRequest,
+  "cosmos.mint.v1beta1.QueryAnnualProvisionsRequest"
+> = {
+  $type: "cosmos.mint.v1beta1.QueryAnnualProvisionsRequest" as const,
 
-	encode(_: QueryAnnualProvisionsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		return writer;
-	},
+  encode(_: QueryAnnualProvisionsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryAnnualProvisionsRequest {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryAnnualProvisionsRequest();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAnnualProvisionsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryAnnualProvisionsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(_: any): QueryAnnualProvisionsRequest {
-		return {};
-	},
+  fromJSON(_: any): QueryAnnualProvisionsRequest {
+    return {};
+  },
 
-	toJSON(_: QueryAnnualProvisionsRequest): unknown {
-		const obj: any = {};
-		return obj;
-	},
+  toJSON(_: QueryAnnualProvisionsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<QueryAnnualProvisionsRequest>, I>>(base?: I): QueryAnnualProvisionsRequest {
-		return QueryAnnualProvisionsRequest.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryAnnualProvisionsRequest>, I>>(_: I): QueryAnnualProvisionsRequest {
-		const message = createBaseQueryAnnualProvisionsRequest();
-		return message;
-	}
+  create<I extends Exact<DeepPartial<QueryAnnualProvisionsRequest>, I>>(base?: I): QueryAnnualProvisionsRequest {
+    return QueryAnnualProvisionsRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QueryAnnualProvisionsRequest>, I>>(_: I): QueryAnnualProvisionsRequest {
+    const message = createBaseQueryAnnualProvisionsRequest();
+    return message;
+  },
 };
 
 function createBaseQueryAnnualProvisionsResponse(): QueryAnnualProvisionsResponse {
-	return { annual_provisions: new Uint8Array(0) };
+  return { annual_provisions: new Uint8Array(0) };
 }
 
-export const QueryAnnualProvisionsResponse: MessageFns<QueryAnnualProvisionsResponse, "cosmos.mint.v1beta1.QueryAnnualProvisionsResponse"> = {
-	$type: "cosmos.mint.v1beta1.QueryAnnualProvisionsResponse" as const,
+export const QueryAnnualProvisionsResponse: MessageFns<
+  QueryAnnualProvisionsResponse,
+  "cosmos.mint.v1beta1.QueryAnnualProvisionsResponse"
+> = {
+  $type: "cosmos.mint.v1beta1.QueryAnnualProvisionsResponse" as const,
 
-	encode(message: QueryAnnualProvisionsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-		if (message.annual_provisions.length !== 0) {
-			writer.uint32(10).bytes(message.annual_provisions);
-		}
-		return writer;
-	},
+  encode(message: QueryAnnualProvisionsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.annual_provisions.length !== 0) {
+      writer.uint32(10).bytes(message.annual_provisions);
+    }
+    return writer;
+  },
 
-	decode(input: BinaryReader | Uint8Array, length?: number): QueryAnnualProvisionsResponse {
-		const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-		let end = length === undefined ? reader.len : reader.pos + length;
-		const message = createBaseQueryAnnualProvisionsResponse();
-		while (reader.pos < end) {
-			const tag = reader.uint32();
-			switch (tag >>> 3) {
-				case 1:
-					if (tag !== 10) {
-						break;
-					}
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAnnualProvisionsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryAnnualProvisionsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
 
-					message.annual_provisions = reader.bytes();
-					continue;
-			}
-			if ((tag & 7) === 4 || tag === 0) {
-				break;
-			}
-			reader.skip(tag & 7);
-		}
-		return message;
-	},
+          message.annual_provisions = reader.bytes();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-	fromJSON(object: any): QueryAnnualProvisionsResponse {
-		return {
-			annual_provisions: isSet(object.annual_provisions) ? bytesFromBase64(object.annual_provisions) : new Uint8Array(0)
-		};
-	},
+  fromJSON(object: any): QueryAnnualProvisionsResponse {
+    return {
+      annual_provisions: isSet(object.annual_provisions)
+        ? bytesFromBase64(object.annual_provisions)
+        : new Uint8Array(0),
+    };
+  },
 
-	toJSON(message: QueryAnnualProvisionsResponse): unknown {
-		const obj: any = {};
-		if (message.annual_provisions.length !== 0) {
-			obj.annual_provisions = base64FromBytes(message.annual_provisions);
-		}
-		return obj;
-	},
+  toJSON(message: QueryAnnualProvisionsResponse): unknown {
+    const obj: any = {};
+    if (message.annual_provisions.length !== 0) {
+      obj.annual_provisions = base64FromBytes(message.annual_provisions);
+    }
+    return obj;
+  },
 
-	create<I extends Exact<DeepPartial<QueryAnnualProvisionsResponse>, I>>(base?: I): QueryAnnualProvisionsResponse {
-		return QueryAnnualProvisionsResponse.fromPartial(base ?? ({} as any));
-	},
-	fromPartial<I extends Exact<DeepPartial<QueryAnnualProvisionsResponse>, I>>(object: I): QueryAnnualProvisionsResponse {
-		const message = createBaseQueryAnnualProvisionsResponse();
-		message.annual_provisions = object.annual_provisions ?? new Uint8Array(0);
-		return message;
-	}
+  create<I extends Exact<DeepPartial<QueryAnnualProvisionsResponse>, I>>(base?: I): QueryAnnualProvisionsResponse {
+    return QueryAnnualProvisionsResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QueryAnnualProvisionsResponse>, I>>(
+    object: I,
+  ): QueryAnnualProvisionsResponse {
+    const message = createBaseQueryAnnualProvisionsResponse();
+    message.annual_provisions = object.annual_provisions ?? new Uint8Array(0);
+    return message;
+  },
 };
 
 function bytesFromBase64(b64: string): Uint8Array {
-	if ((globalThis as any).Buffer) {
-		return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
-	} else {
-		const bin = globalThis.atob(b64);
-		const arr = new Uint8Array(bin.length);
-		for (let i = 0; i < bin.length; ++i) {
-			arr[i] = bin.charCodeAt(i);
-		}
-		return arr;
-	}
+  if ((globalThis as any).Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  } else {
+    const bin = globalThis.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+      arr[i] = bin.charCodeAt(i);
+    }
+    return arr;
+  }
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-	if ((globalThis as any).Buffer) {
-		return globalThis.Buffer.from(arr).toString("base64");
-	} else {
-		const bin: string[] = [];
-		arr.forEach((byte) => {
-			bin.push(globalThis.String.fromCharCode(byte));
-		});
-		return globalThis.btoa(bin.join(""));
-	}
+  if ((globalThis as any).Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
+  } else {
+    const bin: string[] = [];
+    arr.forEach((byte) => {
+      bin.push(globalThis.String.fromCharCode(byte));
+    });
+    return globalThis.btoa(bin.join(""));
+  }
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-	? T
-	: T extends globalThis.Array<infer U>
-		? globalThis.Array<DeepPartial<U>>
-		: T extends ReadonlyArray<infer U>
-			? ReadonlyArray<DeepPartial<U>>
-			: T extends {}
-				? { [K in keyof T]?: DeepPartial<T[K]> }
-				: Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export interface MessageFns<T, V extends string> {
-	readonly $type: V;
-	encode(message: T, writer?: BinaryWriter): BinaryWriter;
-	decode(input: BinaryReader | Uint8Array, length?: number): T;
-	fromJSON(object: any): T;
-	toJSON(message: T): unknown;
-	create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
-	fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
+  readonly $type: V;
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

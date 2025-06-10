@@ -12,7 +12,7 @@ export const runBiomeFix = async (filePath: string) => {
 	try {
 		if (!existsSync(filePath)) return;
 
-		await execAsync(`biome check ${filePath} --write`);
+		await execAsync(`npx biome check ${filePath} --write`);
 	} catch (error) {
 		// @biome-ignore
 		console.log(error);
