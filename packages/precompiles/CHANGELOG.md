@@ -2,6 +2,12 @@
 
 <!-- Switched name to @sei-js/precompiles -->
 
+## 2.0.5
+
+### Patch Changes
+
+- 475b27c: Added Solo functions for migration to EVM only
+
 ## 2.0.4
 
 ### Patch Changes
