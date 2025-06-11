@@ -17,7 +17,7 @@ please refer to the table below.
 
 | Package                                                 | Description                                                                                                                     |
 |---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
-| [@sei-js/evm](packages/evm)                             | Typescript library containing helper functions for interacting with the EVM on Sei.                                             |
+| [@sei-js/precompiles](packages/precompiles)             | Typescript library containing helper functions for interacting with Sei's precompile contracts.                                  |
 | [@sei-js/create-sei](packages/create-sei)               | CLI Tool used to quickly spin up Sei Projects and dApps in either the cosmos or EVM ecosystem                                   |
 | [@sei-js/mcp-server](packages/mcp-server)               | MCP server for interacting with Sei via LLM's and agents                                                                        |
 | [@sei-js/sei-global-wallet](packages/sei-global-wallet) | A global wallet conforming to EIP-6963 allowing for AA across dApps.                                                            |

@@ -3,6 +3,7 @@
 # testing
 packages/*/coverage
 
+examples/
 
 # compiled output
 dist
