@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test } from '@jest/globals';
-import { config, getPrivateKeyAsHex } from '../../core/config.js';
-import { formatPrivateKey as mockFormatPrivateKey, initializeConfig, getPrivateKeyAsHex as mockGetPrivateKeyAsHex } from './helpers/config-utils.js';
+import { config, formatPrivateKey, getPrivateKeyAsHex } from '../../core/config.js';
 
 /**
  * This file contains tests for both the actual config implementation and the mock config implementation.
@@ -14,12 +13,6 @@ import { formatPrivateKey as mockFormatPrivateKey, initializeConfig, getPrivateK
 jest.mock('dotenv', () => ({
   config: jest.fn()
 }));
-
-// Get direct access to the formatPrivateKey function for testing
-const formatPrivateKey = (key?: string): string | undefined => {
-  if (!key) return undefined;
-  return key.startsWith('0x') ? key : `0x${key}`;
-};
 
 describe('Config Module - Actual Implementation', () => {
   // Store original environment
