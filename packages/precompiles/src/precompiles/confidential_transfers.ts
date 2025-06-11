@@ -1,13 +1,13 @@
 /**
  * The address of the Confidential Transfers precompile contract.
  * This contract facilitates the interaction with the Confidential Transfers module using the EVM.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001010';
 
 /**
  * The ABI for the Confidential Transfers precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI = [
 	{

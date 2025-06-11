@@ -3,7 +3,7 @@ import { IBC_PRECOMPILE_ABI, IBC_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
  * The ABI for the IBC precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_IBC_PRECOMPILE_ABI = IBC_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -28,7 +28,7 @@ export const ETHERS_IBC_PRECOMPILE_ABI = IBC_PRECOMPILE_ABI as InterfaceAbi;
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the IBC precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export const getIbcPrecompileEthersV6Contract = (runner: ContractRunner) => {
 	return new Contract(IBC_PRECOMPILE_ADDRESS, ETHERS_IBC_PRECOMPILE_ABI, runner);

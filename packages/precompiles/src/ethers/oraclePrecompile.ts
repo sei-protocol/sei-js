@@ -27,7 +27,7 @@ export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as InterfaceAb
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the Oracle precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export const getOraclePrecompileEthersV6Contract = (runner: ContractRunner) => {
 	return new Contract(ORACLE_PRECOMPILE_ADDRESS, ETHERS_ORACLE_PRECOMPILE_ABI, runner);

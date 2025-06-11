@@ -1,12 +1,12 @@
 /**
  * The address of the IBC precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const IBC_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001009';
 
 /**
  * The ABI for the IBC precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const IBC_PRECOMPILE_ABI = [
 	{

@@ -3,7 +3,7 @@ import { GOVERNANCE_PRECOMPILE_ABI, GOVERNANCE_PRECOMPILE_ADDRESS } from '../pre
 
 /**
  * The ABI for the Governance precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_GOVERNANCE_PRECOMPILE_ABI = GOVERNANCE_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -13,8 +13,8 @@ export const ETHERS_GOVERNANCE_PRECOMPILE_ABI = GOVERNANCE_PRECOMPILE_ABI as Int
  *
  * @example
  * ```tsx
- * import { getGovernancePrecompileEthersV6Contract, parseSei } from '@sei-js/precompiles/ethers';
- * import { ethers } from 'ethers';
+ * import { getGovernancePrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
+ * import { ethers, parseEther } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(); // or any other provider
  * const signer = provider.getSigner();
@@ -22,13 +22,13 @@ export const ETHERS_GOVERNANCE_PRECOMPILE_ABI = GOVERNANCE_PRECOMPILE_ABI as Int
  * const governancePrecompileContract = getGovernancePrecompileEthersV6Contract(signer);
  *
  * // Surround with try/catch for detailed errors
- * const depositResponse = await governancePrecompileContract.connect(signer).deposit('1', { value: parseSei(1) });
+ * const depositResponse = await governancePrecompileContract.connect(signer).deposit('1', { value: parseEther(1) });
  * console.log('Deposit Response:', depositResponse);
  * ```
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the Governance precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export const getGovernancePrecompileEthersV6Contract = (runner: ContractRunner) => {
 	return new Contract(GOVERNANCE_PRECOMPILE_ADDRESS, ETHERS_GOVERNANCE_PRECOMPILE_ABI, runner);

@@ -1,6 +1,6 @@
 /**
  * The address of the Bank precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001001';
 

@@ -27,7 +27,7 @@ export const ETHERS_POINTERVIEW_PRECOMPILE_ABI = POINTERVIEW_PRECOMPILE_ABI as I
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the Pointerview precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export const getPointerviewPrecompileEthersV6Contract = (runner: ContractRunner) => {
 	return new Contract(POINTERVIEW_PRECOMPILE_ADDRESS, ETHERS_POINTERVIEW_PRECOMPILE_ABI, runner);

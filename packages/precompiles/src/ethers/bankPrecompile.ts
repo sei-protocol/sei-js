@@ -3,7 +3,7 @@ import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
  * The ABI for the Bank precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_BANK_PRECOMPILE_ABI = BANK_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -29,7 +29,7 @@ export const ETHERS_BANK_PRECOMPILE_ABI = BANK_PRECOMPILE_ABI as InterfaceAbi;
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the Bank precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export const getBankPrecompileEthersV6Contract = (runner: ContractRunner) => {
 	return new Contract(BANK_PRECOMPILE_ADDRESS, BANK_PRECOMPILE_ABI, runner);

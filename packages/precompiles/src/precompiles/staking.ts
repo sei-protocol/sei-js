@@ -1,12 +1,12 @@
 /**
  * The address of the Staking precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const STAKING_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001005';
 
 /**
  * The ABI for the Staking precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const STAKING_PRECOMPILE_ABI = [
 	{

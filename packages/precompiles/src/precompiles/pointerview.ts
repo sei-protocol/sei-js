@@ -1,12 +1,12 @@
 /**
  * The address of the Pointerview precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const POINTERVIEW_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000000000000000000000000100A';
 
 /**
  * The ABI for the Pointerview precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const POINTERVIEW_PRECOMPILE_ABI = [
 	{

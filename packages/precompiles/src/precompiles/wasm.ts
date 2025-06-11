@@ -1,12 +1,12 @@
 /**
  * The address of the Wasm precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const WASM_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001002';
 
 /**
  * The ABI for the Wasm precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const WASM_PRECOMPILE_ABI = [
 	{

@@ -6,7 +6,8 @@
 	"bin": "./dist/main.js",
 	"scripts": {
 		"build": "tsc && cp -r ./templates ./dist/templates",
-		"dev": "node --loader ts-node/esm src/main.ts"
+		"dev": "node --loader ts-node/esm src/main.ts",
+		"docs": "typedoc --out docs"
 	},
 	"dependencies": {
 		"boxen": "^7.1.1",

@@ -1,6 +1,6 @@
 /**
  * The address of the Distribution precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const DISTRIBUTION_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001007';
 

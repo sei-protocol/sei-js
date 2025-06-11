@@ -1,12 +1,12 @@
 /**
  * The address of the Oracle precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const ORACLE_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001002';
 
 /**
  * The ABI for the Oracle precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ORACLE_PRECOMPILE_ABI = [
 	{

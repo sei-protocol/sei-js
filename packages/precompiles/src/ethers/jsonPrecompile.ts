@@ -3,7 +3,7 @@ import { JSON_PRECOMPILE_ABI, JSON_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
  * The ABI for the JSON precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_JSON_PRECOMPILE_ABI = JSON_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -29,7 +29,7 @@ export const ETHERS_JSON_PRECOMPILE_ABI = JSON_PRECOMPILE_ABI as InterfaceAbi;
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the JSON precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export const getJSONPrecompileEthersV6Contract = (runner: ContractRunner) => {
 	return new Contract(JSON_PRECOMPILE_ADDRESS, ETHERS_JSON_PRECOMPILE_ABI, runner);

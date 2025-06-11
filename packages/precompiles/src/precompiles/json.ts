@@ -1,12 +1,12 @@
 /**
  * The address of the JSON precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const JSON_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001003';
 
 /**
  * The ABI for the JSON precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const JSON_PRECOMPILE_ABI = [
 	{

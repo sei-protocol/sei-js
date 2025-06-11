@@ -3,5 +3,11 @@
 	"include": ["./library"],
 	"compilerOptions": {
 		"outDir": "./dist"
+	},
+	"typedocOptions": {
+		"readme": "./README.md",
+		"name": "cosmos",
+		"entryPoints": ["library/encoding/index.ts", "library/rest/index.ts", "library/types/index.ts"],
+		"exclude": ["node_modules"]
 	}
 }

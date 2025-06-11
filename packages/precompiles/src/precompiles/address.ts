@@ -1,7 +1,7 @@
 /**
  * The address of the Address precompile contract.
  * This contract gets associated Sei and EVM addresses.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const ADDRESS_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001004';
 

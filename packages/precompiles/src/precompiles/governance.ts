@@ -1,12 +1,12 @@
 /**
  * The address of the Governance precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const GOVERNANCE_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001006';
 
 /**
  * The ABI for the Governance precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const GOVERNANCE_PRECOMPILE_ABI = [
 	{

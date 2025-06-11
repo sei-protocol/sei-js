@@ -3,7 +3,7 @@ import { CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI, CONFIDENTIAL_TRANSFERS_PRECOMPIL
 
 /**
  * The ABI for the Confidential Transfers precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI = CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -28,7 +28,7 @@ export const ETHERS_CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI = CONFIDENTIAL_TRANSFE
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export function getConfidentialTransfersPrecompileEthersV6Contract(runner: ContractRunner) {
 	return new Contract(CONFIDENTIAL_TRANSFERS_PRECOMPILE_ADDRESS, ETHERS_CONFIDENTIAL_TRANSFERS_PRECOMPILE_ABI, runner);

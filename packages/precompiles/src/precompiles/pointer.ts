@@ -1,12 +1,12 @@
 /**
  * The address of the Pointer precompile contract.
- * @category Cosmos Interoperability
+ * @category Address
  */
 export const POINTER_PRECOMPILE_ADDRESS: `0x${string}` = '0x000000000000000000000000000000000000100B';
 
 /**
  * The ABI for the Pointer precompile contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const POINTER_PRECOMPILE_ABI = [
 	{
