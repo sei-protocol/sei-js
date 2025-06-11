@@ -1,5 +1,14 @@
 # @sei-js/cosmjs
 
+## 1.0.12
+
+### Patch Changes
+
+- e4a6011: Deprecating these packages
+- Updated dependencies [e4a6011]
+- Updated dependencies [475b27c]
+  - @sei-js/cosmos@1.0.6
+
 ## 1.0.11
 
 ### Patch Changes

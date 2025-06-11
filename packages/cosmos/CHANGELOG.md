@@ -1,5 +1,12 @@
 # @sei-js/cosmos
 
+## 1.0.6
+
+### Patch Changes
+
+- e4a6011: Deprecating these packages
+- 475b27c: Added Solo functions for migration to EVM only
+
 ## 1.0.5
 
 ### Patch Changes
