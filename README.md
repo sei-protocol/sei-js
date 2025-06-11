@@ -27,5 +27,22 @@ please refer to the table below.
 
 ## Development
 
-To build all packages and docs, run `yarn install` then `yarn build:all`
+### Prerequisites
 
+This project uses Yarn 4.7.0 with Corepack for package management. To get started:
+
+1. **Enable Corepack** (if not already enabled):
+   ```bash
+   corepack enable
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   yarn install
+   ```
+
+The correct Yarn version will be automatically used thanks to the `packageManager` field in `package.json` and Corepack.
+
+### Building
+
+To build all packages and docs, run `yarn install` then `yarn build:all`
