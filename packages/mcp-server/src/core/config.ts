@@ -14,7 +14,7 @@ const envSchema = z.object({
 const env = envSchema.safeParse(process.env);
 
 // Format private key with 0x prefix if it exists
-const formatPrivateKey = (key?: string): string | undefined => {
+export const formatPrivateKey = (key?: string): string | undefined => {
 	if (!key) return undefined;
 
 	// Ensure the private key has 0x prefix
