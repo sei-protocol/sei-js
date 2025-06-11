@@ -8,9 +8,9 @@ flags:
   create-sei:
     paths:
       - packages/create-sei/**
-  evm:
+  precompiles:
     paths:
-      - packages/registry/**
+      - packages/precompiles/**
   ledger:
     paths:
       - packages/ledger/**
@@ -35,10 +35,10 @@ coverage:
         target: 80%
         flags:
           - create-sei
-      evm:
+      precompiles:
         target: 80%
         flags:
-          - evm
+          - precompiles
       ledger:
         target: 80%
         flags:

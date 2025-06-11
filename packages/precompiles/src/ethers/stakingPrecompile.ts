@@ -3,7 +3,7 @@ import { STAKING_PRECOMPILE_ABI, STAKING_PRECOMPILE_ADDRESS } from '../precompil
 
 /**
  * The ABI for the Staking precompile contract, used to create an Ethers contract.
- * @category Cosmos Interoperability
+ * @category ABI
  */
 export const ETHERS_STAKING_PRECOMPILE_ABI = STAKING_PRECOMPILE_ABI as InterfaceAbi;
 
@@ -13,8 +13,8 @@ export const ETHERS_STAKING_PRECOMPILE_ABI = STAKING_PRECOMPILE_ABI as Interface
  *
  * @example
  * ```tsx
- * import { getStakingPrecompileEthersV6Contract, parseSei } from '@sei-js/precompiles/ethers';
- * import { ethers } from 'ethers';
+ * import { getStakingPrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
+ * import { ethers, parseEther } from 'ethers';
  *
  * const provider = new ethers.BrowserProvider(window.ethereum); // or any other provider
  * const signer = await provider.getSigner();
@@ -23,13 +23,13 @@ export const ETHERS_STAKING_PRECOMPILE_ABI = STAKING_PRECOMPILE_ABI as Interface
  *
  * const contract = getStakingPrecompileEthersV6Contract(signer);
  *
- * const response = await contract.delegate('0xVALIDATOR_ADDRESS', parseSei(1));
+ * const response = await contract.delegate('0xVALIDATOR_ADDRESS', parseEther(1));
  * console.log('Delegate Response:', response);
  * ```
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
  * @returns The typed contract instance for interacting with the Staking precompile contract.
- * @category Cosmos Interoperability
+ * @category Contract Factory
  */
 export const getStakingPrecompileEthersV6Contract = (runner: ContractRunner) => {
 	return new Contract(STAKING_PRECOMPILE_ADDRESS, ETHERS_STAKING_PRECOMPILE_ABI, runner);

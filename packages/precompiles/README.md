@@ -58,10 +58,10 @@ const balance = await client.readContract({
 
 ```typescript
 import { ethers } from 'ethers'
-import { getBankPrecompileEthersContract } from '@sei-js/precompiles/ethers'
+import { getBankPrecompileEthersV6Contract } from '@sei-js/precompiles/ethers'
 
 const provider = new ethers.JsonRpcProvider('https://evm-rpc.sei-apis.com')
-const bankContract = getBankPrecompileEthersContract(provider)
+const bankContract = getBankPrecompileEthersV6Contract(provider)
 
 // Read token balance
 const balance = await bankContract.balance('0x...', 'usei')
