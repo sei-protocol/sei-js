@@ -3,7 +3,7 @@ import { seiLocal } from '../chain';
 describe('seiLocal chain', () => {
 	it('should be a valid chain definition', () => {
 		expect(seiLocal).toMatchObject({
-			id: 713715,
+			id: 713714,
 			name: 'Sei Local',
 			nativeCurrency: {
 				name: 'Sei',
