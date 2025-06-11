@@ -1,5 +1,11 @@
 # @sei-js/precompiles
 
+## 2.1.0
+
+### Minor Changes
+
+- b888b94: Rename @sei-js/evm to @sei-js/precompiles
+
 <!-- Switched name to @sei-js/precompiles -->
 
 ## 2.0.5
