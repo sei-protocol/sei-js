@@ -7,7 +7,7 @@
 	},
 	"typedocOptions": {
 		"readme": "./README.md",
-		"name": "registry",
+		"name": "ledger",
 		"entryPoints": ["src/index.ts"]
 	}
 }

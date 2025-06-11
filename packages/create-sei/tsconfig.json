@@ -15,5 +15,11 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src"]
+	"include": ["src"],
+	"typedocOptions": {
+		"readme": "./README.md",
+		"name": "create-sei",
+		"entryPoints": ["src/main.ts"],
+		"exclude": ["node_modules"]
+	}
 }
