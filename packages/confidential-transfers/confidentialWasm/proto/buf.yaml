@@ -1,4 +1,0 @@
-version: v1
-name:  buf.build/sei-protocol/confidentialtransfers
-deps:
-  - buf.build/sei-protocol/third-party

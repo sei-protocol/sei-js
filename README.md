@@ -21,8 +21,6 @@ please refer to the table below.
 | [@sei-js/create-sei](packages/create-sei)               | CLI Tool used to quickly spin up Sei Projects and dApps in either the cosmos or EVM ecosystem                                   |
 | [@sei-js/mcp-server](packages/mcp-server)               | MCP server for interacting with Sei via LLM's and agents                                                                        |
 | [@sei-js/sei-global-wallet](packages/sei-global-wallet) | A global wallet conforming to EIP-6963 allowing for AA across dApps.                                                            |
-| [@sei-js/cosmjs](packages/cosmjs)                       | TypeScript library containing helper functions for wallet connection, transaction signing, and RPC querying using cosmjs.       |
-| [@sei-js/cosmos](packages/cosmos)                       | TypeScript library for Sei protobuf encoding and decoding, a REST query client, and Typescript types for everything Sei Cosmos. |
 | [@sei-js/ledger](packages/ledger)                       | TypeScript library transacting on Sei using a Ledger device.                                                                    |
 
 ## Development

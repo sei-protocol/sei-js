@@ -1,5 +1,0 @@
-version: v1
-plugins:
-  - name: gogo
-    out: ./cttypes
-    opt: paths=source_relative

@@ -1,8 +1,0 @@
-# compiled output
-dist
-
-# dependencies
-node_modules
-
-.idea
-.DS_Store
