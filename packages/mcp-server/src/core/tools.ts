@@ -1,9 +1,8 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { Address, Hash, Hex } from 'viem';
+import type { Address, Hash, Hex, WriteContractParameters } from 'viem';
 import { z } from 'zod';
 import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
-import { isWalletEnabled } from './config.js';
-import { getWalletProvider } from './wallet/index.js';
+import { getPrivateKeyAsHex } from './config.js';
 import * as services from './services/index.js';
 
 /**
@@ -12,21 +11,6 @@ import * as services from './services/index.js';
  * @param server The MCP server instance
  */
 export function registerEVMTools(server: McpServer) {
-	// Register read-only tools (always available)
-	registerReadOnlyTools(server);
-
-	// Register wallet-dependent tools (only if wallet is enabled)
-	if (isWalletEnabled()) {
-		registerWalletTools(server);
-	} else {
-		console.error('Wallet functionality is disabled. Wallet-dependent tools will not be available.');
-	}
-}
-
-/**
- * Register read-only tools that don't require wallet functionality
- */
-function registerReadOnlyTools(server: McpServer) {
 	// NETWORK INFORMATION TOOLS
 
 	// Get chain information
@@ -331,7 +315,7 @@ function registerReadOnlyTools(server: McpServer) {
 		'Get detailed information about a specific transaction by its hash. Includes sender, recipient, value, data, and more.',
 		{
 			txHash: z.string().describe("The transaction hash to look up (e.g., '0x1234...')"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ txHash, network = DEFAULT_NETWORK }) => {
 			try {
@@ -445,12 +429,7 @@ function registerReadOnlyTools(server: McpServer) {
 			}
 		}
 	);
-}
 
-/**
- * Register wallet-dependent tools that require wallet functionality
- */
-function registerWalletTools(server: McpServer) {
 	// TRANSFER TOOLS
 
 	// Transfer Sei
@@ -818,12 +797,12 @@ function registerWalletTools(server: McpServer) {
 				// Parse ABI if it's a string
 				const parsedAbi = typeof abi === 'string' ? JSON.parse(abi) : abi;
 
-				const contractParams: Record<string, unknown> = {
+				const contractParams = {
 					address: contractAddress as Address,
 					abi: parsedAbi,
 					functionName,
 					args
-				};
+				} as unknown as WriteContractParameters;
 
 				const txHash = await services.writeContract(contractParams, network);
 
@@ -1320,20 +1299,20 @@ function registerWalletTools(server: McpServer) {
 		async () => {
 			// Handler function starts here
 			try {
-				const walletProvider = getWalletProvider();
-				if (!walletProvider.isAvailable()) {
+				const privateKeyValue = getPrivateKeyAsHex();
+				if (!privateKeyValue) {
 					return {
 						content: [
 							{
 								type: 'text',
-								text: `Error: Wallet provider '${walletProvider.getName()}' is not available. Please configure the wallet provider and restart the MCP server.`
+								text: 'Error: The PRIVATE_KEY environment variable is not set. Please set this variable with your private key and restart the MCP server for this tool to function.'
 							}
 						],
 						isError: true
 					};
 				}
 
-				const address = await services.getAddressFromProvider();
+				const address = services.getAddressFromPrivateKey(privateKeyValue);
 
 				return {
 					content: [
