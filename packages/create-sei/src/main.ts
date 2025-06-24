@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import inquirer from 'inquirer';
 import boxen from 'boxen';
+import inquirer from 'inquirer';
 
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Command } from 'commander';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -86,7 +86,7 @@ const promptEVMLibrary = async () => {
 };
 
 function isValidDirectoryName(dirName) {
-	const illegalRe = /[<>:"/\\|?*\x00-\x1F]/g;
+	const illegalRe = /[<>:"/\\|?*]/g;
 	const windowsReservedRe = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])$/i;
 	const trailingRe = /[. ]+$/;
 	const validNpmPackageRe = /^(?:@[a-z0-9-*~][a-z0-9-*._~]*)?[a-z0-9-~][a-z0-9-._~]*$/;
@@ -95,6 +95,7 @@ function isValidDirectoryName(dirName) {
 		return false;
 	}
 
+	// Check for illegal characters, Windows reserved names, trailing spaces/dots
 	if (illegalRe.test(dirName) || windowsReservedRe.test(dirName) || trailingRe.test(dirName) || !validNpmPackageRe.test(dirName)) {
 		return false;
 	}
@@ -166,7 +167,7 @@ async function runWizard(options: WizardOptions): Promise<void> {
 
 	const appFramework = options.framework || (await promptFramework());
 	let appConnectionType = options.ecosystem || (await promptRpcIntegrations());
-	if (appConnectionType == RPCIntegrationType.EVM) {
+	if (appConnectionType === RPCIntegrationType.EVM) {
 		appConnectionType = options.library || (await promptEVMLibrary());
 	}
 
@@ -182,7 +183,7 @@ async function runWizard(options: WizardOptions): Promise<void> {
 program
 	.command('app')
 	.description('Create a new SEI dApp')
-	.option('-n, --name <name>', `Specify the name of your dApp. Name must be a valid package name.`)
+	.option('-n, --name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
 	.option('-f, --framework <framework>', `Specify the app framework to use: [${Object.values(FrontendScaffolding).join(', ')}]`)
 	.option('-e, --ecosystem <ecosystem>', `Specify the ecosystem to use: [${Object.values(RPCIntegrationType).join(', ')}]`)
 	.option('-l, --library <library>', `Specify the EVM library to use: [${Object.values(EVMLibrary).join(', ')}]. Only used if ecosystem chosen is 'EVM'`)
