@@ -1,347 +1,281 @@
 ---
-title: 'SeiJS Overview'
-description: 'Complete TypeScript SDK for building on Sei Network'
+title: Quick Start Guide
+description: Build your first Sei application in under 10 minutes with @sei-js
 ---
 
-## Welcome to SeiJS
+## Prerequisites
 
-SeiJS is a comprehensive TypeScript SDK for building applications on Sei Network. It provides everything you need to interact with both Cosmos and EVM ecosystems on Sei, from wallet management to advanced DeFi integrations.
-
-<CardGroup cols={2}>
-  <Card
-    title="Cosmos SDK Integration"
-    icon="atom"
-    href="/cosmos/introduction"
-  >
-    Native Cosmos functionality with CosmJS integration
-  </Card>
-  <Card
-    title="EVM Compatibility"
-    icon="ethereum"
-    href="/evm/introduction"
-  >
-    Full Ethereum tooling support with Wagmi, Viem, and Ethers
-  </Card>
-  <Card
-    title="Developer Tools"
-    icon="hammer"
-    href="/create-sei/introduction"
-  >
-    CLI scaffolding and project templates
-  </Card>
-  <Card
-    title="Hardware Wallets"
-    icon="shield"
-    href="/ledger/introduction"
-  >
-    Secure Ledger hardware wallet integration
-  </Card>
-</CardGroup>
-
-## Package Ecosystem
-
-SeiJS is organized as a monorepo with specialized packages for different use cases:
-
-### Core Packages
+Before you start building, ensure you have the following installed:
 
 <AccordionGroup>
-  <Accordion title="@sei-js/cosmos" icon="atom">
-    **Core Cosmos SDK Integration**
+  <Accordion title="Node.js & Package Manager" icon="node-js">
+    **Required versions:**
+    - Node.js v18 or higher
+    - npm, yarn, or pnpm (latest version)
     
-    Essential types, encoding utilities, and REST client for Cosmos ecosystem development.
-    
-    - TypeScript definitions for Sei modules
-    - Protobuf encoding/decoding
-    - REST API client
-    - Transaction utilities
-    
-    [View Documentation →](/cosmos/introduction)
+    <Tabs>
+      <Tab title="Check Node.js">
+        ```bash
+        node --version
+        # Should output v18.0.0 or higher
+        ```
+      </Tab>
+      <Tab title="Install Node.js">
+        Download from [nodejs.org](https://nodejs.org) or use a version manager:
+        ```bash
+        # Using nvm
+        nvm install --lts
+        nvm use --lts
+        ```
+      </Tab>
+    </Tabs>
   </Accordion>
 
-  <Accordion title="@sei-js/evm" icon="ethereum">
-    **EVM Development Tools**
+  <Accordion title="Code Editor (Recommended)" icon="code">
+    **VS Code with TypeScript support**
     
-    Complete EVM integration with popular Ethereum development tools.
-    
-    - Wagmi React hooks
-    - Viem and Ethers.js support
-    - Precompiled contract addresses
-    - Chain configurations
-    
-    [View Documentation →](/evm/introduction)
-  </Accordion>
-
-  <Accordion title="@sei-js/cosmjs" icon="signature">
-    **CosmJS Helper Functions**
-    
-    Enhanced CosmJS integration with Sei-specific utilities.
-    
-    - Wallet management
-    - Transaction signing
-    - RPC querying
-    - Address utilities
-    
-    [View Documentation →](/cosmjs/introduction)
+    We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following extensions:
+    - TypeScript and JavaScript Language Features (built-in)
+    - Solidity extension (for smart contracts)
+    - Tailwind CSS IntelliSense (for styling)
   </Accordion>
 </AccordionGroup>
 
-### Specialized Packages
-
-<AccordionGroup>
-  <Accordion title="@sei-js/create-sei" icon="hammer">
-    **Project Scaffolding CLI**
-    
-    Command-line tool for creating new Sei projects with templates.
-    
-    - EVM and Cosmos templates
-    - Next.js integration
-    - Best practices setup
-    - Development workflows
-    
-    [View Documentation →](/create-sei/introduction)
-  </Accordion>
-
-  <Accordion title="@sei-js/ledger" icon="shield">
-    **Hardware Wallet Integration**
-    
-    Secure Ledger hardware wallet support for Sei applications.
-    
-    - Transport layer management
-    - Address derivation
-    - Transaction signing
-    - Multi-account support
-    
-    [View Documentation →](/ledger/introduction)
-  </Accordion>
-
-  <Accordion title="@sei-js/registry" icon="database">
-    **Asset Registry**
-    
-    Comprehensive registry of tokens, networks, and protocol information.
-    
-    - Token metadata
-    - Network configurations
-    - IBC channel information
-    - Gas fee data
-    
-    [View Documentation →](/registry/introduction)
-  </Accordion>
-
-  <Accordion title="@sei-js/sei-global-wallet" icon="wallet">
-    **EIP-6963 Wallet Standard**
-    
-    Modern wallet discovery and connection using EIP-6963 standard.
-    
-    - Standardized wallet interface
-    - Dynamic wallet discovery
-    - Framework integrations
-    - Best practices implementation
-    
-    [View Documentation →](/sei-global-wallet/introduction)
-  </Accordion>
-
-  <Accordion title="@sei-js/confidential-transfers" icon="eye-slash">
-    **Privacy-Preserving Transactions**
-    
-    Advanced privacy features for confidential token transfers.
-    
-    - Encrypted balance queries
-    - Confidential transfers
-    - Multi-denomination support
-    - Ethers.js and Viem integration
-    
-    [View Documentation →](/confidential-transfers/introduction)
-  </Accordion>
-</AccordionGroup>
-
-## Architecture Overview
-
-SeiJS is designed with modularity and flexibility in mind:
-
-```mermaid
-graph TB
-    A[Your Application] --> B[@sei-js/evm]
-    A --> C[@sei-js/cosmjs]
-    A --> D[@sei-js/cosmos]
-    
-    B --> E[Wagmi/Viem/Ethers]
-    C --> F[CosmJS]
-    D --> G[Sei Modules]
-    
-    H[@sei-js/create-sei] --> A
-    I[@sei-js/ledger] --> B
-    I --> C
-    J[@sei-js/registry] --> B
-    J --> C
-    K[@sei-js/sei-global-wallet] --> B
-    L[@sei-js/confidential-transfers] --> B
-```
-
-## Getting Started
-
-### Choose Your Development Path
-
-<CardGroup cols={2}>
-  <Card
-    title="EVM Development"
-    icon="ethereum"
-    href="/evm/introduction"
-  >
-    **Best for:** Ethereum developers, DeFi applications, existing dApp migration
-    
-    - Familiar Ethereum tooling
-    - Wagmi, Viem, Ethers.js support
-    - Solidity smart contracts
-    - MetaMask compatibility
-  </Card>
-  <Card
-    title="Cosmos Development"
-    icon="atom"
-    href="/cosmos/introduction"
-  >
-    **Best for:** Cosmos ecosystem apps, IBC transfers, native Sei features
-    
-    - CosmJS integration
-    - Native Cosmos modules
-    - IBC functionality
-    - Keplr wallet support
-  </Card>
-</CardGroup>
-
-### Quick Installation
-
-<CodeGroup>
-
-```bash All Packages
-npm install @sei-js/cosmos @sei-js/evm @sei-js/cosmjs
-```
-
-```bash EVM Only
-npm install @sei-js/evm ethers viem wagmi
-```
-
-```bash Cosmos Only
-npm install @sei-js/cosmos @sei-js/cosmjs @cosmjs/stargate
-```
-
-```bash CLI Tool
-npm install -g @sei-js/create-sei
-```
-
-</CodeGroup>
-
-### Create Your First Project
+## Create your first Sei application
 
 <Steps>
-  <Step title="Install CLI">
-    ```bash
-    npm install -g @sei-js/create-sei
-    ```
+  <Step title="Initialize your project">
+    Use our CLI tool to create a new Sei application with everything pre-configured:
+    
+    <CodeGroup>
+      ```bash npm
+      npx @sei-js/create-sei my-sei-app
+      ```
+      
+      ```bash yarn
+      yarn create @sei-js/create-sei my-sei-app
+      ```
+      
+      ```bash pnpm
+      pnpm create @sei-js/create-sei my-sei-app
+      ```
+    </CodeGroup>
+    
+    <Check>
+    **Expected outcome:** A new project directory with TypeScript configuration, testing setup, and example code.
+    </Check>
+    
+    <Info>
+    The CLI will ask you to choose a template. Select "React + Wagmi" for a full-featured web application, or "Node.js" for backend/script development.
+    </Info>
   </Step>
-  
-  <Step title="Create Project">
-    ```bash
-    create-sei my-sei-app
-    ```
-  </Step>
-  
-  <Step title="Choose Template">
-    Select from available templates:
-    - **Next.js + EVM**: React app with Ethereum tooling
-    - **Next.js + Cosmos**: React app with CosmJS
-    - **Vanilla TypeScript**: Pure TypeScript project
-  </Step>
-  
-  <Step title="Start Building">
+
+  <Step title="Navigate and install dependencies">
+    Move into your project directory and install dependencies:
+    
     ```bash
     cd my-sei-app
+    npm install
+    ```
+    
+    <Check>
+    **Expected outcome:** All dependencies installed successfully without errors.
+    </Check>
+    
+    <Accordion title="Troubleshooting installation issues">
+      **Common issues and solutions:**
+      
+      - **Node version conflicts:** Use `nvm use` to switch to the correct Node.js version
+      - **Permission errors:** Avoid using `sudo` with npm. Use `nvm` or fix npm permissions
+      - **Network timeouts:** Try switching to a different registry: `npm config set registry https://registry.npmjs.org/`
+    </Accordion>
+  </Step>
+
+  <Step title="Configure your environment">
+    Create a `.env` file in your project root with your Sei network configuration:
+    
+    ```bash .env
+    # Network Configuration
+    NEXT_PUBLIC_CHAIN_ID=sei
+    NEXT_PUBLIC_RPC_URL=https://rpc.sei-apis.com
+    NEXT_PUBLIC_REST_URL=https://rest.sei-apis.com
+    
+    # Optional: For development
+    NEXT_PUBLIC_ENABLE_TESTNETS=true
+    ```
+    
+    <Warning>
+    Never commit private keys or sensitive information to version control. Use environment variables for all secrets.
+    </Warning>
+    
+    <Check>
+    **Expected outcome:** Environment file created with network endpoints configured.
+    </Check>
+  </Step>
+
+  <Step title="Start your development server">
+    Launch your application in development mode:
+    
+    ```bash
     npm run dev
     ```
+    
+    <Check>
+    **Expected outcome:** Development server running at `http://localhost:3000` with hot reload enabled.
+    </Check>
+    
+    Your browser should automatically open to show your new Sei application with:
+    - Wallet connection button
+    - Network status display
+    - Example interactions ready to test
   </Step>
 </Steps>
 
-## Key Features
+## Test your application
 
-### 🔗 **Dual Ecosystem Support**
-Build on both Cosmos and EVM with a single SDK, enabling unique cross-ecosystem applications.
+<Tabs>
+  <Tab title="Connect a Wallet">
+    **Test wallet connectivity:**
+    
+    1. Click "Connect Wallet" in your application
+    2. Select a wallet (MetaMask, Compass, or any Sei-compatible wallet)
+    3. Approve the connection request
+    
+    <Check>
+    You should see your wallet address displayed and network status showing "Connected to Sei".
+    </Check>
+  </Tab>
 
-### 🛠️ **Developer Experience**
-Full TypeScript support, comprehensive documentation, and familiar tooling patterns.
+  <Tab title="Check Account Balance">
+    **Verify balance display:**
+    
+    ```typescript
+    // This code is already included in your template
+    import { useBalance } from 'wagmi';
+    
+    const { data: balance } = useBalance({
+      address: userAddress,
+    });
+    ```
+    
+    <Check>
+    Your SEI balance should appear in the interface after wallet connection.
+    </Check>
+  </Tab>
 
-### 🔒 **Security First**
-Hardware wallet support, secure key management, and battle-tested cryptographic implementations.
+  <Tab title="Test a Transaction">
+    **Try a simple transaction:**
+    
+    1. Ensure you have some SEI in your wallet (get testnet tokens from [faucet](https://faucet.sei-apis.com))
+    2. Use the example transfer function in your template
+    3. Send a small amount to another address
+    
+    <Check>
+    Transaction should complete in 1-2 seconds with a transaction hash displayed.
+    </Check>
+  </Tab>
+</Tabs>
 
-### ⚡ **Performance Optimized**
-Efficient RPC handling, smart caching, and optimized for Sei's high-performance blockchain.
+## Next steps
 
-### 🌐 **Framework Agnostic**
-Works with React, Vue, Angular, or vanilla JavaScript/TypeScript applications.
-
-## Community Examples
+Now that you have a working Sei application, explore these key features:
 
 <CardGroup cols={2}>
-  <Card
-    title="DeFi Dashboard"
-    icon="chart-line"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/defi-dashboard"
-  >
-    Complete DeFi application with swaps, staking, and portfolio tracking
+  <Card title="Smart Contract Integration" icon="file-contract" href="/precompiles/index">
+    Learn how to deploy and interact with smart contracts on Sei
   </Card>
-  <Card
-    title="NFT Marketplace"
-    icon="image"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/nft-marketplace"
-  >
-    Full-featured NFT marketplace with minting and trading
+  <Card title="Precompile Functions" icon="microchip" href="/precompiles/index">
+    Access Sei's native blockchain functions directly from your app
   </Card>
-  <Card
-    title="Cross-Chain Bridge"
-    icon="bridge"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/bridge"
-  >
-    IBC and EVM bridge implementation
+  <Card title="Advanced Wallet Features" icon="wallet" href="/sei-global-wallet/introduction">
+    Implement multi-wallet support and advanced signing
   </Card>
-  <Card
-    title="Governance Portal"
-    icon="vote-yea"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/governance"
-  >
-    Cosmos governance participation interface
+  <Card title="Production Deployment" icon="cloud-arrow-up" href="/development">
+    Deploy your application to production with best practices
   </Card>
 </CardGroup>
 
-## Support & Resources
+## Common patterns
 
-<CardGroup cols={3}>
-  <Card
-    title="GitHub"
-    icon="github"
-    href="https://github.com/sei-protocol/sei-js"
-  >
-    Source code, issues, and contributions
+<AccordionGroup>
+  <Accordion title="Token transfers" icon="arrow-right-arrow-left">
+    **Send SEI or custom tokens:**
+    
+    ```typescript
+    import { useSendTransaction } from 'wagmi';
+    import { parseEther } from 'viem';
+    
+    const { sendTransaction } = useSendTransaction();
+    
+    // Send 1 SEI
+    sendTransaction({
+      to: '0x...',
+      value: parseEther('1')
+    });
+    ```
+  </Accordion>
+
+  <Accordion title="Smart contract calls" icon="file-contract">
+    **Interact with deployed contracts:**
+    
+    ```typescript
+    import { useWriteContract } from 'wagmi';
+    
+    const { writeContract } = useWriteContract();
+    
+    // Call a contract function
+    writeContract({
+      address: '0x...',
+      abi: contractAbi,
+      functionName: 'transfer',
+      args: [recipientAddress, amount]
+    });
+    ```
+  </Accordion>
+
+  <Accordion title="Query blockchain data" icon="magnifying-glass">
+    **Read contract state and blockchain data:**
+    
+    ```typescript
+    import { useReadContract } from 'wagmi';
+    
+    const { data } = useReadContract({
+      address: '0x...',
+      abi: contractAbi,
+      functionName: 'balanceOf',
+      args: [userAddress]
+    });
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## 🤝 Getting Help
+
+### Community Resources
+
+<CardGroup cols={2}>
+  <Card title="GitHub Discussions" href="https://github.com/sei-protocol/sei-js/discussions" icon="github">
+    Ask questions and discuss features
   </Card>
-  <Card
-    title="Discord"
-    icon="discord"
-    href="https://discord.gg/sei"
-  >
-    Community support and discussions
+  <Card title="Discord" href="https://discord.gg/sei" icon="discord">
+    Join the Sei developer community
   </Card>
-  <Card
-    title="Documentation"
-    icon="book"
-    href="https://docs.sei.io"
-  >
-    Official Sei Network documentation
+  <Card title="Documentation" href="https://docs.sei.io" icon="book">
+    Official Sei documentation
+  </Card>
+  <Card title="Issues" href="https://github.com/sei-protocol/sei-js/issues" icon="bug">
+    Report bugs and request features
   </Card>
 </CardGroup>
 
-## What's Next?
+### Maintainers
 
-1. **[Choose your development path](/overview#choose-your-development-path)** - EVM or Cosmos
-2. **[Install the packages](/overview#quick-installation)** you need
-3. **[Create your first project](/overview#create-your-first-project)** with our CLI
-4. **[Explore the examples](/overview#community-examples)** for inspiration
-5. **[Join the community](/overview#support--resources)** for support
+For urgent issues or questions about the project, reach out to the maintainers:
 
-Ready to build the future of decentralized applications on Sei? Let's get started! 🚀
+- **Core Team**: [@sei-protocol](https://github.com/sei-protocol)
+- **Issues**: Use GitHub issues for bug reports and feature requests
+- **Discussions**: Use GitHub discussions for questions and ideas
+
+<Note>
+We appreciate all contributions, big and small! Whether it's fixing a typo, adding a feature, or improving documentation, every contribution helps make SeiJS better for everyone.
+</Note>

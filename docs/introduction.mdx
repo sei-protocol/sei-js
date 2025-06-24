@@ -1,102 +1,92 @@
 ---
-title: Introduction
-description: 'Welcome to SeiJS - A comprehensive TypeScript library for building applications on Sei'
+title: Welcome to @sei-js
+description: TypeScript SDK for building decentralized applications on Sei Network
 ---
 
 <img
   className="block dark:hidden"
   src="/images/hero-light.svg"
-  alt="Hero Light"
+  alt="@sei-js TypeScript SDK"
 />
 <img
   className="hidden dark:block"
   src="/images/hero-dark.svg"
-  alt="Hero Dark"
+  alt="@sei-js TypeScript SDK"
 />
 
-## What is SeiJS?
+## Build on Sei Network
 
-SeiJS is a monorepo that contains multiple NPM libraries for writing applications that interact with Sei. It provides comprehensive tools for both EVM and Cosmos development on the Sei blockchain.
+@sei-js is the complete TypeScript SDK for building applications on Sei Network. Whether you're creating DeFi protocols, NFT marketplaces, or blockchain games, @sei-js provides everything you need to ship faster.
 
 <CardGroup cols={2}>
   <Card
-    title="EVM Development"
-    icon="ethereum"
-    href="/packages/evm"
-  >
-    Build applications using familiar Ethereum tools like Wagmi, Viem, and Ethers.js
-  </Card>
-  <Card
-    title="Cosmos Development"
-    icon="atom"
-    href="/packages/cosmjs"
-  >
-    Interact with CosmWasm smart contracts and native Cosmos modules
-  </Card>
-  <Card
-    title="Wallet Integration"
-    icon="wallet"
-    href="/packages/sei-global-wallet"
-  >
-    Connect to various wallets with EIP-6963 compliance
-  </Card>
-  <Card
-    title="Quick Start"
+    title="Start Building"
     icon="rocket"
-    href="/packages/create-sei"
+    href="/overview"
   >
-    Scaffold new projects with our CLI tool
+    Get your first Sei application running in minutes
+  </Card>
+  <Card
+    title="Precompiles"
+    icon="microchip"
+    href="/precompiles/index"
+  >
+    Access Sei's native blockchain functions directly
+  </Card>
+  <Card
+    title="Wallet Connection"
+    icon="wallet"
+    href="/sei-global-wallet/introduction"
+  >
+    Connect to any Sei-compatible wallet with EIP-6963
   </Card>
 </CardGroup>
 
-## Setting up
-
-The first step to world-class documentation is setting up your editing environments.
-
-<CodeGroup>
-
-```bash npm
-npm install @sei-js/evm @sei-js/cosmjs
-```
-
-```bash yarn
-yarn add @sei-js/evm @sei-js/cosmjs
-```
-
-```bash pnpm
-pnpm add @sei-js/evm @sei-js/cosmjs
-```
-
-</CodeGroup>
-
-## Key Features
+## Why @sei-js?
 
 <AccordionGroup>
-  <Accordion title="Multi-Chain Support">
-    SeiJS supports both EVM and Cosmos ecosystems, allowing you to build applications that leverage the best of both worlds.
+  <Accordion title="Complete TypeScript support" icon="code">
+    Full type safety for every function, contract interaction, and API response. Catch errors at compile time.
   </Accordion>
 
-  <Accordion title="TypeScript First">
-    All packages are built with TypeScript, providing excellent developer experience with full type safety.
+  <Accordion title="Production ready" icon="shield-check">
+    Battle-tested components used by major applications in the Sei ecosystem.
   </Accordion>
 
-  <Accordion title="Comprehensive Tooling">
-    From wallet connection to transaction signing, RPC querying, and smart contract interaction - we've got you covered.
-  </Accordion>
-
-  <Accordion title="Developer Experience">
-    Easy-to-use APIs, comprehensive documentation, and helpful utilities to speed up your development.
+  <Accordion title="Optimized for Sei" icon="bolt">
+    Take advantage of Sei's fast finality, low gas fees, and native order matching.
   </Accordion>
 </AccordionGroup>
 
-## Documentation
+## Package ecosystem
 
-For detailed tutorials and examples, check out our [official documentation](https://docs.sei.io). You can also refer to the [TypeDoc documentation](https://sei-protocol.github.io/sei-js/) for complete API reference.
+@sei-js includes specialized packages for every aspect of Sei development:
 
-## Community
+<CardGroup cols={3}>
+  <Card title="@sei-js/precompiles" icon="microchip" href="/precompiles/index">
+    Native blockchain function access
+  </Card>
+  <Card title="@sei-js/create-sei" icon="hammer" href="/create-sei/introduction">
+    Project scaffolding and templates
+  </Card>
+  <Card title="@sei-js/sei-global-wallet" icon="wallet" href="/sei-global-wallet/introduction">
+    Universal wallet connections
+  </Card>
+  <Card title="@sei-js/ledger" icon="shield" href="/ledger/introduction">
+    Hardware wallet integration
+  </Card>
+  <Card title="@sei-js/registry" icon="database" href="/registry/introduction">
+    Chain and asset registry
+  </Card>
+</CardGroup>
 
-Join our community to get help, share your projects, and stay updated:
+## Ready to build?
 
-- [Discord](https://discord.gg/sei)
-- [Twitter](https://x.com/SeiNetwork)
-- [GitHub](https://github.com/sei-protocol/sei-js)
+<CardGroup cols={2}>
+  <Card title="Quick Start" href="/overview" icon="play">
+    Build your first Sei app in under 10 minutes
+  </Card>
+  <Card title="Examples" href="/development" icon="code">
+    Explore working applications and patterns
+  </Card>
+</CardGroup>

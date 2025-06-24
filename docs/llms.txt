@@ -10,7 +10,6 @@ SeiJS is a comprehensive JavaScript SDK for interacting with the Sei blockchain.
 
 - @sei-js/core - Core functionality for Sei blockchain interactions
 - @sei-js/precompiles - Native blockchain function integrations through precompile contracts
-- @sei-js/evm - EVM integration tools for Sei
 - @sei-js/cosmos - Cosmos SDK integration tools
 - @sei-js/create-sei - Boilerplate applications and templates
 - @sei-js/ledger - Ledger hardware wallet integration
