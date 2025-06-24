@@ -1,5 +1,5 @@
 import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { DISTRIBUTION_PRECOMPILE_ADDRESS, DISTRIBUTION_PRECOMPILE_ABI } from '../precompiles';
+import { DISTRIBUTION_PRECOMPILE_ABI, DISTRIBUTION_PRECOMPILE_ADDRESS } from '../precompiles';
 
 /**
  * The ABI for the Distribution precompile contract, used to create an Ethers contract.
