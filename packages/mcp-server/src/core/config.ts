@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-import { z } from 'zod';
 import type { Hex } from 'viem';
+import { z } from 'zod';
 
 // Load environment variables from .env file
 dotenv.config();
