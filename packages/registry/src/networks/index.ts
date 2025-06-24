@@ -1,5 +1,5 @@
 import NetworksJSON from '../../chain-registry/chains.json';
-import { Network } from '../index';
+import type { Network } from '../index';
 
 /**
  * Describes an endpoint with a provider name and its associated URL.

@@ -1,5 +1,5 @@
 import TokenListJSON from '../../community-assetlist/assetlist.json';
-import { Network } from '../index';
+import type { Network } from '../index';
 
 /**
  * DenomUnit represents a struct that describes a given
