@@ -1,5 +1,5 @@
 import type { Chain } from 'viem';
-import { sei, seiTestnet, seiDevnet } from 'viem/chains';
+import { sei, seiDevnet, seiTestnet } from 'viem/chains';
 
 // Default configuration values
 export const DEFAULT_NETWORK = 'sei';
