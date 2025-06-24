@@ -145,8 +145,8 @@ export async function isNFTOwner(tokenAddress: string, ownerAddress: string, tok
 		)) as Address;
 
 		return actualOwner.toLowerCase() === validatedOwnerAddress.toLowerCase();
-	} catch (error: any) {
-		console.error(`Error checking NFT ownership: ${error.message}`);
+	} catch (error: unknown) {
+		console.error(`Error checking NFT ownership: ${error instanceof Error ? error.message : String(error)}`);
 		return false;
 	}
 }

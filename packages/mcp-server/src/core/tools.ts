@@ -1,5 +1,5 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { Address, Hash, Hex } from 'viem';
+import type { Address, Hash, Hex, WriteContractParameters } from 'viem';
 import { z } from 'zod';
 import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
 import { getPrivateKeyAsHex } from './config.js';
@@ -315,7 +315,7 @@ export function registerEVMTools(server: McpServer) {
 		'Get detailed information about a specific transaction by its hash. Includes sender, recipient, value, data, and more.',
 		{
 			txHash: z.string().describe("The transaction hash to look up (e.g., '0x1234...')"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ txHash, network = DEFAULT_NETWORK }) => {
 			try {
@@ -797,12 +797,12 @@ export function registerEVMTools(server: McpServer) {
 				// Parse ABI if it's a string
 				const parsedAbi = typeof abi === 'string' ? JSON.parse(abi) : abi;
 
-				const contractParams: Record<string, any> = {
+				const contractParams = {
 					address: contractAddress as Address,
 					abi: parsedAbi,
 					functionName,
 					args
-				};
+				} as unknown as WriteContractParameters;
 
 				const txHash = await services.writeContract(contractParams, network);
 
