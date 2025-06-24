@@ -1,5 +1,5 @@
 import IBCInfoJSON from '../../chain-registry/ibc_info.json';
-import { Network } from '../index';
+import type { Network } from '../index';
 
 /**
  * Represents information about an IBC channel, facilitating communication

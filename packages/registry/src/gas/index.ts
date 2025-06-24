@@ -1,5 +1,5 @@
 import GasInfoJSON from '../../chain-registry/gas.json';
-import { Network } from '../index';
+import type { Network } from '../index';
 
 /**
  * Defines the gas price adjustments for specific modules within the Sei blockchain,
