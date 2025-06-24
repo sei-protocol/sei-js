@@ -25,10 +25,6 @@
       "url": "https://cosmos.sei-js.com"
     },
     {
-      "name": "@sei-js/evm",
-      "url": "https://evm.sei-js.com"
-    },
-    {
       "name": "@sei-js/cosmjs",
       "url": "https://cosmjs.sei-js.com"
     },

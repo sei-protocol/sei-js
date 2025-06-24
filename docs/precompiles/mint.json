@@ -1,6 +1,5 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "@sei-js/evm",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -54,10 +53,6 @@
       "url": "https://cosmos.sei-js.com"
     },
     {
-      "name": "@sei-js/evm",
-      "url": "https://evm.sei-js.com"
-    },
-    {
       "name": "@sei-js/cosmjs",
       "url": "https://cosmjs.sei-js.com"
     },
@@ -93,7 +88,7 @@
     "url": "/introduction"
   },
   "search": {
-    "prompt": "Search @sei-js/evm docs..."
+    "prompt": "Search @sei-js/precompiles docs..."
   },
   "feedback": {
     "thumbsRating": true,

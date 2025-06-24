@@ -11,14 +11,10 @@ SeiJS is a comprehensive JavaScript SDK for interacting with the Sei blockchain.
 ### Installation
 
 ```bash
-npm install @sei-js/core
+npm install @sei-js/precompiles @sei-js/cosmos
 ```
 
 For specific functionality, install the relevant packages:
-
-```bash
-npm install @sei-js/precompiles @sei-js/evm @sei-js/cosmos
-```
 
 ## Key Packages
 
@@ -27,9 +23,6 @@ Core functionality for Sei blockchain interactions. Provides the foundation for 
 
 ### @sei-js/precompiles
 Native blockchain function integrations through precompile contracts. These contracts provide direct access to Sei's unique blockchain features from EVM smart contracts.
-
-### @sei-js/evm
-EVM integration tools for Sei. Includes utilities for deploying and interacting with smart contracts on Sei's EVM.
 
 ### @sei-js/cosmos
 Cosmos SDK integration tools. Provides access to Sei's Cosmos SDK features, including staking, governance, and IBC transfers.
