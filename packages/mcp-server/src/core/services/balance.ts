@@ -1,8 +1,8 @@
-import { formatEther, formatUnits, type Address, getContract } from 'viem';
+import { type Address, formatEther, formatUnits, getContract } from 'viem';
+import { DEFAULT_NETWORK } from '../chains.js';
 import { getPublicClient } from './clients.js';
 import { readContract } from './contracts.js';
 import * as services from './index.js';
-import { DEFAULT_NETWORK } from '../chains.js';
 
 // Standard ERC20 ABI (minimal for reading)
 const erc20Abi = [

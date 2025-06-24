@@ -1,5 +1,5 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { Abi, Address, Chain, Hash, Hex, WriteContractParameters } from 'viem';
+import type { Address, Hash, Hex } from 'viem';
 import { z } from 'zod';
 import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
 import { getPrivateKeyAsHex } from './config.js';
@@ -843,7 +843,12 @@ export function registerEVMTools(server: McpServer) {
 		{
 			bytecode: z.string().describe("The compiled contract bytecode as a hex string (e.g., '0x608060405234801561001057600080fd5b50...')"),
 			abi: z.array(z.any()).describe('The contract ABI (Application Binary Interface) as a JSON array, needed for constructor function'),
-			args: z.array(z.any()).optional().describe("The constructor arguments to pass during deployment, as an array (e.g., ['param1', 'param2']). Leave empty if constructor has no parameters."),
+			args: z
+				.array(z.any())
+				.optional()
+				.describe(
+					"The constructor arguments to pass during deployment, as an array (e.g., ['param1', 'param2']). Leave empty if constructor has no parameters."
+				),
 			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ bytecode, abi, args = [], network = DEFAULT_NETWORK }) => {
@@ -852,7 +857,7 @@ export function registerEVMTools(server: McpServer) {
 				const parsedAbi = typeof abi === 'string' ? JSON.parse(abi) : abi;
 
 				// Ensure bytecode is a proper hex string
-				const formattedBytecode = bytecode.startsWith('0x') ? bytecode as Hex : `0x${bytecode}` as Hex;
+				const formattedBytecode = bytecode.startsWith('0x') ? (bytecode as Hex) : (`0x${bytecode}` as Hex);
 
 				const result = await services.deployContract(formattedBytecode, parsedAbi, args, network);
 
