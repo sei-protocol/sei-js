@@ -1,0 +1,34 @@
+# SeiJS Documentation
+
+Official JavaScript SDK for building decentralized applications on Sei Network. Includes tools for EVM integration, boilerplate applications, wallet connections, and precompile contract interfaces.
+
+## Overview
+
+SeiJS is a comprehensive JavaScript SDK for interacting with the Sei blockchain. It provides tools for both Cosmos SDK and EVM integration, allowing developers to build decentralized applications on Sei Network.
+
+## Key Packages
+
+- @sei-js/core - Core functionality for Sei blockchain interactions
+- @sei-js/precompiles - Native blockchain function integrations through precompile contracts
+- @sei-js/evm - EVM integration tools for Sei
+- @sei-js/cosmos - Cosmos SDK integration tools
+- @sei-js/create-sei - Boilerplate applications and templates
+- @sei-js/ledger - Ledger hardware wallet integration
+- @sei-js/registry - Asset registry for tokens and networks
+- @sei-js/sei-global-wallet - Wallet connection tools
+
+## Precompile Contracts
+
+Sei offers unique precompile contracts for blockchain interactions:
+- Address (0x1004) - Address association
+- Bank (0x1001) - Token operations
+- Confidential Transfers (0x1010) - Privacy features
+- Distribution (0x1007) - Reward distribution
+- Governance (0x1006) - Voting and deposits
+- IBC (0x1009) - Cross-chain transfers
+- JSON (0x1003) - JSON parsing utilities
+- Oracle (0x1002) - Price feeds and TWAPs
+- Pointer (0x100B) - Token pointer creation
+- Pointerview (0x100A) - Token pointer queries
+- Staking (0x1005) - Validator operations
+- WASM (0x1002) - Smart contract interaction

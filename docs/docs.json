@@ -6,6 +6,7 @@
     "dark": "https://cdn.sei.io/sei.svg",
     "light": "https://cdn.sei.io/sei.svg"
   },
+  "description": "Official JavaScript SDK for building decentralized applications on Sei Network. Includes tools for EVM integration, boilerplate applications, wallet connections, and precompile contract interfaces.",
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#9E1F19",
@@ -20,6 +21,20 @@
    ]
  },
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Sei Documentation",
+          "icon": "book-open-cover",
+          "href": "https://docs.sei.io"
+        },
+        {
+          "anchor": "Sei App",
+          "icon": "grid-2",
+          "href": "https://app.sei.io"
+        }
+  ]
+    },
     "dropdowns": [
       {
         "dropdown": "Getting Started",
@@ -33,7 +48,7 @@
         ]
       },
       {
-        "dropdown": "@sei-js/precompiles",
+        "dropdown": "Precompiles",
         "description": "Native blockchain function integrations",
         "icon": "microchip",
         "pages": [
@@ -117,5 +132,12 @@
         ]
       }
     ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/SeiNetwork",
+      "github": "https://github.com/sei-protocol/sei-js",
+      "linkedin": "https://www.linkedin.com/company/sei-protocol"
+    }
   }
 }
