@@ -1,0 +1,221 @@
+# SeiJS Documentation
+
+Official JavaScript SDK for building decentralized applications on Sei Network. Includes tools for EVM integration, boilerplate applications, wallet connections, and precompile contract interfaces.
+
+## Overview
+
+SeiJS is a comprehensive JavaScript SDK for interacting with the Sei blockchain. It provides tools for both Cosmos SDK and EVM integration, allowing developers to build decentralized applications on Sei Network.
+
+## Getting Started
+
+### Installation
+
+```bash
+npm install @sei-js/core
+```
+
+For specific functionality, install the relevant packages:
+
+```bash
+npm install @sei-js/precompiles @sei-js/evm @sei-js/cosmos
+```
+
+## Key Packages
+
+### @sei-js/core
+Core functionality for Sei blockchain interactions. Provides the foundation for connecting to Sei networks and performing basic operations.
+
+### @sei-js/precompiles
+Native blockchain function integrations through precompile contracts. These contracts provide direct access to Sei's unique blockchain features from EVM smart contracts.
+
+### @sei-js/evm
+EVM integration tools for Sei. Includes utilities for deploying and interacting with smart contracts on Sei's EVM.
+
+### @sei-js/cosmos
+Cosmos SDK integration tools. Provides access to Sei's Cosmos SDK features, including staking, governance, and IBC transfers.
+
+### @sei-js/create-sei
+Boilerplate applications and templates. Quickly scaffold new Sei applications with pre-configured setups.
+
+### @sei-js/ledger
+Ledger hardware wallet integration. Securely connect to Ledger devices for signing transactions on Sei.
+
+### @sei-js/registry
+Asset registry for tokens and networks. Provides information about tokens, networks, and IBC assets on Sei.
+
+### @sei-js/sei-global-wallet
+Wallet connection tools. Simplifies connecting to various wallet providers for Sei applications.
+
+## Precompile Contracts
+
+Sei offers unique precompile contracts for blockchain interactions:
+
+### Address (0x1004)
+Address association between EVM and Cosmos addresses. Allows mapping between the two address formats.
+
+### Bank (0x1001)
+Token operations including transfers, balances, and supply queries. Access Sei's native token functionality from EVM.
+
+### Confidential Transfers (0x1010)
+Privacy features for confidential transactions. Enables private transfers with selective disclosure.
+
+### Distribution (0x1007)
+Reward distribution for staking and governance. Access staking rewards and community pool funds.
+
+### Governance (0x1006)
+Voting and deposits for governance proposals. Participate in Sei governance from EVM contracts.
+
+### IBC (0x1009)
+Cross-chain transfers using the Inter-Blockchain Communication protocol. Send tokens to other Cosmos chains.
+
+### JSON (0x1003)
+JSON parsing utilities for smart contracts. Simplifies handling JSON data in EVM contracts.
+
+### Oracle (0x1002)
+Price feeds and TWAPs for DeFi applications. Access reliable price data for various assets.
+
+### Pointer (0x100B)
+Token pointer creation for cross-chain assets. Create and manage pointers to tokens on other chains.
+
+### Pointerview (0x100A)
+Token pointer queries for viewing pointer information. Query details about token pointers.
+
+### Staking (0x1005)
+Validator operations including delegation and unbonding. Participate in Sei's proof-of-stake system.
+
+### WASM (0x1002)
+Smart contract interaction with CosmWasm contracts. Call CosmWasm contracts from EVM contracts.
+
+## Ethers.js Integration
+
+SeiJS provides full integration with Ethers.js for EVM interactions:
+
+```javascript
+import { ethers } from 'ethers';
+import { getBankPrecompile } from '@sei-js/precompiles/ethers';
+
+// Connect to Sei EVM
+const provider = new ethers.JsonRpcProvider('https://evm-rpc.sei-apis.com');
+const signer = new ethers.Wallet(privateKey, provider);
+
+// Get Bank precompile contract
+const bankContract = getBankPrecompile(signer);
+
+// Transfer tokens
+await bankContract.send('sei1...', 'usei', '1000000');
+```
+
+## Viem Integration
+
+SeiJS also supports Viem for modern EVM interactions:
+
+```javascript
+import { createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import { sei } from '@sei-js/precompiles/viem';
+import { bankAbi } from '@sei-js/precompiles/viem';
+
+// Connect to Sei EVM
+const account = privateKeyToAccount('0x...');
+const client = createWalletClient({
+  account,
+  chain: sei,
+  transport: http()
+});
+
+// Call Bank precompile
+const result = await client.writeContract({
+  address: '0x0000000000000000000000000000000000001001',
+  abi: bankAbi,
+  functionName: 'send',
+  args: ['sei1...', 'usei', 1000000n]
+});
+```
+
+## Wallet Integration
+
+Connect to various wallets using the Sei Global Wallet:
+
+```javascript
+import { SeiGlobalWallet } from '@sei-js/sei-global-wallet';
+
+// Initialize wallet
+const wallet = new SeiGlobalWallet();
+
+// Connect to wallet
+await wallet.connect();
+
+// Get accounts
+const accounts = await wallet.getAccounts();
+
+// Sign transaction
+const signedTx = await wallet.signTransaction(tx);
+```
+
+## Create-Sei Templates
+
+Quickly scaffold new applications:
+
+```bash
+npx @sei-js/create-sei my-sei-app
+```
+
+Choose from various templates:
+- React + Viem
+- Next.js + Ethers
+- Vue + Viem
+- Vanilla JS
+
+## Registry Usage
+
+Access token and network information:
+
+```javascript
+import { getToken, getNetwork } from '@sei-js/registry';
+
+// Get token information
+const seiToken = getToken('sei');
+
+// Get network information
+const mainnet = getNetwork('sei');
+const testnet = getNetwork('sei-testnet');
+```
+
+## Advanced Features
+
+### Confidential Transfers
+
+```javascript
+import { getConfidentialTransfersPrecompile } from '@sei-js/precompiles/ethers';
+
+const ctContract = getConfidentialTransfersPrecompile(signer);
+
+// Initialize account
+await ctContract.initializeAccount();
+
+// Make private transfer
+await ctContract.transfer('recipient_public_key', 'usei', '1000000');
+```
+
+### CosmWasm Integration
+
+```javascript
+import { getWasmPrecompile } from '@sei-js/precompiles/ethers';
+
+const wasmContract = getWasmPrecompile(signer);
+
+// Query CosmWasm contract
+const result = await wasmContract.query('sei1...', '{"get_count":{}}');
+
+// Execute CosmWasm contract
+await wasmContract.execute('sei1...', '{"increment":{}}', []);
+```
+
+## Security Best Practices
+
+- Always use the latest version of SeiJS packages
+- Validate all user inputs before sending to the blockchain
+- Use hardware wallets for high-value operations
+- Test thoroughly on testnet before deploying to mainnet
+- Follow proper key management practices
+- Implement proper error handling for all blockchain operations

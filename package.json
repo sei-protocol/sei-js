@@ -10,7 +10,7 @@
 		"build:all": "yarn workspaces foreach --topological-dev --all run build",
 		"postinstall": "yarn update-submodules",
 		"update-submodules": "git submodule update --init --recursive",
-		"docs": "mint update && mint dev",
+		"docs": "cd docs && mint update && mint dev",
 		"typedocs": "typedoc",
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
