@@ -58,11 +58,7 @@
 				"pages": [
 					{
 						"group": "Getting Started",
-						"pages": ["create-sei/introduction", "create-sei/quick-start", "create-sei/templates"]
-					},
-					{
-						"group": "Development",
-						"pages": ["create-sei/next-steps", "create-sei/customization"]
+						"pages": ["create-sei/welcome", "create-sei/quick-start", "create-sei/templates"]
 					}
 				]
 			},
