@@ -150,7 +150,7 @@ const signedTx = await wallet.signTransaction(tx);
 Quickly scaffold new applications:
 
 ```bash
-npx @sei-js/create-sei my-sei-app
+npx @sei-js/create-sei app
 ```
 
 Choose from various templates:

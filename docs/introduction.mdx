@@ -1,92 +1,110 @@
 ---
-title: Welcome to @sei-js
-description: TypeScript SDK for building decentralized applications on Sei Network
+title: Welcome
+description: Welcome to @sei-js - TypeScript SDK for building decentralized applications on Sei Network
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.svg"
-  alt="@sei-js TypeScript SDK"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.svg"
-  alt="@sei-js TypeScript SDK"
-/>
-
-## Build on Sei Network
+## 🚀 Build on Sei Network
 
 @sei-js is the complete TypeScript SDK for building applications on Sei Network. Whether you're creating DeFi protocols, NFT marketplaces, or blockchain games, @sei-js provides everything you need to ship faster.
-
-<CardGroup cols={2}>
-  <Card
-    title="Start Building"
-    icon="rocket"
-    href="/overview"
-  >
-    Get your first Sei application running in minutes
-  </Card>
-  <Card
-    title="Precompiles"
-    icon="microchip"
-    href="/precompiles/index"
-  >
-    Access Sei's native blockchain functions directly
-  </Card>
-  <Card
-    title="Wallet Connection"
-    icon="wallet"
-    href="/sei-global-wallet/introduction"
-  >
-    Connect to any Sei-compatible wallet with EIP-6963
-  </Card>
-</CardGroup>
-
-## Why @sei-js?
-
-<AccordionGroup>
-  <Accordion title="Complete TypeScript support" icon="code">
-    Full type safety for every function, contract interaction, and API response. Catch errors at compile time.
-  </Accordion>
-
-  <Accordion title="Production ready" icon="shield-check">
-    Battle-tested components used by major applications in the Sei ecosystem.
-  </Accordion>
-
-  <Accordion title="Optimized for Sei" icon="bolt">
-    Take advantage of Sei's fast finality, low gas fees, and native order matching.
-  </Accordion>
-</AccordionGroup>
-
-## Package ecosystem
-
-@sei-js includes specialized packages for every aspect of Sei development:
-
-<CardGroup cols={3}>
-  <Card title="@sei-js/precompiles" icon="microchip" href="/precompiles/index">
-    Native blockchain function access
-  </Card>
-  <Card title="@sei-js/create-sei" icon="hammer" href="/create-sei/introduction">
-    Project scaffolding and templates
-  </Card>
-  <Card title="@sei-js/sei-global-wallet" icon="wallet" href="/sei-global-wallet/introduction">
-    Universal wallet connections
-  </Card>
-  <Card title="@sei-js/ledger" icon="shield" href="/ledger/introduction">
-    Hardware wallet integration
-  </Card>
-  <Card title="@sei-js/registry" icon="database" href="/registry/introduction">
-    Chain and asset registry
-  </Card>
-</CardGroup>
-
-## Ready to build?
 
 <CardGroup cols={2}>
   <Card title="Quick Start" href="/overview" icon="play">
     Build your first Sei app in under 10 minutes
   </Card>
-  <Card title="Examples" href="/development" icon="code">
-    Explore working applications and patterns
+  <Card title="Contributing" href="/contributing" icon="code">
+    Help improve @sei-js and contribute to the project
   </Card>
 </CardGroup>
+
+## ⚡ Why @sei-js?
+
+<Steps>
+  <Step title="Complete TypeScript support">
+    Full type safety for every function, contract interaction, and API response. Catch errors at compile time.
+  </Step>
+  <Step title="Production ready">
+    Battle-tested components used by major applications in the Sei ecosystem.
+  </Step>
+  <Step title="Optimized for Sei">
+    Take advantage of Sei's fast finality, low gas fees, and native order matching.
+  </Step>
+</Steps>
+
+## 📦 Package ecosystem
+
+<AccordionGroup>
+  <Accordion title="@sei-js/precompiles" icon="microchip">
+    Native blockchain function access - Access Sei's precompiled contracts directly from your EVM applications.
+    
+    ```bash
+    yarn add @sei-js/precompiles
+    ```
+    
+    <Card title="View Documentation" href="/precompiles/index" icon="book-open">
+      Complete guide to precompile contracts
+    </Card>
+  </Accordion>
+  <Accordion title="@sei-js/create-sei" icon="hammer">
+    Project scaffolding and templates - Bootstrap new Sei projects with pre-configured templates and tooling.
+    
+    ```bash
+    npx @sei-js/create-sei app
+    ```
+    
+    <Card title="View Documentation" href="/create-sei/introduction" icon="book-open">
+      Learn about project scaffolding
+    </Card>
+  </Accordion>
+  <Accordion title="@sei-js/sei-global-wallet" icon="wallet">
+    Universal wallet connections - Connect to any Sei-compatible wallet using the EIP-6963 standard.
+    
+    ```bash
+    yarn add @sei-js/sei-global-wallet
+    ```
+    
+    <Card title="View Documentation" href="/sei-global-wallet/introduction" icon="book-open">
+      Complete wallet integration guide
+    </Card>
+  </Accordion>
+  <Accordion title="@sei-js/ledger" icon="shield">
+    Hardware wallet integration - Secure transaction signing with Ledger hardware wallets.
+    
+    ```bash
+    yarn add @sei-js/ledger
+    ```
+    
+    <Card title="View Documentation" href="/ledger/introduction" icon="book-open">
+      Hardware wallet setup guide
+    </Card>
+  </Accordion>
+  <Accordion title="@sei-js/registry" icon="database">
+    Chain and asset registry - Access comprehensive data about Sei networks, tokens, and assets.
+    
+    ```bash
+    yarn add @sei-js/registry
+    ```
+    
+    <Card title="View Documentation" href="/registry/introduction" icon="book-open">
+      Registry usage and examples
+    </Card>
+  </Accordion>
+</AccordionGroup>
+
+## 🤝 Community & Support
+
+<Tabs>
+  <Tab title="Developer Resources">
+    **Get help from the community:**
+    
+    - [GitHub Discussions](https://github.com/sei-protocol/sei-js/discussions) - Ask questions and discuss features
+    - [Discord](https://discord.gg/sei) - Join the Sei developer community
+    - [Official Documentation](https://docs.sei.io) - Complete Sei protocol documentation
+  </Tab>
+  <Tab title="Report Issues">
+    **Found a bug or have a feature request?**
+    
+    - [GitHub Issues](https://github.com/sei-protocol/sei-js/issues) - Report bugs and request features
+    - Include reproduction steps and environment details
+    - Check existing issues before creating new ones
+  </Tab>
+</Tabs>
