@@ -1,0 +1,289 @@
+---
+title: "Setup & Installation"
+description: "Configure Sei MCP Server with Cursor, Windsurf, Claude Desktop, or CLI"
+icon: "download"
+---
+
+<Tabs>
+  <Tab title="Cursor IDE">
+    
+    <Steps>
+      <Step title="Open Settings">
+        Navigate to Cursor → Settings → Cursor Settings → MCP
+        
+        ```
+        Cursor → Settings → Cursor Settings → MCP
+        ```
+      </Step>
+      
+      <Step title="Configure Server">
+        Click "Add new Global MCP server" and add this configuration to mcp.json:
+        
+        <CodeGroup>
+        ```json mcp.json
+        {
+          "mcpServers": {
+            "sei-mcp-server": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "PRIVATE_KEY": "your_private_key_here"
+              }
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Restart">
+        Restart Cursor to activate the MCP server. You'll see a notification when it's ready.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Windsurf">
+    
+    <Steps>
+      <Step title="Open Settings">
+        Navigate to Windsurf → Settings → Windsurf Settings → Cascade
+        
+        ```
+        Windsurf → Settings → Windsurf Settings → Cascade
+        ```
+      </Step>
+      
+      <Step title="Add Configuration">
+        Add the Sei MCP Server to your configuration:
+        
+        <CodeGroup>
+        ```json Configuration
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "PRIVATE_KEY": "your_private_key_here"
+              }
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Activate">
+        Save and restart Windsurf. The server loads automatically.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Claude Desktop">
+    
+    <Steps>
+      <Step title="Install Claude">
+        Download [Claude Desktop](https://claude.ai/download) from Anthropic.
+      </Step>
+      
+      <Step title="Edit Configuration">
+        Open Settings → Developer → Edit Config and add:
+        
+        <CodeGroup>
+        ```json Claude Config
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "PRIVATE_KEY": "your_private_key_here"
+              }
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Restart">
+        Save and restart Claude Desktop to enable Sei tools.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="CLI">
+    
+    <Steps>
+      <Step title="Install CLI">
+        ```bash
+        npm install -g @anthropic-ai/claude-code
+        ```
+      </Step>
+      
+      <Step title="Add Server">
+        ```bash
+        claude mcp add sei-mcp-server npx @sei-js/mcp-server
+        ```
+      </Step>
+      
+      <Step title="Start Session">
+        ```bash
+        claude
+        ```
+        
+        The Sei MCP Server activates automatically in your session.
+      </Step>
+    </Steps>
+    
+  </Tab>
+</Tabs>
+
+## Private Key Setup
+
+<Warning>
+Use a dedicated test wallet with minimal funds. Never use your main wallet's private key.
+</Warning>
+
+Export your private key from your wallet:
+
+<Steps>
+  <Step title="Access Wallet Settings">
+    Look for "Export Private Key" or "Show Private Key" in wallet settings
+  </Step>
+  
+  <Step title="Verify Format">
+    Ensure the key starts with `0x`
+  </Step>
+  
+  <Step title="Fund Wallet">
+    Fund the wallet with small amounts for testing
+  </Step>
+</Steps>
+
+## Environment Configuration
+
+<Tabs>
+  <Tab title="Environment Variables">
+    
+    Create a `.env` file for local development:
+    
+    <CodeGroup>
+    ```bash .env
+    # Required
+    PRIVATE_KEY=0x_your_private_key_here
+    
+    # Optional (coming soon)
+    CUSTOM_RPC_URL=https://your-rpc.com
+    CUSTOM_CHAIN_ID=1329
+    ```
+    </CodeGroup>
+    
+  </Tab>
+  
+  <Tab title="HTTP Server Mode">
+    
+    For web applications and custom integrations:
+    
+    <CodeGroup>
+    ```bash Start HTTP Server
+    npx @sei-protocol/sei-mcp-server --http
+    ```
+    
+    ```javascript Connect from Web App
+    const eventSource = new EventSource('http://localhost:3001/sse');
+    ```
+    </CodeGroup>
+    
+  </Tab>
+</Tabs>
+
+## Verification
+
+After setup, verify your installation by asking your AI assistant:
+
+<CodeGroup>
+```text Test Connection
+"What tools are available for Sei blockchain?"
+```
+
+```text Check Balance
+"What's my SEI balance?"
+```
+
+```text Network Info
+"Show me Sei network information"
+```
+</CodeGroup>
+
+Expected responses should show available tools and your wallet information.
+
+<Note>
+If you encounter connection issues, verify Node.js 18+ is installed and restart your AI assistant after configuration changes.
+</Note>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Connection Issues" icon="wifi">
+    **Problem**: Server fails to connect or start
+    
+    **Solutions**:
+    - Verify Node.js 18+ is installed
+    - Restart your AI assistant after configuration
+    - Check for typos in configuration files
+    - Ensure npx has internet access for package downloads
+  </Accordion>
+  
+  <Accordion title="Private Key Errors" icon="key">
+    **Problem**: Authentication or wallet errors
+    
+    **Solutions**:
+    - Ensure key format starts with `0x`
+    - Verify wallet has sufficient funds for gas
+    - Test private key in a wallet application first
+    - Use a dedicated test wallet, not your main wallet
+  </Accordion>
+  
+  <Accordion title="Model Errors" icon="exclamation-triangle">
+    **Problem**: "The model returned an error" in Cursor
+    
+    **Solutions**:
+    - Disable "Auto" in the model menu
+    - Select a specific model like `claude-4-sonnet`
+    - Try disabling MCP servers temporarily
+    - Check server logs for detailed error messages
+  </Accordion>
+  
+  <Accordion title="Network Issues" icon="globe">
+    **Problem**: Cannot connect to Sei network
+    
+    **Solutions**:
+    - Verify internet connection
+    - Check if Sei RPC endpoints are accessible
+    - Try switching to different network (testnet/devnet)
+    - Wait and retry if network is experiencing issues
+  </Accordion>
+</AccordionGroup>
+
+## Support Resources
+
+<CardGroup cols={2}>
+  <Card
+    title="Discord Community"
+    icon="discord"
+    href="https://discord.gg/sei"
+  >
+    Get help from the Sei community and developers
+  </Card>
+  <Card
+    title="GitHub Issues"
+    icon="github"
+    href="https://github.com/sei-protocol/sei-js/issues"
+  >
+    Report bugs and request features
+  </Card>
+</CardGroup>

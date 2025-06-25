@@ -1,0 +1,866 @@
+---
+title: 'Integration Guide'
+description: 'Add unified wallet discovery to your web application'
+---
+
+## Installation & Setup
+
+Get started by installing the package and configuring your Dynamic environment:
+
+<Steps>
+  <Step title="Install the package">
+    <CodeGroup>
+    ```bash npm
+    npm install @sei-js/sei-global-wallet
+    ```
+    
+    ```bash yarn
+    yarn add @sei-js/sei-global-wallet
+    ```
+    
+    ```bash pnpm
+    pnpm add @sei-js/sei-global-wallet
+    ```
+    </CodeGroup>
+  </Step>
+
+  <Step title="Get Dynamic environment ID">
+    1. Sign up at [dynamic.xyz](https://dynamic.xyz) (free account)
+    2. Create a new project
+    3. Copy your Environment ID from project settings
+    
+    <Warning>
+    Keep your environment ID secure - you'll need it for wallet configuration.
+    </Warning>
+  </Step>
+
+  <Step title="Import and initialize">
+    Add the import to your application entry point:
+    
+    ```javascript
+    import { EIP6963Emitter } from '@sei-js/sei-global-wallet'; // Enable EIP-6963 wallet discovery
+    
+    // Initialize wallet discovery
+    EIP6963Emitter();
+    ```
+    
+    <Check>
+    Wallet discovery is now active in your application
+    </Check>
+  </Step>
+</Steps>
+
+## React Integration
+
+Build a complete wallet connection system for React applications:
+
+<Tabs>
+  <Tab title="Wallet Provider">
+    ```tsx providers/WalletProvider.tsx
+    import React, { createContext, useContext, useEffect, useState } from 'react';
+    import { EIP6963Emitter } from '@sei-js/sei-global-wallet'; // Enable EIP-6963 wallet discovery
+    
+    interface WalletContextType {
+      isConnected: boolean;
+      address: string | null;
+      balance: string | null;
+      availableWallets: any[];
+      connect: (walletId?: string) => Promise<void>;
+      disconnect: () => void;
+      sendTransaction: (to: string, amount: string) => Promise<string>;
+    }
+    
+    const WalletContext = createContext<WalletContextType | null>(null);
+    
+    export function WalletProvider({ children }: { children: React.ReactNode }) {
+      const [isConnected, setIsConnected] = useState(false);
+      const [address, setAddress] = useState<string | null>(null);
+      const [balance, setBalance] = useState<string | null>(null);
+      const [availableWallets, setAvailableWallets] = useState<any[]>([]);
+      const [activeProvider, setActiveProvider] = useState<any>(null);
+    
+      useEffect(() => {
+        // Initialize EIP-6963 wallet discovery
+        EIP6963Emitter();
+        
+        // Listen for wallet announcements
+        const handleWalletAnnouncement = (event: any) => {
+          const wallet = event.detail;
+          setAvailableWallets(prev => {
+            const exists = prev.find(w => w.info.uuid === wallet.info.uuid);
+            return exists ? prev : [...prev, wallet];
+          });
+        };
+    
+        window.addEventListener('eip6963:announceProvider', handleWalletAnnouncement);
+        
+        // Request existing providers
+        window.dispatchEvent(new Event('eip6963:requestProvider'));
+        
+        return () => {
+          window.removeEventListener('eip6963:announceProvider', handleWalletAnnouncement);
+        };
+      }, []);
+    
+      const connect = async (walletId?: string) => {
+        let wallet = availableWallets[0]; // Default to first available
+        
+        if (walletId) {
+          wallet = availableWallets.find(w => w.info.uuid === walletId);
+          if (!wallet) throw new Error(`Wallet ${walletId} not found`);
+        }
+        
+        if (!wallet) throw new Error('No wallets available');
+    
+        try {
+          const accounts = await wallet.provider.request({ 
+            method: 'eth_requestAccounts' 
+          });
+          
+          const balance = await wallet.provider.request({
+            method: 'eth_getBalance',
+            params: [accounts[0], 'latest']
+          });
+    
+          setActiveProvider(wallet.provider);
+          setAddress(accounts[0]);
+          setBalance(balance);
+          setIsConnected(true);
+        } catch (error) {
+          console.error('Connection failed:', error);
+          throw error;
+        }
+      };
+    
+      const disconnect = () => {
+        setIsConnected(false);
+        setAddress(null);
+        setBalance(null);
+        setActiveProvider(null);
+      };
+    
+      const sendTransaction = async (to: string, amount: string): Promise<string> => {
+        if (!activeProvider || !address) {
+          throw new Error('Wallet not connected');
+        }
+    
+        return await activeProvider.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: address,
+            to,
+            value: amount,
+          }]
+        });
+      };
+    
+      return (
+        <WalletContext.Provider value={{
+          isConnected,
+          address,
+          balance,
+          availableWallets,
+          connect,
+          disconnect,
+          sendTransaction
+        }}>
+          {children}
+        </WalletContext.Provider>
+      );
+    }
+    
+    export const useWallet = () => {
+      const context = useContext(WalletContext);
+      if (!context) {
+        throw new Error('useWallet must be used within WalletProvider');
+      }
+      return context;
+    };
+    ```
+  </Tab>
+
+  <Tab title="Connection Component">
+    ```tsx components/WalletConnection.tsx
+    import React from 'react';
+    import { useWallet } from '../providers/WalletProvider';
+    
+    export function WalletConnection() {
+      const { 
+        isConnected, 
+        address, 
+        balance, 
+        availableWallets, 
+        connect, 
+        disconnect 
+      } = useWallet();
+    
+      const formatAddress = (addr: string) => 
+        `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+    
+      const formatBalance = (bal: string) => {
+        const balanceInSei = parseInt(bal, 16) / 1e18;
+        return balanceInSei.toFixed(4);
+      };
+    
+      if (isConnected) {
+        return (
+          <div className="wallet-connected">
+            <div className="wallet-info">
+              <p><strong>Address:</strong> {formatAddress(address!)}</p>
+              <p><strong>Balance:</strong> {formatBalance(balance!)} SEI</p>
+            </div>
+            <button onClick={disconnect} className="disconnect-button">
+              Disconnect Wallet
+            </button>
+          </div>
+        );
+      }
+    
+      return (
+        <div className="wallet-selection">
+          <h3>Connect a Wallet</h3>
+          {availableWallets.length > 0 ? (
+            <div className="wallet-options">
+              {availableWallets.map((wallet) => (
+                <button
+                  key={wallet.info.uuid}
+                  onClick={() => connect(wallet.info.uuid)}
+                  className="wallet-option"
+                >
+                  <img 
+                    src={wallet.info.icon} 
+                    alt={wallet.info.name} 
+                    width="24" 
+                    height="24" 
+                  />
+                  {wallet.info.name}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="no-wallets">
+              <p>No compatible wallets detected.</p>
+              <p>Install a wallet like MetaMask to continue.</p>
+            </div>
+          )}
+        </div>
+      );
+    }
+    ```
+  </Tab>
+
+  <Tab title="App Integration">
+    ```tsx App.tsx
+    import React from 'react';
+    import { WalletProvider } from './providers/WalletProvider';
+    import { WalletConnection } from './components/WalletConnection';
+    
+    function App() {
+      return (
+        <WalletProvider>
+          <div className="app">
+            <header>
+              <h1>My Sei DApp</h1>
+              <WalletConnection />
+            </header>
+            
+            <main>
+              {/* Your app content */}
+            </main>
+          </div>
+        </WalletProvider>
+      );
+    }
+    
+    export default App;
+    ```
+  </Tab>
+</Tabs>
+
+## Vue Integration
+
+Implement wallet connectivity using Vue 3 Composition API:
+
+<Tabs>
+  <Tab title="Composable">
+    ```typescript composables/useWallet.ts
+    import { ref, onMounted } from 'vue';
+    import { EIP6963Emitter } from '@sei-js/sei-global-wallet'; // Enable EIP-6963 wallet discovery
+    
+    export function useWallet() {
+      const isConnected = ref(false);
+      const address = ref<string | null>(null);
+      const balance = ref<string | null>(null);
+      const availableWallets = ref<any[]>([]);
+      const activeProvider = ref<any>(null);
+    
+      onMounted(() => {
+        // Initialize wallet discovery
+        EIP6963Emitter();
+        
+        // Listen for wallet providers
+        const handleWalletAnnouncement = (event: any) => {
+          const wallet = event.detail;
+          if (!availableWallets.value.find(w => w.info.uuid === wallet.info.uuid)) {
+            availableWallets.value.push(wallet);
+          }
+        };
+    
+        window.addEventListener('eip6963:announceProvider', handleWalletAnnouncement);
+        window.dispatchEvent(new Event('eip6963:requestProvider'));
+        
+        // Cleanup on unmount
+        return () => {
+          window.removeEventListener('eip6963:announceProvider', handleWalletAnnouncement);
+        };
+      });
+    
+      const connect = async (walletId?: string) => {
+        let wallet = availableWallets.value[0];
+        
+        if (walletId) {
+          wallet = availableWallets.value.find(w => w.info.uuid === walletId);
+          if (!wallet) throw new Error(`Wallet ${walletId} not found`);
+        }
+        
+        if (!wallet) throw new Error('No wallets available');
+    
+        try {
+          const accounts = await wallet.provider.request({ 
+            method: 'eth_requestAccounts' 
+          });
+          
+          const bal = await wallet.provider.request({
+            method: 'eth_getBalance',
+            params: [accounts[0], 'latest']
+          });
+          
+          activeProvider.value = wallet.provider;
+          address.value = accounts[0];
+          balance.value = bal;
+          isConnected.value = true;
+        } catch (error) {
+          console.error('Connection failed:', error);
+          throw error;
+        }
+      };
+    
+      const disconnect = () => {
+        isConnected.value = false;
+        address.value = null;
+        balance.value = null;
+        activeProvider.value = null;
+      };
+    
+      const sendTransaction = async (to: string, amount: string) => {
+        if (!activeProvider.value || !address.value) {
+          throw new Error('Wallet not connected');
+        }
+    
+        return await activeProvider.value.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: address.value,
+            to,
+            value: amount,
+          }]
+        });
+      };
+    
+      return {
+        isConnected,
+        address,
+        balance,
+        availableWallets,
+        connect,
+        disconnect,
+        sendTransaction
+      };
+    }
+    ```
+  </Tab>
+
+  <Tab title="Component">
+    ```vue components/WalletConnection.vue
+    <template>
+      <div class="wallet-connection">
+        <div v-if="isConnected" class="connected">
+          <p><strong>Address:</strong> {{ formatAddress(address!) }}</p>
+          <p><strong>Balance:</strong> {{ formatBalance(balance!) }} SEI</p>
+          <button @click="disconnect" class="disconnect-btn">
+            Disconnect
+          </button>
+        </div>
+        
+        <div v-else class="disconnected">
+          <h3>Connect a Wallet</h3>
+          <div v-if="availableWallets.length > 0" class="wallet-options">
+            <button 
+              v-for="wallet in availableWallets" 
+              :key="wallet.info.uuid"
+              @click="connect(wallet.info.uuid)"
+              class="wallet-option"
+            >
+              <img 
+                :src="wallet.info.icon" 
+                :alt="wallet.info.name"
+                width="24" 
+                height="24"
+              />
+              {{ wallet.info.name }}
+            </button>
+          </div>
+          <div v-else class="no-wallets">
+            <p>No compatible wallets detected.</p>
+            <p>Install a wallet like MetaMask to continue.</p>
+          </div>
+        </div>
+      </div>
+    </template>
+    
+    <script setup lang="ts">
+    import { useWallet } from '../composables/useWallet';
+    
+    const { 
+      isConnected, 
+      address, 
+      balance, 
+      availableWallets, 
+      connect, 
+      disconnect 
+    } = useWallet();
+    
+    const formatAddress = (addr: string) => 
+      `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+    
+    const formatBalance = (bal: string) => {
+      const balanceInSei = parseInt(bal, 16) / 1e18;
+      return balanceInSei.toFixed(4);
+    };
+    </script>
+    
+    <style scoped>
+    .wallet-connection {
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    
+    .wallet-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .wallet-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .wallet-option:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .disconnect-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      background: #dc3545;
+      color: white;
+      cursor: pointer;
+    }
+    </style>
+    ```
+  </Tab>
+</Tabs>
+
+## Vanilla JavaScript Integration
+
+Pure JavaScript implementation without framework dependencies:
+
+```javascript wallet.js
+import { EIP6963Emitter } from '@sei-js/sei-global-wallet'; // Enable EIP-6963 wallet discovery
+
+class SeiWalletManager {
+  constructor() {
+    this.isConnected = false;
+    this.address = null;
+    this.balance = null;
+    this.availableWallets = [];
+    this.activeProvider = null;
+    
+    this.init();
+  }
+
+  async init() {
+    // Initialize wallet discovery
+    EIP6963Emitter();
+    
+    // Listen for wallet announcements
+    window.addEventListener('eip6963:announceProvider', (event) => {
+      const wallet = event.detail;
+      const exists = this.availableWallets.find(w => w.info.uuid === wallet.info.uuid);
+      if (!exists) {
+        this.availableWallets.push(wallet);
+        this.updateWalletOptions();
+      }
+    });
+    
+    // Request existing providers
+    window.dispatchEvent(new Event('eip6963:requestProvider'));
+  }
+
+  async connect(walletId) {
+    let wallet = this.availableWallets[0];
+    
+    if (walletId) {
+      wallet = this.availableWallets.find(w => w.info.uuid === walletId);
+      if (!wallet) throw new Error(`Wallet ${walletId} not found`);
+    }
+    
+    if (!wallet) throw new Error('No wallets available');
+
+    try {
+      const accounts = await wallet.provider.request({ 
+        method: 'eth_requestAccounts' 
+      });
+      
+      const balance = await wallet.provider.request({
+        method: 'eth_getBalance',
+        params: [accounts[0], 'latest']
+      });
+      
+      this.activeProvider = wallet.provider;
+      this.address = accounts[0];
+      this.balance = balance;
+      this.isConnected = true;
+      
+      this.updateUI();
+      this.dispatchEvent('walletConnected', { 
+        address: this.address,
+        walletName: wallet.info.name 
+      });
+    } catch (error) {
+      console.error('Connection failed:', error);
+      this.dispatchEvent('walletError', { error });
+      throw error;
+    }
+  }
+
+  disconnect() {
+    this.isConnected = false;
+    this.address = null;
+    this.balance = null;
+    this.activeProvider = null;
+    this.updateUI();
+    this.dispatchEvent('walletDisconnected');
+  }
+
+  async sendTransaction(to, amount) {
+    if (!this.activeProvider || !this.address) {
+      throw new Error('Wallet not connected');
+    }
+
+    return await this.activeProvider.request({
+      method: 'eth_sendTransaction',
+      params: [{
+        from: this.address,
+        to,
+        value: amount,
+      }]
+    });
+  }
+
+  updateWalletOptions() {
+    const container = document.getElementById('wallet-options');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (this.availableWallets.length === 0) {
+      container.innerHTML = `
+        <div class="no-wallets">
+          <p>No compatible wallets detected.</p>
+          <p>Install a wallet like MetaMask to continue.</p>
+        </div>
+      `;
+      return;
+    }
+    
+    this.availableWallets.forEach(wallet => {
+      const button = document.createElement('button');
+      button.className = 'wallet-option';
+      button.innerHTML = `
+        <img src="${wallet.info.icon}" alt="${wallet.info.name}" width="24" height="24">
+        <span>${wallet.info.name}</span>
+      `;
+      button.addEventListener('click', () => this.connect(wallet.info.uuid));
+      container.appendChild(button);
+    });
+  }
+
+  updateUI() {
+    const connectSection = document.getElementById('connect-section');
+    const connectedSection = document.getElementById('connected-section');
+
+    if (this.isConnected) {
+      connectSection.style.display = 'none';
+      connectedSection.style.display = 'block';
+      
+      document.getElementById('wallet-address').textContent = 
+        `${this.address.slice(0, 6)}...${this.address.slice(-4)}`;
+      
+      const balanceInSei = parseInt(this.balance, 16) / 1e18;
+      document.getElementById('wallet-balance').textContent = 
+        `${balanceInSei.toFixed(4)} SEI`;
+    } else {
+      connectSection.style.display = 'block';
+      connectedSection.style.display = 'none';
+    }
+  }
+
+  dispatchEvent(eventType, data = {}) {
+    window.dispatchEvent(new CustomEvent(eventType, { detail: data }));
+  }
+}
+
+// Initialize wallet manager
+const walletManager = new SeiWalletManager();
+
+// Set up disconnect handler
+document.getElementById('disconnect-wallet')?.addEventListener('click', () => {
+  walletManager.disconnect();
+});
+
+// Listen for wallet events
+window.addEventListener('walletConnected', (event) => {
+  console.log('Wallet connected:', event.detail);
+});
+
+window.addEventListener('walletError', (event) => {
+  console.error('Wallet error:', event.detail.error);
+  alert('Failed to connect wallet. Please try again.');
+});
+
+// Export for global use
+window.walletManager = walletManager;
+```
+
+## HTML Structure
+
+For vanilla JavaScript implementation, use this HTML structure:
+
+```html index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sei DApp</title>
+    <style>
+        .wallet-section { margin: 2rem 0; }
+        .wallet-options { display: flex; flex-direction: column; gap: 0.5rem; }
+        .wallet-option { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            padding: 0.75rem; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            background: white; 
+            cursor: pointer; 
+        }
+        .wallet-option:hover { background-color: #f5f5f5; }
+        .no-wallets { text-align: center; color: #666; }
+        .connected-info { background: #e8f5e8; padding: 1rem; border-radius: 4px; }
+        .disconnect-btn { 
+            padding: 0.5rem 1rem; 
+            background: #dc3545; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>My Sei DApp</h1>
+        </header>
+        
+        <div class="wallet-section">
+            <div id="connect-section">
+                <h3>Connect a Wallet</h3>
+                <div id="wallet-options"></div>
+            </div>
+            
+            <div id="connected-section" style="display: none;">
+                <div class="connected-info">
+                    <p><strong>Address:</strong> <span id="wallet-address"></span></p>
+                    <p><strong>Balance:</strong> <span id="wallet-balance"></span></p>
+                    <button id="disconnect-wallet" class="disconnect-btn">
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <main>
+            <!-- Your app content -->
+        </main>
+    </div>
+    
+    <script type="module" src="wallet.js"></script>
+</body>
+</html>
+```
+
+## Configuration Options
+
+Customize your wallet integration with these configuration options:
+
+```javascript config/wallet-config.js
+export const walletConfig = {
+  // Dynamic environment ID (required)
+  environmentId: 'your-environment-id-here',
+  
+  // Wallet appearance
+  walletName: 'Your App Wallet',
+  walletIcon: 'data:image/svg+xml;base64,...', // Base64 encoded SVG
+  walletUrl: 'https://your-app.com',
+  
+  // EIP-6963 configuration
+  eip6963: {
+    rdns: 'com.yourapp.wallet', // Reverse domain name
+  },
+  
+  // Network settings
+  defaultNetwork: 'sei-1', // Sei mainnet
+  supportedNetworks: ['sei-1', 'sei-atlantic-2'], // Mainnet and testnet
+  
+  // Auto-connection settings
+  autoConnect: true,
+  reconnectOnPageLoad: true,
+  
+  // UI customization
+  showWalletIcons: true,
+  maxWalletsDisplayed: 5,
+};
+```
+
+## Testing Your Integration
+
+Verify your wallet integration works correctly:
+
+<Steps>
+  <Step title="Test wallet detection">
+    1. Open your app in a browser with MetaMask installed
+    2. Check browser developer console for wallet announcement events
+    3. Verify your app displays available wallets
+    
+    ```javascript
+    // Debug wallet detection
+    window.addEventListener('eip6963:announceProvider', (event) => {
+      console.log('Wallet detected:', event.detail.info.name);
+    });
+    ```
+  </Step>
+
+  <Step title="Test connection flow">
+    1. Click on a wallet option
+    2. Approve connection in the wallet popup
+    3. Verify address and balance display correctly
+    4. Test disconnect functionality
+  </Step>
+
+  <Step title="Test transactions">
+    Send a small test transaction:
+    
+    ```javascript
+    // Test transaction (0.001 SEI)
+    await walletManager.sendTransaction(
+      '0x742d35cc6451dca72ed88c21b51c0b1db4c3c7b7', 
+      '0x38D7EA4C68000'
+    );
+    ```
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="No wallets detected">
+    **Problem**: Available wallets list is empty
+    
+    **Solutions**:
+    1. Ensure you have a compatible wallet installed (MetaMask, etc.)
+    2. Check that the wallet is enabled and unlocked
+    3. Verify the EIP-6963 import is correct
+    4. Try refreshing the page
+    
+    ```javascript
+    // Debug wallet detection
+    console.log('Available wallets:', walletManager.availableWallets.length);
+    ```
+  </Accordion>
+
+  <Accordion title="Connection fails">
+    **Problem**: Wallet connection request fails
+    
+    **Solutions**:
+    1. Check wallet is unlocked
+    2. Verify network connectivity
+    3. Make sure you're on a supported network
+    4. Clear browser cache and try again
+    
+    ```javascript
+    // Check wallet state
+    if (window.ethereum) {
+      console.log('Ethereum provider available:', !!window.ethereum);
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Environment ID errors">
+    **Problem**: Dynamic environment configuration issues
+    
+    **Solutions**:
+    1. Verify environment ID is correct in Dynamic dashboard
+    2. Check environment variables are set properly
+    3. Ensure no extra spaces in the ID string
+    4. Try creating a new environment ID
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+Your wallet integration is complete! Explore advanced Sei features:
+
+<CardGroup cols={2}>
+  <Card
+    title="Sei Precompiles"
+    icon="microchip"
+    href="/precompiles/overview"
+  >
+    Access Sei's unique blockchain capabilities
+  </Card>
+  <Card
+    title="DeFi Integration"
+    icon="chart-line"
+    href="/cosmos/introduction"
+  >
+    Build DeFi applications with Sei
+  </Card>
+</CardGroup>
+
+<Info>
+Need help? Join the [Sei Discord](https://discord.gg/sei) for community support.
+</Info>

@@ -66,7 +66,7 @@
 				"dropdown": "@sei-js/sei-global-wallet",
 				"description": "EIP-6963 wallet standard implementation",
 				"icon": "wallet",
-				"pages": ["sei-global-wallet/introduction"]
+				"pages": ["sei-global-wallet/introduction", "sei-global-wallet/integration"]
 			},
 			{
 				"dropdown": "@sei-js/precompiles",
@@ -111,6 +111,21 @@
 				"description": "Hardware wallet connection support",
 				"icon": "shield",
 				"pages": ["ledger/introduction"]
+			},
+			{
+				"dropdown": "@sei-js/mcp-server",
+				"description": "AI assistant blockchain integration via MCP",
+				"icon": "robot",
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": ["mcp-server/introduction", "mcp-server/setup"]
+					},
+					{
+						"group": "Implementation",
+						"pages": ["mcp-server/tools", "mcp-server/prompts", "mcp-server/context"]
+					}
+				]
 			}
 		]
 	},
