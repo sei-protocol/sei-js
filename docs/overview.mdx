@@ -3,61 +3,49 @@ title: Quick Start Guide
 description: Build your first Sei application in under 10 minutes with @sei-js
 ---
 
-## Prerequisites
+## ✅ Prerequisites
 
-Before you start building, ensure you have the following installed:
+Before you begin, ensure you have the following installed:
 
 <AccordionGroup>
-  <Accordion title="Node.js & Package Manager" icon="node-js">
-    **Required versions:**
-    - Node.js v18 or higher
-    - npm, yarn, or pnpm (latest version)
+  <Accordion title="Node.js & Package Management" icon="node-js">
+    **Required for running @sei-js applications:**
+    - **Node.js** (v18 or higher) - Required for npx and package management
+    - **nvm** (Node Version Manager) - Recommended for managing Node.js versions
     
-    <Tabs>
-      <Tab title="Check Node.js">
-        ```bash
-        node --version
-        # Should output v18.0.0 or higher
-        ```
-      </Tab>
-      <Tab title="Install Node.js">
-        Download from [nodejs.org](https://nodejs.org) or use a version manager:
-        ```bash
-        # Using nvm
-        nvm install --lts
-        nvm use --lts
-        ```
-      </Tab>
-    </Tabs>
+    <Check>
+    Verify your installation: `node --version` should output v18.0.0 or higher
+    </Check>
   </Accordion>
 
-  <Accordion title="Code Editor (Recommended)" icon="code">
-    **VS Code with TypeScript support**
+  <Accordion title="Code Editor" icon="code">
+    **Traditional Editors:**
+    - **VS Code** - Popular, lightweight with excellent TypeScript support
+    - **WebStorm** - Full-featured IDE with advanced debugging and refactoring
     
-    We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following extensions:
-    - TypeScript and JavaScript Language Features (built-in)
-    - Solidity extension (for smart contracts)
-    - Tailwind CSS IntelliSense (for styling)
+    **AI-Powered Editors:**
+    - **Cursor** - VS Code fork with built-in AI coding assistance
+    - **Windsurf** - AI-first development environment with intelligent code generation
+    
+    <Info>
+    All editors work great with @sei-js projects. Choose based on your preference for AI assistance and feature requirements.
+    </Info>
   </Accordion>
 </AccordionGroup>
 
-## Create your first Sei application
+## 🏗️ Create your first Sei application
 
 <Steps>
   <Step title="Initialize your project">
-    Use our CLI tool to create a new Sei application with everything pre-configured:
+    Generate a new Sei application using our CLI tool:
     
     <CodeGroup>
-      ```bash npm
-      npx @sei-js/create-sei my-sei-app
-      ```
-      
-      ```bash yarn
-      yarn create @sei-js/create-sei my-sei-app
+      ```bash npx
+      npx @sei-js/create-sei app
       ```
       
       ```bash pnpm
-      pnpm create @sei-js/create-sei my-sei-app
+      pnpm create @sei-js/create-sei app
       ```
     </CodeGroup>
     
@@ -73,10 +61,22 @@ Before you start building, ensure you have the following installed:
   <Step title="Navigate and install dependencies">
     Move into your project directory and install dependencies:
     
-    ```bash
-    cd my-sei-app
-    npm install
-    ```
+    <CodeGroup>
+      ```bash npm
+      cd app
+      npm install
+      ```
+      
+      ```bash yarn
+      cd app
+      yarn install
+      ```
+      
+      ```bash pnpm
+      cd app
+      pnpm install
+      ```
+    </CodeGroup>
     
     <Check>
     **Expected outcome:** All dependencies installed successfully without errors.
@@ -91,34 +91,22 @@ Before you start building, ensure you have the following installed:
     </Accordion>
   </Step>
 
-  <Step title="Configure your environment">
-    Create a `.env` file in your project root with your Sei network configuration:
-    
-    ```bash .env
-    # Network Configuration
-    NEXT_PUBLIC_CHAIN_ID=sei
-    NEXT_PUBLIC_RPC_URL=https://rpc.sei-apis.com
-    NEXT_PUBLIC_REST_URL=https://rest.sei-apis.com
-    
-    # Optional: For development
-    NEXT_PUBLIC_ENABLE_TESTNETS=true
-    ```
-    
-    <Warning>
-    Never commit private keys or sensitive information to version control. Use environment variables for all secrets.
-    </Warning>
-    
-    <Check>
-    **Expected outcome:** Environment file created with network endpoints configured.
-    </Check>
-  </Step>
-
   <Step title="Start your development server">
     Launch your application in development mode:
     
-    ```bash
-    npm run dev
-    ```
+    <CodeGroup>
+      ```bash npm
+      npm run dev
+      ```
+      
+      ```bash yarn
+      yarn dev
+      ```
+      
+      ```bash pnpm
+      pnpm dev
+      ```
+    </CodeGroup>
     
     <Check>
     **Expected outcome:** Development server running at `http://localhost:3000` with hot reload enabled.
@@ -131,151 +119,21 @@ Before you start building, ensure you have the following installed:
   </Step>
 </Steps>
 
-## Test your application
+## 🛠️ What you can build
 
-<Tabs>
-  <Tab title="Connect a Wallet">
-    **Test wallet connectivity:**
-    
-    1. Click "Connect Wallet" in your application
-    2. Select a wallet (MetaMask, Compass, or any Sei-compatible wallet)
-    3. Approve the connection request
-    
-    <Check>
-    You should see your wallet address displayed and network status showing "Connected to Sei".
-    </Check>
-  </Tab>
-
-  <Tab title="Check Account Balance">
-    **Verify balance display:**
-    
-    ```typescript
-    // This code is already included in your template
-    import { useBalance } from 'wagmi';
-    
-    const { data: balance } = useBalance({
-      address: userAddress,
-    });
-    ```
-    
-    <Check>
-    Your SEI balance should appear in the interface after wallet connection.
-    </Check>
-  </Tab>
-
-  <Tab title="Test a Transaction">
-    **Try a simple transaction:**
-    
-    1. Ensure you have some SEI in your wallet (get testnet tokens from [faucet](https://faucet.sei-apis.com))
-    2. Use the example transfer function in your template
-    3. Send a small amount to another address
-    
-    <Check>
-    Transaction should complete in 1-2 seconds with a transaction hash displayed.
-    </Check>
-  </Tab>
-</Tabs>
-
-## Next steps
-
-Now that you have a working Sei application, explore these key features:
+Your new Sei application comes with examples and patterns for common blockchain interactions:
 
 <CardGroup cols={2}>
-  <Card title="Smart Contract Integration" icon="file-contract" href="/precompiles/index">
-    Learn how to deploy and interact with smart contracts on Sei
+  <Card title="Connect Wallets" icon="wallet">
+    Connect to any Sei-compatible wallet including MetaMask, Compass, and more using the built-in wallet integration
   </Card>
-  <Card title="Precompile Functions" icon="microchip" href="/precompiles/index">
-    Access Sei's native blockchain functions directly from your app
+  <Card title="Check Balances" icon="coins">
+    Fetch and display wallet balances for SEI and other tokens with real-time updates
   </Card>
-  <Card title="Advanced Wallet Features" icon="wallet" href="/sei-global-wallet/introduction">
-    Implement multi-wallet support and advanced signing
+  <Card title="Query Blockchain Data" icon="magnifying-glass">
+    Access blockchain information like total SEI supply using precompile contracts
   </Card>
-  <Card title="Production Deployment" icon="cloud-arrow-up" href="/development">
-    Deploy your application to production with best practices
-  </Card>
-</CardGroup>
-
-## Common patterns
-
-<AccordionGroup>
-  <Accordion title="Token transfers" icon="arrow-right-arrow-left">
-    **Send SEI or custom tokens:**
-    
-    ```typescript
-    import { useSendTransaction } from 'wagmi';
-    import { parseEther } from 'viem';
-    
-    const { sendTransaction } = useSendTransaction();
-    
-    // Send 1 SEI
-    sendTransaction({
-      to: '0x...',
-      value: parseEther('1')
-    });
-    ```
-  </Accordion>
-
-  <Accordion title="Smart contract calls" icon="file-contract">
-    **Interact with deployed contracts:**
-    
-    ```typescript
-    import { useWriteContract } from 'wagmi';
-    
-    const { writeContract } = useWriteContract();
-    
-    // Call a contract function
-    writeContract({
-      address: '0x...',
-      abi: contractAbi,
-      functionName: 'transfer',
-      args: [recipientAddress, amount]
-    });
-    ```
-  </Accordion>
-
-  <Accordion title="Query blockchain data" icon="magnifying-glass">
-    **Read contract state and blockchain data:**
-    
-    ```typescript
-    import { useReadContract } from 'wagmi';
-    
-    const { data } = useReadContract({
-      address: '0x...',
-      abi: contractAbi,
-      functionName: 'balanceOf',
-      args: [userAddress]
-    });
-    ```
-  </Accordion>
-</AccordionGroup>
-
-## 🤝 Getting Help
-
-### Community Resources
-
-<CardGroup cols={2}>
-  <Card title="GitHub Discussions" href="https://github.com/sei-protocol/sei-js/discussions" icon="github">
-    Ask questions and discuss features
-  </Card>
-  <Card title="Discord" href="https://discord.gg/sei" icon="discord">
-    Join the Sei developer community
-  </Card>
-  <Card title="Documentation" href="https://docs.sei.io" icon="book">
-    Official Sei documentation
-  </Card>
-  <Card title="Issues" href="https://github.com/sei-protocol/sei-js/issues" icon="bug">
-    Report bugs and request features
+  <Card title="Smart Contract Interactions" icon="file-contract">
+    Deploy and interact with smart contracts including simple examples like counters and token transfers
   </Card>
 </CardGroup>
-
-### Maintainers
-
-For urgent issues or questions about the project, reach out to the maintainers:
-
-- **Core Team**: [@sei-protocol](https://github.com/sei-protocol)
-- **Issues**: Use GitHub issues for bug reports and feature requests
-- **Discussions**: Use GitHub discussions for questions and ideas
-
-<Note>
-We appreciate all contributions, big and small! Whether it's fixing a typo, adding a feature, or improving documentation, every contribution helps make SeiJS better for everyone.
-</Note>

@@ -1,24 +1,24 @@
 ---
-title: Contributing to SeiJS
-description: Complete guide to contributing to @sei-js - local development setup, testing, deployment, and pull request process
+title: Contributing
+description: Contributing to @sei-js - Complete guide to local development setup, testing, and pull request process
 ---
 
 ## 🚀 Getting Started
 
-Welcome to the SeiJS contributor community! This guide will help you set up your local development environment and contribute to the project.
+Welcome to the @sei-js contributor community! This guide will help you set up your local development environment and contribute to the project.
 
 ### Prerequisites
 
 Before you begin, ensure you have:
 
 - **nvm** (Node Version Manager)
-- **Yarn**
+- **Yarn** (4.7.0)
 
 ### Local Development Setup
 
 <Steps>
   <Step title="Fork and Clone">
-    1. Fork the [sei-js repository](https://github.com/sei-protocol/sei-js) on GitHub
+    1. Fork the [@sei-js repository](https://github.com/sei-protocol/sei-js) on GitHub
     2. Clone your fork locally:
     
     ```bash
@@ -129,72 +129,36 @@ sei-js/
 
 ### Code Quality and Standards
 
-We use **Biome** for code formatting and linting:
+We use **Biome** for code formatting and linting. Configure your IDE to use Biome for the best development experience:
 
-<Tabs>
-  <Tab title="Check Code">
-    ```bash
-    # Check all files
-    yarn biome check
-    
-    # Check specific files
-    yarn biome check packages/precompiles/src/**/*.ts
-    ```
-  </Tab>
-  
-  <Tab title="Fix Issues">
-    ```bash
-    # Auto-fix formatting and linting issues
-    yarn biome check --apply
-    
-    # Fix specific files
-    yarn biome check --apply packages/precompiles/src/**/*.ts
-    ```
-  </Tab>
-  
-  <Tab title="Format Only">
-    ```bash
-    # Just format code
-    yarn biome format --write .
-    ```
-  </Tab>
-</Tabs>
+```bash
+# Check your code
+yarn biome check
+
+# Auto-fix formatting and linting issues  
+yarn biome check --apply
+```
+
+<Info>
+Configure your IDE to use the project's Biome configuration for automatic formatting and linting as you code.
+</Info>
 
 ### Running Tests
 
-<AccordionGroup>
-  <Accordion title="All Tests" icon="check">
-    ```bash
-    # Run all tests across all packages
-    yarn test:all
-    
-    # Run tests with coverage report
-    yarn test:coverage
-    ```
-  </Accordion>
-  
-  <Accordion title="Package-Specific Tests" icon="box">
-    ```bash
-    # Test a specific package
-    cd packages/precompiles
-    yarn test
-    
-    # Watch mode for development
-    yarn test --watch
-    ```
-  </Accordion>
-  
-  <Accordion title="Integration Tests" icon="link">
-    ```bash
-    # Run integration tests (requires network access)
-    yarn test:integration
-    
-    # Test against specific networks
-    NETWORK=testnet yarn test:integration
-    ```
-  </Accordion>
-</AccordionGroup>
+Run tests to ensure your changes work correctly:
+
+```bash
+# Run all tests
+yarn test:all
+
+# Run tests with coverage report
+yarn test:coverage
+```
+
+<Warning>
+Always aim for **100% code coverage** in your contributions. Add comprehensive tests for any new functionality or bug fixes.
+</Warning>
 
 ## 📝 Making Changes
 
-That's it! You're ready to start contributing to SeiJS. Make your changes, test them thoroughly with the commands above, and submit your pull request when ready.
+That's it! You're ready to start contributing to @sei-js. Make your changes, test them thoroughly with the commands above, and submit your pull request when ready.
