@@ -7,7 +7,7 @@
 		"light": "https://cdn.sei.io/sei.svg"
 	},
 	"description": "Official TypeScript SDK for building decentralized applications on Sei Network. Complete @sei-js toolkit for EVM development, wallet integration, and blockchain interactions.",
-	"favicon": "/favicon.svg",
+	"favicon": "/favicon.ico",
 	"colors": {
 		"primary": "#9E1F19",
 		"light": "#B52A2A",
