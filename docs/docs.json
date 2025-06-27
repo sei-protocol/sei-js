@@ -93,10 +93,6 @@
 						"pages": ["precompiles/introduction", "precompiles/quick-start"]
 					},
 					{
-						"group": "Integrations",
-						"pages": ["precompiles/precompiles/viem", "precompiles/precompiles/ethers"]
-					},
-					{
 						"group": "Precompiles",
 						"pages": [
 							"precompiles/precompiles/address",

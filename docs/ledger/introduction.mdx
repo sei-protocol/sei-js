@@ -1,108 +1,154 @@
 ---
 title: '@sei-js/ledger'
-description: 'Ledger hardware wallet integration for Sei'
+description: 'TypeScript library for SEI Ledger app helper functions'
 icon: "shield"
 ---
 
 ## Overview
 
-The `@sei-js/ledger` package provides seamless integration with Ledger hardware wallets for Sei blockchain interactions. It supports both EVM and Cosmos address derivation, transaction signing, and wallet management through the Ledger device.
-
-<CardGroup cols={2}>
-  <Card
-    title="Hardware Security"
-    icon="shield-halved"
-  >
-    Secure transaction signing with Ledger hardware wallets
-  </Card>
-  <Card
-    title="Dual Address Support"
-    icon="code-branch"
-  >
-    Generate both EVM and Cosmos addresses from the same seed
-  </Card>
-  <Card
-    title="CosmJS Integration"
-    icon="link"
-  >
-    Compatible with CosmJS signing clients
-  </Card>
-  <Card
-    title="HD Wallet Support"
-    icon="sitemap"
-  >
-    Full hierarchical deterministic wallet support
-  </Card>
-</CardGroup>
+The `@sei-js/ledger` package provides TypeScript helper functions for integrating with the SEI Ledger hardware wallet app. It enables secure transaction signing and address derivation for Sei blockchain applications using Ledger devices.
 
 ## Installation
 
 <CodeGroup>
-
-```bash npm
-npm install @sei-js/ledger
-```
-
 ```bash yarn
 yarn add @sei-js/ledger
+```
+
+```bash npm  
+npm install @sei-js/ledger
 ```
 
 ```bash pnpm
 pnpm add @sei-js/ledger
 ```
-
 </CodeGroup>
 
-## Prerequisites
+## Core Functions
 
-### Hardware Requirements
+### createTransportAndApp
 
-- Ledger Nano S, Nano S Plus, or Nano X
-- Latest firmware installed on the device
-- Sei app installed on Ledger device
+Creates a transport connection and app instance for communicating with the Ledger device.
 
-### Software Requirements
+**Parameters:**
+- None
 
-- Node.js ≥16
-- USB access for web applications (WebUSB API)
-- Transport layer support (USB/HID)
-
-## Quick Start
-
-### Basic Setup
+**Returns:**
+- `Promise<{transport: Transport, app: SeiApp}>` - Object containing transport and app instances
 
 <CodeGroup>
+```typescript Basic Usage
+import { createTransportAndApp } from '@sei-js/ledger';
 
-```typescript Complete Example
-import {
-  coins,
-  SigningStargateClient,
-  StdFee
-} from "@cosmjs/stargate";
+const { transport, app } = await createTransportAndApp();
+console.log(transport, app);
+```
+</CodeGroup>
 
-import {
-  createTransportAndApp,
-  getAddresses,
-  SeiLedgerOfflineAminoSigner
-} from "@sei-js/ledger";
+### getAddresses
 
-const delegateWithLedger = async () => {
+Retrieves both EVM and Cosmos addresses from the Ledger device for a given derivation path.
+
+**Parameters:**
+- `app` (SeiApp) - An instance of the Ledger Sei app
+- `path` (string) - HD derivation path (e.g., "m/44'/60'/0'/0/0")
+
+**Returns:**
+- `Promise<{evmAddress: string, nativeAddress: string}>` - Object containing both address types
+
+<CodeGroup>
+```typescript Get Addresses
+import { getAddresses } from '@sei-js/ledger';
+
+const { evmAddress, nativeAddress } = await getAddresses(app, "m/44'/60'/0'/0/0");
+console.log(evmAddress, nativeAddress);
+```
+</CodeGroup>
+
+### SeiLedgerOfflineAminoSigner
+
+A signer class that enables offline amino signing with Ledger devices, compatible with CosmJS.
+
+#### Constructor
+
+```typescript
+new SeiLedgerOfflineAminoSigner(app: SeiApp, path: string)
+```
+
+**Parameters:**
+- `app` (SeiApp) - An instance of the Ledger Sei app
+- `path` (string) - HD derivation path (e.g., "m/44'/60'/0'/0/0")
+
+<CodeGroup>
+```typescript Create Signer
+import { SeiLedgerOfflineAminoSigner } from '@sei-js/ledger';
+
+const ledgerSigner = new SeiLedgerOfflineAminoSigner(app, "m/44'/60'/0'/0/0");
+```
+</CodeGroup>
+
+#### getAccounts
+
+Retrieves account information from the Ledger device.
+
+**Returns:**
+- `Promise<readonly AccountData[]>` - Array of AccountData objects with address and public key
+
+<CodeGroup>
+```typescript Get Accounts
+const accounts = await ledgerSigner.getAccounts();
+console.log(accounts); 
+// { address: 'sei1...', pubkey: { type: 'tendermint/PubKeySecp256k1', value: '...' } }
+```
+</CodeGroup>
+
+#### signAmino
+
+Signs a transaction document using the Ledger device.
+
+**Parameters:**
+- `_signerAddress` (string) - The address of the signer (unused)
+- `signDoc` (StdSignDoc) - The sign document to be signed
+
+**Returns:**
+- `Promise<AminoSignResponse>` - Object containing the signed document and signature
+
+<CodeGroup>
+```typescript Sign Transaction
+import { StdSignDoc } from '@cosmjs/amino';
+
+const signDoc: StdSignDoc = { /* your StdSignDoc object */ };
+const signResponse = await ledgerSigner.signAmino('sei123...', signDoc);
+console.log(signResponse.signed, signResponse.signature);
+```
+</CodeGroup>
+
+## Complete Example
+
+Here's a complete example showing how to use the ledger package to delegate tokens:
+
+<CodeGroup>
+```typescript Complete Delegation Example
+import { coins, SigningStargateClient, StdFee } from "@cosmjs/stargate";
+import { createTransportAndApp, getAddresses, SeiLedgerOfflineAminoSigner } from "@sei-js/ledger";
+
+const testApp = async () => {
   const validatorAddress = "seivaloper1sq7x0r2mf3gvwr2l9amtlye0yd3c6dqa4th95v";
-  const rpcUrl = "https://rpc.sei.io/";
-  const memo = "Delegation from Ledger";
+  const rpcUrl = "https://rpc-testnet.sei-apis.com/";
+  const memo = "Delegation";
   const path = "m/44'/60'/0'/0/0";
 
-  // Create transport and app
+  // Create connection to Ledger device
   const { app } = await createTransportAndApp();
   
-  // Get addresses
+  // Get addresses from Ledger
   const { nativeAddress } = await getAddresses(app, path);
   
-  // Create signer
+  // Create signer instance
   const ledgerSigner = new SeiLedgerOfflineAminoSigner(app, path);
   
-  // Connect to chain
-  const client = await SigningStargateClient.connectWithSigner(
+  // Connect to Sei network
+  const signingStargateClient = await SigningStargateClient.connectWithSigner(
     rpcUrl, 
     ledgerSigner
   );
@@ -113,577 +159,42 @@ const delegateWithLedger = async () => {
     value: {
       delegatorAddress: nativeAddress.address,
       validatorAddress: validatorAddress,
-      amount: coins(1000000, "usei"), // 1 SEI
+      amount: coins(500, "usei"),
     },
   };
 
+  // Set transaction fee
   const fee: StdFee = {
     amount: [{ denom: "usei", amount: "20000" }],
     gas: "200000",
   };
 
-  // Sign and broadcast
-  const result = await client.signAndBroadcast(
+  // Sign and broadcast transaction
+  const result = await signingStargateClient.signAndBroadcast(
     nativeAddress.address, 
     [msgDelegate], 
     fee, 
     memo
   );
   
-  console.log("Transaction result:", result);
-};
-```
-
-</CodeGroup>
-
-## Core Functions
-
-### createTransportAndApp
-
-Creates a transport connection and initializes the Sei Ledger app.
-
-<CodeGroup>
-
-```typescript Basic Usage
-import { createTransportAndApp } from '@sei-js/ledger';
-
-const { transport, app } = await createTransportAndApp();
-console.log('Connected to Ledger device');
-```
-
-```typescript With Error Handling
-import { createTransportAndApp } from '@sei-js/ledger';
-
-try {
-  const { transport, app } = await createTransportAndApp();
-  console.log('Ledger connected successfully');
-  
-  // Use app for operations
-  
-} catch (error) {
-  if (error.message.includes('No device selected')) {
-    console.error('Please connect your Ledger device');
-  } else if (error.message.includes('App not found')) {
-    console.error('Please install the Sei app on your Ledger');
-  } else {
-    console.error('Ledger connection error:', error);
-  }
-}
-```
-
-</CodeGroup>
-
-**Returns**: `Promise<{transport: Transport, app: SeiApp}>`
-
-### getAddresses
-
-Retrieves both EVM and Cosmos addresses for a given derivation path.
-
-<CodeGroup>
-
-```typescript Address Derivation
-import { getAddresses } from '@sei-js/ledger';
-
-const path = "m/44'/60'/0'/0/0"; // Standard Ethereum path
-const { evmAddress, nativeAddress } = await getAddresses(app, path);
-
-console.log('EVM Address:', evmAddress);
-console.log('Cosmos Address:', nativeAddress.address);
-console.log('Public Key:', nativeAddress.pubkey);
-```
-
-```typescript Multiple Addresses
-// Derive multiple addresses
-const addresses = [];
-for (let i = 0; i < 5; i++) {
-  const path = `m/44'/60'/0'/0/${i}`;
-  const { evmAddress, nativeAddress } = await getAddresses(app, path);
-  addresses.push({
-    index: i,
-    path,
-    evm: evmAddress,
-    cosmos: nativeAddress.address
-  });
-}
-
-console.log('Derived addresses:', addresses);
-```
-
-</CodeGroup>
-
-**Parameters**:
-- `app` (SeiApp): Ledger Sei app instance
-- `path` (string): HD derivation path
-
-**Returns**: `Promise<{evmAddress: string, nativeAddress: AccountData}>`
-
-## SeiLedgerOfflineAminoSigner
-
-The main signer class for Ledger integration with CosmJS.
-
-### Constructor
-
-<CodeGroup>
-
-```typescript Basic Initialization
-import { SeiLedgerOfflineAminoSigner } from '@sei-js/ledger';
-
-const path = "m/44'/60'/0'/0/0";
-const signer = new SeiLedgerOfflineAminoSigner(app, path);
-```
-
-```typescript With Custom Prefix
-const signer = new SeiLedgerOfflineAminoSigner(
-  app, 
-  path, 
-  'sei' // Custom address prefix
-);
-```
-
-</CodeGroup>
-
-### getAccounts
-
-Retrieves account information for the signer.
-
-<CodeGroup>
-
-```typescript Get Account Info
-const accounts = await signer.getAccounts();
-console.log('Signer accounts:', accounts);
-
-// accounts[0] contains:
-// - address: Cosmos address
-// - algo: Signature algorithm
-// - pubkey: Public key bytes
-```
-
-</CodeGroup>
-
-### signAmino
-
-Signs transactions using Amino encoding (Ledger compatible).
-
-<CodeGroup>
-
-```typescript Transaction Signing
-import { makeSignDoc } from '@cosmjs/amino';
-
-const signDoc = makeSignDoc(
-  [msgDelegate], // messages
-  fee,           // fee
-  'sei-chain',   // chain ID
-  memo,          // memo
-  accountNumber, // account number
-  sequence       // sequence
-);
-
-const signature = await signer.signAmino(signerAddress, signDoc);
-console.log('Transaction signed:', signature);
-```
-
-</CodeGroup>
-
-## Advanced Usage
-
-### Multi-Account Management
-
-<CodeGroup>
-
-```typescript Account Manager
-class LedgerAccountManager {
-  private app: SeiApp;
-  private accounts: Map<string, AccountData> = new Map();
-
-  constructor(app: SeiApp) {
-    this.app = app;
-  }
-
-  async addAccount(index: number): Promise<AccountData> {
-    const path = `m/44'/60'/0'/0/${index}`;
-    const { nativeAddress } = await getAddresses(this.app, path);
-    
-    this.accounts.set(path, nativeAddress);
-    return nativeAddress;
-  }
-
-  async getAccount(index: number): Promise<AccountData | undefined> {
-    const path = `m/44'/60'/0'/0/${index}`;
-    return this.accounts.get(path);
-  }
-
-  async createSigner(index: number): Promise<SeiLedgerOfflineAminoSigner> {
-    const path = `m/44'/60'/0'/0/${index}`;
-    return new SeiLedgerOfflineAminoSigner(this.app, path);
-  }
-}
-
-// Usage
-const manager = new LedgerAccountManager(app);
-await manager.addAccount(0);
-const signer = await manager.createSigner(0);
-```
-
-</CodeGroup>
-
-### Transaction Types
-
-<CodeGroup>
-
-```typescript Bank Transfer
-const msgSend = {
-  typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-  value: {
-    fromAddress: senderAddress,
-    toAddress: recipientAddress,
-    amount: coins(1000000, "usei"),
-  },
+  console.log("Broadcast result:", result);
 };
 
-const result = await client.signAndBroadcast(
-  senderAddress,
-  [msgSend],
-  fee,
-  "Transfer via Ledger"
-);
+testApp();
 ```
-
-```typescript Staking Operations
-// Delegate
-const msgDelegate = {
-  typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-  value: {
-    delegatorAddress: delegatorAddress,
-    validatorAddress: validatorAddress,
-    amount: { denom: "usei", amount: "1000000" },
-  },
-};
-
-// Undelegate
-const msgUndelegate = {
-  typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-  value: {
-    delegatorAddress: delegatorAddress,
-    validatorAddress: validatorAddress,
-    amount: { denom: "usei", amount: "500000" },
-  },
-};
-
-// Withdraw rewards
-const msgWithdrawRewards = {
-  typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
-  value: {
-    delegatorAddress: delegatorAddress,
-    validatorAddress: validatorAddress,
-  },
-};
-```
-
-```typescript Governance
-// Vote on proposal
-const msgVote = {
-  typeUrl: "/cosmos.gov.v1beta1.MsgVote",
-  value: {
-    proposalId: BigInt(1),
-    voter: voterAddress,
-    option: 1, // VOTE_OPTION_YES
-  },
-};
-
-// Submit proposal
-const msgSubmitProposal = {
-  typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
-  value: {
-    content: {
-      typeUrl: "/cosmos.gov.v1beta1.TextProposal",
-      value: {
-        title: "Proposal Title",
-        description: "Proposal Description",
-      },
-    },
-    initialDeposit: coins(10000000, "usei"),
-    proposer: proposerAddress,
-  },
-};
-```
-
 </CodeGroup>
 
-### Error Handling
+## Security Notes
 
-<CodeGroup>
+<Warning>
+- Ensure your Ledger device is genuine and purchased from official sources
+- Always verify transaction details on your Ledger device screen before confirming
+- Keep your Ledger device firmware updated
+- Store your recovery phrase securely and never share it
+</Warning>
 
-```typescript Comprehensive Error Handling
-class LedgerError extends Error {
-  constructor(message: string, public code?: string) {
-    super(message);
-    this.name = 'LedgerError';
-  }
-}
+## Hardware Requirements
 
-async function safeLedgerOperation<T>(
-  operation: () => Promise<T>
-): Promise<T> {
-  try {
-    return await operation();
-  } catch (error: any) {
-    // Handle specific Ledger errors
-    if (error.message.includes('No device selected')) {
-      throw new LedgerError('Please connect your Ledger device', 'DEVICE_NOT_CONNECTED');
-    } else if (error.message.includes('App not found')) {
-      throw new LedgerError('Please install the Sei app on your Ledger', 'APP_NOT_FOUND');
-    } else if (error.message.includes('Transaction rejected')) {
-      throw new LedgerError('Transaction was rejected on the device', 'USER_REJECTED');
-    } else if (error.message.includes('Device locked')) {
-      throw new LedgerError('Please unlock your Ledger device', 'DEVICE_LOCKED');
-    } else {
-      throw new LedgerError(`Ledger operation failed: ${error.message}`, 'UNKNOWN_ERROR');
-    }
-  }
-}
-
-// Usage
-try {
-  const result = await safeLedgerOperation(async () => {
-    const { app } = await createTransportAndApp();
-    return await getAddresses(app, "m/44'/60'/0'/0/0");
-  });
-  console.log('Addresses:', result);
-} catch (error) {
-  if (error instanceof LedgerError) {
-    console.error(`Ledger Error [${error.code}]:`, error.message);
-  } else {
-    console.error('Unexpected error:', error);
-  }
-}
-```
-
-</CodeGroup>
-
-## Utility Functions
-
-### removeLeadingZeros
-
-Removes leading zeros from byte arrays (useful for signature processing).
-
-<CodeGroup>
-
-```typescript Signature Processing
-import { removeLeadingZeros } from '@sei-js/ledger';
-
-const signature = new Uint8Array([0, 0, 1, 2, 3, 4]);
-const cleaned = removeLeadingZeros(signature);
-console.log('Original:', signature);  // [0, 0, 1, 2, 3, 4]
-console.log('Cleaned:', cleaned);     // [1, 2, 3, 4]
-```
-
-</CodeGroup>
-
-**Parameters**:
-- `bytes` (Uint8Array): Input byte array
-
-**Returns**: `Uint8Array` - Byte array with leading zeros removed
-
-## Web Integration
-
-### WebUSB Support
-
-<CodeGroup>
-
-```typescript Web Application Setup
-// Check WebUSB support
-if (!navigator.usb) {
-  throw new Error('WebUSB not supported in this browser');
-}
-
-// Request device permissions
-async function requestLedgerPermission() {
-  try {
-    const device = await navigator.usb.requestDevice({
-      filters: [{ vendorId: 0x2c97 }] // Ledger vendor ID
-    });
-    console.log('Ledger device authorized:', device);
-    return device;
-  } catch (error) {
-    console.error('User denied device access:', error);
-    throw error;
-  }
-}
-
-// Initialize with permission
-async function initializeLedger() {
-  await requestLedgerPermission();
-  const { transport, app } = await createTransportAndApp();
-  return { transport, app };
-}
-```
-
-```typescript React Hook Example
-import { useState, useEffect } from 'react';
-import { createTransportAndApp, getAddresses } from '@sei-js/ledger';
-
-function useLedger() {
-  const [app, setApp] = useState(null);
-  const [addresses, setAddresses] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const connect = async () => {
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const { app: ledgerApp } = await createTransportAndApp();
-      setApp(ledgerApp);
-      
-      const addrs = await getAddresses(ledgerApp, "m/44'/60'/0'/0/0");
-      setAddresses(addrs);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { app, addresses, error, loading, connect };
-}
-
-// Component usage
-function LedgerWallet() {
-  const { app, addresses, error, loading, connect } = useLedger();
-
-  return (
-    <div>
-      {!app && (
-        <button onClick={connect} disabled={loading}>
-          {loading ? 'Connecting...' : 'Connect Ledger'}
-        </button>
-      )}
-      
-      {error && <div className="error">Error: {error}</div>}
-      
-      {addresses && (
-        <div>
-          <p>EVM: {addresses.evmAddress}</p>
-          <p>Cosmos: {addresses.nativeAddress.address}</p>
-        </div>
-      )}
-    </div>
-  );
-}
-```
-
-</CodeGroup>
-
-## Best Practices
-
-<AccordionGroup>
-  <Accordion title="Security">
-    - Always verify transaction details on the Ledger screen
-    - Use standard derivation paths when possible
-    - Implement proper error handling for user rejections
-    - Never store or transmit private keys
-  </Accordion>
-
-  <Accordion title="User Experience">
-    - Provide clear instructions for Ledger setup
-    - Show loading states during device operations
-    - Handle device disconnections gracefully
-    - Implement retry mechanisms for failed operations
-  </Accordion>
-
-  <Accordion title="Performance">
-    - Cache transport and app instances when possible
-    - Batch multiple address derivations
-    - Implement connection pooling for web applications
-    - Use appropriate timeouts for device operations
-  </Accordion>
-
-  <Accordion title="Development">
-    - Test with actual Ledger devices, not simulators
-    - Implement comprehensive error handling
-    - Use TypeScript for better type safety
-    - Follow Ledger app development guidelines
-  </Accordion>
-</AccordionGroup>
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title="Connection Issues">
-    **Problem**: Cannot connect to Ledger device
-    
-    **Solutions**:
-    - Ensure device is unlocked and Sei app is open
-    - Check USB connection and try different ports
-    - Update Ledger firmware and Sei app
-    - Grant browser permissions for WebUSB
-  </Accordion>
-
-  <Accordion title="Transaction Failures">
-    **Problem**: Transactions fail to sign or broadcast
-    
-    **Solutions**:
-    - Verify account has sufficient balance for fees
-    - Check transaction format and message types
-    - Ensure correct chain ID and network
-    - Review Ledger device screen for errors
-  </Accordion>
-
-  <Accordion title="Address Issues">
-    **Problem**: Generated addresses don't match expected values
-    
-    **Solutions**:
-    - Verify derivation path format
-    - Check address prefix configuration
-    - Ensure correct app instance is used
-    - Compare with other wallet implementations
-  </Accordion>
-</AccordionGroup>
-
-## Compatibility
-
-| Component | Version | Notes |
-|-----------|---------|-------|
-| Ledger Devices | All | Nano S, S Plus, X |
-| Sei App | ≥1.0.0 | Latest version recommended |
-| Node.js | ≥16 | For server-side usage |
-| Browsers | Modern | WebUSB support required |
-| CosmJS | ≥0.30 | Signing client compatibility |
-
-## Examples
-
-<CardGroup cols={2}>
-  <Card
-    title="Staking Dashboard"
-    icon="layer-group"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/ledger-staking"
-  >
-    Complete staking interface with Ledger integration
-  </Card>
-  <Card
-    title="Multi-Sig Wallet"
-    icon="users"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/ledger-multisig"
-  >
-    Multi-signature wallet with hardware security
-  </Card>
-  <Card
-    title="DeFi Integration"
-    icon="coins"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/ledger-defi"
-  >
-    DeFi operations with Ledger signing
-  </Card>
-  <Card
-    title="Web3 dApp"
-    icon="globe"
-    href="https://github.com/sei-protocol/sei-js/tree/main/examples/ledger-web3"
-  >
-    Full web application with Ledger support
-  </Card>
-</CardGroup>
-
-## API Reference
-
-For complete API documentation, see the [TypeDoc reference](https://sei-protocol.github.io/sei-js/modules/ledger.html).
+- Ledger Nano S Plus, Nano X, or compatible device
+- SEI app installed on the Ledger device
+- USB or Bluetooth connection to your computer
