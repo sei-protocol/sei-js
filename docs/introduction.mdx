@@ -8,6 +8,8 @@ icon: "rocket"
 
 @sei-js is the complete TypeScript SDK for building applications on Sei Network. Whether you're creating DeFi protocols, NFT marketplaces, or blockchain games, @sei-js provides everything you need to ship faster.
 
+**Works with your favorite tools:** Sei is fully EVM-compatible, so you can use Viem, Ethers.js, Foundry, Hardhat, and all your existing Ethereum development tools without any changes. @sei-js extends these tools with Sei-specific features like precompiled contracts and optimized wallet connections.
+
 <CardGroup cols={2}>
   <Card title="Quick Start" href="/overview" icon="play">
     Build your first Sei app in under 10 minutes
@@ -19,93 +21,98 @@ icon: "rocket"
 
 ## Why @sei-js?
 
-<Steps>
-  <Step title="Complete TypeScript support">
+<AccordionGroup>
+  <Accordion title="Complete TypeScript support" icon="code">
     Full type safety for every function, contract interaction, and API response. Catch errors at compile time.
-  </Step>
-  <Step title="Production ready">
+  </Accordion>
+  <Accordion title="Production ready" icon="check">
     Battle-tested components used by major applications in the Sei ecosystem.
-  </Step>
-  <Step title="Optimized for Sei">
+  </Accordion>
+  <Accordion title="Optimized for Sei" icon="bolt">
     Take advantage of Sei's fast finality, low gas fees, and native order matching.
-  </Step>
-</Steps>
+  </Accordion>
+</AccordionGroup>
 
 ## Package ecosystem
 
-<AccordionGroup>
-  <Accordion title="@sei-js/precompiles" icon="microchip">
-    Native blockchain function access - Access Sei's precompiled contracts directly from your EVM applications.
+<CardGroup cols={2}>
+  <Card title="@sei-js/precompiles" icon="microchip" href="/precompiles/introduction">
+    **Native blockchain function access**
+    
+    Access Sei's precompiled contracts directly from your EVM applications.
     
     ```bash
     yarn add @sei-js/precompiles
     ```
+  </Card>
+  
+  <Card title="@sei-js/create-sei" icon="hammer" href="/create-sei/introduction">
+    **Project scaffolding and templates**
     
-    <Card title="View Documentation" href="/precompiles/index" icon="book-open">
-      Complete guide to precompile contracts
-    </Card>
-  </Accordion>
-  <Accordion title="@sei-js/create-sei" icon="hammer">
-    Project scaffolding and templates - Bootstrap new Sei projects with pre-configured templates and tooling.
+    Bootstrap new Sei projects with pre-configured templates and tooling.
     
     ```bash
     npx @sei-js/create-sei app
     ```
+  </Card>
+  
+  <Card title="@sei-js/sei-global-wallet" icon="wallet" href="/sei-global-wallet/introduction">
+    **Universal wallet connections**
     
-    <Card title="View Documentation" href="/create-sei/introduction" icon="book-open">
-      Learn about project scaffolding
-    </Card>
-  </Accordion>
-  <Accordion title="@sei-js/sei-global-wallet" icon="wallet">
-    Universal wallet connections - Connect to any Sei-compatible wallet using the EIP-6963 standard.
+    Connect to any Sei-compatible wallet using the EIP-6963 standard.
     
     ```bash
     yarn add @sei-js/sei-global-wallet
     ```
+  </Card>
+  
+  <Card title="@sei-js/ledger" icon="shield" href="/ledger/introduction">
+    **Hardware wallet integration**
     
-    <Card title="View Documentation" href="/sei-global-wallet/introduction" icon="book-open">
-      Complete wallet integration guide
-    </Card>
-  </Accordion>
-  <Accordion title="@sei-js/ledger" icon="shield">
-    Hardware wallet integration - Secure transaction signing with Ledger hardware wallets.
+    Secure transaction signing with Ledger hardware wallets.
     
     ```bash
     yarn add @sei-js/ledger
     ```
+  </Card>
+  
+  <Card title="@sei-js/registry" icon="database" href="/registry/introduction">
+    **Chain and asset registry**
     
-    <Card title="View Documentation" href="/ledger/introduction" icon="book-open">
-      Hardware wallet setup guide
-    </Card>
-  </Accordion>
-  <Accordion title="@sei-js/registry" icon="database">
-    Chain and asset registry - Access comprehensive data about Sei networks, tokens, and assets.
+    Access comprehensive data about Sei networks, tokens, and assets.
     
     ```bash
     yarn add @sei-js/registry
     ```
+  </Card>
+  
+  <Card title="@sei-js/mcp-server" icon="robot" href="/mcp-server/introduction">
+    **LLM blockchain integration**
     
-    <Card title="View Documentation" href="/registry/introduction" icon="book-open">
-      Registry usage and examples
-    </Card>
-  </Accordion>
-</AccordionGroup>
+    Teach Claude, ChatGPT, or any LLM to interact with the Sei blockchain.
+    
+    ```bash
+    npm install -g @sei-js/mcp-server
+    ```
+  </Card>
+</CardGroup>
+
+<Info>
+🤖 **Teach Your LLM About Sei**
+
+Connect Claude, ChatGPT, or any LLM to the Sei blockchain with **@sei-js/mcp-server**. Your AI assistant can check balances, transfer tokens, deploy contracts, and guide users through the entire @sei-js ecosystem.
+
+[Get Started with MCP →](/mcp-server/introduction)
+</Info>
 
 ## Community & Support
 
-<Tabs>
-  <Tab title="Developer Resources">
-    **Get help from the community:**
-    
-    - [GitHub Discussions](https://github.com/sei-protocol/sei-js/discussions) - Ask questions and discuss features
-    - [Discord](https://discord.gg/sei) - Join the Sei developer community
-    - [Official Documentation](https://docs.sei.io) - Complete Sei protocol documentation
-  </Tab>
-  <Tab title="Report Issues">
-    **Found a bug or have a feature request?**
-    
-    - [GitHub Issues](https://github.com/sei-protocol/sei-js/issues) - Report bugs and request features
-    - Include reproduction steps and environment details
-    - Check existing issues before creating new ones
-  </Tab>
-</Tabs>
+- [GitHub Discussions](https://github.com/sei-protocol/sei-js/discussions) - Ask questions and discuss features
+- [Discord](https://discord.gg/sei) - Join the Sei developer community
+- [Official Documentation](https://docs.sei.io) - Complete Sei protocol documentation
+
+## Report Issues
+
+- [GitHub Issues](https://github.com/sei-protocol/sei-js/issues) - Report bugs and request features
+- Include reproduction steps and environment details
+- Check existing issues before creating new ones

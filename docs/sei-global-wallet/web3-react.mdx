@@ -1,0 +1,415 @@
+---
+title: 'Web3-React Integration'
+description: 'Integrate Sei Global Wallet with Web3-React for flexible wallet management'
+icon: 'react'
+---
+
+# Web3-React Integration
+
+Web3-React is a flexible React library that provides hooks for managing Web3 connections. This guide shows you how to integrate Sei Global Wallet with Web3-React using EIP-6963 wallet discovery.
+
+## Prerequisites
+
+- React application
+- Node.js and npm/yarn
+- Basic understanding of React hooks and Web3 concepts
+
+## Step 1: Create React Application
+
+Create a new React application with TypeScript:
+
+<CodeGroup>
+
+```bash npm
+npx create-react-app my-sei-dapp --template typescript
+cd my-sei-dapp
+```
+
+```bash yarn
+yarn create react-app my-sei-dapp --template typescript
+cd my-sei-dapp
+```
+
+</CodeGroup>
+
+## Step 2: Install Dependencies
+
+Install the required packages:
+
+<CodeGroup>
+
+```bash npm
+npm install @web3-react/core @web3-react/eip1193 @web3-react/types @sei-js/sei-global-wallet
+```
+
+```bash yarn
+yarn add @web3-react/core @web3-react/eip1193 @web3-react/types @sei-js/sei-global-wallet
+```
+
+</CodeGroup>
+
+## Step 3: Configure Your Application
+
+Update your `App.tsx` file with the complete Web3-React configuration:
+
+```typescript App.tsx
+import '@sei-js/sei-global-wallet/eip6963';
+import React, { useEffect, useState } from 'react';
+import { Web3ReactProvider, initializeConnector } from '@web3-react/core';
+import { EIP1193 } from '@web3-react/eip1193';
+
+interface EIP6963ProviderInfo {
+  uuid: string;
+  name: string;
+  icon: string;
+  rdns: string;
+}
+
+interface EIP6963ProviderDetail {
+  info: EIP6963ProviderInfo;
+  provider: any;
+}
+
+function findSeiGlobalWallet(): any {
+  if (typeof window === 'undefined') return null;
+
+  const providers = new Map<string, EIP6963ProviderDetail>();
+  
+  const handleProviderAnnouncement = (event: Event) => {
+    const customEvent = event as CustomEvent<EIP6963ProviderDetail>;
+    providers.set(customEvent.detail.info.uuid, customEvent.detail);
+  };
+
+  window.addEventListener('eip6963:announceProvider', handleProviderAnnouncement as EventListener);
+  window.dispatchEvent(new Event('eip6963:requestProvider'));
+  window.removeEventListener('eip6963:announceProvider', handleProviderAnnouncement);
+
+  for (const [uuid, provider] of providers) {
+    if (provider.info.name.toLowerCase().includes('sei') || 
+        provider.info.rdns.includes('sei')) {
+      return provider.provider;
+    }
+  }
+}
+
+export const [eip6963Connector, eip6963Hooks] = initializeConnector<EIP1193>((actions) => {
+  const seiProvider = findSeiGlobalWallet();
+  return new EIP1193({ actions, provider: seiProvider });
+});
+
+const connectors: [EIP1193, typeof eip6963Hooks][] = [
+  [eip6963Connector, eip6963Hooks]
+];
+
+function InnerApp() {
+  const { useAccount, useChainId, useIsActive } = eip6963Hooks;
+  const account = useAccount();
+  const chainId = useChainId();
+  const isActive = useIsActive();
+  const [isConnecting, setIsConnecting] = useState(false);
+
+  useEffect(() => {
+    const autoConnect = async () => {
+      try {
+        setIsConnecting(true);
+        await eip6963Connector.activate();
+      } catch (err) {
+        console.error('Failed to connect Sei Global Wallet', err);
+      } finally {
+        setIsConnecting(false);
+      }
+    };
+
+    autoConnect();
+  }, []);
+
+  if (!isActive) {
+    return (
+      <div>
+        <h3>{isConnecting ? 'Connecting to Sei Global Wallet…' : 'Not Connected'}</h3>
+        {!isConnecting && (
+          <button 
+            onClick={() => eip6963Connector.activate()} 
+            className="connect-button"
+          >
+            Connect Sei Global Wallet
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="connected-info">
+      <h2>✅ Connected to Sei Global Wallet!</h2>
+      <p>
+        <strong>Account:</strong> <code>{account}</code>
+      </p>
+      <p>
+        <strong>Chain ID:</strong> <code>{chainId}</code>
+      </p>
+      <button
+        onClick={() => {
+          if (eip6963Connector?.deactivate) {
+            eip6963Connector.deactivate();
+          } else {
+            eip6963Connector.resetState();
+          }
+        }}
+        className="disconnect-button"
+      >
+        Disconnect
+      </button>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Web3ReactProvider connectors={connectors}>
+      <div className="app-container">
+        <h1>Sei Global Wallet via EIP-6963 Discovery</h1>
+        <p>This app targets the Sei Global Wallet using EIP-6963 discovery</p>
+        <InnerApp />
+      </div>
+    </Web3ReactProvider>
+  );
+}
+```
+
+## Step 4: Add Basic Styling (Optional)
+
+Add some basic CSS to your `App.css`:
+
+```css App.css
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.account-info {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.connect-button, .disconnect-button {
+  background: #9E1F19;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.connect-button:hover, .disconnect-button:hover {
+  background: #780000;
+}
+
+.connected-info {
+  background: #e8f5e8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+```
+
+## Step 5: Run Your Application
+
+Start your development server:
+
+<CodeGroup>
+
+```bash npm
+npm start
+```
+
+```bash yarn
+yarn start
+```
+
+</CodeGroup>
+
+Your application will be available at `http://localhost:3000`.
+
+## Expected Behavior
+
+Once configured correctly, your application will:
+
+1. **Auto-connect:** Attempts to connect to Sei Global Wallet on load
+2. **Show Connection Status:** Displays connecting, connected, or disconnected states
+3. **Display Account Info:** Shows wallet address and chain ID when connected
+4. **Handle Disconnection:** Provides disconnect functionality
+5. **EIP-6963 Discovery:** Uses standard wallet discovery to find Sei Global Wallet
+
+## Understanding the Code
+
+### EIP-6963 Wallet Discovery
+
+The `findSeiGlobalWallet()` function implements EIP-6963 discovery:
+
+```typescript
+function findSeiGlobalWallet(): any {
+  if (typeof window === 'undefined') return null;
+
+  const providers = new Map<string, EIP6963ProviderDetail>();
+  
+  // Listen for wallet announcements
+  const handleProviderAnnouncement = (event: Event) => {
+    const customEvent = event as CustomEvent<EIP6963ProviderDetail>;
+    providers.set(customEvent.detail.info.uuid, customEvent.detail);
+  };
+
+  // Set up event listener and request providers
+  window.addEventListener('eip6963:announceProvider', handleProviderAnnouncement as EventListener);
+  window.dispatchEvent(new Event('eip6963:requestProvider'));
+  window.removeEventListener('eip6963:announceProvider', handleProviderAnnouncement);
+
+  // Find Sei Global Wallet specifically
+  for (const [uuid, provider] of providers) {
+    if (provider.info.name.toLowerCase().includes('sei') || 
+        provider.info.rdns.includes('sei')) {
+      return provider.provider;
+    }
+  }
+}
+```
+
+### Connector Initialization
+
+The connector is initialized with the discovered wallet provider:
+
+```typescript
+export const [eip6963Connector, eip6963Hooks] = initializeConnector<EIP1193>((actions) => {
+  const seiProvider = findSeiGlobalWallet();
+  return new EIP1193({ actions, provider: seiProvider });
+});
+```
+
+## Advanced Features
+
+### Multiple Wallet Support
+
+Support multiple wallets by creating additional connectors:
+
+```typescript
+// Create connectors for different wallet types
+const [seiConnector, seiHooks] = initializeConnector<EIP1193>((actions) => {
+  const seiProvider = findSeiGlobalWallet();
+  return new EIP1193({ actions, provider: seiProvider });
+});
+
+const [metamaskConnector, metamaskHooks] = initializeConnector<EIP1193>((actions) => {
+  return new EIP1193({ actions, provider: window.ethereum });
+});
+
+const connectors: [EIP1193, typeof seiHooks | typeof metamaskHooks][] = [
+  [seiConnector, seiHooks],
+  [metamaskConnector, metamaskHooks]
+];
+```
+
+### Error Handling
+
+Implement comprehensive error handling:
+
+```typescript
+function InnerApp() {
+  const { useAccount, useChainId, useIsActive, useError } = eip6963Hooks;
+  const account = useAccount();
+  const chainId = useChainId();
+  const isActive = useIsActive();
+  const error = useError();
+  const [isConnecting, setIsConnecting] = useState(false);
+
+  if (error) {
+    return (
+      <div className="error-info">
+        <h3>Connection Error</h3>
+        <p>{error.message}</p>
+        <button onClick={() => eip6963Connector.activate()}>
+          Retry Connection
+        </button>
+      </div>
+    );
+  }
+
+  // ... rest of component
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Sei Global Wallet not found">
+    **Solution:** Ensure the wallet registration import is at the top:
+    ```typescript
+    import '@sei-js/sei-global-wallet/eip6963';
+    ```
+    
+    Also check browser console for EIP-6963 events:
+    ```typescript
+    // Debug EIP-6963 events
+    window.addEventListener('eip6963:announceProvider', (event) => {
+      console.log('Wallet announced:', event.detail);
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Connection fails on page load">
+    **Solution:** The auto-connect might fail if the wallet isn't ready. Add better error handling:
+    ```typescript
+    useEffect(() => {
+      const autoConnect = async () => {
+        try {
+          setIsConnecting(true);
+          // Add a small delay to ensure wallet is ready
+          await new Promise(resolve => setTimeout(resolve, 100));
+          await eip6963Connector.activate();
+        } catch (err) {
+          console.error('Auto-connect failed:', err);
+        } finally {
+          setIsConnecting(false);
+        }
+      };
+
+      autoConnect();
+    }, []);
+    ```
+  </Accordion>
+  
+  <Accordion title="TypeScript errors">
+    **Solution:** Add proper type declarations:
+    ```typescript
+    // types/global.d.ts
+    declare global {
+      interface Window {
+        ethereum?: any;
+      }
+    }
+    
+    export {};
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Wagmi + Dynamic" icon="blocks" href="/sei-global-wallet/wagmi-dynamic">
+    Explore advanced features with Wagmi and Dynamic
+  </Card>
+  <Card title="Dynamic Next.js" icon="next-dot-js" href="/sei-global-wallet/dynamic-nextjs">
+    Full-stack integration with Next.js
+  </Card>
+</CardGroup>
+
+## Additional Resources
+
+- [Web3-React Documentation](https://github.com/Uniswap/web3-react)
+- [EIP-6963 Standard](https://eips.ethereum.org/EIPS/eip-6963)
+- [Sei Network Documentation](https://docs.sei.io)

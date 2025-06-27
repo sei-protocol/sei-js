@@ -33,9 +33,6 @@ Boilerplate applications and templates. Quickly scaffold new Sei applications wi
 ### @sei-js/ledger
 Ledger hardware wallet integration. Securely connect to Ledger devices for signing transactions on Sei.
 
-### @sei-js/registry
-Asset registry for tokens and networks. Provides information about tokens, networks, and IBC assets on Sei.
-
 ### @sei-js/sei-global-wallet
 Wallet connection tools. Simplifies connecting to various wallet providers for Sei applications.
 
@@ -158,21 +155,6 @@ Choose from various templates:
 - Next.js + Ethers
 - Vue + Viem
 - Vanilla JS
-
-## Registry Usage
-
-Access token and network information:
-
-```javascript
-import { getToken, getNetwork } from '@sei-js/registry';
-
-// Get token information
-const seiToken = getToken('sei');
-
-// Get network information
-const mainnet = getNetwork('sei');
-const testnet = getNetwork('sei-testnet');
-```
 
 ## Advanced Features
 
