@@ -2709,4 +2709,67 @@ describe('EVM Tools', () => {
     expect(response).toHaveProperty('isError', true);
     expect(response.content[0].text).toContain('Error deploying contract: This is a string error');
   });
+
+  test('deploy_contract - with ABI as string', async () => {
+    const tool = checkToolExists('deploy_contract');
+    if (!tool) return;
+    
+    const mockDeployResult = {
+      address: '0x1234567890123456789012345678901234567890' as `0x${string}`,
+      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890' as `0x${string}`
+    };
+    
+    (services.deployContract as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve(mockDeployResult);
+    });
+    
+    const params = {
+      bytecode: '0x608060405234801561001057600080fd5b50',
+      abi: JSON.stringify([{ inputs: [], stateMutability: 'nonpayable', type: 'constructor' }]), // ABI as string
+      network: mockNetwork
+    };
+    
+    const response = await testToolSuccess(tool, params);
+    
+    expect(response).toHaveProperty('content');
+    expect(response.content[0]).toHaveProperty('type', 'text');
+  });
+
+  test('is_contract - returns false (EOA)', async () => {
+    const tool = checkToolExists('is_contract');
+    if (!tool) return;
+    
+    (services.isContract as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve(false);
+    });
+    
+    const params = {
+      address: '0x0987654321098765432109876543210987654321',
+      network: mockNetwork
+    };
+    
+    const response = await tool.handler(params);
+    
+    expect(response.content[0].text).toContain('Externally Owned Account (EOA)');
+  });
+
+  test('check_nft_ownership - returns false (does not own)', async () => {
+    const tool = checkToolExists('check_nft_ownership');
+    if (!tool) return;
+    
+    (services.isNFTOwner as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve(false);
+    });
+    
+    const params = {
+      tokenAddress: mockTokenAddress,
+      tokenId: mockTokenId,
+      ownerAddress: '0x1234567890123456789012345678901234567890',
+      network: mockNetwork
+    };
+    
+    const response = await tool.handler(params);
+    
+    expect(response.content[0].text).toContain('Address does not own this NFT');
+  });
 });

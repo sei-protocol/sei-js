@@ -1,5 +1,5 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { readContract, writeContract, getLogs, isContract } from '../../../core/services/contracts.js';
+import { readContract, writeContract, getLogs, isContract, deployContract } from '../../../core/services/contracts.js';
 import { getPublicClient, getWalletClient } from '../../../core/services/clients.js';
 import { getPrivateKeyAsHex } from '../../../core/config.js';
 import type { Hash, Abi, Address, GetLogsParameters, ReadContractParameters, WriteContractParameters } from 'viem';
@@ -18,11 +18,15 @@ describe('Contract Service', () => {
   const mockPublicClient = {
     readContract: jest.fn(),
     getLogs: jest.fn(),
-    getBytecode: jest.fn()
+    getBytecode: jest.fn(),
+    waitForTransactionReceipt: jest.fn()
   };
 
   const mockWalletClient = {
-    writeContract: jest.fn()
+    writeContract: jest.fn(),
+    deployContract: jest.fn(),
+    account: '0x1234567890123456789012345678901234567890' as Address,
+    chain: { id: 1, name: 'Sei' }
   };
 
   const mockPrivateKey = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
@@ -179,6 +183,123 @@ describe('Contract Service', () => {
       await isContract(mockAddress);
       
       expect(getPublicClient).toHaveBeenCalledWith('sei');
+    });
+  });
+
+  describe('deployContract', () => {
+    const mockBytecode = '0x608060405234801561001057600080fd5b50' as Hash;
+    const mockAbi = [
+      {
+        inputs: [{ name: 'name', type: 'string' }, { name: 'symbol', type: 'string' }],
+        stateMutability: 'nonpayable',
+        type: 'constructor'
+      }
+    ];
+    const mockArgs = ['TestToken', 'TTK'];
+    const mockContractAddress = '0x9876543210987654321098765432109876543210' as Address;
+    const mockTransactionHash = '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890' as Hash;
+
+    beforeEach(() => {
+      // Setup successful deployment mocks
+      mockWalletClient.deployContract.mockImplementation(() => Promise.resolve(mockTransactionHash));
+      mockPublicClient.waitForTransactionReceipt.mockImplementation(() => Promise.resolve({
+        contractAddress: mockContractAddress,
+        transactionHash: mockTransactionHash,
+        status: 'success'
+      }));
+    });
+
+    test('should deploy contract successfully with all parameters', async () => {
+      const result = await deployContract(mockBytecode, mockAbi, mockArgs, 'sei');
+      
+      expect(getPrivateKeyAsHex).toHaveBeenCalled();
+      expect(getWalletClient).toHaveBeenCalledWith(mockPrivateKey, 'sei');
+      expect(mockWalletClient.deployContract).toHaveBeenCalledWith({
+        abi: mockAbi,
+        bytecode: mockBytecode,
+        args: mockArgs,
+        account: mockWalletClient.account,
+        chain: mockWalletClient.chain
+      });
+      expect(getPublicClient).toHaveBeenCalledWith('sei');
+      expect(mockPublicClient.waitForTransactionReceipt).toHaveBeenCalledWith({ hash: mockTransactionHash });
+      expect(result).toEqual({
+        address: mockContractAddress,
+        transactionHash: mockTransactionHash
+      });
+    });
+
+    test('should deploy contract successfully without constructor arguments', async () => {
+      const result = await deployContract(mockBytecode, mockAbi, undefined, 'sei');
+      
+      expect(mockWalletClient.deployContract).toHaveBeenCalledWith({
+        abi: mockAbi,
+        bytecode: mockBytecode,
+        args: [],
+        account: mockWalletClient.account,
+        chain: mockWalletClient.chain
+      });
+      expect(result).toEqual({
+        address: mockContractAddress,
+        transactionHash: mockTransactionHash
+      });
+    });
+
+    test('should use default network when none is specified', async () => {
+      await deployContract(mockBytecode, mockAbi, mockArgs);
+      
+      expect(getWalletClient).toHaveBeenCalledWith(mockPrivateKey, 'sei');
+      expect(getPublicClient).toHaveBeenCalledWith('sei');
+    });
+
+    test('should throw error when private key is not available', async () => {
+      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(null);
+      
+      await expect(deployContract(mockBytecode, mockAbi, mockArgs, 'sei')).rejects.toThrow(
+        'Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.'
+      );
+      expect(getWalletClient).not.toHaveBeenCalled();
+    });
+
+    test('should throw error when wallet client account is not available', async () => {
+      const mockWalletClientWithoutAccount = {
+        ...mockWalletClient,
+        account: undefined
+      };
+      (getWalletClient as jest.Mock).mockReturnValue(mockWalletClientWithoutAccount);
+      
+      await expect(deployContract(mockBytecode, mockAbi, mockArgs, 'sei')).rejects.toThrow(
+        'Wallet client account not available for contract deployment.'
+      );
+      expect(mockWalletClientWithoutAccount.deployContract).not.toHaveBeenCalled();
+    });
+
+    test('should throw error when contract deployment fails - no contract address returned', async () => {
+      mockPublicClient.waitForTransactionReceipt.mockImplementation(() => Promise.resolve({
+        contractAddress: null,
+        transactionHash: mockTransactionHash,
+        status: 'success'
+      }));
+      
+      await expect(deployContract(mockBytecode, mockAbi, mockArgs, 'sei')).rejects.toThrow(
+        'Contract deployment failed - no contract address returned'
+      );
+    });
+
+    test('should handle deployment with empty args array', async () => {
+      const result = await deployContract(mockBytecode, mockAbi, [], 'sei');
+      
+      expect(mockWalletClient.deployContract).toHaveBeenCalledWith({
+        abi: mockAbi,
+        bytecode: mockBytecode,
+        args: [],
+        account: mockWalletClient.account,
+        chain: mockWalletClient.chain
+      });
+      expect(result).toEqual({
+        address: mockContractAddress,
+        transactionHash: mockTransactionHash
+      });
     });
   });
 });
