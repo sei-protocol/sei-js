@@ -1,0 +1,153 @@
+---
+title: 'Quick Start'
+description: 'Get Sei Global Wallet integrated into your application in minutes'
+icon: 'rocket'
+---
+
+# Quick Start
+
+Get Sei Global Wallet up and running in your application with a simple installation and import.
+
+## Installation
+
+Install the Sei Global Wallet package using your preferred package manager:
+
+<CodeGroup>
+
+```bash npm
+npm install @sei-js/sei-global-wallet
+```
+
+```bash yarn
+yarn add @sei-js/sei-global-wallet
+```
+
+```bash pnpm
+pnpm add @sei-js/sei-global-wallet
+```
+
+</CodeGroup>
+
+## Basic Integration
+
+Import the package to register the wallet with the EIP-6963 standard:
+
+```typescript
+import '@sei-js/sei-global-wallet/eip6963';
+```
+
+<Note>
+This single import enables Sei Global Wallet discovery across all EIP-6963 compatible wallet connection libraries including RainbowKit, ConnectKit, Web3-React, and more.
+</Note>
+
+## Prerequisites
+
+Before integrating Sei Global Wallet, ensure you understand these key concepts:
+
+<AccordionGroup>
+  <Accordion title="EIP-6963 Standard">
+    EIP-6963 is a standard that allows multiple wallets to coexist without conflicts. Instead of fighting over `window.ethereum`, wallets announce themselves through events, letting users choose which one to use.
+  </Accordion>
+  
+  <Accordion title="Dynamic Infrastructure">
+    Dynamic is the infrastructure powering Sei Global Wallet. It handles authentication, key management, and cross-app wallet persistence while keeping wallets non-custodial.
+  </Accordion>
+</AccordionGroup>
+
+## Supported Authentication Methods
+
+Sei Global Wallet supports multiple authentication methods:
+
+<CardGroup cols={2}>
+  <Card title="Social Logins" icon="share-nodes">
+    - Google
+    - X (Twitter)
+    - Telegram
+  </Card>
+  <Card title="Traditional Methods" icon="envelope">
+    - Email authentication
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+Choose your preferred wallet connection library for detailed integration instructions:
+
+<CardGroup cols={2}>
+  <Card title="RainbowKit" icon="rainbow" href="/sei-global-wallet/rainbowkit">
+    Popular React wallet connection library
+  </Card>
+  <Card title="ConnectKit" icon="plug" href="/sei-global-wallet/connectkit">
+    Modern wallet connection component
+  </Card>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <Card title="Web3-React" icon="react" href="/sei-global-wallet/web3-react">
+    Flexible React hooks for Web3
+  </Card>
+  <Card title="Wagmi + Dynamic" icon="blocks" href="/sei-global-wallet/wagmi-dynamic">
+    Type-safe React hooks with Dynamic infrastructure
+  </Card>
+</CardGroup>
+
+<CardGroup cols={1}>
+  <Card title="Dynamic (Next.js)" icon="next-dot-js" href="/sei-global-wallet/dynamic-nextjs">
+    Full-stack Next.js integration with Dynamic
+  </Card>
+</CardGroup>
+
+## Testing Your Integration
+
+Once you've completed an integration, test it by:
+
+1. **Browser Compatibility:** Test with multiple browsers (Chrome, Firefox, Safari, Edge)
+2. **Network Switching:** Verify connections work on both Sei mainnet and testnet
+3. **Authentication Methods:** Test different social login options
+4. **Persistence:** Ensure wallet connection persists across page refreshes
+
+<Tip>
+Clear your browser cache if wallets aren't appearing in the connection modal during testing.
+</Tip>
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion title="Sei Global Wallet doesn't appear in wallet list">
+    **Solution:** Ensure the import is at the top of your main application file:
+    ```typescript
+    import '@sei-js/sei-global-wallet/eip6963';
+    ```
+  </Accordion>
+  
+  <Accordion title="TypeScript errors about window.ethereum">
+    **Solution:** Add type declarations to your project:
+    ```typescript
+    // Add to your App.tsx or create types/global.d.ts
+    declare global {
+      interface Window {
+        ethereum?: any;
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="WalletConnect connection fails">
+    **Solution:** Get a proper project ID from [cloud.walletconnect.com](https://cloud.walletconnect.com) and replace `'YOUR_WALLETCONNECT_PROJECT_ID'` with your actual ID.
+  </Accordion>
+</AccordionGroup>
+
+## Support
+
+If you encounter issues:
+
+- Check the browser console for EIP-6963 events and errors
+- Verify your WalletConnect project ID is valid
+- Test on different networks (mainnet vs testnet)
+- Clear browser cache and try again
+
+For additional help, provide:
+- Device details
+- Browser information
+- Clear description of the issue
+- Screen recording if possible

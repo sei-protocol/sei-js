@@ -79,9 +79,24 @@
 			},
 			{
 				"dropdown": "@sei-js/sei-global-wallet",
-				"description": "Consistent wallet across dApps",
+				"description": "User friendly wallet connect",
 				"icon": "wallet",
-				"pages": ["sei-global-wallet/introduction", "sei-global-wallet/integration"]
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": ["sei-global-wallet/introduction", "sei-global-wallet/quickstart"]
+					},
+					{
+						"group": "Integrations",
+						"pages": [
+							"sei-global-wallet/rainbowkit",
+							"sei-global-wallet/connectkit",
+							"sei-global-wallet/web3-react",
+							"sei-global-wallet/wagmi-dynamic",
+							"sei-global-wallet/dynamic-nextjs"
+						]
+					}
+				]
 			},
 			{
 				"dropdown": "@sei-js/precompiles",
@@ -111,14 +126,8 @@
 				]
 			},
 			{
-				"dropdown": "@sei-js/registry",
-				"description": "Network and asset information",
-				"icon": "database",
-				"pages": ["registry/introduction"]
-			},
-			{
 				"dropdown": "@sei-js/ledger",
-				"description": "Hardware wallet connection support",
+				"description": "Hardware wallet connection",
 				"icon": "shield",
 				"pages": ["ledger/introduction"]
 			}
