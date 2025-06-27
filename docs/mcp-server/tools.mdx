@@ -10,80 +10,71 @@ The Sei MCP Server provides 28 tools for blockchain operations. Ask your AI assi
 
 | Tool | Purpose | Example Usage |
 |------|---------|---------------|
-| `get-address-from-private-key` | Get wallet address | "What's my wallet address?" |
-| `get-balance` | Check SEI balance | "What's my SEI balance?" |
-| `transfer-sei` | Send SEI tokens | "Send 1 SEI to 0x742d..." |
-| `is-contract` | Check if address is contract | "Is 0x3894... a contract?" |
-| `estimate-gas` | Estimate transaction gas cost | "How much gas for this transaction?" |
+| `get_address_from_private_key` | Get wallet address | "What's my wallet address?" |
+| `get_balance` | Check SEI balance | "What's my SEI balance?" |
+| `transfer_sei` | Send SEI tokens | "Send 1 SEI to 0x742d..." |
+| `is_contract` | Check if address is contract | "Is 0x3894... a contract?" |
+| `estimate_gas` | Estimate transaction gas cost | "How much gas for this transaction?" |
 
 ## Network & Blockchain Data
 
 | Tool | Purpose | Example Usage |
 |------|---------|---------------|
-| `get-chain-info` | Get network information | "Show me Sei network info" |
-| `get-supported-networks` | List supported networks | "What networks are supported?" |
-| `get-latest-block` | Get latest block | "Get latest block" |
-| `get-block-by-number` | Get specific block | "Get block 12345" |
-| `get-transaction` | Get transaction details | "Analyze transaction 0xabc..." |
-| `get-transaction-receipt` | Get transaction receipt | "Get receipt for 0xabc..." |
+| `get_chain_info` | Get network information | "Show me Sei network info" |
+| `get_supported_networks` | List supported networks | "What networks are supported?" |
+| `get_latest_block` | Get latest block | "Get latest block" |
+| `get_block_by_number` | Get specific block | "Get block 12345" |
+| `get_transaction` | Get transaction details | "Analyze transaction 0xabc..." |
+| `get_transaction_receipt` | Get transaction receipt | "Get receipt for 0xabc..." |
 
 ## Token Management (ERC-20)
 
 | Tool | Purpose | Example Usage |
 |------|---------|---------------|
-| `get-token-info` | Get ERC-20 token details | "Get info for token 0x3894..." |
-| `get-token-balance` | Check token balance | "What's my USDC balance?" |
-| `get-erc20-balance` | Check ERC-20 balance | "Check ERC20 balance for 0x742d..." |
-| `get-token-balance-erc20` | Get ERC-20 token balance | "Get token balance for address" |
-| `transfer-token` | Send ERC-20 tokens | "Send 100 USDC to 0x742d..." |
-| `transfer-erc20` | Transfer ERC-20 tokens | "Transfer tokens to address" |
-| `approve-token-spending` | Approve token spending | "Approve 1000 USDC for 0xDEX..." |
+| `get_token_info` | Get ERC-20 token details | "Get info for token 0x3894..." |
+| `get_token_balance` | Check token balance | "What's my USDC balance?" |
+| `get_erc20_balance` | Check ERC-20 balance | "Check ERC20 balance for 0x742d..." |
+| `get_token_balance_erc20` | Get ERC-20 token balance | "Get token balance for address" |
+| `transfer_token` | Send ERC-20 tokens | "Send 100 USDC to 0x742d..." |
+| `transfer_erc20` | Transfer ERC-20 tokens | "Transfer tokens to address" |
+| `approve_token_spending` | Approve token spending | "Approve 1000 USDC for 0xDEX..." |
 
 ## NFT Operations (ERC-721)
 
 | Tool | Purpose | Example Usage |
 |------|---------|---------------|
-| `get-nft-info` | Get NFT details | "Get info for NFT token 123" |
-| `check-nft-ownership` | Verify NFT ownership | "Do I own NFT token 123?" |
-| `transfer-nft` | Transfer NFT | "Transfer NFT token 123 to 0x742d..." |
-| `get-nft-balance` | Count NFTs owned | "How many NFTs do I own?" |
+| `get_nft_info` | Get NFT details | "Get info for NFT token 123" |
+| `check_nft_ownership` | Verify NFT ownership | "Do I own NFT token 123?" |
+| `transfer_nft` | Transfer NFT | "Transfer NFT token 123 to 0x742d..." |
+| `get_nft_balance` | Count NFTs owned | "How many NFTs do I own?" |
 
 ## Multi-Token Operations (ERC-1155)
 
 | Tool | Purpose | Example Usage |
 |------|---------|---------------|
-| `get-erc1155-balance` | Get ERC-1155 token balance | "Check my ERC1155 token balance" |
-| `get-erc1155-token-uri` | Get ERC-1155 metadata URI | "Get metadata for token ID 123" |
-| `transfer-erc1155` | Transfer ERC-1155 tokens | "Transfer ERC1155 token to address" |
+| `get_erc1155_balance` | Get ERC-1155 token balance | "Check my ERC1155 token balance" |
+| `get_erc1155_token_uri` | Get ERC-1155 metadata URI | "Get metadata for token ID 123" |
+| `transfer_erc1155` | Transfer ERC-1155 tokens | "Transfer ERC1155 token to address" |
 
 ## Smart Contract Operations
 
 | Tool | Purpose | Example Usage |
 |------|---------|---------------|
-| `read-contract` | Read contract data | "Read balanceOf from contract 0x3894..." |
-| `write-contract` | Execute contract function | "Call contract function with params" |
-| `deploy-contract` | Deploy new contract | "Deploy contract with bytecode" |
+| `read_contract` | Read contract data | "Read balanceOf from contract 0x3894..." |
+| `write_contract` | Execute contract function | "Call contract function with params" |
+| `deploy_contract` | Deploy new smart contract | "Deploy my token contract" |
 
-## Resource URIs
+## Documentation
 
-Access blockchain data programmatically:
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `search_sei_js_docs` | Search Sei-JS documentation | "How do I use precompiles with Viem?" |
 
-```text
-# Network data
-evm://sei/chain
-evm://sei-testnet/chain
+## Security Notes
 
-# Block information  
-evm://sei/block/latest
-evm://sei/block/12345
-
-# Transactions
-evm://sei/tx/0xabc123...
-evm://sei/tx/0xabc123.../receipt
-
-# Token data
-evm://sei/token/0x3894.../balanceOf/0x742d...
-
-# NFT data
-evm://sei/nft/0xNFT_ADDRESS/123
-evm://sei/nft/0xNFT_ADDRESS/123/isOwnedBy/0x742d...
+<Warning>
+The MCP server requires a `PRIVATE_KEY` environment variable for transaction signing. Ensure this key is:
+- Kept secure and never shared
+- Only used with funds you can afford to lose
+- Properly backed up before use
+</Warning>

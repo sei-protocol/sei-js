@@ -90,7 +90,7 @@
 				"pages": [
 					{
 						"group": "Getting Started",
-						"pages": ["precompiles/index", "precompiles/quick-start"]
+						"pages": ["precompiles/introduction", "precompiles/quick-start"]
 					},
 					{
 						"group": "Integrations",
@@ -101,7 +101,6 @@
 						"pages": [
 							"precompiles/precompiles/address",
 							"precompiles/precompiles/bank",
-							"precompiles/precompiles/confidential-transfers",
 							"precompiles/precompiles/distribution",
 							"precompiles/precompiles/governance",
 							"precompiles/precompiles/ibc",
