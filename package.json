@@ -3,12 +3,14 @@
 	"version": "2.0.0",
 	"private": true,
 	"license": "MIT",
-	"workspaces": ["packages/*"],
+	"workspaces": [
+		"packages/*"
+	],
 	"scripts": {
 		"build:all": "yarn workspaces foreach --topological-dev --all run build",
 		"postinstall": "yarn update-submodules",
 		"update-submodules": "git submodule update --init --recursive",
-		"docs": "cd docs && mint update && mint dev",
+		"docs": "cd docs && yarn dlx mint dev",
 		"typedocs": "typedoc",
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
@@ -23,7 +25,7 @@
 		"@types/jest": "^29.5.14",
 		"@types/node": "^22.13.13",
 		"jest": "^29.7.0",
-		"mint": "^4.1.57",
+		"mint": "latest",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^29.3.0",
 		"ts-node": "2.1.2",

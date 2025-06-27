@@ -6,29 +6,51 @@ icon: "robot"
 
 <CardGroup cols={2}>
   <Card
-    title="What You'll Build"
-    icon="hammer"
+    title="Supercharge your LLMs"
+    icon="rocket"
   >
-    Connect AI assistants to Sei blockchain with natural language commands for token transfers, smart contract interactions, and network monitoring.
+    Connect AI assistants to Sei blockchain with natural language commands for token transfers, smart contract interactions and deployments, and more.
   </Card>
   <Card
     title="Perfect For"
     icon="users"
   >
-    Developers, DeFi users, NFT collectors, and teams wanting AI-powered blockchain interactions without complex coding.
+    Developers, Vibe Coders, DeFi users, NFT collectors, and anyone wanting to interact with Sei through natural language interfaces.
   </Card>
 </CardGroup>
+
+## Quick Start
+
+Add the Sei MCP Server to your AI assistant with this configuration:
+
+```json
+{
+  "mcpServers": {
+    "sei": {
+      "command": "npx",
+      "args": ["@sei-js/mcp-server"],
+      "env": {
+        "PRIVATE_KEY": "your_private_key_here"
+      }
+    }
+  }
+}
+```
+
+<Card title="Complete Setup Guide" icon="arrow-right" href="/mcp-server/setup">
+  Follow our step-by-step installation guide for Claude Desktop, Cursor, Windsurf, and custom integrations.
+</Card>
 
 ## What is MCP?
 
 The Model Context Protocol is an open standard that connects AI systems with external tools and data sources. It enables:
 
-- **Real-time data access** from external services
-- **Function execution** and operations  
-- **Context preservation** across interactions
-- **Specialized capabilities** beyond base training
+- **Real-time blockchain data access** - Get current balances, transaction history, and network status directly from Sei
+- **Full execution and write operations** - Deploy contracts, execute transactions, and interact with smart contracts
+- **Up-to-date documentation access** - Search and understand the latest Sei documentation and guides
+- **Specialized blockchain capabilities** - Access Sei-specific features like precompiles and native token operations
 
-The Sei MCP Server leverages this protocol to bring blockchain functionality directly to your AI assistant.
+The Sei MCP Server leverages this protocol to bring comprehensive blockchain functionality directly to your AI assistant, enabling natural language interactions with the Sei network.
 
 ## Why Use Sei MCP Server?
 
@@ -50,76 +72,6 @@ The Sei MCP Server leverages this protocol to bring blockchain functionality dir
   </Accordion>
 </AccordionGroup>
 
-## Popular Use Cases
-
-<Steps>
-  <Step title="DeFi Portfolio Management">
-    Monitor token balances, execute transfers, and analyze transaction history across multiple wallets with conversational commands.
-  </Step>
-  
-  <Step title="Smart Contract Development">
-    Deploy contracts, read contract data, and interact with deployed contracts using natural language through your AI coding assistant.
-  </Step>
-  
-  <Step title="NFT Collection Analysis">
-    Check ownership, transfer NFTs, and analyze collection metadata with simple prompts to your AI assistant.
-  </Step>
-  
-  <Step title="Network Monitoring">
-    Get real-time blockchain data, analyze blocks and transactions, and monitor network health through conversational queries.
-  </Step>
-</Steps>
-
-## Key Features
-
-### Blockchain Operations
-- Query account balances and transaction history
-- Execute token transfers  
-- Interact with smart contracts
-- Monitor network status
-
-### Coming Soon
-- Documentation search and explanation
-- @sei-js library integration
-- Boilerplate generation
-- DeFi protocol interactions
-
 <Note>
 The Sei MCP Server is actively developed with new features added regularly. Current version supports core blockchain operations with advanced DeFi integrations planned.
 </Note>
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card
-    title="Setup & Installation"
-    icon="download"
-    href="/mcp-server/setup"
-  >
-    Get started with Cursor, Windsurf, Claude Desktop, or CLI installation
-  </Card>
-  <Card
-    title="Available Tools"
-    icon="wrench"
-    href="/mcp-server/tools"
-  >
-    Explore 16+ tools for tokens, NFTs, contracts, and blockchain data
-  </Card>
-</CardGroup>
-
-<CardGroup cols={2}>
-  <Card
-    title="Integration Guide"
-    icon="plug"
-    href="/mcp-server/integration"
-  >
-    Connect with web applications and custom implementations
-  </Card>
-  <Card
-    title="Security & Best Practices"
-    icon="shield-check"
-    href="/mcp-server/security"
-  >
-    Production deployment, private key management, and safety guidelines
-  </Card>
-</CardGroup>

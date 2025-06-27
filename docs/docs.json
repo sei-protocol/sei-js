@@ -52,8 +52,23 @@
 				]
 			},
 			{
+				"dropdown": "@sei-js/mcp-server",
+				"description": "Teach your LLM about Sei",
+				"icon": "robot",
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": ["mcp-server/introduction", "mcp-server/setup"]
+					},
+					{
+						"group": "Implementation",
+						"pages": ["mcp-server/tools", "mcp-server/prompts", "mcp-server/context"]
+					}
+				]
+			},
+			{
 				"dropdown": "@sei-js/create-sei",
-				"description": "CLI scaffolding and templates",
+				"description": "Boilerplate frontend dApps",
 				"icon": "hammer",
 				"pages": [
 					{
@@ -64,13 +79,13 @@
 			},
 			{
 				"dropdown": "@sei-js/sei-global-wallet",
-				"description": "EIP-6963 wallet standard implementation",
+				"description": "Consistent wallet across dApps",
 				"icon": "wallet",
 				"pages": ["sei-global-wallet/introduction", "sei-global-wallet/integration"]
 			},
 			{
 				"dropdown": "@sei-js/precompiles",
-				"description": "Native blockchain function integrations",
+				"description": "Native functions from the EVM",
 				"icon": "microchip",
 				"pages": [
 					{
@@ -111,21 +126,6 @@
 				"description": "Hardware wallet connection support",
 				"icon": "shield",
 				"pages": ["ledger/introduction"]
-			},
-			{
-				"dropdown": "@sei-js/mcp-server",
-				"description": "AI assistant blockchain integration via MCP",
-				"icon": "robot",
-				"pages": [
-					{
-						"group": "Getting Started",
-						"pages": ["mcp-server/introduction", "mcp-server/setup"]
-					},
-					{
-						"group": "Implementation",
-						"pages": ["mcp-server/tools", "mcp-server/prompts", "mcp-server/context"]
-					}
-				]
 			}
 		]
 	},
