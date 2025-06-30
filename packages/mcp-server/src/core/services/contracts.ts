@@ -1,7 +1,7 @@
 import type { GetLogsParameters, Hash, Hex, Log, ReadContractParameters, WriteContractParameters } from 'viem';
 import { DEFAULT_NETWORK } from '../chains.js';
 import { getPrivateKeyAsHex } from '../config.js';
-import { getPublicClient, getWalletClient } from './clients.js';
+import { getPublicClient, getWalletClientFromProvider } from './clients.js';
 import * as services from './index.js';
 
 /**
@@ -27,7 +27,7 @@ export async function writeContract(params: Record<string, any>, network = DEFAU
 		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
 	}
 
-	const client = getWalletClient(key, network);
+	const client = await getWalletClientFromProvider(network);
 	return await client.writeContract(params as any);
 }
 
@@ -75,7 +75,7 @@ export async function deployContract(
 		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
 	}
 
-	const client = getWalletClient(key, network);
+	const client = await getWalletClientFromProvider(network);
 	
 	if (!client.account) {
 		throw new Error('Wallet client account not available for contract deployment.');

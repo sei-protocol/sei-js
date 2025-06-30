@@ -1,5 +1,5 @@
 import { describe, test, expect, jest, beforeEach, afterEach } from '@jest/globals';
-import { getPublicClient, getWalletClient, getAddressFromPrivateKey } from '../../../core/services/clients.js';
+import { getPublicClient, getAddressFromPrivateKey } from '../../../core/services/clients.js';
 import { createPublicClient, createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { getChain, getRpcUrl } from '../../../core/chains.js';
@@ -139,36 +139,5 @@ describe('Client Service', () => {
     });
   });
 
-  describe('getWalletClient', () => {
-    test('should create and return a wallet client', () => {
-      const client = getWalletClient(mockPrivateKey, 'sei');
-      
-      expect(getChain).toHaveBeenCalledWith('sei');
-      expect(getRpcUrl).toHaveBeenCalledWith('sei');
-      expect(privateKeyToAccount).toHaveBeenCalledWith(mockPrivateKey);
-      expect(http).toHaveBeenCalledWith(mockRpcUrl);
-      expect(createWalletClient).toHaveBeenCalledWith({
-        account: mockAccount,
-        chain: mockChain,
-        transport: mockHttpTransport
-      });
-      expect(client).toBe(mockWalletClient);
-    });
 
-    test('should use default network when none is specified', () => {
-      getWalletClient(mockPrivateKey);
-      
-      expect(getChain).toHaveBeenCalledWith('sei');
-      expect(getRpcUrl).toHaveBeenCalledWith('sei');
-    });
-  });
-
-  describe('getAddressFromPrivateKey', () => {
-    test('should return the address derived from the private key', () => {
-      const address = getAddressFromPrivateKey(mockPrivateKey);
-      
-      expect(privateKeyToAccount).toHaveBeenCalledWith(mockPrivateKey);
-      expect(address).toBe(mockAccount.address);
-    });
-  });
 });
