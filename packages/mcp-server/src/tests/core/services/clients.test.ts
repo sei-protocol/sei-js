@@ -1,8 +1,9 @@
 import { describe, test, expect, jest, beforeEach, afterEach } from '@jest/globals';
-import { getPublicClient, getAddressFromPrivateKey } from '../../../core/services/clients.js';
+import { getPublicClient, getAddressFromPrivateKey, getWalletClientFromProvider, getAddressFromProvider } from '../../../core/services/clients.js';
 import { createPublicClient, createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { getChain, getRpcUrl } from '../../../core/chains.js';
+import { getWalletProvider } from '../../../core/wallet/index.js';
 
 // Mock dependencies
 jest.mock('viem', () => {
@@ -23,6 +24,10 @@ jest.mock('../../../core/chains.js', () => ({
   DEFAULT_NETWORK: 'sei',
   getChain: jest.fn(),
   getRpcUrl: jest.fn()
+}));
+
+jest.mock('../../../core/wallet/index.js', () => ({
+  getWalletProvider: jest.fn()
 }));
 
 describe('Client Service', () => {
@@ -139,5 +144,50 @@ describe('Client Service', () => {
     });
   });
 
+  describe('getWalletClientFromProvider', () => {
+    const mockWalletProvider = {
+      getWalletClient: jest.fn()
+    };
 
+    beforeEach(() => {
+      (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
+      mockWalletProvider.getWalletClient.mockResolvedValue(mockWalletClient);
+    });
+
+    test('should get wallet client from provider with default network', async () => {
+      const client = await getWalletClientFromProvider();
+      
+      expect(getWalletProvider).toHaveBeenCalled();
+      expect(mockWalletProvider.getWalletClient).toHaveBeenCalledWith('sei');
+      expect(client).toBe(mockWalletClient);
+    });
+
+    test('should get wallet client from provider with specified network', async () => {
+      const client = await getWalletClientFromProvider('sei-testnet');
+      
+      expect(getWalletProvider).toHaveBeenCalled();
+      expect(mockWalletProvider.getWalletClient).toHaveBeenCalledWith('sei-testnet');
+      expect(client).toBe(mockWalletClient);
+    });
+  });
+
+  describe('getAddressFromProvider', () => {
+    const mockWalletProvider = {
+      getAddress: jest.fn()
+    };
+    const mockAddress = '0x1234567890123456789012345678901234567890';
+
+    beforeEach(() => {
+      (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
+      mockWalletProvider.getAddress.mockResolvedValue(mockAddress);
+    });
+
+    test('should get address from provider', async () => {
+      const address = await getAddressFromProvider();
+      
+      expect(getWalletProvider).toHaveBeenCalled();
+      expect(mockWalletProvider.getAddress).toHaveBeenCalled();
+      expect(address).toBe(mockAddress);
+    });
+  });
 });

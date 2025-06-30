@@ -826,6 +826,40 @@ describe('EVM Tools', () => {
       });
   });
 
+  // Test disabled wallet scenario
+  test('should handle disabled wallet mode', () => {
+    // Create a new server for this test
+    const mockServerResult = createMockServer();
+    const disabledWalletServer = mockServerResult.server;
+    const disabledWalletTools = mockServerResult.registeredTools;
+    
+    // Mock wallet as disabled
+    (isWalletEnabled as jest.Mock).mockReturnValue(false);
+    
+    // Mock console.error to verify it's called
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+    
+    // Register tools with disabled wallet
+    registerEVMTools(disabledWalletServer);
+    
+    // Verify console.error was called with the expected message
+    expect(consoleSpy).toHaveBeenCalledWith('Wallet functionality is disabled. Wallet-dependent tools will not be available.');
+    
+    // Verify wallet tools are not registered
+    expect(disabledWalletTools.has('get_address_from_private_key')).toBe(false);
+    expect(disabledWalletTools.has('transfer_sei')).toBe(false);
+    expect(disabledWalletTools.has('transfer_erc20')).toBe(false);
+    
+    // Verify read-only tools are still registered
+    expect(disabledWalletTools.has('get_chain_info')).toBe(true);
+    expect(disabledWalletTools.has('get_balance')).toBe(true);
+    
+    // Clean up
+    consoleSpy.mockRestore();
+    // Restore wallet enabled for other tests
+    (isWalletEnabled as jest.Mock).mockReturnValue(true);
+  });
+
   // Verify all expected tools are registered
   test('should register all expected tools', () => {
     // Log the registered tools for debugging
@@ -1072,6 +1106,99 @@ describe('EVM Tools', () => {
       
       expect(response).toHaveProperty('isError', true);
       expect(response.content[0].text).toContain('Error estimating gas: This is a string error');
+    });
+
+    test('estimate_gas - with contract call data', async () => {
+      const tool = checkToolExists('estimate_gas');
+      if (!tool) return;
+      
+      const params = {
+        to: '0x1234567890123456789012345678901234567890',
+        value: '0.5',
+        data: '0xa9059cbb000000000000000000000000742d35cc6cd6b4c0532a6b329dc52b4eca13a623000000000000000000000000000000000000000000000000016345785d8a0000',
+        network: mockNetwork
+      };
+      
+      // Mock the estimateGas function to return a specific value for contract calls
+      (services.estimateGas as jest.Mock).mockImplementationOnce((txParams, network) => {
+        return Promise.resolve(BigInt('45000')); // Higher gas for contract calls
+      });
+      
+      // Mock the parseEther function
+      (services.helpers.parseEther as jest.Mock).mockReturnValueOnce(BigInt('500000000000000000')); // 0.5 ETH
+      
+      const response = await tool.handler(params);
+      
+      expect(services.estimateGas).toHaveBeenCalledWith({
+        to: params.to as `0x${string}`,
+        value: BigInt('500000000000000000'),
+        data: params.data as `0x${string}`
+      }, mockNetwork);
+      
+      expect(response).toHaveProperty('content');
+      expect(response.content[0]).toHaveProperty('type', 'text');
+      expect(response.content[0].text).toContain('45000');
+    });
+
+    test('estimate_gas - without data parameter', async () => {
+      const tool = checkToolExists('estimate_gas');
+      if (!tool) return;
+      
+      const params = {
+        to: '0x1234567890123456789012345678901234567890',
+        value: '1.0',
+        network: mockNetwork
+        // No data parameter provided
+      };
+      
+      // Mock the estimateGas function to return a specific value
+      (services.estimateGas as jest.Mock).mockImplementationOnce((txParams, network) => {
+        return Promise.resolve(BigInt('21000')); // Basic transfer gas
+      });
+      
+      // Mock the parseEther function
+      (services.helpers.parseEther as jest.Mock).mockReturnValueOnce(BigInt('1000000000000000000')); // 1 ETH
+      
+      const response = await tool.handler(params);
+      
+      expect(services.estimateGas).toHaveBeenCalledWith({
+        to: params.to as `0x${string}`,
+        value: BigInt('1000000000000000000')
+        // data should not be included since it wasn't provided
+      }, mockNetwork);
+      
+      expect(response).toHaveProperty('content');
+      expect(response.content[0]).toHaveProperty('type', 'text');
+      expect(response.content[0].text).toContain('21000');
+    });
+
+    test('estimate_gas - without value parameter', async () => {
+      const tool = checkToolExists('estimate_gas');
+      if (!tool) return;
+      
+      const params = {
+        to: '0x1234567890123456789012345678901234567890',
+        data: '0xa9059cbb000000000000000000000000742d35cc6cd6b4c0532a6b329dc52b4eca13a623000000000000000000000000000000000000000000000000016345785d8a0000',
+        network: mockNetwork
+        // No value parameter provided
+      };
+      
+      // Mock the estimateGas function to return a specific value
+      (services.estimateGas as jest.Mock).mockImplementationOnce((txParams, network) => {
+        return Promise.resolve(BigInt('35000')); // Contract call without value
+      });
+      
+      const response = await tool.handler(params);
+      
+      expect(services.estimateGas).toHaveBeenCalledWith({
+        to: params.to as `0x${string}`,
+        data: params.data as `0x${string}`
+        // value should not be included since it wasn't provided
+      }, mockNetwork);
+      
+      expect(response).toHaveProperty('content');
+      expect(response.content[0]).toHaveProperty('type', 'text');
+      expect(response.content[0].text).toContain('35000');
     });
   });
   
