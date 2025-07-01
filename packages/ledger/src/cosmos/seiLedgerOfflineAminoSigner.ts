@@ -1,8 +1,8 @@
-import { AminoSignResponse, encodeSecp256k1Signature, OfflineAminoSigner, serializeSignDoc, StdSignDoc } from '@cosmjs/amino';
-import { fromHex } from '@cosmjs/encoding';
-import { AccountData } from '@cosmjs/proto-signing';
+import { type AminoSignResponse, type OfflineAminoSigner, type StdSignDoc, encodeSecp256k1Signature, serializeSignDoc } from '@cosmjs/amino';
 import { Secp256k1Signature } from '@cosmjs/crypto';
-import { SeiApp } from '@zondax/ledger-sei';
+import { fromHex } from '@cosmjs/encoding';
+import type { AccountData } from '@cosmjs/proto-signing';
+import type { SeiApp } from '@zondax/ledger-sei';
 
 /**
  *  A signer implementation that uses a Ledger device to sign transactions

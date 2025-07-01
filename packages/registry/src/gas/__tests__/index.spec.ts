@@ -1,18 +1,18 @@
-import { ModuleAdjustments, GAS_INFO, ChainGasInfo } from '../index';
-import { Network } from '../../index';
+import type { Network } from '../../index';
+import { type ChainGasInfo, GAS_INFO, type ModuleAdjustments } from '../index';
 
 describe('GasInfo Tests', () => {
 	// Check if GasInfo contains all expected networks
 	it('contains all required networks', () => {
 		const expectedNetworks: Network[] = ['pacific-1', 'atlantic-2', 'arctic-1'];
-		expectedNetworks.forEach((network) => {
+		for (const network of expectedNetworks) {
 			expect(GAS_INFO).toHaveProperty(network);
-		});
+		}
 	});
 
 	// Validate the structure of GasInfo for each network
 	it('validates structure for each network', () => {
-		Object.values(GAS_INFO).forEach((info: ChainGasInfo) => {
+		for (const info of Object.values(GAS_INFO)) {
 			expect(typeof info.denom).toBe('string');
 			expect(typeof info.min_gas_price).toBe('number');
 			expect(info).toHaveProperty('module_adjustments');
@@ -22,7 +22,7 @@ describe('GasInfo Tests', () => {
 			expect(typeof dex.sudo_gas_price).toBe('number');
 			expect(typeof dex.order_placement).toBe('number');
 			expect(typeof dex.order_cancellation).toBe('number');
-		});
+		}
 	});
 
 	// Example: Check specific values for a network (e.g., 'pacific-1')

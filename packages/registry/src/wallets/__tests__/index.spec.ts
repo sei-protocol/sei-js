@@ -1,18 +1,18 @@
-import { Wallet, WALLETS } from '../index';
+import { WALLETS, type Wallet } from '../index';
 
 describe('Wallet Extensions Configuration Tests', () => {
 	it('contains an array of wallet extensions', () => {
 		expect(Array.isArray(WALLETS)).toBeTruthy();
-		WALLETS.forEach((extension: Wallet) => {
+		for (const extension of WALLETS) {
 			expect(typeof extension.name).toBe('string');
 			expect(typeof extension.identifier).toBe('string');
 			expect(typeof extension.icon).toBe('string');
 			expect(typeof extension.url).toBe('string');
 			expect(Array.isArray(extension.capabilities)).toBeTruthy();
-			extension.capabilities.forEach((capability) => {
+			for (const capability of extension.capabilities) {
 				expect(['native', 'evm']).toContain(capability);
-			});
-		});
+			}
+		}
 	});
 
 	it('contains specific wallet extension by identifier', () => {
