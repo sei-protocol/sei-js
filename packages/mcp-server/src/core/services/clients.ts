@@ -1,6 +1,7 @@
 import { http, type Address, type Hex, type PublicClient, type WalletClient, createPublicClient, createWalletClient } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { DEFAULT_NETWORK, getChain, getRpcUrl } from '../chains.js';
+import { getWalletProvider } from '../wallet/index.js';
 
 // Cache for clients to avoid recreating them for each request
 const clientCache = new Map<string, PublicClient>();
@@ -37,26 +38,17 @@ export function getPublicClient(network = DEFAULT_NETWORK): PublicClient {
 }
 
 /**
- * Create a wallet client for a specific network and private key
+ * Get a wallet client using the configured wallet provider
  */
-export function getWalletClient(privateKey: Hex, network = DEFAULT_NETWORK): WalletClient {
-	const chain = getChain(network);
-	const rpcUrl = getRpcUrl(network);
-	const account = privateKeyToAccount(privateKey);
-
-	return createWalletClient({
-		account,
-		chain,
-		transport: http(rpcUrl)
-	});
+export async function getWalletClientFromProvider(network = DEFAULT_NETWORK): Promise<WalletClient> {
+	const walletProvider = getWalletProvider();
+	return walletProvider.getWalletClient(network);
 }
 
 /**
- * Get an EVM address from a private key
- * @param privateKey The private key in hex format (with or without 0x prefix)
- * @returns The EVM address derived from the private key
+ * Get an EVM address from the configured wallet provider
  */
-export function getAddressFromPrivateKey(privateKey: Hex): Address {
-	const account = privateKeyToAccount(privateKey);
-	return account.address;
+export async function getAddressFromProvider(): Promise<Address> {
+	const walletProvider = getWalletProvider();
+	return walletProvider.getAddress();
 }

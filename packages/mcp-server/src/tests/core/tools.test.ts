@@ -14,16 +14,19 @@ import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globa
  */
 
 import type { Address } from 'viem';
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { getRpcUrl, getSupportedNetworks } from '../../core/chains.js';
-import { getPrivateKeyAsHex } from '../../core/config.js';
+import { getPrivateKeyAsHex, isWalletEnabled, getWalletMode } from '../../core/config.js';
 import { registerEVMTools } from '../../core/tools.js';
 import * as services from '../../core/services/index.js';
-import { createMockServer, setupBalanceMocks, setupTransactionMocks, testToolError, testToolSuccess, verifyErrorResponse, verifySuccessResponse } from './helpers/tool-test-helpers.js';
+import { getWalletProvider } from '../../core/wallet/index.js';
+import { createMockServer, setupBalanceMocks, setupTransactionMocks, testToolError, testToolSuccess, verifyErrorResponse, verifySuccessResponse, type Tool } from './helpers/tool-test-helpers.js';
 
 // Mock all service functions
 jest.mock('../../core/services/index.js');
 jest.mock('../../core/chains.js');
 jest.mock('../../core/config.js');
+jest.mock('../../core/wallet/index.js');
 
 describe('EVM Tools', () => {
   // Common test variables
@@ -33,20 +36,39 @@ describe('EVM Tools', () => {
   const mockNetwork = 'sei';
   const mockError = new Error('Test error');
   
-  // Setup mock server and tools
-  const { server, registeredTools } = createMockServer();
-  
-  // Register tools with the mock server - do this once before all tests
-  registerEVMTools(server);
+  // Variables to hold server and registeredTools
+  let server: McpServer;
+  let registeredTools: Map<string, Tool>;
   
   beforeEach(() => {
-    // Default mock implementations
+    // Create fresh mock server for each test
+    const mockServerResult = createMockServer();
+    server = mockServerResult.server;
+    registeredTools = mockServerResult.registeredTools;
+    
+    // Setup configuration mocks first
     (getRpcUrl as jest.Mock).mockReturnValue('https://rpc.sei.io');
     (getSupportedNetworks as jest.Mock).mockReturnValue(['sei', 'sei-testnet']);
     (getPrivateKeyAsHex as jest.Mock).mockReturnValue('0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890');
-    (services.getAddressFromPrivateKey as jest.Mock).mockReturnValue(mockAddress);
+    (isWalletEnabled as jest.Mock).mockReturnValue(true); // Enable wallet for testing
+    (getWalletMode as jest.Mock).mockReturnValue('private-key'); // Set wallet mode
+    
+    // Mock wallet provider
+    const mockWalletProvider = {
+      isAvailable: jest.fn().mockReturnValue(true),
+      getName: jest.fn().mockReturnValue('private-key'),
+      getAddress: jest.fn().mockResolvedValue(mockAddress),
+      getWalletClient: jest.fn().mockResolvedValue({ account: { address: mockAddress } })
+    };
+    (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
+    
+    // Mock service functions
+    (services.getAddressFromProvider as jest.Mock).mockResolvedValue(mockAddress);
     (services.getChainId as jest.Mock).mockResolvedValue(1 as never);
     (services.getBlockNumber as jest.Mock).mockResolvedValue(BigInt(12345678) as never);
+    
+    // Register tools after mocks are set up
+    registerEVMTools(server);
     
     // Mock formatJson function
     // Create a type for the helpers object to avoid read-only property error
@@ -735,11 +757,11 @@ describe('EVM Tools', () => {
         (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
         
         // Mock the service function
-        (services.getAddressFromPrivateKey as jest.Mock).mockReturnValue(mockAddress);
+        (services.getAddressFromProvider as jest.Mock).mockResolvedValue(mockAddress);
         
         const response = await testToolSuccess(tool, {});
         
-        expect(services.getAddressFromPrivateKey).toHaveBeenCalledWith(mockPrivateKey);
+        expect(services.getAddressFromProvider).toHaveBeenCalled();
         
         expect(response).toHaveProperty('content');
         expect(response.content[0]).toHaveProperty('type', 'text');
@@ -748,52 +770,52 @@ describe('EVM Tools', () => {
         expect(parsedResponse).toEqual({ address: mockAddress });
       });
       
-      test('get_address_from_private_key - private key not set', async () => {
+      test('get_address_from_private_key - wallet not available', async () => {
         const tool = checkToolExists('get_address_from_private_key');
         if (!tool) return;
         
-        // Mock the config function to return undefined (private key not set)
-        (getPrivateKeyAsHex as jest.Mock).mockReturnValue(undefined);
+        // Mock wallet provider to be unavailable
+        const mockWalletProvider = {
+          isAvailable: jest.fn().mockReturnValue(false),
+          getName: jest.fn().mockReturnValue('private-key')
+        };
+        (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
         
-        // For this test, we're not using a mock function to throw an error
-        // Instead, we're directly calling the handler and expecting it to return an error response
-        const response = await tool.handler({});
+        const response = await testToolSuccess(tool, {});
         
-        verifyErrorResponse(response, 'Error: The PRIVATE_KEY environment variable is not set');
-        expect(services.getAddressFromPrivateKey).not.toHaveBeenCalled();
+        verifyErrorResponse(response, "Error: Wallet provider 'private-key' is not available");
       });
       
       test('get_address_from_private_key - error path', async () => {
         const tool = checkToolExists('get_address_from_private_key');
         if (!tool) return;
         
-        const mockPrivateKey = '0x1234567890abcdef';
+        // Mock wallet provider as available
+        const mockWalletProvider = {
+          isAvailable: jest.fn().mockReturnValue(true),
+          getName: jest.fn().mockReturnValue('private-key')
+        };
+        (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
         
-        // Mock the config function
-        (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
+        const response = await testToolError(tool, {}, services.getAddressFromProvider as jest.Mock, mockError);
         
-        // Mock the service function to throw an error
-        const error = new Error('Invalid private key format');
-        const mockFn = services.getAddressFromPrivateKey as jest.Mock;
-        
-        const response = await testToolError(tool, {}, mockFn, error);
-        
-        verifyErrorResponse(response, 'Error deriving address from private key: Invalid private key format');
-        expect(services.getAddressFromPrivateKey).toHaveBeenCalledWith(mockPrivateKey);
+        verifyErrorResponse(response, 'Error deriving address from private key: Test error');
       });
       
       test('get_address_from_private_key - error with non-Error object', async () => {
         const tool = checkToolExists('get_address_from_private_key');
         if (!tool) return;
         
-        const mockPrivateKey = '0x1234567890abcdef';
-        
-        // Mock the config function
-        (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
+        // Mock wallet provider as available
+        const mockWalletProvider = {
+          isAvailable: jest.fn().mockReturnValue(true),
+          getName: jest.fn().mockReturnValue('private-key')
+        };
+        (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
         
         // Mock the service function to throw a non-Error object
         const nonErrorObject = "This is a string error";
-        (services.getAddressFromPrivateKey as jest.Mock).mockImplementationOnce(() => {
+        (services.getAddressFromProvider as jest.Mock).mockImplementationOnce(() => {
           throw nonErrorObject;
         });
         
@@ -801,9 +823,41 @@ describe('EVM Tools', () => {
         
         expect(response).toHaveProperty('isError', true);
         expect(response.content[0].text).toContain('Error deriving address from private key: This is a string error');
-        expect(services.getAddressFromPrivateKey).toHaveBeenCalledWith(mockPrivateKey);
       });
-    });
+  });
+
+  // Test disabled wallet scenario
+  test('should handle disabled wallet mode', () => {
+    // Create a new server for this test
+    const mockServerResult = createMockServer();
+    const disabledWalletServer = mockServerResult.server;
+    const disabledWalletTools = mockServerResult.registeredTools;
+    
+    // Mock wallet as disabled
+    (isWalletEnabled as jest.Mock).mockReturnValue(false);
+    
+    // Mock console.error to verify it's called
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+    
+    // Register tools with disabled wallet
+    registerEVMTools(disabledWalletServer);
+    
+    // Verify console.error was called with the expected message
+    expect(consoleSpy).toHaveBeenCalledWith('Wallet functionality is disabled. Wallet-dependent tools will not be available.');
+    
+    // Verify wallet tools are not registered
+    expect(disabledWalletTools.has('get_address_from_private_key')).toBe(false);
+    expect(disabledWalletTools.has('transfer_sei')).toBe(false);
+    expect(disabledWalletTools.has('transfer_erc20')).toBe(false);
+    
+    // Verify read-only tools are still registered
+    expect(disabledWalletTools.has('get_chain_info')).toBe(true);
+    expect(disabledWalletTools.has('get_balance')).toBe(true);
+    
+    // Clean up
+    consoleSpy.mockRestore();
+    // Restore wallet enabled for other tests
+    (isWalletEnabled as jest.Mock).mockReturnValue(true);
   });
 
   // Verify all expected tools are registered
@@ -1052,6 +1106,99 @@ describe('EVM Tools', () => {
       
       expect(response).toHaveProperty('isError', true);
       expect(response.content[0].text).toContain('Error estimating gas: This is a string error');
+    });
+
+    test('estimate_gas - with contract call data', async () => {
+      const tool = checkToolExists('estimate_gas');
+      if (!tool) return;
+      
+      const params = {
+        to: '0x1234567890123456789012345678901234567890',
+        value: '0.5',
+        data: '0xa9059cbb000000000000000000000000742d35cc6cd6b4c0532a6b329dc52b4eca13a623000000000000000000000000000000000000000000000000016345785d8a0000',
+        network: mockNetwork
+      };
+      
+      // Mock the estimateGas function to return a specific value for contract calls
+      (services.estimateGas as jest.Mock).mockImplementationOnce((txParams, network) => {
+        return Promise.resolve(BigInt('45000')); // Higher gas for contract calls
+      });
+      
+      // Mock the parseEther function
+      (services.helpers.parseEther as jest.Mock).mockReturnValueOnce(BigInt('500000000000000000')); // 0.5 ETH
+      
+      const response = await tool.handler(params);
+      
+      expect(services.estimateGas).toHaveBeenCalledWith({
+        to: params.to as `0x${string}`,
+        value: BigInt('500000000000000000'),
+        data: params.data as `0x${string}`
+      }, mockNetwork);
+      
+      expect(response).toHaveProperty('content');
+      expect(response.content[0]).toHaveProperty('type', 'text');
+      expect(response.content[0].text).toContain('45000');
+    });
+
+    test('estimate_gas - without data parameter', async () => {
+      const tool = checkToolExists('estimate_gas');
+      if (!tool) return;
+      
+      const params = {
+        to: '0x1234567890123456789012345678901234567890',
+        value: '1.0',
+        network: mockNetwork
+        // No data parameter provided
+      };
+      
+      // Mock the estimateGas function to return a specific value
+      (services.estimateGas as jest.Mock).mockImplementationOnce((txParams, network) => {
+        return Promise.resolve(BigInt('21000')); // Basic transfer gas
+      });
+      
+      // Mock the parseEther function
+      (services.helpers.parseEther as jest.Mock).mockReturnValueOnce(BigInt('1000000000000000000')); // 1 ETH
+      
+      const response = await tool.handler(params);
+      
+      expect(services.estimateGas).toHaveBeenCalledWith({
+        to: params.to as `0x${string}`,
+        value: BigInt('1000000000000000000')
+        // data should not be included since it wasn't provided
+      }, mockNetwork);
+      
+      expect(response).toHaveProperty('content');
+      expect(response.content[0]).toHaveProperty('type', 'text');
+      expect(response.content[0].text).toContain('21000');
+    });
+
+    test('estimate_gas - without value parameter', async () => {
+      const tool = checkToolExists('estimate_gas');
+      if (!tool) return;
+      
+      const params = {
+        to: '0x1234567890123456789012345678901234567890',
+        data: '0xa9059cbb000000000000000000000000742d35cc6cd6b4c0532a6b329dc52b4eca13a623000000000000000000000000000000000000000000000000016345785d8a0000',
+        network: mockNetwork
+        // No value parameter provided
+      };
+      
+      // Mock the estimateGas function to return a specific value
+      (services.estimateGas as jest.Mock).mockImplementationOnce((txParams, network) => {
+        return Promise.resolve(BigInt('35000')); // Contract call without value
+      });
+      
+      const response = await tool.handler(params);
+      
+      expect(services.estimateGas).toHaveBeenCalledWith({
+        to: params.to as `0x${string}`,
+        data: params.data as `0x${string}`
+        // value should not be included since it wasn't provided
+      }, mockNetwork);
+      
+      expect(response).toHaveProperty('content');
+      expect(response.content[0]).toHaveProperty('type', 'text');
+      expect(response.content[0].text).toContain('35000');
     });
   });
   
@@ -2772,4 +2919,5 @@ describe('EVM Tools', () => {
     
     expect(response.content[0].text).toContain('Address does not own this NFT');
   });
+});
 });

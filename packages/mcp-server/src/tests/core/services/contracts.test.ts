@@ -1,6 +1,6 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
 import { readContract, writeContract, getLogs, isContract, deployContract } from '../../../core/services/contracts.js';
-import { getPublicClient, getWalletClient } from '../../../core/services/clients.js';
+import { getPublicClient, getWalletClientFromProvider } from '../../../core/services/clients.js';
 import { getPrivateKeyAsHex } from '../../../core/config.js';
 import type { Hash, Abi, Address, GetLogsParameters, ReadContractParameters, WriteContractParameters } from 'viem';
 import * as services from '../../../core/services';
@@ -40,7 +40,7 @@ describe('Contract Service', () => {
     
     // Setup default mock implementations
     (getPublicClient as jest.Mock).mockReturnValue(mockPublicClient);
-    (getWalletClient as jest.Mock).mockReturnValue(mockWalletClient);
+    (getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClient));
     (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
     
     // Use mockImplementation instead of mockResolvedValue to properly type the return values
@@ -83,7 +83,7 @@ describe('Contract Service', () => {
       const result = await writeContract(params, 'sei');
       
       expect(getPrivateKeyAsHex).toHaveBeenCalled();
-      expect(getWalletClient).toHaveBeenCalledWith(mockPrivateKey, 'sei');
+      expect(getWalletClientFromProvider).toHaveBeenCalledWith('sei');
       expect(mockWalletClient.writeContract).toHaveBeenCalledWith(params);
       expect(result).toBe(mockHash);
     });
@@ -99,7 +99,7 @@ describe('Contract Service', () => {
       } as unknown as WriteContractParameters;
       
       await expect(writeContract(params, 'sei')).rejects.toThrow('Private key not available');
-      expect(getWalletClient).not.toHaveBeenCalled();
+      expect(getWalletClientFromProvider).not.toHaveBeenCalled();
     });
 
     test('should use default network when none is specified', async () => {
@@ -113,7 +113,7 @@ describe('Contract Service', () => {
       
       await writeContract(params);
       
-      expect(getWalletClient).toHaveBeenCalledWith(mockPrivateKey, 'sei');
+      expect(getWalletClientFromProvider).toHaveBeenCalledWith('sei');
     });
   });
 
@@ -213,7 +213,7 @@ describe('Contract Service', () => {
       const result = await deployContract(mockBytecode, mockAbi, mockArgs, 'sei');
       
       expect(getPrivateKeyAsHex).toHaveBeenCalled();
-      expect(getWalletClient).toHaveBeenCalledWith(mockPrivateKey, 'sei');
+      expect(getWalletClientFromProvider).toHaveBeenCalledWith('sei');
       expect(mockWalletClient.deployContract).toHaveBeenCalledWith({
         abi: mockAbi,
         bytecode: mockBytecode,
@@ -248,7 +248,7 @@ describe('Contract Service', () => {
     test('should use default network when none is specified', async () => {
       await deployContract(mockBytecode, mockAbi, mockArgs);
       
-      expect(getWalletClient).toHaveBeenCalledWith(mockPrivateKey, 'sei');
+      expect(getWalletClientFromProvider).toHaveBeenCalledWith('sei');
       expect(getPublicClient).toHaveBeenCalledWith('sei');
     });
 
@@ -258,7 +258,7 @@ describe('Contract Service', () => {
       await expect(deployContract(mockBytecode, mockAbi, mockArgs, 'sei')).rejects.toThrow(
         'Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.'
       );
-      expect(getWalletClient).not.toHaveBeenCalled();
+      expect(getWalletClientFromProvider).not.toHaveBeenCalled();
     });
 
     test('should throw error when wallet client account is not available', async () => {
@@ -266,7 +266,7 @@ describe('Contract Service', () => {
         ...mockWalletClient,
         account: undefined
       };
-      (getWalletClient as jest.Mock).mockReturnValue(mockWalletClientWithoutAccount);
+      (getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClientWithoutAccount));
       
       await expect(deployContract(mockBytecode, mockAbi, mockArgs, 'sei')).rejects.toThrow(
         'Wallet client account not available for contract deployment.'

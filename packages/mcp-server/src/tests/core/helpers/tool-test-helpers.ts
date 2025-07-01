@@ -6,7 +6,7 @@ import type { Address, Hash } from 'viem';
 type ToolSchema = Record<string, unknown>;
 type ToolHandler = (params: Record<string, unknown>) => Promise<ToolResponse>;
 
-interface Tool {
+export interface Tool {
   name: string;
   description: string;
   schema: ToolSchema;

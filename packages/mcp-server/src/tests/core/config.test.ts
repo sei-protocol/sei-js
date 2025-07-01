@@ -101,4 +101,63 @@ describe('Config Module - Actual Implementation', () => {
       expect(getPrivateKeyAsHex()).toBe('0xabcdef1234567890');
     });
   });
+
+  describe('isWalletEnabled', () => {
+    test('should return true when wallet mode is private-key', () => {
+      // Set environment variable for private-key mode
+      process.env.WALLET_MODE = 'private-key';
+      
+      // Force re-evaluation of config module
+      jest.resetModules();
+      const { isWalletEnabled } = require('../../core/config.js');
+      
+      expect(isWalletEnabled()).toBe(true);
+    });
+
+    test('should return false when wallet mode is disabled', () => {
+      // Set environment variable for disabled mode
+      process.env.WALLET_MODE = 'disabled';
+      
+      // Force re-evaluation of config module
+      jest.resetModules();
+      const { isWalletEnabled } = require('../../core/config.js');
+      
+      expect(isWalletEnabled()).toBe(false);
+    });
+
+    test('should return false when wallet mode is not set (defaults to disabled)', () => {
+      // Remove wallet mode env var to test default
+      delete process.env.WALLET_MODE;
+      
+      // Force re-evaluation of config module
+      jest.resetModules();
+      const { isWalletEnabled } = require('../../core/config.js');
+      
+      expect(isWalletEnabled()).toBe(false);
+    });
+  });
+
+  describe('getWalletMode', () => {
+    test('should return the configured wallet mode', () => {
+      // Set environment variable
+      process.env.WALLET_MODE = 'private-key';
+      
+      // Force re-evaluation of config module
+      jest.resetModules();
+      const { getWalletMode } = require('../../core/config.js');
+      
+      expect(getWalletMode()).toBe('private-key');
+    });
+
+    test('should return disabled as default when not set', () => {
+      // Remove wallet mode env var to test default
+      delete process.env.WALLET_MODE;
+      
+      // Force re-evaluation of config module
+      jest.resetModules();
+      const { getWalletMode } = require('../../core/config.js');
+      
+      expect(getWalletMode()).toBe('disabled');
+    });
+  });
 });

@@ -1,7 +1,6 @@
-import { type Address, type Hash, type Hex, getContract, parseEther, parseUnits } from 'viem';
+import { type Address, type Hash, getContract, parseEther, parseUnits } from 'viem';
 import { DEFAULT_NETWORK } from '../chains.js';
-import { getPrivateKeyAsHex } from '../config.js';
-import { getPublicClient, getWalletClient } from './clients.js';
+import { getPublicClient, getWalletClientFromProvider } from './clients.js';
 import * as services from './index.js';
 
 // Standard ERC20 ABI for transfers
@@ -119,14 +118,8 @@ export async function transferSei(
 	network = DEFAULT_NETWORK
 ): Promise<Hash> {
 	const validatedToAddress = services.helpers.validateAddress(toAddress);
-	// Get private key from environment
-	const privateKey = getPrivateKeyAsHex();
-
-	if (!privateKey) {
-		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
-	}
-
-	const client = getWalletClient(privateKey, network);
+	// Get wallet client from provider
+	const client = await getWalletClientFromProvider(network);
 	const amountWei = parseEther(amount);
 
 	// Ensure account exists before using it
@@ -169,12 +162,8 @@ export async function transferERC20(
 }> {
 	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 	const validatedToAddress = services.helpers.validateAddress(toAddress);
-	// Get private key from environment
-	const privateKey = getPrivateKeyAsHex();
-
-	if (!privateKey) {
-		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
-	}
+	// Get wallet client from provider
+	const walletClient = await getWalletClientFromProvider(network);
 
 	const publicClient = getPublicClient(network);
 
@@ -191,9 +180,6 @@ export async function transferERC20(
 
 	// Parse the amount with the correct number of decimals
 	const rawAmount = parseUnits(amount, decimals);
-
-	// Create wallet client for sending the transaction
-	const walletClient = getWalletClient(privateKey, network);
 
 	// Ensure account exists before using it
 	if (!walletClient.account) {
@@ -250,13 +236,8 @@ export async function approveERC20(
 }> {
 	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 	const validatedSpenderAddress = services.helpers.validateAddress(spenderAddress);
-
-	// Get private key from environment
-	const privateKey = getPrivateKeyAsHex();
-
-	if (!privateKey) {
-		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
-	}
+	// Get wallet client from provider
+	const walletClient = await getWalletClientFromProvider(network);
 
 	const publicClient = getPublicClient(network);
 	const contract = getContract({
@@ -271,9 +252,6 @@ export async function approveERC20(
 
 	// Parse the amount with the correct number of decimals
 	const rawAmount = parseUnits(amount, decimals);
-
-	// Create wallet client for sending the transaction
-	const walletClient = getWalletClient(privateKey, network);
 
 	// Ensure account exists before using it
 	if (!walletClient.account) {
@@ -327,15 +305,9 @@ export async function transferERC721(
 }> {
 	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 	const validatedToAddress = services.helpers.validateAddress(toAddress);
-	// Get private key from environment
-	const privateKey = getPrivateKeyAsHex();
 
-	if (!privateKey) {
-		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
-	}
-
-	// Create wallet client for sending the transaction
-	const walletClient = getWalletClient(privateKey, network);
+	// Get wallet client from provider
+	const walletClient = await getWalletClientFromProvider(network);
 
 	// Ensure account exists before using it
 	if (!walletClient.account) {
@@ -405,15 +377,8 @@ export async function transferERC1155(
 }> {
 	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 	const validatedToAddress = services.helpers.validateAddress(toAddress);
-	// Get private key from environment
-	const privateKey = getPrivateKeyAsHex();
-
-	if (!privateKey) {
-		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
-	}
-
-	// Create wallet client for sending the transaction
-	const walletClient = getWalletClient(privateKey, network);
+	// Get wallet client from provider
+	const walletClient = await getWalletClientFromProvider(network);
 
 	// Ensure account exists before using it
 	if (!walletClient.account) {

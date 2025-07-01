@@ -1,12 +1,29 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { DEFAULT_NETWORK } from './chains.js';
+import { isWalletEnabled } from './config.js';
 
 /**
  * Register all EVM-related prompts with the MCP server
  * @param server The MCP server instance
  */
 export function registerEVMPrompts(server: McpServer) {
+	// Register read-only prompts (always available)
+	registerReadOnlyPrompts(server);
+
+	// Register wallet-dependent prompts (only if wallet is enabled)
+	if (isWalletEnabled()) {
+		registerWalletPrompts(server);
+	} else {
+		console.error('Wallet functionality is disabled. Wallet-dependent prompts will not be available.');
+	}
+}
+
+/**
+ * Register read-only prompts that don't require wallet functionality
+ * @param server The MCP server instance
+ */
+function registerReadOnlyPrompts(server: McpServer) {
 	// Basic block explorer prompt
 	server.prompt(
 		'explore_block',
@@ -57,18 +74,7 @@ export function registerEVMPrompts(server: McpServer) {
 		})
 	);
 
-	// Get wallet address from private key prompt
-	server.prompt('my_wallet_address', 'What is my wallet EVM address', {}, () => ({
-		messages: [
-			{
-				role: 'user',
-				content: {
-					type: 'text',
-					text: 'Please retrieve my wallet EVM address using tools get_address_from_private_key via MCP server.'
-				}
-			}
-		]
-	}));
+
 
 	// Address analysis prompt
 	server.prompt(
@@ -197,5 +203,69 @@ export function registerEVMPrompts(server: McpServer) {
 				]
 			};
 		}
+	);
+}
+
+/**
+ * Register wallet-dependent prompts that require wallet functionality
+ * @param server The MCP server instance
+ */
+function registerWalletPrompts(server: McpServer) {
+	// Get wallet address from private key prompt
+	server.prompt('my_wallet_address', 'What is my wallet EVM address', {}, () => ({
+		messages: [
+			{
+				role: 'user',
+				content: {
+					type: 'text',
+					text: 'Please retrieve my wallet EVM address using tools get_address_from_private_key via MCP server.'
+				}
+			}
+		]
+	}));
+
+	// Send transaction prompt
+	server.prompt(
+		'send_transaction_guidance',
+		'Get guidance on sending a transaction',
+		{
+			toAddress: z.string().describe('The recipient address'),
+			amount: z.string().describe('The amount to send (in SEI)'),
+			network: z.string().optional().describe('Network name or chain ID. Defaults to Sei mainnet.')
+		},
+		({ toAddress, amount, network = DEFAULT_NETWORK }) => ({
+			messages: [
+				{
+					role: 'user',
+					content: {
+						type: 'text',
+						text: `I want to send ${amount} SEI to ${toAddress} on the ${network} network. Please guide me through this process, including checking my balance first, estimating gas, and executing the transaction safely.`
+					}
+				}
+			]
+		})
+	);
+
+	// Token transfer guidance
+	server.prompt(
+		'token_transfer_guidance',
+		'Get guidance on transferring tokens',
+		{
+			tokenAddress: z.string().describe('The token contract address'),
+			toAddress: z.string().describe('The recipient address'),
+			amount: z.string().describe('The amount to transfer'),
+			network: z.string().optional().describe('Network name or chain ID. Defaults to Sei mainnet.')
+		},
+		({ tokenAddress, toAddress, amount, network = DEFAULT_NETWORK }) => ({
+			messages: [
+				{
+					role: 'user',
+					content: {
+						type: 'text',
+						text: `I want to transfer ${amount} tokens from contract ${tokenAddress} to ${toAddress} on the ${network} network. Please guide me through this process, including checking my balance first, approving the token if needed, and executing the transfer safely.`
+					}
+				}
+			]
+		})
 	);
 }
