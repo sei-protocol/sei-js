@@ -21,16 +21,38 @@ icon: "robot"
 
 ## Quick Start
 
-Add the Sei MCP Server to your AI assistant with this configuration:
+<Note>
+**Secure by Default**: The MCP server runs in **read-only mode** by default. Wallet tools are disabled until you explicitly configure a private key.
+</Note>
+
+### Basic Setup (Read-Only)
+
+Start with read-only blockchain data access:
 
 ```json
 {
   "mcpServers": {
     "sei": {
       "command": "npx",
-      "args": ["@sei-js/mcp-server"],
+      "args": ["-y", "@sei-js/mcp-server"]
+    }
+  }
+}
+```
+
+### Full Setup (With Wallet)
+
+To enable transactions and wallet tools, add the wallet mode flag and private key:
+
+```json
+{
+  "mcpServers": {
+    "sei": {
+      "command": "npx",
+      "args": ["-y", "@sei-js/mcp-server"],
       "env": {
-        "PRIVATE_KEY": "your_private_key_here"
+        "WALLET_MODE": "private-key",
+        "PRIVATE_KEY": "0x123..."
       }
     }
   }
@@ -46,7 +68,8 @@ Add the Sei MCP Server to your AI assistant with this configuration:
 The Model Context Protocol is an open standard that connects AI systems with custom prompts, tools and data sources (context). It enables:
 
 - **Real-time blockchain data access** - Get current balances, transaction history, and network status directly from Sei
-- **Full execution and write operations** - Deploy contracts, execute transactions, and interact with smart contracts
+- **Secure by default** - Runs in read-only mode until you explicitly enable wallet tools
+- **Full execution and write operations** - Deploy contracts, execute transactions, and interact with smart contracts (with wallet configured)
 - **Up-to-date documentation access** - Search and understand the latest Sei documentation and guides
 - **Specialized blockchain capabilities** - Access Sei-specific features like precompiles and native token operations
 

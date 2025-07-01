@@ -20,14 +20,15 @@ icon: "download"
         Click "Add new Global MCP server" and add this configuration to mcp.json:
         
         <CodeGroup>
-        ```json mcp.json
+        ```json
         {
           "mcpServers": {
-            "sei-mcp-server": {
+            "sei": {
               "command": "npx",
               "args": ["-y", "@sei-js/mcp-server"],
               "env": {
-                "PRIVATE_KEY": "your_private_key_here"
+                "WALLET_MODE": "private-key",
+                "PRIVATE_KEY": "0x123..."
               }
             }
           }
@@ -58,14 +59,15 @@ icon: "download"
         Add the Sei MCP Server to your configuration:
         
         <CodeGroup>
-        ```json Configuration
+        ```json
         {
           "mcpServers": {
             "sei": {
               "command": "npx",
               "args": ["-y", "@sei-js/mcp-server"],
               "env": {
-                "PRIVATE_KEY": "your_private_key_here"
+                "WALLET_MODE": "private-key",
+                "PRIVATE_KEY": "0x123..."
               }
             }
           }
@@ -92,14 +94,15 @@ icon: "download"
         Open Settings → Developer → Edit Config and add:
         
         <CodeGroup>
-        ```json Claude Config
+        ```json
         {
           "mcpServers": {
             "sei": {
               "command": "npx",
               "args": ["-y", "@sei-js/mcp-server"],
               "env": {
-                "PRIVATE_KEY": "your_private_key_here"
+                "WALLET_MODE": "private-key",
+                "PRIVATE_KEY": "0x123..."
               }
             }
           }
@@ -126,7 +129,11 @@ icon: "download"
       
       <Step title="Add Server">
         ```bash
+        # Read-only mode (default)
         claude mcp add sei-mcp-server npx @sei-js/mcp-server
+        
+        # Wallet-enabled mode
+        claude mcp add sei-mcp-server-wallet npx @sei-js/mcp-server --env WALLET_MODE=private-key PRIVATE_KEY=0x123...
         ```
       </Step>
       
@@ -142,24 +149,82 @@ icon: "download"
   </Tab>
 </Tabs>
 
-## Private Key Setup
+## Wallet Connection
+
+<Note>
+**Wallet Tools Disabled by Default**
+
+For security, the MCP server runs in **read-only mode** by default. Only blockchain data tools are available without wallet configuration.
+</Note>
+
+### Default Behavior (Read-Only)
+
+Without wallet configuration, you can:
+- ✅ Check balances and account data
+- ✅ Read smart contract data
+- ✅ Get network and block information
+- ✅ Search documentation
+- ❌ Send transactions or transfer tokens
+- ❌ Deploy or write to contracts
+- ❌ Approve token spending
+
+### Enabling Wallet Tools
+
+To unlock transaction capabilities, add your private key to the configuration:
 
 <Warning>
 Use a dedicated test wallet with minimal funds. Never use your main wallet's private key.
 </Warning>
 
-Export your private key from your wallet:
-
 <Steps>
-  <Step title="Access Wallet Settings">
-    Look for "Export Private Key" or "Show Private Key" in wallet settings
+  <Step title="Get Private Key">
+    Export your private key from your wallet:
+    - Look for "Export Private Key" or "Show Private Key" in wallet settings
+    - Ensure the key starts with `0x`
+    - Fund the wallet with small amounts for testing
   </Step>
   
-  <Step title="Verify Format">
-    Ensure the key starts with `0x`
+  <Step title="Add to Configuration">
+    Add the `PRIVATE_KEY` environment variable to your MCP configuration:
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "WALLET_MODE": "private-key",
+            "PRIVATE_KEY": "0x123...."
+          }
+        }
+      }
+    }
+    ```
   </Step>
   
-  <Step title="Fund Wallet">
-    Fund the wallet with small amounts for testing
+  <Step title="Restart & Verify">
+    Restart your AI assistant and verify wallet tools are available:
+    
+    **Ask your AI:** "What's my wallet address?"
+    
+    If configured correctly, you'll get your wallet address. If not, you'll see an error message.
   </Step>
 </Steps>
+
+### Security Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Test Wallet Only" icon="shield-check">
+    Use a dedicated wallet for testing, not your main holdings
+  </Card>
+  <Card title="Minimal Funds" icon="coins">
+    Keep only small amounts needed for testing transactions
+  </Card>
+  <Card title="Secure Storage" icon="lock">
+    Never commit private keys to version control
+  </Card>
+  <Card title="Regular Rotation" icon="arrows-rotate">
+    Rotate test wallet keys periodically
+  </Card>
+</CardGroup>
