@@ -1,0 +1,8 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "extends": ["../../biome.json"],
+  "files": {
+    "ignoreUnknown": false,
+    "ignore": ["templates/**"]
+  }
+}
