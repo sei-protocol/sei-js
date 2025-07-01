@@ -1,0 +1,528 @@
+---
+title: 'Dynamic Next.js Integration'
+description: 'Full-stack Next.js integration with Dynamic and Sei Global Wallet'
+icon: 'code'
+---
+
+# Dynamic Next.js Integration
+
+This guide shows you how to integrate Sei Global Wallet with Dynamic in a Next.js application, handling both client-side and server-side rendering considerations.
+
+## Prerequisites
+
+- Node.js and npm/yarn
+- Dynamic account and environment ID
+- Basic understanding of Next.js and React
+
+## Step 1: Create Next.js Application
+
+Create a new Next.js application with TypeScript:
+
+<CodeGroup>
+
+```bash npm
+npx create-next-app@latest my-sei-dapp --typescript --tailwind --eslint
+cd my-sei-dapp
+```
+
+```bash yarn
+yarn create next-app my-sei-dapp --typescript --tailwind --eslint
+cd my-sei-dapp
+```
+
+</CodeGroup>
+
+## Step 2: Install Dependencies
+
+Install the required packages:
+
+<CodeGroup>
+
+```bash npm
+npm install @dynamic-labs/sdk-react-core @dynamic-labs/wagmi-connector wagmi viem @tanstack/react-query @sei-js/sei-global-wallet
+```
+
+```bash yarn
+yarn add @dynamic-labs/sdk-react-core @dynamic-labs/wagmi-connector wagmi viem @tanstack/react-query @sei-js/sei-global-wallet
+```
+
+</CodeGroup>
+
+## Step 3: Configure Root Layout
+
+Update your `app/layout.tsx` file to include the Sei Global Wallet import:
+
+```typescript app/layout.tsx
+'use client';
+import './globals.css';
+import { Inter } from 'next/font/google';
+import Providers from '@/lib/providers';
+
+const inter = Inter({ subsets: ['latin'] });
+
+// Import the global wallet implementation
+import '@sei-js/sei-global-wallet/eip6963';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+```
+
+## Step 4: Create Providers Component
+
+Create a `lib/providers.tsx` file to configure Dynamic and Wagmi:
+
+```typescript lib/providers.tsx
+'use client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createConfig, WagmiProvider } from 'wagmi';
+import { http } from 'viem';
+import { sei, seiTestnet } from 'viem/chains';
+
+// Dynamic imports
+import { DynamicContextProvider, DynamicWidget } from '@dynamic-labs/sdk-react-core';
+import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
+import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
+
+// Import Sei Global Wallet for EIP-6963 discovery
+import '@sei-js/sei-global-wallet/eip6963';
+
+const queryClient = new QueryClient();
+
+const wagmiConfig = createConfig({
+  chains: [sei, seiTestnet],
+  transports: {
+    [sei.id]: http('https://evm-rpc.sei-apis.com'),
+    [seiTestnet.id]: http('https://evm-rpc-testnet.sei-apis.com')
+  }
+});
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <DynamicContextProvider
+      settings={{
+        environmentId: 'REPLACE-WITH-YOUR-ENVIRONMENT-ID', // Replace with your environmentId
+        walletConnectors: [EthereumWalletConnectors],
+        overrides: {
+          evmNetworks: (networks) => [
+            ...networks,
+            {
+              blockExplorerUrls: ['https://seitrace.com'],
+              chainId: 1329,
+              chainName: 'Sei Network',
+              iconUrls: ['https://app.dynamic.xyz/assets/networks/sei.svg'],
+              name: 'Sei',
+              nativeCurrency: {
+                decimals: 18,
+                name: 'Sei',
+                symbol: 'SEI'
+              },
+              networkId: 1329,
+              rpcUrls: ['https://evm-rpc.sei-apis.com'],
+              vanityName: 'Sei Mainnet'
+            },
+            {
+              blockExplorerUrls: ['https://seitrace.com/?chain=testnet'],
+              chainId: 1328,
+              chainName: 'Sei Testnet',
+              iconUrls: ['https://app.dynamic.xyz/assets/networks/sei.svg'],
+              name: 'Sei Testnet',
+              nativeCurrency: {
+                decimals: 18,
+                name: 'Sei',
+                symbol: 'SEI'
+              },
+              networkId: 1328,
+              rpcUrls: ['https://evm-rpc-testnet.sei-apis.com'],
+              vanityName: 'Sei Testnet'
+            }
+          ]
+        }
+      }}
+    >
+      <WagmiProvider config={wagmiConfig}>
+        <QueryClientProvider client={queryClient}>
+          <DynamicWagmiConnector>{children}</DynamicWagmiConnector>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </DynamicContextProvider>
+  );
+}
+```
+
+## Step 5: Create Main Page
+
+Update your `app/page.tsx` with the wallet connection interface:
+
+```typescript app/page.tsx
+'use client';
+import { useAccount, useBalance } from 'wagmi';
+import { DynamicWidget } from '@dynamic-labs/sdk-react-core';
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Sei Global Wallet + Dynamic + Next.js
+          </h1>
+          <p className="text-lg text-gray-600">
+            Full-stack integration with server-side rendering support
+          </p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Wallet Connection</h2>
+          <DynamicWidget />
+        </div>
+
+        <AccountInfo />
+      </div>
+    </main>
+  );
+}
+
+function AccountInfo() {
+  const { address, isConnected, chain } = useAccount();
+  const { data: balance, isLoading } = useBalance({
+    address: address
+  });
+
+  if (!isConnected) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-semibold mb-4">Account Information</h2>
+        <p className="text-gray-600">Connect your wallet to see account details</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6">
+      <h2 className="text-2xl font-semibold mb-4">Account Information</h2>
+      <div className="space-y-3">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Address</label>
+          <p className="mt-1 text-sm text-gray-900 font-mono bg-gray-100 p-2 rounded">
+            {address}
+          </p>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Network</label>
+          <p className="mt-1 text-sm text-gray-900">
+            {chain?.name} (Chain ID: {chain?.id})
+          </p>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Balance</label>
+          <p className="mt-1 text-sm text-gray-900">
+            {isLoading ? (
+              <span className="animate-pulse">Loading...</span>
+            ) : (
+              `${balance?.formatted} ${balance?.symbol}`
+            )}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## Step 6: Environment Configuration
+
+Create a `.env.local` file for your environment variables:
+
+```env .env.local
+NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID=your_environment_id_here
+```
+
+Update your providers to use the environment variable:
+
+```typescript lib/providers.tsx
+export default function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <DynamicContextProvider
+      settings={{
+        environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID!,
+        // ... rest of configuration
+      }}
+    >
+      {/* ... rest of providers */}
+    </DynamicContextProvider>
+  );
+}
+```
+
+## Step 7: Run Your Application
+
+Start your development server:
+
+<CodeGroup>
+
+```bash npm
+npm run dev
+```
+
+```bash yarn
+yarn dev
+```
+
+</CodeGroup>
+
+Your application will be available at `http://localhost:3000`.
+
+## Expected Behavior
+
+Your Next.js application will:
+
+1. **Server-Side Rendering:** Properly handle SSR without hydration errors
+2. **Dynamic Widget:** Show Dynamic's wallet connection interface
+3. **Sei Global Wallet:** Include Sei Global Wallet in the wallet options
+4. **Responsive Design:** Work seamlessly on desktop and mobile
+5. **Production Ready:** Optimized for deployment
+
+## Next.js Specific Considerations
+
+### Client-Side Only Components
+
+Some wallet interactions need to be client-side only:
+
+```typescript components/ClientOnlyWallet.tsx
+'use client';
+import dynamic from 'next/dynamic';
+
+const DynamicWidget = dynamic(
+  () => import('@dynamic-labs/sdk-react-core').then((mod) => mod.DynamicWidget),
+  {
+    ssr: false,
+    loading: () => <div className="animate-pulse">Loading wallet...</div>
+  }
+);
+
+export default function ClientOnlyWallet() {
+  return <DynamicWidget />;
+}
+```
+
+### Hydration Error Prevention
+
+Prevent hydration errors with proper client-side checks:
+
+```typescript components/WalletStatus.tsx
+'use client';
+import { useAccount } from 'wagmi';
+import { useEffect, useState } from 'react';
+
+export default function WalletStatus() {
+  const { address, isConnected } = useAccount();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      {isConnected ? (
+        <p>Connected: {address}</p>
+      ) : (
+        <p>Not connected</p>
+      )}
+    </div>
+  );
+}
+```
+
+## Advanced Features
+
+### Custom Hook for Wallet State
+
+Create a custom hook to manage wallet state:
+
+```typescript hooks/useWallet.ts
+'use client';
+import { useAccount, useBalance, useChainId } from 'wagmi';
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+
+export function useWallet() {
+  const { address, isConnected } = useAccount();
+  const { data: balance } = useBalance({ address });
+  const chainId = useChainId();
+  const { primaryWallet, user } = useDynamicContext();
+
+  return {
+    address,
+    isConnected,
+    balance,
+    chainId,
+    primaryWallet,
+    user,
+    isLoading: !address && isConnected
+  };
+}
+```
+
+### API Routes Integration
+
+Create API routes that work with wallet authentication:
+
+```typescript app/api/user/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(request: NextRequest) {
+  // Get wallet address from headers or authentication
+  const walletAddress = request.headers.get('x-wallet-address');
+  
+  if (!walletAddress) {
+    return NextResponse.json(
+      { error: 'Wallet address required' },
+      { status: 401 }
+    );
+  }
+
+  // Your API logic here
+  return NextResponse.json({
+    address: walletAddress,
+    message: 'User data retrieved successfully'
+  });
+}
+```
+
+### Middleware for Wallet Authentication
+
+Create middleware to protect routes:
+
+```typescript middleware.ts
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  // Check if user has wallet connected
+  const hasWallet = request.cookies.get('wallet-connected');
+  
+  if (request.nextUrl.pathname.startsWith('/dashboard') && !hasWallet) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+  
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: '/dashboard/:path*'
+};
+```
+
+## Deployment
+
+### Vercel Deployment
+
+Deploy to Vercel with environment variables:
+
+<Steps>
+  <Step title="Install Vercel CLI">
+    ```bash
+    npm install -g vercel
+    ```
+  </Step>
+  
+  <Step title="Deploy to Vercel">
+    ```bash
+    vercel --prod
+    ```
+  </Step>
+  
+  <Step title="Set Environment Variables">
+    In Vercel dashboard, add your `NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID`
+  </Step>
+  
+  <Step title="Update Dynamic Settings">
+    Add your production domain to Dynamic's allowed origins
+  </Step>
+</Steps>
+
+### Production Optimization
+
+Optimize for production deployment:
+
+```typescript next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    optimizeCss: true,
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  webpack: (config) => {
+    config.externals.push('pino-pretty', 'lokijs', 'encoding');
+    return config;
+  },
+};
+
+module.exports = nextConfig;
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Hydration errors">
+    **Solution:** Ensure wallet components are client-side only:
+    ```typescript
+    const DynamicWidget = dynamic(
+      () => import('@dynamic-labs/sdk-react-core').then((mod) => mod.DynamicWidget),
+      { ssr: false }
+    );
+    ```
+  </Accordion>
+  
+  <Accordion title="Environment variables not loading">
+    **Solution:** Ensure your environment variables are prefixed with `NEXT_PUBLIC_`:
+    ```env
+    NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID=your_id_here
+    ```
+  </Accordion>
+  
+  <Accordion title="Build errors with wallet imports">
+    **Solution:** Add webpack externals to your `next.config.js`:
+    ```javascript
+    webpack: (config) => {
+      config.externals.push('pino-pretty', 'lokijs', 'encoding');
+      return config;
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="RainbowKit Integration" icon="rainbow" href="/sei-global-wallet/rainbowkit">
+    Compare with RainbowKit approach
+  </Card>
+  <Card title="Web3-React Integration" icon="react" href="/sei-global-wallet/web3-react">
+    Explore Web3-React alternative
+  </Card>
+</CardGroup>
+
+## Additional Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Dynamic Documentation](https://docs.dynamic.xyz)
+- [Wagmi Documentation](https://wagmi.sh)
+- [Sei Network Documentation](https://docs.sei.io)

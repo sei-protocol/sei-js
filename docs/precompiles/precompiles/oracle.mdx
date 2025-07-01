@@ -1,0 +1,352 @@
+---
+title: 'Oracle Precompile'
+description: 'Access price feeds and TWAP data through the Oracle precompile contract'
+icon: "crystal-ball"
+---
+
+## Overview
+
+The Oracle precompile provides access to Sei's native oracle system, allowing you to query real-time exchange rates and time-weighted average prices (TWAP) for various assets. This precompile bridges EVM contracts with Sei's oracle module for price data.
+
+**Contract Address:** `0x0000000000000000000000000000000000001002`
+
+## Key Features
+
+- **Real-Time Exchange Rates**: Get current market prices for supported assets
+- **TWAP Data**: Access time-weighted average prices with configurable lookback periods
+- **Multi-Asset Support**: Query prices for various token denominations
+- **High Precision**: Decimal-accurate price data for DeFi applications
+
+## Available Functions
+
+### View Functions
+
+<AccordionGroup>
+  <Accordion title="getExchangeRates() → DenomOracleExchangeRatePair[]">
+    Get current exchange rates for all supported denominations.
+    
+    **Parameters:** None
+    
+    **Returns:** Array of denomination-price pairs with metadata
+    
+    **Return Structure:**
+    ```typescript
+    interface DenomOracleExchangeRatePair {
+      denom: string;
+      oracleExchangeRateVal: {
+        exchangeRate: string;
+        lastUpdate: string;
+        lastUpdateTimestamp: bigint;
+      };
+    }
+    ```
+    
+    ```typescript
+    const exchangeRates = await oracleContract.getExchangeRates();
+    // Returns: [
+    //   {
+    //     denom: "usei",
+    //     oracleExchangeRateVal: {
+    //       exchangeRate: "0.123456789",
+    //       lastUpdate: "2024-01-01T12:00:00Z",
+    //       lastUpdateTimestamp: 1704110400n
+    //     }
+    //   },
+    //   ...
+    // ]
+    ```
+  </Accordion>
+
+  <Accordion title="getOracleTwaps(uint64) → OracleTwap[]">
+    Get time-weighted average prices with a specified lookback period.
+    
+    **Parameters:**
+    - `lookback_seconds` (uint64): Lookback period in seconds
+    
+    **Returns:** Array of TWAP data for all supported denominations
+    
+    **Return Structure:**
+    ```typescript
+    interface OracleTwap {
+      denom: string;
+      twap: string;
+      lookbackSeconds: bigint;
+    }
+    ```
+    
+    ```typescript
+    // Get 1-hour TWAP data
+    const twapData = await oracleContract.getOracleTwaps(3600n);
+    // Returns: [
+    //   {
+    //     denom: "usei", 
+    //     twap: "0.125000000",
+    //     lookbackSeconds: 3600n
+    //   },
+    //   ...
+    // ]
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Usage Examples
+
+<Tabs>
+  <Tab title="Viem">
+    ```typescript
+    import { createPublicClient, http } from 'viem';
+    import { 
+      seiTestnet,
+      ORACLE_PRECOMPILE_ABI,
+      ORACLE_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles/viem';
+
+    const client = createPublicClient({
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    // Get current exchange rates
+    async function getCurrentPrices() {
+      const exchangeRates = await client.readContract({
+        address: ORACLE_PRECOMPILE_ADDRESS,
+        abi: ORACLE_PRECOMPILE_ABI,
+        functionName: 'getExchangeRates'
+      });
+      
+      return exchangeRates.map(rate => ({
+        denom: rate.denom,
+        price: parseFloat(rate.oracleExchangeRateVal.exchangeRate),
+        lastUpdate: new Date(Number(rate.oracleExchangeRateVal.lastUpdateTimestamp) * 1000),
+        lastUpdateString: rate.oracleExchangeRateVal.lastUpdate
+      }));
+    }
+
+    // Get TWAP data for specific timeframe
+    async function getTwapData(lookbackHours: number) {
+      const lookbackSeconds = BigInt(lookbackHours * 3600);
+      
+      const twapData = await client.readContract({
+        address: ORACLE_PRECOMPILE_ADDRESS,
+        abi: ORACLE_PRECOMPILE_ABI,
+        functionName: 'getOracleTwaps',
+        args: [lookbackSeconds]
+      });
+      
+      return twapData.map(twap => ({
+        denom: twap.denom,
+        price: parseFloat(twap.twap),
+        lookbackHours: Number(twap.lookbackSeconds) / 3600
+      }));
+    }
+
+    // Get price for specific denomination
+    async function getPriceForDenom(targetDenom: string) {
+      const exchangeRates = await getCurrentPrices();
+      return exchangeRates.find(rate => rate.denom === targetDenom);
+    }
+
+    // Compare current price vs TWAP
+    async function getPriceComparison(denom: string, twapHours: number = 24) {
+      const [currentRates, twapData] = await Promise.all([
+        getCurrentPrices(),
+        getTwapData(twapHours)
+      ]);
+      
+      const currentPrice = currentRates.find(r => r.denom === denom);
+      const twapPrice = twapData.find(t => t.denom === denom);
+      
+      if (!currentPrice || !twapPrice) {
+        throw new Error(`Price data not found for ${denom}`);
+      }
+      
+      const deviation = ((currentPrice.price - twapPrice.price) / twapPrice.price) * 100;
+      
+      return {
+        denom,
+        currentPrice: currentPrice.price,
+        twapPrice: twapPrice.price,
+        deviationPercent: deviation,
+        isAboveTwap: currentPrice.price > twapPrice.price
+      };
+    }
+    ```
+  </Tab>
+
+  <Tab title="Ethers.js">
+    ```typescript
+    import { ethers } from 'ethers';
+    import { getOraclePrecompileEthersContract } from '@sei-js/precompiles/ethers';
+
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
+    const oracleContract = getOraclePrecompileEthersContract(provider);
+
+    // Get current exchange rates
+    async function getCurrentPrices() {
+      const exchangeRates = await oracleContract.getExchangeRates();
+      
+      return exchangeRates.map(rate => ({
+        denom: rate.denom,
+        price: parseFloat(rate.oracleExchangeRateVal.exchangeRate),
+        lastUpdate: new Date(Number(rate.oracleExchangeRateVal.lastUpdateTimestamp) * 1000),
+        lastUpdateString: rate.oracleExchangeRateVal.lastUpdate
+      }));
+    }
+
+    // Get TWAP data
+    async function getTwapData(lookbackHours: number) {
+      const lookbackSeconds = BigInt(lookbackHours * 3600);
+      const twapData = await oracleContract.getOracleTwaps(lookbackSeconds);
+      
+      return twapData.map(twap => ({
+        denom: twap.denom,
+        price: parseFloat(twap.twap),
+        lookbackHours: Number(twap.lookbackSeconds) / 3600
+      }));
+    }
+
+    // Price monitoring function
+    async function monitorPriceChanges(denom: string, thresholdPercent: number = 5) {
+      const [current, twap24h] = await Promise.all([
+        getCurrentPrices(),
+        getTwapData(24)
+      ]);
+      
+      const currentPrice = current.find(p => p.denom === denom);
+      const twapPrice = twap24h.find(p => p.denom === denom);
+      
+      if (currentPrice && twapPrice) {
+        const change = Math.abs((currentPrice.price - twapPrice.price) / twapPrice.price * 100);
+        
+        if (change > thresholdPercent) {
+          console.log(`⚠️ Price alert for ${denom}:`);
+          console.log(`Current: ${currentPrice.price}`);
+          console.log(`24h TWAP: ${twapPrice.price}`);
+          console.log(`Change: ${change.toFixed(2)}%`);
+        }
+      }
+    }
+    ```
+  </Tab>
+
+  <Tab title="Manual">
+    ```typescript
+    import { 
+      ORACLE_PRECOMPILE_ABI, 
+      ORACLE_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles';
+
+    // Using with web3.js
+    import Web3 from 'web3';
+    
+    const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
+    const oracleContract = new web3.eth.Contract(
+      ORACLE_PRECOMPILE_ABI,
+      ORACLE_PRECOMPILE_ADDRESS
+    );
+
+    // Get current exchange rates
+    const exchangeRates = await oracleContract.methods
+      .getExchangeRates()
+      .call();
+
+    // Get TWAP data for 1 hour
+    const twapData = await oracleContract.methods
+      .getOracleTwaps(3600)
+      .call();
+
+    // Process the data
+    const prices = exchangeRates.map(rate => ({
+      denom: rate.denom,
+      price: parseFloat(rate.oracleExchangeRateVal.exchangeRate),
+      timestamp: parseInt(rate.oracleExchangeRateVal.lastUpdateTimestamp)
+    }));
+    ```
+  </Tab>
+</Tabs>
+
+## Common Use Cases
+
+### DeFi Applications
+- **Price Oracles**: Use real-time prices for lending/borrowing protocols
+- **DEX Integration**: Price discovery and arbitrage detection
+- **Liquidation Systems**: Monitor collateral values with TWAP data
+- **Yield Farming**: Calculate APY based on token prices
+
+### Trading Applications
+- **Price Alerts**: Monitor significant price movements
+- **Technical Analysis**: Use TWAP data for trend analysis  
+- **Risk Management**: Compare current prices vs historical averages
+- **Portfolio Valuation**: Calculate total portfolio value
+
+### Analytics & Monitoring
+- **Market Data**: Track price history and volatility
+- **Deviation Analysis**: Identify price anomalies
+- **Performance Metrics**: Calculate returns and benchmarks
+
+## TWAP Lookback Periods
+
+Common lookback periods for different use cases:
+
+- **1 minute (60s)**: High-frequency trading signals
+- **5 minutes (300s)**: Short-term price smoothing
+- **1 hour (3600s)**: Medium-term trend analysis
+- **4 hours (14400s)**: Swing trading signals
+- **24 hours (86400s)**: Daily average pricing
+- **7 days (604800s)**: Weekly trend analysis
+
+```typescript
+// Example: Get multiple TWAP timeframes
+async function getMultiTimeframeTwap(denom: string) {
+  const timeframes = [3600, 14400, 86400]; // 1h, 4h, 24h
+  
+  const twapPromises = timeframes.map(seconds => 
+    client.readContract({
+      address: ORACLE_PRECOMPILE_ADDRESS,
+      abi: ORACLE_PRECOMPILE_ABI,
+      functionName: 'getOracleTwaps',
+      args: [BigInt(seconds)]
+    })
+  );
+  
+  const results = await Promise.all(twapPromises);
+  
+  return timeframes.map((seconds, index) => ({
+    timeframe: `${seconds / 3600}h`,
+    price: parseFloat(results[index].find(t => t.denom === denom)?.twap || '0')
+  }));
+}
+```
+
+## Error Handling
+
+Common errors when using the Oracle precompile:
+
+- **No data available**: Some denominations may not have oracle data
+- **Stale data**: Check timestamp to ensure data freshness
+- **Invalid lookback**: Very large lookback periods may not have data
+
+```typescript
+try {
+  const exchangeRates = await oracleContract.getExchangeRates();
+  
+  // Check for stale data (older than 5 minutes)
+  const now = Date.now() / 1000;
+  const staleThreshold = 300; // 5 minutes
+  
+  exchangeRates.forEach(rate => {
+    const lastUpdate = Number(rate.oracleExchangeRateVal.lastUpdateTimestamp);
+    if (now - lastUpdate > staleThreshold) {
+      console.warn(`Stale price data for ${rate.denom}: ${now - lastUpdate}s old`);
+    }
+  });
+} catch (error) {
+  console.error('Failed to fetch oracle data:', error);
+}
+```
+
+## Related Precompiles
+
+- **[Bank](/precompiles/precompiles/bank)**: Query token balances and metadata
+- **[Staking](/precompiles/precompiles/staking)**: Validator and delegation information
+- **[Governance](/precompiles/precompiles/governance)**: Proposal and voting data

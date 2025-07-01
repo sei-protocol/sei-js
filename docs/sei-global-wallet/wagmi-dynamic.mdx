@@ -1,0 +1,413 @@
+---
+title: 'Wagmi + Dynamic Integration'
+description: 'Integrate Sei Global Wallet with Wagmi and Dynamic for advanced wallet management'
+icon: 'gear'
+---
+
+# Wagmi + Dynamic Integration
+
+This integration combines Wagmi's type-safe React hooks with Dynamic's infrastructure to provide advanced wallet management capabilities. This approach gives you the best of both worlds: Wagmi's excellent developer experience and Dynamic's powerful wallet features.
+
+## Prerequisites
+
+- React application
+- Node.js and npm/yarn
+- Dynamic account and environment ID
+- Basic understanding of React hooks
+
+## Step 1: Create React Application
+
+Create a new React application with TypeScript:
+
+<CodeGroup>
+
+```bash npm
+npx create-react-app my-sei-dapp --template typescript
+cd my-sei-dapp
+```
+
+```bash yarn
+yarn create react-app my-sei-dapp --template typescript
+cd my-sei-dapp
+```
+
+</CodeGroup>
+
+## Step 2: Install Dependencies
+
+Install the required packages:
+
+<CodeGroup>
+
+```bash npm
+npm install @dynamic-labs/sdk-react-core @dynamic-labs/wagmi-connector @dynamic-labs/ethereum wagmi viem @tanstack/react-query @sei-js/sei-global-wallet
+```
+
+```bash yarn
+yarn add @dynamic-labs/sdk-react-core @dynamic-labs/wagmi-connector @dynamic-labs/ethereum wagmi viem @tanstack/react-query @sei-js/sei-global-wallet
+```
+
+</CodeGroup>
+
+## Step 3: Get Dynamic Environment ID
+
+<Steps>
+  <Step title="Sign up for Dynamic">
+    Visit [dynamic.xyz](https://dynamic.xyz) and create a free account
+  </Step>
+  <Step title="Create a new project">
+    Click "Create Project" and fill in your project details
+  </Step>
+  <Step title="Get your Environment ID">
+    Copy the Environment ID from your project dashboard
+  </Step>
+  <Step title="Configure allowed origins">
+    Add your development URL (e.g., `http://localhost:3000`) to allowed origins
+  </Step>
+</Steps>
+
+## Step 4: Configure Your Application
+
+Update your `App.tsx` file with the complete Wagmi + Dynamic configuration:
+
+```typescript App.tsx
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createConfig, WagmiProvider, useAccount } from 'wagmi';
+import { http } from 'viem';
+import { sei, seiTestnet } from 'viem/chains';
+
+// Dynamic imports
+import { DynamicContextProvider, DynamicWidget } from '@dynamic-labs/sdk-react-core';
+import { DynamicWagmiConnector } from '@dynamic-labs/wagmi-connector';
+import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
+
+// Import Sei Global Wallet for EIP-6963 discovery
+import '@sei-js/sei-global-wallet/eip6963';
+
+const queryClient = new QueryClient();
+
+const wagmiConfig = createConfig({
+  chains: [sei, seiTestnet],
+  transports: {
+    [sei.id]: http('https://evm-rpc.sei-apis.com'),
+    [seiTestnet.id]: http('https://evm-rpc-testnet.sei-apis.com')
+  }
+});
+
+export default function App() {
+  return (
+    <DynamicContextProvider
+      settings={{
+        environmentId: 'REPLACE-WITH-YOUR-ENVIRONMENT-ID', // <- Replace with your Environment ID
+        walletConnectors: [EthereumWalletConnectors],
+        overrides: {
+          evmNetworks: (networks) => [
+            ...networks,
+            {
+              blockExplorerUrls: ['https://seitrace.com'],
+              chainId: 1329,
+              chainName: 'Sei Network',
+              iconUrls: ['https://app.dynamic.xyz/assets/networks/sei.svg'],
+              name: 'Sei',
+              nativeCurrency: {
+                decimals: 18,
+                name: 'Sei',
+                symbol: 'SEI'
+              },
+              networkId: 1329,
+              rpcUrls: ['https://evm-rpc.sei-apis.com'],
+              vanityName: 'Sei Mainnet'
+            },
+            {
+              blockExplorerUrls: ['https://seitrace.com/?chain=testnet'],
+              chainId: 1328,
+              chainName: 'Sei Testnet',
+              iconUrls: ['https://app.dynamic.xyz/assets/networks/sei.svg'],
+              name: 'Sei Testnet',
+              nativeCurrency: {
+                decimals: 18,
+                name: 'Sei',
+                symbol: 'SEI'
+              },
+              networkId: 1328,
+              rpcUrls: ['https://evm-rpc-testnet.sei-apis.com'],
+              vanityName: 'Sei Testnet'
+            }
+          ]
+        }
+      }}
+    >
+      <WagmiProvider config={wagmiConfig}>
+        <QueryClientProvider client={queryClient}>
+          <DynamicWagmiConnector>
+            <div className="app-container">
+              <h1>Dynamic + Wagmi + Sei Global Wallet</h1>
+              <DynamicWidget />
+              <AccountInfo />
+            </div>
+          </DynamicWagmiConnector>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </DynamicContextProvider>
+  );
+}
+
+function AccountInfo() {
+  const { address, isConnected, chain } = useAccount();
+
+  if (!isConnected) {
+    return <p>Connect your wallet to see account info</p>;
+  }
+
+  return (
+    <div className="account-info">
+      <h3>Account Information</h3>
+      <p>
+        <strong>Address:</strong> {address}
+      </p>
+      <p>
+        <strong>Chain:</strong> {chain?.name} (ID: {chain?.id})
+      </p>
+      <p>
+        <strong>Connected:</strong> {isConnected ? 'Yes' : 'No'}
+      </p>
+    </div>
+  );
+}
+```
+
+## Step 5: Add Environment ID
+
+Replace `'REPLACE-WITH-YOUR-ENVIRONMENT-ID'` with your actual Dynamic Environment ID from your dashboard.
+
+<Warning>
+Keep your Environment ID secure and don't commit it to public repositories. Consider using environment variables for production deployments.
+</Warning>
+
+## Step 6: Run Your Application
+
+Start your development server:
+
+<CodeGroup>
+
+```bash npm
+npm start
+```
+
+```bash yarn
+yarn start
+```
+
+</CodeGroup>
+
+Your application will be available at `http://localhost:3000`.
+
+## Expected Behavior
+
+Once configured correctly, your application will:
+
+1. **Show Dynamic Widget:** Dynamic's wallet connection interface appears
+2. **Support Multiple Wallets:** Users can choose from various wallet options including Sei Global Wallet
+3. **Sei Network Support:** Both Sei mainnet and testnet are available
+4. **Social Login:** Sei Global Wallet provides social authentication options
+5. **Wagmi Integration:** All Wagmi hooks work seamlessly with connected wallets
+
+## Dynamic Features
+
+Dynamic provides advanced features beyond basic wallet connection:
+
+<CardGroup cols={2}>
+  <Card title="Multi-Wallet Support" icon="wallet">
+    Users can connect multiple wallets simultaneously
+  </Card>
+  <Card title="Social Authentication" icon="users">
+    Support for Google, Twitter, Discord, and email login
+  </Card>
+  <Card title="User Analytics" icon="chart-line">
+    Detailed analytics on user behavior and wallet usage
+  </Card>
+  <Card title="Custom Branding" icon="paintbrush">
+    White-label the wallet experience to match your brand
+  </Card>
+</CardGroup>
+
+## Advanced Configuration
+
+### Custom Authentication Methods
+
+Configure specific authentication methods:
+
+```typescript
+<DynamicContextProvider
+  settings={{
+    environmentId: 'YOUR-ENVIRONMENT-ID',
+    walletConnectors: [EthereumWalletConnectors],
+    initialAuthenticationMode: 'connect-and-sign',
+    authenticationMethods: ['email', 'google', 'twitter'],
+    // ... other settings
+  }}
+>
+```
+
+### Custom Styling
+
+Customize the Dynamic widget appearance:
+
+```typescript
+<DynamicContextProvider
+  settings={{
+    environmentId: 'YOUR-ENVIRONMENT-ID',
+    walletConnectors: [EthereumWalletConnectors],
+    cssOverrides: `
+      .dynamic-widget-card {
+        background: #f5f5f5;
+        border-radius: 12px;
+      }
+      .dynamic-widget-button {
+        background: #9E1F19;
+        color: white;
+      }
+    `,
+    // ... other settings
+  }}
+>
+```
+
+### Network Switching
+
+Handle network switching with Dynamic:
+
+```typescript
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+
+function NetworkSwitcher() {
+  const { primaryWallet } = useDynamicContext();
+
+  const switchToSeiMainnet = async () => {
+    if (primaryWallet) {
+      await primaryWallet.switchNetwork({ networkChainId: 1329 });
+    }
+  };
+
+  const switchToSeiTestnet = async () => {
+    if (primaryWallet) {
+      await primaryWallet.switchNetwork({ networkChainId: 1328 });
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={switchToSeiMainnet}>Switch to Sei Mainnet</button>
+      <button onClick={switchToSeiTestnet}>Switch to Sei Testnet</button>
+    </div>
+  );
+}
+```
+
+## Using Wagmi Hooks
+
+With this setup, you can use all Wagmi hooks as normal:
+
+```typescript
+import { useBalance, useContractRead, useContractWrite } from 'wagmi';
+
+function WalletBalance() {
+  const { address } = useAccount();
+  const { data: balance, isLoading } = useBalance({
+    address: address
+  });
+
+  if (isLoading) return <div>Loading balance...</div>;
+
+  return (
+    <div>
+      Balance: {balance?.formatted} {balance?.symbol}
+    </div>
+  );
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Environment ID errors">
+    **Solution:** Ensure your Environment ID is correct and active:
+    - Check your Dynamic dashboard for the correct Environment ID
+    - Verify your domain is added to allowed origins
+    - Make sure your Dynamic project is properly configured
+  </Accordion>
+  
+  <Accordion title="Network configuration issues">
+    **Solution:** Verify your network overrides are properly configured:
+    ```typescript
+    overrides: {
+      evmNetworks: (networks) => [
+        ...networks,
+        // Your custom network configurations
+      ]
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Wallet connection failures">
+    **Solution:** Check that all imports are correct:
+    ```typescript
+    import '@sei-js/sei-global-wallet/eip6963'; // Must be imported
+    import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Production Considerations
+
+### Environment Variables
+
+Use environment variables for sensitive configuration:
+
+```typescript
+// .env.local
+REACT_APP_DYNAMIC_ENVIRONMENT_ID=your_environment_id_here
+
+// In your component
+environmentId: process.env.REACT_APP_DYNAMIC_ENVIRONMENT_ID!
+```
+
+### Error Boundaries
+
+Implement error boundaries for better error handling:
+
+```typescript
+import { ErrorBoundary } from 'react-error-boundary';
+
+function ErrorFallback({error}: {error: Error}) {
+  return (
+    <div role="alert">
+      <h2>Something went wrong:</h2>
+      <pre>{error.message}</pre>
+    </div>
+  );
+}
+
+// Wrap your app
+<ErrorBoundary FallbackComponent={ErrorFallback}>
+  <App />
+</ErrorBoundary>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Dynamic Next.js" icon="next-dot-js" href="/sei-global-wallet/dynamic-nextjs">
+    Server-side rendering with Next.js
+  </Card>
+  <Card title="RainbowKit Integration" icon="rainbow" href="/sei-global-wallet/rainbowkit">
+    Compare with RainbowKit approach
+  </Card>
+</CardGroup>
+
+## Additional Resources
+
+- [Dynamic Documentation](https://docs.dynamic.xyz)
+- [Wagmi Documentation](https://wagmi.sh)
+- [Sei Network Documentation](https://docs.sei.io)
