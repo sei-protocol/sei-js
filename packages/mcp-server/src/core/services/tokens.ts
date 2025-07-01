@@ -1,4 +1,4 @@
-import { type Address, type Hash, type Hex, formatUnits, getContract } from 'viem';
+import { type Address, type Hex, type Hash, formatUnits, getContract } from 'viem';
 import { getPublicClient } from './clients.js';
 
 // Standard ERC20 ABI (minimal for reading)

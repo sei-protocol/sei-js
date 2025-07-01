@@ -1,17 +1,17 @@
 import { describe, expect, test } from '@jest/globals';
 import type { Chain } from 'viem';
-import { sei, seiDevnet, seiTestnet } from 'viem/chains';
+import { sei, seiTestnet, seiDevnet } from 'viem/chains';
 import {
-	DEFAULT_CHAIN_ID,
 	DEFAULT_NETWORK,
 	DEFAULT_RPC_URL,
+	DEFAULT_CHAIN_ID,
 	chainMap,
+	networkNameMap,
+	rpcUrlMap,
+	resolveChainId,
 	getChain,
 	getRpcUrl,
-	getSupportedNetworks,
-	networkNameMap,
-	resolveChainId,
-	rpcUrlMap
+	getSupportedNetworks
 } from '../../core/chains.js';
 
 describe('chains module', () => {
@@ -165,7 +165,7 @@ describe('chains module', () => {
 	describe('getSupportedNetworks', () => {
 		test('returns sorted list of supported networks', () => {
 			const networks = getSupportedNetworks();
-
+			
 			// Check that all expected networks are included
 			expect(networks).toContain('sei');
 			expect(networks).toContain('sei-testnet');
