@@ -2,8 +2,8 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Address, Hash, Hex } from 'viem';
 import { z } from 'zod';
 import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
-import { isWalletEnabled, getWalletMode } from './config.js';
-import { getWalletProvider } from './wallet';
+import { isWalletEnabled } from './config.js';
+import { getWalletProvider } from './wallet/index.js';
 import * as services from './services/index.js';
 
 /**
