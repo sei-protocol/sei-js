@@ -1,0 +1,157 @@
+---
+title: "Available Tools"
+description: "Complete reference of 28 MCP tools for blockchain operations"
+icon: "wrench"
+---
+
+The Sei MCP Server provides 28 tools for blockchain operations. **By default, wallet tools are disabled** and only read-only tools are available. [Enable wallet tools](/mcp-server/setup#wallet-connection) to unlock transaction capabilities.
+
+<Note>
+**Wallet Tools Disabled by Default**
+
+For security, wallet-dependent tools require explicit configuration. Only read-only blockchain data tools are available by default.
+</Note>
+
+## Read-Only Tools (Always Available)
+
+These tools work without wallet connection and are available by default:
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `get_balance` | Check SEI balance | "What's my SEI balance?" |
+| `is_contract` | Check if address is contract | "Is 0x3894... a contract?" |
+| `estimate_gas` | Estimate transaction gas cost | "How much gas for this transaction?" |
+
+## Wallet Tools (Require Configuration) 🔐
+
+<Warning>
+These tools require [wallet configuration](/mcp-server/setup#wallet-connection) and are **disabled by default** for security.
+</Warning>
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `get_address_from_private_key` | Get wallet address | "What's my wallet address?" |
+| `transfer_sei` | Send SEI tokens | "Send 1 SEI to 0x742d..." |
+
+## Network & Blockchain Data
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `get_chain_info` | Get network information | "Show me Sei network info" |
+| `get_supported_networks` | List supported networks | "What networks are supported?" |
+| `get_latest_block` | Get latest block | "Get latest block" |
+| `get_block_by_number` | Get specific block | "Get block 12345" |
+| `get_transaction` | Get transaction details | "Analyze transaction 0xabc..." |
+| `get_transaction_receipt` | Get transaction receipt | "Get receipt for 0xabc..." |
+
+## Token Management
+
+### Read-Only Token Tools
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `get_token_info` | Get ERC-20 token details | "Get info for token 0x3894..." |
+| `get_token_balance` | Check token balance | "What's my USDC balance?" |
+| `get_erc20_balance` | Check ERC-20 balance | "Check ERC20 balance for 0x742d..." |
+| `get_token_balance_erc20` | Get ERC-20 token balance | "Get token balance for address" |
+
+### Wallet-Required Token Tools 🔐
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `transfer_token` | Send ERC-20 tokens | "Send 100 USDC to 0x742d..." |
+| `transfer_erc20` | Transfer ERC-20 tokens | "Transfer tokens to address" |
+| `approve_token_spending` | Approve token spending | "Approve 1000 USDC for 0xDEX..." |
+
+## NFT Operations (ERC-721)
+
+### Read-Only NFT Tools
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `get_nft_info` | Get NFT details | "Get info for NFT token 123" |
+| `check_nft_ownership` | Verify NFT ownership | "Do I own NFT token 123?" |
+| `get_nft_balance` | Count NFTs owned | "How many NFTs do I own?" |
+
+### Wallet-Required NFT Tools 🔐
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `transfer_nft` | Transfer NFT | "Transfer NFT token 123 to 0x742d..." |
+
+## Multi-Token Operations (ERC-1155)
+
+### Read-Only ERC-1155 Tools
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `get_erc1155_balance` | Get ERC-1155 token balance | "Check my ERC1155 token balance" |
+| `get_erc1155_token_uri` | Get ERC-1155 metadata URI | "Get metadata for token ID 123" |
+
+### Wallet-Required ERC-1155 Tools 🔐
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `transfer_erc1155` | Transfer ERC-1155 tokens | "Transfer ERC1155 token to address" |
+
+## Smart Contract Operations
+
+### Read-Only Contract Tools
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `read_contract` | Read contract data | "Read balanceOf from contract 0x3894..." |
+
+### Wallet-Required Contract Tools 🔐
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `write_contract` | Execute contract function | "Call contract function with params" |
+| `deploy_contract` | Deploy new smart contract | "Deploy my token contract" |
+
+## Documentation
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `search_sei_js_docs` | Search Sei-JS documentation | "How do I use precompiles with Viem?" |
+
+## Enabling Wallet Tools
+
+To use wallet-required tools (🔐), you must configure a wallet connection:
+
+<Steps>
+  <Step title="Set Private Key">
+    Add your private key to the MCP server configuration:
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "WALLET_MODE": "private-key",
+            "PRIVATE_KEY": "0x123..."
+          }
+        }
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Restart MCP Server">
+    Restart your AI assistant (Claude Desktop, Cursor, etc.) to activate wallet tools.
+  </Step>
+</Steps>
+
+[See full setup guide →](/mcp-server/setup#wallet-connection)
+
+## Security Notes
+
+<Warning>
+**Wallet tools require a private key for transaction signing. Ensure this key is:**
+- Kept secure and never shared
+- Only used with funds you can afford to lose  
+- Properly backed up before use
+- From a dedicated wallet, not your main holdings
+</Warning>

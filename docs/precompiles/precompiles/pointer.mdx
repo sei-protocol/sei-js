@@ -1,0 +1,818 @@
+---
+title: 'Pointer Precompile'
+description: 'Create EVM pointer contracts for CosmWasm CW20, CW721, and native tokens through the Pointer precompile contract'
+icon: "location-arrow"
+---
+
+## Overview
+
+The Pointer precompile enables creation of EVM-compatible pointer contracts that bridge CosmWasm tokens (CW20, CW721) and native Cosmos tokens to the EVM ecosystem. This allows seamless interoperability and unified token management across both environments.
+
+**Contract Address:** `0x000000000000000000000000000000000000100B`
+
+## Key Features
+
+- **CW20 Bridging**: Create EVM pointers for CosmWasm CW20 tokens
+- **CW721 Bridging**: Create EVM pointers for CosmWasm CW721 NFTs  
+- **Native Token Bridging**: Create EVM pointers for native Cosmos tokens
+- **Automatic Contract Creation**: Deploys ERC20/ERC721 compatible contracts
+- **Gas Fee Required**: All functions are payable and require gas
+
+## Available Functions
+
+### State-Changing Functions
+
+<AccordionGroup>
+  <Accordion title="addCW20Pointer(string) → address">
+    Create an EVM pointer contract for a CosmWasm CW20 token.
+    
+    **Parameters:**
+    - `cwAddr` (string): The CosmWasm CW20 contract address
+    
+    **Returns:**
+    - `ret` (address): The deployed EVM pointer contract address
+    
+    **Gas Required:** Yes (payable function)
+    
+    ```typescript
+    const pointerAddress = await pointerContract.addCW20Pointer(
+      "sei1...", // CW20 contract address
+      { value: ethers.parseEther("0.01") } // Gas fee
+    );
+    
+    console.log(`CW20 pointer created at: ${pointerAddress}`);
+    ```
+  </Accordion>
+
+  <Accordion title="addCW721Pointer(string) → address">
+    Create an EVM pointer contract for a CosmWasm CW721 NFT collection.
+    
+    **Parameters:**
+    - `cwAddr` (string): The CosmWasm CW721 contract address
+    
+    **Returns:**
+    - `ret` (address): The deployed EVM pointer contract address
+    
+    **Gas Required:** Yes (payable function)
+    
+    ```typescript
+    const pointerAddress = await pointerContract.addCW721Pointer(
+      "sei1...", // CW721 contract address
+      { value: ethers.parseEther("0.01") } // Gas fee
+    );
+    
+    console.log(`CW721 pointer created at: ${pointerAddress}`);
+    ```
+  </Accordion>
+
+  <Accordion title="addNativePointer(string) → address">
+    Create an EVM pointer contract for a native Cosmos token.
+    
+    **Parameters:**
+    - `token` (string): The native token denomination (e.g., "usei", "uatom")
+    
+    **Returns:**
+    - `ret` (address): The deployed EVM pointer contract address
+    
+    **Gas Required:** Yes (payable function)
+    
+    ```typescript
+    const pointerAddress = await pointerContract.addNativePointer(
+      "usei", // Native token denomination
+      { value: ethers.parseEther("0.01") } // Gas fee
+    );
+    
+    console.log(`Native SEI pointer created at: ${pointerAddress}`);
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Usage Examples
+
+<Tabs>
+  <Tab title="Viem">
+    ```typescript
+    import { createWalletClient, createPublicClient, http } from 'viem';
+    import { privateKeyToAccount } from 'viem/accounts';
+    import { 
+      seiTestnet,
+      POINTER_PRECOMPILE_ABI,
+      POINTER_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles/viem';
+
+    const account = privateKeyToAccount('0x...');
+    
+    const walletClient = createWalletClient({
+      account,
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    const publicClient = createPublicClient({
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    // Create CW20 pointer
+    async function createCW20Pointer(cwAddr: string) {
+      const { request } = await publicClient.simulateContract({
+        address: POINTER_PRECOMPILE_ADDRESS,
+        abi: POINTER_PRECOMPILE_ABI,
+        functionName: 'addCW20Pointer',
+        args: [cwAddr],
+        value: parseEther('0.01'),
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      const receipt = await publicClient.waitForTransactionReceipt({ hash });
+      
+      // Extract pointer address from logs
+      const pointerAddress = receipt.logs[0]?.address;
+      
+      return {
+        transactionHash: hash,
+        pointerAddress,
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Create CW721 pointer
+    async function createCW721Pointer(cwAddr: string) {
+      const { request } = await publicClient.simulateContract({
+        address: POINTER_PRECOMPILE_ADDRESS,
+        abi: POINTER_PRECOMPILE_ABI,
+        functionName: 'addCW721Pointer',
+        args: [cwAddr],
+        value: parseEther('0.01'),
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      const receipt = await publicClient.waitForTransactionReceipt({ hash });
+      
+      return {
+        transactionHash: hash,
+        pointerAddress: receipt.logs[0]?.address,
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Create native token pointer
+    async function createNativePointer(denom: string) {
+      const { request } = await publicClient.simulateContract({
+        address: POINTER_PRECOMPILE_ADDRESS,
+        abi: POINTER_PRECOMPILE_ABI,
+        functionName: 'addNativePointer',
+        args: [denom],
+        value: parseEther('0.01'),
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      const receipt = await publicClient.waitForTransactionReceipt({ hash });
+      
+      return {
+        transactionHash: hash,
+        pointerAddress: receipt.logs[0]?.address,
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Batch pointer creation
+    async function createMultiplePointers(tokens: Array<{
+      type: 'cw20' | 'cw721' | 'native';
+      address: string;
+      name?: string;
+    }>) {
+      const results = [];
+      
+      for (const token of tokens) {
+        try {
+          let result;
+          
+          switch (token.type) {
+            case 'cw20':
+              result = await createCW20Pointer(token.address);
+              break;
+            case 'cw721':
+              result = await createCW721Pointer(token.address);
+              break;
+            case 'native':
+              result = await createNativePointer(token.address);
+              break;
+          }
+          
+          results.push({
+            token,
+            success: true,
+            ...result
+          });
+        } catch (error) {
+          results.push({
+            token,
+            success: false,
+            error: error.message
+          });
+        }
+      }
+      
+      return results;
+    }
+
+    // Example usage
+    const seiPointer = await createNativePointer("usei");
+    console.log(`SEI pointer created at: ${seiPointer.pointerAddress}`);
+    ```
+  </Tab>
+
+  <Tab title="Ethers.js">
+    ```typescript
+    import { ethers } from 'ethers';
+    import { getPointerPrecompileEthersContract } from '@sei-js/precompiles/ethers';
+
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
+    const wallet = new ethers.Wallet('0x...', provider);
+    const pointerContract = getPointerPrecompileEthersContract(wallet);
+
+    // Create CW20 pointer
+    async function createCW20Pointer(cwAddr: string) {
+      const tx = await pointerContract.addCW20Pointer(cwAddr, {
+        value: ethers.parseEther("0.01")
+      });
+      
+      const receipt = await tx.wait();
+      
+      return {
+        transactionHash: tx.hash,
+        pointerAddress: receipt.logs[0]?.address,
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Create CW721 pointer
+    async function createCW721Pointer(cwAddr: string) {
+      const tx = await pointerContract.addCW721Pointer(cwAddr, {
+        value: ethers.parseEther("0.01")
+      });
+      
+      const receipt = await tx.wait();
+      
+      return {
+        transactionHash: tx.hash,
+        pointerAddress: receipt.logs[0]?.address,
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Create native token pointer
+    async function createNativePointer(denom: string) {
+      const tx = await pointerContract.addNativePointer(denom, {
+        value: ethers.parseEther("0.01")
+      });
+      
+      const receipt = await tx.wait();
+      
+      return {
+        transactionHash: tx.hash,
+        pointerAddress: receipt.logs[0]?.address,
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Pointer factory class
+    class PointerFactory {
+      private contract: ethers.Contract;
+      private defaultGasFee: bigint;
+      
+      constructor(signer: ethers.Signer, gasFee = "0.01") {
+        this.contract = getPointerPrecompileEthersContract(signer);
+        this.defaultGasFee = ethers.parseEther(gasFee);
+      }
+      
+      async createCW20Pointer(cwAddr: string, customGasFee?: string) {
+        const value = customGasFee ? ethers.parseEther(customGasFee) : this.defaultGasFee;
+        
+        const tx = await this.contract.addCW20Pointer(cwAddr, { value });
+        const receipt = await tx.wait();
+        
+        return this.parsePointerResult(tx, receipt, 'cw20', cwAddr);
+      }
+      
+      async createCW721Pointer(cwAddr: string, customGasFee?: string) {
+        const value = customGasFee ? ethers.parseEther(customGasFee) : this.defaultGasFee;
+        
+        const tx = await this.contract.addCW721Pointer(cwAddr, { value });
+        const receipt = await tx.wait();
+        
+        return this.parsePointerResult(tx, receipt, 'cw721', cwAddr);
+      }
+      
+      async createNativePointer(denom: string, customGasFee?: string) {
+        const value = customGasFee ? ethers.parseEther(customGasFee) : this.defaultGasFee;
+        
+        const tx = await this.contract.addNativePointer(denom, { value });
+        const receipt = await tx.wait();
+        
+        return this.parsePointerResult(tx, receipt, 'native', denom);
+      }
+      
+      private parsePointerResult(tx: any, receipt: any, type: string, originalAddress: string) {
+        return {
+          type,
+          originalAddress,
+          pointerAddress: receipt.logs[0]?.address,
+          transactionHash: tx.hash,
+          gasUsed: receipt.gasUsed,
+          gasFee: tx.value,
+          blockNumber: receipt.blockNumber
+        };
+      }
+      
+      // Create multiple pointers in sequence
+      async createBatch(tokens: Array<{
+        type: 'cw20' | 'cw721' | 'native';
+        address: string;
+        gasFee?: string;
+      }>) {
+        const results = [];
+        
+        for (const token of tokens) {
+          try {
+            let result;
+            
+            switch (token.type) {
+              case 'cw20':
+                result = await this.createCW20Pointer(token.address, token.gasFee);
+                break;
+              case 'cw721':
+                result = await this.createCW721Pointer(token.address, token.gasFee);
+                break;
+              case 'native':
+                result = await this.createNativePointer(token.address, token.gasFee);
+                break;
+            }
+            
+            results.push({
+              success: true,
+              ...result
+            });
+          } catch (error) {
+            results.push({
+              success: false,
+              type: token.type,
+              originalAddress: token.address,
+              error: error.message
+            });
+          }
+        }
+        
+        return results;
+      }
+      
+      // Estimate gas for pointer creation
+      async estimateGas(type: 'cw20' | 'cw721' | 'native', address: string) {
+        try {
+          let gasEstimate;
+          
+          switch (type) {
+            case 'cw20':
+              gasEstimate = await this.contract.addCW20Pointer.estimateGas(address, {
+                value: this.defaultGasFee
+              });
+              break;
+            case 'cw721':
+              gasEstimate = await this.contract.addCW721Pointer.estimateGas(address, {
+                value: this.defaultGasFee
+              });
+              break;
+            case 'native':
+              gasEstimate = await this.contract.addNativePointer.estimateGas(address, {
+                value: this.defaultGasFee
+              });
+              break;
+          }
+          
+          return {
+            gasEstimate,
+            gasFee: this.defaultGasFee,
+            totalCost: gasEstimate * BigInt(await this.contract.provider.getGasPrice()) + this.defaultGasFee
+          };
+        } catch (error) {
+          return {
+            error: error.message
+          };
+        }
+      }
+    }
+
+    // Usage
+    const factory = new PointerFactory(wallet);
+    
+    // Create single pointer
+    const seiPointer = await factory.createNativePointer("usei");
+    console.log('SEI pointer:', seiPointer);
+    
+    // Create multiple pointers
+    const tokens = [
+      { type: 'native' as const, address: 'usei' },
+      { type: 'cw20' as const, address: 'sei1...' },
+      { type: 'cw721' as const, address: 'sei1...' }
+    ];
+    
+    const batchResults = await factory.createBatch(tokens);
+    console.log('Batch results:', batchResults);
+    ```
+  </Tab>
+
+  <Tab title="Manual">
+    ```typescript
+    import { 
+      POINTER_PRECOMPILE_ABI, 
+      POINTER_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles';
+
+    // Using with web3.js
+    import Web3 from 'web3';
+    
+    const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
+    const account = web3.eth.accounts.privateKeyToAccount('0x...');
+    web3.eth.accounts.wallet.add(account);
+    
+    const pointerContract = new web3.eth.Contract(
+      POINTER_PRECOMPILE_ABI,
+      POINTER_PRECOMPILE_ADDRESS
+    );
+
+    // Create CW20 pointer
+    const cw20Tx = await pointerContract.methods
+      .addCW20Pointer('sei1...')
+      .send({
+        from: account.address,
+        value: web3.utils.toWei('0.01', 'ether'),
+        gas: 200000
+      });
+    
+    console.log('CW20 pointer created:', cw20Tx.transactionHash);
+
+    // Create native token pointer
+    const nativeTx = await pointerContract.methods
+      .addNativePointer('usei')
+      .send({
+        from: account.address,
+        value: web3.utils.toWei('0.01', 'ether'),
+        gas: 200000
+      });
+    
+    console.log('Native pointer created:', nativeTx.transactionHash);
+    ```
+  </Tab>
+</Tabs>
+
+## Pointer Creation Patterns
+
+### Token Bridge Setup
+```typescript
+// Complete bridge setup for a new token
+async function setupTokenBridge(
+  tokenAddress: string,
+  tokenType: 'cw20' | 'cw721' | 'native',
+  metadata?: { name?: string; symbol?: string; decimals?: number }
+) {
+  // 1. Create the pointer
+  let pointerResult;
+  
+  switch (tokenType) {
+    case 'cw20':
+      pointerResult = await createCW20Pointer(tokenAddress);
+      break;
+    case 'cw721':
+      pointerResult = await createCW721Pointer(tokenAddress);
+      break;
+    case 'native':
+      pointerResult = await createNativePointer(tokenAddress);
+      break;
+  }
+  
+  // 2. Verify pointer creation
+  if (!pointerResult.pointerAddress) {
+    throw new Error('Failed to create pointer contract');
+  }
+  
+  // 3. Return bridge information
+  return {
+    originalToken: {
+      address: tokenAddress,
+      type: tokenType,
+      ...metadata
+    },
+    evmPointer: {
+      address: pointerResult.pointerAddress,
+      transactionHash: pointerResult.transactionHash,
+      gasUsed: pointerResult.gasUsed
+    },
+    bridgeActive: true,
+    createdAt: new Date().toISOString()
+  };
+}
+```
+
+### Batch Bridge Creation
+```typescript
+// Create bridges for multiple tokens efficiently
+async function createTokenBridges(tokens: Array<{
+  address: string;
+  type: 'cw20' | 'cw721' | 'native';
+  name?: string;
+  priority?: number;
+}>) {
+  // Sort by priority if specified
+  const sortedTokens = tokens.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  
+  const results = {
+    successful: [],
+    failed: [],
+    totalGasUsed: BigInt(0),
+    totalFees: BigInt(0)
+  };
+  
+  for (const token of sortedTokens) {
+    try {
+      const bridge = await setupTokenBridge(token.address, token.type, { name: token.name });
+      
+      results.successful.push(bridge);
+      results.totalGasUsed += bridge.evmPointer.gasUsed;
+      results.totalFees += ethers.parseEther("0.01"); // Standard fee
+      
+      // Add delay between creations to avoid rate limiting
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (error) {
+      results.failed.push({
+        token,
+        error: error.message
+      });
+    }
+  }
+  
+  return results;
+}
+```
+
+### Bridge Verification
+```typescript
+// Verify that a pointer was created successfully
+async function verifyPointerCreation(
+  originalAddress: string,
+  tokenType: 'cw20' | 'cw721' | 'native',
+  expectedPointerAddress: string
+) {
+  // Use pointerview to check if pointer exists
+  let actualPointer;
+  
+  switch (tokenType) {
+    case 'cw20':
+      actualPointer = await getCW20Pointer(originalAddress);
+      break;
+    case 'cw721':
+      actualPointer = await getCW721Pointer(originalAddress);
+      break;
+    case 'native':
+      actualPointer = await getNativePointer(originalAddress);
+      break;
+  }
+  
+  return {
+    exists: actualPointer.exists,
+    addressMatches: actualPointer.addr.toLowerCase() === expectedPointerAddress.toLowerCase(),
+    version: actualPointer.version,
+    verified: actualPointer.exists && 
+              actualPointer.addr.toLowerCase() === expectedPointerAddress.toLowerCase()
+  };
+}
+```
+
+## Common Use Cases
+
+### DeFi Protocol Integration
+- **Token Listing**: Create EVM pointers for new tokens
+- **Liquidity Pools**: Bridge tokens for DEX integration
+- **Yield Farming**: Enable farming with CosmWasm tokens
+
+### Cross-Chain Applications
+- **Multi-Ecosystem Support**: Bridge tokens between CosmWasm and EVM
+- **Unified Interfaces**: Provide single interface for all token types
+- **Portfolio Management**: Track assets across ecosystems
+
+### NFT Marketplace Development
+- **Collection Bridging**: Bridge CW721 collections to EVM
+- **Cross-Platform Trading**: Enable trading across ecosystems
+- **Metadata Preservation**: Maintain NFT metadata across bridges
+
+## Gas Optimization
+
+### Fee Management
+```typescript
+// Dynamic gas fee calculation
+async function calculateOptimalGasFee(provider: ethers.Provider) {
+  const gasPrice = await provider.getGasPrice();
+  const baseFee = ethers.parseEther("0.01"); // Minimum required
+  
+  // Add buffer for gas price fluctuations
+  const buffer = gasPrice * BigInt(200000) * BigInt(110) / BigInt(100); // 10% buffer
+  
+  return baseFee + buffer;
+}
+
+// Batch creation with optimized fees
+async function createPointersWithOptimizedFees(tokens: Array<{
+  address: string;
+  type: 'cw20' | 'cw721' | 'native';
+}>) {
+  const optimalFee = await calculateOptimalGasFee(provider);
+  const feeInEther = ethers.formatEther(optimalFee);
+  
+  const factory = new PointerFactory(wallet, feeInEther);
+  return await factory.createBatch(tokens.map(token => ({
+    ...token,
+    gasFee: feeInEther
+  })));
+}
+```
+
+### Transaction Batching
+```typescript
+// Create multiple pointers in a single transaction (if supported)
+async function batchCreatePointers(tokens: Array<{
+  address: string;
+  type: 'cw20' | 'cw721' | 'native';
+}>) {
+  // Note: This would require a custom multicall contract
+  // For now, we optimize by minimizing delays between transactions
+  
+  const promises = tokens.map(async (token, index) => {
+    // Stagger transactions to avoid nonce conflicts
+    await new Promise(resolve => setTimeout(resolve, index * 100));
+    
+    switch (token.type) {
+      case 'cw20':
+        return createCW20Pointer(token.address);
+      case 'cw721':
+        return createCW721Pointer(token.address);
+      case 'native':
+        return createNativePointer(token.address);
+    }
+  });
+  
+  return Promise.allSettled(promises);
+}
+```
+
+## Error Handling
+
+Common scenarios when creating pointers:
+
+- **Insufficient gas fee**: Transaction reverts due to low gas payment
+- **Token already bridged**: Pointer already exists for the token
+- **Invalid token address**: Malformed or non-existent token
+- **Network congestion**: Transaction delays or failures
+
+```typescript
+async function safeCreatePointer(
+  tokenAddress: string,
+  tokenType: 'cw20' | 'cw721' | 'native',
+  retries = 3
+) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      // Check if pointer already exists
+      const existingPointer = await checkExistingPointer(tokenAddress, tokenType);
+      if (existingPointer.exists) {
+        return {
+          success: true,
+          alreadyExists: true,
+          pointerAddress: existingPointer.addr,
+          message: 'Pointer already exists'
+        };
+      }
+      
+      // Create new pointer
+      let result;
+      switch (tokenType) {
+        case 'cw20':
+          result = await createCW20Pointer(tokenAddress);
+          break;
+        case 'cw721':
+          result = await createCW721Pointer(tokenAddress);
+          break;
+        case 'native':
+          result = await createNativePointer(tokenAddress);
+          break;
+      }
+      
+      return {
+        success: true,
+        alreadyExists: false,
+        ...result
+      };
+    } catch (error) {
+      console.warn(`Attempt ${attempt} failed:`, error.message);
+      
+      if (attempt === retries) {
+        return {
+          success: false,
+          error: error.message,
+          attempts: retries
+        };
+      }
+      
+      // Wait before retry
+      await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+    }
+  }
+}
+```
+
+## Security Considerations
+
+### Address Validation
+- Validate token addresses before creating pointers
+- Check token existence on source chain
+- Verify token metadata and permissions
+
+### Gas Fee Management
+- Set appropriate gas fees to ensure transaction success
+- Monitor gas price fluctuations
+- Implement fee estimation and adjustment
+
+### Transaction Monitoring
+- Track pointer creation transactions
+- Verify successful deployment
+- Monitor for failed or pending transactions
+
+```typescript
+// Comprehensive pointer creation with security checks
+async function secureCreatePointer(
+  tokenAddress: string,
+  tokenType: 'cw20' | 'cw721' | 'native',
+  options: {
+    validateToken?: boolean;
+    maxGasFee?: string;
+    timeout?: number;
+  } = {}
+) {
+  const {
+    validateToken = true,
+    maxGasFee = "0.05",
+    timeout = 60000
+  } = options;
+  
+  // 1. Validate inputs
+  if (!tokenAddress || typeof tokenAddress !== 'string') {
+    throw new Error('Invalid token address');
+  }
+  
+  if (!['cw20', 'cw721', 'native'].includes(tokenType)) {
+    throw new Error('Invalid token type');
+  }
+  
+  // 2. Validate token exists (if requested)
+  if (validateToken) {
+    const tokenExists = await validateTokenExists(tokenAddress, tokenType);
+    if (!tokenExists) {
+      throw new Error(`Token ${tokenAddress} does not exist`);
+    }
+  }
+  
+  // 3. Check if pointer already exists
+  const existingPointer = await checkExistingPointer(tokenAddress, tokenType);
+  if (existingPointer.exists) {
+    return {
+      success: true,
+      alreadyExists: true,
+      pointerAddress: existingPointer.addr
+    };
+  }
+  
+  // 4. Calculate safe gas fee
+  const optimalFee = await calculateOptimalGasFee(provider);
+  const maxFeeWei = ethers.parseEther(maxGasFee);
+  
+  if (optimalFee > maxFeeWei) {
+    throw new Error(`Required gas fee ${ethers.formatEther(optimalFee)} exceeds maximum ${maxGasFee}`);
+  }
+  
+  // 5. Create pointer with timeout
+  const createPromise = safeCreatePointer(tokenAddress, tokenType);
+  const timeoutPromise = new Promise((_, reject) => 
+    setTimeout(() => reject(new Error('Transaction timeout')), timeout)
+  );
+  
+  return Promise.race([createPromise, timeoutPromise]);
+}
+```
+
+## Related Precompiles
+
+- **[Pointerview](/precompiles/precompiles/pointerview)**: Query existing pointer contracts
+- **[Bank](/precompiles/precompiles/bank)**: Manage token balances after bridging
+- **[Address](/precompiles/precompiles/address)**: Convert between address formats

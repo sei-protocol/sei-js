@@ -1,8 +1,8 @@
-import { formatEther, formatUnits, type Address, getContract } from 'viem';
+import { type Address, formatEther, formatUnits, getContract } from 'viem';
+import { DEFAULT_NETWORK } from '../chains.js';
 import { getPublicClient } from './clients.js';
 import { readContract } from './contracts.js';
 import * as services from './index.js';
-import { DEFAULT_NETWORK } from '../chains.js';
 
 // Standard ERC20 ABI (minimal for reading)
 const erc20Abi = [
@@ -145,8 +145,8 @@ export async function isNFTOwner(tokenAddress: string, ownerAddress: string, tok
 		)) as Address;
 
 		return actualOwner.toLowerCase() === validatedOwnerAddress.toLowerCase();
-	} catch (error: any) {
-		console.error(`Error checking NFT ownership: ${error.message}`);
+	} catch (error: unknown) {
+		console.error(`Error checking NFT ownership: ${error instanceof Error ? error.message : String(error)}`);
 		return false;
 	}
 }

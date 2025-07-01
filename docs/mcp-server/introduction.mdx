@@ -1,0 +1,117 @@
+---
+title: "Sei MCP Server"
+description: "Enable AI assistants to interact with Sei blockchain through natural language using the Model Context Protocol"
+icon: "robot"
+---
+
+<CardGroup cols={2}>
+  <Card
+    title="Supercharge your LLMs"
+    icon="rocket"
+  >
+    Connect AI assistants to Sei blockchain with natural language commands for token transfers, smart contract interactions and deployments, and more.
+  </Card>
+  <Card
+    title="Perfect For"
+    icon="users"
+  >
+    Developers, Vibe Coders, DeFi users, NFT collectors, and anyone wanting to interact with Sei through natural language interfaces.
+  </Card>
+</CardGroup>
+
+## Quick Start
+
+<Note>
+**Secure by Default**: The MCP server runs in **read-only mode** by default. Wallet tools are disabled until you explicitly configure a private key.
+</Note>
+
+### Basic Setup (Read-Only)
+
+Start with read-only blockchain data access:
+
+```json
+{
+  "mcpServers": {
+    "sei": {
+      "command": "npx",
+      "args": ["-y", "@sei-js/mcp-server"]
+    }
+  }
+}
+```
+
+### Full Setup (With Wallet)
+
+To enable transactions and wallet tools, add the wallet mode flag and private key:
+
+```json
+{
+  "mcpServers": {
+    "sei": {
+      "command": "npx",
+      "args": ["-y", "@sei-js/mcp-server"],
+      "env": {
+        "WALLET_MODE": "private-key",
+        "PRIVATE_KEY": "0x123..."
+      }
+    }
+  }
+}
+```
+
+<Card title="Complete Setup Guide" icon="arrow-right" href="/mcp-server/setup">
+  Follow our step-by-step installation guide for Claude Desktop, Cursor, Windsurf, and custom integrations.
+</Card>
+
+## What is MCP?
+
+The Model Context Protocol is an open standard that connects AI systems with custom prompts, tools and data sources (context). It enables:
+
+- **Real-time blockchain data access** - Get current balances, transaction history, and network status directly from Sei
+- **Secure by default** - Runs in read-only mode until you explicitly enable wallet tools
+- **Full execution and write operations** - Deploy contracts, execute transactions, and interact with smart contracts (with wallet configured)
+- **Up-to-date documentation access** - Search and understand the latest Sei documentation and guides
+- **Specialized blockchain capabilities** - Access Sei-specific features like precompiles and native token operations
+
+The Sei MCP Server leverages this protocol to bring comprehensive blockchain functionality directly to your AI assistant, enabling natural language interactions with the Sei network.
+
+## Why Use Sei MCP Server?
+
+<AccordionGroup>
+  <Accordion title="Natural Language Blockchain Operations" icon="comments">
+    Interact with Sei blockchain using conversational commands like "What's my SEI balance?" or "Send 1 SEI to this address" instead of complex API calls.
+  </Accordion>
+  
+  <Accordion title="AI-Powered Analysis" icon="brain">
+    Get intelligent insights about transactions, contracts, and market data with built-in analysis capabilities powered by your AI assistant.
+  </Accordion>
+  
+  <Accordion title="Multi-Platform Support" icon="desktop">
+    Works seamlessly with Cursor IDE, Windsurf, Claude Desktop, and custom applications through standardized MCP integration.
+  </Accordion>
+  
+  <Accordion title="Comprehensive Toolkit" icon="toolbox">
+    Access 16+ blockchain tools covering token management, NFT operations, smart contract interactions, and network monitoring.
+  </Accordion>
+</AccordionGroup>
+
+## Example Queries
+
+```text
+"How do I query staking my delegations using Viem?"
+"Generate a wallet connection component using Sei Global Wallet"
+"Help me set up a new Sei project with the latest patterns"
+```
+
+## Code Generation
+
+The AI generates accurate, production-ready code using official @sei-js patterns:
+
+- Uses correct package imports and APIs
+- Follows documented best practices
+- Includes proper error handling
+- References current version patterns
+
+<Note>
+The Sei MCP Server is actively developed with new features added regularly. Current version supports core blockchain operations with advanced DeFi integrations planned.
+</Note>

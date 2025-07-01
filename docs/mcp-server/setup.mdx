@@ -1,0 +1,230 @@
+---
+title: "Setup & Installation"
+description: "Configure Sei MCP Server with Cursor, Windsurf, Claude Desktop, or CLI"
+icon: "download"
+---
+
+<Tabs>
+  <Tab title="Cursor IDE">
+    
+    <Steps>
+      <Step title="Open Settings">
+        Navigate to Cursor → Settings → Cursor Settings → MCP
+        
+        ```
+        Cursor → Settings → Cursor Settings → MCP
+        ```
+      </Step>
+      
+      <Step title="Configure Server">
+        Click "Add new Global MCP server" and add this configuration to mcp.json:
+        
+        <CodeGroup>
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "WALLET_MODE": "private-key",
+                "PRIVATE_KEY": "0x123..."
+              }
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Restart">
+        Restart Cursor to activate the MCP server. You'll see a notification when it's ready.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Windsurf">
+    
+    <Steps>
+      <Step title="Open Settings">
+        Navigate to Windsurf → Settings → Windsurf Settings → Cascade
+        
+        ```
+        Windsurf → Settings → Windsurf Settings → Cascade
+        ```
+      </Step>
+      
+      <Step title="Add Configuration">
+        Add the Sei MCP Server to your configuration:
+        
+        <CodeGroup>
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "WALLET_MODE": "private-key",
+                "PRIVATE_KEY": "0x123..."
+              }
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Activate">
+        Save and restart Windsurf. The server loads automatically.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Claude Desktop">
+    
+    <Steps>
+      <Step title="Install Claude">
+        Download [Claude Desktop](https://claude.ai/download) from Anthropic.
+      </Step>
+      
+      <Step title="Edit Configuration">
+        Open Settings → Developer → Edit Config and add:
+        
+        <CodeGroup>
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "WALLET_MODE": "private-key",
+                "PRIVATE_KEY": "0x123..."
+              }
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Restart">
+        Save and restart Claude Desktop to enable Sei tools.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Claude CLI">
+    
+    <Steps>
+      <Step title="Install CLI">
+        ```bash
+        npm install -g @anthropic-ai/claude-code
+        ```
+      </Step>
+      
+      <Step title="Add Server">
+        ```bash
+        # Read-only mode (default)
+        claude mcp add sei-mcp-server npx @sei-js/mcp-server
+        
+        # Wallet-enabled mode
+        claude mcp add sei-mcp-server-wallet npx @sei-js/mcp-server --env WALLET_MODE=private-key PRIVATE_KEY=0x123...
+        ```
+      </Step>
+      
+      <Step title="Start Session">
+        ```bash
+        claude
+        ```
+        
+        The Sei MCP Server activates automatically in your session.
+      </Step>
+    </Steps>
+    
+  </Tab>
+</Tabs>
+
+## Wallet Connection
+
+<Note>
+**Wallet Tools Disabled by Default**
+
+For security, the MCP server runs in **read-only mode** by default. Only blockchain data tools are available without wallet configuration.
+</Note>
+
+### Default Behavior (Read-Only)
+
+Without wallet configuration, you can:
+- ✅ Check balances and account data
+- ✅ Read smart contract data
+- ✅ Get network and block information
+- ✅ Search documentation
+- ❌ Send transactions or transfer tokens
+- ❌ Deploy or write to contracts
+- ❌ Approve token spending
+
+### Enabling Wallet Tools
+
+To unlock transaction capabilities, add your private key to the configuration:
+
+<Warning>
+Use a dedicated test wallet with minimal funds. Never use your main wallet's private key.
+</Warning>
+
+<Steps>
+  <Step title="Get Private Key">
+    Export your private key from your wallet:
+    - Look for "Export Private Key" or "Show Private Key" in wallet settings
+    - Ensure the key starts with `0x`
+    - Fund the wallet with small amounts for testing
+  </Step>
+  
+  <Step title="Add to Configuration">
+    Add the `PRIVATE_KEY` environment variable to your MCP configuration:
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "WALLET_MODE": "private-key",
+            "PRIVATE_KEY": "0x123...."
+          }
+        }
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Restart & Verify">
+    Restart your AI assistant and verify wallet tools are available:
+    
+    **Ask your AI:** "What's my wallet address?"
+    
+    If configured correctly, you'll get your wallet address. If not, you'll see an error message.
+  </Step>
+</Steps>
+
+### Security Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Test Wallet Only" icon="shield-check">
+    Use a dedicated wallet for testing, not your main holdings
+  </Card>
+  <Card title="Minimal Funds" icon="coins">
+    Keep only small amounts needed for testing transactions
+  </Card>
+  <Card title="Secure Storage" icon="lock">
+    Never commit private keys to version control
+  </Card>
+  <Card title="Regular Rotation" icon="arrows-rotate">
+    Rotate test wallet keys periodically
+  </Card>
+</CardGroup>
