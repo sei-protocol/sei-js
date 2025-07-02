@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+
+### Patch Changes
+
+- 29b8c15: Adds the ability to search the @sei-js docs when providing answers
+- cab5074: Disable wallet based tools by default, add ability to add more wallet providers
+
 ## 0.2.0
 
 ### Minor Changes
