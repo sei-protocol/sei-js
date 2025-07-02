@@ -1,0 +1,140 @@
+---
+title: Quick Start Guide
+description: Build your first Sei application in under 10 minutes with @sei-js
+icon: "bolt"
+---
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+<AccordionGroup>
+  <Accordion title="Node.js & Package Management" icon="node-js">
+    **Required for running @sei-js applications:**
+    - **Node.js** (v18 or higher) - Required for npx and package management
+    - **nvm** (Node Version Manager) - Recommended for managing Node.js versions
+    
+    <Check>
+    Verify your installation: `node --version` should output v18.0.0 or higher
+    </Check>
+  </Accordion>
+
+  <Accordion title="Code Editor" icon="code">
+    **Traditional Editors:**
+    - **VS Code** - Popular, lightweight with excellent TypeScript support
+    - **WebStorm** - Full-featured IDE with advanced debugging and refactoring
+    
+    **AI-Powered Editors:**
+    - **Cursor** - VS Code fork with built-in AI coding assistance
+    - **Windsurf** - AI-first development environment with intelligent code generation
+    
+    <Info>
+    All editors work great with @sei-js projects. Choose based on your preference for AI assistance and feature requirements.
+    </Info>
+  </Accordion>
+</AccordionGroup>
+
+## Create your first Sei application
+
+<Steps>
+  <Step title="Initialize your project">
+    Generate a new Sei application using our CLI tool:
+    
+    <CodeGroup>
+      ```bash npx
+      npx @sei-js/create-sei app
+      ```
+      
+      ```bash pnpm
+      pnpm create @sei-js/create-sei app
+      ```
+    </CodeGroup>
+    
+    <Check>
+    **Expected outcome:** A new project directory with TypeScript configuration, testing setup, and example code.
+    </Check>
+    
+    <Info>
+    The CLI will ask you to choose a template. Select "React + Wagmi" for a full-featured web application, or "Node.js" for backend/script development.
+    </Info>
+  </Step>
+
+  <Step title="Navigate and install dependencies">
+    Move into your project directory and install dependencies:
+    
+    <CodeGroup>
+      ```bash npm
+      cd app
+      npm install
+      ```
+      
+      ```bash yarn
+      cd app
+      yarn install
+      ```
+      
+      ```bash pnpm
+      cd app
+      pnpm install
+      ```
+    </CodeGroup>
+    
+    <Check>
+    **Expected outcome:** All dependencies installed successfully without errors.
+    </Check>
+    
+    <Accordion title="Troubleshooting installation issues">
+      **Common issues and solutions:**
+      
+      - **Node version conflicts:** Use `nvm use` to switch to the correct Node.js version
+      - **Permission errors:** Avoid using `sudo` with npm. Use `nvm` or fix npm permissions
+      - **Network timeouts:** Try switching to a different registry: `npm config set registry https://registry.npmjs.org/`
+    </Accordion>
+  </Step>
+
+  <Step title="Start your development server">
+    Launch your application in development mode:
+    
+    <CodeGroup>
+      ```bash npm
+      npm run dev
+      ```
+      
+      ```bash yarn
+      yarn dev
+      ```
+      
+      ```bash pnpm
+      pnpm dev
+      ```
+    </CodeGroup>
+    
+    <Check>
+    **Expected outcome:** Development server running at `http://localhost:3000` with hot reload enabled.
+    </Check>
+    
+    Your browser should automatically open to show your new Sei application with:
+    - Wallet connection button
+    - Network status display
+    - Example interactions ready to test
+  </Step>
+</Steps>
+
+## What you can build
+
+Your new Sei application comes with examples and patterns for common blockchain interactions:
+
+<CardGroup cols={2}>
+  <Card title="Connect Wallets" icon="wallet">
+    Connect to any Sei-compatible wallet including MetaMask, Compass, and more using the built-in wallet integration
+  </Card>
+  <Card title="Check Balances" icon="coins">
+    Fetch and display wallet balances for SEI and other tokens with real-time updates
+  </Card>
+  <Card title="Query Blockchain Data" icon="magnifying-glass">
+    Access blockchain information like total SEI supply using precompile contracts
+  </Card>
+  <Card title="Smart Contract Interactions" icon="file-contract">
+    Deploy and interact with smart contracts including simple examples like counters and token transfers
+  </Card>
+</CardGroup>

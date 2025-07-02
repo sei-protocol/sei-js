@@ -1,0 +1,230 @@
+---
+title: 'RainbowKit Integration'
+description: 'Integrate Sei Global Wallet with RainbowKit for a beautiful wallet connection experience'
+icon: 'rainbow'
+---
+
+# RainbowKit Integration
+
+RainbowKit is a popular React library that provides a beautiful, responsive wallet connection experience. This guide shows you how to integrate Sei Global Wallet with RainbowKit.
+
+## Prerequisites
+
+- React application
+- Node.js and npm/yarn
+- Basic understanding of React hooks
+
+## Step 1: Create React Application
+
+Create a new React application with TypeScript:
+
+<CodeGroup>
+
+```bash npm
+npx create-react-app my-sei-dapp --template typescript
+cd my-sei-dapp
+```
+
+```bash yarn
+yarn create react-app my-sei-dapp --template typescript
+cd my-sei-dapp
+```
+
+</CodeGroup>
+
+## Step 2: Install Dependencies
+
+Install the required packages:
+
+<CodeGroup>
+
+```bash npm
+npm install @rainbow-me/rainbowkit wagmi viem @tanstack/react-query @sei-js/sei-global-wallet
+```
+
+```bash yarn
+yarn add @rainbow-me/rainbowkit wagmi viem @tanstack/react-query @sei-js/sei-global-wallet
+```
+
+</CodeGroup>
+
+## Step 3: Configure Your Application
+
+Update your `App.tsx` file with the complete RainbowKit configuration:
+
+```typescript App.tsx
+import '@rainbow-me/rainbowkit/styles.css';
+import '@sei-js/sei-global-wallet/eip6963';
+import { ConnectButton, getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { WagmiProvider } from 'wagmi';
+import { sei, seiTestnet } from 'wagmi/chains';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useAccount, useBalance } from 'wagmi';
+
+const config = getDefaultConfig({
+  appName: 'My Sei dApp',
+  projectId: 'YOUR_WALLETCONNECT_PROJECT_ID',
+  chains: [sei, seiTestnet],
+  ssr: false
+});
+
+const queryClient = new QueryClient();
+
+function AccountInfo() {
+  const { address, isConnected, chain } = useAccount();
+  const { data: balance } = useBalance({ address });
+
+  if (!isConnected) {
+    return <p>Connect your wallet to see account details</p>;
+  }
+
+  return (
+    <div className="account-info">
+      <h3>Account Information</h3>
+      <p>
+        <strong>Address:</strong> {address}
+      </p>
+      <p>
+        <strong>Network:</strong> {chain?.name}
+      </p>
+      <p>
+        <strong>Balance:</strong> {balance?.formatted} {balance?.symbol}
+      </p>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          <div className="app-container">
+            <h1>My Sei dApp</h1>
+            <ConnectButton />
+            <AccountInfo />
+          </div>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+}
+```
+
+## Step 4: Get WalletConnect Project ID
+
+<Steps>
+  <Step title="Visit WalletConnect">
+    Go to [cloud.walletconnect.com](https://cloud.walletconnect.com) and sign up for a free account
+  </Step>
+  <Step title="Create a new project">
+    Click "Create" and fill in your project details
+  </Step>
+  <Step title="Copy your Project ID">
+    Copy the Project ID from your dashboard
+  </Step>
+  <Step title="Replace in your code">
+    Replace `'YOUR_WALLETCONNECT_PROJECT_ID'` with your actual Project ID
+  </Step>
+</Steps>
+
+## Step 5: Run Your Application
+
+Start your development server:
+
+<CodeGroup>
+
+```bash npm
+npm run dev
+```
+
+```bash yarn
+yarn dev
+```
+
+</CodeGroup>
+
+Your application will be available at `http://localhost:3000`.
+
+## Expected Behavior
+
+Once configured correctly, your application will:
+
+1. **Display Connect Button:** RainbowKit's styled connect button appears
+2. **Show Sei Global Wallet:** Sei Global Wallet appears in the wallet selection modal
+3. **Handle Authentication:** Users can authenticate via social login methods
+4. **Display Account Info:** Connected wallet address, network, and balance are shown
+5. **Persist Connection:** Wallet connection persists across page refreshes
+
+## Customization Options
+
+### Custom Styling
+
+RainbowKit provides extensive customization options:
+
+```typescript
+import { darkTheme, lightTheme } from '@rainbow-me/rainbowkit';
+
+// In your RainbowKitProvider
+<RainbowKitProvider theme={darkTheme()}>
+  {/* Your app */}
+</RainbowKitProvider>
+```
+
+### Custom Chains
+
+Add additional chains to support multiple networks:
+
+```typescript
+import { mainnet, polygon, arbitrum } from 'wagmi/chains';
+
+const config = getDefaultConfig({
+  appName: 'My Sei dApp',
+  projectId: 'YOUR_WALLETCONNECT_PROJECT_ID',
+  chains: [sei, seiTestnet, mainnet, polygon, arbitrum],
+  ssr: false
+});
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Sei Global Wallet not appearing">
+    **Solution:** Ensure the import is at the top of your file:
+    ```typescript
+    import '@sei-js/sei-global-wallet/eip6963';
+    ```
+  </Accordion>
+  
+  <Accordion title="WalletConnect errors">
+    **Solution:** Verify your Project ID is correct and active:
+    - Check [cloud.walletconnect.com](https://cloud.walletconnect.com) dashboard
+    - Ensure your domain is added to allowed origins
+    - Replace the placeholder Project ID with your actual ID
+  </Accordion>
+  
+  <Accordion title="Network connection issues">
+    **Solution:** Verify network configuration:
+    ```typescript
+    // Ensure you're importing the correct chains
+    import { sei, seiTestnet } from 'wagmi/chains';
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="ConnectKit Integration" icon="plug" href="/sei-global-wallet/connectkit">
+    Try ConnectKit for a different UI experience
+  </Card>
+  <Card title="Advanced Features" icon="gear" href="/sei-global-wallet/wagmi-dynamic">
+    Explore Wagmi + Dynamic for more advanced features
+  </Card>
+</CardGroup>
+
+## Additional Resources
+
+- [RainbowKit Documentation](https://rainbowkit.com)
+- [Wagmi Documentation](https://wagmi.sh)
+- [Sei Network Documentation](https://docs.sei.io)

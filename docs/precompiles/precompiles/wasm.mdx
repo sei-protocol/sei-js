@@ -1,0 +1,789 @@
+---
+title: 'WASM Precompile'
+description: 'Interact with CosmWasm smart contracts from EVM through the WASM precompile contract'
+icon: "cube"
+---
+
+## Overview
+
+The WASM precompile enables seamless interaction with CosmWasm smart contracts from EVM applications. This bridge allows EVM developers to execute, query, and instantiate CosmWasm contracts using familiar Ethereum tooling and patterns.
+
+**Contract Address:** `0x0000000000000000000000000000000000001002`
+
+## Key Features
+
+- **Contract Execution**: Execute CosmWasm contract functions from EVM
+- **Batch Operations**: Execute multiple contract calls in a single transaction
+- **Contract Instantiation**: Deploy new CosmWasm contracts from EVM
+- **Query Support**: Read contract state without gas costs
+- **Cross-Ecosystem Bridge**: Connect EVM and CosmWasm ecosystems
+
+## Available Functions
+
+### Contract Interaction
+
+<AccordionGroup>
+  <Accordion title="execute(string, bytes, bytes) → bytes">
+    Execute a function on a CosmWasm smart contract.
+    
+    **Parameters:**
+    - `contractAddress` (string): CosmWasm contract address
+    - `msg` (bytes): Encoded execution message
+    - `coins` (bytes): Encoded coins to send with execution
+    
+    **Returns:**
+    - `response` (bytes): Contract execution response
+    
+    **Gas Required:** Yes (payable function)
+    
+    ```typescript
+    const response = await wasmContract.execute(
+      "sei1...", // Contract address
+      encodedMsg, // Execution message
+      encodedCoins, // Coins to send
+      { value: ethers.parseEther("0.01") }
+    );
+    ```
+  </Accordion>
+
+  <Accordion title="execute_batch(ExecuteMsg[]) → bytes[]">
+    Execute multiple CosmWasm contract functions in a single transaction.
+    
+    **Parameters:**
+    - `executeMsgs` (ExecuteMsg[]): Array of execution messages
+    
+    **Returns:**
+    - `responses` (bytes[]): Array of contract responses
+    
+    **Gas Required:** Yes (payable function)
+    
+    ```typescript
+    const responses = await wasmContract.execute_batch([
+      {
+        contractAddress: "sei1...",
+        msg: encodedMsg1,
+        coins: encodedCoins1
+      },
+      {
+        contractAddress: "sei1...",
+        msg: encodedMsg2,
+        coins: encodedCoins2
+      }
+    ], { value: ethers.parseEther("0.02") });
+    ```
+  </Accordion>
+
+  <Accordion title="query(string, bytes) → bytes">
+    Query a CosmWasm contract's state (read-only).
+    
+    **Parameters:**
+    - `contractAddress` (string): CosmWasm contract address
+    - `req` (bytes): Encoded query request
+    
+    **Returns:**
+    - `response` (bytes): Query response data
+    
+    **Gas Required:** No (view function)
+    
+    ```typescript
+    const queryResponse = await wasmContract.query(
+      "sei1...", // Contract address
+      encodedQuery // Query message
+    );
+    ```
+  </Accordion>
+
+  <Accordion title="instantiate(...) → (string, bytes)">
+    Deploy a new CosmWasm contract instance.
+    
+    **Parameters:**
+    - `codeID` (uint64): Code ID of the contract to instantiate
+    - `admin` (string): Admin address for the contract
+    - `msg` (bytes): Instantiation message
+    - `label` (string): Human-readable label
+    - `coins` (bytes): Coins to send during instantiation
+    
+    **Returns:**
+    - `contractAddr` (string): Address of the new contract
+    - `data` (bytes): Instantiation response data
+    
+    **Gas Required:** Yes (payable function)
+    
+    ```typescript
+    const [contractAddr, data] = await wasmContract.instantiate(
+      123, // Code ID
+      "sei1...", // Admin address
+      encodedInitMsg, // Init message
+      "My Contract", // Label
+      encodedCoins, // Initial funds
+      { value: ethers.parseEther("0.05") }
+    );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Usage Examples
+
+<Tabs>
+  <Tab title="Viem">
+    ```typescript
+    import { createWalletClient, createPublicClient, http } from 'viem';
+    import { privateKeyToAccount } from 'viem/accounts';
+    import { 
+      seiTestnet,
+      WASM_PRECOMPILE_ABI,
+      WASM_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles/viem';
+
+    const account = privateKeyToAccount('0x...');
+    
+    const walletClient = createWalletClient({
+      account,
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    const publicClient = createPublicClient({
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    // Query contract
+    async function queryContract(contractAddress: string, queryMsg: any) {
+      const encodedQuery = new TextEncoder().encode(JSON.stringify(queryMsg));
+      
+      const response = await publicClient.readContract({
+        address: WASM_PRECOMPILE_ADDRESS,
+        abi: WASM_PRECOMPILE_ABI,
+        functionName: 'query',
+        args: [contractAddress, `0x${Buffer.from(encodedQuery).toString('hex')}`]
+      });
+      
+      // Decode response
+      const decoded = new TextDecoder().decode(
+        new Uint8Array(Buffer.from(response.slice(2), 'hex'))
+      );
+      return JSON.parse(decoded);
+    }
+
+    // Execute contract
+    async function executeContract(
+      contractAddress: string,
+      executeMsg: any,
+      funds: Array<{ denom: string; amount: string }> = []
+    ) {
+      const encodedMsg = new TextEncoder().encode(JSON.stringify(executeMsg));
+      const encodedCoins = new TextEncoder().encode(JSON.stringify(funds));
+      
+      const { request } = await publicClient.simulateContract({
+        address: WASM_PRECOMPILE_ADDRESS,
+        abi: WASM_PRECOMPILE_ABI,
+        functionName: 'execute',
+        args: [
+          contractAddress,
+          `0x${Buffer.from(encodedMsg).toString('hex')}`,
+          `0x${Buffer.from(encodedCoins).toString('hex')}`
+        ],
+        value: parseEther('0.01'),
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Instantiate contract
+    async function instantiateContract(
+      codeId: number,
+      initMsg: any,
+      label: string,
+      admin?: string,
+      funds: Array<{ denom: string; amount: string }> = []
+    ) {
+      const encodedMsg = new TextEncoder().encode(JSON.stringify(initMsg));
+      const encodedCoins = new TextEncoder().encode(JSON.stringify(funds));
+      
+      const { request } = await publicClient.simulateContract({
+        address: WASM_PRECOMPILE_ADDRESS,
+        abi: WASM_PRECOMPILE_ABI,
+        functionName: 'instantiate',
+        args: [
+          BigInt(codeId),
+          admin || account.address,
+          `0x${Buffer.from(encodedMsg).toString('hex')}`,
+          label,
+          `0x${Buffer.from(encodedCoins).toString('hex')}`
+        ],
+        value: parseEther('0.05'),
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      const receipt = await publicClient.waitForTransactionReceipt({ hash });
+      
+      // Extract contract address from logs
+      return {
+        transactionHash: hash,
+        contractAddress: receipt.logs[0]?.data, // Parse from logs
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Batch execute
+    async function batchExecute(executions: Array<{
+      contractAddress: string;
+      msg: any;
+      funds?: Array<{ denom: string; amount: string }>;
+    }>) {
+      const executeMsgs = executions.map(exec => ({
+        contractAddress: exec.contractAddress,
+        msg: `0x${Buffer.from(JSON.stringify(exec.msg)).toString('hex')}`,
+        coins: `0x${Buffer.from(JSON.stringify(exec.funds || [])).toString('hex')}`
+      }));
+      
+      const { request } = await publicClient.simulateContract({
+        address: WASM_PRECOMPILE_ADDRESS,
+        abi: WASM_PRECOMPILE_ABI,
+        functionName: 'execute_batch',
+        args: [executeMsgs],
+        value: parseEther('0.02'),
+        account
+      });
+      
+      const hash = await walletClient.writeContract(request);
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Contract manager class
+    class CosmWasmManager {
+      async deployAndSetup(
+        codeId: number,
+        initMsg: any,
+        setupMsgs: any[],
+        label: string
+      ) {
+        // 1. Instantiate contract
+        const deployment = await instantiateContract(codeId, initMsg, label);
+        
+        // 2. Execute setup messages
+        const setupExecutions = setupMsgs.map(msg => ({
+          contractAddress: deployment.contractAddress,
+          msg
+        }));
+        
+        const setupResult = await batchExecute(setupExecutions);
+        
+        return {
+          contractAddress: deployment.contractAddress,
+          deploymentTx: deployment.transactionHash,
+          setupTx: setupResult.transactionHash
+        };
+      }
+      
+      async queryMultiple(queries: Array<{
+        contractAddress: string;
+        msg: any;
+      }>) {
+        const results = await Promise.all(
+          queries.map(query => queryContract(query.contractAddress, query.msg))
+        );
+        
+        return queries.map((query, index) => ({
+          contractAddress: query.contractAddress,
+          query: query.msg,
+          result: results[index]
+        }));
+      }
+    }
+
+    // Example usage
+    const manager = new CosmWasmManager();
+    
+    // Query contract state
+    const balance = await queryContract("sei1...", { balance: { address: "sei1..." } });
+    console.log('Balance:', balance);
+    
+    // Execute transfer
+    const transferResult = await executeContract("sei1...", {
+      transfer: {
+        recipient: "sei1...",
+        amount: "1000000"
+      }
+    });
+    console.log('Transfer completed:', transferResult.transactionHash);
+    ```
+  </Tab>
+
+  <Tab title="Ethers.js">
+    ```typescript
+    import { ethers } from 'ethers';
+    import { getWasmPrecompileEthersContract } from '@sei-js/precompiles/ethers';
+
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
+    const wallet = new ethers.Wallet('0x...', provider);
+    const wasmContract = getWasmPrecompileEthersContract(wallet);
+
+    // Helper functions for encoding/decoding
+    function encodeMsg(msg: any): string {
+      return '0x' + Buffer.from(JSON.stringify(msg)).toString('hex');
+    }
+
+    function encodeCoins(coins: Array<{ denom: string; amount: string }>): string {
+      return '0x' + Buffer.from(JSON.stringify(coins)).toString('hex');
+    }
+
+    function decodeResponse(response: string): any {
+      const decoded = Buffer.from(response.slice(2), 'hex').toString();
+      return JSON.parse(decoded);
+    }
+
+    // Query contract
+    async function queryContract(contractAddress: string, queryMsg: any) {
+      const response = await wasmContract.query(
+        contractAddress,
+        encodeMsg(queryMsg)
+      );
+      
+      return decodeResponse(response);
+    }
+
+    // Execute contract
+    async function executeContract(
+      contractAddress: string,
+      executeMsg: any,
+      funds: Array<{ denom: string; amount: string }> = []
+    ) {
+      const tx = await wasmContract.execute(
+        contractAddress,
+        encodeMsg(executeMsg),
+        encodeCoins(funds),
+        { value: ethers.parseEther("0.01") }
+      );
+      
+      const receipt = await tx.wait();
+      return {
+        transactionHash: tx.hash,
+        response: decodeResponse(receipt.logs[0]?.data || '0x'),
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Instantiate contract
+    async function instantiateContract(
+      codeId: number,
+      initMsg: any,
+      label: string,
+      admin?: string,
+      funds: Array<{ denom: string; amount: string }> = []
+    ) {
+      const tx = await wasmContract.instantiate(
+        codeId,
+        admin || wallet.address,
+        encodeMsg(initMsg),
+        label,
+        encodeCoins(funds),
+        { value: ethers.parseEther("0.05") }
+      );
+      
+      const receipt = await tx.wait();
+      
+      // Parse contract address from logs
+      const contractAddr = receipt.logs[0]?.topics[1]; // Adjust based on actual log structure
+      
+      return {
+        contractAddress: contractAddr,
+        transactionHash: tx.hash,
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Batch execute
+    async function batchExecute(executions: Array<{
+      contractAddress: string;
+      msg: any;
+      funds?: Array<{ denom: string; amount: string }>;
+    }>) {
+      const executeMsgs = executions.map(exec => ({
+        contractAddress: exec.contractAddress,
+        msg: encodeMsg(exec.msg),
+        coins: encodeCoins(exec.funds || [])
+      }));
+      
+      const tx = await wasmContract.execute_batch(executeMsgs, {
+        value: ethers.parseEther("0.02")
+      });
+      
+      const receipt = await tx.wait();
+      
+      return {
+        transactionHash: tx.hash,
+        responses: receipt.logs.map((log: any) => decodeResponse(log.data)),
+        gasUsed: receipt.gasUsed
+      };
+    }
+
+    // Contract interaction helper
+    class ContractHelper {
+      constructor(private contractAddress: string) {}
+      
+      async query(msg: any) {
+        return queryContract(this.contractAddress, msg);
+      }
+      
+      async execute(msg: any, funds?: Array<{ denom: string; amount: string }>) {
+        return executeContract(this.contractAddress, msg, funds);
+      }
+      
+      async getBalance(address: string) {
+        return this.query({ balance: { address } });
+      }
+      
+      async transfer(recipient: string, amount: string) {
+        return this.execute({
+          transfer: { recipient, amount }
+        });
+      }
+      
+      async getTokenInfo() {
+        return this.query({ token_info: {} });
+      }
+    }
+
+    // Example usage
+    const tokenContract = new ContractHelper("sei1...");
+    
+    // Query token info
+    const tokenInfo = await tokenContract.getTokenInfo();
+    console.log('Token:', tokenInfo);
+    
+    // Check balance
+    const balance = await tokenContract.getBalance("sei1...");
+    console.log('Balance:', balance);
+    
+    // Transfer tokens
+    const transferResult = await tokenContract.transfer("sei1...", "1000000");
+    console.log('Transfer:', transferResult);
+    ```
+  </Tab>
+
+  <Tab title="Manual">
+    ```typescript
+    import { 
+      WASM_PRECOMPILE_ABI, 
+      WASM_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles';
+
+    // Using with web3.js
+    import Web3 from 'web3';
+    
+    const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
+    const account = web3.eth.accounts.privateKeyToAccount('0x...');
+    web3.eth.accounts.wallet.add(account);
+    
+    const wasmContract = new web3.eth.Contract(
+      WASM_PRECOMPILE_ABI,
+      WASM_PRECOMPILE_ADDRESS
+    );
+
+    // Helper functions
+    function encodeMsg(msg) {
+      return '0x' + Buffer.from(JSON.stringify(msg)).toString('hex');
+    }
+
+    function decodeResponse(response) {
+      return JSON.parse(Buffer.from(response.slice(2), 'hex').toString());
+    }
+
+    // Query contract
+    const queryResponse = await wasmContract.methods
+      .query(
+        'sei1...', // Contract address
+        encodeMsg({ balance: { address: 'sei1...' } })
+      )
+      .call();
+    
+    const balance = decodeResponse(queryResponse);
+    console.log('Balance:', balance);
+
+    // Execute contract
+    const executeTx = await wasmContract.methods
+      .execute(
+        'sei1...', // Contract address
+        encodeMsg({ transfer: { recipient: 'sei1...', amount: '1000000' } }),
+        encodeMsg([]) // No coins
+      )
+      .send({
+        from: account.address,
+        value: web3.utils.toWei('0.01', 'ether'),
+        gas: 300000
+      });
+    
+    console.log('Execute completed:', executeTx.transactionHash);
+
+    // Instantiate contract
+    const instantiateTx = await wasmContract.methods
+      .instantiate(
+        123, // Code ID
+        'sei1...', // Admin
+        encodeMsg({ name: 'My Token', symbol: 'MTK' }),
+        'My Token Contract',
+        encodeMsg([])
+      )
+      .send({
+        from: account.address,
+        value: web3.utils.toWei('0.05', 'ether'),
+        gas: 500000
+      });
+    
+    console.log('Contract instantiated:', instantiateTx.transactionHash);
+    ```
+  </Tab>
+</Tabs>
+
+## Message Encoding
+
+### JSON Message Format
+CosmWasm contracts expect JSON messages. Encode them as bytes:
+
+```typescript
+// Execute message example
+const executeMsg = {
+  transfer: {
+    recipient: "sei1...",
+    amount: "1000000"
+  }
+};
+
+// Encode for WASM precompile
+const encodedMsg = '0x' + Buffer.from(JSON.stringify(executeMsg)).toString('hex');
+```
+
+### Coins Encoding
+Send native tokens with contract calls:
+
+```typescript
+const coins = [
+  { denom: "usei", amount: "1000000" },
+  { denom: "uatom", amount: "500000" }
+];
+
+const encodedCoins = '0x' + Buffer.from(JSON.stringify(coins)).toString('hex');
+```
+
+## Common Use Cases
+
+### DeFi Integration
+- **Token Contracts**: Interact with CW20 tokens from EVM
+- **DEX Integration**: Execute swaps on CosmWasm DEXs
+- **Lending Protocols**: Deposit/borrow through WASM contracts
+
+### NFT Operations
+- **CW721 Interaction**: Mint, transfer, and query NFTs
+- **Marketplace Integration**: Buy/sell NFTs through contracts
+- **Metadata Management**: Update NFT metadata
+
+### Cross-Chain Applications
+- **IBC Integration**: Trigger IBC transfers through contracts
+- **Bridge Operations**: Interact with bridge contracts
+- **Multi-Chain Coordination**: Coordinate actions across chains
+
+## Advanced Patterns
+
+### Contract Factory Pattern
+```typescript
+class ContractFactory {
+  async deployToken(
+    codeId: number,
+    name: string,
+    symbol: string,
+    decimals: number,
+    initialSupply: string
+  ) {
+    const initMsg = {
+      name,
+      symbol,
+      decimals,
+      initial_balances: [{
+        address: wallet.address,
+        amount: initialSupply
+      }]
+    };
+    
+    return await instantiateContract(codeId, initMsg, `${name} Token`);
+  }
+  
+  async deployMultiple(tokens: Array<{
+    name: string;
+    symbol: string;
+    supply: string;
+  }>) {
+    const deployments = [];
+    
+    for (const token of tokens) {
+      const deployment = await this.deployToken(
+        123, // CW20 code ID
+        token.name,
+        token.symbol,
+        6,
+        token.supply
+      );
+      
+      deployments.push({
+        ...token,
+        contractAddress: deployment.contractAddress
+      });
+    }
+    
+    return deployments;
+  }
+}
+```
+
+### Batch Operations
+```typescript
+// Execute multiple operations atomically
+async function atomicSwap(
+  tokenA: string,
+  tokenB: string,
+  amountA: string,
+  amountB: string,
+  dexContract: string
+) {
+  const operations = [
+    {
+      contractAddress: tokenA,
+      msg: { increase_allowance: { spender: dexContract, amount: amountA } },
+      funds: []
+    },
+    {
+      contractAddress: dexContract,
+      msg: { swap: { offer_asset: { amount: amountA, info: { token: { contract_addr: tokenA } } } } },
+      funds: []
+    }
+  ];
+  
+  return await batchExecute(operations);
+}
+```
+
+### Query Aggregation
+```typescript
+// Query multiple contracts efficiently
+async function getPortfolioBalances(
+  userAddress: string,
+  tokenContracts: string[]
+) {
+  const queries = tokenContracts.map(contract => ({
+    contractAddress: contract,
+    msg: { balance: { address: userAddress } }
+  }));
+  
+  const results = await Promise.all(
+    queries.map(query => queryContract(query.contractAddress, query.msg))
+  );
+  
+  return tokenContracts.map((contract, index) => ({
+    contract,
+    balance: results[index].balance
+  }));
+}
+```
+
+## Error Handling
+
+```typescript
+async function safeExecute(
+  contractAddress: string,
+  msg: any,
+  funds: Array<{ denom: string; amount: string }> = []
+) {
+  try {
+    // Validate contract exists
+    const contractInfo = await queryContract(contractAddress, { contract_info: {} });
+    if (!contractInfo) {
+      throw new Error('Contract not found');
+    }
+    
+    // Execute with retry logic
+    let attempts = 0;
+    const maxAttempts = 3;
+    
+    while (attempts < maxAttempts) {
+      try {
+        return await executeContract(contractAddress, msg, funds);
+      } catch (error) {
+        attempts++;
+        if (attempts === maxAttempts) throw error;
+        
+        // Wait before retry
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempts));
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message
+    };
+  }
+}
+```
+
+## Performance Optimization
+
+### Query Caching
+```typescript
+class QueryCache {
+  private cache = new Map<string, { data: any; timestamp: number }>();
+  private readonly TTL = 30000; // 30 seconds
+  
+  async query(contractAddress: string, msg: any) {
+    const key = `${contractAddress}:${JSON.stringify(msg)}`;
+    const cached = this.cache.get(key);
+    
+    if (cached && Date.now() - cached.timestamp < this.TTL) {
+      return cached.data;
+    }
+    
+    const result = await queryContract(contractAddress, msg);
+    this.cache.set(key, { data: result, timestamp: Date.now() });
+    
+    return result;
+  }
+}
+```
+
+### Batch Optimization
+```typescript
+// Optimize gas usage with intelligent batching
+class BatchOptimizer {
+  private pendingExecutions: Array<{
+    contractAddress: string;
+    msg: any;
+    funds?: Array<{ denom: string; amount: string }>;
+  }> = [];
+  
+  addExecution(execution: any) {
+    this.pendingExecutions.push(execution);
+    
+    // Auto-execute when batch is full
+    if (this.pendingExecutions.length >= 10) {
+      this.executeBatch();
+    }
+  }
+  
+  async executeBatch() {
+    if (this.pendingExecutions.length === 0) return;
+    
+    const executions = [...this.pendingExecutions];
+    this.pendingExecutions = [];
+    
+    return await batchExecute(executions);
+  }
+}
+```
+
+## Related Precompiles
+
+- **[Bank](/precompiles/precompiles/bank)**: Manage token balances and transfers
+- **[Address](/precompiles/precompiles/address)**: Convert between address formats
+- **[JSON](/precompiles/precompiles/json)**: Parse contract response data

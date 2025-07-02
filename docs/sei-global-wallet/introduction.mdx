@@ -1,0 +1,96 @@
+---
+title: 'Sei Global Wallet'
+description: 'Cross-application embedded crypto wallet providing persistent wallet experience across Sei ecosystem applications'
+icon: 'wallet'
+---
+
+# Sei Global Wallet
+
+Unlike traditional browser extension wallets, Sei Global Wallet is built directly into web applications and allows users to authenticate using familiar methods like Google, Twitter, Telegram, or email—no downloads or crypto knowledge required.
+
+## What is Sei Global Wallet?
+
+Sei Global Wallet is an embedded wallet experience for the Sei network, enabling wallet creation and authentication through social logins. Unlike traditional embedded wallets, Sei Global Wallet offers greater flexibility by allowing users to carry their wallets across different apps within the Sei ecosystem.
+
+<CardGroup cols={2}>
+  <Card title="For Users" icon="user" color="#9E1F19">
+    - **No Installation Required:** Works directly in your browser without extensions
+    - **Familiar Authentication:** Login with Google, Twitter, Telegram, or email
+    - **Persistent Across Apps:** Same wallet works across all Sei ecosystem applications
+    - **Self-Custodial:** You maintain full control of your keys
+  </Card>
+  <Card title="For Developers" icon="code" color="#9E1F19">
+    - **One-Line Integration:** Single import enables wallet across all EIP-6963 compatible libraries
+    - **Zero Configuration:** Pre-configured and ready to use
+    - **Universal Compatibility:** Works with RainbowKit, ConnectKit, Web3-React, and more
+  </Card>
+</CardGroup>
+
+## Why Use Sei Global Wallet?
+
+<AccordionGroup>
+  <Accordion title="Enhanced User Experience">
+    Sei Global Wallet eliminates the friction of traditional wallet setup by enabling authentication through familiar social platforms. Users can create and access their wallets instantly without downloading browser extensions or managing seed phrases manually.
+  </Accordion>
+  
+  <Accordion title="Cross-App Connectivity">
+    Unlike isolated embedded wallets, Sei Global Wallet provides a consistent identity across the entire Sei ecosystem. Users can seamlessly navigate between different applications while maintaining their wallet connection and transaction history.
+  </Accordion>
+  
+  <Accordion title="Developer-Friendly Integration">
+    Built on the EIP-6963 standard, Sei Global Wallet integrates with existing wallet connection libraries without requiring custom implementations. A single import statement enables compatibility with popular tools like RainbowKit, ConnectKit, and Web3-React.
+  </Accordion>
+</AccordionGroup>
+
+## How to Create a Sei Global Wallet Account
+
+<Steps>
+  <Step title="Visit a Sei ecosystem application">
+    Go to [app.sei.io](https://app.sei.io) or any integrated Sei ecosystem application
+  </Step>
+  <Step title="Connect wallet">
+    Click "Connect Wallet" and select "Sei Global Wallet" from the available options
+  </Step>
+  <Step title="Choose authentication method">
+    Select your preferred login method:
+    - Google
+    - X (Twitter)
+    - Telegram
+    - Email
+  </Step>
+  <Step title="Complete authentication">
+    Follow the authentication flow for your chosen method
+  </Step>
+  <Step title="Start using your wallet">
+    Your wallet is automatically created and ready to use across all integrated Sei applications
+  </Step>
+</Steps>
+
+## Key Technical Concepts
+
+<Note>
+**EIP-6963:** A standard that allows multiple wallets to coexist without conflicts. Instead of fighting over `window.ethereum`, wallets announce themselves through events, letting users choose which one to use.
+</Note>
+
+<Note>
+**Dynamic:** The infrastructure powering Sei Global Wallet. It handles authentication, key management, and cross-app wallet persistence while keeping wallets non-custodial.
+</Note>
+
+## Security Features
+
+- **Self-Custodial:** Users maintain full control of their private keys
+- **Encrypted Communication:** All app-to-wallet communication is encrypted
+- **Multi-Factor Authentication:** Optional MFA for enhanced security
+- **Key Export:** Users can export keys to other wallets like MetaMask
+- **Audit Compliance:** Platform audited
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="rocket" href="/sei-global-wallet/quickstart">
+    Get up and running with Sei Global Wallet in minutes
+  </Card>
+  <Card title="Integration Guides" icon="puzzle-piece" href="/sei-global-wallet/rainbowkit">
+    Detailed integration examples for popular frameworks
+  </Card>
+</CardGroup>

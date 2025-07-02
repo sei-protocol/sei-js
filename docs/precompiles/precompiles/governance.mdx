@@ -1,0 +1,470 @@
+---
+title: 'Governance Precompile'
+description: 'Participate in Sei network governance through voting and deposits via the Governance precompile contract'
+icon: "check-to-slot"
+---
+
+## Overview
+
+The Governance precompile enables participation in Sei's on-chain governance system directly from EVM contracts. Users can vote on proposals and make deposits to support governance proposals, bridging EVM functionality with Cosmos SDK governance.
+
+**Contract Address:** `0x0000000000000000000000000000000000001006`
+
+## Key Features
+
+- **Proposal Voting**: Cast votes on governance proposals with different options
+- **Proposal Deposits**: Deposit tokens to support governance proposals
+- **Democratic Participation**: Enable EVM contracts to participate in network governance
+- **Transparent Governance**: All governance actions are recorded on-chain
+
+## Available Functions
+
+### State-Changing Functions
+
+<AccordionGroup>
+  <Accordion title="vote(uint64, int32) → bool">
+    Cast a vote on a governance proposal.
+    
+    **Parameters:**
+    - `proposalID` (uint64): The ID of the proposal to vote on
+    - `option` (int32): The vote option (1=Yes, 2=Abstain, 3=No, 4=NoWithVeto)
+    
+    **Returns:** Success boolean
+    
+    **Vote Options:**
+    - `1` - **Yes**: Support the proposal
+    - `2` - **Abstain**: Neutral vote (counts toward quorum)
+    - `3` - **No**: Oppose the proposal
+    - `4` - **NoWithVeto**: Strong opposition (can cause proposal failure)
+    
+    ```typescript
+    // Vote "Yes" on proposal #42
+    const success = await governanceContract.vote(42n, 1);
+    
+    // Vote "No" on proposal #43
+    const success = await governanceContract.vote(43n, 3);
+    ```
+  </Accordion>
+
+  <Accordion title="deposit(uint64) → bool">
+    Make a deposit to support a governance proposal.
+    
+    **Parameters:**
+    - `proposalID` (uint64): The ID of the proposal to deposit to
+    
+    **Returns:** Success boolean
+    
+    **Note:** This function is payable - send SEI with the transaction as deposit
+    
+    ```typescript
+    // Deposit 100 SEI to proposal #42
+    const success = await governanceContract.deposit(42n, {
+      value: parseEther("100")
+    });
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Usage Examples
+
+<Tabs>
+  <Tab title="Viem">
+    ```typescript
+    import { createPublicClient, createWalletClient, http, parseEther } from 'viem';
+    import { privateKeyToAccount } from 'viem/accounts';
+    import { 
+      seiTestnet,
+      GOVERNANCE_PRECOMPILE_ABI,
+      GOVERNANCE_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles/viem';
+
+    const publicClient = createPublicClient({
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    const account = privateKeyToAccount('0x...');
+    const walletClient = createWalletClient({
+      account,
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    // Vote options enum for clarity
+    enum VoteOption {
+      YES = 1,
+      ABSTAIN = 2,
+      NO = 3,
+      NO_WITH_VETO = 4
+    }
+
+    // Cast a vote on a proposal
+    async function voteOnProposal(proposalId: bigint, option: VoteOption) {
+      const hash = await walletClient.writeContract({
+        address: GOVERNANCE_PRECOMPILE_ADDRESS,
+        abi: GOVERNANCE_PRECOMPILE_ABI,
+        functionName: 'vote',
+        args: [proposalId, option]
+      });
+      
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Make a deposit to a proposal
+    async function depositToProposal(proposalId: bigint, amount: string) {
+      const hash = await walletClient.writeContract({
+        address: GOVERNANCE_PRECOMPILE_ADDRESS,
+        abi: GOVERNANCE_PRECOMPILE_ABI,
+        functionName: 'deposit',
+        args: [proposalId],
+        value: parseEther(amount)
+      });
+      
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Governance participation helper
+    async function participateInGovernance(
+      proposalId: bigint,
+      vote: VoteOption,
+      depositAmount?: string
+    ) {
+      const actions = [];
+      
+      // Make deposit if specified
+      if (depositAmount) {
+        console.log(`Depositing ${depositAmount} SEI to proposal ${proposalId}`);
+        const depositTx = await depositToProposal(proposalId, depositAmount);
+        actions.push({ type: 'deposit', tx: depositTx });
+      }
+      
+      // Cast vote
+      console.log(`Voting ${VoteOption[vote]} on proposal ${proposalId}`);
+      const voteTx = await voteOnProposal(proposalId, vote);
+      actions.push({ type: 'vote', tx: voteTx });
+      
+      return actions;
+    }
+
+    // Batch voting on multiple proposals
+    async function batchVote(votes: Array<{ proposalId: bigint; option: VoteOption }>) {
+      const votePromises = votes.map(({ proposalId, option }) =>
+        voteOnProposal(proposalId, option)
+      );
+      
+      return await Promise.all(votePromises);
+    }
+
+    // Example usage
+    await participateInGovernance(42n, VoteOption.YES, "100");
+    await batchVote([
+      { proposalId: 43n, option: VoteOption.NO },
+      { proposalId: 44n, option: VoteOption.ABSTAIN }
+    ]);
+    ```
+  </Tab>
+
+  <Tab title="Ethers.js">
+    ```typescript
+    import { ethers } from 'ethers';
+    import { getGovernancePrecompileEthersContract } from '@sei-js/precompiles/ethers';
+
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
+    const signer = new ethers.Wallet('0x...', provider);
+    const governanceContract = getGovernancePrecompileEthersContract(provider);
+
+    // Vote options enum
+    enum VoteOption {
+      YES = 1,
+      ABSTAIN = 2,
+      NO = 3,
+      NO_WITH_VETO = 4
+    }
+
+    // Cast a vote on a proposal
+    async function voteOnProposal(proposalId: number, option: VoteOption) {
+      const governanceWithSigner = governanceContract.connect(signer);
+      
+      const tx = await governanceWithSigner.vote(proposalId, option);
+      return await tx.wait();
+    }
+
+    // Make a deposit to a proposal
+    async function depositToProposal(proposalId: number, amount: string) {
+      const governanceWithSigner = governanceContract.connect(signer);
+      
+      const tx = await governanceWithSigner.deposit(proposalId, {
+        value: ethers.parseEther(amount)
+      });
+      
+      return await tx.wait();
+    }
+
+    // Governance manager class
+    class GovernanceManager {
+      private contract: ethers.Contract;
+      private signer: ethers.Signer;
+      
+      constructor(provider: ethers.Provider, signer: ethers.Signer) {
+        this.contract = getGovernancePrecompileEthersContract(provider);
+        this.signer = signer;
+      }
+      
+      async vote(proposalId: number, option: VoteOption): Promise<ethers.TransactionReceipt> {
+        const contractWithSigner = this.contract.connect(this.signer);
+        const tx = await contractWithSigner.vote(proposalId, option);
+        return await tx.wait();
+      }
+      
+      async deposit(proposalId: number, amount: string): Promise<ethers.TransactionReceipt> {
+        const contractWithSigner = this.contract.connect(this.signer);
+        const tx = await contractWithSigner.deposit(proposalId, {
+          value: ethers.parseEther(amount)
+        });
+        return await tx.wait();
+      }
+      
+      async voteWithDeposit(
+        proposalId: number, 
+        option: VoteOption, 
+        depositAmount: string
+      ): Promise<{ depositTx: ethers.TransactionReceipt; voteTx: ethers.TransactionReceipt }> {
+        const depositTx = await this.deposit(proposalId, depositAmount);
+        const voteTx = await this.vote(proposalId, option);
+        
+        return { depositTx, voteTx };
+      }
+    }
+
+    // Usage
+    const governance = new GovernanceManager(provider, signer);
+    
+    // Vote on a proposal
+    await governance.vote(42, VoteOption.YES);
+    
+    // Deposit and vote
+    await governance.voteWithDeposit(43, VoteOption.NO, "50");
+    ```
+  </Tab>
+
+  <Tab title="Manual">
+    ```typescript
+    import { 
+      GOVERNANCE_PRECOMPILE_ABI, 
+      GOVERNANCE_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles';
+
+    // Using with web3.js
+    import Web3 from 'web3';
+    
+    const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
+    const governanceContract = new web3.eth.Contract(
+      GOVERNANCE_PRECOMPILE_ABI,
+      GOVERNANCE_PRECOMPILE_ADDRESS
+    );
+
+    // Setup account
+    const account = web3.eth.accounts.privateKeyToAccount('0x...');
+    web3.eth.accounts.wallet.add(account);
+
+    // Vote on proposal
+    const voteTx = await governanceContract.methods
+      .vote(42, 1) // Vote "Yes" on proposal 42
+      .send({
+        from: account.address,
+        gas: 100000
+      });
+
+    // Deposit to proposal
+    const depositTx = await governanceContract.methods
+      .deposit(42)
+      .send({
+        from: account.address,
+        value: web3.utils.toWei('100', 'ether'), // 100 SEI
+        gas: 100000
+      });
+    ```
+  </Tab>
+</Tabs>
+
+## Vote Options Explained
+
+### 1. Yes (Option 1)
+- **Purpose**: Support the proposal
+- **Effect**: Counts toward proposal approval
+- **When to use**: When you agree with the proposal
+
+### 2. Abstain (Option 2)
+- **Purpose**: Neutral stance but participate in quorum
+- **Effect**: Counts toward quorum but not for/against
+- **When to use**: When you want to participate but have no strong opinion
+
+### 3. No (Option 3)
+- **Purpose**: Oppose the proposal
+- **Effect**: Counts against proposal approval
+- **When to use**: When you disagree with the proposal
+
+### 4. NoWithVeto (Option 4)
+- **Purpose**: Strong opposition with penalty implications
+- **Effect**: Can cause proposal failure and deposit forfeiture
+- **When to use**: When you believe the proposal is harmful or spam
+
+```typescript
+// Helper function to get vote option description
+function getVoteDescription(option: number): string {
+  switch (option) {
+    case 1: return "Yes - Support the proposal";
+    case 2: return "Abstain - Neutral participation";
+    case 3: return "No - Oppose the proposal";
+    case 4: return "NoWithVeto - Strong opposition";
+    default: return "Invalid vote option";
+  }
+}
+```
+
+## Common Use Cases
+
+### DAO Integration
+- **Automated Voting**: Smart contracts can vote based on predetermined logic
+- **Delegation Systems**: Allow token holders to delegate voting power
+- **Proposal Support**: Automatically deposit to proposals meeting criteria
+
+### Community Governance
+- **Voting Campaigns**: Coordinate community voting efforts
+- **Proposal Funding**: Pool resources to support important proposals
+- **Governance Analytics**: Track voting patterns and participation
+
+### Protocol Governance
+- **Parameter Updates**: Vote on protocol parameter changes
+- **Upgrade Proposals**: Participate in network upgrade decisions
+- **Treasury Management**: Vote on treasury spending proposals
+
+## Governance Workflow
+
+### 1. Proposal Lifecycle
+```typescript
+// Typical governance proposal states:
+enum ProposalStatus {
+  DEPOSIT_PERIOD = "deposit_period",    // Accepting deposits
+  VOTING_PERIOD = "voting_period",      // Active voting
+  PASSED = "passed",                    // Proposal approved
+  REJECTED = "rejected",                // Proposal failed
+  FAILED = "failed"                     // Proposal failed due to veto
+}
+```
+
+### 2. Participation Strategy
+```typescript
+async function smartGovernanceParticipation(
+  proposalId: bigint,
+  proposalType: string,
+  userPreferences: GovernancePreferences
+) {
+  // Analyze proposal type and user preferences
+  const decision = analyzeProposal(proposalType, userPreferences);
+  
+  if (decision.shouldDeposit) {
+    await depositToProposal(proposalId, decision.depositAmount);
+  }
+  
+  if (decision.shouldVote) {
+    await voteOnProposal(proposalId, decision.voteOption);
+  }
+  
+  return decision;
+}
+```
+
+## Governance Best Practices
+
+### Research Before Voting
+- Read proposal details thoroughly
+- Understand the implications of changes
+- Consider long-term effects on the network
+
+### Deposit Considerations
+- Deposits help proposals reach voting stage
+- Failed proposals may result in deposit forfeiture
+- Consider the proposal's likelihood of success
+
+### Vote Timing
+- Vote early to signal community sentiment
+- Monitor voting progress and participation
+- Consider changing vote if new information emerges
+
+```typescript
+// Governance participation tracker
+class GovernanceTracker {
+  private votes: Map<bigint, VoteOption> = new Map();
+  private deposits: Map<bigint, string> = new Map();
+  
+  recordVote(proposalId: bigint, option: VoteOption) {
+    this.votes.set(proposalId, option);
+  }
+  
+  recordDeposit(proposalId: bigint, amount: string) {
+    this.deposits.set(proposalId, amount);
+  }
+  
+  getParticipationSummary() {
+    return {
+      totalVotes: this.votes.size,
+      totalDeposits: this.deposits.size,
+      voteBreakdown: this.getVoteBreakdown(),
+      totalDepositAmount: this.getTotalDepositAmount()
+    };
+  }
+  
+  private getVoteBreakdown() {
+    const breakdown = { yes: 0, no: 0, abstain: 0, noWithVeto: 0 };
+    for (const option of this.votes.values()) {
+      switch (option) {
+        case VoteOption.YES: breakdown.yes++; break;
+        case VoteOption.NO: breakdown.no++; break;
+        case VoteOption.ABSTAIN: breakdown.abstain++; break;
+        case VoteOption.NO_WITH_VETO: breakdown.noWithVeto++; break;
+      }
+    }
+    return breakdown;
+  }
+  
+  private getTotalDepositAmount(): string {
+    return Array.from(this.deposits.values())
+      .reduce((total, amount) => total + parseFloat(amount), 0)
+      .toString();
+  }
+}
+```
+
+## Error Handling
+
+Common errors when using the Governance precompile:
+
+- **Invalid proposal ID**: Proposal doesn't exist
+- **Voting period ended**: Cannot vote after voting period closes
+- **Already voted**: Cannot change vote once cast
+- **Insufficient deposit**: Deposit amount too small
+
+```typescript
+async function safeVote(proposalId: bigint, option: VoteOption) {
+  try {
+    return await voteOnProposal(proposalId, option);
+  } catch (error) {
+    if (error.message.includes('proposal not found')) {
+      throw new Error(`Proposal ${proposalId} does not exist`);
+    } else if (error.message.includes('voting period ended')) {
+      throw new Error(`Voting period for proposal ${proposalId} has ended`);
+    } else if (error.message.includes('already voted')) {
+      throw new Error(`Already voted on proposal ${proposalId}`);
+    } else {
+      throw error;
+    }
+  }
+}
+```
+
+## Related Precompiles
+
+- **[Bank](/precompiles/precompiles/bank)**: Check SEI balance before making deposits
+- **[Staking](/precompiles/precompiles/staking)**: Voting power is based on staked tokens
+- **[Distribution](/precompiles/precompiles/distribution)**: Claim rewards from governance participation

@@ -1,0 +1,143 @@
+{
+	"$schema": "https://mintlify.com/docs.json",
+	"name": "SeiJS Documentation",
+	"theme": "mint",
+	"logo": {
+		"dark": "https://cdn.sei.io/sei.svg",
+		"light": "https://cdn.sei.io/sei.svg"
+	},
+	"description": "Official TypeScript SDK for building decentralized applications on Sei Network. Complete @sei-js toolkit for EVM development, wallet integration, and blockchain interactions.",
+	"favicon": "/favicon.ico",
+	"colors": {
+		"primary": "#9E1F19",
+		"light": "#B52A2A",
+		"dark": "#780000"
+	},
+	"contextual": {
+		"options": ["copy", "chatgpt", "claude"]
+	},
+	"navigation": {
+		"global": {
+			"anchors": [
+				{
+					"anchor": "Sei Documentation",
+					"icon": "book-open-cover",
+					"href": "https://docs.sei.io"
+				},
+				{
+					"anchor": "Sei App",
+					"icon": "grid-2",
+					"href": "https://app.sei.io"
+				},
+				{
+					"anchor": "GitHub",
+					"icon": "github",
+					"href": "https://github.com/sei-protocol/sei-js"
+				}
+			]
+		},
+		"dropdowns": [
+			{
+				"dropdown": "Getting Started",
+				"icon": "rocket",
+				"pages": [
+					{
+						"group": "Introduction",
+						"pages": ["introduction", "overview"]
+					},
+					{
+						"group": "Local Development",
+						"pages": ["contributing"]
+					}
+				]
+			},
+			{
+				"dropdown": "@sei-js/mcp-server",
+				"description": "Teach your LLM about Sei",
+				"icon": "robot",
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": ["mcp-server/introduction", "mcp-server/setup"]
+					},
+					{
+						"group": "Implementation",
+						"pages": ["mcp-server/tools", "mcp-server/prompts", "mcp-server/context"]
+					}
+				]
+			},
+			{
+				"dropdown": "@sei-js/create-sei",
+				"description": "Boilerplate frontend dApps",
+				"icon": "hammer",
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": ["create-sei/welcome", "create-sei/quick-start", "create-sei/templates"]
+					}
+				]
+			},
+			{
+				"dropdown": "@sei-js/sei-global-wallet",
+				"description": "User friendly wallet connect",
+				"icon": "wallet",
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": ["sei-global-wallet/introduction", "sei-global-wallet/quickstart"]
+					},
+					{
+						"group": "Integrations",
+						"pages": [
+							"sei-global-wallet/rainbowkit",
+							"sei-global-wallet/connectkit",
+							"sei-global-wallet/web3-react",
+							"sei-global-wallet/wagmi-dynamic",
+							"sei-global-wallet/dynamic-nextjs"
+						]
+					}
+				]
+			},
+			{
+				"dropdown": "@sei-js/precompiles",
+				"description": "Native functions from the EVM",
+				"icon": "microchip",
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": ["precompiles/introduction", "precompiles/quick-start"]
+					},
+					{
+						"group": "Precompiles",
+						"pages": [
+							"precompiles/precompiles/address",
+							"precompiles/precompiles/bank",
+							"precompiles/precompiles/distribution",
+							"precompiles/precompiles/governance",
+							"precompiles/precompiles/ibc",
+							"precompiles/precompiles/json",
+							"precompiles/precompiles/oracle",
+							"precompiles/precompiles/pointer",
+							"precompiles/precompiles/pointerview",
+							"precompiles/precompiles/staking",
+							"precompiles/precompiles/wasm"
+						]
+					}
+				]
+			},
+			{
+				"dropdown": "@sei-js/ledger",
+				"description": "Hardware wallet connection",
+				"icon": "shield",
+				"pages": ["ledger/introduction"]
+			}
+		]
+	},
+	"footer": {
+		"socials": {
+			"x": "https://x.com/SeiNetwork",
+			"github": "https://github.com/sei-protocol/sei-js",
+			"linkedin": "https://www.linkedin.com/company/sei-protocol"
+		}
+	}
+}

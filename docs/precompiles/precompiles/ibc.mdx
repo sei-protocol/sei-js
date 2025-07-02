@@ -1,0 +1,708 @@
+---
+title: 'IBC Precompile'
+description: 'Transfer tokens across Cosmos chains using the Inter-Blockchain Communication (IBC) protocol through the IBC precompile contract'
+icon: "arrow-right-arrow-left"
+---
+
+## Overview
+
+The IBC precompile enables cross-chain token transfers using the Inter-Blockchain Communication (IBC) protocol directly from EVM contracts. This allows seamless integration between Sei and other Cosmos SDK chains, enabling multi-chain DeFi applications and cross-chain asset management.
+
+**Contract Address:** `0x0000000000000000000000000000000000001009`
+
+## Key Features
+
+- **Cross-Chain Transfers**: Send tokens to any IBC-enabled Cosmos chain
+- **Flexible Timeouts**: Set custom timeout parameters or use defaults
+- **Memo Support**: Include arbitrary data with transfers
+- **Multi-Asset Support**: Transfer any IBC-compatible token denomination
+
+## Available Functions
+
+### State-Changing Functions
+
+<AccordionGroup>
+  <Accordion title="transfer(string, string, string, string, uint256, uint64, uint64, uint64, string) → bool">
+    Transfer tokens to another chain via IBC with custom timeout parameters.
+    
+    **Parameters:**
+    - `toAddress` (string): Recipient address on destination chain
+    - `port` (string): IBC port identifier (usually "transfer")
+    - `channel` (string): IBC channel identifier (e.g., "channel-0")
+    - `denom` (string): Token denomination to transfer
+    - `amount` (uint256): Amount to transfer (in base units)
+    - `revisionNumber` (uint64): Timeout height revision number
+    - `revisionHeight` (uint64): Timeout height revision height
+    - `timeoutTimestamp` (uint64): Timeout timestamp (nanoseconds)
+    - `memo` (string): Optional memo data
+    
+    **Returns:** Success boolean
+    
+    ```typescript
+    const success = await ibcContract.transfer(
+      "cosmos1...",           // Destination address
+      "transfer",            // Port
+      "channel-0",           // Channel
+      "usei",               // Denomination
+      parseEther("100"),    // Amount (100 SEI)
+      1n,                   // Revision number
+      1000000n,             // Revision height
+      0n,                   // Timeout timestamp (0 = no timeout)
+      "Cross-chain transfer" // Memo
+    );
+    ```
+  </Accordion>
+
+  <Accordion title="transferWithDefaultTimeout(string, string, string, string, uint256, string) → bool">
+    Transfer tokens to another chain via IBC using default timeout parameters.
+    
+    **Parameters:**
+    - `toAddress` (string): Recipient address on destination chain
+    - `port` (string): IBC port identifier (usually "transfer")
+    - `channel` (string): IBC channel identifier
+    - `denom` (string): Token denomination to transfer
+    - `amount` (uint256): Amount to transfer (in base units)
+    - `memo` (string): Optional memo data
+    
+    **Returns:** Success boolean
+    
+    **Note:** Uses default timeout of 10 minutes from current time
+    
+    ```typescript
+    const success = await ibcContract.transferWithDefaultTimeout(
+      "cosmos1...",           // Destination address
+      "transfer",            // Port
+      "channel-0",           // Channel
+      "usei",               // Denomination
+      parseEther("50"),     // Amount (50 SEI)
+      "Simple transfer"     // Memo
+    );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Usage Examples
+
+<Tabs>
+  <Tab title="Viem">
+    ```typescript
+    import { createPublicClient, createWalletClient, http, parseEther } from 'viem';
+    import { privateKeyToAccount } from 'viem/accounts';
+    import { 
+      seiTestnet,
+      IBC_PRECOMPILE_ABI,
+      IBC_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles/viem';
+
+    const publicClient = createPublicClient({
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    const account = privateKeyToAccount('0x...');
+    const walletClient = createWalletClient({
+      account,
+      chain: seiTestnet,
+      transport: http()
+    });
+
+    // Common IBC channels and their destinations
+    const IBC_CHANNELS = {
+      OSMOSIS: 'channel-0',
+      COSMOS_HUB: 'channel-1',
+      JUNO: 'channel-2',
+      STARGAZE: 'channel-3'
+    } as const;
+
+    // Transfer with default timeout (recommended for most use cases)
+    async function transferToChain(
+      destinationAddress: string,
+      channel: string,
+      denom: string,
+      amount: string,
+      memo: string = ""
+    ) {
+      const hash = await walletClient.writeContract({
+        address: IBC_PRECOMPILE_ADDRESS,
+        abi: IBC_PRECOMPILE_ABI,
+        functionName: 'transferWithDefaultTimeout',
+        args: [
+          destinationAddress,
+          "transfer",
+          channel,
+          denom,
+          parseEther(amount),
+          memo
+        ]
+      });
+      
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Transfer with custom timeout
+    async function transferWithCustomTimeout(
+      destinationAddress: string,
+      channel: string,
+      denom: string,
+      amount: string,
+      timeoutMinutes: number = 10,
+      memo: string = ""
+    ) {
+      const currentTime = Math.floor(Date.now() / 1000);
+      const timeoutTimestamp = BigInt((currentTime + timeoutMinutes * 60) * 1_000_000_000); // Convert to nanoseconds
+      
+      const hash = await walletClient.writeContract({
+        address: IBC_PRECOMPILE_ADDRESS,
+        abi: IBC_PRECOMPILE_ABI,
+        functionName: 'transfer',
+        args: [
+          destinationAddress,
+          "transfer",
+          channel,
+          denom,
+          parseEther(amount),
+          1n, // Revision number
+          0n, // Revision height (0 = no height timeout)
+          timeoutTimestamp,
+          memo
+        ]
+      });
+      
+      return await publicClient.waitForTransactionReceipt({ hash });
+    }
+
+    // Cross-chain DeFi helper
+    async function crossChainSwap(
+      destinationChain: keyof typeof IBC_CHANNELS,
+      destinationAddress: string,
+      amount: string,
+      swapMemo: string
+    ) {
+      const channel = IBC_CHANNELS[destinationChain];
+      
+      console.log(`Initiating cross-chain swap to ${destinationChain}`);
+      console.log(`Channel: ${channel}, Amount: ${amount} SEI`);
+      
+      return await transferToChain(
+        destinationAddress,
+        channel,
+        "usei",
+        amount,
+        swapMemo
+      );
+    }
+
+    // Batch cross-chain transfers
+    async function batchTransfer(
+      transfers: Array<{
+        destinationAddress: string;
+        channel: string;
+        denom: string;
+        amount: string;
+        memo?: string;
+      }>
+    ) {
+      const transferPromises = transfers.map(transfer =>
+        transferToChain(
+          transfer.destinationAddress,
+          transfer.channel,
+          transfer.denom,
+          transfer.amount,
+          transfer.memo || ""
+        )
+      );
+      
+      return await Promise.all(transferPromises);
+    }
+
+    // Multi-chain portfolio rebalancing
+    async function rebalancePortfolio(
+      rebalanceConfig: Array<{
+        chain: keyof typeof IBC_CHANNELS;
+        targetAddress: string;
+        percentage: number; // Percentage of total balance
+      }>,
+      totalAmount: string
+    ) {
+      const totalAmountBN = parseFloat(totalAmount);
+      
+      const transfers = rebalanceConfig.map(config => ({
+        destinationAddress: config.targetAddress,
+        channel: IBC_CHANNELS[config.chain],
+        denom: "usei",
+        amount: (totalAmountBN * config.percentage / 100).toString(),
+        memo: `Portfolio rebalancing - ${config.percentage}% to ${config.chain}`
+      }));
+      
+      return await batchTransfer(transfers);
+    }
+
+    // Example usage
+    await crossChainSwap(
+      "OSMOSIS",
+      "osmo1...",
+      "100",
+      "=swap:uosmo:osmo1..."
+    );
+    
+    await rebalancePortfolio([
+      { chain: "OSMOSIS", targetAddress: "osmo1...", percentage: 40 },
+      { chain: "COSMOS_HUB", targetAddress: "cosmos1...", percentage: 30 },
+      { chain: "JUNO", targetAddress: "juno1...", percentage: 30 }
+    ], "1000");
+    ```
+  </Tab>
+
+  <Tab title="Ethers.js">
+    ```typescript
+    import { ethers } from 'ethers';
+    import { getIbcPrecompileEthersContract } from '@sei-js/precompiles/ethers';
+
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
+    const signer = new ethers.Wallet('0x...', provider);
+    const ibcContract = getIbcPrecompileEthersContract(provider);
+
+    // Transfer with default timeout
+    async function transferToChain(
+      destinationAddress: string,
+      channel: string,
+      denom: string,
+      amount: string,
+      memo: string = ""
+    ) {
+      const ibcWithSigner = ibcContract.connect(signer);
+      
+      const tx = await ibcWithSigner.transferWithDefaultTimeout(
+        destinationAddress,
+        "transfer",
+        channel,
+        denom,
+        ethers.parseEther(amount),
+        memo
+      );
+      
+      return await tx.wait();
+    }
+
+    // IBC transfer manager class
+    class IBCTransferManager {
+      private contract: ethers.Contract;
+      private signer: ethers.Signer;
+      
+      // Common chain configurations
+      private readonly CHAINS = {
+        OSMOSIS: { channel: 'channel-0', prefix: 'osmo' },
+        COSMOS_HUB: { channel: 'channel-1', prefix: 'cosmos' },
+        JUNO: { channel: 'channel-2', prefix: 'juno' },
+        STARGAZE: { channel: 'channel-3', prefix: 'stars' }
+      };
+      
+      constructor(provider: ethers.Provider, signer: ethers.Signer) {
+        this.contract = getIbcPrecompileEthersContract(provider);
+        this.signer = signer;
+      }
+      
+      async transferWithDefaults(
+        destinationAddress: string,
+        channel: string,
+        denom: string,
+        amount: string,
+        memo: string = ""
+      ): Promise<ethers.TransactionReceipt> {
+        const contractWithSigner = this.contract.connect(this.signer);
+        
+        const tx = await contractWithSigner.transferWithDefaultTimeout(
+          destinationAddress,
+          "transfer",
+          channel,
+          denom,
+          ethers.parseEther(amount),
+          memo
+        );
+        
+        return await tx.wait();
+      }
+      
+      async transferWithCustomTimeout(
+        destinationAddress: string,
+        channel: string,
+        denom: string,
+        amount: string,
+        timeoutMinutes: number,
+        memo: string = ""
+      ): Promise<ethers.TransactionReceipt> {
+        const contractWithSigner = this.contract.connect(this.signer);
+        
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeoutTimestamp = BigInt((currentTime + timeoutMinutes * 60) * 1_000_000_000);
+        
+        const tx = await contractWithSigner.transfer(
+          destinationAddress,
+          "transfer",
+          channel,
+          denom,
+          ethers.parseEther(amount),
+          1n, // Revision number
+          0n, // Revision height
+          timeoutTimestamp,
+          memo
+        );
+        
+        return await tx.wait();
+      }
+      
+      async transferToKnownChain(
+        chainName: keyof typeof this.CHAINS,
+        destinationAddress: string,
+        amount: string,
+        memo: string = ""
+      ): Promise<ethers.TransactionReceipt> {
+        const chainConfig = this.CHAINS[chainName];
+        if (!chainConfig) {
+          throw new Error(`Unknown chain: ${chainName}`);
+        }
+        
+        return await this.transferWithDefaults(
+          destinationAddress,
+          chainConfig.channel,
+          "usei",
+          amount,
+          memo
+        );
+      }
+      
+      // Validate destination address format
+      validateDestinationAddress(address: string, chainPrefix: string): boolean {
+        return address.startsWith(chainPrefix) && address.length >= 39;
+      }
+      
+      // Get estimated transfer time
+      getEstimatedTransferTime(chainName: keyof typeof this.CHAINS): string {
+        const times = {
+          OSMOSIS: "1-2 minutes",
+          COSMOS_HUB: "1-2 minutes", 
+          JUNO: "1-2 minutes",
+          STARGAZE: "1-2 minutes"
+        };
+        
+        return times[chainName] || "1-3 minutes";
+      }
+    }
+
+    // Usage
+    const ibcManager = new IBCTransferManager(provider, signer);
+    
+    // Transfer to Osmosis
+    await ibcManager.transferToKnownChain(
+      "OSMOSIS",
+      "osmo1...",
+      "100",
+      "DeFi farming"
+    );
+    ```
+  </Tab>
+
+  <Tab title="Manual">
+    ```typescript
+    import { 
+      IBC_PRECOMPILE_ABI, 
+      IBC_PRECOMPILE_ADDRESS 
+    } from '@sei-js/precompiles';
+
+    // Using with web3.js
+    import Web3 from 'web3';
+    
+    const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
+    const ibcContract = new web3.eth.Contract(
+      IBC_PRECOMPILE_ABI,
+      IBC_PRECOMPILE_ADDRESS
+    );
+
+    // Setup account
+    const account = web3.eth.accounts.privateKeyToAccount('0x...');
+    web3.eth.accounts.wallet.add(account);
+
+    // Transfer with default timeout
+    const transferTx = await ibcContract.methods
+      .transferWithDefaultTimeout(
+        'cosmos1...', // Destination address
+        'transfer',   // Port
+        'channel-0',  // Channel
+        'usei',       // Denomination
+        web3.utils.toWei('100', 'ether'), // Amount
+        'Cross-chain transfer' // Memo
+      )
+      .send({
+        from: account.address,
+        gas: 300000
+      });
+
+    // Transfer with custom timeout
+    const currentTime = Math.floor(Date.now() / 1000);
+    const timeoutTimestamp = (currentTime + 600) * 1_000_000_000; // 10 minutes
+
+    const customTransferTx = await ibcContract.methods
+      .transfer(
+        'cosmos1...',
+        'transfer',
+        'channel-0',
+        'usei',
+        web3.utils.toWei('50', 'ether'),
+        1, // Revision number
+        0, // Revision height
+        timeoutTimestamp,
+        'Custom timeout transfer'
+      )
+      .send({
+        from: account.address,
+        gas: 300000
+      });
+    ```
+  </Tab>
+</Tabs>
+
+## IBC Channel Configuration
+
+### Common Sei IBC Channels
+
+| Chain | Channel ID | Destination Prefix | Transfer Time |
+|-------|------------|-------------------|---------------|
+| Osmosis | channel-0 | osmo | 1-2 minutes |
+| Cosmos Hub | channel-1 | cosmos | 1-2 minutes |
+| Juno | channel-2 | juno | 1-2 minutes |
+| Stargaze | channel-3 | stars | 1-2 minutes |
+
+### Channel Discovery
+```typescript
+// Helper to validate channel and destination
+function validateIBCTransfer(
+  channel: string,
+  destinationAddress: string,
+  expectedPrefix: string
+) {
+  // Validate channel format
+  if (!channel.startsWith('channel-')) {
+    throw new Error('Invalid channel format. Must start with "channel-"');
+  }
+  
+  // Validate destination address
+  if (!destinationAddress.startsWith(expectedPrefix)) {
+    throw new Error(`Invalid destination address. Must start with "${expectedPrefix}"`);
+  }
+  
+  // Validate address length (typical Cosmos address is 39-45 characters)
+  if (destinationAddress.length < 39 || destinationAddress.length > 45) {
+    throw new Error('Invalid destination address length');
+  }
+  
+  return true;
+}
+```
+
+## Common Use Cases
+
+### Cross-Chain DeFi
+- **Yield Farming**: Transfer tokens to other chains for higher yields
+- **Arbitrage**: Move assets between chains to exploit price differences
+- **Liquidity Provision**: Provide liquidity on multiple DEXs across chains
+
+### Portfolio Management
+- **Diversification**: Spread assets across multiple chains
+- **Risk Management**: Move assets to safer chains during market volatility
+- **Rebalancing**: Maintain target allocations across chains
+
+### Multi-Chain Applications
+- **Cross-Chain Swaps**: Enable swaps between assets on different chains
+- **Unified Wallets**: Manage assets across multiple chains from one interface
+- **Cross-Chain Governance**: Participate in governance across multiple chains
+
+## Transfer Strategies
+
+### Timeout Management
+```typescript
+// Calculate appropriate timeout based on network conditions
+function calculateOptimalTimeout(
+  destinationChain: string,
+  amount: string,
+  networkCongestion: 'low' | 'medium' | 'high' = 'medium'
+): number {
+  const baseTimeout = 10; // 10 minutes base
+  
+  const congestionMultiplier = {
+    low: 1,
+    medium: 1.5,
+    high: 2
+  };
+  
+  const amountMultiplier = parseFloat(amount) > 1000 ? 1.2 : 1; // Extra time for large transfers
+  
+  return Math.ceil(baseTimeout * congestionMultiplier[networkCongestion] * amountMultiplier);
+}
+```
+
+### Memo Optimization
+```typescript
+// Generate optimized memos for different use cases
+function generateTransferMemo(
+  purpose: 'swap' | 'farming' | 'arbitrage' | 'general',
+  additionalData?: Record<string, any>
+): string {
+  const memos = {
+    swap: (data: any) => `=swap:${data.outputToken}:${data.recipient}`,
+    farming: (data: any) => `farm:${data.poolId}:${data.strategy}`,
+    arbitrage: (data: any) => `arb:${data.targetPrice}:${data.slippage}`,
+    general: (data: any) => data?.message || 'IBC transfer'
+  };
+  
+  return memos[purpose](additionalData);
+}
+```
+
+### Batch Transfer Optimization
+```typescript
+// Optimize batch transfers for gas efficiency
+async function optimizedBatchTransfer(
+  transfers: Array<{
+    destinationAddress: string;
+    channel: string;
+    denom: string;
+    amount: string;
+    memo?: string;
+  }>,
+  maxConcurrent: number = 3
+) {
+  // Group transfers by channel for efficiency
+  const transfersByChannel = transfers.reduce((acc, transfer) => {
+    if (!acc[transfer.channel]) acc[transfer.channel] = [];
+    acc[transfer.channel].push(transfer);
+    return acc;
+  }, {} as Record<string, typeof transfers>);
+  
+  // Process transfers in batches
+  const results = [];
+  for (const [channel, channelTransfers] of Object.entries(transfersByChannel)) {
+    for (let i = 0; i < channelTransfers.length; i += maxConcurrent) {
+      const batch = channelTransfers.slice(i, i + maxConcurrent);
+      const batchPromises = batch.map(transfer => 
+        transferToChain(
+          transfer.destinationAddress,
+          transfer.channel,
+          transfer.denom,
+          transfer.amount,
+          transfer.memo
+        )
+      );
+      
+      const batchResults = await Promise.all(batchPromises);
+      results.push(...batchResults);
+    }
+  }
+  
+  return results;
+}
+```
+
+## Error Handling
+
+Common errors when using the IBC precompile:
+
+- **Invalid channel**: Channel doesn't exist or is closed
+- **Timeout expired**: Transfer took too long to complete
+- **Insufficient balance**: Not enough tokens to transfer
+- **Invalid destination**: Malformed destination address
+
+```typescript
+async function safeIBCTransfer(
+  destinationAddress: string,
+  channel: string,
+  denom: string,
+  amount: string,
+  memo: string = ""
+) {
+  try {
+    // Validate inputs
+    if (!destinationAddress || !channel || !denom || !amount) {
+      throw new Error('Missing required parameters');
+    }
+    
+    // Validate channel format
+    if (!channel.startsWith('channel-')) {
+      throw new Error('Invalid channel format');
+    }
+    
+    // Validate amount
+    if (parseFloat(amount) <= 0) {
+      throw new Error('Amount must be greater than 0');
+    }
+    
+    return await transferToChain(destinationAddress, channel, denom, amount, memo);
+  } catch (error) {
+    if (error.message.includes('channel not found')) {
+      throw new Error(`IBC channel ${channel} not found or inactive`);
+    } else if (error.message.includes('insufficient funds')) {
+      throw new Error(`Insufficient ${denom} balance for transfer`);
+    } else if (error.message.includes('timeout')) {
+      throw new Error('Transfer timeout - try again with longer timeout');
+    } else if (error.message.includes('invalid destination')) {
+      throw new Error('Invalid destination address format');
+    } else {
+      throw error;
+    }
+  }
+}
+```
+
+## Security Considerations
+
+### Address Validation
+- Always validate destination addresses match the expected chain prefix
+- Verify channel IDs are correct for the intended destination chain
+- Double-check amounts and denominations before transfer
+
+### Timeout Management
+- Use appropriate timeouts based on network conditions
+- Consider using default timeouts for most transfers
+- Monitor for failed transfers due to timeouts
+
+### Memo Security
+- Avoid including sensitive information in memos
+- Be cautious with automated memo generation
+- Validate memo content for cross-chain applications
+
+```typescript
+// Security validation helper
+function validateTransferSecurity(
+  destinationAddress: string,
+  channel: string,
+  amount: string,
+  memo: string
+): { valid: boolean; warnings: string[] } {
+  const warnings: string[] = [];
+  
+  // Check for common address typos
+  if (destinationAddress.includes('0x')) {
+    warnings.push('Destination address contains 0x - this may be an Ethereum address');
+  }
+  
+  // Check for large transfers
+  if (parseFloat(amount) > 10000) {
+    warnings.push('Large transfer amount - please double-check');
+  }
+  
+  // Check memo for sensitive data
+  if (memo.includes('private') || memo.includes('secret') || memo.includes('key')) {
+    warnings.push('Memo may contain sensitive information');
+  }
+  
+  return {
+    valid: warnings.length === 0,
+    warnings
+  };
+}
+```
+
+## Related Precompiles
+
+- **[Bank](/precompiles/precompiles/bank)**: Check token balances before IBC transfers
+- **[Address](/precompiles/precompiles/address)**: Convert between EVM and Cosmos addresses
+- **[Oracle](/precompiles/precompiles/oracle)**: Get exchange rates for cross-chain arbitrage
