@@ -4,7 +4,7 @@ import { TrieveSDK } from 'trieve-ts-sdk';
 import { z } from 'zod';
 
 import { DEFAULT_BASE_URL, SERVER_URL, SUBDOMAIN } from './config.js';
-import type { MintlifySearchConfig, SeiJSSearchResult, TrieveResponse, TrieveSearchResult } from './types.js';
+import type { MintlifySearchConfig, SeiSearchResponse, TrieveResponse, TrieveSearchResult } from './types.js';
 import { formatErr, throwOnAxiosError } from './utils.js';
 
 /**
@@ -28,7 +28,7 @@ const fetchMintlifyConfig = async (subdomain: string): Promise<MintlifySearchCon
 /**
  * Search Sei-JS documentation using Mintlify/Trieve API
  */
-const searchSeiJSDocs = async (query: string, config: MintlifySearchConfig): Promise<SeiJSSearchResult[]> => {
+const searchSeiJSDocs = async (query: string, config: MintlifySearchConfig): Promise<SeiSearchResponse[]> => {
 	const trieve = new TrieveSDK({
 		apiKey: config.trieveApiKey,
 		datasetId: config.trieveDatasetId,
@@ -65,7 +65,7 @@ export const createSeiJSDocsSearchTool = async (server: McpServer): Promise<void
 
 	server.tool(
 		'search_sei_js_docs',
-		'Search all @sei-js libraries documentation for blockchain development, EVM/Ethereum integration, global wallet connections, React next.js and vite boilerplates, ledger integration, and the Sei chain registry',
+		'Search all @sei-js libraries documentation for blockchain development, EVM/Ethereum integration, global wallet connections, React Next.js and Vite boilerplates, ledger integration, and the Sei chain registry. Useful for NodeJS based integrations with Sei.',
 		{
 			query: z.string()
 		},

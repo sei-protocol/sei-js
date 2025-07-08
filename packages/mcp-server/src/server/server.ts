@@ -1,10 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { getSupportedNetworks } from '../core/chains.js';
 import { registerEVMPrompts } from '../core/prompts.js';
 import { registerEVMResources } from '../core/resources.js';
 import { registerEVMTools } from '../core/tools.js';
 import { createSeiJSDocsSearchTool } from '../mintlify/index.js';
+import { createDocsSearchTool } from '../docs/index.js';
 
 // Create and start the MCP server
 async function startServer() {
@@ -20,7 +20,8 @@ async function startServer() {
 		registerEVMTools(server);
 		registerEVMPrompts(server);
 
-		// Register documentation search tool
+		// Register documentation search tools
+		await createDocsSearchTool(server);
 		await createSeiJSDocsSearchTool(server);
 
 		// Log server information

@@ -150,6 +150,31 @@ describe('Balance Service', () => {
 			// Restore console.error
 			console.error = originalConsoleError;
 		});
+
+		test('should return false if there is a non-Error object thrown', async () => {
+			// Import mocked modules
+			const { readContract } = await import('../../../core/services/contracts.js');
+			const { utils } = await import('../../../core/services/utils.js');
+
+			// Configure mocks for this test
+			(readContract as jest.Mock).mockImplementation(() => {
+				throw 'String error message'; // Non-Error object
+			});
+			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
+
+			// Mock console.error to avoid cluttering test output
+			const originalConsoleError = console.error;
+			console.error = () => {};
+
+			// Call the function
+			const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n);
+
+			// Verify results
+			expect(result).toBe(false);
+
+			// Restore console.error
+			console.error = originalConsoleError;
+		});
 	});
 
 	describe('getERC721Balance', () => {
