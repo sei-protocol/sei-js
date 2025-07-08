@@ -56,14 +56,12 @@ const searchDocs = async (query: string): Promise<SeiSearchResponse[]> => {
 			throw new Error('No results found');
 		}
 		
-		// Return as array to match expected interface
 		return data;
 	} catch (error) {
 		if (error instanceof Error) {
 			throw new Error(`Search failed: ${error.message}`);
 		}
-		// For testing purposes, allow non-Error objects to pass through
-		// so we can test the String(error) branch in the main handler
+
 		throw error;
 	}
 };
