@@ -23,7 +23,7 @@ const fetchMintlifyConfig = async (subdomain: string): Promise<MintlifySearchCon
 		
 		return (await response.json()) as MintlifySearchConfig;
 	} catch (err) {
-		throw new Error(formatErr(err));
+		throw new Error(formatErr(err), { cause: err });
 	}
 };
 
