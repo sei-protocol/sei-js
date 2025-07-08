@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3
+
+### Patch Changes
+
+- d421249: Removed unnecessary dependencies
+
 ## 0.2.2
 
 ### Patch Changes
