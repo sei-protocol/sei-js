@@ -7,7 +7,7 @@ const DOCS_SEARCH_URL = 'https://docs.sei-apis.io/search';
 export const createDocsSearchTool = async (server: McpServer) => {
 	server.tool(
 		'search_docs',
-		'Search the main Sei docs for general chain information, ecosystem providers, and user onboarding guides. Useful for all queries for up to date information about Sei.',
+		'Search the main Sei docs for general chain information, ecosystem providers, and user onboarding guides. Useful for all queries for up-to-date information about Sei.',
 		{
 			query: z.string()
 		},

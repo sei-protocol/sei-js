@@ -65,7 +65,7 @@ export const createSeiJSDocsSearchTool = async (server: McpServer): Promise<void
 
 	server.tool(
 		'search_sei_js_docs',
-		'Search all @sei-js libraries documentation for blockchain development, EVM/Ethereum integration, global wallet connections, React next.js and vite boilerplates, ledger integration, and the Sei chain registry. Useful for nodejs based integrations with Sei.',
+		'Search all @sei-js libraries documentation for blockchain development, EVM/Ethereum integration, global wallet connections, React Next.js and Vite boilerplates, ledger integration, and the Sei chain registry. Useful for NodeJS based integrations with Sei.',
 		{
 			query: z.string()
 		},
