@@ -1,11 +1,10 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import axios, { AxiosError } from 'axios';
 import { TrieveSDK } from 'trieve-ts-sdk';
 import { z } from 'zod';
 
 import { DEFAULT_BASE_URL, SERVER_URL, SUBDOMAIN } from './config.js';
 import type { MintlifySearchConfig, SeiSearchResponse, TrieveResponse, TrieveSearchResult } from './types.js';
-import { formatErr, throwOnAxiosError } from './utils.js';
+import { formatErr } from './utils.js';
 
 /**
  * Fetch Mintlify configuration for the given subdomain
@@ -13,15 +12,18 @@ import { formatErr, throwOnAxiosError } from './utils.js';
 const fetchMintlifyConfig = async (subdomain: string): Promise<MintlifySearchConfig> => {
 	try {
 		const url = `${SERVER_URL}/api/mcp/config/${subdomain}`;
-		const response = await axios.get(url, {
-			validateStatus() {
-				return true;
+		const response = await fetch(url);
+		
+		if (!response.ok) {
+			if (response.status === 404) {
+				throw new Error(`${subdomain} not found`);
 			}
-		});
-		throwOnAxiosError(response, 'Failed to fetch MCP config');
-		return response.data;
+			throw new Error(`Failed to fetch MCP config: ${response.status} ${response.statusText}`);
+		}
+		
+		return (await response.json()) as MintlifySearchConfig;
 	} catch (err) {
-		throw new Error(formatErr(err).replace('Request failed with status code 404', `${subdomain} not found`));
+		throw new Error(formatErr(err));
 	}
 };
 
