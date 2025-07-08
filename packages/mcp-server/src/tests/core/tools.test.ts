@@ -20,7 +20,12 @@ import { getPrivateKeyAsHex, isWalletEnabled, getWalletMode } from '../../core/c
 import { registerEVMTools } from '../../core/tools.js';
 import * as services from '../../core/services/index.js';
 import { getWalletProvider } from '../../core/wallet/index.js';
+import { createDocsSearchTool } from '../../docs/index.js';
 import { createMockServer, setupBalanceMocks, setupTransactionMocks, testToolError, testToolSuccess, verifyErrorResponse, verifySuccessResponse, type Tool } from './helpers/tool-test-helpers.js';
+
+// Mock fetch globally
+const mockFetch = jest.fn();
+global.fetch = mockFetch as jest.MockedFunction<typeof fetch>;
 
 // Mock all service functions
 jest.mock('../../core/services/index.js');
@@ -40,7 +45,7 @@ describe('EVM Tools', () => {
   let server: McpServer;
   let registeredTools: Map<string, Tool>;
   
-  beforeEach(() => {
+  beforeEach(async () => {
     // Create fresh mock server for each test
     const mockServerResult = createMockServer();
     server = mockServerResult.server;
@@ -69,6 +74,12 @@ describe('EVM Tools', () => {
     
     // Register tools after mocks are set up
     registerEVMTools(server);
+    
+    // Register docs search tool
+    await createDocsSearchTool(server);
+    
+    // Reset fetch mock
+    mockFetch.mockReset();
     
     // Mock formatJson function
     // Create a type for the helpers object to avoid read-only property error
@@ -2918,6 +2929,215 @@ describe('EVM Tools', () => {
     const response = await tool.handler(params);
     
     expect(response.content[0].text).toContain('Address does not own this NFT');
+  });
+
+  // Documentation Search Tests
+  describe('Documentation Search Tools', () => {
+    test('search_docs - successful search with results', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      const mockResults = [
+        {
+          title: 'Getting Started',
+          content: 'Learn how to get started with Sei',
+          link: 'https://docs.sei.io/getting-started'
+        },
+        {
+          title: 'Bridging Tokens',
+          content: 'How to bridge tokens to Sei',
+          link: 'https://docs.sei.io/bridging'
+        }
+      ];
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: jest.fn().mockResolvedValueOnce(mockResults)
+      } as unknown as Response);
+      
+      const response = await testToolSuccess(tool, { query: 'bridging tokens' });
+      
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://docs.sei-apis.io/search?q=bridging%20tokens'
+      );
+      
+      expect(response).toHaveProperty('content');
+      expect(response.content).toHaveLength(2);
+      expect(response.content[0]).toEqual({
+        type: 'text',
+        text: 'Title: Getting Started\nContent: Learn how to get started with Sei\nLink: https://docs.sei.io/getting-started'
+      });
+      expect(response.content[1]).toEqual({
+        type: 'text',
+        text: 'Title: Bridging Tokens\nContent: How to bridge tokens to Sei\nLink: https://docs.sei.io/bridging'
+      });
+    });
+    
+    test('search_docs - HTTP error response', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 404
+      } as unknown as Response);
+      
+      const response = await tool.handler({ query: 'test query' });
+      
+      expect(response).toHaveProperty('isError', true);
+      expect(response.content[0].text).toContain('Error searching docs: Search failed: HTTP error! status: 404');
+    });
+    
+    test('search_docs - empty results', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: jest.fn().mockResolvedValueOnce([])
+      } as unknown as Response);
+      
+      const response = await tool.handler({ query: 'nonexistent' });
+      
+      expect(response).toHaveProperty('isError', true);
+      expect(response.content[0].text).toContain('Error searching docs: Search failed: No results found');
+    });
+    
+    test('search_docs - null results', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: jest.fn().mockResolvedValueOnce(null)
+      } as unknown as Response);
+      
+      const response = await tool.handler({ query: 'test' });
+      
+      expect(response).toHaveProperty('isError', true);
+      expect(response.content[0].text).toContain('Error searching docs: Search failed: No results found');
+    });
+    
+    test('search_docs - network error', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      mockFetch.mockRejectedValueOnce(new Error('Network error'));
+      
+      const response = await tool.handler({ query: 'test' });
+      
+      expect(response).toHaveProperty('isError', true);
+      expect(response.content[0].text).toContain('Error searching docs: Search failed: Network error');
+    });
+    
+    test('search_docs - unknown error type', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      mockFetch.mockRejectedValueOnce('Unknown error');
+      
+      const response = await tool.handler({ query: 'test' });
+      
+      expect(response).toHaveProperty('isError', true);
+      expect(response.content[0].text).toContain('Error searching docs: Unknown error');
+    });
+    
+    test('search_docs - JSON parsing error', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: jest.fn().mockRejectedValueOnce(new Error('Invalid JSON'))
+      } as unknown as Response);
+      
+      const response = await tool.handler({ query: 'test' });
+      
+      expect(response).toHaveProperty('isError', true);
+      expect(response.content[0].text).toContain('Error searching docs: Search failed: Invalid JSON');
+    });
+    
+    test('search_docs - non-Error object thrown', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      // Mock fetch to throw a non-Error object that will pass through searchDocs
+      mockFetch.mockRejectedValueOnce({ message: 'Custom error object' });
+      
+      const response = await tool.handler({ query: 'test' });
+      
+      expect(response).toHaveProperty('isError', true);
+      expect(response.content[0].text).toContain('Error searching docs: [object Object]');
+    });
+
+    test('search_docs - properly encode query parameters', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      const mockResults = [{
+        title: 'Test Result',
+        content: 'Test content',
+        link: 'https://docs.sei.io/test'
+      }];
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: jest.fn().mockResolvedValueOnce(mockResults)
+      } as unknown as Response);
+      
+      await tool.handler({ query: 'special chars: @#$%^&*()' });
+      
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://docs.sei-apis.io/search?q=special%20chars%3A%20%40%23%24%25%5E%26*()'
+      );
+    });
+    
+    test('search_docs - single result', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      const mockResults = [{
+        title: 'Single Result',
+        content: 'Single content',
+        link: 'https://docs.sei.io/single'
+      }];
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: jest.fn().mockResolvedValueOnce(mockResults)
+      } as unknown as Response);
+      
+      const response = await testToolSuccess(tool, { query: 'single' });
+      
+      expect(response.content).toHaveLength(1);
+      expect(response.content[0]).toEqual({
+        type: 'text',
+        text: 'Title: Single Result\nContent: Single content\nLink: https://docs.sei.io/single'
+      });
+    });
+    
+    test('search_docs - results with special characters', async () => {
+      const tool = checkToolExists('search_docs');
+      if (!tool) return;
+      
+      const mockResults = [{
+        title: 'Special & Characters',
+        content: 'Content with "quotes" and <tags> & symbols',
+        link: 'https://docs.sei.io/special'
+      }];
+      
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: jest.fn().mockResolvedValueOnce(mockResults)
+      } as unknown as Response);
+      
+      const response = await testToolSuccess(tool, { query: 'special' });
+      
+      expect(response.content[0]).toEqual({
+        type: 'text',
+        text: 'Title: Special & Characters\nContent: Content with "quotes" and <tags> & symbols\nLink: https://docs.sei.io/special'
+      });
+    });
   });
 });
 });
