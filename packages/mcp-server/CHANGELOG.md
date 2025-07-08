@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+### Patch Changes
+
+- 96d3a73: Added main docs search tool
+
 ## 0.2.1
 
 ### Patch Changes
