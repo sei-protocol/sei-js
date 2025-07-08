@@ -1,14 +1,25 @@
 ---
 title: "Documentation Context"
-description: "How the MCP server reads @sei-js documentation to provide intelligent assistance"
+description: "How the MCP server provides intelligent assistance through comprehensive documentation search"
 icon: "book-open"
 ---
 
-The Sei MCP Server includes intelligent documentation search that reads the entire @sei-js ecosystem documentation to provide context-aware responses and code generation.
+The Sei MCP Server includes intelligent documentation search that provides access to both the main Sei documentation and the entire @sei-js ecosystem documentation for context-aware responses and code generation.
 
 ## Documentation Access
 
-The MCP server can search and reference documentation for all @sei-js packages:
+The MCP server provides two search tools:
+
+### Main Sei Documentation (`search_docs`)
+Search the official Sei documentation for:
+- General chain information and network details
+- Ecosystem providers and integrations
+- User onboarding guides and tutorials
+- Bridging and cross-chain operations
+- DeFi protocols and marketplace information
+
+### Sei-JS Package Documentation (`search_sei_js_docs`)
+Search and reference documentation for all @sei-js packages:
 
 - **@sei-js/precompiles** - Precompile contract reference and integration examples
 - **@sei-js/sei-global-wallet** - EIP-6963 wallet standard implementation

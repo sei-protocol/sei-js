@@ -5,7 +5,7 @@ export interface MintlifySearchConfig {
 	base_url?: string;
 }
 
-export interface SeiJSSearchResult {
+export interface SeiSearchResponse {
 	title: string;
 	content: string;
 	link: string;
