@@ -145,7 +145,7 @@ app.post('/messages', (req: Request, res: Response) => {
 
 	console.error(`Handling message for session: ${sessionId}`);
 	try {
-		transport.handlePostMessage(req, res).catch((error: Error) => {
+		transport.handlePostMessage(req, res, req.body).catch((error: Error) => {
 			console.error(`Error handling post message: ${error}`);
 			res.status(500).json({ error: `Internal server error: ${error.message}` });
 		});
