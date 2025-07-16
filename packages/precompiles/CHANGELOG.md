@@ -1,5 +1,11 @@
 # @sei-js/precompiles
 
+## 2.1.1
+
+### Patch Changes
+
+- a64da08: Update README files in NPM
+
 ## 2.1.0
 
 ### Minor Changes

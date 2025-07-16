@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4
+
+### Patch Changes
+
+- a64da08: Update README files in NPM
+
 ## 0.2.3
 
 ### Patch Changes

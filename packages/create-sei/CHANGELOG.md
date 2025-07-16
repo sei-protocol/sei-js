@@ -1,5 +1,11 @@
 # @sei-js/create-sei-app
 
+## 0.0.3
+
+### Patch Changes
+
+- a64da08: Update README files in NPM
+
 ## 0.0.2
 
 ### Patch Changes
