@@ -1,24 +1,35 @@
-# Sei Global Wallet Package
+<div align="center">
 
-This repository provides [Dynamic Global Wallet](https://docs.dynamic.xyz/global-wallets/overview) support for Sei.
+# @sei-js/sei-global-wallet
 
-## Getting Started
+[![npm version](https://badge.fury.io/js/@sei-js%2Fsei-global-wallet.svg)](https://badge.fury.io/js/@sei-js%2Fsei-global-wallet)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Sei Network](https://img.shields.io/badge/Sei-Network-red)](https://sei.io)
 
-1.**Install Sei Global Wallet Package**
+**Universal wallet connections using the EIP-6963 standard**
+
+[Documentation](https://sei-js.docs.sei.io/sei-global-wallet/introduction) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/sei-global-wallet) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
+
+</div>
+
+## 🚀 Quick Start
 
 ```bash
 npm install @sei-js/sei-global-wallet
 ```
 
-2.**Importing the Sei Global Wallet**
-To use this wallet with any wallet provider that supports the EIP-6963 standard, you need to import the wallet package in your project.
- 
+Then import to register with EIP-6963 standard:
+
 ```javascript
- import "@sei-js/sei-global-wallet/eip6963";
- ```
+import '@sei-js/sei-global-wallet/eip6963';
+```
 
-3.**Use Sei Global Wallet**
-   Your wallet is now ready to use within the project.
+This single import enables Sei Global Wallet across all compatible wallet libraries (RainbowKit, ConnectKit, Web3-React, Wagmi, etc.).
 
----
+## 📚 Documentation
+
+For complete documentation, examples, and guides, visit:
+**[sei-js.docs.sei.io/sei-global-wallet](https://sei-js.docs.sei.io/sei-global-wallet/introduction)**
+
 
