@@ -1,5 +1,11 @@
 # @sei-js/ledger
 
+## 1.1.5
+
+### Patch Changes
+
+- a64da08: Update README files in NPM
+
 ## 1.1.4
 
 ### Patch Changes

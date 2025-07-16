@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.3.4
+
+### Patch Changes
+
+- a64da08: Update README files in NPM
+
 ## 1.3.3
 
 ### Patch Changes
