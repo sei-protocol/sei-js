@@ -1,36 +1,27 @@
-# Create Sei App
+<div align="center">
 
-This repository contains various templates for kick-starting a Sei application out of the box, as well as a CLI (Command Line Interface) tool that can be used to create projects using the given templates.
+# @sei-js/create-sei
 
-You can use either:
-- Next.js
-- Vite.js
+[![npm version](https://badge.fury.io/js/@sei-js%2Fcreate-sei.svg)](https://badge.fury.io/js/@sei-js%2Fcreate-sei)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Sei Network](https://img.shields.io/badge/Sei-Network-red)](https://sei.io)
 
-to scaffold your project.
+**Scaffold new Sei applications with pre-configured templates and tooling**
 
-## Scaffold your project
-Simply run `npx @sei-js/create-sei app` to run the setup wizard and choose the template you want to use.
+[Documentation](https://sei-js.docs.sei.io/create-sei/welcome) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/create-sei) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
 
-## EVM Applications (Recommended)
-Building on our EVM (Ethereum Virtual Machine) is the easiest way to get your dApp kick-started on Sei! The mature EVM ecosystem provides many tools out of the box to help developers build faster, including deploying smart contracts and other helpful connection libraries.
+</div>
 
-This tool will offer multiple variants of EVM tooling, including
-- [Wagmi](https://wagmi.sh/core/getting-started) ([Viem](https://viem.sh/)): Recommended
-- [Ethers](https://docs.ethers.org/v6/)
+## 🚀 Quick Start
 
-Both variants use [@sei-js/evm](https://sei-protocol.github.io/sei-js/modules/evm.html)
+```bash
+npx @sei-js/create-sei app -n my-sei-app
+```
 
-If you are new to Web3 development, we recommend using Wagmi since it provides helpful hooks out of the box.
+## 📚 Documentation
 
-## Cosmos Applications
-Cosmos based Sei Applications interact with the CosmWasm VM on the chain. Use this if you are a seasoned CosmWasm developer, or if you intend to interact with CosmWasm Smart Contracts, as well as other chains in the Cosmos ecosystem.
+For complete documentation, examples, and guides, visit:
+**[sei-js.docs.sei.io/create-sei](https://sei-js.docs.sei.io/create-sei/welcome)**
 
-If you think your app might require interaction with native Cosmos modules, you should check the list of [precompiles](https://www.docs.sei.io/dev-interoperability/precompiles/addr) to determine if the same support can be offered by the EVM.
 
-Cosmos Applications use
-- [CosmosKit](https://hyperweb.io/stack/cosmos-kit)
-- [@sei-js/cosmjs](https://sei-protocol.github.io/sei-js/modules/cosmjs.html)
-- [Cosmjs](https://github.com/cosmos/cosmjs)
-
-## Contributing
-We love contributions from the amazing Sei community! If you have a dApp template to contribute, do make a Pull Request into the [sei-js](https://github.com/sei-protocol/sei-js) repository.
