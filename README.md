@@ -4,11 +4,7 @@ SeiJS is a monorepo that contains multiple NPM libraries for writing application
 
 ## Documentation
 
-Please check [our documentation](https://docs.sei.io) for notes on how to get up and running. The tutorial has examples
-on how to connect to a Sei wallet, query an RPC endpoint, transfer tokens, IBC transfer, and interact with contracts.
-
-You can also refer to the [typedoc documentation](https://sei-protocol.github.io/sei-js/) for reference on the contents
-of the @sei-js/core and @sei-js/react library.
+Please check [our documentation](https://sei-js.docs.sei.io) for notes on how to get up and running. 
 
 ## Packages
 

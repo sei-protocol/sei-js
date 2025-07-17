@@ -3,11 +3,5 @@
 	"include": ["src"],
 	"compilerOptions": {
 		"outDir": "./dist/types"
-	},
-	"typedocOptions": {
-		"readme": "./README.md",
-		"name": "sei-account",
-		"entryPoints": ["src/index.ts"],
-		"exclude": ["node_modules"]
 	}
 }
