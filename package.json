@@ -7,15 +7,14 @@
 		"packages/*"
 	],
 	"scripts": {
-		"build:all": "yarn workspaces foreach --topological-dev --all run build",
+		"build:all": "yarn workspaces foreach --all --parallel run build",
 		"postinstall": "yarn update-submodules",
 		"update-submodules": "git submodule update --init --recursive",
 		"docs": "cd docs && yarn dlx mint dev",
-		"typedocs": "typedoc",
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
-		"test:all": "yarn workspaces foreach --all run test",
-		"test:coverage": "yarn workspaces foreach --all run test --coverage"
+		"test:all": "yarn workspaces foreach --all --parallel run test",
+		"test:coverage": "yarn workspaces foreach --all --parallel run test --coverage"
 	},
 	"dependencies": {
 		"@biomejs/biome": "^1.9.4",
@@ -29,8 +28,6 @@
 		"rimraf": "^3.0.2",
 		"ts-jest": "^29.3.0",
 		"ts-node": "2.1.2",
-		"typedoc": "^0.27.9",
-		"typedoc-material-theme": "^1.3.0",
 		"typescript": "^5.8.2"
 	},
 	"packageManager": "yarn@4.7.0"

@@ -3,11 +3,5 @@
 	"include": ["src"],
 	"compilerOptions": {
 		"outDir": "./dist/types"
-	},
-	"typedocOptions": {
-		"readme": "./README.md",
-		"name": "precompiles",
-		"entryPoints": ["src/index.ts"],
-		"exclude": ["node_modules"]
 	}
 }

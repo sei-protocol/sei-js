@@ -4,10 +4,5 @@
 	"compilerOptions": {
 		"outDir": "./dist/types",
 		"rootDir": "./"
-	},
-	"typedocOptions": {
-		"readme": "./README.md",
-		"name": "ledger",
-		"entryPoints": ["src/index.ts"]
 	}
 }
