@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.5
+
+### Patch Changes
+
+- 411f4ec: fix:http-server/handlePostMessage
+
+  https://github.com/modelcontextprotocol/typescript-sdk/issues/187#issuecomment-2765284408
+
 ## 0.2.4
 
 ### Patch Changes
