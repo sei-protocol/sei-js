@@ -1,0 +1,214 @@
+---
+title: "@sei-js/x402-next"
+description: Next.js middleware integration for x402 Payment Protocol
+---
+
+# @sei-js/x402-next
+
+Next.js middleware integration for the x402 Payment Protocol. This package allows you to easily add paywall functionality to your Next.js applications using the x402 protocol.
+
+## Installation
+
+```bash
+npm install @sei-js/x402-next
+```
+
+## Quick Start
+
+Create a middleware file in your Next.js project (e.g., `middleware.ts`):
+
+```typescript
+import { paymentMiddleware, Network } from '@sei-js/x402-next';
+
+export const middleware = paymentMiddleware(
+  "0xYourAddress",
+  {
+    '/protected': {
+      price: '$0.01',
+      network: "pacific-1",
+      config: {
+        description: 'Access to protected content'
+      }
+    },
+  }
+);
+
+// Configure which paths the middleware should run on
+export const config = {
+  matcher: [
+    '/protected/:path*',
+  ]
+};
+```
+
+## Configuration
+
+The `paymentMiddleware` function accepts three parameters:
+
+1. `payTo`: Your receiving address (`0x${string}`)
+2. `routes`: Route configurations for protected endpoints
+3. `facilitator`: (Optional) Configuration for the x402 facilitator service
+4. `paywall`: (Optional) Configuration for the built-in paywall
+
+See the Middleware Options section below for detailed configuration options.
+
+## Middleware Options
+
+### Route Configuration
+
+```typescript
+type RoutesConfig = Record<string, Price | RouteConfig>;
+
+interface RouteConfig {
+  price: Price;           // Price in USD or token amount
+  network: Network;       // "pacific-1" or "atlantic-2"
+  config?: PaymentMiddlewareConfig;
+}
+```
+
+### Payment Configuration
+
+```typescript
+interface PaymentMiddlewareConfig {
+  description?: string;               // Description of the payment
+  mimeType?: string;                  // MIME type of the resource
+  maxTimeoutSeconds?: number;         // Maximum time for payment (default: 60)
+  outputSchema?: Record<string, any>; // JSON schema for the response
+  customPaywallHtml?: string;         // Custom HTML for the paywall
+  resource?: string;                  // Resource URL (defaults to request URL)
+}
+```
+
+## Example with API Routes
+
+Create protected API routes in your Next.js application:
+
+```typescript
+// middleware.ts
+import { paymentMiddleware } from '@sei-js/x402-next';
+import { facilitator } from '@sei-js/x402';
+
+export const middleware = paymentMiddleware(
+  "0xYourAddress",
+  {
+    '/api/premium': {
+      price: '$0.05',
+      network: "pacific-1",
+      config: {
+        description: 'Premium API access',
+        maxTimeoutSeconds: 120,
+      }
+    },
+    '/api/data-feed': {
+      price: '$0.01',
+      network: "pacific-1",
+      config: {
+        description: 'Real-time data feed',
+        mimeType: 'application/json',
+      }
+    }
+  },
+  facilitator,
+  {
+    appName: 'My Next.js App',
+    appLogo: '/logo.png'
+  }
+);
+
+export const config = {
+  matcher: [
+    '/api/premium/:path*',
+    '/api/data-feed/:path*',
+  ]
+};
+```
+
+```typescript
+// pages/api/premium/index.ts or app/api/premium/route.ts
+export async function GET() {
+  return Response.json({
+    message: "This is premium content",
+    data: {
+      timestamp: new Date().toISOString(),
+      premium: true
+    }
+  });
+}
+```
+
+## App Router Support
+
+The middleware works with both Pages Router and App Router:
+
+### App Router (app directory)
+
+```typescript
+// middleware.ts
+import { paymentMiddleware } from '@sei-js/x402-next';
+
+export const middleware = paymentMiddleware(
+  "0xYourAddress",
+  {
+    '/dashboard': {
+      price: '$0.10',
+      network: "pacific-1",
+      config: {
+        description: 'Premium dashboard access'
+      }
+    }
+  }
+);
+
+export const config = {
+  matcher: ['/dashboard/:path*']
+};
+```
+
+### Pages Router (pages directory)
+
+```typescript
+// middleware.ts
+import { paymentMiddleware } from '@sei-js/x402-next';
+
+export const middleware = paymentMiddleware(
+  "0xYourAddress",
+  {
+    '/premium': {
+      price: '$0.05',
+      network: "pacific-1",
+      config: {
+        description: 'Premium page access'
+      }
+    }
+  }
+);
+
+export const config = {
+  matcher: ['/premium/:path*']
+};
+```
+
+## Deployment Considerations
+
+### Vercel
+
+The middleware works seamlessly with Vercel's Edge Runtime:
+
+```typescript
+// middleware.ts
+export const config = {
+  matcher: [
+    '/api/premium/:path*',
+    '/protected/:path*'
+  ],
+  runtime: 'edge' // Optional: explicitly use Edge Runtime
+};
+```
+
+### Other Platforms
+
+The middleware is compatible with any platform that supports Next.js middleware:
+- Netlify
+- AWS Amplify
+- Railway
+- Self-hosted deployments

@@ -130,6 +130,36 @@
 				"description": "Hardware wallet connection",
 				"icon": "shield",
 				"pages": ["ledger/introduction"]
+			},
+			{
+				"dropdown": "@sei-js/x402",
+				"description": "HTTP micro payments",
+				"icon": "credit-card",
+				"pages": [
+					{
+						"group": "Introduction",
+						"pages": ["x402/introduction", "x402/overview", "x402/quickstart"]
+					},
+					{
+						"group": "Facilitators",
+						"pages": ["x402/facilitators/introduction", "x402/facilitators/example"]
+					},
+					{
+						"group": "Client Integration",
+						"pages": ["x402/clients/fetch"]
+					},
+					{
+						"group": "Packages",
+						"pages": [
+							"x402/packages/x402",
+							"x402/packages/x402-fetch",
+							"x402/packages/x402-axios",
+							"x402/packages/x402-express",
+							"x402/packages/x402-hono",
+							"x402/packages/x402-next"
+						]
+					}
+				]
 			}
 		]
 	},
