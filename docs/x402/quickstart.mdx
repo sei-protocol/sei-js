@@ -48,13 +48,13 @@ Before you begin, ensure you have the following:
             ```bash yarn
             mkdir my-paid-api && cd my-paid-api
             yarn init -y
-            yarn add @sei-js/x402-express express
+            yarn add @sei-js/x402-express express dotenv
             ```
 
             ```bash pnpm
             mkdir my-paid-api && cd my-paid-api
             pnpm init -y
-            pnpm add @sei-js/x402-express express
+            pnpm add @sei-js/x402-express express dotenv
             ```
         </CodeGroup>
 
@@ -72,7 +72,7 @@ Before you begin, ensure you have the following:
         ```javascript
         import {config} from "dotenv";
         import express from "express";
-        import {paymentMiddleware, Resource} from "x402-express";
+        import {paymentMiddleware, Resource} from "@sei-js/x402-express";
         config();
 
         const facilitatorUrl = process.env.FACILITATOR_URL as Resource;
@@ -90,9 +90,10 @@ Before you begin, ensure you have the following:
             payTo,
             {
               "GET /weather": {
-              // USDC amount in dollars
-              price: "$0.001",
-              network: "sei-testnet",
+								// USDC amount in dollars
+								price: "$0.001",
+								network: "sei-testnet",
+							}
             },
             {
                 url: facilitatorUrl,
@@ -130,7 +131,7 @@ Before you begin, ensure you have the following:
         In another terminal, try accessing the protected endpoint:
 
         ```bash
-        curl http://localhost:3000/weather
+        curl http://localhost:4021/weather
         ```
 
         <Check>
