@@ -27,7 +27,7 @@ app.use(paymentMiddleware(
   {
     "/protected-route": {
       price: "$0.10",
-      network: "pacific-1",
+      network: "sei",
       config: {
         description: "Access to premium content",
       }
@@ -66,7 +66,7 @@ type RoutesConfig = Record<string, Price | RouteConfig>;
 
 interface RouteConfig {
   price: Price;           // Price in USD or token amount
-  network: Network;       // "pacific-1" or "atlantic-2"
+  network: Network;       // "sei" or "seiTestnet"
   config?: PaymentMiddlewareConfig;
 }
 ```
@@ -97,7 +97,7 @@ app.use(paymentMiddleware(
   {
     "/api/premium": {
       price: "$0.02",
-      network: "pacific-1",
+      network: "sei",
       config: {
         description: "Premium API endpoint",
         maxTimeoutSeconds: 60,

@@ -18,14 +18,14 @@ npm install @sei-js/x402-next
 Create a middleware file in your Next.js project (e.g., `middleware.ts`):
 
 ```typescript
-import { paymentMiddleware, Network } from '@sei-js/x402-next';
+import { paymentMiddleware } from '@sei-js/x402-next';
 
 export const middleware = paymentMiddleware(
   "0xYourAddress",
   {
     '/protected': {
       price: '$0.01',
-      network: "pacific-1",
+      network: "sei",
       config: {
         description: 'Access to protected content'
       }
@@ -61,7 +61,7 @@ type RoutesConfig = Record<string, Price | RouteConfig>;
 
 interface RouteConfig {
   price: Price;           // Price in USD or token amount
-  network: Network;       // "pacific-1" or "atlantic-2"
+  network: Network;       // "sei" or "seiTestnet"
   config?: PaymentMiddlewareConfig;
 }
 ```
@@ -93,7 +93,7 @@ export const middleware = paymentMiddleware(
   {
     '/api/premium': {
       price: '$0.05',
-      network: "pacific-1",
+      network: "sei",
       config: {
         description: 'Premium API access',
         maxTimeoutSeconds: 120,
@@ -101,7 +101,7 @@ export const middleware = paymentMiddleware(
     },
     '/api/data-feed': {
       price: '$0.01',
-      network: "pacific-1",
+      network: "sei",
       config: {
         description: 'Real-time data feed',
         mimeType: 'application/json',
@@ -151,7 +151,7 @@ export const middleware = paymentMiddleware(
   {
     '/dashboard': {
       price: '$0.10',
-      network: "pacific-1",
+      network: "sei",
       config: {
         description: 'Premium dashboard access'
       }
@@ -175,7 +175,7 @@ export const middleware = paymentMiddleware(
   {
     '/premium': {
       price: '$0.05',
-      network: "pacific-1",
+      network: "sei",
       config: {
         description: 'Premium page access'
       }
