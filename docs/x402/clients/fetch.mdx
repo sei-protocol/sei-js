@@ -1,0 +1,83 @@
+---
+title: "Fetch Client"
+description: "Make paid HTTP requests with the native Fetch API and x402"
+icon: "desktop"
+---
+
+## Fetch Client Integration
+
+Use x402 with the standard Fetch API to make paid HTTP requests. Perfect for both browser and Node.js environments.
+
+## Installation
+
+```bash
+npm install @sei-js/x402-fetch viem dotenv
+```
+
+## Basic Usage
+
+```typescript
+import { config } from "dotenv";
+import { Hex } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import {
+  wrapFetchWithPayment,
+  decodeXPaymentResponse,
+} from "@sei-js/x402-fetch";
+
+config();
+
+const privateKey = process.env.PRIVATE_KEY as Hex;
+const baseURL = process.env.RESOURCE_SERVER_URL as string; // e.g. http://localhost:4021
+const endpointPath = process.env.ENDPOINT_PATH as string; // e.g. /weather
+const url = `${baseURL}${endpointPath}`;
+
+if (!baseURL || !privateKey || !endpointPath) {
+  console.error("Missing required environment variables");
+  process.exit(1);
+}
+
+// Create account from private key
+const account = privateKeyToAccount(privateKey);
+
+// Wrap fetch with payment handling
+const fetchWithPayment = wrapFetchWithPayment(fetch, account);
+
+// Make a paid request
+fetchWithPayment(url, {
+  method: "GET",
+})
+  .then(async (response) => {
+    const body = await response.json();
+    console.log("Response:", body);
+
+    // Decode the payment response
+    const paymentResponse = decodeXPaymentResponse(
+      response.headers.get("x-payment-response")!
+    );
+    console.log("Payment details:", paymentResponse);
+  })
+  .catch((error) => {
+    console.error("Error:", error.response?.data?.error);
+  });
+```
+
+## Environment Setup
+
+Create a `.env` file with the required configuration:
+
+```env
+# Required: Your private key for making payments
+PRIVATE_KEY=0xYourPrivateKeyHere
+
+# Required: The server URL hosting the paid API
+RESOURCE_SERVER_URL=http://localhost:4021
+
+# Required: The endpoint path to access
+ENDPOINT_PATH=/weather
+```
+
+<Warning>
+  **Security Note**: Never commit private keys to version control. Use
+  environment variables or secure key management services in production.
+</Warning>

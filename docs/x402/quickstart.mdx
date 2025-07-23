@@ -1,0 +1,163 @@
+---
+title: Quickstart Guide
+description: Build your first paid API on Sei in under 10 minutes by using @sei-js/x402
+icon: "bolt"
+---
+
+## Prerequisites
+
+Before you begin, ensure you have the following:
+
+<AccordionGroup>
+    <Accordion title="Node.js & Package Management" icon="square-terminal">
+        **Required for running x402 applications:**
+        - **Node.js** (v18 or higher) - Required for running x402 packages
+        - **npm, yarn, or pnpm** - For package management
+
+        <Check>
+            Verify your installation: `node --version` should output v18.0.0 or higher
+        </Check>
+    </Accordion>
+
+    <Accordion title="Sei Wallet & Test Funds" icon="wallet">
+        **Required for testing payments:**
+        - **MetaMask** or **Compass Wallet** - For signing transactions
+        - **Sei Testnet configured** - Add Sei testnet to your wallet
+        - **Test SEI tokens** - Get from [Sei Faucet](https://docs.sei.io/learn/faucet)
+
+        <Info>
+            Sei testnet details: Chain ID `1328`, RPC `https://evm-rpc-testnet.sei-apis.com`
+        </Info>
+    </Accordion>
+
+    <Accordion title="Environment Variables" icon="key">
+        **Required configuration for your paid API:**
+        - **`FACILITATOR_URL`** - URL of your x402 facilitator service
+        - **`ADDRESS`** - Your Sei wallet address (0x format) to receive payments
+
+        <Warning>
+            Keep your environment variables secure and never commit them to version control
+        </Warning>
+    </Accordion>
+
+</AccordionGroup>
+
+## Create Your First Paid API
+
+<Steps>
+    <Step title="Install x402 packages">
+        Create a new project and install the required packages:
+
+        <CodeGroup>
+            ```bash npm
+            mkdir my-paid-api && cd my-paid-api
+            npm init -y
+            npm install @sei-js/x402-express express dotenv
+            ```
+
+            ```bash yarn
+            mkdir my-paid-api && cd my-paid-api
+            yarn init -y
+            yarn add @sei-js/x402-express express dotenv
+            ```
+
+            ```bash pnpm
+            mkdir my-paid-api && cd my-paid-api
+            pnpm init -y
+            pnpm add @sei-js/x402-express express dotenv
+            ```
+        </CodeGroup>
+
+        <Check>
+            **Expected outcome:** Project directory created with x402 dependencies installed.
+        </Check>
+    </Step>
+
+    <Step title="Create a simple paid API server">
+    <Warning>
+        **Facilitator Might be Required**: The code references `facilitatorUrl` environment variable that need to be configured. You'll need to set up a facilitator to process payments or use a public facilitator. See the [Facilitator Example](/facilitators/example) here.
+    </Warning>
+        Create `server.js` with a protected API endpoint:
+
+        ```javascript
+        import {config} from "dotenv";
+        import express from "express";
+        import {paymentMiddleware, Resource} from "@sei-js/x402-express";
+        config();
+
+        const facilitatorUrl = process.env.FACILITATOR_URL as Resource;
+        const payTo = process.env.ADDRESS as `0x${string}`;
+
+        if (!facilitatorUrl || !payTo) {
+          console.error("Missing required environment variables");
+          process.exit(1);
+        }
+
+        const app = express();
+
+        app.use(
+          paymentMiddleware(
+            payTo,
+            {
+              "GET /weather": {
+                // USDC amount in dollars
+                price: "$0.001",
+                network: "sei-testnet",
+              }
+            },
+            {
+                url: facilitatorUrl,
+            },
+           ),
+        );
+
+        app.get("/weather", (req, res) => {
+        res.send({
+            report: {
+                weather: "sunny",
+                temperature: 70,
+            },
+          });
+        });
+
+        app.listen(4021, () => {
+          console.log(`Server listening at http://localhost:${4021}`);
+        });
+
+        ```
+
+        <Check>
+            **Expected outcome:** Express server configured with x402 payment middleware.
+        </Check>
+    </Step>
+
+    <Step title="Test the payment requirement">
+        Start your server and test the payment requirement:
+
+        ```bash
+        node server.js
+        ```
+
+        In another terminal, try accessing the protected endpoint:
+
+        ```bash
+        curl http://localhost:4021/weather
+        ```
+
+        <Check>
+            **Expected outcome:** You should receive a `402 Payment Required` response with payment details.
+        </Check>
+
+        Example response:
+        ```json
+        {
+            "error": "Payment Required",
+            "amount": "0.01",
+            "currency": "SEI",
+            "recipient": "YOUR_WALLET_ADDRESS",
+            "network": "sei-testnet"
+        }
+        ```
+    </Step>
+
+</Steps>

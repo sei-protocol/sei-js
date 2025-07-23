@@ -1,0 +1,139 @@
+---
+title: "@sei-js/x402-hono"
+description: Hono middleware integration for x402 Payment Protocol
+---
+
+# @sei-js/x402-hono
+
+Hono middleware integration for the x402 Payment Protocol. This package allows you to easily add paywall functionality to your Hono applications using the x402 protocol.
+
+## Installation
+
+```bash
+npm install @sei-js/x402-hono
+```
+
+## Quick Start
+
+```typescript
+import { Hono } from "hono";
+import { paymentMiddleware, Network } from "@sei-js/x402-hono";
+
+const app = new Hono();
+
+// Configure the payment middleware
+app.use(paymentMiddleware(
+  "0xYourAddress",
+  {
+    "/protected-route": {
+      price: "$0.10",
+      network: "sei",
+      config: {
+        description: "Access to premium content",
+      }
+    }
+  }
+));
+
+// Implement your route
+app.get("/protected-route", (c) => {
+  return c.json({ message: "This content is behind a paywall" });
+});
+
+serve({
+  fetch: app.fetch,
+  port: 3000
+});
+```
+
+## Configuration
+
+The `paymentMiddleware` function accepts three parameters:
+
+1. `payTo`: Your receiving address (`0x${string}`)
+2. `routes`: Route configurations for protected endpoints
+3. `facilitator`: (Optional) Configuration for the x402 facilitator service
+4. `paywall`: (Optional) Configuration for the built-in paywall
+
+## Middleware Options
+
+The middleware supports the same configuration options as the Express middleware:
+
+### Route Configuration
+
+```typescript
+type RoutesConfig = Record<string, Price | RouteConfig>;
+
+interface RouteConfig {
+  price: Price;           // Price in USD or token amount
+  network: Network;       // "sei" or "seiTestnet"
+  config?: PaymentMiddlewareConfig;
+}
+```
+
+### Payment Configuration
+
+```typescript
+interface PaymentMiddlewareConfig {
+  description?: string;               // Description of the payment
+  mimeType?: string;                  // MIME type of the resource
+  maxTimeoutSeconds?: number;         // Maximum time for payment (default: 60)
+  outputSchema?: Record<string, any>; // JSON schema for the response
+  customPaywallHtml?: string;         // Custom HTML for the paywall
+  resource?: string;                  // Resource URL (defaults to request URL)
+}
+```
+
+## Example with Cloudflare Workers
+
+```typescript
+import { Hono } from "hono";
+import { paymentMiddleware } from "@sei-js/x402-hono";
+
+const app = new Hono();
+
+app.use(paymentMiddleware(
+  "0xYourAddress",
+  {
+    "/api/premium": {
+      price: "$0.02",
+      network: "sei",
+      config: {
+        description: "Premium API endpoint",
+        maxTimeoutSeconds: 60,
+      }
+    }
+  }
+));
+
+app.get("/api/premium", (c) => {
+  return c.json({
+    message: "This is premium content",
+    data: {
+      timestamp: Date.now(),
+      premium: true
+    }
+  });
+});
+
+app.get("/", (c) => {
+  return c.text("Hono x402 API Server");
+});
+
+export default app;
+```
+
+## Edge Runtime Support
+
+Hono's lightweight design makes it perfect for edge computing environments. The x402-hono middleware works seamlessly with:
+
+- Cloudflare Workers
+- Vercel Edge Functions
+- Deno Deploy
+- Bun runtime
+
+## Performance Benefits
+
+- **Minimal overhead**: Hono's fast routing combined with x402's efficient payment protocol
+- **Edge-optimized**: Perfect for serverless and edge computing environments
+- **TypeScript-first**: Full type safety for payment configurations and responses

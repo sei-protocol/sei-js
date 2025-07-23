@@ -1,0 +1,211 @@
+---
+title: "Example"
+description: "Complete setup guide for x402 facilitators"
+icon: "code"
+---
+
+<Warning>
+    This example is for learning purposes only. Do not use it for production.
+</Warning>
+## Prerequisites
+
+Before setting up a facilitator, ensure you have:
+
+- **Node.js 18+** installed
+- **Sei wallet** with some SEI for gas fees
+- **Private key** for your facilitator wallet (testnet recommended for development)
+
+## Quick Setup
+
+### 1. Install Dependencies
+
+```bash
+npm install @sei-js/x402 express dotenv
+```
+
+### 2. Environment Configuration
+
+Create a `.env` file:
+
+```env
+# Required: Your facilitator private key
+PRIVATE_KEY=0xYourPrivateKeyHere
+
+# Optional: Server port (defaults to 3000)
+PORT=3002
+```
+
+<Warning>
+  **Security Note**: Never commit private keys to version control. Use
+  environment variables or secure key management services in production.
+</Warning>
+
+### 3. Basic Facilitator Implementation
+
+Create `index.ts` with the following structure:
+
+```typescript
+import { config } from "dotenv";
+import express from "express";
+import { verify, settle } from "@sei-js/x402/facilitator";
+import {
+  PaymentRequirementsSchema,
+  PaymentRequirements,
+  evm,
+  PaymentPayload,
+  PaymentPayloadSchema,
+} from "@sei-js/x402/types";
+
+config();
+
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+
+if (!PRIVATE_KEY) {
+  console.error("Missing required environment variables");
+  process.exit(1);
+}
+
+const { createConnectedClient, createSigner } = evm;
+
+const app = express();
+app.use(express.json());
+
+type VerifyRequest = {
+  paymentPayload: PaymentPayload;
+  paymentRequirements: PaymentRequirements;
+};
+
+type SettleRequest = {
+  paymentPayload: PaymentPayload;
+  paymentRequirements: PaymentRequirements;
+};
+
+const client = createConnectedClient("sei-testnet");
+
+// Verification endpoint
+app.post("/verify", async (req, res) => {
+  try {
+    const body: VerifyRequest = req.body;
+    const paymentRequirements = PaymentRequirementsSchema.parse(
+      body.paymentRequirements
+    );
+    const paymentPayload = PaymentPayloadSchema.parse(body.paymentPayload);
+    const valid = await verify(client, paymentPayload, paymentRequirements);
+    res.json(valid);
+  } catch {
+    res.status(400).json({ error: "Invalid request" });
+  }
+});
+
+// Settlement endpoint
+app.post("/settle", async (req, res) => {
+  try {
+    const signer = createSigner("sei-testnet", PRIVATE_KEY as `0x${string}`);
+    const body: SettleRequest = req.body;
+    const paymentRequirements = PaymentRequirementsSchema.parse(
+      body.paymentRequirements
+    );
+    const paymentPayload = PaymentPayloadSchema.parse(body.paymentPayload);
+    const response = await settle(signer, paymentPayload, paymentRequirements);
+    res.json(response);
+  } catch (error) {
+    res.status(400).json({ error: `Invalid request: ${error}` });
+  }
+});
+
+// Supported schemes endpoint
+app.get("/supported", (req, res) => {
+  res.json({
+    kinds: [
+      {
+        x402Version: 1,
+        scheme: "exact",
+        network: "sei-testnet",
+      },
+    ],
+  });
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log(
+    `Server listening at http://localhost:${process.env.PORT || 3000}`
+  );
+});
+```
+
+### 4. Run Your Facilitator
+
+```bash
+npx tsx index.ts
+```
+
+<Check>
+  Your facilitator server should start and display: `Server listening at
+  http://localhost:3002`
+</Check>
+
+## API Endpoints
+
+Your facilitator exposes three main endpoints:
+
+### POST /verify
+
+Verifies x402 payment payloads without executing transactions.
+
+**Request Body:**
+
+```typescript
+{
+  paymentPayload: PaymentPayload; // x402 payment data
+  paymentRequirements: PaymentRequirements; // Payment requirements
+}
+```
+
+**Response:**
+
+```json
+{
+  "valid": true,
+  "reason": "Payment payload is valid"
+}
+```
+
+### POST /settle
+
+Settles verified payments by signing and broadcasting transactions to Sei testnet.
+
+**Request Body:**
+
+```typescript
+{
+  paymentPayload: PaymentPayload; // x402 payment data
+  paymentRequirements: PaymentRequirements; // Payment requirements
+}
+```
+
+**Response:**
+
+```json
+{
+  "transactionHash": "0x...",
+  "status": "success"
+}
+```
+
+### GET /supported
+
+Returns supported payment schemes and networks.
+
+**Response:**
+
+```json
+{
+  "kinds": [
+    {
+      "x402Version": 1,
+      "scheme": "exact",
+      "network": "sei-testnet"
+    }
+  ]
+}
+```
