@@ -1,5 +1,11 @@
 # @sei-js/precompiles
 
+## 2.1.2
+
+### Patch Changes
+
+- c1667a9: Fixed oracle precompile address in @sei-js/precompiles and removed confidential transfers
+
 ## 2.1.1
 
 ### Patch Changes
