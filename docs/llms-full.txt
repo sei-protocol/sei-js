@@ -46,9 +46,6 @@ Address association between EVM and Cosmos addresses. Allows mapping between the
 ### Bank (0x1001)
 Token operations including transfers, balances, and supply queries. Access Sei's native token functionality from EVM.
 
-### Confidential Transfers (0x1010)
-Privacy features for confidential transactions. Enables private transfers with selective disclosure.
-
 ### Distribution (0x1007)
 Reward distribution for staking and governance. Access staking rewards and community pool funds.
 
@@ -61,7 +58,7 @@ Cross-chain transfers using the Inter-Blockchain Communication protocol. Send to
 ### JSON (0x1003)
 JSON parsing utilities for smart contracts. Simplifies handling JSON data in EVM contracts.
 
-### Oracle (0x1002)
+### Oracle (0x1008)
 Price feeds and TWAPs for DeFi applications. Access reliable price data for various assets.
 
 ### Pointer (0x100B)

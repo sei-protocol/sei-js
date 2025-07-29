@@ -2,7 +2,7 @@
  * The address of the Oracle precompile contract.
  * @category Address
  */
-export const ORACLE_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001002';
+export const ORACLE_PRECOMPILE_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000001008';
 
 /**
  * The ABI for the Oracle precompile contract.
