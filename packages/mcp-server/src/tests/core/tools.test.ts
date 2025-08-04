@@ -23,9 +23,10 @@ import { getWalletProvider } from '../../core/wallet/index.js';
 import { createDocsSearchTool } from '../../docs/index.js';
 import { createMockServer, setupBalanceMocks, setupTransactionMocks, testToolError, testToolSuccess, verifyErrorResponse, verifySuccessResponse, type Tool } from './helpers/tool-test-helpers.js';
 
-// Mock fetch globally
-const mockFetch = jest.fn();
-global.fetch = mockFetch as jest.MockedFunction<typeof fetch>;
+// Mock node-fetch
+jest.mock('node-fetch');
+import fetch, { Response } from 'node-fetch';
+const mockFetch = fetch as jest.MockedFunction<typeof fetch>;
 
 // Mock all service functions
 jest.mock('../../core/services/index.js');
