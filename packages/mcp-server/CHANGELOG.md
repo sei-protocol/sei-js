@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.6
+
+### Patch Changes
+
+- 1f25b0d: Explicitly use node-fetch instead of relying on users node version to have fetch
+
 ## 0.2.5
 
 ### Patch Changes
