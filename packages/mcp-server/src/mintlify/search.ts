@@ -1,6 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { TrieveSDK } from 'trieve-ts-sdk';
 import { z } from 'zod';
+import fetch from 'node-fetch';
 
 import { DEFAULT_BASE_URL, SERVER_URL, SUBDOMAIN } from './config.js';
 import type { MintlifySearchConfig, SeiSearchResponse, TrieveResponse, TrieveSearchResult } from './types.js';
