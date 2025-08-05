@@ -40,7 +40,7 @@ Start with read-only blockchain data access:
 }
 ```
 
-### Full Setup (With Wallet)
+### Full Setup (With Wallet and optional RPC urls)
 
 To enable transactions and wallet tools, add the wallet mode flag and private key:
 
@@ -52,7 +52,10 @@ To enable transactions and wallet tools, add the wallet mode flag and private ke
       "args": ["-y", "@sei-js/mcp-server"],
       "env": {
         "WALLET_MODE": "private-key",
-        "PRIVATE_KEY": "0x123..."
+        "PRIVATE_KEY": "YOUR_PRIVATE_KEY",
+        "MAINNET_RPC_URL": "YOUR_MAINNET_RPC_URL", // Optional
+        "TESTNET_RPC_URL": "YOUR_TESTNET_RPC_URL", // Optional
+        "DEVNET_RPC_URL": "YOUR_DEVNET_RPC_URL" // Optional
       }
     }
   }

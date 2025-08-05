@@ -1,7 +1,18 @@
 import { http, type Address, type Hex, type PublicClient, type WalletClient, createPublicClient, createWalletClient } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
+import fetch, { Headers, Request, Response } from 'node-fetch';
 import { DEFAULT_NETWORK, getChain, getRpcUrl } from '../chains.js';
 import { getWalletProvider } from '../wallet/index.js';
+
+// Polyfill fetch for Node.js environments
+if (!globalThis.fetch) {
+	Object.assign(globalThis, {
+		fetch,
+		Headers,
+		Request,
+		Response
+	});
+}
 
 // Cache for clients to avoid recreating them for each request
 const clientCache = new Map<string, PublicClient>();
