@@ -30,20 +30,9 @@ enum FrontendScaffolding {
 	Next = 'next'
 }
 
-export enum RPCIntegrationType {
-	EVM = 'evm',
-	CosmJS = 'cosmos'
-}
-
-export enum EVMLibrary {
-	Wagmi = 'wagmi'
-}
-
 interface WizardOptions {
 	name?: string;
 	framework?: FrontendScaffolding;
-	ecosystem?: RPCIntegrationType;
-	library?: EVMLibrary;
 }
 
 const promptFramework = async () => {
@@ -57,32 +46,6 @@ const promptFramework = async () => {
 	]);
 
 	return appFramework;
-};
-
-const promptRpcIntegrations = async () => {
-	const { rpcIntegrationType } = await inquirer.prompt([
-		{
-			type: 'list',
-			name: 'rpcIntegrationType',
-			message: 'Select the wallet connection type you want to include:',
-			choices: Object.values(RPCIntegrationType)
-		}
-	]);
-
-	return rpcIntegrationType;
-};
-
-const promptEVMLibrary = async () => {
-	const { evmLibrary } = await inquirer.prompt([
-		{
-			type: 'list',
-			name: 'evmLibrary',
-			message: 'Choose your preferred EVM library:',
-			choices: Object.values(EVMLibrary)
-		}
-	]);
-
-	return evmLibrary;
 };
 
 function isValidDirectoryName(dirName) {
@@ -121,22 +84,6 @@ const validateOptions = (options: WizardOptions): boolean => {
 		}
 	}
 
-	if (options.ecosystem) {
-		const validEcosystems = Object.values(RPCIntegrationType);
-		if (!validEcosystems.includes(options.ecosystem)) {
-			console.log(`Invalid Ecosystem '${options.ecosystem}' provided. Framework must be one of: [${validEcosystems.join(', ')}]`);
-			valid = false;
-		}
-	}
-
-	if (options.library) {
-		const validEVMLibraries = Object.values(EVMLibrary);
-		if (!validEVMLibraries.includes(options.library)) {
-			console.log(`Invalid EVM Library '${options.library}' provided. Framework must be one of: [${validEVMLibraries.join(', ')}]`);
-			valid = false;
-		}
-	}
-
 	return valid;
 };
 
@@ -166,12 +113,8 @@ async function runWizard(options: WizardOptions): Promise<void> {
 	}
 
 	const appFramework = options.framework || (await promptFramework());
-	let appConnectionType = options.ecosystem || (await promptRpcIntegrations());
-	if (appConnectionType === RPCIntegrationType.EVM) {
-		appConnectionType = options.library || (await promptEVMLibrary());
-	}
 
-	const templateName = `${appFramework}-${appConnectionType}-template`;
+	const templateName = `${appFramework}-template`;
 	const templatePath = path.join(__dirname, 'templates', templateName);
 	const dst = path.join(process.cwd(), dAppName);
 	await fs.promises.cp(templatePath, dst, { recursive: true });
@@ -185,8 +128,6 @@ program
 	.description('Create a new SEI dApp')
 	.option('-n, --name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
 	.option('-f, --framework <framework>', `Specify the app framework to use: [${Object.values(FrontendScaffolding).join(', ')}]`)
-	.option('-e, --ecosystem <ecosystem>', `Specify the ecosystem to use: [${Object.values(RPCIntegrationType).join(', ')}]`)
-	.option('-l, --library <library>', `Specify the EVM library to use: [${Object.values(EVMLibrary).join(', ')}]. Only used if ecosystem chosen is 'EVM'`)
 	.action(async (options: WizardOptions) => {
 		try {
 			await runWizard(options);
