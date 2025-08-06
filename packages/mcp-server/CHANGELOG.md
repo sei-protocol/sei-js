@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.7
+
+### Patch Changes
+
+- 977328b: Added ability to add custom RPC urls to each chain, removed the need for node-fetch, & updated docs for troubleshooting clarification
+
 ## 0.2.6
 
 ### Patch Changes
