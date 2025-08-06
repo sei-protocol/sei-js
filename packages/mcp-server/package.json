@@ -13,7 +13,7 @@
 		"LICENSE"
 	],
 	"scripts": {
-		"build": "rm -rf dist && tsc --outDir dist/esm --module esnext",
+		"build": "rm -rf dist && tsc",
 		"start": "node dist/esm/index.js",
 		"dev": "tsx src/index.ts",
 		"test": "jest"
@@ -21,16 +21,15 @@
 	"devDependencies": {
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.0",
-		"@types/node-fetch": "^2.6.13",
 		"typescript": "^5.8.3"
 	},
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.7.0",
+		"@noble/hashes": "^1.8.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
 		"express": "^4.21.2",
 		"jest": "^30.0.3",
-		"node-fetch": "^2.7.0",
 		"trieve-ts-sdk": "^0.0.121",
 		"tsx": "^4.20.3",
 		"viem": "^2.30.5",

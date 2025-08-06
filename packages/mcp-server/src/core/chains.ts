@@ -22,9 +22,9 @@ export const networkNameMap: Record<string, number> = {
 
 // Map chain IDs to RPC URLs
 export const rpcUrlMap: Record<number, string> = {
-	1329: 'https://evm-rpc.sei-apis.com',
-	1328: 'https://evm-rpc-testnet.sei-apis.com',
-	713715: 'https://evm-rpc-arctic-1.sei-apis.com'
+	1329: process.env.MAINNET_RPC_URL || 'https://evm-rpc.sei-apis.com',
+	1328: process.env.TESTNET_RPC_URL || 'https://evm-rpc-testnet.sei-apis.com',
+	713715: process.env.DEVNET_RPC_URL || 'https://evm-rpc-arctic-1.sei-apis.com'
 };
 
 /**

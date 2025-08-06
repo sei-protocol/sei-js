@@ -63,6 +63,10 @@
 					{
 						"group": "Implementation",
 						"pages": ["mcp-server/tools", "mcp-server/prompts", "mcp-server/context"]
+					},
+					{
+						"group": "Support",
+						"pages": ["mcp-server/troubleshooting"]
 					}
 				]
 			},

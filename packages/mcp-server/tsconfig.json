@@ -2,7 +2,9 @@
 	"extends": "../../tsconfig.base.json",
 	"include": ["src"],
 	"compilerOptions": {
-		"outDir": "./dist/types",
-		"moduleResolution": "bundler"
+		"outDir": "./dist/esm",
+		"moduleResolution": "node",
+		"module": "ES2020",
+		"target": "ES2020"
 	}
 }
