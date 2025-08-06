@@ -129,7 +129,7 @@ To use wallet-required tools (🔐), you must configure a wallet connection:
       "mcpServers": {
         "sei": {
           "command": "npx",
-          "args": ["-y", "@sei-js/mcp-server"],
+          "args": ["node@18", "@sei-js/mcp-server"],
           "env": {
             "WALLET_MODE": "private-key",
             "PRIVATE_KEY": "0x123..."

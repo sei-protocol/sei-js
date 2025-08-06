@@ -34,7 +34,7 @@ Start with read-only blockchain data access:
   "mcpServers": {
     "sei": {
       "command": "npx",
-      "args": ["-y", "@sei-js/mcp-server"]
+      "args": ["node@18", "@sei-js/mcp-server"]
     }
   }
 }
@@ -49,7 +49,7 @@ To enable transactions and wallet tools, add the wallet mode flag and private ke
   "mcpServers": {
     "sei": {
       "command": "npx",
-      "args": ["-y", "@sei-js/mcp-server"],
+      "args": ["node@18", "@sei-js/mcp-server"],
       "env": {
         "WALLET_MODE": "private-key",
         "PRIVATE_KEY": "YOUR_PRIVATE_KEY",

@@ -32,10 +32,9 @@ import {
 	type Tool
 } from './helpers/tool-test-helpers.js';
 
-// Mock node-fetch
-jest.mock('node-fetch');
-import fetch, { type Response } from 'node-fetch';
-const mockFetch = fetch as jest.MockedFunction<typeof fetch>;
+// Mock global fetch
+const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>;
+global.fetch = mockFetch;
 
 // Mock all service functions
 jest.mock('../../core/services/index.js');
