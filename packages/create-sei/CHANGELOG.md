@@ -1,5 +1,11 @@
 # @sei-js/create-sei-app
 
+## 0.0.4
+
+### Patch Changes
+
+- 848c236: Remove cosmos from templates
+
 ## 0.0.3
 
 ### Patch Changes
