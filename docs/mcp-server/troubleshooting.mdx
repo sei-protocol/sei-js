@@ -1,0 +1,231 @@
+---
+title: "Troubleshooting"
+description: "Resolve common issues and get help with Sei MCP Server setup and configuration"
+icon: "bug"
+---
+
+## Quick Diagnosis
+
+Most issues are caused by an incorrect Node.js version being used. Start here:
+
+<Steps>
+  <Step title="Check Node.js Version">
+    Verify your Node.js version is 18 or higher:
+    
+    ```bash
+    node --version
+    ```
+    
+    If you see a version below 18, you'll need to upgrade.
+  </Step>
+  
+  <Step title="Check Your PATH">
+    If your Node.js version looks correct but you're still getting errors, check your PATH:
+    
+    ```bash
+    echo $PATH
+    ```
+    
+    Look for Node.js paths in the output. If you see multiple Node.js versions, the first one in the PATH will be used. You can set the PATH [environment variable](/mcp-server/setup#environment-variables) in your mcp config to override what node version is being used.
+  </Step>
+  
+  <Step title="Verify Environment Variables">
+    Check that your environment variables are set correctly. See the [environment variables](/mcp-server/setup#environment-variables) section for reference.
+  </Step>
+</Steps>
+
+## Common Issues
+
+### 'fetch' is not defined errors
+
+This is the most common error and typically indicates a Node.js version issue. If the quick diagnosis above didn't solve your problem, try forcing a specific Node.js version:
+
+<Steps>
+  <Step title="Force Node.js Version">
+    You can force the MCP server to use a specific Node.js version by setting the PATH environment variable:
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "PATH": "/path/to/your/node/bin"
+          }
+        }
+      }
+    }
+    ```
+    
+    Replace `/path/to/your/node/bin` with the actual path to your preferred Node.js version.
+    
+    <Note>
+    **Quick Path Finder**: Run `dirname $(which npx)` to get the correct path to use.
+    </Note>
+  </Step>
+</Steps>
+
+### NVM Version Conflicts
+
+If you're using NVM (Node Version Manager), you might have multiple Node.js versions installed.
+
+<Steps>
+  <Step title="Check NVM Versions">
+    Check your installed versions:
+    
+    ```bash
+    nvm list
+    ```
+    
+    Look for versions below 18 that might be taking precedence.
+  </Step>
+  
+  <Step title="Option 1: Remove Problematic Versions">
+    Uninstall Node.js versions below 18:
+    
+    ```bash
+    nvm uninstall 16.15.0
+    nvm uninstall 14.21.3
+    # ... uninstall other versions below 18
+    ```
+    
+    This will prevent conflicts with older versions.
+  </Step>
+  
+  <Step title="Option 2: Force Specific Version">
+    Alternatively, you can force the MCP server to use a specific Node.js version by setting the PATH environment variable:
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "PATH": "/Users/yourname/.nvm/versions/node/v18.18.0/bin:/usr/local/bin:/usr/bin:/bin"
+          }
+        }
+      }
+    }
+    ```
+  </Step>
+</Steps>
+
+### Environment Variable Issues
+
+Many issues stem from incorrect environment variable configuration.
+
+<Steps>
+  <Step title="Check Your Configuration">
+    Verify your environment variables are set correctly. Common issues include:
+    
+    - **WALLET_MODE**: Should be `"disabled"` or `"private-key"`
+    - **PRIVATE_KEY**: Must be 0x-prefixed hex string when using private-key mode
+    - **RPC URLs**: Should be valid URLs if you're overriding defaults
+  </Step>
+  
+  <Step title="Test Configuration">
+    Try running with minimal configuration first:
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"]
+        }
+      }
+    }
+    ```
+    
+    If this works, gradually add your environment variables back.
+  </Step>
+  
+  <Step title="Reference Documentation">
+    See the [Environment Variables](/mcp-server/setup#environment-variables) section for complete documentation of all available options.
+  </Step>
+</Steps>
+
+
+
+## Error Reference
+
+<CardGroup cols={1}>
+  <Card title="'fetch' is not defined" icon="bug">
+    **Cause**: Node.js version below 18 or PATH pointing to wrong Node.js version
+    **Solution**: Upgrade Node.js or fix PATH as shown above
+  </Card>
+  <Card title="'Cannot find module'" icon="package">
+    **Cause**: Package not installed or network issues
+    **Solution**: Check internet connection and try reinstalling the package
+  </Card>
+  <Card title="'Permission denied'" icon="lock">
+    **Cause**: Insufficient permissions to execute npx
+    **Solution**: Ensure npx is executable or use full path to Node.js binary
+  </Card>
+  <Card title="'RPC connection failed'" icon="wifi">
+    **Cause**: Invalid RPC URL or network connectivity issues
+    **Solution**: Check your RPC URLs and internet connection
+  </Card>
+</CardGroup>
+
+## Getting Help
+
+### Before Reporting an Issue
+
+1. **Check this troubleshooting guide** - Your issue might already be covered
+2. **Verify your environment** - Ensure Node.js 18+ and correct PATH
+3. **Test with minimal config** - Try the basic setup first
+4. **Check environment variables** - Verify all settings are correct
+
+### Reporting Issues
+
+If you're still experiencing problems, please [create an issue on GitHub](https://github.com/sei-protocol/sei-js/issues) with the following information:
+
+<Steps>
+  <Step title="Environment Details">
+    Include:
+    - Operating system and version
+    - Node.js version (`node --version`)
+    - MCP client (Cursor, Claude Desktop, etc.)
+    - Your PATH (`echo $PATH`)
+  </Step>
+  
+  <Step title="Configuration">
+    Share your MCP configuration (remove private keys):
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "WALLET_MODE": "disabled"
+            // ... other env vars (no private keys)
+          }
+        }
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Error Messages">
+    Include the complete error message and any relevant logs.
+  </Step>
+  
+  <Step title="Steps to Reproduce">
+    Describe exactly what you did to encounter the issue.
+  </Step>
+</Steps>
+
+<Note>
+**Security**: Never include private keys or sensitive information when reporting issues. Use placeholder values instead.
+</Note>
+
+### Community Support
+
+- **GitHub Issues**: [Create an issue](https://github.com/sei-protocol/sei-js/issues)
+- **Discord**: Join the [Sei Discord](https://discord.gg/sei) for community help
+- **Documentation**: Check the [main Sei docs](https://docs.sei.io/) for additional resources 

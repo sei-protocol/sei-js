@@ -34,24 +34,24 @@ Start with read-only blockchain data access:
   "mcpServers": {
     "sei": {
       "command": "npx",
-      "args": ["node@18", "@sei-js/mcp-server"]
+      "args": ["-y", "@sei-js/mcp-server"]
     }
   }
 }
 ```
 
-### Full Setup (With Wallet and optional RPC urls)
+### Full Setup (With Wallet and RPC Configuration)
 
-To enable transactions and wallet tools, add the wallet mode flag and private key:
-
-To use custom RPC URLs, override them with the following keys:
+<Note>
+**Advanced Configuration**: For wallet setup and custom RPC endpoints, see the [Environment Variables](/mcp-server/setup#environment-variables) section in the setup guide.
+</Note>
 
 ```json
 {
   "mcpServers": {
     "sei": {
       "command": "npx",
-      "args": ["node@18", "@sei-js/mcp-server"],
+      "args": ["-y", "@sei-js/mcp-server"],
       "env": {
         "WALLET_MODE": "private-key",
         "PRIVATE_KEY": "YOUR_PRIVATE_KEY",
@@ -67,6 +67,10 @@ To use custom RPC URLs, override them with the following keys:
 <Card title="Complete Setup Guide" icon="arrow-right" href="/mcp-server/setup">
   Follow our step-by-step installation guide for Claude Desktop, Cursor, Windsurf, and custom integrations.
 </Card>
+
+<Note>
+**Running into issues?** If you encounter "'fetch' is not defined" errors or Node.js version conflicts, check out our [troubleshooting guide](/mcp-server/troubleshooting) for solutions to common setup problems.
+</Note>
 
 ## What is MCP?
 
