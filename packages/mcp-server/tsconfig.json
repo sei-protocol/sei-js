@@ -3,7 +3,7 @@
 	"include": ["src"],
 	"compilerOptions": {
 		"outDir": "./dist/esm",
-		"moduleResolution": "Node",
+		"moduleResolution": "node",
 		"module": "ES2020",
 		"target": "ES2020"
 	}
