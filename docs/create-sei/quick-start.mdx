@@ -38,18 +38,6 @@ The CLI provides an interactive wizard to guide you through project setup:
     - **Vite** - Fast build tool with React
   </Step>
   
-  <Step title="Select Ecosystem">
-    Choose your blockchain integration:
-    - **EVM** - Ethereum-compatible development (recommended)
-    - **Cosmos** - Native Cosmos SDK (deprecated per SIP-3)
-  </Step>
-  
-  <Step title="Pick Library (EVM only)">
-    For EVM ecosystem, choose your wallet library:
-    - **Wagmi** - Type-safe React hooks for Ethereum
-    - **Ethers.js** - Traditional Ethereum library
-  </Step>
-  
   <Step title="Project Setup">
     The CLI automatically configures:
     - TypeScript configuration
@@ -67,15 +55,11 @@ Skip the interactive setup by specifying all options directly:
 <CodeGroup>
 
 ```bash Next.js + Wagmi
-npx @sei-js/create-sei app -n my-app -f next -e evm -l wagmi
+npx @sei-js/create-sei app -n my-app -f next
 ```
 
 ```bash Vite + Ethers.js
-npx @sei-js/create-sei app -n my-app -f vite -e evm
-```
-
-```bash Next.js + CosmJS (Deprecated)
-npx @sei-js/create-sei app -n my-app -f next -e cosmos
+npx @sei-js/create-sei app -n my-app -f vite
 ```
 
 </CodeGroup>
@@ -86,8 +70,6 @@ npx @sei-js/create-sei app -n my-app -f next -e cosmos
 |------|-----------|-------------|---------|
 | `-n` | `--name` | Project name (must be valid package name) | Any valid npm package name |
 | `-f` | `--framework` | Frontend framework | `vite`, `next` |
-| `-e` | `--ecosystem` | Blockchain ecosystem | `evm`, `cosmos` |
-| `-l` | `--library` | EVM library (EVM ecosystem only) | `wagmi` |
 
 <Info>
 **Template Combinations**: The CLI creates different project templates based on your flag combinations. See all available combinations on the [Templates page](/create-sei/templates).
@@ -99,7 +81,7 @@ After running the CLI, you'll have a fully configured Sei dApp ready for develop
 
 - **Project Structure Created** - Organized file structure with components, hooks, and utilities properly scaffolded for your chosen framework and ecosystem.
 
-- **Wallet Integration Ready** - Pre-configured wallet connections for your chosen ecosystem (Wagmi/Ethers.js for EVM, CosmJS for Cosmos) with connection hooks ready to use.
+- **Wallet Integration Ready** - Pre-configured wallet connections and connection hooks ready to use.
 
 - **Development Tools Configured** - TypeScript, ESLint, Prettier, and Tailwind CSS automatically configured with sensible defaults and ready for immediate development.
 

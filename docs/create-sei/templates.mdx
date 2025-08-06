@@ -8,9 +8,7 @@ icon: "grid-2"
 **New to @sei-js/create-sei?** Check out our [Quick Start guide](/create-sei/quick-start) for step-by-step instructions on getting started. This page is a reference for all available template combinations.
 </Info>
 
-## Next.js Templates
-
-Choose from these Next.js-based templates for building production-ready frontend dApps with server-side rendering, SEO optimization, and full-stack capabilities. Each template includes pre-configured wallet connections and Sei blockchain integration.
+## Choose a Template
 
 <CardGroup cols={1}>
   <Card
@@ -33,56 +31,6 @@ Choose from these Next.js-based templates for building production-ready frontend
   </Card>
 
   <Card
-    title="Next.js + Ethers.js (EVM)"
-    icon="react"
-  >
-    Next.js application using Ethers.js for blockchain interactions with custom React hooks for wallet management. Includes pre-configured Sei precompile contract integrations for native blockchain functionality like token operations, staking, and governance. Ideal for developers familiar with Ethers.js who need direct access to Sei's unique features.
-    
-    <br/>
-    
-    **CLI Flags:** `-f next -e evm`
-    
-    <br/>
-
-    **Tech Stack:** `Next.js 14` `Ethers.js v6` `Custom Hooks` `Sei Precompiles` `Tailwind CSS`
-    
-    ```bash
-    npx @sei-js/create-sei app -n my-app -f next -e evm
-    ```
-  </Card>
-
-  <Card
-    title="Next.js + CosmJS (Cosmos) - Deprecated"
-    icon="atom"
-  >
-    <Warning>
-    **Deprecated**: CosmWasm and Cosmos functionality will be removed from Sei as part of [SIP-3](https://github.com/sei-protocol/sips/blob/main/sips/sip-3.md). Please use EVM templates for new projects.
-    </Warning>
-    
-    Legacy Next.js application with CosmJS for Cosmos SDK interactions and Keplr wallet integration. Supports native Cosmos transaction signing and IBC transfers. Only recommended for maintaining existing Cosmos-based applications before migrating to EVM templates.
-    
-    <br/>
-    
-    **CLI Flags:** `-f next -e cosmos`
-    
-    <br/>
-
-    **Tech Stack:** `Next.js 14` `CosmJS` `Keplr Wallet` `Cosmos SDK` `Tailwind CSS`
-    
-    ```bash
-    npx @sei-js/create-sei app -n my-app -f next -e cosmos
-    ```
-  </Card>
-</CardGroup>
-
----
-
-## Vite Templates
-
-Select from these Vite-based templates for rapid frontend dApp development with instant hot module replacement and lightning-fast build times. Perfect for prototyping, single-page applications, and development environments requiring quick iteration cycles.
-
-<CardGroup cols={1}>
-  <Card
     title="Vite + Wagmi (EVM)"
     icon="bolt"
   >
@@ -100,53 +48,12 @@ Select from these Vite-based templates for rapid frontend dApp development with 
     npx @sei-js/create-sei app -n my-app -f vite -e evm -l wagmi
     ```
   </Card>
-
-  <Card
-    title="Vite + Ethers.js (EVM)"
-    icon="bolt"
-  >
-    Lightweight Vite application with Ethers.js for direct blockchain interactions and custom wallet connection setup. Includes Sei precompile contract factories for accessing native functionality like bank operations, staking rewards, and oracle price feeds. Best for developers who prefer minimal abstractions and direct control over wallet connections.
-    
-    <br/>
-    
-    **CLI Flags:** `-f vite -e evm`
-    
-    <br/>
-
-    **Tech Stack:** `Vite` `React 18` `TypeScript` `Ethers.js v6` `Sei Precompiles`
-    
-    ```bash
-    npx @sei-js/create-sei app -n my-app -f vite -e evm
-    ```
-  </Card>
-
-  <Card
-    title="Vite + CosmJS (Cosmos) - Deprecated"
-    icon="atom"
-  >
-    <Warning>
-    **Deprecated**: CosmWasm and Cosmos functionality will be removed from Sei as part of [SIP-3](https://github.com/sei-protocol/sips/blob/main/sips/sip-3.md). Please use EVM templates for new projects.
-    </Warning>
-    
-    Legacy Vite application with CosmJS for Cosmos SDK interactions, Keplr wallet integration, and native Cosmos transaction signing. Supports IBC transfers and CosmWasm contract interactions. Only use for maintaining existing Cosmos applications during the transition period to EVM-based architecture.
-    
-    <br/>
-    
-    **CLI Flags:** `-f vite -e cosmos`
-    
-    <br/>
-
-    **Tech Stack:** `Vite` `React 18` `TypeScript` `CosmJS` `Keplr Wallet`
-    
-    ```bash
-    npx @sei-js/create-sei app -n my-app -f vite -e cosmos
-    ```
-  </Card>
 </CardGroup>
 
+---
 ## What's Included
 
-Every template includes these essential features:
+Each template includes these essential features:
 
 <CardGroup cols={2}>
   <Card title="Wallet Connection" icon="wallet">
