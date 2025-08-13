@@ -1,0 +1,166 @@
+---
+title: "Transport Modes"
+description: "Understanding MCP transport protocols and when to use each"
+icon: "network-wired"
+---
+
+The Sei MCP Server supports three transport modes for different integration scenarios. In most cases, `stdio` is the best choice, but understanding these modes is important if you need a remote MCP server or if your AI tool doesn't support MCP. Each transport offers unique advantages depending on your use case and client requirements.
+
+## Transport Overview
+
+<CardGroup cols={1}>
+  <Card title="stdio" icon="terminal">
+    **Default Mode**
+    Direct process communication via standard input/output streams.
+  </Card>
+  <Card title="streamable-http" icon="globe">
+    **HTTP API**
+    RESTful HTTP server with streaming capabilities for web integrations.
+  </Card>
+  <Card title="http-sse (deprecated)" icon="wifi-slash">
+    **Server-Sent Events**
+    HTTP with server-sent events (deprecated, use streamable-http instead).
+  </Card>
+</CardGroup>
+
+
+## Choosing the Right Transport
+
+<AccordionGroup>
+  <Accordion title="stdio - Best for Cursor, Windsurf, & local clients" icon="terminal">
+    **Recommended for:**
+    - Claude Desktop, Cursor, Windsurf integrations
+    - Local development and testing
+    - Maximum performance requirements
+    
+    **Pros:**
+    - Fastest performance (no network overhead)
+    - Automatic lifecycle management
+    - Native MCP client support
+    
+    **Cons:**
+    - Limited to local process communication
+    - No remote access capabilities
+    
+    **Security:**
+    - Process isolation (server runs as child process)
+    - No network exposure (communication via local IPC)
+    - Client-managed lifecycle
+  </Accordion>
+  
+  <Accordion title="streamable-http - Best for remote access or tools that don't support MCP" icon="globe">
+    **Recommended for:**
+    - Remote server deployments
+    - Custom HTTP clients
+    - Tools that don't support MCP
+    - Web applications
+    
+    **Pros:**
+    - Network accessible
+    - Standard HTTP protocols
+    - Scalable and load-balanceable
+    - Works with any HTTP client
+    
+    **Cons:**
+    - Network latency overhead
+    - Requires manual server management
+    - Additional security considerations
+    
+    **Security:**
+    - Network exposure (server accessible over HTTP)
+    - Consider implementing API keys or tokens
+    - Configure CORS policies as needed
+    - Restrict access to trusted networks
+    - Use reverse proxy with HTTPS for production
+  </Accordion>
+  
+  <Accordion title="http-sse - Deprecated, use streamable-http instead" icon="wifi-slash">
+    **Status:** Deprecated - migrate to `streamable-http`
+    
+    This transport is no longer recommended for new implementations. Existing users should migrate to `streamable-http` for better performance and standards compliance.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Configuration
+
+<Tabs>
+  <Tab title="stdio">
+    ```json Claude Desktop
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"]
+        }
+      }
+    }
+    ```
+    
+    ```bash Environment Variables
+    # stdio is the default, no configuration needed
+    SERVER_TRANSPORT=stdio  # Optional, this is default
+    npx @sei-js/mcp-server
+    ```
+  </Tab>
+  
+  <Tab title="streamable-http">
+    ```bash Basic Setup
+    SERVER_TRANSPORT=streamable-http npx @sei-js/mcp-server
+    ```
+    
+    Defaults to `http://localhost:8080/mcp`
+    
+    ```bash Custom Configuration
+    SERVER_TRANSPORT=streamable-http \
+    SERVER_PORT=3001 \
+    SERVER_HOST=0.0.0.0 \
+    SERVER_PATH=/api/sei \
+    npx @sei-js/mcp-server
+    ```
+    
+    Runs on `http://0.0.0.0:3001/api/sei`
+    
+    ```json MCP Client Config
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "SERVER_TRANSPORT": "streamable-http",
+            "SERVER_PORT": "8080"
+          }
+        }
+      }
+    }
+    ```
+    
+    ```bash Test with curl
+    # Get available tools
+    curl -X POST http://localhost:8080/mcp \
+      -H "Content-Type: application/json" \
+      -H "Accept: application/json, text/event-stream" \
+      -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
+    
+    # Call a specific tool (example: get balance)
+    curl -X POST http://localhost:8080/mcp \
+      -H "Content-Type: application/json" \
+      -H "Accept: application/json, text/event-stream" \
+      -d '{"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "get_balance", "arguments": {"address": "0x1234..."}}}'
+    ```
+  </Tab>
+  
+  <Tab title="http-sse">
+    <Warning>
+    **Deprecated**: Migrate to `streamable-http` instead.
+    </Warning>
+    
+    ```bash
+    SERVER_TRANSPORT=http-sse npx @sei-js/mcp-server
+    ```
+  </Tab>
+</Tabs>
+
+---
