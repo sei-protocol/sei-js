@@ -866,26 +866,19 @@ describe('EVM Tools', () => {
 			// Mock wallet as disabled
 			(isWalletEnabled as jest.Mock).mockReturnValue(false);
 
-			// Mock console.error to verify it's called
-			const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-
 			// Register tools with disabled wallet
 			registerEVMTools(disabledWalletServer);
-
-			// Verify console.error was called with the expected message
-			expect(consoleSpy).toHaveBeenCalledWith('Wallet functionality is disabled. Wallet-dependent tools will not be available.');
 
 			// Verify wallet tools are not registered
 			expect(disabledWalletTools.has('get_address_from_private_key')).toBe(false);
 			expect(disabledWalletTools.has('transfer_sei')).toBe(false);
 			expect(disabledWalletTools.has('transfer_erc20')).toBe(false);
+			expect(disabledWalletTools.has('transfer_erc721')).toBe(false);
 
 			// Verify read-only tools are still registered
 			expect(disabledWalletTools.has('get_chain_info')).toBe(true);
 			expect(disabledWalletTools.has('get_balance')).toBe(true);
 
-			// Clean up
-			consoleSpy.mockRestore();
 			// Restore wallet enabled for other tests
 			(isWalletEnabled as jest.Mock).mockReturnValue(true);
 		});

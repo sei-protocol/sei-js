@@ -3482,7 +3482,7 @@ __metadata:
     viem: "npm:^2.30.5"
     zod: "npm:^3.24.2"
   bin:
-    mcp-server: ./bin/cli.js
+    mcp-server: ./bin/mcp-server.js
   languageName: unknown
   linkType: soft
 

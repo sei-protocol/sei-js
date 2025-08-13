@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { config as dotenvConfig } from 'dotenv';
-import { getPackageInfo } from '../core/package-info.js';
+import { getPackageInfo } from './package-info.js';
 import type { TransportConfig, TransportMode } from './transport/types.js';
 
 const DEFAULT_CONFIG = {
@@ -107,6 +107,9 @@ Environment Variables:
   SERVER_PATH         Server path for HTTP transports (default: /mcp)
   PRIVATE_KEY         Private key for wallet operations (optional)
   WALLET_MODE         Wallet mode: private-key, disabled (default: disabled)
+  MAINNET_RPC_URL     Custom RPC URL for Sei mainnet (optional)
+  TESTNET_RPC_URL     Custom RPC URL for Sei testnet (optional)
+  DEVNET_RPC_URL      Custom RPC URL for Sei devnet (optional)
 `);
 
 	program.parse();

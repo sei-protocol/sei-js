@@ -3,7 +3,7 @@ import { createTransport } from './server/transport/index.js';
 import { isWalletEnabled } from './core/config.js';
 import { parseArgs } from './server/args.js';
 
-const main = async () => {
+export const main = async () => {
 	try {
 		const config = parseArgs();
 		const server = await getServer();
@@ -17,7 +17,4 @@ const main = async () => {
 	}
 };
 
-main().catch((error) => {
-	console.error('Fatal error in main():', error);
-	process.exit(1);
-});
+main();

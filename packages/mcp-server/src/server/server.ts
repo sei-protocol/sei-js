@@ -3,7 +3,7 @@ import { registerEVMTools } from '../core/tools.js';
 import { registerEVMResources } from '../core/resources.js';
 import { registerEVMPrompts } from '../core/prompts.js';
 import { createSeiJSDocsSearchTool } from '../mintlify/search.js';
-import { getPackageInfo } from '../core/package-info.js';
+import { getPackageInfo } from './package-info.js';
 import { getSupportedNetworks } from '../core/chains.js';
 import { createDocsSearchTool } from '../docs/index.js';
 
@@ -30,7 +30,7 @@ export const getServer = async () => {
 			console.error('Server will continue without documentation search functionality.');
 		}
 
-		console.error(`EVM MCP Server initialized for networks: ${getSupportedNetworks().join(', ')}`);
+		console.error('Supported networks:', getSupportedNetworks().join(', '));
 
 		return server;
 	} catch (error) {
