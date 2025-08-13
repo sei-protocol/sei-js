@@ -3,7 +3,7 @@
 	"description": "Model Context Protocol (MCP) server for interacting with EVM-compatible networks",
 	"type": "module",
 	"version": "0.2.7",
-	"bin": "./bin/cli.js",
+	"bin": "./bin/mcp-server.js",
 	"main": "./dist/esm/index.js",
 	"module": "./dist/esm/index.js",
 	"files": [
@@ -15,6 +15,9 @@
 	"scripts": {
 		"build": "rm -rf dist && tsc",
 		"start": "node dist/esm/index.js",
+		"start:http": "node dist/esm/index.js --streamable-http",
+		"start:http-sse": "node dist/esm/index.js --http-sse",
+		"inspect": "npx -y @modelcontextprotocol/inspector",
 		"dev": "tsx src/index.ts",
 		"test": "jest"
 	},
@@ -26,6 +29,7 @@
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.7.0",
 		"@noble/hashes": "^1.8.0",
+		"commander": "^14.0.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
 		"express": "^4.21.2",

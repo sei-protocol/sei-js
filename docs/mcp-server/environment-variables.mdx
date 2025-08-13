@@ -1,0 +1,291 @@
+---
+title: "Environment Variables"
+description: "Configure Sei MCP Server with environment variables for wallet access and custom RPC endpoints"
+icon: "gear"
+---
+
+The Sei MCP Server supports configuration through environment variables, which can be set in your MCP configuration JSON or passed directly to the Node.js command.
+
+## Configuration Methods
+
+<Tabs>
+  <Tab title="JSON Configuration">
+    Add environment variables to your MCP server configuration:
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "WALLET_MODE": "private-key",
+            "PRIVATE_KEY": "0x123...",
+            "MAINNET_RPC_URL": "https://your-custom-rpc.com"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Command Line">
+    Pass environment variables directly to the Node.js command:
+    
+    ```bash
+    # Streamable HTTP with custom path (recommended)
+    SERVER_TRANSPORT=streamable-http SERVER_PORT=8080 SERVER_PATH=/api/mcp npx @sei-js/mcp-server
+    
+    # Or export them first
+    export SERVER_TRANSPORT=streamable-http
+    export SERVER_PORT=8080
+    export SERVER_PATH=/mcp
+    npx @sei-js/mcp-server
+    ```
+    
+    For Claude CLI:
+    ```bash
+    # Add server to Claude CLI
+    claude mcp add sei-http npx @sei-js/mcp-server --env SERVER_TRANSPORT=streamable-http SERVER_PORT=8080
+    
+    # Start Claude
+    claude
+    ```
+  </Tab>
+</Tabs>
+
+## Available Variables
+
+### Wallet Configuration
+
+#### `WALLET_MODE`
+- **Type**: `string`
+- **Default**: `"disabled"`
+- **Description**: Controls wallet functionality and transaction capabilities
+- **Options**: 
+  - `"disabled"` - Read-only mode, no transaction capabilities
+  - `"private-key"` - Enable wallet tools using private key
+
+#### `PRIVATE_KEY`
+- **Type**: `string`
+- **Default**: `-`
+- **Description**: Private key for wallet operations (required when WALLET_MODE="private-key")
+- **Format**: 0x-prefixed hex string (64 characters after 0x)
+
+<Warning>
+**Security Critical**: Never commit private keys to version control. Use a dedicated test wallet with minimal funds.
+</Warning>
+
+### Network Configuration
+
+#### `MAINNET_RPC_URL`
+- **Type**: `string`
+- **Default**: `"https://evm-rpc.sei-apis.com"`
+- **Description**: Custom RPC endpoint for Sei mainnet
+- **Use Case**: Private RPC providers, local nodes, or custom endpoints
+
+#### `TESTNET_RPC_URL`
+- **Type**: `string`
+- **Default**: `"https://evm-rpc-testnet.sei-apis.com"`
+- **Description**: Custom RPC endpoint for Sei testnet (Atlantic-2)
+- **Use Case**: Testing with custom infrastructure
+
+#### `DEVNET_RPC_URL`
+- **Type**: `string`
+- **Default**: `"https://evm-rpc-arctic-1.sei-apis.com"`
+- **Description**: Custom RPC endpoint for Sei devnet
+- **Use Case**: Development and experimental features
+
+### Server Configuration
+
+#### `SERVER_TRANSPORT`
+- **Type**: `string`
+- **Default**: `"stdio"`
+- **Description**: Transport mode for the MCP server
+- **Options**: 
+  - `"stdio"` - Standard input/output (default for AI assistants)
+  - `"streamable-http"` - Streamable HTTP transport (recommended for web apps)
+  - `"http-sse"` - HTTP Server-Sent Events (deprecated)
+
+#### `SERVER_PORT`
+- **Type**: `number`
+- **Default**: `8080`
+- **Description**: Port number for HTTP transports (http-sse, streamable-http)
+- **Range**: 1-65535
+
+#### `SERVER_HOST`
+- **Type**: `string`
+- **Default**: `"localhost"`
+- **Description**: Host address for HTTP server
+- **Use Case**: Bind to specific network interfaces
+
+#### `SERVER_PATH`
+- **Type**: `string`
+- **Default**: `"/mcp"`
+- **Description**: Base path for HTTP endpoints
+- **Format**: Must start with `/` (automatically normalized)
+
+### System Configuration
+
+#### `PATH`
+- **Type**: `string`
+- **Default**: System PATH
+- **Description**: Override PATH to specify Node.js version
+- **Use Case**: Troubleshooting Node.js version conflicts
+
+## Configuration Examples
+
+<AccordionGroup>
+  <Accordion title="Default STDIO Mode">
+    No environment variables needed for AI assistant integration:
+    
+    <Tabs>
+      <Tab title="JSON Config">
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"]
+            }
+          }
+        }
+        ```
+      </Tab>
+      <Tab title="CLI">
+        ```bash
+        # Default STDIO mode (no environment variables needed)
+        npx @sei-js/mcp-server
+        
+        # Or with Claude CLI
+        claude mcp add sei npx @sei-js/mcp-server
+        ```
+      </Tab>
+    </Tabs>
+    
+    **Transport**: Standard input/output for Claude Desktop, Cursor, Windsurf
+  </Accordion>
+  
+  <Accordion title="Streamable HTTP Transport">
+    Use streamable HTTP when you need API access over HTTP:
+    
+    <Tabs>
+      <Tab title="JSON Config">
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "SERVER_TRANSPORT": "streamable-http",
+                "SERVER_PORT": "8080",
+                "SERVER_PATH": "/api/mcp",
+                "SERVER_HOST": "0.0.0.0"
+              }
+            }
+          }
+        }
+        ```
+      </Tab>
+      <Tab title="CLI">
+        ```bash
+        # Streamable HTTP with custom configuration
+        SERVER_TRANSPORT=streamable-http \
+        SERVER_PORT=8080 \
+        SERVER_PATH=/api/mcp \
+        SERVER_HOST=0.0.0.0 \
+        npx @sei-js/mcp-server
+        
+        # Or with Claude CLI
+        claude mcp add sei-http npx @sei-js/mcp-server \
+          --env SERVER_TRANSPORT=streamable-http \
+          --env SERVER_PORT=8080 \
+          --env SERVER_PATH=/api/mcp
+        ```
+      </Tab>
+    </Tabs>
+    
+    **Use Case**: Web applications, custom integrations, API access
+  </Accordion>
+  
+  <Accordion title="HTTP SSE Transport (Deprecated)">
+    HTTP Server-Sent Events transport - use streamable-http instead:
+    
+    <Tabs>
+      <Tab title="JSON Config">
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "SERVER_TRANSPORT": "http-sse",
+                "SERVER_PORT": "3001",
+                "SERVER_PATH": "/mcp"
+              }
+            }
+          }
+        }
+        ```
+      </Tab>
+      <Tab title="CLI">
+        ```bash
+        # HTTP SSE (deprecated - use streamable-http instead)
+        SERVER_TRANSPORT=http-sse \
+        SERVER_PORT=3001 \
+        SERVER_PATH=/mcp \
+        npx @sei-js/mcp-server
+        
+        # Or with Claude CLI
+        claude mcp add sei-sse npx @sei-js/mcp-server \
+          --env SERVER_TRANSPORT=http-sse \
+          --env SERVER_PORT=3001
+        ```
+      </Tab>
+    </Tabs>
+    
+    **Status**: Deprecated - migrate to streamable-http for better performance
+  </Accordion>
+</AccordionGroup>
+
+## Security Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Test Wallet Only" icon="shield-check">
+    Use a dedicated wallet for testing, not your main holdings
+  </Card>
+  <Card title="Minimal Funds" icon="coins">
+    Keep only small amounts needed for testing transactions
+  </Card>
+  <Card title="Secure Storage" icon="lock">
+    Never commit private keys to version control or share them
+  </Card>
+  <Card title="Regular Rotation" icon="arrows-rotate">
+    Rotate test wallet keys periodically for security
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+### Common Issues
+
+**Private Key Format**
+- Must start with `0x`
+- Must be exactly 66 characters (0x + 64 hex characters)
+- Use lowercase hex characters
+
+**RPC Connection**
+- Verify custom RPC URLs are accessible
+- Check for rate limiting on custom endpoints
+- Ensure RPC supports required methods
+
+**Environment Variables Not Loading**
+- Restart your AI assistant after configuration changes
+- Verify JSON syntax in MCP configuration
+- Check for typos in variable names
+
+<Card title="Need More Help?" icon="bug" href="/mcp-server/troubleshooting">
+  Check our comprehensive troubleshooting guide for solutions to specific problems.
+</Card>

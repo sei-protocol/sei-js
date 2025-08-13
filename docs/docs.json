@@ -57,16 +57,16 @@
 				"icon": "robot",
 				"pages": [
 					{
-						"group": "Getting Started",
-						"pages": ["mcp-server/introduction", "mcp-server/setup"]
+						"group": "About",
+						"pages": ["mcp-server/introduction", "mcp-server/transports"]
 					},
 					{
-						"group": "Implementation",
+						"group": "Setup",
+						"pages": ["mcp-server/quickstart", "mcp-server/environment-variables", "mcp-server/troubleshooting"]
+					},
+					{
+						"group": "Capabilities",
 						"pages": ["mcp-server/tools", "mcp-server/prompts", "mcp-server/context"]
-					},
-					{
-						"group": "Support",
-						"pages": ["mcp-server/troubleshooting"]
 					}
 				]
 			},

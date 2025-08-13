@@ -1,0 +1,253 @@
+---
+title: "Quickstart"
+description: "Configure Sei MCP Server with Cursor, Windsurf, Claude Desktop, or CLI"
+icon: "download"
+---
+
+<Tabs>
+  <Tab title="Cursor IDE">
+    
+    <Steps>
+      <Step title="Open Settings">
+        Navigate to Cursor → Settings → Cursor Settings → MCP
+        
+        ```
+        Cursor → Settings → Cursor Settings → MCP
+        ```
+      </Step>
+      
+      <Step title="Configure Server">
+        Click "Add new Global MCP server" and add this configuration to mcp.json:
+        
+        <CodeGroup>
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"]
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Restart">
+        Restart Cursor to activate the MCP server. You'll see a notification when it's ready.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Windsurf">
+    
+    <Steps>
+      <Step title="Open Settings">
+        Navigate to Windsurf → Settings → Windsurf Settings → Cascade
+        
+        ```
+        Windsurf → Settings → Windsurf Settings → Cascade
+        ```
+      </Step>
+      
+      <Step title="Add Configuration">
+        Add the Sei MCP Server to your configuration:
+        
+        <CodeGroup>
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"]
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Activate">
+        Save and restart Windsurf. The server loads automatically.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Claude Desktop">
+    
+    <Steps>
+      <Step title="Install Claude">
+        Download [Claude Desktop](https://claude.ai/download) from Anthropic.
+      </Step>
+      
+      <Step title="Edit Configuration">
+        Open Settings → Developer → Edit Config and add:
+        
+        <CodeGroup>
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"]
+            }
+          }
+        }
+        ```
+        </CodeGroup>
+      </Step>
+      
+      <Step title="Restart">
+        Save and restart Claude Desktop to enable Sei tools.
+      </Step>
+    </Steps>
+    
+    <Note>
+    **Remote MCP Servers**: Claude Desktop also supports connectors for remote HTTP servers. If you want to use a remote Sei MCP server instead of running it locally, set up the server using the **Remote Servers (http)** tab above, then add a connector configuration instead of the local server setup.
+    </Note>
+    
+  </Tab>
+  
+  <Tab title="Claude CLI">
+    
+    <Steps>
+      <Step title="Install CLI">
+        ```bash
+        npm install -g @anthropic-ai/claude-code
+        ```
+      </Step>
+      
+      <Step title="Add Server">
+        ```bash
+        # Read-only mode (default)
+        claude mcp add sei-mcp-server npx @sei-js/mcp-server
+        
+        # Wallet-enabled mode
+        claude mcp add sei-mcp-server-wallet npx @sei-js/mcp-server --env WALLET_MODE=private-key PRIVATE_KEY=0x123...
+        ```
+      </Step>
+      
+      <Step title="Start Session">
+        ```bash
+        claude
+        ```
+        
+        The Sei MCP Server activates automatically in your session.
+      </Step>
+    </Steps>
+    
+  </Tab>
+  
+  <Tab title="Remote Servers (http)">
+    The Sei MCP Server can be run as a standalone HTTP server via the `streamable-http` transport. 
+    
+    <Steps>
+      <Step title="Start HTTP Server">
+        Launch the MCP server with streamable-http transport:
+        
+        ```bash
+        # Basic API setup (port: 8080, path: /mcp)
+        SERVER_TRANSPORT=streamable-http npx @sei-js/mcp-server
+        ```
+        
+        Or with custom configuration:
+        
+        ```bash
+        # Custom port and path
+        SERVER_TRANSPORT=streamable-http \
+        SERVER_PORT=3001 \
+        SERVER_PATH=/api/sei \
+        SERVER_HOST=0.0.0.0 \
+        npx @sei-js/mcp-server
+        ```
+      </Step>
+      
+      <Step title="Verify Server">
+        The server will output:
+        
+        ```
+        EVM MCP Server initialized for networks: sei, sei-devnet, sei-testnet
+        MCP Server ready (streamable-http transport on localhost:8080/mcp)
+        ```
+      </Step>
+      
+      <Step title="Test with curl">
+        Test the API endpoint with curl:
+        
+        ```bash
+        # List available tools
+        curl -X POST http://localhost:8080/mcp \
+          -H "Content-Type: application/json" \
+          -H "Accept: application/json, text/event-stream" \
+          -d '{
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/list"
+          }'
+        
+        # Get latest block info
+        curl -X POST http://localhost:8080/mcp \
+          -H "Content-Type: application/json" \
+          -H "Accept: application/json, text/event-stream" \
+          -d '{
+            "jsonrpc": "2.0",
+            "id": 2,
+            "method": "tools/call",
+            "params": {
+              "name": "get_latest_block",
+              "arguments": {
+                "network": "sei"
+              }
+            }
+          }'
+        ```
+      </Step>
+    </Steps>
+    
+  </Tab>
+</Tabs>
+
+## Verification
+
+After setup, verify the server is working by asking your AI assistant:
+
+<Steps>
+  <Step title="Test Connection">
+    **Ask:** "What Sei tools are available?"
+    
+    You should see a list of available blockchain tools.
+  </Step>
+  
+  <Step title="Test Read Operations">
+    **Ask:** "What's the latest block on Sei?"
+    
+    This tests basic blockchain connectivity.
+  </Step>
+  
+  <Step title="Test Wallet (Optional)">
+    If you configured wallet access (see environment variables for setup):
+    
+    **Ask:** "What's my wallet address?"
+    
+    This confirms wallet tools are enabled.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Environment Variables" icon="gear" href="/mcp-server/environment-variables">
+    Configure wallet access and custom RPC endpoints
+  </Card>
+  <Card title="Available Tools" icon="wrench" href="/mcp-server/tools">
+    Explore 50+ blockchain tools and capabilities
+  </Card>
+  <Card title="Troubleshooting" icon="bug" href="/mcp-server/troubleshooting">
+    Solutions to common setup and configuration issues
+  </Card>
+  <Card title="Context & Prompts" icon="message-lines" href="/mcp-server/context">
+    Learn how to effectively interact with the server
+  </Card>
+</CardGroup>

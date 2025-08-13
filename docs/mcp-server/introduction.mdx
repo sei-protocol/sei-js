@@ -1,6 +1,6 @@
 ---
 title: "Sei MCP Server"
-description: "Enable AI assistants to interact with Sei blockchain through natural language using the Model Context Protocol"
+description: "Enable LLM based tools to interact with and better understand Sei through natural language queries, using the Model Context Protocol"
 icon: "robot"
 ---
 
@@ -9,7 +9,7 @@ icon: "robot"
     title="Supercharge your LLMs"
     icon="rocket"
   >
-    Connect AI assistants to Sei blockchain with natural language commands for token transfers, smart contract interactions and deployments, and more.
+    Teach your LLMs how to do token transfers, smart contract interactions, read documentation, generate boilerplate code, and more.
   </Card>
   <Card
     title="Perfect For"
@@ -21,68 +21,104 @@ icon: "robot"
 
 ## Quick Start
 
-<Note>
-**Secure by Default**: The MCP server runs in **read-only mode** by default. Wallet tools are disabled until you explicitly configure a private key.
-</Note>
-
-### Basic Setup (Read-Only)
-
-Start with read-only blockchain data access:
-
-```json
-{
-  "mcpServers": {
-    "sei": {
-      "command": "npx",
-      "args": ["-y", "@sei-js/mcp-server"]
-    }
-  }
-}
-```
-
-### Full Setup (With Wallet and RPC Configuration)
-
-<Note>
-**Advanced Configuration**: For wallet setup and custom RPC endpoints, see the [Environment Variables](/mcp-server/setup#environment-variables) section in the setup guide.
-</Note>
-
-```json
-{
-  "mcpServers": {
-    "sei": {
-      "command": "npx",
-      "args": ["-y", "@sei-js/mcp-server"],
-      "env": {
-        "WALLET_MODE": "private-key",
-        "PRIVATE_KEY": "YOUR_PRIVATE_KEY",
-        "MAINNET_RPC_URL": "https://evm-rpc.sei-apis.com",
-        "TESTNET_RPC_URL": "https://evm-rpc-testnet.sei-apis.com",
-        "DEVNET_RPC_URL": "https://evm-rpc-arctic-1.sei-apis.com"
+<Tabs>
+  <Tab title="Basic Setup">
+    **Read-only mode** - Perfect for blockchain queries, documentation lookup, and analysis without transaction capabilities.
+    
+    <Note>
+    **Safe by Default**: Wallet tools are disabled until you explicitly configure a private key.
+    </Note>
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"]
+        }
       }
     }
-  }
-}
-```
+    ```
+    
+    **What you can do:**
+    - Query balances and transaction history
+    - Search Sei documentation
+    - Analyze blockchain data
+    - Generate boilerplate code
+    - Get network status and block info
+  </Tab>
+  
+  <Tab title="With Wallet Connection">
+    **Transaction capabilities** - Adds wallet tools for sending tokens, deploying contracts, and blockchain interactions.
+    
+    <Warning>
+    **Security Critical**: Only use test wallets with minimal funds. Never commit private keys to version control.
+    </Warning>
+    
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "WALLET_MODE": "private-key",
+            "PRIVATE_KEY": "YOUR_PRIVATE_KEY"
+          }
+        }
+      }
+    }
+    ```
+    
+    **Additional capabilities:**
+    - Send tokens and execute transactions
+    - Deploy and interact with smart contracts
+    - Manage NFT collections
+    - Stake and delegate tokens
+    - All read-only features included
+  </Tab>
+  
+  <Tab title="Full Configuration">
+    **Advanced setup** - Complete environment variable configuration for custom RPC endpoints, transport modes, and server settings.
+    
+    See the [Environment Variables](/mcp-server/environment-variables) documentation for all available options and detailed explanations.
 
-<Card title="Complete Setup Guide" icon="arrow-right" href="/mcp-server/setup">
-  Follow our step-by-step installation guide for Claude Desktop, Cursor, Windsurf, and custom integrations.
-</Card>
+    ```json
+    {
+      "mcpServers": {
+        "sei": {
+          "command": "npx",
+          "args": ["-y", "@sei-js/mcp-server"],
+          "env": {
+            "WALLET_MODE": "private-key",
+            "PRIVATE_KEY": "YOUR_PRIVATE_KEY",
+            "SERVER_TRANSPORT": "streamable-http",
+            "SERVER_PORT": "8080",
+            "SERVER_PATH": "/mcp",
+            "MAINNET_RPC_URL": "https://evm-rpc.sei-apis.com",
+            "TESTNET_RPC_URL": "https://evm-rpc-testnet.sei-apis.com",
+            "DEVNET_RPC_URL": "https://evm-rpc-arctic-1.sei-apis.com"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
 
-<Note>
-**Running into issues?** If you encounter "'fetch' is not defined" errors or Node.js version conflicts, check out our [troubleshooting guide](/mcp-server/troubleshooting) for solutions to common setup problems.
-</Note>
+---
 
 ## What is MCP?
 
-The Model Context Protocol is an open standard that connects AI systems with custom prompts, tools and data sources (context). It enables:
+The Model Context Protocol is an open standard that connects AI systems with custom prompts, tools and data sources (context). It enables things like:
 
 - **Real-time blockchain data access** - Get current balances, transaction history, and network status directly from Sei
-- **Secure by default** - Runs in read-only mode until you explicitly enable wallet tools
 - **Full execution and write operations** - Deploy contracts, execute transactions, and interact with smart contracts (with wallet configured)
 - **Up-to-date documentation access** - Search both main Sei docs and Sei-JS package documentation for comprehensive guidance
 - **Specialized blockchain capabilities** - Access Sei-specific features like precompiles and native token operations
+- **Create boilerplate code** - Generate code for Sei projects using the latest patterns
 
-The Sei MCP Server leverages this protocol to bring comprehensive blockchain functionality directly to your AI assistant, enabling natural language interactions with the Sei network.
+The Sei MCP Server leverages this protocol to bring all of this and more directly to your LLM enabled tools, allowing for natural language interactions with Sei.
 
 ## Why Use Sei MCP Server?
 
@@ -107,21 +143,20 @@ The Sei MCP Server leverages this protocol to bring comprehensive blockchain fun
 ## Example Queries
 
 ```text
-"How do I bridge tokens to Sei from Ethereum?"
+"Get me the transactions in the latest block and tell me what they did."
 "How do I query staking my delegations using Viem?"
-"Generate a wallet connection component using Sei Global Wallet"
-"Help me set up a new Sei project with the latest patterns"
+"Generate a boilerplate dApp with Sei Global Wallet connection"
+"What's my SEI balance?"
+"Send 1 SEI to this address"
 ```
 
-## Code Generation
+## Next Steps
 
-The AI generates accurate, production-ready code using official @sei-js patterns:
-
-- Uses correct package imports and APIs
-- Follows documented best practices
-- Includes proper error handling
-- References current version patterns
-
-<Note>
-The Sei MCP Server is actively developed with new features added regularly. Current version supports core blockchain operations with advanced DeFi integrations planned.
-</Note>
+<CardGroup cols={2}>
+  <Card title="Complete Setup Guide" icon="arrow-right" href="/mcp-server/quickstart">
+    Follow our step-by-step installation guide for Claude Desktop, Cursor, Windsurf, and custom integrations.
+  </Card>
+  <Card title="Troubleshooting" icon="bug" href="/mcp-server/troubleshooting">
+    Solutions to common setup and configuration issues
+  </Card>
+</CardGroup>
