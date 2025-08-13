@@ -18,8 +18,6 @@ export function registerEVMTools(server: McpServer) {
 	// Register wallet-dependent tools (only if wallet is enabled)
 	if (isWalletEnabled()) {
 		registerWalletTools(server);
-	} else {
-		console.error('Wallet functionality is disabled. Wallet-dependent tools will not be available.');
 	}
 }
 

@@ -1,30 +1,35 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { getSupportedNetworks } from '../core/chains.js';
-import { registerEVMPrompts } from '../core/prompts.js';
-import { registerEVMResources } from '../core/resources.js';
 import { registerEVMTools } from '../core/tools.js';
-import { createSeiJSDocsSearchTool } from '../mintlify/index.js';
+import { registerEVMResources } from '../core/resources.js';
+import { registerEVMPrompts } from '../core/prompts.js';
+import { createSeiJSDocsSearchTool } from '../mintlify/search.js';
+import { getPackageInfo } from '../core/package-info.js';
+import { getSupportedNetworks } from '../core/chains.js';
 import { createDocsSearchTool } from '../docs/index.js';
 
-// Create and start the MCP server
-async function startServer() {
+export const getServer = async () => {
 	try {
-		// Create a new MCP server instance
+		const packageInfo = getPackageInfo();
 		const server = new McpServer({
-			name: 'EVM-Server',
-			version: '1.0.0'
+			name: packageInfo.name,
+			version: packageInfo.version
 		});
 
-		// Register all resources, tools, and prompts
 		registerEVMResources(server);
 		registerEVMTools(server);
 		registerEVMPrompts(server);
 
-		// Register documentation search tools
-		await createDocsSearchTool(server);
 		await createSeiJSDocsSearchTool(server);
 
-		// Log server information
+		// Wrap docs search tool creation in try-catch to handle API rate limiting
+		// TODO: move this into trieve like the sei-js docs search tool
+		try {
+			await createDocsSearchTool(server);
+		} catch (error) {
+			console.error('Warning: Failed to initialize documentation search tools (API rate limited?):', error instanceof Error ? error.message : String(error));
+			console.error('Server will continue without documentation search functionality.');
+		}
+
 		console.error(`EVM MCP Server initialized for networks: ${getSupportedNetworks().join(', ')}`);
 
 		return server;
@@ -32,7 +37,4 @@ async function startServer() {
 		console.error('Failed to initialize server:', error);
 		process.exit(1);
 	}
-}
-
-// Export the server creation function
-export default startServer;
+};

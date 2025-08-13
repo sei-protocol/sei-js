@@ -14,8 +14,6 @@ export function registerEVMPrompts(server: McpServer) {
 	// Register wallet-dependent prompts (only if wallet is enabled)
 	if (isWalletEnabled()) {
 		registerWalletPrompts(server);
-	} else {
-		console.error('Wallet functionality is disabled. Wallet-dependent prompts will not be available.');
 	}
 }
 
