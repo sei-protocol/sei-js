@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+### Minor Changes
+
+- 9b32f5d: Added streamable-http transport and better environment variable configuration
+
 ## 0.2.7
 
 ### Patch Changes
