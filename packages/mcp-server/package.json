@@ -18,7 +18,7 @@
 		"start:http": "node dist/esm/index.js --streamable-http",
 		"start:http-sse": "node dist/esm/index.js --http-sse",
 		"inspect": "npx -y @modelcontextprotocol/inspector",
-		"dev": "tsx src/index.ts",
+		"dev": "tsx watch src/index.ts",
 		"test": "jest"
 	},
 	"devDependencies": {
