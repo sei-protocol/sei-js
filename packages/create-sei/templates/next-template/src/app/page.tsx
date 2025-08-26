@@ -1,21 +1,10 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import Web3Provider from './components/Web3Provider';
-import Homepage from './components/Homepage/Homepage';
+'use client';
 
-import './index.css';
+import { Default, Landing, Shell } from '@/components';
+import { useAccount } from 'wagmi';
 
 export default function Home() {
-	return (
-		<Web3Provider>
-			<div className="header">
-				<ConnectButton
-					showBalance={{
-						smallScreen: false,
-						largeScreen: true
-					}}
-				/>
-			</div>
-			<Homepage />
-		</Web3Provider>
-	);
+	const { isConnected } = useAccount();
+
+	return <Shell>{isConnected ? <Default /> : <Landing />}</Shell>;
 }

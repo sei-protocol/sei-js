@@ -470,7 +470,7 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   webpack: (config) => {
-    config.externals.push('pino-pretty', 'lokijs', 'encoding');
+    config.externals.push('lokijs', 'encoding');
     return config;
   },
 };
@@ -502,7 +502,7 @@ module.exports = nextConfig;
     **Solution:** Add webpack externals to your `next.config.js`:
     ```javascript
     webpack: (config) => {
-      config.externals.push('pino-pretty', 'lokijs', 'encoding');
+      config.externals.push('lokijs', 'encoding');
       return config;
     }
     ```
