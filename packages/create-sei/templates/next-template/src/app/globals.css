@@ -1,4 +1,3 @@
-@import "../node_modules/tailwindcss/dist/lib.d.mts";
 
 @tailwind base;
 @tailwind components;
