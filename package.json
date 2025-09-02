@@ -8,8 +8,6 @@
 	],
 	"scripts": {
 		"build:all": "yarn workspaces foreach --all --parallel run build",
-		"postinstall": "yarn update-submodules",
-		"update-submodules": "git submodule update --init --recursive",
 		"docs": "cd docs && yarn dlx mint dev",
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",

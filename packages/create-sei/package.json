@@ -5,7 +5,7 @@
 	"type": "module",
 	"bin": "./dist/main.js",
 	"scripts": {
-		"build": "rm -rf dist && tsc && chmod +x dist/main.js && rsync -av --exclude='node_modules' ./templates/ ./dist/templates/ && rsync -av --exclude='node_modules' ./extensions/ ./dist/extensions/",
+		"build": "rm -rf dist && tsc && chmod +x dist/main.js && rsync -av --exclude-from=.rsyncignore ./templates/ ./dist/templates/ && rsync -av --exclude-from=.rsyncignore ./extensions/ ./dist/extensions/",
 		"dev": "node --loader ts-node/esm src/main.ts",
 		"test": "jest"
 	},
