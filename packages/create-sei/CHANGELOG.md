@@ -1,5 +1,11 @@
 # @sei-js/create-sei-app
 
+## 1.0.0
+
+### Major Changes
+
+- 92fd8fd: Updated default template and added extensions
+
 ## 0.0.4
 
 ### Patch Changes
