@@ -128,7 +128,7 @@ async function runWizard(options: WizardOptions): Promise<void> {
 
 	const extensionText = options.extension ? ` with ${options.extension} extension` : '';
 	console.log(`Project setup complete! Using template ${templateName}${extensionText}\n`);
-	console.log(`To start your app, run: \n > cd ${dAppName} \n > yarn \n > yarn dev\n`);
+	console.log(`To start your app, run: \n > cd ${dAppName} \n > pnpm \n > pnpm dev\n`);
 }
 
 program

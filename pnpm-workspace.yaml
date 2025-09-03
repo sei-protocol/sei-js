@@ -1,0 +1,4 @@
+packages:
+  - 'packages/*'
+  # Exclude templates to avoid nested workspace conflicts
+  - '!packages/create-sei/templates/*'

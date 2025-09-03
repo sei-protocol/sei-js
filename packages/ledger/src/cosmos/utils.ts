@@ -4,9 +4,12 @@ import { SeiApp } from '@zondax/ledger-sei';
 /**
  * Creates a transport and app instance
  *
- * @returns {Promise<{transport: Transport, app: SeiApp}>} transport and app instances
+ * @returns transport and app instances
  */
-export const createTransportAndApp = async () => {
+export const createTransportAndApp = async (): Promise<{
+	transport: Awaited<ReturnType<typeof Transport.create>>;
+	app: SeiApp;
+}> => {
 	const transport = await Transport.create();
 	const app = new SeiApp(transport);
 	return { transport, app };

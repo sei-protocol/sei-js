@@ -22,21 +22,24 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y rsync
 
       - name: Install Dependencies
-        run: yarn
+        run: pnpm install --frozen-lockfile
 
       - name: Build Packages
-        run: yarn build:all
+        run: pnpm build:all
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
           # Release builds the packages and calls changeset publish
-          publish: yarn release
+          publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

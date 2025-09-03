@@ -10,7 +10,7 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "rimraf dist && yarn build:cjs && yarn build:esm && yarn build:types",
+		"build": "rimraf dist && pnpm run build:cjs && pnpm run build:esm && pnpm run build:types",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",

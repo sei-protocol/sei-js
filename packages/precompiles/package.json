@@ -7,20 +7,14 @@
 	"types": "./dist/types/index.d.ts",
 	"sideEffects": false,
 	"scripts": {
-		"build": "rimraf dist && yarn build:types && yarn build:cjs && yarn build:esm",
+		"build": "rimraf dist && pnpm run build:types && pnpm run build:cjs && pnpm run build:esm",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"test": "jest --passWithNoTests"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": [
-		"sei",
-		"javascript",
-		"typescript",
-		"node",
-		"evm"
-	],
+	"keywords": ["sei", "javascript", "typescript", "node", "evm"],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"publishConfig": {

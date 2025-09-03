@@ -15,14 +15,17 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
-      - name: Yarn Install
-        run: yarn
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Build All Packages
-        run: yarn build:all
+        run: pnpm build:all
 
       - name: Test
-        run: yarn test:all
+        run: pnpm test:all

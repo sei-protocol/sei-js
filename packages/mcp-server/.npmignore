@@ -28,5 +28,4 @@ docs/
 node_modules/
 coverage/
 bun.lock
-yarn.lock
-package-lock.json 
+package-lock.json
