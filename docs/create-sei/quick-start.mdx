@@ -11,11 +11,11 @@ You don't need to install `@sei-js/create-sei` globally. Use it directly with np
 <CodeGroup>
 
 ```bash npx
-npx @sei-js/create-sei app
+npx @sei-js/create-sei app -name my-sei-app
 ```
 
 ```bash pnpm
-pnpm create @sei-js/create-sei app
+pnpm create @sei-js/create-sei app -name my-sei-app
 ```
 
 </CodeGroup>
@@ -28,48 +28,35 @@ The CLI provides an interactive wizard to guide you through project setup:
   <Step title="Run the CLI">
     Execute the create-sei command with your project name:
     ```bash
-    npx @sei-js/create-sei app -n my-sei-app
+    npx @sei-js/create-sei app
     ```
   </Step>
   
   <Step title="Choose Framework">
-    Select your preferred frontend framework:
-    - **Next.js** - Full-stack React framework with SSR/SSG
-    - **Vite** - Fast build tool with React
+    - `cd my-sei-app`
+    - `yarn install`
+    - `yarn dev`
+
   </Step>
   
   <Step title="Project Setup">
     The CLI automatically configures:
     - TypeScript configuration
+    - Up to date NextJS
     - Tailwind CSS styling
-    - ESLint configuration
-    - Prettier formatting
+    - Biome formatting
+    - Mantine UI components
     - Git initialization
   </Step>
 </Steps>
 
-## Manual CLI Usage
-
-Skip the interactive setup by specifying all options directly:
-
-<CodeGroup>
-
-```bash Next.js + Wagmi
-npx @sei-js/create-sei app -n my-app -f next
-```
-
-```bash Vite + Ethers.js
-npx @sei-js/create-sei app -n my-app -f vite
-```
-
-</CodeGroup>
-
 ### CLI Options
 
-| Flag | Long Form | Description | Options |
-|------|-----------|-------------|---------|
-| `-n` | `--name` | Project name (must be valid package name) | Any valid npm package name |
-| `-f` | `--framework` | Frontend framework | `vite`, `next` |
+- `app`: Create a new Sei dApp
+  - `--name`: Project name (must be valid package name)
+  - `--extension`: Add one of the optional extensions to your project
+    
+- `list-extensions`: List the available extensions
 
 <Info>
 **Template Combinations**: The CLI creates different project templates based on your flag combinations. See all available combinations on the [Templates page](/create-sei/templates).
@@ -79,10 +66,10 @@ npx @sei-js/create-sei app -n my-app -f vite
 
 After running the CLI, you'll have a fully configured Sei dApp ready for development:
 
-- **Project Structure Created** - Organized file structure with components, hooks, and utilities properly scaffolded for your chosen framework and ecosystem.
+- **Project Structure Created** - Organized file structure with components, hooks, and utilities properly scaffolded.
 
 - **Wallet Integration Ready** - Pre-configured wallet connections and connection hooks ready to use.
 
-- **Development Tools Configured** - TypeScript, ESLint, Prettier, and Tailwind CSS automatically configured with sensible defaults and ready for immediate development.
+- **Development Tools Configured** - TypeScript, Biome, Mantine UI, and Tailwind CSS automatically configured with sensible defaults and ready for immediate development.
 
 - **Sei Network Integration** - Built-in Sei network configuration and contract interaction examples to help you start building on Sei right away.

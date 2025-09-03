@@ -6,30 +6,26 @@
 	"module": "./dist/esm/src/index.js",
 	"types": "./dist/types/src/index.d.ts",
 	"sideEffects": false,
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
-		"build": "rimraf dist && yarn build:cjs && yarn build:esm && yarn build:types",
+		"build": "rimraf dist && pnpm run build:cjs && pnpm run build:esm && pnpm run build:types",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": [
-		"sei",
-		"javascript",
-		"typescript",
-		"ledger"
-	],
+	"keywords": ["sei", "javascript", "typescript", "ledger"],
 	"repository": "git@github.com:sei-protocol/sei-js.git",
 	"license": "MIT",
 	"publishConfig": {
 		"access": "public"
 	},
 	"dependencies": {
+		"@cosmjs/amino": "^0.32.4",
 		"@cosmjs/crypto": "^0.32.4",
+		"@cosmjs/encoding": "^0.32.4",
+		"@cosmjs/proto-signing": "^0.32.4",
 		"@cosmjs/stargate": "^0.32.4",
 		"@ledgerhq/hw-transport-node-hid": "^6.29.3",
 		"@zondax/ledger-sei": "1.0.1"

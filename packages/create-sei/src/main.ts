@@ -25,28 +25,10 @@ const printWelcomeMessage = () => {
 	);
 };
 
-enum FrontendScaffolding {
-	Vite = 'vite',
-	Next = 'next'
-}
-
 interface WizardOptions {
 	name?: string;
-	framework?: FrontendScaffolding;
+	extension?: string;
 }
-
-const promptFramework = async () => {
-	const { appFramework } = await inquirer.prompt([
-		{
-			type: 'list',
-			name: 'appFramework',
-			message: 'Select an app framework to use?',
-			choices: Object.values(FrontendScaffolding)
-		}
-	]);
-
-	return appFramework;
-};
 
 function isValidDirectoryName(dirName) {
 	const illegalRe = /[<>:"/\\|?*]/g;
@@ -76,16 +58,29 @@ const validateOptions = (options: WizardOptions): boolean => {
 		}
 	}
 
-	if (options.framework) {
-		const validFrameworks = Object.values(FrontendScaffolding);
-		if (!validFrameworks.includes(options.framework)) {
-			console.log(`Invalid Framework '${options.framework}' provided. Framework must be one of: [${validFrameworks.join(', ')}]`);
-			valid = false;
-		}
-	}
-
 	return valid;
 };
+
+async function listExtensions(): Promise<void> {
+	const extensionsPath = path.join(__dirname, 'extensions');
+
+	try {
+		const extensions = await fs.promises.readdir(extensionsPath, { withFileTypes: true });
+		const extensionDirs = extensions.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
+
+		if (extensionDirs.length === 0) {
+			console.log('No extensions available.');
+			return;
+		}
+
+		console.log('Available extensions:');
+		for (const ext of extensionDirs) {
+			console.log(`  - ${ext}`);
+		}
+	} catch (error) {
+		console.log('No extensions directory found.');
+	}
+}
 
 async function runWizard(options: WizardOptions): Promise<void> {
 	if (!validateOptions(options)) {
@@ -112,25 +107,50 @@ async function runWizard(options: WizardOptions): Promise<void> {
 		dAppName = promptResult.dAppName;
 	}
 
-	const appFramework = options.framework || (await promptFramework());
-
-	const templateName = `${appFramework}-template`;
+	// Copy base template
+	const templateName = 'next-template';
 	const templatePath = path.join(__dirname, 'templates', templateName);
 	const dst = path.join(process.cwd(), dAppName);
 	await fs.promises.cp(templatePath, dst, { recursive: true });
 
-	console.log(`Project setup complete! Using template ${templateName}\n`);
-	console.log(`To start your app, run: \n > cd ${dAppName} \n > yarn \n > yarn dev\n`);
+	// Apply extension if specified
+	if (options.extension) {
+		const extensionPath = path.join(__dirname, 'extensions', options.extension);
+
+		try {
+			await fs.promises.access(extensionPath);
+			await fs.promises.cp(extensionPath, dst, { recursive: true });
+			console.log(`Applied extension: ${options.extension}`);
+		} catch (error) {
+			console.log(`Warning: Extension '${options.extension}' not found. Continuing with base template.`);
+		}
+	}
+
+	const extensionText = options.extension ? ` with ${options.extension} extension` : '';
+	console.log(`Project setup complete! Using template ${templateName}${extensionText}\n`);
+	console.log(`To start your app, run: \n > cd ${dAppName} \n > pnpm \n > pnpm dev\n`);
 }
 
 program
 	.command('app')
 	.description('Create a new SEI dApp')
-	.option('-n, --name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
-	.option('-f, --framework <framework>', `Specify the app framework to use: [${Object.values(FrontendScaffolding).join(', ')}]`)
+	.option('--name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
+	.option('--extension <extension>', 'Specify an extension to apply to the base template')
+
 	.action(async (options: WizardOptions) => {
 		try {
 			await runWizard(options);
+		} catch (error) {
+			console.error('An error occurred:', error);
+		}
+	});
+
+program
+	.command('list-extensions')
+	.description('List all available extensions')
+	.action(async () => {
+		try {
+			await listExtensions();
 		} catch (error) {
 			console.error('An error occurred:', error);
 		}

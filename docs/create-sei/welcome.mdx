@@ -6,15 +6,11 @@ icon: "hammer"
 
 ## Overview
 
-`@sei-js/create-sei` is a CLI tool that scaffolds production-ready Sei dApps in seconds. Choose from EVM or Cosmos templates with Next.js/Vite, modern wallet integration, and TypeScript support.
+`@sei-js/create-sei` is a CLI tool that scaffolds production-ready Sei dApps in seconds. Quickly spin up templates with Next.js/Vite, modern wallet integration, and TypeScript support.
 
 ```bash
-npx @sei-js/create-sei app -n my-sei-app -f next
+npx @sei-js/create-sei app --name my-sei-app
 ```
-
-<Warning>
-**Cosmos Deprecation**: Per [SIP-3](https://github.com/sei-protocol/sei-improvement-proposals/blob/main/SIPS/sip-3.md), Sei is transitioning to EVM only. Use EVM templates for new projects.
-</Warning>
 
 <CardGroup cols={2}>
   <Card title="EVM Templates" icon="ethereum">
@@ -24,10 +20,10 @@ npx @sei-js/create-sei app -n my-sei-app -f next
     Next.js for full-stack apps, Vite for lightweight builds
   </Card>
   <Card title="Production Ready" icon="rocket">
-    TypeScript, Tailwind CSS, ESLint, wallet connections included
+    TypeScript, Tailwind CSS, Mantine, Biome, and wallet connections included
   </Card>
 </CardGroup>
 
 ## What's Included
 
-Every project includes wallet connections, contract interactions, TypeScript, Tailwind CSS, ESLint, and responsive layouts. No additional setup required.
+Every project includes wallet connections, contract interactions, TypeScript, Tailwind CSS, Biome for formatting, and responsive layouts. No additional setup required.

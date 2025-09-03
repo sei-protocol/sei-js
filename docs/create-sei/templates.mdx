@@ -8,9 +8,8 @@ icon: "grid-2"
 **New to @sei-js/create-sei?** Check out our [Quick Start guide](/create-sei/quick-start) for step-by-step instructions on getting started. This page is a reference for all available template combinations.
 </Info>
 
-## Choose a Template
+## Default Template
 
-<CardGroup cols={1}>
   <Card
     title="Next.js + Wagmi (EVM)"
     icon="react"
@@ -18,60 +17,44 @@ icon: "grid-2"
     Production-ready Next.js application with Wagmi for type-safe Ethereum wallet connections and blockchain interactions. Includes built-in support for MetaMask, WalletConnect, Coinbase Wallet, and other popular wallets. Best for full-stack dApps requiring server-side rendering, SEO optimization, and robust wallet integration.
     
     <br/>
-    
-    **CLI Flags:** `-f next -e evm -l wagmi`
-    
-    <br/>
 
     **Tech Stack:** `Next.js 14` `Wagmi v2` `Viem` `TanStack Query` `Tailwind CSS`
     
     ```bash
-    npx @sei-js/create-sei app -n my-app -f next -e evm -l wagmi
+    npx @sei-js/create-sei app --name my-sei-app
+    ```
+  </Card>
+
+---
+
+## Extensions
+
+Enhance your templates with additional functionality using extensions:
+
+<CardGroup cols={1}>
+  <Card
+    title="List Available Extensions"
+    icon="list"
+  >
+    View all available extensions that can be added to your project:
+    
+    ```bash
+    npx @sei-js/create-sei list-extensions
     ```
   </Card>
 
   <Card
-    title="Vite + Wagmi (EVM)"
-    icon="bolt"
+    title="Precompiles Extension"
+    icon="database"
   >
-    Ultra-fast development environment with Vite's instant hot module replacement and Wagmi's type-safe wallet connections. Features automatic wallet detection, connection state management, and optimized bundle sizes. Perfect for rapid prototyping, development testing, and single-page applications requiring fast iteration cycles.
+    Add Sei precompile contract integration with examples for querying native blockchain data like token supply, staking info, and governance proposals. Perfect for dApps that need to interact with Sei's built-in smart contracts.
     
     <br/>
     
-    **CLI Flags:** `-f vite -e evm -l wagmi`
-    
-    <br/>
-
-    **Tech Stack:** `Vite` `React 18` `TypeScript` `Wagmi v2` `Viem` `TanStack Query`
+    **Features:** Bank precompile, Staking precompile, Governance precompile examples
     
     ```bash
-    npx @sei-js/create-sei app -n my-app -f vite -e evm -l wagmi
+    npx @sei-js/create-sei app --name my-sei-precompile-app --extension precompiles
     ```
-  </Card>
-</CardGroup>
-
----
-## What's Included
-
-Each template includes these essential features:
-
-<CardGroup cols={2}>
-  <Card title="Wallet Connection" icon="wallet">
-    Ready-to-use wallet connection with support for MetaMask, WalletConnect, and other popular wallets
-  </Card>
-  <Card title="Network Configuration" icon="network-wired">
-    Pre-configured for Sei mainnet, Atlantic-2 testnet, and devnet environments
-  </Card>
-  <Card title="Type Safety" icon="shield-check">
-    Full TypeScript support with proper type definitions for contracts and blockchain interactions
-  </Card>
-  <Card title="Modern Tooling" icon="wrench">
-    ESLint, Prettier, and modern development tools configured out of the box
-  </Card>
-  <Card title="Responsive Design" icon="mobile">
-    Mobile-first responsive layouts with Tailwind CSS utility classes
-  </Card>
-  <Card title="Error Handling" icon="exclamation-triangle">
-    Comprehensive error boundaries and user feedback for blockchain interactions
   </Card>
 </CardGroup>

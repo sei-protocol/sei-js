@@ -5,5 +5,3 @@ coverage/
 
 jest.config.ts
 tsconfig.json
-
-yarn-error.log

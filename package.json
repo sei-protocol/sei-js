@@ -3,18 +3,13 @@
 	"version": "2.0.0",
 	"private": true,
 	"license": "MIT",
-	"workspaces": [
-		"packages/*"
-	],
 	"scripts": {
-		"build:all": "yarn workspaces foreach --all --parallel run build",
-		"postinstall": "yarn update-submodules",
-		"update-submodules": "git submodule update --init --recursive",
-		"docs": "cd docs && yarn dlx mint dev",
+		"build:all": "pnpm -r run build",
+		"docs": "cd docs && pnpm dlx mint dev",
 		"release": "changeset publish && git push --follow-tags",
-		"release:internal": "yarn build:all && yarn changeset && yarn changeset version --snapshot internal && yarn changeset publish --no-git-tag --snapshot --tag internal",
-		"test:all": "yarn workspaces foreach --all --parallel run test",
-		"test:coverage": "yarn workspaces foreach --all --parallel run test --coverage"
+		"release:internal": "pnpm build:all && pnpm changeset && pnpm changeset version --snapshot internal && pnpm changeset publish --no-git-tag --snapshot --tag internal",
+		"test:all": "pnpm -r run test",
+		"test:coverage": "pnpm -r run test --coverage"
 	},
 	"dependencies": {
 		"@biomejs/biome": "^1.9.4",
@@ -30,5 +25,5 @@
 		"ts-node": "2.1.2",
 		"typescript": "^5.8.2"
 	},
-	"packageManager": "yarn@4.7.0"
+	"packageManager": "pnpm@9.0.0"
 }

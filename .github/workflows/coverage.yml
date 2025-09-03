@@ -15,31 +15,34 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch the full history instead of a shallow clone
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: '.nvmrc'
 
       - uses: browser-actions/setup-chrome@v1
       - run: chrome --version
 
-      - name: Enable Corepack
-        run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y rsync
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install --frozen-lockfile
 
       - name: Build packages
-        run: yarn build:all
+        run: pnpm build:all
 
       - name: Run Jest tests
-        run: yarn test:coverage
+        run: pnpm test:coverage
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: '**/coverage-final.json'
           token: ${{ secrets.CODECOV_TOKEN }}

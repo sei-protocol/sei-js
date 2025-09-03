@@ -39,4 +39,4 @@ The correct Yarn version will be automatically used thanks to the `packageManage
 
 ### Building
 
-To build all packages and docs, run `yarn install` then `yarn build:all`
+To build all packages and docs, run `pnpm install` then `pnpm build:all`

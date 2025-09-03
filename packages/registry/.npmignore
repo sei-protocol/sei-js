@@ -4,6 +4,3 @@ docs
 coverage/
 
 tsconfig.json
-
-yarn-error.log
-
