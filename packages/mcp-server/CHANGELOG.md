@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+### Patch Changes
+
+- 2df51c5: fix: update dev script to watch for changes in index.ts. useful during the development and debugging process.
+
 ## 0.3.0
 
 ### Minor Changes
