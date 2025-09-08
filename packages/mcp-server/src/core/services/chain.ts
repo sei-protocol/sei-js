@@ -1,7 +1,6 @@
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import Docker from 'dockerode';
 
-const execAsync = promisify(exec);
+const docker = new Docker();
 
 /**
  * Interface for Sei chain version information
@@ -27,69 +26,40 @@ export interface DockerContainer {
 
 /**
  * Get available Sei chain versions from GitHub Container Registry
- * Uses skopeo to query the registry without pulling images
+ * Uses GitHub Container Registry API to query available tags
  */
 export async function getAvailableSeiVersions(): Promise<SeiChainVersion[]> {
 	try {
-		// First try using skopeo (more reliable for registry queries)
-		try {
-			const { stdout } = await execAsync('skopeo list-tags docker://ghcr.io/sei-protocol/sei');
-			const data = JSON.parse(stdout);
-
-			// Convert tags to version objects with additional metadata
-			const versions: SeiChainVersion[] = [];
-
-			for (const tag of data.Tags || []) {
-				try {
-					// Get image details for each tag
-					const { stdout: inspectOutput } = await execAsync(`skopeo inspect docker://ghcr.io/sei-protocol/sei:${tag}`);
-					const imageInfo = JSON.parse(inspectOutput);
-
-					versions.push({
-						tag,
-						digest: imageInfo.Digest || 'unknown',
-						created: imageInfo.Created || 'unknown',
-						size: imageInfo.Size ? `${Math.round(imageInfo.Size / 1024 / 1024)}MB` : 'unknown'
-					});
-				} catch (error) {
-					// If we can't get details for a specific tag, still include it
-					versions.push({
-						tag,
-						digest: 'unknown',
-						created: 'unknown',
-						size: 'unknown'
-					});
-				}
-			}
-
-			return versions.sort((a, b) => b.tag.localeCompare(a.tag, undefined, { numeric: true }));
-		} catch (skopeoError) {
-			// Fallback to docker registry API
-			console.warn('Skopeo not available, falling back to registry API');
-			return await getVersionsFromRegistryAPI();
-		}
+		// Use GitHub Container Registry API directly
+		return await getVersionsFromRegistryAPI();
 	} catch (error) {
 		throw new Error(`Failed to get available Sei versions: ${error instanceof Error ? error.message : String(error)}`);
 	}
 }
 
 /**
- * Fallback method using GitHub Container Registry API
+ * Get versions using GitHub Container Registry API with fetch
  */
 async function getVersionsFromRegistryAPI(): Promise<SeiChainVersion[]> {
 	try {
-		// Use curl to query the GitHub Container Registry API
-		const { stdout } = await execAsync(
-			'curl -s "https://ghcr.io/v2/sei-protocol/sei/tags/list" -H "Accept: application/vnd.docker.distribution.manifest.v2+json"'
-		);
+		// Use fetch to query the GitHub Container Registry API
+		const response = await fetch('https://ghcr.io/v2/sei-protocol/sei/tags/list', {
+			headers: {
+				'Accept': 'application/vnd.docker.distribution.manifest.v2+json'
+			}
+		});
 
-		const data = JSON.parse(stdout);
+		if (!response.ok) {
+			throw new Error(`Registry API returned ${response.status}: ${response.statusText}`);
+		}
 
-		if (!data.tags) {
+		const data = await response.json() as { tags?: string[] };
+
+		if (!data.tags || !Array.isArray(data.tags)) {
 			throw new Error('No tags found in registry response');
 		}
 
-		// Convert to version objects (without detailed metadata in fallback)
+		// Convert to version objects (without detailed metadata)
 		const versions: SeiChainVersion[] = data.tags.map((tag: string) => ({
 			tag,
 			digest: 'unknown',
@@ -177,8 +147,9 @@ export async function startSeiChain(
 
 		// Stop existing container if it exists
 		try {
-			await execAsync(`docker stop ${containerName} 2>/dev/null || true`);
-			await execAsync(`docker rm ${containerName} 2>/dev/null || true`);
+			const existingContainer = docker.getContainer(containerName);
+			await existingContainer.stop();
+			await existingContainer.remove();
 		} catch (error) {
 			// Ignore errors when stopping/removing non-existent containers
 		}
@@ -186,34 +157,59 @@ export async function startSeiChain(
 		// Pull the image
 		const imageTag = `ghcr.io/sei-protocol/sei:${version}`;
 
-		await execAsync(`docker pull ${imageTag}`);
+		await new Promise<void>((resolve, reject) => {
+			docker.pull(imageTag, (err: Error | null, stream: NodeJS.ReadableStream) => {
+				if (err) {
+					reject(err);
+					return;
+				}
 
-		// Create data directory
-		await execAsync(`mkdir -p ${dataDir}`);
+				docker.modem.followProgress(stream, (err: Error | null) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
+				});
+			});
+		});
 
-		// Build docker run command
-		const dockerCmd = [
-			'docker run -d',
-			`--name ${containerName}`,
-			`-p ${rpcPort}:26657`,
-			`-p ${restPort}:1317`,
-			`-p ${grpcPort}:9090`,
-			`-p ${evmRpcPort}:8545`,
-			`-p ${p2pPort}:26656`,
-			`-v ${dataDir}:/root/.sei`,
-			imageTag,
-			'seid start',
-			`--chain-id ${chainId}`,
-			`--moniker ${moniker}`,
-			'--rpc.laddr tcp://0.0.0.0:26657',
-			'--api.enable true',
-			'--api.address tcp://0.0.0.0:1317',
-			'--grpc.address 0.0.0.0:9090',
-			'--evm-rpc.address 0.0.0.0:8545'
-		].join(' ');
+		// Create and start the container using dockerode
+		const container = await docker.createContainer({
+			Image: imageTag,
+			name: containerName,
+			Cmd: [
+				'seid', 'start',
+				'--chain-id', chainId,
+				'--moniker', moniker,
+				'--rpc.laddr', 'tcp://0.0.0.0:26657',
+				'--api.enable', 'true',
+				'--api.address', 'tcp://0.0.0.0:1317',
+				'--grpc.address', '0.0.0.0:9090',
+				'--evm-rpc.address', '0.0.0.0:8545'
+			],
+			ExposedPorts: {
+				'26657/tcp': {},
+				'1317/tcp': {},
+				'9090/tcp': {},
+				'8545/tcp': {},
+				'26656/tcp': {}
+			},
+			HostConfig: {
+				PortBindings: {
+					'26657/tcp': [{ HostPort: rpcPort.toString() }],
+					'1317/tcp': [{ HostPort: restPort.toString() }],
+					'9090/tcp': [{ HostPort: grpcPort.toString() }],
+					'8545/tcp': [{ HostPort: evmRpcPort.toString() }],
+					'26656/tcp': [{ HostPort: p2pPort.toString() }]
+				},
+				Binds: [`${dataDir}:/root/.sei`]
+			}
+		});
 
-		const { stdout } = await execAsync(dockerCmd);
-		const containerId = stdout.trim();
+		await container.start();
+		const containerInfo = await container.inspect();
+		const containerId = containerInfo.Id;
 
 		return {
 			containerId,
@@ -236,8 +232,9 @@ export async function startSeiChain(
  */
 export async function stopSeiChain(containerName: string): Promise<void> {
 	try {
-		await execAsync(`docker stop ${containerName}`);
-		await execAsync(`docker rm ${containerName}`);
+		const container = docker.getContainer(containerName);
+		await container.stop();
+		await container.remove();
 	} catch (error) {
 		throw new Error(`Failed to stop Sei chain: ${error instanceof Error ? error.message : String(error)}`);
 	}
@@ -248,27 +245,24 @@ export async function stopSeiChain(containerName: string): Promise<void> {
  */
 export async function getSeiChainStatus(): Promise<DockerContainer[]> {
 	try {
-		const { stdout } = await execAsync(
-			'docker ps -a --filter "ancestor=ghcr.io/sei-protocol/sei" --format "table {{.ID}}\\t{{.Names}}\\t{{.Image}}\\t{{.Status}}\\t{{.Ports}}\\t{{.CreatedAt}}"'
+		const containers = await docker.listContainers({ all: true });
+		
+		// Filter for Sei chain containers
+		const seiContainers = containers.filter(container => 
+			container.Image.includes('ghcr.io/sei-protocol/sei') ||
+			container.Names.some(name => name.includes('sei-chain'))
 		);
 
-		const lines = stdout.trim().split('\n');
-		if (lines.length <= 1) {
-			return [];
-		}
-
-		// Skip header line and parse container info
-		return lines.slice(1).map((line) => {
-			const [id, name, image, status, ports, created] = line.split('\t');
-			return {
-				id: id?.trim() || '',
-				name: name?.trim() || '',
-				image: image?.trim() || '',
-				status: status?.trim() || '',
-				ports: ports?.trim() || '',
-				created: created?.trim() || ''
-			};
-		});
+		return seiContainers.map(container => ({
+			id: container.Id.substring(0, 12),
+			name: container.Names[0]?.replace('/', '') || '',
+			image: container.Image,
+			status: container.Status,
+			ports: container.Ports.map(port => 
+				port.PublicPort ? `${port.PublicPort}:${port.PrivatePort}` : `${port.PrivatePort}`
+			).join(', '),
+			created: new Date(container.Created * 1000).toISOString()
+		}));
 	} catch (error) {
 		throw new Error(`Failed to get Sei chain status: ${error instanceof Error ? error.message : String(error)}`);
 	}
@@ -279,8 +273,15 @@ export async function getSeiChainStatus(): Promise<DockerContainer[]> {
  */
 export async function getSeiChainLogs(containerName: string, lines = 100): Promise<string> {
 	try {
-		const { stdout } = await execAsync(`docker logs --tail ${lines} ${containerName}`);
-		return stdout;
+		const container = docker.getContainer(containerName);
+		const logStream = await container.logs({
+			stdout: true,
+			stderr: true,
+			tail: lines,
+			follow: false
+		});
+		
+		return logStream.toString();
 	} catch (error) {
 		throw new Error(`Failed to get Sei chain logs: ${error instanceof Error ? error.message : String(error)}`);
 	}
