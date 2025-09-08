@@ -33,8 +33,8 @@ export async function getSeiReleases(): Promise<SeiRelease[]> {
 		// Sort by published date (newest first)
 		return releases.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
 	} catch (error) {
-		// Fallback to hardcoded versions if API fails
-		console.warn('Failed to fetch releases from GitHub API, using fallback versions:', error);
+		// No fallback versions are provided; no releases will be available if API fails
+		console.warn('Failed to fetch releases from GitHub API; no releases will be available:', error);
 
 		return [];
 	}
