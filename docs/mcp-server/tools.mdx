@@ -4,7 +4,7 @@ description: "Complete reference of all Sei MCP server tools"
 icon: "wrench"
 ---
 
-The Sei MCP Server provides various tools for blockchain operations, queries, documentation lookup, and more. **By default, wallet tools are disabled** and only read-only tools are available. [Enable wallet tools](/mcp-server/quickstart#wallet-connection) to unlock transaction capabilities.
+The Sei MCP Server provides various tools for blockchain operations, queries, documentation lookup, local development, and more. **By default, wallet tools are disabled** and only read-only tools are available. [Enable wallet tools](/mcp-server/quickstart#wallet-connection) to unlock transaction capabilities.
 
 <Note>
 **Wallet Tools Disabled by Default**
@@ -115,6 +115,49 @@ These tools require [wallet configuration](/mcp-server/quickstart#wallet-connect
 |------|---------|---------------|
 | `search_docs` | Search the main Sei docs for general chain information, ecosystem providers, and user onboarding guides | "How do I bridge tokens to Sei?" |
 | `search_sei_js_docs` | Search Sei-JS documentation | "How do I use precompiles with Viem?" |
+
+## Local Development (Docker Tools) 🐳
+
+<Info>
+**Docker Required**: These tools require Docker to be installed and running on your system. Enable with `SEI_DOCKER_ENABLED=true`.
+</Info>
+
+Manage local Sei blockchain containers for development and testing:
+
+| Tool | Purpose | Example Usage |
+|------|---------|---------------|
+| `get_sei_releases` | Get available Sei chain releases | "What Sei versions are available?" |
+| `start_sei_chain` | Start local Sei blockchain container | "Start a local Sei chain with version v6.1.0" |
+| `get_running_chains` | List running Sei containers | "Show me all running Sei containers" |
+| `restart_sei_container` | Restart stopped Sei container | "Restart my sei-chain-latest container" |
+| `stop_sei_chain` | Stop running Sei container | "Stop my local blockchain" |
+| `delete_sei_container` | Delete Sei container | "Delete the sei-chain-v6.1.0 container" |
+
+### Docker Tool Features
+
+- **Multi-version support**: Run different Sei chain versions simultaneously
+- **Pre-configured accounts**: Test accounts with funds automatically created
+- **Port management**: Configurable RPC, REST, EVM, and gRPC ports
+- **Container lifecycle**: Full start, stop, restart, and cleanup operations
+- **GitHub integration**: Fetch latest releases directly from sei-protocol/sei-chain
+
+### Enabling Docker Tools
+
+To use Docker tools, add the environment variable to your MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "sei": {
+      "command": "npx",
+      "args": ["-y", "@sei-js/mcp-server"],
+      "env": {
+        "SEI_DOCKER_ENABLED": "true"
+      }
+    }
+  }
+}
+```
 
 ## Enabling Wallet Tools
 

@@ -97,8 +97,9 @@ icon: "robot"
             "SERVER_PATH": "/mcp",
             "MAINNET_RPC_URL": "https://evm-rpc.sei-apis.com",
             "TESTNET_RPC_URL": "https://evm-rpc-testnet.sei-apis.com",
-            "DEVNET_RPC_URL": "https://evm-rpc-arctic-1.sei-apis.com"
-          }
+            "DEVNET_RPC_URL": "https://evm-rpc-arctic-1.sei-apis.com",
+						"SEI_DOCKER_ENABLED": "true",
+						}
         }
       }
     }
@@ -113,6 +114,7 @@ icon: "robot"
 The Model Context Protocol is an open standard that connects AI systems with custom prompts, tools and data sources (context). It enables things like:
 
 - **Real-time blockchain data access** - Get current balances, transaction history, and network status directly from Sei
+- **Local development environment** - Spin up complete Sei blockchain containers for testing and development
 - **Full execution and write operations** - Deploy contracts, execute transactions, and interact with smart contracts (with wallet configured)
 - **Up-to-date documentation access** - Search both main Sei docs and Sei-JS package documentation for comprehensive guidance
 - **Specialized blockchain capabilities** - Access Sei-specific features like precompiles and native token operations
@@ -136,7 +138,7 @@ The Sei MCP Server leverages this protocol to bring all of this and more directl
   </Accordion>
   
   <Accordion title="Comprehensive Toolkit" icon="toolbox">
-    Access 29 blockchain tools covering token management, NFT operations, smart contract interactions, network monitoring, and documentation search.
+    Access 35+ blockchain tools covering token management, NFT operations, smart contract interactions, network monitoring, local development with Docker, and documentation search.
   </Accordion>
 </AccordionGroup>
 
@@ -148,6 +150,9 @@ The Sei MCP Server leverages this protocol to bring all of this and more directl
 "Generate a boilerplate dApp with Sei Global Wallet connection"
 "What's my SEI balance?"
 "Send 1 SEI to this address"
+"Start a local Sei blockchain for testing"
+"Show me all running Sei containers"
+"Stop my local blockchain and clean up"
 ```
 
 ## Next Steps
