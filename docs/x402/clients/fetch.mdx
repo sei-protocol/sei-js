@@ -4,80 +4,160 @@ description: "Make paid HTTP requests with the native Fetch API and x402"
 icon: "desktop"
 ---
 
-## Fetch Client Integration
+## Create Your First Fetch Client
 
 Use x402 with the standard Fetch API to make paid HTTP requests. Perfect for both browser and Node.js environments.
 
-## Installation
+<Steps>
+    <Step title="Install Dependencies">
+        Create a new project and install the required packages:
 
-```bash
-npm install @sei-js/x402-fetch viem dotenv
-```
+        <CodeGroup>
+            ```bash npm
+            mkdir my-fetch-client && cd my-fetch-client
+            npm init -y
+            npm install x402-fetch @coinbase/x402 viem dotenv tsx
+            ```
 
-## Basic Usage
+            ```bash yarn
+            mkdir my-fetch-client && cd my-fetch-client
+            yarn init -y
+            yarn add x402-fetch @coinbase/x402 viem dotenv tsx
+            ```
 
-```typescript
-import { config } from "dotenv";
-import { Hex } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import {
-  wrapFetchWithPayment,
-  decodeXPaymentResponse,
-} from "@sei-js/x402-fetch";
+            ```bash pnpm
+            mkdir my-fetch-client && cd my-fetch-client
+            pnpm init -y
+            pnpm add x402-fetch @coinbase/x402 viem dotenv tsx
+            ```
+        </CodeGroup>
 
-config();
+        <Check>
+            **Expected outcome:** Project directory created with x402 fetch client dependencies installed.
+        </Check>
+    </Step>
 
-const privateKey = process.env.PRIVATE_KEY as Hex;
-const baseURL = process.env.RESOURCE_SERVER_URL as string; // e.g. http://localhost:4021
-const endpointPath = process.env.ENDPOINT_PATH as string; // e.g. /weather
-const url = `${baseURL}${endpointPath}`;
+    <Step title="Environment Configuration">
+        Create a `.env` file in your project root:
 
-if (!baseURL || !privateKey || !endpointPath) {
-  console.error("Missing required environment variables");
-  process.exit(1);
-}
+        ```env
+        # Required: Your private key for making payments
+        PRIVATE_KEY=0xYourPrivateKeyHere
 
-// Create account from private key
-const account = privateKeyToAccount(privateKey);
+        # Required: The server URL hosting the paid API
+        RESOURCE_SERVER_URL=http://localhost:4021
 
-// Wrap fetch with payment handling
-const fetchWithPayment = wrapFetchWithPayment(fetch, account);
+        # Required: The endpoint path to access
+        ENDPOINT_PATH=/weather
+        ```
 
-// Make a paid request
-fetchWithPayment(url, {
-  method: "GET",
-})
-  .then(async (response) => {
-    const body = await response.json();
-    console.log("Response:", body);
+        <Warning>
+            **Security Note**: Never commit private keys to version control. Use environment variables or secure key management services in production. For testing, you can use a dummy private key.
+        </Warning>
 
-    // Decode the payment response
-    const paymentResponse = decodeXPaymentResponse(
-      response.headers.get("x-payment-response")!
-    );
-    console.log("Payment details:", paymentResponse);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response?.data?.error);
-  });
-```
+        <Check>
+            **Expected outcome:** Environment variables configured for your fetch client.
+        </Check>
+    </Step>
 
-## Environment Setup
+    <Step title="Create the fetch client">
+        Create `fetch-client.ts` with the payment-enabled fetch implementation:
 
-Create a `.env` file with the required configuration:
+        ```typescript
+        import { config } from "dotenv";
+        import { Hex } from "viem";
+        import { privateKeyToAccount } from "viem/accounts";
+        import {
+          wrapFetchWithPayment,
+          decodeXPaymentResponse,
+        } from "x402-fetch";
 
-```env
-# Required: Your private key for making payments
-PRIVATE_KEY=0xYourPrivateKeyHere
+        config();
 
-# Required: The server URL hosting the paid API
-RESOURCE_SERVER_URL=http://localhost:4021
+        const privateKey = process.env.PRIVATE_KEY as Hex;
+        const baseURL = process.env.RESOURCE_SERVER_URL as string;
+        const endpointPath = process.env.ENDPOINT_PATH as string;
+        const url = `${baseURL}${endpointPath}`;
 
-# Required: The endpoint path to access
-ENDPOINT_PATH=/weather
-```
+        if (!baseURL || !privateKey || !endpointPath) {
+          console.error("Missing required environment variables");
+          process.exit(1);
+        }
 
-<Warning>
-  **Security Note**: Never commit private keys to version control. Use
-  environment variables or secure key management services in production.
-</Warning>
+        // Create account from private key
+        const account = privateKeyToAccount(privateKey);
+
+        // Wrap fetch with payment handling
+        const fetchWithPayment = wrapFetchWithPayment(fetch, account);
+
+        // Make a paid request
+        fetchWithPayment(url, {
+          method: "GET",
+        })
+          .then(async (response) => {
+            const body = await response.json();
+            console.log("Response:", body);
+
+            // Decode the payment response
+            const paymentResponse = decodeXPaymentResponse(
+              response.headers.get("x-payment-response")!
+            );
+            console.log("Payment details:", paymentResponse);
+          })
+          .catch((error) => {
+            console.error("Error:", error.message);
+          });
+        ```
+
+        <Check>
+            **Expected outcome:** Fetch client code created with automatic payment handling.
+        </Check>
+    </Step>
+
+    <Step title="Run your fetch client">
+        Execute your fetch client to make paid requests:
+
+        <CodeGroup>
+            ```bash npm
+            npx tsx fetch-client.ts
+            ```
+
+            ```bash yarn
+            yarn tsx fetch-client.ts
+            ```
+
+            ```bash pnpm
+            pnpx tsx fetch-client.ts
+            ```
+
+            ```bash direct
+            npx tsx fetch-client.ts
+            ```
+        </CodeGroup>
+
+        <Check>
+            **Expected outcome:** The client should automatically handle the 402 Payment Required response, make the payment, and receive the protected content.
+        </Check>
+
+        <Info>
+            Make sure your paid API server is running on the configured URL. The fetch client will automatically detect 402 responses, handle payment processing, and retry the request with payment proof.
+        </Info>
+
+        Example successful output:
+        ```bash
+        Response: {
+          report: {
+            weather: 'sunny',
+            temperature: 70
+          }
+        }
+        Payment details: {
+          success: true,
+          transaction: '0x1234567890abcdef...',
+          network: 'sei-testnet',
+          payer: '0xYourWalletAddress...'
+        }
+        ```
+    </Step>
+
+</Steps>

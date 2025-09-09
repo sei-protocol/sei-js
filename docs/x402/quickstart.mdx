@@ -1,6 +1,6 @@
 ---
 title: Quickstart Guide
-description: Build your first paid API on Sei in under 10 minutes by using @sei-js/x402
+description: Build your first paid API on Sei in under 10 minutes by using x402
 icon: "bolt"
 ---
 
@@ -52,19 +52,19 @@ Before you begin, ensure you have the following:
             ```bash npm
             mkdir my-paid-api && cd my-paid-api
             npm init -y
-            npm install @sei-js/x402-express express dotenv
+            npm install x402-express @coinbase/x402 express dotenv
             ```
 
             ```bash yarn
             mkdir my-paid-api && cd my-paid-api
             yarn init -y
-            yarn add @sei-js/x402-express express dotenv
+            yarn add x402-express @coinbase/x402 express dotenv
             ```
 
             ```bash pnpm
             mkdir my-paid-api && cd my-paid-api
             pnpm init -y
-            pnpm add @sei-js/x402-express express dotenv
+            pnpm add x402-express @coinbase/x402 express dotenv
             ```
         </CodeGroup>
 
@@ -73,23 +73,65 @@ Before you begin, ensure you have the following:
         </Check>
     </Step>
 
+    <Step title="Configure ES Modules">
+        Update your `package.json` to enable ES modules:
+
+        ```json
+        {
+          "name": "my-paid-api",
+          "version": "1.0.0",
+          "type": "module",
+          "main": "server.js",
+          "scripts": {
+            "start": "node server.js"
+          },
+          "dependencies": {
+            "x402-express": "^0.6.0",
+            "@coinbase/x402": "^0.6.0",
+            "express": "^5.1.0",
+            "dotenv": "^17.2.2"
+          }
+        }
+        ```
+
+        <Check>
+            **Expected outcome:** Package.json configured for ES modules.
+        </Check>
+    </Step>
+
+    <Step title="Create environment configuration">
+        Create a `.env` file in your project root:
+
+        ```env
+        FACILITATOR_URL=http://localhost:3000/facilitator
+        ADDRESS=0x1234567890123456789012345678901234567890
+        ```
+
+        <Warning>
+            Replace `ADDRESS` with your testnet Sei wallet address. The `FACILITATOR_URL` should point to your facilitator
+            service, but having a valid one is not required for this tutorial. If you want to
+            test with a facilitator, you can run one locally. See the [Facilitator Example](/facilitators/example)
+        </Warning>
+
+        <Check>
+            **Expected outcome:** Environment variables configured for your API.
+        </Check>
+    </Step>
+
     <Step title="Create a simple paid API server">
-    <Warning>
-        **Facilitator Might be Required**: The code references `facilitatorUrl` environment variable that need to be configured. You'll need to set up a facilitator to process payments or use a public facilitator. See the [Facilitator Example](/facilitators/example) here.
-    </Warning>
         Create `server.js` with a protected API endpoint:
 
         ```javascript
         import {config} from "dotenv";
         import express from "express";
-        import {paymentMiddleware, Resource} from "@sei-js/x402-express";
+        import {paymentMiddleware} from "x402-express";
         config();
 
-        const facilitatorUrl = process.env.FACILITATOR_URL as Resource;
-        const payTo = process.env.ADDRESS as `0x${string}`;
+        const facilitatorUrl = process.env.FACILITATOR_URL;
+        const payTo = process.env.ADDRESS;
 
         if (!facilitatorUrl || !payTo) {
-          console.error("Missing required environment variables");
+          console.error("Missing required environment variables FACILITATOR_URL and ADDRESS");
           process.exit(1);
         }
 
@@ -131,32 +173,71 @@ Before you begin, ensure you have the following:
         </Check>
     </Step>
 
-    <Step title="Test the payment requirement">
-        Start your server and test the payment requirement:
+    <Step title="Start and test your paid API">
+        Start your server:
 
-        ```bash
-        node server.js
-        ```
+        <CodeGroup>
+            ```bash npm
+            npm start
+            ```
 
-        In another terminal, try accessing the protected endpoint:
+            ```bash yarn
+            yarn start
+            ```
+
+            ```bash pnpm
+            pnpm start
+            ```
+
+            ```bash direct
+            node server.js
+            ```
+        </CodeGroup>
+
+        In another terminal, test the protected endpoint:
 
         ```bash
         curl http://localhost:4021/weather
         ```
 
         <Check>
-            **Expected outcome:** You should receive a `402 Payment Required` response with payment details.
+            **Expected outcome:** You should receive a `402 Payment Required` response with payment details, or an error if the facilitator is not running.
         </Check>
 
-        Example response:
+        <Info>
+            If you get a connection error, make sure your facilitator service is running at the configured URL, or set up a local facilitator using the [Facilitator Example](/x402/facilitators/example).
+        </Info>
+
+        Example successful 402 response:
         ```json
-        {
-            "error": "Payment Required",
-            "amount": "0.01",
-            "currency": "SEI",
-            "recipient": "YOUR_WALLET_ADDRESS",
-            "network": "sei-testnet"
-        }
+			{
+				"x402Version": 1,
+				"error": "X-PAYMENT header is required",
+				"accepts": [
+				{
+					"scheme": "exact",
+					"network": "sei-testnet",
+					"maxAmountRequired": "1000",
+					"resource": "http://localhost:4021/weather",
+					"description": "",
+					"mimeType": "",
+					"payTo": "0x1234567890123456789012345678901234567890",
+					"maxTimeoutSeconds": 60,
+					"asset": "0x4fCF1784B31630811181f670Aea7A7bEF803eaED",
+					"outputSchema": {
+						"input": {
+							"type": "http",
+							"method": "GET",
+							"discoverable": true
+						}
+					},
+					"extra": {
+					"name": "USDC",
+					"version": "2"
+					}
+				}
+				]
+			}
         ```
     </Step>
 

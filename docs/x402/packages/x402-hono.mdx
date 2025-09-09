@@ -1,23 +1,23 @@
 ---
-title: "@sei-js/x402-hono"
+title: "x402-hono"
 description: Hono middleware integration for x402 Payment Protocol
 ---
 
-# @sei-js/x402-hono
+# x402-hono
 
 Hono middleware integration for the x402 Payment Protocol. This package allows you to easily add paywall functionality to your Hono applications using the x402 protocol.
 
 ## Installation
 
 ```bash
-npm install @sei-js/x402-hono
+npm install x402-hono @coinbase/x402
 ```
 
 ## Quick Start
 
 ```typescript
 import { Hono } from "hono";
-import { paymentMiddleware, Network } from "@sei-js/x402-hono";
+import { paymentMiddleware, Network } from "x402-hono";
 
 const app = new Hono();
 
@@ -27,7 +27,7 @@ app.use(paymentMiddleware(
   {
     "/protected-route": {
       price: "$0.10",
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: "Access to premium content",
       }
@@ -88,7 +88,7 @@ interface PaymentMiddlewareConfig {
 
 ```typescript
 import { Hono } from "hono";
-import { paymentMiddleware } from "@sei-js/x402-hono";
+import { paymentMiddleware } from "x402-hono";
 
 const app = new Hono();
 
@@ -97,7 +97,7 @@ app.use(paymentMiddleware(
   {
     "/api/premium": {
       price: "$0.02",
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: "Premium API endpoint",
         maxTimeoutSeconds: 60,
