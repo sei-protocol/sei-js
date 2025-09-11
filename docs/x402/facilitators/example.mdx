@@ -22,10 +22,10 @@ Before setting up a facilitator, ensure you have:
         Create a new project and install the required packages:
 
         <CodeGroup>
-            ```bash npm
+            ```bash pnpm
             mkdir my-facilitator && cd my-facilitator
-            npm init -y
-            npm install x402 @coinbase/x402 express dotenv tsx
+            pnpm init -y
+            pnpm add x402 @coinbase/x402 express dotenv tsx
             ```
 
             ```bash yarn
@@ -34,10 +34,10 @@ Before setting up a facilitator, ensure you have:
             yarn add x402 @coinbase/x402 express dotenv tsx
             ```
 
-            ```bash pnpm
+            ```bash npm
             mkdir my-facilitator && cd my-facilitator
-            pnpm init -y
-            pnpm add x402 @coinbase/x402 express dotenv tsx
+            npm init -y
+            npm install x402 @coinbase/x402 express dotenv tsx
             ```
         </CodeGroup>
 
@@ -167,16 +167,16 @@ app.listen(process.env.PORT || 3000, () => {
         Start your facilitator server:
 
         <CodeGroup>
-            ```bash npm
-            npx tsx index.ts
+            ```bash pnpm
+            pnpx tsx index.ts
             ```
 
             ```bash yarn
             yarn tsx index.ts
             ```
 
-            ```bash pnpm
-            pnpx tsx index.ts
+            ```bash npm
+            npx tsx index.ts
             ```
 
             ```bash direct
