@@ -1,23 +1,23 @@
 ---
-title: "@sei-js/x402-express"
+title: "x402-express"
 description: Express middleware integration for x402 Payment Protocol
 ---
 
-# @sei-js/x402-express
+# x402-express
 
 Express middleware integration for the x402 Payment Protocol. This package allows you to easily add paywall functionality to your Express.js applications using the x402 protocol.
 
 ## Installation
 
 ```bash
-npm install @sei-js/x402-express
+npm install x402-express @coinbase/x402
 ```
 
 ## Quick Start
 
 ```typescript
 import express from "express";
-import { paymentMiddleware, Network } from "@sei-js/x402-express";
+import { paymentMiddleware, Network } from "x402-express";
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(paymentMiddleware(
   {
     "/protected-route": {
       price: "$0.10",
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: "Access to premium content",
       }
@@ -110,8 +110,7 @@ type PaywallConfig = {
 
 ```typescript
 import express from "express";
-import { paymentMiddleware } from "@sei-js/x402-express";
-import { facilitator } from "@sei-js/x402";
+import { paymentMiddleware } from "x402-express";
 
 const app = express();
 
@@ -120,7 +119,7 @@ app.use(paymentMiddleware(
   {
     "/premium-api": {
       price: "$0.05",
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: "Premium API access",
         maxTimeoutSeconds: 120,
@@ -128,14 +127,16 @@ app.use(paymentMiddleware(
     },
     "/data-feed": {
       price: "$0.01",
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: "Real-time data feed",
         mimeType: "application/json",
       }
     }
   },
-  facilitator, // Use facilitator
+  {
+    url: "https://x402.org/facilitator" // Use test facilitator
+  },
   {
     appName: "My Premium API",
     appLogo: "https://example.com/logo.png"

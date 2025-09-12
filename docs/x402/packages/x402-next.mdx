@@ -1,16 +1,16 @@
 ---
-title: "@sei-js/x402-next"
+title: "x402-next"
 description: Next.js middleware integration for x402 Payment Protocol
 ---
 
-# @sei-js/x402-next
+# x402-next
 
 Next.js middleware integration for the x402 Payment Protocol. This package allows you to easily add paywall functionality to your Next.js applications using the x402 protocol.
 
 ## Installation
 
 ```bash
-npm install @sei-js/x402-next
+npm install x402-next @coinbase/x402
 ```
 
 ## Quick Start
@@ -18,14 +18,14 @@ npm install @sei-js/x402-next
 Create a middleware file in your Next.js project (e.g., `middleware.ts`):
 
 ```typescript
-import { paymentMiddleware } from '@sei-js/x402-next';
+import { paymentMiddleware } from 'x402-next';
 
 export const middleware = paymentMiddleware(
   "0xYourAddress",
   {
     '/protected': {
       price: '$0.01',
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: 'Access to protected content'
       }
@@ -85,15 +85,15 @@ Create protected API routes in your Next.js application:
 
 ```typescript
 // middleware.ts
-import { paymentMiddleware } from '@sei-js/x402-next';
-import { facilitator } from '@sei-js/x402';
+import { paymentMiddleware } from 'x402-next';
+// Use facilitator URL instead of import
 
 export const middleware = paymentMiddleware(
   "0xYourAddress",
   {
     '/api/premium': {
       price: '$0.05',
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: 'Premium API access',
         maxTimeoutSeconds: 120,
@@ -101,7 +101,7 @@ export const middleware = paymentMiddleware(
     },
     '/api/data-feed': {
       price: '$0.01',
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: 'Real-time data feed',
         mimeType: 'application/json',
@@ -144,14 +144,14 @@ The middleware works with both Pages Router and App Router:
 
 ```typescript
 // middleware.ts
-import { paymentMiddleware } from '@sei-js/x402-next';
+import { paymentMiddleware } from 'x402-next';
 
 export const middleware = paymentMiddleware(
   "0xYourAddress",
   {
     '/dashboard': {
       price: '$0.10',
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: 'Premium dashboard access'
       }
@@ -168,14 +168,14 @@ export const config = {
 
 ```typescript
 // middleware.ts
-import { paymentMiddleware } from '@sei-js/x402-next';
+import { paymentMiddleware } from 'x402-next';
 
 export const middleware = paymentMiddleware(
   "0xYourAddress",
   {
     '/premium': {
       price: '$0.05',
-      network: "sei",
+      network: "sei-testnet",
       config: {
         description: 'Premium page access'
       }

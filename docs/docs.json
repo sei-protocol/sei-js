@@ -136,7 +136,7 @@
 				"pages": ["ledger/introduction"]
 			},
 			{
-				"dropdown": "@sei-js/x402",
+				"dropdown": "x402",
 				"description": "HTTP micro payments",
 				"icon": "credit-card",
 				"pages": [

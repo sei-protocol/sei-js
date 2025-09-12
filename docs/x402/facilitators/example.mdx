@@ -15,46 +15,71 @@ Before setting up a facilitator, ensure you have:
 - **Sei wallet** with some SEI for gas fees
 - **Private key** for your facilitator wallet (testnet recommended for development)
 
-## Quick Setup
+## Create Your First Facilitator
 
-### 1. Install Dependencies
+<Steps>
+    <Step title="Install Dependencies">
+        Create a new project and install the required packages:
 
-```bash
-npm install @sei-js/x402 express dotenv
-```
+        <CodeGroup>
+            ```bash pnpm
+            mkdir my-facilitator && cd my-facilitator
+            pnpm init -y
+            pnpm add x402 @coinbase/x402 express dotenv tsx
+            ```
 
-### 2. Environment Configuration
+            ```bash yarn
+            mkdir my-facilitator && cd my-facilitator
+            yarn init -y
+            yarn add x402 @coinbase/x402 express dotenv tsx
+            ```
 
-Create a `.env` file:
+            ```bash npm
+            mkdir my-facilitator && cd my-facilitator
+            npm init -y
+            npm install x402 @coinbase/x402 express dotenv tsx
+            ```
+        </CodeGroup>
 
-```env
-# Required: Your facilitator private key
-PRIVATE_KEY=0xYourPrivateKeyHere
+        <Check>
+            **Expected outcome:** Project directory created with facilitator dependencies installed.
+        </Check>
+    </Step>
 
-# Optional: Server port (defaults to 3000)
-PORT=3002
-```
+    <Step title="Environment Configuration">
+        Create a `.env` file in your project root:
 
-<Warning>
-  **Security Note**: Never commit private keys to version control. Use
-  environment variables or secure key management services in production.
-</Warning>
+        ```env
+        # Required: Your facilitator private key
+        PRIVATE_KEY=0xYourPrivateKeyHere
 
-### 3. Basic Facilitator Implementation
+        # Optional: Server port (defaults to 3000)
+        PORT=3000
+        ```
 
-Create `index.ts` with the following structure:
+        <Warning>
+            **Security Note**: Never commit private keys to version control. Use environment variables or secure key management services in production. For testing, you can use a dummy private key.
+        </Warning>
+
+        <Check>
+            **Expected outcome:** Environment variables configured for your facilitator.
+        </Check>
+    </Step>
+
+    <Step title="Create the facilitator server">
+        Create `index.ts` with the facilitator implementation:
 
 ```typescript
 import { config } from "dotenv";
 import express from "express";
-import { verify, settle } from "@sei-js/x402/facilitator";
+import { verify, settle } from "x402/facilitator";
 import {
   PaymentRequirementsSchema,
   PaymentRequirements,
   evm,
   PaymentPayload,
   PaymentPayloadSchema,
-} from "@sei-js/x402/types";
+} from "x402/types";
 
 config();
 
@@ -133,16 +158,61 @@ app.listen(process.env.PORT || 3000, () => {
 });
 ```
 
-### 4. Run Your Facilitator
+        <Check>
+            **Expected outcome:** Facilitator server code created with verification and settlement endpoints.
+        </Check>
+    </Step>
 
-```bash
-npx tsx index.ts
-```
+    <Step title="Start and test your facilitator">
+        Start your facilitator server:
 
-<Check>
-  Your facilitator server should start and display: `Server listening at
-  http://localhost:3002`
-</Check>
+        <CodeGroup>
+            ```bash pnpm
+            pnpx tsx index.ts
+            ```
+
+            ```bash yarn
+            yarn tsx index.ts
+            ```
+
+            ```bash npm
+            npx tsx index.ts
+            ```
+
+            ```bash direct
+            npx tsx index.ts
+            ```
+        </CodeGroup>
+
+        In another terminal, test the supported schemes endpoint:
+
+        ```bash
+        curl http://localhost:3000/supported
+        ```
+
+        <Check>
+            **Expected outcome:** Your facilitator server should start and display: `Server listening at http://localhost:3000`
+        </Check>
+
+        <Info>
+            The facilitator provides three endpoints: `/verify` for payment verification, `/settle` for transaction settlement, and `/supported` for listing supported payment schemes.
+        </Info>
+
+        Example response from `/supported`:
+        ```json
+        {
+          "kinds": [
+            {
+              "x402Version": 1,
+              "scheme": "exact",
+              "network": "sei-testnet"
+            }
+          ]
+        }
+        ```
+    </Step>
+
+</Steps>
 
 ## API Endpoints
 
