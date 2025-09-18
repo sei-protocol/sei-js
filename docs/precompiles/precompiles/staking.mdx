@@ -35,7 +35,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
     ```typescript
     const success = await stakingContract.delegate(
       "seivaloper1...", 
-      { value: parseEther("100") } // Delegate 100 SEI
+      { value: 100000000 } // Delegate 100 SEI (6 decimals)
     );
     ```
   </Accordion>
@@ -54,7 +54,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
     const success = await stakingContract.redelegate(
       "seivaloper1source...",
       "seivaloper1destination...", 
-      parseEther("50") // Redelegate 50 SEI
+      50000000 // Redelegate 50 SEI (6 decimals)
     );
     ```
   </Accordion>
@@ -73,7 +73,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
     ```typescript
     const success = await stakingContract.undelegate(
       "seivaloper1...",
-      parseEther("25") // Undelegate 25 SEI
+      25000000 // Undelegate 25 SEI (6 decimals)
     );
     ```
   </Accordion>
@@ -124,7 +124,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
 <Tabs>
   <Tab title="Viem">
     ```typescript
-    import { createPublicClient, createWalletClient, http, parseEther, formatEther } from 'viem';
+    import { createPublicClient, createWalletClient, http, formatEther } from 'viem';
     import { privateKeyToAccount } from 'viem/accounts';
     import { 
       seiTestnet,
@@ -151,7 +151,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
         abi: STAKING_PRECOMPILE_ABI,
         functionName: 'delegate',
         args: [validatorAddress],
-        value: parseEther(amount)
+        value: amount  // (6 decimals)
       });
       
       return await publicClient.waitForTransactionReceipt({ hash });
@@ -184,7 +184,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
         address: STAKING_PRECOMPILE_ADDRESS,
         abi: STAKING_PRECOMPILE_ABI,
         functionName: 'redelegate',
-        args: [fromValidator, toValidator, parseEther(amount)]
+        args: [fromValidator, toValidator, amount] // Amount (6 decimals)
       });
       
       return await publicClient.waitForTransactionReceipt({ hash });
@@ -196,7 +196,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
         address: STAKING_PRECOMPILE_ADDRESS,
         abi: STAKING_PRECOMPILE_ABI,
         functionName: 'undelegate',
-        args: [validatorAddress, parseEther(amount)]
+        args: [validatorAddress, amount] // Amount (6 decimals)
       });
       
       return await publicClient.waitForTransactionReceipt({ hash });
@@ -232,7 +232,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
       const stakingWithSigner = stakingContract.connect(signer);
       
       const tx = await stakingWithSigner.delegate(validatorAddress, {
-        value: ethers.parseEther(amount)
+        value: amount // Amount (6 decimals)
       });
       
       return await tx.wait();
@@ -261,7 +261,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
       const tx = await stakingWithSigner.redelegate(
         fromValidator,
         toValidator,
-        ethers.parseEther(amount)
+        amount // Amount (6 decimals)
       );
       
       return await tx.wait();
@@ -273,7 +273,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
       
       const tx = await stakingWithSigner.undelegate(
         validatorAddress,
-        ethers.parseEther(amount)
+        amount // Amount (6 decimals)
       );
       
       return await tx.wait();
@@ -392,12 +392,12 @@ async function diversifyDelegations(
   totalAmount: string,
   validatorAddresses: string[]
 ) {
-  const amountPerValidator = parseEther(totalAmount) / BigInt(validatorAddresses.length);
-  
+  const amountPerValidator = totalAmount / BigInt(validatorAddresses.length); // Amount (6 decimals)
+
   const delegationPromises = validatorAddresses.map(validator =>
-    delegateToValidator(validator, formatEther(amountPerValidator))
+    delegateToValidator(validator, amountPerValidator)
   );
-  
+
   return await Promise.all(delegationPromises);
 }
 ```
