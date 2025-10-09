@@ -2,10 +2,13 @@ name: PR → Codex review → Slack
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review, synchronize]
+    types: [opened, reopened, ready_for_review]
 
 jobs:
   codex_review:
+    # Run only for trusted contributors
+    # if: ${{ contains(fromJSON('["OWNER","MEMBER","COLLABORATOR","CONTRIBUTOR"]'), github.event.pull_request.author_association) }}
+
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
