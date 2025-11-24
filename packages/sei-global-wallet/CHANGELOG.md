@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.3.5
+
+### Patch Changes
+
+- 1575dac: Update global wallet icon
+
 ## 1.3.4
 
 ### Patch Changes
