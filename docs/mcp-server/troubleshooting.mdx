@@ -147,7 +147,92 @@ Many issues stem from incorrect environment variable configuration.
   </Step>
 </Steps>
 
+### Docker Issues
 
+Problems with Docker tools and local blockchain containers.
+
+<Steps>
+  <Step title="Docker Not Available">
+    If Docker tools aren't showing up or you get "Docker not available" errors:
+    
+    ```bash
+    # Check if Docker is installed
+    docker --version
+    
+    # Check if Docker daemon is running
+    docker ps
+    
+    # Verify SEI_DOCKER_ENABLED is set
+    echo $SEI_DOCKER_ENABLED
+    ```
+    
+    **Solutions:**
+    - Install Docker from [docker.com](https://docker.com)
+    - Start Docker Desktop or Docker daemon
+    - Ensure `SEI_DOCKER_ENABLED=true` in your MCP configuration
+    - Restart your AI assistant after enabling Docker tools
+  </Step>
+  
+  <Step title="Container Start Failures">
+    If Sei containers fail to start or crash immediately:
+    
+    ```bash
+    # Check Docker logs
+    docker logs sei-chain-latest
+    
+    # Check available system resources
+    docker system df
+    
+    # Check port conflicts
+    lsof -i :26657 -i :1317 -i :8545 -i :9090
+    ```
+    
+    **Common causes:**
+    - Port conflicts (26657, 1317, 8545, 9090 already in use)
+    - Insufficient disk space or memory
+    - Docker image corruption
+    
+    **Solutions:**
+    - Stop conflicting services or use different ports
+    - Free up disk space (`docker system prune`)
+    - Pull fresh Docker image (`docker pull ghcr.io/sei-protocol/sei:latest`)
+  </Step>
+  
+  <Step title="Image Pull Failures">
+    If Docker images fail to download:
+    
+    ```bash
+    # Test Docker Hub connectivity
+    docker pull hello-world
+    
+    # Try pulling Sei image manually
+    docker pull ghcr.io/sei-protocol/sei:latest
+    ```
+    
+    **Solutions:**
+    - Check internet connection
+    - Verify Docker Hub/GitHub Container Registry access
+    - Try different network (corporate firewalls may block)
+    - Use VPN if in restricted region
+  </Step>
+  
+  <Step title="Container Management Issues">
+    If containers won't stop, restart, or delete:
+    
+    ```bash
+    # Force stop container
+    docker stop sei-chain-latest --time 0
+    
+    # Force remove container
+    docker rm sei-chain-latest --force
+    
+    # Clean up all stopped containers
+    docker container prune
+    ```
+    
+    **Use with caution:** Force operations may cause data loss.
+  </Step>
+</Steps>
 
 ## Error Reference
 
@@ -167,6 +252,18 @@ Many issues stem from incorrect environment variable configuration.
   <Card title="'RPC connection failed'" icon="wifi">
     **Cause**: Invalid RPC URL or network connectivity issues
     **Solution**: Check your RPC URLs and internet connection
+  </Card>
+  <Card title="'Docker not available'" icon="docker">
+    **Cause**: Docker not installed, not running, or SEI_DOCKER_ENABLED not set
+    **Solution**: Install Docker, start daemon, and set SEI_DOCKER_ENABLED=true
+  </Card>
+  <Card title="'Port already in use'" icon="network-port">
+    **Cause**: Required ports (26657, 1317, 8545, 9090) are occupied by other services
+    **Solution**: Stop conflicting services or configure different ports
+  </Card>
+  <Card title="'Container failed to start'" icon="container">
+    **Cause**: Docker image issues, resource constraints, or configuration problems
+    **Solution**: Check Docker logs, free up resources, or pull fresh image
   </Card>
 </CardGroup>
 
@@ -188,6 +285,7 @@ If you're still experiencing problems, please [create an issue on GitHub](https:
     Include:
     - Operating system and version
     - Node.js version (`node --version`)
+    - Docker version (`docker --version`) if using Docker tools
     - MCP client (Cursor, Claude Desktop, etc.)
     - Your PATH (`echo $PATH`)
   </Step>

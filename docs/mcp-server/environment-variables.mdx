@@ -125,6 +125,21 @@ The Sei MCP Server supports configuration through environment variables, which c
 - **Description**: Base path for HTTP endpoints
 - **Format**: Must start with `/` (automatically normalized)
 
+### Docker Configuration
+
+#### `SEI_DOCKER_ENABLED`
+- **Type**: `string`
+- **Default**: `"false"`
+- **Description**: Enable Docker tools for local Sei blockchain development
+- **Options**: 
+  - `"false"` - Docker tools disabled (default)
+  - `"true"` - Enable Docker container management tools
+- **Prerequisites**: Docker must be installed and running on your system
+
+<Info>
+**Docker Tools**: When enabled, provides 6 additional tools for managing local Sei blockchain containers including start, stop, restart, and cleanup operations.
+</Info>
+
 ### System Configuration
 
 #### `PATH`
@@ -248,6 +263,48 @@ The Sei MCP Server supports configuration through environment variables, which c
     
     **Status**: Deprecated - migrate to streamable-http for better performance
   </Accordion>
+  
+  <Accordion title="Local Development with Docker">
+    Enable Docker tools for local blockchain development:
+    
+    <Tabs>
+      <Tab title="JSON Config">
+        ```json
+        {
+          "mcpServers": {
+            "sei": {
+              "command": "npx",
+              "args": ["-y", "@sei-js/mcp-server"],
+              "env": {
+                "SEI_DOCKER_ENABLED": "true",
+                "WALLET_MODE": "private-key",
+                "PRIVATE_KEY": "0x123..."
+              }
+            }
+          }
+        }
+        ```
+      </Tab>
+      <Tab title="CLI">
+        ```bash
+        # Enable Docker tools with wallet support
+        SEI_DOCKER_ENABLED=true \
+        WALLET_MODE=private-key \
+        PRIVATE_KEY=0x123... \
+        npx @sei-js/mcp-server
+        
+        # Or with Claude CLI
+        claude mcp add sei-docker npx @sei-js/mcp-server \
+          --env SEI_DOCKER_ENABLED=true \
+          --env WALLET_MODE=private-key \
+          --env PRIVATE_KEY=0x123...
+        ```
+      </Tab>
+    </Tabs>
+    
+    **Use Case**: Local development, testing, and blockchain experimentation
+    **Tools Added**: get_sei_releases, start_sei_chain, get_running_chains, restart_sei_container, stop_sei_chain, delete_sei_container
+  </Accordion>
 </AccordionGroup>
 
 ## Security Best Practices
@@ -285,6 +342,12 @@ The Sei MCP Server supports configuration through environment variables, which c
 - Restart your AI assistant after configuration changes
 - Verify JSON syntax in MCP configuration
 - Check for typos in variable names
+
+**Docker Tools Not Available**
+- Ensure Docker is installed and running: `docker --version`
+- Verify `SEI_DOCKER_ENABLED=true` is set correctly
+- Check Docker daemon is accessible: `docker ps`
+- Restart MCP server after enabling Docker tools
 
 <Card title="Need More Help?" icon="bug" href="/mcp-server/troubleshooting">
   Check our comprehensive troubleshooting guide for solutions to specific problems.

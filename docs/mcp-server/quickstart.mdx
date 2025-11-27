@@ -126,6 +126,9 @@ icon: "download"
         
         # Wallet-enabled mode
         claude mcp add sei-mcp-server-wallet npx @sei-js/mcp-server --env WALLET_MODE=private-key PRIVATE_KEY=0x123...
+        
+        # Docker-enabled mode for local development
+        claude mcp add sei-mcp-server-docker npx @sei-js/mcp-server --env SEI_DOCKER_ENABLED=true WALLET_MODE=private-key PRIVATE_KEY=0x123...
         ```
       </Step>
       
@@ -233,6 +236,16 @@ After setup, verify the server is working by asking your AI assistant:
     
     This confirms wallet tools are enabled.
   </Step>
+  
+  <Step title="Test Docker Tools (Optional)">
+    If you enabled Docker tools with `SEI_DOCKER_ENABLED=true`:
+    
+    **Ask:** "What Sei chain versions are available?"
+    
+    **Ask:** "Start a local Sei blockchain"
+    
+    This confirms Docker tools are working.
+  </Step>
 </Steps>
 
 ## Next Steps
@@ -242,7 +255,7 @@ After setup, verify the server is working by asking your AI assistant:
     Configure wallet access and custom RPC endpoints
   </Card>
   <Card title="Available Tools" icon="wrench" href="/mcp-server/tools">
-    Explore 50+ blockchain tools and capabilities
+    Explore 35+ blockchain tools and capabilities
   </Card>
   <Card title="Troubleshooting" icon="bug" href="/mcp-server/troubleshooting">
     Solutions to common setup and configuration issues

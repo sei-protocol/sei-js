@@ -6,6 +6,7 @@ import { createSeiJSDocsSearchTool } from '../mintlify/search.js';
 import { getPackageInfo } from './package-info.js';
 import { getSupportedNetworks } from '../core/chains.js';
 import { createDocsSearchTool } from '../docs/index.js';
+import { registerDockerTools } from '../docker/index.js';
 
 export const getServer = async () => {
 	try {
@@ -18,6 +19,7 @@ export const getServer = async () => {
 		registerEVMResources(server);
 		registerEVMTools(server);
 		registerEVMPrompts(server);
+		registerDockerTools(server);
 
 		await createSeiJSDocsSearchTool(server);
 
