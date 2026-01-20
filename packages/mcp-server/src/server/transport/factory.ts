@@ -9,14 +9,12 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 			return new StdioTransport();
 		
 		case 'streamable-http':
-			return new StreamableHttpTransport(config.port, config.host, config.path);
+			return new StreamableHttpTransport(config.port, config.host, config.path, config.walletMode);
 		
 		case 'http-sse':
-			return new HttpSseTransport(config.port, config.host, config.path);
+			return new HttpSseTransport(config.port, config.host, config.path, config.walletMode);
 		
 		default:
 			throw new Error(`Unsupported transport mode: ${config.mode}`);
 	}
 };
-
-
