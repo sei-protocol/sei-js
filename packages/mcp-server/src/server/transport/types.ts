@@ -1,7 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { WalletMode } from '../../core/config.js';
 
 export type TransportMode = 'stdio' | 'streamable-http' | 'http-sse';
-export type WalletMode = 'disabled' | 'private-key';
 
 export interface McpTransport {
 	start(server: McpServer): Promise<void>;
@@ -16,3 +16,6 @@ export interface TransportConfig {
 	host: string; // Required for HTTP-based transports
 	path: string; // Required for HTTP-based transports
 }
+
+// Re-export WalletMode for convenience
+export type { WalletMode };
