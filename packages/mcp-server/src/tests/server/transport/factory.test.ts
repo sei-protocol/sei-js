@@ -70,7 +70,7 @@ describe('Transport Factory', () => {
 
 			const transport = createTransport(config);
 
-			expect(StreamableHttpTransport).toHaveBeenCalledWith(8080, '0.0.0.0', '/api/mcp');
+			expect(StreamableHttpTransport).toHaveBeenCalledWith(8080, '0.0.0.0', '/api/mcp', 'private-key');
 			expect(transport).toBe(mockStreamableInstance);
 		});
 
@@ -88,7 +88,7 @@ describe('Transport Factory', () => {
 
 			const transport = createTransport(config);
 
-			expect(HttpSseTransport).toHaveBeenCalledWith(9000, '127.0.0.1', '/sse');
+			expect(HttpSseTransport).toHaveBeenCalledWith(9000, '127.0.0.1', '/sse', 'disabled');
 			expect(transport).toBe(mockSseInstance);
 		});
 
@@ -123,7 +123,7 @@ describe('Transport Factory', () => {
 
 				const transport = createTransport(config);
 
-				expect(StreamableHttpTransport).toHaveBeenCalledWith(params.port, params.host, params.path);
+				expect(StreamableHttpTransport).toHaveBeenCalledWith(params.port, params.host, params.path, 'disabled');
 				expect(transport).toBe(mockInstance);
 
 				jest.clearAllMocks();
@@ -145,7 +145,7 @@ describe('Transport Factory', () => {
 
 			const transport1 = createTransport(config1);
 
-			expect(HttpSseTransport).toHaveBeenCalledWith(1, '::1', '/');
+			expect(HttpSseTransport).toHaveBeenCalledWith(1, '::1', '/', 'private-key');
 			expect(transport1).toBe(mockInstance1);
 
 			jest.clearAllMocks();
@@ -164,7 +164,7 @@ describe('Transport Factory', () => {
 
 			const transport2 = createTransport(config2);
 
-			expect(StreamableHttpTransport).toHaveBeenCalledWith(65535, '0.0.0.0', '/very/long/path/to/test/edge/cases');
+			expect(StreamableHttpTransport).toHaveBeenCalledWith(65535, '0.0.0.0', '/very/long/path/to/test/edge/cases', 'disabled');
 			expect(transport2).toBe(mockInstance2);
 		});
 	});

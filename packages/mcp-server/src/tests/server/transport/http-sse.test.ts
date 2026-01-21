@@ -16,7 +16,10 @@ jest.mock('express', () => {
 	return express;
 });
 
-jest.mock('cors', () => jest.fn(() => 'cors-middleware'));
+jest.mock('../../../server/transport/security.js', () => ({
+	createCorsMiddleware: jest.fn(() => 'cors-middleware'),
+	validateSecurityConfig: jest.fn()
+}));
 
 jest.mock('@modelcontextprotocol/sdk/server/sse.js', () => ({
 	SSEServerTransport: jest.fn()
@@ -27,7 +30,8 @@ describe('HttpSseTransport', () => {
 	let mockExpress: jest.MockedFunction<any>;
 	let mockApp: any;
 	let mockServer: any;
-	let mockCors: jest.MockedFunction<any>;
+	let mockCreateCorsMiddleware: jest.MockedFunction<any>;
+	let mockValidateSecurityConfig: jest.MockedFunction<any>;
 	let mockSSEServerTransport: jest.MockedFunction<any>;
 	let mockTransport: any;
 	let mockMcpServer: any;
@@ -38,11 +42,12 @@ describe('HttpSseTransport', () => {
 
 		// Import mocked modules
 		const expressModule = await import('express');
-		const corsModule = await import('cors');
+		const securityModule = await import('../../../server/transport/security.js');
 		const { SSEServerTransport } = await import('@modelcontextprotocol/sdk/server/sse.js');
 
 		mockExpress = expressModule.default as jest.MockedFunction<any>;
-		mockCors = corsModule.default as jest.MockedFunction<any>;
+		mockCreateCorsMiddleware = securityModule.createCorsMiddleware as jest.MockedFunction<any>;
+		mockValidateSecurityConfig = securityModule.validateSecurityConfig as jest.MockedFunction<any>;
 		mockSSEServerTransport = SSEServerTransport as jest.MockedFunction<any>;
 
 		// Setup mock objects
@@ -70,7 +75,7 @@ describe('HttpSseTransport', () => {
 		// Configure mocks
 		mockExpress.mockReturnValue(mockApp);
 		mockExpress.json = jest.fn().mockReturnValue('json-middleware');
-		mockCors.mockReturnValue('cors-middleware');
+		mockCreateCorsMiddleware.mockReturnValue('cors-middleware');
 		mockSSEServerTransport.mockImplementation(() => mockTransport);
 
 		// Import the class after mocks are set up
@@ -96,14 +101,8 @@ describe('HttpSseTransport', () => {
 			
 			expect(mockExpress).toHaveBeenCalled();
 			expect(mockApp.use).toHaveBeenCalledWith('json-middleware');
-			expect(mockCors).toHaveBeenCalledWith({
-				origin: '*',
-				methods: ['GET', 'POST', 'OPTIONS'],
-				allowedHeaders: ['Content-Type', 'Authorization'],
-				credentials: true,
-				exposedHeaders: ['Content-Type', 'Access-Control-Allow-Origin']
-			});
-			expect(mockApp.options).toHaveBeenCalledWith('*', 'cors-middleware');
+			expect(mockCreateCorsMiddleware).toHaveBeenCalled();
+			expect(mockApp.use).toHaveBeenCalledWith('cors-middleware');
 			expect(mockApp.get).toHaveBeenCalledWith('/health', expect.any(Function));
 			expect(mockApp.get).toHaveBeenCalledWith('/sse', expect.any(Function));
 			expect(mockApp.post).toHaveBeenCalledWith('/sse/message', expect.any(Function));

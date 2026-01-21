@@ -97,7 +97,7 @@ Examples:
   Streamable HTTP transport with custom path:
     $ SERVER_TRANSPORT=streamable-http SERVER_PORT=8080 SERVER_PATH=/api/mcp npx ${packageInfo.name}
     
-  With wallet enabled:
+  With wallet enabled (STDIO transport only):
     $ WALLET_MODE=private-key PRIVATE_KEY=your_private_key_here npx ${packageInfo.name}
 
 Environment Variables:
@@ -110,6 +110,10 @@ Environment Variables:
   MAINNET_RPC_URL     Custom RPC URL for Sei mainnet (optional)
   TESTNET_RPC_URL     Custom RPC URL for Sei testnet (optional)
   DEVNET_RPC_URL      Custom RPC URL for Sei devnet (optional)
+
+Security Note:
+  Wallet mode is only supported with stdio transport. HTTP transports block
+  wallet mode to prevent cross-origin attacks from malicious websites.
 `);
 
 	program.parse();

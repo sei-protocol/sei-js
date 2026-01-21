@@ -2,38 +2,42 @@ import express, { type Request, type Response } from 'express';
 import type { Server } from 'node:http';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { McpTransport, TransportMode } from './types.js';
-import {getServer} from '../server.js';
+import type { McpTransport, TransportMode, WalletMode } from './types.js';
+import { createCorsMiddleware, validateSecurityConfig } from './security.js';
+import { getServer } from '../server.js';
 
 export class StreamableHttpTransport implements McpTransport {
 	public readonly mode: TransportMode = 'streamable-http';
 	private port: number;
 	private host: string;
 	private path: string;
+	private walletMode: WalletMode;
 	private app?: express.Express;
 	private server?: Server;
 
-	constructor(port = 8080, host = 'localhost', path = '/mcp') {
+	constructor(port = 8080, host = 'localhost', path = '/mcp', walletMode: WalletMode = 'disabled') {
 		this.port = port;
 		this.host = host;
 		this.path = path;
+		this.walletMode = walletMode;
 	}
 
 	// Note: server parameter ignored for now as this is a stateless server
 	// TODO: allow creating both stateless and stateful remote MCP servers
 	async start(_server: McpServer): Promise<void> {
+		// Block wallet mode on HTTP transports
+		validateSecurityConfig(this.mode, this.walletMode);
+
 		this.app = express();
 		this.app.use(express.json());
-		this.app.use((req, res, next) => {
-			res.header('Access-Control-Allow-Origin', '*');
-			res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
-			res.header('Access-Control-Allow-Headers', 'Content-Type');
-			if (req.method === 'OPTIONS') {
-				return res.sendStatus(200);
-			}
-			next();
-		});
+		
+		// Secure CORS - no cross-origin allowed by default
+		this.app.use(createCorsMiddleware());
 
+		// Health check endpoint
+		this.app.get('/health', (_req: Request, res: Response) => {
+			res.json({ status: 'ok', timestamp: new Date().toISOString() });
+		});
 
 		this.app.post(this.path, async (req: Request, res: Response) => {
 			try {

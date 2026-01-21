@@ -1,9 +1,9 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
-import cors from 'cors';
 import express, { type Request, type Response } from 'express';
 import type { Server } from 'node:http';
-import type { McpTransport } from './types.js';
+import type { McpTransport, WalletMode } from './types.js';
+import { createCorsMiddleware, validateSecurityConfig } from './security.js';
 
 export class HttpSseTransport implements McpTransport {
 	readonly mode = 'http-sse' as const;
@@ -11,12 +11,15 @@ export class HttpSseTransport implements McpTransport {
 	private httpServer: Server | null = null;
 	private connections = new Map<string, SSEServerTransport>();
 	private mcpServer: McpServer | null = null;
+	private walletMode: WalletMode;
 
 	constructor(
 		private port: number,
 		private host: string,
-		private path: string
+		private path: string,
+		walletMode: WalletMode = 'disabled'
 	) {
+		this.walletMode = walletMode;
 		this.app = express();
 		this.setupMiddleware();
 		this.setupRoutes();
@@ -24,16 +27,9 @@ export class HttpSseTransport implements McpTransport {
 
 	private setupMiddleware() {
 		this.app.use(express.json());
-		this.app.use(
-			cors({
-				origin: '*',
-				methods: ['GET', 'POST', 'OPTIONS'],
-				allowedHeaders: ['Content-Type', 'Authorization'],
-				credentials: true,
-				exposedHeaders: ['Content-Type', 'Access-Control-Allow-Origin']
-			})
-		);
-		this.app.options('*', cors());
+		
+		// Secure CORS - no cross-origin allowed by default
+		this.app.use(createCorsMiddleware());
 	}
 
 	private setupRoutes() {
@@ -82,6 +78,9 @@ export class HttpSseTransport implements McpTransport {
 	}
 
 	async start(server: McpServer): Promise<void> {
+		// Block wallet mode on HTTP transports
+		validateSecurityConfig(this.mode, this.walletMode);
+
 		this.mcpServer = server;
 		return new Promise((resolve, reject) => {
 			this.httpServer = this.app.listen(this.port, this.host, () => {
