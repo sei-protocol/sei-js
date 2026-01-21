@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction, RequestHandler } from 'express';
+import type { TransportMode, WalletMode } from './types.js';
 
 /**
  * Creates CORS middleware with secure defaults.
@@ -19,8 +20,8 @@ export function createCorsMiddleware(): RequestHandler {
  * Exits the process if unsafe configuration detected
  */
 export function validateSecurityConfig(
-	transportMode: string,
-	walletMode: string
+	transportMode: TransportMode,
+	walletMode: WalletMode
 ): void {
 	const isHttpTransport = transportMode === 'streamable-http' || transportMode === 'http-sse';
 	const isWalletEnabled = walletMode !== 'disabled';

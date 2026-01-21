@@ -143,27 +143,28 @@ describe('Security Module', () => {
 			});
 		});
 
-		describe('edge cases', () => {
-			it('should handle unknown transport modes as non-HTTP (safe)', () => {
+		describe('wallet mode variations', () => {
+			it('should block private-key wallet mode on streamable-http', () => {
 				expect(() => {
-					validateSecurityConfig('unknown-transport', 'private-key');
-				}).not.toThrow();
-
-				expect(processExitSpy).not.toHaveBeenCalled();
-			});
-
-			it('should handle unknown wallet modes as enabled', () => {
-				// Any wallet mode other than 'disabled' should be considered enabled
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'some-other-mode');
+					validateSecurityConfig('streamable-http', 'private-key');
 				}).toThrow('process.exit called with code 1');
 
 				expect(processExitSpy).toHaveBeenCalledWith(1);
 			});
 
-			it('should handle empty strings', () => {
+			it('should block private-key wallet mode on http-sse', () => {
 				expect(() => {
-					validateSecurityConfig('', '');
+					validateSecurityConfig('http-sse', 'private-key');
+				}).toThrow('process.exit called with code 1');
+
+				expect(processExitSpy).toHaveBeenCalledWith(1);
+			});
+
+			it('should allow disabled wallet mode on all transports', () => {
+				expect(() => {
+					validateSecurityConfig('stdio', 'disabled');
+					validateSecurityConfig('streamable-http', 'disabled');
+					validateSecurityConfig('http-sse', 'disabled');
 				}).not.toThrow();
 
 				expect(processExitSpy).not.toHaveBeenCalled();

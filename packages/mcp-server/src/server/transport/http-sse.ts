@@ -2,7 +2,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import express, { type Request, type Response } from 'express';
 import type { Server } from 'node:http';
-import type { McpTransport } from './types.js';
+import type { McpTransport, WalletMode } from './types.js';
 import { createCorsMiddleware, validateSecurityConfig } from './security.js';
 
 export class HttpSseTransport implements McpTransport {
@@ -11,13 +11,13 @@ export class HttpSseTransport implements McpTransport {
 	private httpServer: Server | null = null;
 	private connections = new Map<string, SSEServerTransport>();
 	private mcpServer: McpServer | null = null;
-	private walletMode: string;
+	private walletMode: WalletMode;
 
 	constructor(
 		private port: number,
 		private host: string,
 		private path: string,
-		walletMode = 'disabled'
+		walletMode: WalletMode = 'disabled'
 	) {
 		this.walletMode = walletMode;
 		this.app = express();

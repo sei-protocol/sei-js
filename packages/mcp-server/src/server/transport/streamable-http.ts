@@ -2,7 +2,7 @@ import express, { type Request, type Response } from 'express';
 import type { Server } from 'node:http';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { McpTransport, TransportMode } from './types.js';
+import type { McpTransport, TransportMode, WalletMode } from './types.js';
 import { createCorsMiddleware, validateSecurityConfig } from './security.js';
 import { getServer } from '../server.js';
 
@@ -11,11 +11,11 @@ export class StreamableHttpTransport implements McpTransport {
 	private port: number;
 	private host: string;
 	private path: string;
-	private walletMode: string;
+	private walletMode: WalletMode;
 	private app?: express.Express;
 	private server?: Server;
 
-	constructor(port = 8080, host = 'localhost', path = '/mcp', walletMode = 'disabled') {
+	constructor(port = 8080, host = 'localhost', path = '/mcp', walletMode: WalletMode = 'disabled') {
 		this.port = port;
 		this.host = host;
 		this.path = path;

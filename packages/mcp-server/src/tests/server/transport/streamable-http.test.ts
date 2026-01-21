@@ -141,6 +141,16 @@ describe('StreamableHttpTransport', () => {
 			expect(mockApp.use).toHaveBeenCalledWith('cors-middleware');
 		});
 
+		it('should call validateSecurityConfig on start', async () => {
+			const securityModule = await import('../../../server/transport/security.js');
+			const mockValidateSecurityConfig = securityModule.validateSecurityConfig as jest.MockedFunction<any>;
+			
+			const transport = new StreamableHttpTransport(8080, 'localhost', '/mcp', 'disabled');
+			await transport.start({ mock: 'server' });
+
+			expect(mockValidateSecurityConfig).toHaveBeenCalledWith('streamable-http', 'disabled');
+		});
+
 		it('should setup health endpoint', async () => {
 			const transport = new StreamableHttpTransport();
 			await transport.start({ mock: 'server' });
