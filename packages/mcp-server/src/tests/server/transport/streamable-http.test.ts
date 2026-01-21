@@ -149,6 +149,27 @@ describe('StreamableHttpTransport', () => {
 			expect(mockApp.get).toHaveBeenCalledWith('/health', expect.any(Function));
 		});
 
+		it('should return health status from health endpoint', async () => {
+			const transport = new StreamableHttpTransport();
+			await transport.start({ mock: 'server' });
+
+			// Get the health endpoint handler
+			const healthHandler = mockApp.get.mock.calls.find(
+				(call: any[]) => call[0] === '/health'
+			)?.[1];
+			expect(healthHandler).toBeDefined();
+
+			const mockReq = {};
+			const mockRes = { json: jest.fn() };
+
+			healthHandler(mockReq, mockRes);
+
+			expect(mockRes.json).toHaveBeenCalledWith({
+				status: 'ok',
+				timestamp: expect.any(String)
+			});
+		});
+
 		it('should handle successful MCP requests', async () => {
 			const transport = new StreamableHttpTransport();
 			await transport.start({ mock: 'server' });
