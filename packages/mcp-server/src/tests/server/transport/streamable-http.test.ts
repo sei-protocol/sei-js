@@ -6,6 +6,7 @@ import type { Server } from 'node:http';
 jest.mock('express', () => {
 	const mockApp = {
 		use: jest.fn(),
+		get: jest.fn(),
 		post: jest.fn(),
 		listen: jest.fn()
 	};
@@ -13,6 +14,11 @@ jest.mock('express', () => {
 	express.json = jest.fn();
 	return express;
 });
+
+jest.mock('../../../server/transport/security.js', () => ({
+	createCorsMiddleware: jest.fn(() => 'cors-middleware'),
+	validateSecurityConfig: jest.fn()
+}));
 
 jest.mock('@modelcontextprotocol/sdk/server/streamableHttp.js', () => ({
 	StreamableHTTPServerTransport: jest.fn()
@@ -47,6 +53,7 @@ describe('StreamableHttpTransport', () => {
 		// Setup mock objects
 		mockApp = {
 			use: jest.fn(),
+			get: jest.fn(),
 			post: jest.fn(),
 			listen: jest.fn()
 		};
@@ -63,9 +70,14 @@ describe('StreamableHttpTransport', () => {
 			close: jest.fn()
 		};
 
+		// Import security mock
+		const securityModule = await import('../../../server/transport/security.js');
+		const mockCreateCorsMiddleware = securityModule.createCorsMiddleware as jest.MockedFunction<any>;
+		mockCreateCorsMiddleware.mockReturnValue('cors-middleware');
+
 		// Setup default mocks
 		mockExpress.mockReturnValue(mockApp);
-		mockExpress.json = jest.fn();
+		mockExpress.json = jest.fn().mockReturnValue('json-middleware');
 		mockApp.listen.mockReturnValue(mockServer);
 		mockGetServer.mockResolvedValue(mockMcpServer);
 		(StreamableHTTPServerTransport as jest.Mock).mockImplementation(() => mockStreamableTransport);
@@ -106,10 +118,10 @@ describe('StreamableHttpTransport', () => {
 			// Verify express setup
 			expect(mockExpress).toHaveBeenCalled();
 			expect(mockExpress.json).toHaveBeenCalled();
-			expect(mockApp.use).toHaveBeenCalledWith(mockExpress.json());
+			expect(mockApp.use).toHaveBeenCalledWith('json-middleware');
 
 			// Verify CORS middleware setup
-			expect(mockApp.use).toHaveBeenCalledWith(expect.any(Function));
+			expect(mockApp.use).toHaveBeenCalledWith('cors-middleware');
 
 			// Verify POST route setup
 			expect(mockApp.post).toHaveBeenCalledWith('/mcp', expect.any(Function));
@@ -121,49 +133,20 @@ describe('StreamableHttpTransport', () => {
 			expect(mockServer.on).toHaveBeenCalledWith('error', expect.any(Function));
 		});
 
-		it('should handle CORS preflight requests', () => {
-			const transport = new StreamableHttpTransport();
-			transport.start();
-
-			// Get the middleware function
-			const middlewareFunction = mockApp.use.mock.calls[1][0];
-
-			// Mock request and response for OPTIONS request
-			const mockReq = { method: 'OPTIONS' } as any as Request;
-			const mockRes = { 
-				header: jest.fn(),
-				sendStatus: jest.fn()
-			} as any as Response;
-			mockRes.sendStatus.mockReturnValue(mockRes);
-			const mockNext = jest.fn();
-
-			// Call the middleware
-			middlewareFunction(mockReq, mockRes, mockNext);
-
-			// Verify CORS headers are set
-			expect(mockRes.header).toHaveBeenCalledWith('Access-Control-Allow-Origin', '*');
-			expect(mockRes.header).toHaveBeenCalledWith('Access-Control-Allow-Methods', 'POST, OPTIONS');
-			expect(mockRes.header).toHaveBeenCalledWith('Access-Control-Allow-Headers', 'Content-Type');
-			expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
-			expect(mockNext).not.toHaveBeenCalled();
-		});
-
-		it('should call next for non-OPTIONS requests', async () => {
+		it('should setup CORS middleware', async () => {
 			const transport = new StreamableHttpTransport();
 			await transport.start({ mock: 'server' });
 
-			// Get the CORS middleware function
-			const corsMiddleware = mockApp.use.mock.calls.find(call => 
-				typeof call[0] === 'function' && call[0].length === 3
-			)?.[0];
+			// Verify CORS middleware was set up
+			expect(mockApp.use).toHaveBeenCalledWith('cors-middleware');
+		});
 
-			const mockReq = { method: 'POST' } as Request;
-			const mockRes = { header: jest.fn() } as any as Response;
-			const mockNext = jest.fn();
+		it('should setup health endpoint', async () => {
+			const transport = new StreamableHttpTransport();
+			await transport.start({ mock: 'server' });
 
-			corsMiddleware(mockReq, mockRes, mockNext);
-
-			expect(mockNext).toHaveBeenCalled();
+			// Verify health endpoint was set up
+			expect(mockApp.get).toHaveBeenCalledWith('/health', expect.any(Function));
 		});
 
 		it('should handle successful MCP requests', async () => {
