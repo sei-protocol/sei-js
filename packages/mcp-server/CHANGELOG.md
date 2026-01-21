@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+### Patch Changes
+
+- 571013a: Block wallet mode on HTTP transports to prevent CORS-based attacks
+
 ## 0.3.1
 
 ### Patch Changes
