@@ -1,6 +1,6 @@
 ---
-title: 'Staking Precompile'
-description: 'Manage validator delegations and staking operations through the Staking precompile contract'
+title: "Staking Precompile"
+description: "Manage validator delegations and staking operations through the Staking precompile contract"
 icon: "coins"
 ---
 
@@ -30,34 +30,41 @@ The Staking precompile provides access to Sei's native staking functionality, al
     
     **Returns:** Success boolean
     
-    **Note:** This function is payable - send SEI with the transaction to delegate
-    
+    **Note:** 
+    - This function is payable - send SEI with the transaction to delegate
+    - This function accepts argument parsed to 18 decimals
+
     ```typescript
     const success = await stakingContract.delegate(
-      "seivaloper1...", 
+      "seivaloper1...",
       { value: parseEther("100") } // Delegate 100 SEI
     );
     ```
+
   </Accordion>
 
-  <Accordion title="redelegate(string, string, uint256) → bool">
-    Redelegate tokens from one validator to another without unbonding.
-    
-    **Parameters:**
-    - `srcAddress` (string): Source validator address
-    - `dstAddress` (string): Destination validator address  
-    - `amount` (uint256): Amount to redelegate (in wei)
-    
-    **Returns:** Success boolean
-    
-    ```typescript
-    const success = await stakingContract.redelegate(
-      "seivaloper1source...",
-      "seivaloper1destination...", 
-      parseEther("50") // Redelegate 50 SEI
-    );
-    ```
-  </Accordion>
+<Accordion title="redelegate(string, string, uint256) → bool">
+  Redelegate tokens from one validator to another without unbonding.
+
+**Parameters:**
+
+- `srcAddress` (string): Source validator address
+- `dstAddress` (string): Destination validator address
+- `amount` (uint256): Amount to redelegate (in wei)
+
+**Returns:** Success boolean
+
+**Note:** This function accepts argument parsed to 6 decimals
+
+```typescript
+const success = await stakingContract.redelegate(
+  "seivaloper1source...",
+  "seivaloper1destination...",
+  parseUnits("50", 6), // Redelegate 50 SEI
+);
+```
+
+</Accordion>
 
   <Accordion title="undelegate(string, uint256) → bool">
     Undelegate tokens from a validator (starts unbonding period).
@@ -68,12 +75,14 @@ The Staking precompile provides access to Sei's native staking functionality, al
     
     **Returns:** Success boolean
     
-    **Note:** Undelegated tokens are subject to a 21-day unbonding period
+    **Note:** 
+    - Undelegated tokens are subject to a 21-day unbonding period
+    - This function takes arguments parsed to 6 decimals
     
     ```typescript
     const success = await stakingContract.undelegate(
       "seivaloper1...",
-      parseEther("25") // Undelegate 25 SEI
+      parseUnits("25", 6) // Undelegate 25 SEI
     );
     ```
   </Accordion>
@@ -130,7 +139,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
       seiTestnet,
       STAKING_PRECOMPILE_ABI,
       STAKING_PRECOMPILE_ADDRESS 
-    } from '@sei-js/precompiles/viem';
+    } from '@sei-js/precompiles';
 
     const publicClient = createPublicClient({
       chain: seiTestnet,
@@ -153,7 +162,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
         args: [validatorAddress],
         value: parseEther(amount)
       });
-      
+
       return await publicClient.waitForTransactionReceipt({ hash });
     }
 
@@ -165,7 +174,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
         functionName: 'delegation',
         args: [delegatorAddress, validatorAddress]
       });
-      
+
       return {
         amount: formatEther(delegation.balance.amount),
         denom: delegation.balance.denom,
@@ -177,16 +186,16 @@ The Staking precompile provides access to Sei's native staking functionality, al
     // Redelegate between validators
     async function redelegateTokens(
       fromValidator: string,
-      toValidator: string, 
+      toValidator: string,
       amount: string
     ) {
       const hash = await walletClient.writeContract({
         address: STAKING_PRECOMPILE_ADDRESS,
         abi: STAKING_PRECOMPILE_ABI,
         functionName: 'redelegate',
-        args: [fromValidator, toValidator, parseEther(amount)]
+        args: [fromValidator, toValidator, parseUnits(amount, 6)]
       });
-      
+
       return await publicClient.waitForTransactionReceipt({ hash });
     }
 
@@ -196,52 +205,53 @@ The Staking precompile provides access to Sei's native staking functionality, al
         address: STAKING_PRECOMPILE_ADDRESS,
         abi: STAKING_PRECOMPILE_ABI,
         functionName: 'undelegate',
-        args: [validatorAddress, parseEther(amount)]
+        args: [validatorAddress, parseUnits(amount, 6)]
       });
-      
+
       return await publicClient.waitForTransactionReceipt({ hash });
     }
 
     // Get all delegations for an address (requires multiple calls)
     async function getAllDelegations(
-      delegatorAddress: string, 
+      delegatorAddress: string,
       validatorAddresses: string[]
     ) {
       const delegationPromises = validatorAddresses.map(validator =>
         getDelegation(delegatorAddress, validator)
       );
-      
+
       const delegations = await Promise.all(delegationPromises);
-      
+
       return delegations.filter(d => parseFloat(d.amount) > 0);
     }
     ```
+
   </Tab>
 
   <Tab title="Ethers.js">
     ```typescript
     import { ethers } from 'ethers';
-    import { getStakingPrecompileEthersContract } from '@sei-js/precompiles/ethers';
+    import { getStakingPrecompileEthersV6Contract } from '@sei-js/precompiles';
 
     const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
     const signer = new ethers.Wallet('0x...', provider);
-    const stakingContract = getStakingPrecompileEthersContract(provider);
+    const stakingContract = getStakingPrecompileEthersV6Contract(provider);
 
     // Delegate tokens to a validator
     async function delegateToValidator(validatorAddress: string, amount: string) {
       const stakingWithSigner = stakingContract.connect(signer);
-      
+
       const tx = await stakingWithSigner.delegate(validatorAddress, {
         value: ethers.parseEther(amount)
       });
-      
+
       return await tx.wait();
     }
 
     // Check delegation
     async function getDelegation(delegatorAddress: string, validatorAddress: string) {
       const delegation = await stakingContract.delegation(delegatorAddress, validatorAddress);
-      
+
       return {
         amount: ethers.formatEther(delegation.balance.amount),
         denom: delegation.balance.denom,
@@ -257,25 +267,25 @@ The Staking precompile provides access to Sei's native staking functionality, al
       amount: string
     ) {
       const stakingWithSigner = stakingContract.connect(signer);
-      
+
       const tx = await stakingWithSigner.redelegate(
         fromValidator,
         toValidator,
-        ethers.parseEther(amount)
+        ethers.parseUnits(amount, 6)
       );
-      
+
       return await tx.wait();
     }
 
     // Undelegate tokens
     async function undelegateTokens(validatorAddress: string, amount: string) {
       const stakingWithSigner = stakingContract.connect(signer);
-      
+
       const tx = await stakingWithSigner.undelegate(
         validatorAddress,
-        ethers.parseEther(amount)
+        ethers.parseUnits(amount, 6)
       );
-      
+
       return await tx.wait();
     }
 
@@ -288,9 +298,9 @@ The Staking precompile provides access to Sei's native staking functionality, al
         'seivaloper2...',
         // ... more validators
       ];
-      
+
       const delegations = [];
-      
+
       for (const validator of validatorAddresses) {
         try {
           const delegation = await getDelegation(delegatorAddress, validator);
@@ -301,10 +311,11 @@ The Staking precompile provides access to Sei's native staking functionality, al
           // No delegation to this validator
         }
       }
-      
+
       return delegations;
     }
     ```
+
   </Tab>
 
   <Tab title="Manual">
@@ -316,7 +327,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
 
     // Using with web3.js
     import Web3 from 'web3';
-    
+
     const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
     const stakingContract = new web3.eth.Contract(
       STAKING_PRECOMPILE_ABI,
@@ -340,22 +351,26 @@ The Staking precompile provides access to Sei's native staking functionality, al
         gas: 200000
       });
     ```
+
   </Tab>
 </Tabs>
 
 ## Common Use Cases
 
 ### Liquid Staking Protocols
+
 - **Auto-Delegation**: Automatically delegate user deposits to optimal validators
 - **Rebalancing**: Redelegate between validators based on performance metrics
 - **Yield Optimization**: Monitor and adjust delegations for maximum rewards
 
 ### Staking-as-a-Service
+
 - **Portfolio Management**: Manage delegations across multiple validators
 - **Risk Distribution**: Spread delegations to reduce validator risk
 - **Performance Tracking**: Monitor delegation performance and rewards
 
 ### DeFi Integration
+
 - **Collateral Management**: Use staked tokens as collateral in lending protocols
 - **Governance Participation**: Delegate to validators aligned with protocol governance
 - **Yield Strategies**: Combine staking with other DeFi yield opportunities
@@ -363,6 +378,7 @@ The Staking precompile provides access to Sei's native staking functionality, al
 ## Validator Selection Strategies
 
 ### Performance-Based Selection
+
 ```typescript
 // Example: Select validators based on commission and uptime
 interface ValidatorMetrics {
@@ -374,30 +390,32 @@ interface ValidatorMetrics {
 
 function selectOptimalValidators(
   validators: ValidatorMetrics[],
-  maxValidators: number = 5
+  maxValidators: number = 5,
 ): string[] {
   return validators
-    .filter(v => v.uptime > 0.95) // 95% uptime minimum
-    .filter(v => v.commission < 0.1) // Max 10% commission
+    .filter((v) => v.uptime > 0.95) // 95% uptime minimum
+    .filter((v) => v.commission < 0.1) // Max 10% commission
     .sort((a, b) => a.commission - b.commission) // Prefer lower commission
     .slice(0, maxValidators)
-    .map(v => v.address);
+    .map((v) => v.address);
 }
 ```
 
 ### Diversification Strategy
+
 ```typescript
 // Spread delegations across multiple validators
 async function diversifyDelegations(
   totalAmount: string,
-  validatorAddresses: string[]
+  validatorAddresses: string[],
 ) {
-  const amountPerValidator = parseEther(totalAmount) / BigInt(validatorAddresses.length);
-  
-  const delegationPromises = validatorAddresses.map(validator =>
-    delegateToValidator(validator, formatEther(amountPerValidator))
+  const amountPerValidator =
+    parseEther(totalAmount) / BigInt(validatorAddresses.length);
+
+  const delegationPromises = validatorAddresses.map((validator) =>
+    delegateToValidator(validator, formatEther(amountPerValidator)),
   );
-  
+
   return await Promise.all(delegationPromises);
 }
 ```
@@ -413,16 +431,16 @@ Common errors when using the Staking precompile:
 
 ```typescript
 try {
-  await delegateToValidator('seivaloper1...', '100');
+  await delegateToValidator("seivaloper1...", "100");
 } catch (error) {
-  if (error.message.includes('insufficient funds')) {
-    console.error('Not enough SEI to delegate');
-  } else if (error.message.includes('validator not found')) {
-    console.error('Invalid validator address');
-  } else if (error.message.includes('delegation not found')) {
-    console.error('No existing delegation found');
+  if (error.message.includes("insufficient funds")) {
+    console.error("Not enough SEI to delegate");
+  } else if (error.message.includes("validator not found")) {
+    console.error("Invalid validator address");
+  } else if (error.message.includes("delegation not found")) {
+    console.error("No existing delegation found");
   } else {
-    console.error('Unexpected error:', error);
+    console.error("Unexpected error:", error);
   }
 }
 ```
@@ -441,7 +459,7 @@ When undelegating tokens, they enter a 21-day unbonding period:
 async function getUnbondingDelegations(delegatorAddress: string) {
   // Implementation would depend on additional precompiles or API calls
   // This is a placeholder for the concept
-  console.log('Unbonding delegations require additional API calls');
+  console.log("Unbonding delegations require additional API calls");
 }
 ```
 
