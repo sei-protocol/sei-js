@@ -6,12 +6,7 @@
 	"bin": "./bin/mcp-server.js",
 	"main": "./dist/esm/index.js",
 	"module": "./dist/esm/index.js",
-	"files": [
-		"dist/",
-		"bin/",
-		"README.md",
-		"LICENSE"
-	],
+	"files": ["dist/", "bin/", "README.md", "LICENSE"],
 	"scripts": {
 		"build": "rm -rf dist && tsc",
 		"start": "node dist/esm/index.js",
@@ -40,18 +35,8 @@
 		"viem": "^2.30.5",
 		"zod": "^3.24.2"
 	},
-	"keywords": [
-		"mcp",
-		"model-context-protocol",
-		"evm",
-		"blockchain",
-		"sei",
-		"web3",
-		"smart-contracts",
-		"ai",
-		"agent"
-	],
-	"author": "Etheral <etheral.eth.dev@gmail.com>",
+	"keywords": ["mcp", "model-context-protocol", "evm", "blockchain", "sei", "web3", "smart-contracts", "ai", "agent"],
+	"author": "@codebycarson",
 	"license": "MIT",
 	"engines": {
 		"node": ">=18.0.0"
@@ -62,9 +47,9 @@
 		"directory": "packages/mcp-server"
 	},
 	"bugs": {
-		"url": "https://github.com/sei-protocol/sei-mcp-server/issues"
+		"url": "https://github.com/sei-protocol/sei-js/issues"
 	},
-	"homepage": "https://github.com/sei-protocol/sei-mcp-server#readme",
+	"homepage": "https://github.com/sei-protocol/sei-js/tree/main/packages/mcp-server#readme",
 	"publishConfig": {
 		"access": "public"
 	}
