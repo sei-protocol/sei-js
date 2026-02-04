@@ -24,7 +24,11 @@
 		"typescript",
 		"registry"
 	],
-	"repository": "git@github.com:sei-protocol/sei-js.git",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sei-protocol/sei-js.git",
+		"directory": "packages/registry"
+	},
 	"license": "MIT",
 	"publishConfig": {
 		"access": "public"

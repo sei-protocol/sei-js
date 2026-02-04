@@ -2,6 +2,11 @@
 	"name": "@sei-js/sei-global-wallet",
 	"description": "Sei Global Wallet is a library to support Dynamic Global Wallets",
 	"version": "1.3.5",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sei-protocol/sei-js.git",
+		"directory": "packages/sei-global-wallet"
+	},
 	"type": "module",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.js",

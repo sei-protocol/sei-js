@@ -58,7 +58,8 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/sei-protocol/sei-mcp-server"
+		"url": "https://github.com/sei-protocol/sei-js.git",
+		"directory": "packages/mcp-server"
 	},
 	"bugs": {
 		"url": "https://github.com/sei-protocol/sei-mcp-server/issues"
