@@ -1,6 +1,6 @@
 ---
-title: 'Distribution Precompile'
-description: 'Claim staking rewards and manage reward distribution through the Distribution precompile contract'
+title: "Distribution Precompile"
+description: "Claim staking rewards and manage reward distribution through the Distribution precompile contract"
 icon: "gift"
 ---
 
@@ -37,26 +37,13 @@ The Distribution precompile provides access to Sei's staking reward distribution
     ```
   </Accordion>
 
-  <Accordion title="withdrawMultipleDelegationRewards(string[]) → bool">
-    Withdraw staking rewards from multiple validators in a single transaction.
-    
-    **Parameters:**
-    - `validators` (string[]): Array of validator operator addresses
-    
-    **Returns:** Success boolean
-    
-    ```typescript
-    const validators = [
-      "seivaloper1...",
-      "seivaloper2...",
-      "seivaloper3..."
-    ];
-    
-    const success = await distributionContract.withdrawMultipleDelegationRewards(
-      validators
-    );
-    ```
-  </Accordion>
+<Accordion title="withdrawMultipleDelegationRewards(string[]) → bool">
+  Withdraw staking rewards from multiple validators in a single transaction.
+  **Parameters:** - `validators` (string[]): Array of validator operator
+  addresses **Returns:** Success boolean ```typescript const validators = [
+  "seivaloper1...", "seivaloper2...", "seivaloper3..." ]; const success = await
+  distributionContract.withdrawMultipleDelegationRewards( validators ); ```
+</Accordion>
 
   <Accordion title="setWithdrawAddress(address) → bool">
     Set a custom address to receive withdrawn rewards.
@@ -134,7 +121,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
       seiTestnet,
       DISTRIBUTION_PRECOMPILE_ABI,
       DISTRIBUTION_PRECOMPILE_ADDRESS 
-    } from '@sei-js/precompiles/viem';
+    } from '@sei-js/precompiles';
 
     const publicClient = createPublicClient({
       chain: seiTestnet,
@@ -156,7 +143,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
         functionName: 'rewards',
         args: [delegatorAddress]
       });
-      
+
       return {
         totalRewards: rewards.total.map(coin => ({
           denom: coin.denom,
@@ -182,7 +169,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
         functionName: 'withdrawDelegationRewards',
         args: [validatorAddress]
       });
-      
+
       return await publicClient.waitForTransactionReceipt({ hash });
     }
 
@@ -194,7 +181,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
         functionName: 'withdrawMultipleDelegationRewards',
         args: [validatorAddresses]
       });
-      
+
       return await publicClient.waitForTransactionReceipt({ hash });
     }
 
@@ -206,7 +193,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
         functionName: 'setWithdrawAddress',
         args: [withdrawAddress]
       });
-      
+
       return await publicClient.waitForTransactionReceipt({ hash });
     }
 
@@ -214,22 +201,22 @@ The Distribution precompile provides access to Sei's staking reward distribution
     async function manageRewards(delegatorAddress: string) {
       // 1. Check pending rewards
       const pendingRewards = await getPendingRewards(delegatorAddress);
-      
+
       console.log('Pending rewards:');
       pendingRewards.totalRewards.forEach(reward => {
         console.log(`  ${reward.denom}: ${reward.amount}`);
       });
-      
+
       // 2. Get validators with rewards
       const validatorsWithRewards = pendingRewards.validatorRewards
         .filter(reward => reward.coins.some(coin => parseFloat(coin.amount) > 0))
         .map(reward => reward.validator);
-      
+
       if (validatorsWithRewards.length === 0) {
         console.log('No rewards to claim');
         return;
       }
-      
+
       // 3. Claim all rewards efficiently
       if (validatorsWithRewards.length === 1) {
         console.log('Claiming rewards from single validator');
@@ -248,37 +235,38 @@ The Distribution precompile provides access to Sei's staking reward distribution
       // This would require integration with staking precompile
       const rewards = await getPendingRewards(delegatorAddress);
       const totalSeiRewards = rewards.totalRewards.find(r => r.denom === 'usei');
-      
+
       if (totalSeiRewards && parseFloat(totalSeiRewards.amount) > 0) {
         console.log(`Auto-compounding ${totalSeiRewards.amount} SEI`);
-        
+
         // 1. Claim rewards
         const validatorsWithRewards = rewards.validatorRewards
           .filter(r => r.coins.some(c => c.denom === 'usei' && parseFloat(c.amount) > 0))
           .map(r => r.validator);
-        
+
         await claimAllRewards(validatorsWithRewards);
-        
+
         // 2. Re-delegate (would need staking precompile integration)
         console.log(`Would re-delegate to ${preferredValidator}`);
       }
     }
     ```
+
   </Tab>
 
   <Tab title="Ethers.js">
     ```typescript
     import { ethers } from 'ethers';
-    import { getDistributionPrecompileEthersContract } from '@sei-js/precompiles/ethers';
+    import { getDistributionPrecompileEthersV6Contract } from '@sei-js/precompiles';
 
     const provider = new ethers.JsonRpcProvider('https://evm-rpc-testnet.sei-apis.com');
     const signer = new ethers.Wallet('0x...', provider);
-    const distributionContract = getDistributionPrecompileEthersContract(provider);
+    const distributionContract = getDistributionPrecompileEthersV6Contract(provider);
 
     // Query pending rewards
     async function getPendingRewards(delegatorAddress: string) {
       const rewards = await distributionContract.rewards(delegatorAddress);
-      
+
       return {
         totalRewards: rewards.total.map(coin => ({
           denom: coin.denom,
@@ -299,7 +287,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
     // Claim rewards from single validator
     async function claimRewardsFromValidator(validatorAddress: string) {
       const distributionWithSigner = distributionContract.connect(signer);
-      
+
       const tx = await distributionWithSigner.withdrawDelegationRewards(validatorAddress);
       return await tx.wait();
     }
@@ -307,7 +295,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
     // Claim rewards from multiple validators
     async function claimAllRewards(validatorAddresses: string[]) {
       const distributionWithSigner = distributionContract.connect(signer);
-      
+
       const tx = await distributionWithSigner.withdrawMultipleDelegationRewards(validatorAddresses);
       return await tx.wait();
     }
@@ -316,15 +304,15 @@ The Distribution precompile provides access to Sei's staking reward distribution
     class RewardManager {
       private contract: ethers.Contract;
       private signer: ethers.Signer;
-      
+
       constructor(provider: ethers.Provider, signer: ethers.Signer) {
-        this.contract = getDistributionPrecompileEthersContract(provider);
+        this.contract = getDistributionPrecompileEthersV6Contract(provider);
         this.signer = signer;
       }
-      
+
       async getPendingRewards(delegatorAddress: string) {
         const rewards = await this.contract.rewards(delegatorAddress);
-        
+
         return {
           totalRewards: rewards.total.map(coin => ({
             denom: coin.denom,
@@ -341,20 +329,20 @@ The Distribution precompile provides access to Sei's staking reward distribution
           }))
         };
       }
-      
+
       async claimAllAvailableRewards(delegatorAddress: string) {
         const rewards = await this.getPendingRewards(delegatorAddress);
-        
+
         const validatorsWithRewards = rewards.validatorRewards
           .filter(reward => reward.coins.some(coin => parseFloat(coin.amount) > 0))
           .map(reward => reward.validator);
-        
+
         if (validatorsWithRewards.length === 0) {
           throw new Error('No rewards available to claim');
         }
-        
+
         const contractWithSigner = this.contract.connect(this.signer);
-        
+
         if (validatorsWithRewards.length === 1) {
           const tx = await contractWithSigner.withdrawDelegationRewards(validatorsWithRewards[0]);
           return await tx.wait();
@@ -363,7 +351,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
           return await tx.wait();
         }
       }
-      
+
       async setWithdrawAddress(withdrawAddress: string) {
         const contractWithSigner = this.contract.connect(this.signer);
         const tx = await contractWithSigner.setWithdrawAddress(withdrawAddress);
@@ -373,11 +361,12 @@ The Distribution precompile provides access to Sei's staking reward distribution
 
     // Usage
     const rewardManager = new RewardManager(provider, signer);
-    
+
     // Check and claim all rewards
     const delegatorAddress = await signer.getAddress();
     await rewardManager.claimAllAvailableRewards(delegatorAddress);
     ```
+
   </Tab>
 
   <Tab title="Manual">
@@ -389,7 +378,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
 
     // Using with web3.js
     import Web3 from 'web3';
-    
+
     const web3 = new Web3('https://evm-rpc-testnet.sei-apis.com');
     const distributionContract = new web3.eth.Contract(
       DISTRIBUTION_PRECOMPILE_ABI,
@@ -398,7 +387,7 @@ The Distribution precompile provides access to Sei's staking reward distribution
 
     // Query pending rewards
     const rewards = await distributionContract.methods
-      .rewards('0x742d35Cc6634C0532925a3b8D6Ac0c2fb15d8d2A')
+      .rewards('0xAddress')
       .call();
 
     // Setup account for transactions
@@ -422,22 +411,26 @@ The Distribution precompile provides access to Sei's staking reward distribution
         gas: 300000
       });
     ```
+
   </Tab>
 </Tabs>
 
 ## Common Use Cases
 
 ### Automated Reward Claiming
+
 - **DeFi Protocols**: Automatically claim and reinvest staking rewards
 - **Yield Optimization**: Compound rewards to maximize returns
 - **Portfolio Management**: Regular reward harvesting across multiple validators
 
 ### Liquid Staking Protocols
+
 - **Reward Distribution**: Distribute claimed rewards to token holders
 - **Fee Collection**: Set withdrawal addresses to protocol treasury
 - **Automated Compounding**: Reinvest rewards to increase staking positions
 
 ### Staking-as-a-Service
+
 - **Client Management**: Claim rewards on behalf of clients
 - **Fee Deduction**: Set withdrawal addresses for fee collection
 - **Performance Tracking**: Monitor reward generation across validators
@@ -445,68 +438,73 @@ The Distribution precompile provides access to Sei's staking reward distribution
 ## Reward Optimization Strategies
 
 ### Timing Optimization
+
 ```typescript
 // Check if rewards are worth claiming (considering gas costs)
 async function shouldClaimRewards(
   delegatorAddress: string,
-  minRewardThreshold: string = "1" // 1 SEI minimum
+  minRewardThreshold: string = "1", // 1 SEI minimum
 ) {
   const rewards = await getPendingRewards(delegatorAddress);
-  const totalSeiRewards = rewards.totalRewards.find(r => r.denom === 'usei');
-  
+  const totalSeiRewards = rewards.totalRewards.find((r) => r.denom === "usei");
+
   if (!totalSeiRewards) return false;
-  
+
   const rewardAmount = parseFloat(totalSeiRewards.amount);
   const threshold = parseFloat(minRewardThreshold);
-  
+
   return rewardAmount >= threshold;
 }
 ```
 
 ### Validator Selection for Claiming
+
 ```typescript
 // Prioritize validators with highest rewards
 async function getOptimalClaimingOrder(delegatorAddress: string) {
   const rewards = await getPendingRewards(delegatorAddress);
-  
+
   return rewards.validatorRewards
-    .filter(reward => reward.coins.some(coin => parseFloat(coin.amount) > 0))
+    .filter((reward) =>
+      reward.coins.some((coin) => parseFloat(coin.amount) > 0),
+    )
     .sort((a, b) => {
-      const aSeiReward = a.coins.find(c => c.denom === 'usei');
-      const bSeiReward = b.coins.find(c => c.denom === 'usei');
-      
+      const aSeiReward = a.coins.find((c) => c.denom === "usei");
+      const bSeiReward = b.coins.find((c) => c.denom === "usei");
+
       const aAmount = aSeiReward ? parseFloat(aSeiReward.amount) : 0;
       const bAmount = bSeiReward ? parseFloat(bSeiReward.amount) : 0;
-      
+
       return bAmount - aAmount; // Descending order
     })
-    .map(reward => reward.validator);
+    .map((reward) => reward.validator);
 }
 ```
 
 ### Batch Claiming Strategy
+
 ```typescript
 // Determine optimal batching strategy
 async function getOptimalClaimingStrategy(
   delegatorAddress: string,
-  maxValidatorsPerTx: number = 10
+  maxValidatorsPerTx: number = 10,
 ) {
   const validatorsWithRewards = await getOptimalClaimingOrder(delegatorAddress);
-  
+
   if (validatorsWithRewards.length <= maxValidatorsPerTx) {
     return {
-      strategy: 'single_batch',
-      batches: [validatorsWithRewards]
+      strategy: "single_batch",
+      batches: [validatorsWithRewards],
     };
   } else {
     const batches = [];
     for (let i = 0; i < validatorsWithRewards.length; i += maxValidatorsPerTx) {
       batches.push(validatorsWithRewards.slice(i, i + maxValidatorsPerTx));
     }
-    
+
     return {
-      strategy: 'multiple_batches',
-      batches
+      strategy: "multiple_batches",
+      batches,
     };
   }
 }
@@ -523,47 +521,49 @@ class RewardTracker {
     amount: string;
     txHash: string;
   }> = [];
-  
+
   recordClaim(validators: string[], amount: string, txHash: string) {
     this.claimedRewards.push({
       timestamp: Date.now(),
       validators,
       amount,
-      txHash
+      txHash,
     });
   }
-  
+
   getTotalClaimed(): string {
     return this.claimedRewards
       .reduce((total, claim) => total + parseFloat(claim.amount), 0)
       .toString();
   }
-  
+
   getClaimFrequency(): number {
     if (this.claimedRewards.length < 2) return 0;
-    
-    const timeSpan = this.claimedRewards[this.claimedRewards.length - 1].timestamp - 
-                    this.claimedRewards[0].timestamp;
-    
+
+    const timeSpan =
+      this.claimedRewards[this.claimedRewards.length - 1].timestamp -
+      this.claimedRewards[0].timestamp;
+
     return timeSpan / (this.claimedRewards.length - 1); // Average time between claims
   }
-  
+
   getMostRewardingValidators(): string[] {
     const validatorRewards = new Map<string, number>();
-    
-    this.claimedRewards.forEach(claim => {
-      const rewardPerValidator = parseFloat(claim.amount) / claim.validators.length;
-      claim.validators.forEach(validator => {
+
+    this.claimedRewards.forEach((claim) => {
+      const rewardPerValidator =
+        parseFloat(claim.amount) / claim.validators.length;
+      claim.validators.forEach((validator) => {
         validatorRewards.set(
-          validator, 
-          (validatorRewards.get(validator) || 0) + rewardPerValidator
+          validator,
+          (validatorRewards.get(validator) || 0) + rewardPerValidator,
         );
       });
     });
-    
+
     return Array.from(validatorRewards.entries())
       .sort((a, b) => b[1] - a[1])
-      .map(entry => entry[0]);
+      .map((entry) => entry[0]);
   }
 }
 ```
@@ -582,22 +582,23 @@ async function safeClaimRewards(validatorAddresses: string[]) {
   try {
     // Validate inputs
     if (validatorAddresses.length === 0) {
-      throw new Error('No validators specified');
+      throw new Error("No validators specified");
     }
-    
+
     // Check for pending rewards first
     const delegatorAddress = await signer.getAddress();
     const rewards = await getPendingRewards(delegatorAddress);
-    
-    const hasRewards = rewards.validatorRewards.some(reward =>
-      validatorAddresses.includes(reward.validator) &&
-      reward.coins.some(coin => parseFloat(coin.amount) > 0)
+
+    const hasRewards = rewards.validatorRewards.some(
+      (reward) =>
+        validatorAddresses.includes(reward.validator) &&
+        reward.coins.some((coin) => parseFloat(coin.amount) > 0),
     );
-    
+
     if (!hasRewards) {
-      throw new Error('No rewards available for specified validators');
+      throw new Error("No rewards available for specified validators");
     }
-    
+
     // Claim rewards
     if (validatorAddresses.length === 1) {
       return await claimRewardsFromValidator(validatorAddresses[0]);
@@ -605,12 +606,14 @@ async function safeClaimRewards(validatorAddresses: string[]) {
       return await claimAllRewards(validatorAddresses);
     }
   } catch (error) {
-    if (error.message.includes('no rewards')) {
-      throw new Error('No rewards available to claim');
-    } else if (error.message.includes('validator not found')) {
-      throw new Error('One or more validators not found');
-    } else if (error.message.includes('out of gas')) {
-      throw new Error('Insufficient gas - try claiming fewer validators at once');
+    if (error.message.includes("no rewards")) {
+      throw new Error("No rewards available to claim");
+    } else if (error.message.includes("validator not found")) {
+      throw new Error("One or more validators not found");
+    } else if (error.message.includes("out of gas")) {
+      throw new Error(
+        "Insufficient gas - try claiming fewer validators at once",
+      );
     } else {
       throw error;
     }
