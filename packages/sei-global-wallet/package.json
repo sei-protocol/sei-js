@@ -21,7 +21,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@dynamic-labs/global-wallet-client": "^4.10.2",
+		"@dynamic-labs/global-wallet-client": "^4.60.1",
 		"@wallet-standard/wallet": "^1.1.0"
 	},
 	"devDependencies": {
@@ -29,41 +29,46 @@
 		"typescript": "^5.7.3"
 	},
 	"peerDependencies": {
+		"@dynamic-labs/ethereum-aa": "^4.15.0",
 		"@solana/wallet-standard-features": "^1.2.0",
 		"@solana/web3.js": "^1.92.1",
 		"@wallet-standard/base": "^1.0.1",
 		"@wallet-standard/features": "^1.0.3",
 		"@wallet-standard/wallet": "^1.1.0",
+		"@zerodev/sdk": "5.4.36",
 		"viem": "^2.7.12"
 	},
 	"peerDependenciesMeta": {
-		"@solana/wallet-standard-features": {
+		"viem": {
 			"optional": true
 		},
 		"@solana/web3.js": {
 			"optional": true
 		},
-		"@wallet-standard/base": {
+		"@solana/wallet-standard-features": {
 			"optional": true
 		},
 		"@wallet-standard/features": {
 			"optional": true
 		},
+		"@wallet-standard/base": {
+			"optional": true
+		},
 		"@wallet-standard/wallet": {
 			"optional": true
 		},
-		"viem": {
+		"@zerodev/sdk": {
+			"optional": true
+		},
+		"@dynamic-labs/ethereum-aa": {
 			"optional": true
 		}
 	},
 	"typesVersions": {
 		"*": {
-			"eip6963": [
-				"./dist/types/eip6963.d.ts"
-			],
-			"solana-standard": [
-				"./dist/types/solana-standard.d.ts"
-			]
+			"eip6963": ["./dist/types/eip6963.d.ts"],
+			"ethereum": ["./dist/types/ethereum.d.ts"],
+			"solana": ["./dist/types/solana.d.ts"]
 		}
 	},
 	"exports": {
@@ -77,10 +82,20 @@
 			"import": "./dist/esm/eip6963.js",
 			"default": "./dist/cjs/eip6963.js"
 		},
-		"./solana-standard": {
-			"types": "./dist/types/solana-standard.d.ts",
-			"import": "./dist/esm/solana-standard.js",
-			"default": "./dist/cjs/solana-standard.js"
+		"./ethereum": {
+			"types": "./dist/types/ethereum.d.ts",
+			"import": "./dist/esm/ethereum.js",
+			"default": "./dist/cjs/ethereum.js"
+		},
+		"./solana": {
+			"types": "./dist/types/solana.d.ts",
+			"import": "./dist/esm/solana.js",
+			"default": "./dist/cjs/solana.js"
+		},
+		"./zerodev": {
+			"types": "./dist/types/zerodev.d.ts",
+			"import": "./dist/esm/zerodev.js",
+			"default": "./dist/cjs/zerodev.js"
 		}
 	}
 }
