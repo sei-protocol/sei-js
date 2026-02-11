@@ -1,7 +1,7 @@
 {
 	"name": "@sei-js/sei-global-wallet",
 	"description": "Sei Global Wallet is a library to support Dynamic Global Wallets",
-	"version": "1.3.5",
+	"version": "1.4.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sei-protocol/sei-js.git",
@@ -66,9 +66,15 @@
 	},
 	"typesVersions": {
 		"*": {
-			"eip6963": ["./dist/types/eip6963.d.ts"],
-			"ethereum": ["./dist/types/ethereum.d.ts"],
-			"solana": ["./dist/types/solana.d.ts"]
+			"eip6963": [
+				"./dist/types/eip6963.d.ts"
+			],
+			"ethereum": [
+				"./dist/types/ethereum.d.ts"
+			],
+			"solana": [
+				"./dist/types/solana.d.ts"
+			]
 		}
 	},
 	"exports": {
