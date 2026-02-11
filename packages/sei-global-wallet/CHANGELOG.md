@@ -1,5 +1,11 @@
 # @sei-js/global-wallet
 
+## 1.4.0
+
+### Minor Changes
+
+- b57f701: Bump global wallet and sync with upstream
+
 ## 1.3.5
 
 ### Patch Changes
