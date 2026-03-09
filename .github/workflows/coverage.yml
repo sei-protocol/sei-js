@@ -23,6 +23,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+
       - uses: browser-actions/setup-chrome@v1
       - run: chrome --version
 
