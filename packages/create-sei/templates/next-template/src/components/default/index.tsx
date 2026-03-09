@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { CodeHighlight } from '@mantine/code-highlight';
+import { CodeHighlight } from "@mantine/code-highlight";
 import {
 	ActionIcon,
 	Alert,
@@ -19,18 +19,18 @@ import {
 	TextInput,
 	ThemeIcon,
 	Title,
-} from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { IconBulb, IconChevronDown, IconChevronUp, IconCoins, IconCopy, IconLogout, IconSend, IconWallet } from '@tabler/icons-react';
-import { useState } from 'react';
-import { formatEther, parseEther } from 'viem';
-import { useAccount, useDisconnect, usePublicClient, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi';
-import { balanceCodeExample, transactionCodeExample, walletCodeExample } from './examples';
+} from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { IconBulb, IconChevronDown, IconChevronUp, IconCoins, IconCopy, IconLogout, IconSend, IconWallet } from "@tabler/icons-react";
+import { useState } from "react";
+import { formatEther, parseEther } from "viem";
+import { useAccount, useDisconnect, usePublicClient, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
+import { balanceCodeExample, transactionCodeExample, walletCodeExample } from "./examples";
 
 function Examples() {
-	const [balance, setBalance] = useState('');
-	const [recipient, setRecipient] = useState('');
-	const [amount, setAmount] = useState('');
+	const [balance, setBalance] = useState("");
+	const [recipient, setRecipient] = useState("");
+	const [amount, setAmount] = useState("");
 
 	// Code visibility toggles
 	const [showWalletCode, setShowWalletCode] = useState(false);
@@ -51,17 +51,17 @@ function Examples() {
 		try {
 			navigator.clipboard.writeText(text).then(() => {
 				notifications.show({
-					title: 'Copied!',
-					message: 'Code copied to clipboard',
-					color: 'green',
+					title: "Copied!",
+					message: "Code copied to clipboard",
+					color: "green",
 				});
 			});
 		} catch (err) {
-			console.error('Failed to copy text: ', err);
+			console.error("Failed to copy text: ", err);
 			notifications.show({
-				title: 'Error',
-				message: 'Failed to copy to clipboard',
-				color: 'red',
+				title: "Error",
+				message: "Failed to copy to clipboard",
+				color: "red",
 			});
 		}
 	};
@@ -78,9 +78,9 @@ function Examples() {
 	const sendSei = async () => {
 		if (!recipient || !amount) {
 			notifications.show({
-				title: 'Missing Information',
-				message: 'Please enter recipient address and amount',
-				color: 'orange',
+				title: "Missing Information",
+				message: "Please enter recipient address and amount",
+				color: "orange",
 			});
 			return;
 		}
@@ -91,11 +91,11 @@ function Examples() {
 				value: parseEther(amount),
 			});
 		} catch (error) {
-			console.error('Transaction error:', error);
+			console.error("Transaction error:", error);
 			notifications.show({
-				title: 'Transaction Error',
-				message: 'Failed to send transaction',
-				color: 'red',
+				title: "Transaction Error",
+				message: "Failed to send transaction",
+				color: "red",
 			});
 		}
 	};
@@ -147,7 +147,7 @@ function Examples() {
 							</Text>
 							<Flex justify="space-between" align="center">
 								<Code bg="white" p="xs">
-									{address || 'No wallet connected'}
+									{address || "No wallet connected"}
 								</Code>
 								{isConnected && address && (
 									<Group gap="xs">
@@ -171,7 +171,7 @@ function Examples() {
 								leftSection={showWalletCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
 								onClick={() => setShowWalletCode(!showWalletCode)}
 							>
-								{showWalletCode ? 'Hide' : 'View'} Implementation
+								{showWalletCode ? "Hide" : "View"} Implementation
 							</Button>
 							{showWalletCode && (
 								<ActionIcon variant="subtle" color="gray" size="sm" radius="md" onClick={() => copyToClipboard(walletCodeExample)}>
@@ -247,7 +247,7 @@ function Examples() {
 										color="green"
 										leftSection={<IconCoins size={14} />}
 									>
-										{balance ? 'Refresh' : 'Check Balance'}
+										{balance ? "Refresh" : "Check Balance"}
 									</Button>
 								</Flex>
 							</Paper>
@@ -261,7 +261,7 @@ function Examples() {
 									leftSection={showBalanceCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
 									onClick={() => setShowBalanceCode(!showBalanceCode)}
 								>
-									{showBalanceCode ? 'Hide' : 'View'} Implementation
+									{showBalanceCode ? "Hide" : "View"} Implementation
 								</Button>
 								{showBalanceCode && (
 									<ActionIcon variant="subtle" color="gray" size="sm" radius="md" onClick={() => copyToClipboard(balanceCodeExample)}>
@@ -377,7 +377,7 @@ function Examples() {
 									leftSection={showTransactionCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
 									onClick={() => setShowTransactionCode(!showTransactionCode)}
 								>
-									{showTransactionCode ? 'Hide' : 'View'} Implementation
+									{showTransactionCode ? "Hide" : "View"} Implementation
 								</Button>
 								{showTransactionCode && (
 									<ActionIcon variant="subtle" color="gray" size="sm" radius="xl" onClick={() => copyToClipboard(transactionCodeExample)}>
