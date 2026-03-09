@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["*/coverage/*", "*/dist/*", "packages/create-sei/templates/**"]
+		"ignore": ["*/coverage/*", "*/dist/*", "packages/create-sei/templates/**", "packages/create-sei/extensions/**"]
 	},
 	"formatter": {
 		"enabled": true,

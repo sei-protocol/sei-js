@@ -9,6 +9,7 @@
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "pnpm build:all && pnpm changeset && pnpm changeset version --snapshot internal && pnpm changeset publish --no-git-tag --snapshot --tag internal",
 		"test:all": "pnpm -r run test",
+		"test:parallel": "pnpm -r --parallel run test",
 		"test:coverage": "pnpm -r run test --coverage"
 	},
 	"dependencies": {

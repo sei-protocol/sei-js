@@ -1,0 +1,59 @@
+---
+title: "Introduction"
+description: "@sei-js/registry provides typed constants for Sei chain info, tokens, networks, IBC channels, and gas configuration"
+icon: "database"
+---
+
+## Overview
+
+The `@sei-js/registry` package provides fully typed TypeScript constants sourced from the official [Sei chain registry](https://github.com/sei-protocol/chain-registry) and the community [asset list](https://github.com/Sei-Public-Goods/sei-assetlist). Use it to access chain metadata, network endpoints, token lists, IBC channel info, and gas configuration without hardcoding values.
+
+## Key Exports
+
+| Export | Description |
+|---|---|
+| `CHAIN_IDS` | Mainnet, testnet, and devnet chain ID strings |
+| `CHAIN_INFO` | Core chain metadata (bech32 prefix, slip44, fee token, supported wallets) |
+| `NETWORKS` | Network configs with RPC, REST, gRPC, EVM, and WebSocket endpoints |
+| `TOKEN_LIST` | Community-maintained token list per network |
+| `IBC_INFO` | IBC channel configurations per network |
+| `GAS_INFO` | Gas denomination and pricing per network |
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @sei-js/registry
+```
+
+```bash yarn
+yarn add @sei-js/registry
+```
+
+```bash pnpm
+pnpm add @sei-js/registry
+```
+
+```bash bun
+bun add @sei-js/registry
+```
+
+</CodeGroup>
+
+## Quick Example
+
+```typescript
+import { CHAIN_IDS, NETWORKS, TOKEN_LIST } from "@sei-js/registry";
+
+// Get the mainnet chain ID
+console.log(CHAIN_IDS.mainnet); // "pacific-1"
+
+// Access mainnet RPC endpoints
+const mainnet = NETWORKS["pacific-1"];
+console.log(mainnet.rpc[0].url);
+
+// Find the SEI token on mainnet
+const sei = TOKEN_LIST["pacific-1"].find((t) => t.symbol === "sei");
+console.log(sei?.name); // "Sei"
+```

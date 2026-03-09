@@ -14,7 +14,11 @@
 		"dark": "#780000"
 	},
 	"contextual": {
-		"options": ["copy", "chatgpt", "claude"]
+		"options": [
+			"copy",
+			"chatgpt",
+			"claude"
+		]
 	},
 	"navigation": {
 		"global": {
@@ -43,11 +47,16 @@
 				"pages": [
 					{
 						"group": "Introduction",
-						"pages": ["introduction", "overview"]
+						"pages": [
+							"introduction",
+							"overview"
+						]
 					},
 					{
 						"group": "Local Development",
-						"pages": ["contributing"]
+						"pages": [
+							"contributing"
+						]
 					}
 				]
 			},
@@ -58,15 +67,26 @@
 				"pages": [
 					{
 						"group": "About",
-						"pages": ["mcp-server/introduction", "mcp-server/transports"]
+						"pages": [
+							"mcp-server/introduction",
+							"mcp-server/transports"
+						]
 					},
 					{
 						"group": "Setup",
-						"pages": ["mcp-server/quickstart", "mcp-server/environment-variables", "mcp-server/troubleshooting"]
+						"pages": [
+							"mcp-server/quickstart",
+							"mcp-server/environment-variables",
+							"mcp-server/troubleshooting"
+						]
 					},
 					{
 						"group": "Capabilities",
-						"pages": ["mcp-server/tools", "mcp-server/prompts", "mcp-server/context"]
+						"pages": [
+							"mcp-server/tools",
+							"mcp-server/prompts",
+							"mcp-server/context"
+						]
 					}
 				]
 			},
@@ -77,7 +97,11 @@
 				"pages": [
 					{
 						"group": "Getting Started",
-						"pages": ["create-sei/welcome", "create-sei/quick-start", "create-sei/templates"]
+						"pages": [
+							"create-sei/welcome",
+							"create-sei/quick-start",
+							"create-sei/templates"
+						]
 					}
 				]
 			},
@@ -88,7 +112,10 @@
 				"pages": [
 					{
 						"group": "Getting Started",
-						"pages": ["sei-global-wallet/introduction", "sei-global-wallet/quickstart"]
+						"pages": [
+							"sei-global-wallet/introduction",
+							"sei-global-wallet/quickstart"
+						]
 					},
 					{
 						"group": "Integrations",
@@ -109,7 +136,10 @@
 				"pages": [
 					{
 						"group": "Getting Started",
-						"pages": ["precompiles/introduction", "precompiles/quick-start"]
+						"pages": [
+							"precompiles/introduction",
+							"precompiles/quick-start"
+						]
 					},
 					{
 						"group": "Precompiles",
@@ -130,10 +160,26 @@
 				]
 			},
 			{
+				"dropdown": "@sei-js/registry",
+				"description": "Chain constants and token lists",
+				"icon": "database",
+				"pages": [
+					{
+						"group": "Getting Started",
+						"pages": [
+							"registry/introduction",
+							"registry/usage"
+						]
+					}
+				]
+			},
+			{
 				"dropdown": "@sei-js/ledger",
 				"description": "Hardware wallet connection",
 				"icon": "shield",
-				"pages": ["ledger/introduction"]
+				"pages": [
+					"ledger/introduction"
+				]
 			},
 			{
 				"dropdown": "x402",
@@ -142,15 +188,24 @@
 				"pages": [
 					{
 						"group": "Introduction",
-						"pages": ["x402/introduction", "x402/overview", "x402/quickstart"]
+						"pages": [
+							"x402/introduction",
+							"x402/overview",
+							"x402/quickstart"
+						]
 					},
 					{
 						"group": "Facilitators",
-						"pages": ["x402/facilitators/introduction", "x402/facilitators/example"]
+						"pages": [
+							"x402/facilitators/introduction",
+							"x402/facilitators/example"
+						]
 					},
 					{
 						"group": "Client Integration",
-						"pages": ["x402/clients/fetch"]
+						"pages": [
+							"x402/clients/fetch"
+						]
 					},
 					{
 						"group": "Packages",
