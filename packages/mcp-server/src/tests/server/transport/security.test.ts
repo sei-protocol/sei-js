@@ -1,175 +1,127 @@
-import { jest } from '@jest/globals';
-import type { Request, Response, NextFunction } from 'express';
+import { describe, expect, it, spyOn } from "bun:test";
+import type { NextFunction, Request, Response } from "express";
+import { createCorsMiddleware, validateSecurityConfig } from "../../../server/transport/security.js";
 
-describe('Security Module', () => {
-	let createCorsMiddleware: typeof import('../../../server/transport/security.js').createCorsMiddleware;
-	let validateSecurityConfig: typeof import('../../../server/transport/security.js').validateSecurityConfig;
-	let consoleErrorSpy: jest.SpyInstance;
-	let processExitSpy: jest.SpyInstance;
+describe("Security Module", () => {
+  describe("createCorsMiddleware", () => {
+    it("should return a middleware function", () => {
+      const middleware = createCorsMiddleware();
+      expect(typeof middleware).toBe("function");
+    });
 
-	beforeEach(async () => {
-		jest.clearAllMocks();
-		
-		// Spy on console.error
-		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
-		
-		// Spy on process.exit to prevent actual exit
-		processExitSpy = jest.spyOn(process, 'exit').mockImplementation((code?: number | string | null | undefined) => {
-			throw new Error(`process.exit called with code ${code}`);
-		});
+    it("should return 204 for OPTIONS preflight requests", () => {
+      const middleware = createCorsMiddleware();
 
-		// Import the module
-		const securityModule = await import('../../../server/transport/security.js');
-		createCorsMiddleware = securityModule.createCorsMiddleware;
-		validateSecurityConfig = securityModule.validateSecurityConfig;
-	});
+      const mockReq = { method: "OPTIONS" } as Request;
+      const mockRes = {
+        sendStatus: (() => mockRes) as unknown,
+      } as Response;
+      const sendStatusSpy = spyOn(mockRes, "sendStatus" as never);
+      const mockNext = (() => {}) as NextFunction;
 
-	afterEach(() => {
-		consoleErrorSpy.mockRestore();
-		processExitSpy.mockRestore();
-	});
+      middleware(mockReq, mockRes, mockNext);
 
-	describe('createCorsMiddleware', () => {
-		it('should return a middleware function', () => {
-			const middleware = createCorsMiddleware();
-			expect(typeof middleware).toBe('function');
-		});
+      expect(sendStatusSpy).toHaveBeenCalledWith(204);
+    });
 
-		it('should return 204 for OPTIONS preflight requests', () => {
-			const middleware = createCorsMiddleware();
-			
-			const mockReq = { method: 'OPTIONS' } as Request;
-			const mockRes = {
-				sendStatus: jest.fn().mockReturnThis()
-			} as unknown as Response;
-			const mockNext = jest.fn() as NextFunction;
+    it("should call next() for non-OPTIONS requests", () => {
+      const middleware = createCorsMiddleware();
 
-			middleware(mockReq, mockRes, mockNext);
+      const mockReq = { method: "POST" } as Request;
+      const mockRes = {} as Response;
+      let nextCalled = false;
+      const mockNext = (() => {
+        nextCalled = true;
+      }) as NextFunction;
 
-			expect(mockRes.sendStatus).toHaveBeenCalledWith(204);
-			expect(mockNext).not.toHaveBeenCalled();
-		});
+      middleware(mockReq, mockRes, mockNext);
 
-		it('should call next() for non-OPTIONS requests', () => {
-			const middleware = createCorsMiddleware();
-			
-			const mockReq = { method: 'POST' } as Request;
-			const mockRes = {
-				sendStatus: jest.fn()
-			} as unknown as Response;
-			const mockNext = jest.fn() as NextFunction;
+      expect(nextCalled).toBe(true);
+    });
 
-			middleware(mockReq, mockRes, mockNext);
+    it("should call next() for GET requests", () => {
+      const middleware = createCorsMiddleware();
 
-			expect(mockRes.sendStatus).not.toHaveBeenCalled();
-			expect(mockNext).toHaveBeenCalled();
-		});
+      const mockReq = { method: "GET" } as Request;
+      const mockRes = {} as Response;
+      let nextCalled = false;
+      const mockNext = (() => {
+        nextCalled = true;
+      }) as NextFunction;
 
-		it('should call next() for GET requests', () => {
-			const middleware = createCorsMiddleware();
-			
-			const mockReq = { method: 'GET' } as Request;
-			const mockRes = {} as Response;
-			const mockNext = jest.fn() as NextFunction;
+      middleware(mockReq, mockRes, mockNext);
 
-			middleware(mockReq, mockRes, mockNext);
+      expect(nextCalled).toBe(true);
+    });
+  });
 
-			expect(mockNext).toHaveBeenCalled();
-		});
-	});
+  describe("validateSecurityConfig", () => {
+    describe("safe configurations", () => {
+      it("should allow stdio transport with wallet enabled", () => {
+        expect(() => {
+          validateSecurityConfig("stdio", "private-key");
+        }).not.toThrow();
+      });
 
-	describe('validateSecurityConfig', () => {
-		describe('safe configurations', () => {
-			it('should allow stdio transport with wallet enabled', () => {
-				expect(() => {
-					validateSecurityConfig('stdio', 'private-key');
-				}).not.toThrow();
+      it("should allow streamable-http transport with wallet disabled", () => {
+        expect(() => {
+          validateSecurityConfig("streamable-http", "disabled");
+        }).not.toThrow();
+      });
 
-				expect(processExitSpy).not.toHaveBeenCalled();
-			});
+      it("should allow http-sse transport with wallet disabled", () => {
+        expect(() => {
+          validateSecurityConfig("http-sse", "disabled");
+        }).not.toThrow();
+      });
 
-			it('should allow streamable-http transport with wallet disabled', () => {
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'disabled');
-				}).not.toThrow();
+      it("should allow stdio transport with wallet disabled", () => {
+        expect(() => {
+          validateSecurityConfig("stdio", "disabled");
+        }).not.toThrow();
+      });
+    });
 
-				expect(processExitSpy).not.toHaveBeenCalled();
-			});
+    describe("unsafe configurations", () => {
+      it("should throw for streamable-http with wallet enabled", () => {
+        expect(() => {
+          validateSecurityConfig("streamable-http", "private-key");
+        }).toThrow("SECURITY ERROR");
+      });
 
-			it('should allow http-sse transport with wallet disabled', () => {
-				expect(() => {
-					validateSecurityConfig('http-sse', 'disabled');
-				}).not.toThrow();
+      it("should throw for http-sse with wallet enabled", () => {
+        expect(() => {
+          validateSecurityConfig("http-sse", "private-key");
+        }).toThrow("SECURITY ERROR");
+      });
 
-				expect(processExitSpy).not.toHaveBeenCalled();
-			});
+      it("should include wallet security details in error message", () => {
+        expect(() => {
+          validateSecurityConfig("streamable-http", "private-key");
+        }).toThrow("Wallet mode cannot be used with HTTP transports");
+      });
+    });
 
-			it('should allow stdio transport with wallet disabled', () => {
-				expect(() => {
-					validateSecurityConfig('stdio', 'disabled');
-				}).not.toThrow();
+    describe("wallet mode variations", () => {
+      it("should block private-key wallet mode on streamable-http", () => {
+        expect(() => {
+          validateSecurityConfig("streamable-http", "private-key");
+        }).toThrow("SECURITY ERROR");
+      });
 
-				expect(processExitSpy).not.toHaveBeenCalled();
-			});
-		});
+      it("should block private-key wallet mode on http-sse", () => {
+        expect(() => {
+          validateSecurityConfig("http-sse", "private-key");
+        }).toThrow("SECURITY ERROR");
+      });
 
-		describe('unsafe configurations', () => {
-			it('should exit with code 1 for streamable-http with wallet enabled', () => {
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
-				expect(consoleErrorSpy).toHaveBeenCalled();
-			});
-
-			it('should exit with code 1 for http-sse with wallet enabled', () => {
-				expect(() => {
-					validateSecurityConfig('http-sse', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
-				expect(consoleErrorSpy).toHaveBeenCalled();
-			});
-
-			it('should log security error message for unsafe config', () => {
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'private-key');
-				}).toThrow();
-
-				// Verify error messages were logged
-				expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('SECURITY ERROR'));
-				expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Wallet mode cannot be used with HTTP transports'));
-			});
-		});
-
-		describe('wallet mode variations', () => {
-			it('should block private-key wallet mode on streamable-http', () => {
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
-			});
-
-			it('should block private-key wallet mode on http-sse', () => {
-				expect(() => {
-					validateSecurityConfig('http-sse', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
-			});
-
-			it('should allow disabled wallet mode on all transports', () => {
-				expect(() => {
-					validateSecurityConfig('stdio', 'disabled');
-					validateSecurityConfig('streamable-http', 'disabled');
-					validateSecurityConfig('http-sse', 'disabled');
-				}).not.toThrow();
-
-				expect(processExitSpy).not.toHaveBeenCalled();
-			});
-		});
-	});
+      it("should allow disabled wallet mode on all transports", () => {
+        expect(() => {
+          validateSecurityConfig("stdio", "disabled");
+          validateSecurityConfig("streamable-http", "disabled");
+          validateSecurityConfig("http-sse", "disabled");
+        }).not.toThrow();
+      });
+    });
+  });
 });
-

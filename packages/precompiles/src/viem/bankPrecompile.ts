@@ -1,5 +1,5 @@
-import type { Abi } from 'viem';
-import { BANK_PRECOMPILE_ABI } from '../precompiles';
+import type { Abi } from "viem";
+import { BANK_PRECOMPILE_ABI } from "../precompiles";
 
 /**
  * The Viem ABI for the Bank precompile contract.

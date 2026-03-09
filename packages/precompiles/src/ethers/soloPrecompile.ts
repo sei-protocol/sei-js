@@ -1,5 +1,5 @@
-import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { SOLO_PRECOMPILE_ABI, SOLO_PRECOMPILE_ADDRESS } from '../precompiles';
+import { Contract, type ContractRunner, type InterfaceAbi } from "ethers";
+import { SOLO_PRECOMPILE_ABI, SOLO_PRECOMPILE_ADDRESS } from "../precompiles";
 
 /**
  * The ABI for the Solo precompile contract, used to create an Ethers contract.
@@ -30,5 +30,5 @@ export const ETHERS_SOLO_PRECOMPILE_ABI = SOLO_PRECOMPILE_ABI as InterfaceAbi;
  * @category Contract Factory
  */
 export const getSoloPrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new Contract(SOLO_PRECOMPILE_ADDRESS, ETHERS_SOLO_PRECOMPILE_ABI, runner);
+  return new Contract(SOLO_PRECOMPILE_ADDRESS, ETHERS_SOLO_PRECOMPILE_ABI, runner);
 };

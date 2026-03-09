@@ -1,5 +1,5 @@
-import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { DISTRIBUTION_PRECOMPILE_ABI, DISTRIBUTION_PRECOMPILE_ADDRESS } from '../precompiles';
+import { Contract, type ContractRunner, type InterfaceAbi } from "ethers";
+import { DISTRIBUTION_PRECOMPILE_ABI, DISTRIBUTION_PRECOMPILE_ADDRESS } from "../precompiles";
 
 /**
  * The ABI for the Distribution precompile contract, used to create an Ethers contract.
@@ -30,5 +30,5 @@ export const ETHERS_DISTRIBUTION_PRECOMPILE_ABI = DISTRIBUTION_PRECOMPILE_ABI as
  * @category Contract Factory
  */
 export const getDistributionPrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, ETHERS_DISTRIBUTION_PRECOMPILE_ABI, runner);
+  return new Contract(DISTRIBUTION_PRECOMPILE_ADDRESS, ETHERS_DISTRIBUTION_PRECOMPILE_ABI, runner);
 };

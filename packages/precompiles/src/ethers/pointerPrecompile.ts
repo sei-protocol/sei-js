@@ -1,5 +1,5 @@
-import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { POINTER_PRECOMPILE_ABI, POINTER_PRECOMPILE_ADDRESS } from '../precompiles';
+import { Contract, type ContractRunner, type InterfaceAbi } from "ethers";
+import { POINTER_PRECOMPILE_ABI, POINTER_PRECOMPILE_ADDRESS } from "../precompiles";
 
 /**
  * The ABI for the Pointer precompile contract, used to create an Ethers contract.
@@ -30,5 +30,5 @@ export const ETHERS_POINTER_PRECOMPILE_ABI = POINTER_PRECOMPILE_ABI as Interface
  * @category Contract Factory
  */
 export const getPointerPrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new Contract(POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, runner);
+  return new Contract(POINTER_PRECOMPILE_ADDRESS, ETHERS_POINTER_PRECOMPILE_ABI, runner);
 };

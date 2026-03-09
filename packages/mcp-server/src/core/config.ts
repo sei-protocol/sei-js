@@ -1,18 +1,18 @@
-import dotenv from 'dotenv';
-import type { Hex } from 'viem';
-import { z } from 'zod';
+import dotenv from "dotenv";
+import type { Hex } from "viem";
+import { z } from "zod";
 
 // Load environment variables from .env file
 dotenv.config();
 
 // Wallet mode types
-export type WalletMode = 'private-key' | 'disabled';
+export type WalletMode = "private-key" | "disabled";
 
 // Define environment variable schema
 const envSchema = z.object({
-	PRIVATE_KEY: z.string().optional(),
-	WALLET_MODE: z.enum(['private-key', 'disabled']).default('disabled'),
-	WALLET_API_KEY: z.string().optional() // Used for wallet providers
+  PRIVATE_KEY: z.string().optional(),
+  WALLET_MODE: z.enum(["private-key", "disabled"]).default("disabled"),
+  WALLET_API_KEY: z.string().optional(), // Used for wallet providers
 });
 
 // Parse and validate environment variables
@@ -20,17 +20,25 @@ const env = envSchema.safeParse(process.env);
 
 // Format private key with 0x prefix if it exists
 export const formatPrivateKey = (key?: string): string | undefined => {
-	if (!key) return undefined;
+  if (!key) return undefined;
 
-	// Ensure the private key has 0x prefix
-	return key.startsWith('0x') ? key : `0x${key}`;
+  // Strip 0x prefix for validation
+  const raw = key.startsWith("0x") ? key.slice(2) : key;
+
+  // Validate key is exactly 64 hex characters (32 bytes)
+  if (!/^[a-fA-F0-9]{64}$/.test(raw)) {
+    console.error("Warning: PRIVATE_KEY is not a valid 64-character hex string. Wallet functionality may not work.");
+    return undefined;
+  }
+
+  return `0x${raw}`;
 };
 
 // Export validated environment variables with formatted private key
 export const config = {
-	privateKey: env.success ? formatPrivateKey(env.data.PRIVATE_KEY) : undefined,
-	walletMode: (env.success ? env.data.WALLET_MODE : 'disabled') as WalletMode,
-	walletApiKey: env.success ? env.data.WALLET_API_KEY : undefined
+  privateKey: env.success ? formatPrivateKey(env.data.PRIVATE_KEY) : undefined,
+  walletMode: (env.success ? env.data.WALLET_MODE : "disabled") as WalletMode,
+  walletApiKey: env.success ? env.data.WALLET_API_KEY : undefined,
 };
 
 /**
@@ -39,7 +47,7 @@ export const config = {
  * @returns Private key from environment variable as Hex or undefined
  */
 export function getPrivateKeyAsHex(): Hex | undefined {
-	return config.privateKey as Hex | undefined;
+  return config.privateKey as Hex | undefined;
 }
 
 /**
@@ -47,7 +55,7 @@ export function getPrivateKeyAsHex(): Hex | undefined {
  * @returns True if wallet functionality should be available
  */
 export function isWalletEnabled(): boolean {
-	return config.walletMode !== 'disabled';
+  return config.walletMode !== "disabled";
 }
 
 /**
@@ -55,5 +63,5 @@ export function isWalletEnabled(): boolean {
  * @returns The configured wallet mode
  */
 export function getWalletMode(): WalletMode {
-	return config.walletMode;
+  return config.walletMode;
 }

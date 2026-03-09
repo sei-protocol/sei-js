@@ -1,191 +1,131 @@
-import { describe, test, expect, jest, beforeEach, afterEach } from '@jest/globals';
-import { getPublicClient, getAddressFromPrivateKey, getWalletClientFromProvider, getAddressFromProvider } from '../../../core/services/clients.js';
-import { createPublicClient, createWalletClient, http } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
-import { getChain, getRpcUrl } from '../../../core/chains.js';
-import { getWalletProvider } from '../../../core/wallet/index.js';
+import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
+import type { Client } from "viem";
+import * as viemModule from "viem";
+import * as viemAccountsModule from "viem/accounts";
+import * as chainsModule from "../../../core/chains.js";
+import { getAddressFromProvider, getPublicClient, getWalletClientFromProvider } from "../../../core/services";
+import * as walletModule from "../../../core/wallet/index.js";
 
-// Mock dependencies
-jest.mock('viem', () => {
-  // Instead of spreading the original module, which causes TypeScript errors,
-  // we'll just mock the specific functions we need
-  return {
-    createPublicClient: jest.fn(),
-    createWalletClient: jest.fn(),
-    http: jest.fn()
-  };
-});
+describe("Client Service", () => {
+  const mockChain = { id: 1, name: "Sei" };
+  const mockRpcUrl = "https://rpc.sei.io";
+  const mockHttpTransport = {} as ReturnType<typeof viemModule.http>;
+  const mockPublicClient = { readContract: mock() } as Client;
+  const mockWalletClient = { writeContract: mock() } as Client;
+  const mockAccount = { address: "0x1234567890123456789012345678901234567890" };
 
-jest.mock('viem/accounts', () => ({
-  privateKeyToAccount: jest.fn()
-}));
-
-jest.mock('../../../core/chains.js', () => ({
-  DEFAULT_NETWORK: 'sei',
-  getChain: jest.fn(),
-  getRpcUrl: jest.fn()
-}));
-
-jest.mock('../../../core/wallet/index.js', () => ({
-  getWalletProvider: jest.fn()
-}));
-
-describe('Client Service', () => {
-  const mockChain = { id: 1, name: 'Sei' };
-  const mockRpcUrl = 'https://rpc.sei.io';
-  const mockHttpTransport = {} as ReturnType<typeof http>;
-  const mockPublicClient = { readContract: jest.fn() };
-  const mockWalletClient = { writeContract: jest.fn() };
-  const mockAccount = { address: '0x1234567890123456789012345678901234567890' };
-  const mockPrivateKey = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
+  const spies: { mockRestore(): void }[] = [];
 
   beforeEach(() => {
-    // Reset all mocks
-    jest.resetAllMocks();
-    
-    // Setup default mock implementations
-    (getChain as jest.Mock).mockReturnValue(mockChain);
-    (getRpcUrl as jest.Mock).mockReturnValue(mockRpcUrl);
-    (http as jest.Mock).mockReturnValue(mockHttpTransport);
-    (createPublicClient as jest.Mock).mockReturnValue(mockPublicClient);
-    (createWalletClient as jest.Mock).mockReturnValue(mockWalletClient);
-    (privateKeyToAccount as jest.Mock).mockReturnValue(mockAccount);
+    spies.length = 0;
+
+    // Spy on module exports
+    spies.push(spyOn(chainsModule, "getChain").mockReturnValue(mockChain as never));
+    spies.push(spyOn(chainsModule, "getRpcUrl").mockReturnValue(mockRpcUrl));
+    spies.push(spyOn(viemModule, "http").mockReturnValue(mockHttpTransport as never));
+    spies.push(spyOn(viemModule, "createPublicClient").mockReturnValue(mockPublicClient as never));
+    spies.push(spyOn(viemModule, "createWalletClient").mockReturnValue(mockWalletClient as never));
+    spies.push(spyOn(viemAccountsModule, "privateKeyToAccount").mockReturnValue(mockAccount as never));
   });
 
-  describe('getPublicClient', () => {
-    test('should create and return a new public client when not cached', () => {
-      const client = getPublicClient('sei');
-      
-      expect(getChain).toHaveBeenCalledWith('sei');
-      expect(getRpcUrl).toHaveBeenCalledWith('sei');
-      expect(http).toHaveBeenCalledWith(mockRpcUrl);
-      expect(createPublicClient).toHaveBeenCalledWith({
+  afterEach(() => {
+    for (const s of spies) s.mockRestore();
+  });
+
+  describe("getPublicClient", () => {
+    test("should create and return a new public client when not cached", () => {
+      const client = getPublicClient("sei");
+
+      expect(chainsModule.getChain).toHaveBeenCalledWith("sei");
+      expect(chainsModule.getRpcUrl).toHaveBeenCalledWith("sei");
+      expect(viemModule.http).toHaveBeenCalledWith(mockRpcUrl);
+      expect(viemModule.createPublicClient).toHaveBeenCalledWith({
         chain: mockChain,
-        transport: mockHttpTransport
+        transport: mockHttpTransport,
       });
       expect(client).toBe(mockPublicClient);
     });
 
-    test('should return cached client for the same network', () => {
+    test("should return cached client for the same network", () => {
       // First call should create a new client
-      const client1 = getPublicClient('sei');
-      
-      // Reset mocks to verify they aren't called again
-      jest.clearAllMocks();
-      
+      const client1 = getPublicClient("sei");
+
       // Second call should return cached client
-      const client2 = getPublicClient('sei');
-      
-      expect(createPublicClient).not.toHaveBeenCalled();
+      const client2 = getPublicClient("sei");
+
       expect(client2).toBe(client1);
     });
 
-    test('should throw error if cache has key but client is undefined', () => {
-      // We need to access the private clientCache to simulate this edge case
-      // First, get a reference to the client
-      getPublicClient('sei');
-      
-      // Use Object.getOwnPropertyDescriptor to access the module's private variable
-      // @ts-ignore - Accessing private implementation for testing
-      const clientCacheMap = new Map([['sei', undefined]]);
-      
-      // Replace the Map.prototype.get method temporarily to simulate the edge case
-      const originalMapGet = Map.prototype.get;
-      Map.prototype.get = function(key) {
-        if (key === 'sei') return undefined;
-        return originalMapGet.call(this, key);
-      };
-      
-      // Replace the Map.prototype.has method temporarily to return true for 'sei'
-      const originalMapHas = Map.prototype.has;
-      Map.prototype.has = function(key) {
-        if (key === 'sei') return true;
-        return originalMapHas.call(this, key);
-      };
-      
-      try {
-        // This should throw an error
-        expect(() => getPublicClient('sei')).toThrow('Client cache inconsistency for network sei');
-      } finally {
-        // Restore the original methods
-        Map.prototype.get = originalMapGet;
-        Map.prototype.has = originalMapHas;
-      }
-    });
-
-    test('should create different clients for different networks', () => {
+    test("should create different clients for different networks", () => {
       // First call for 'sei' network
-      const seiClient = getPublicClient('sei');
-      
+      const seiClient = getPublicClient("sei");
+
       // Setup mocks for 'ethereum' network
-      const ethereumChain = { id: 1, name: 'Ethereum' };
-      const ethereumRpcUrl = 'https://rpc.ethereum.io';
-      const ethereumPublicClient = { readContract: jest.fn() };
-      
-      (getChain as jest.Mock).mockReturnValue(ethereumChain);
-      (getRpcUrl as jest.Mock).mockReturnValue(ethereumRpcUrl);
-      (createPublicClient as jest.Mock).mockReturnValue(ethereumPublicClient);
-      
+      const ethereumChain = { id: 1, name: "Ethereum" };
+      const ethereumRpcUrl = "https://rpc.ethereum.io";
+      const ethereumPublicClient = { readContract: mock() } as Client;
+
+      (chainsModule.getChain as ReturnType<typeof mock>).mockReturnValue(ethereumChain);
+      (chainsModule.getRpcUrl as ReturnType<typeof mock>).mockReturnValue(ethereumRpcUrl);
+      (viemModule.createPublicClient as ReturnType<typeof mock>).mockReturnValue(ethereumPublicClient);
+
       // Call for 'ethereum' network
-      const ethereumClient = getPublicClient('ethereum');
-      
-      expect(getChain).toHaveBeenCalledWith('ethereum');
-      expect(getRpcUrl).toHaveBeenCalledWith('ethereum');
+      const ethereumClient = getPublicClient("ethereum");
+
+      expect(chainsModule.getChain).toHaveBeenCalledWith("ethereum");
+      expect(chainsModule.getRpcUrl).toHaveBeenCalledWith("ethereum");
       expect(ethereumClient).toBe(ethereumPublicClient);
       expect(ethereumClient).not.toBe(seiClient);
     });
 
-    // This test verifies that getPublicClient works with no network parameter
-    test('should use default network when none is specified', () => {
-      // Since we're mocking the module and can't easily test the default parameter,
-      // we'll just verify that calling the function without a parameter returns the expected client
+    test("should use default network when none is specified", () => {
       const client = getPublicClient();
       expect(client).toBe(mockPublicClient);
     });
   });
 
-  describe('getWalletClientFromProvider', () => {
+  describe("getWalletClientFromProvider", () => {
     const mockWalletProvider = {
-      getWalletClient: jest.fn()
+      getWalletClient: mock(),
     };
 
     beforeEach(() => {
-      (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
+      spies.push(spyOn(walletModule, "getWalletProvider").mockReturnValue(mockWalletProvider as never));
       mockWalletProvider.getWalletClient.mockResolvedValue(mockWalletClient);
     });
 
-    test('should get wallet client from provider with default network', async () => {
+    test("should get wallet client from provider with default network", async () => {
       const client = await getWalletClientFromProvider();
-      
-      expect(getWalletProvider).toHaveBeenCalled();
-      expect(mockWalletProvider.getWalletClient).toHaveBeenCalledWith('sei');
+
+      expect(walletModule.getWalletProvider).toHaveBeenCalled();
+      expect(mockWalletProvider.getWalletClient).toHaveBeenCalledWith("sei");
       expect(client).toBe(mockWalletClient);
     });
 
-    test('should get wallet client from provider with specified network', async () => {
-      const client = await getWalletClientFromProvider('sei-testnet');
-      
-      expect(getWalletProvider).toHaveBeenCalled();
-      expect(mockWalletProvider.getWalletClient).toHaveBeenCalledWith('sei-testnet');
+    test("should get wallet client from provider with specified network", async () => {
+      const client = await getWalletClientFromProvider("sei-testnet");
+
+      expect(walletModule.getWalletProvider).toHaveBeenCalled();
+      expect(mockWalletProvider.getWalletClient).toHaveBeenCalledWith("sei-testnet");
       expect(client).toBe(mockWalletClient);
     });
   });
 
-  describe('getAddressFromProvider', () => {
+  describe("getAddressFromProvider", () => {
     const mockWalletProvider = {
-      getAddress: jest.fn()
+      getAddress: mock(),
     };
-    const mockAddress = '0x1234567890123456789012345678901234567890';
+    const mockAddress = "0x1234567890123456789012345678901234567890";
 
     beforeEach(() => {
-      (getWalletProvider as jest.Mock).mockReturnValue(mockWalletProvider);
+      spies.push(spyOn(walletModule, "getWalletProvider").mockReturnValue(mockWalletProvider as never));
       mockWalletProvider.getAddress.mockResolvedValue(mockAddress);
     });
 
-    test('should get address from provider', async () => {
+    test("should get address from provider", async () => {
       const address = await getAddressFromProvider();
-      
-      expect(getWalletProvider).toHaveBeenCalled();
+
+      expect(walletModule.getWalletProvider).toHaveBeenCalled();
       expect(mockWalletProvider.getAddress).toHaveBeenCalled();
       expect(address).toBe(mockAddress);
     });

@@ -1,5 +1,5 @@
-import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '../precompiles';
+import { Contract, type ContractRunner, type InterfaceAbi } from "ethers";
+import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from "../precompiles";
 
 /**
  * The ABI for the Bank precompile contract, used to create an Ethers contract.
@@ -32,5 +32,5 @@ export const ETHERS_BANK_PRECOMPILE_ABI = BANK_PRECOMPILE_ABI as InterfaceAbi;
  * @category Contract Factory
  */
 export const getBankPrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new Contract(BANK_PRECOMPILE_ADDRESS, ETHERS_BANK_PRECOMPILE_ABI, runner);
+  return new Contract(BANK_PRECOMPILE_ADDRESS, ETHERS_BANK_PRECOMPILE_ABI, runner);
 };

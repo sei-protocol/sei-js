@@ -1,1 +1,1 @@
-export { createDocsSearchTool } from './server.js';
+export { createDocsSearchTool } from "./server.js";

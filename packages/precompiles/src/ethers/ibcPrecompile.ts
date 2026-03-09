@@ -1,5 +1,5 @@
-import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { IBC_PRECOMPILE_ABI, IBC_PRECOMPILE_ADDRESS } from '../precompiles';
+import { Contract, type ContractRunner, type InterfaceAbi } from "ethers";
+import { IBC_PRECOMPILE_ABI, IBC_PRECOMPILE_ADDRESS } from "../precompiles";
 
 /**
  * The ABI for the IBC precompile contract, used to create an Ethers contract.
@@ -31,5 +31,5 @@ export const ETHERS_IBC_PRECOMPILE_ABI = IBC_PRECOMPILE_ABI as InterfaceAbi;
  * @category Contract Factory
  */
 export const getIbcPrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new Contract(IBC_PRECOMPILE_ADDRESS, ETHERS_IBC_PRECOMPILE_ABI, runner);
+  return new Contract(IBC_PRECOMPILE_ADDRESS, ETHERS_IBC_PRECOMPILE_ABI, runner);
 };

@@ -1,0 +1,11 @@
+{
+	"files": [],
+	"references": [
+		{ "path": "packages/registry" },
+		{ "path": "packages/precompiles" },
+		{ "path": "packages/ledger" },
+		{ "path": "packages/sei-global-wallet" },
+		{ "path": "packages/mcp-server" },
+		{ "path": "packages/create-sei" }
+	]
+}

@@ -1,1 +1,1 @@
-export { createKernelClient } from '@dynamic-labs/global-wallet-client/zerodev';
+export { createKernelClient } from "@dynamic-labs/global-wallet-client/zerodev";

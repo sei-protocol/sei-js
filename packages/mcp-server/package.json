@@ -4,23 +4,35 @@
 	"type": "module",
 	"version": "0.3.2",
 	"bin": "./bin/mcp-server.js",
-	"main": "./dist/esm/index.js",
-	"module": "./dist/esm/index.js",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
 	"files": ["dist/", "bin/", "README.md", "LICENSE"],
 	"scripts": {
-		"build": "rm -rf dist && tsc",
-		"start": "node dist/esm/index.js",
-		"start:http": "node dist/esm/index.js --streamable-http",
-		"start:http-sse": "node dist/esm/index.js --http-sse",
-		"inspect": "npx -y @modelcontextprotocol/inspector",
+		"build": "tsc -b",
 		"dev": "tsx watch src/index.ts",
-		"test": "jest"
+		"clean": "rm -rf dist",
+		"start": "node dist/index.js",
+		"start:http": "node dist/index.js --streamable-http",
+		"start:http-sse": "node dist/index.js --http-sse",
+		"inspect": "npx -y @modelcontextprotocol/inspector",
+		"test": "bun test",
+		"lint": "biome lint .",
+		"lint:fix": "biome lint --write .",
+		"format": "biome format --write .",
+		"format:check": "biome format .",
+		"check": "biome check .",
+		"check:fix": "biome check --write ."
 	},
 	"devDependencies": {
-		"@jest/globals": "^30.0.3",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.0",
-		"typescript": "^5.8.3"
+		"tsx": "^4.20.3"
 	},
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.7.0",
@@ -29,9 +41,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
 		"express": "^4.21.2",
-		"jest": "^30.0.3",
 		"trieve-ts-sdk": "^0.0.121",
-		"tsx": "^4.20.3",
 		"viem": "^2.30.5",
 		"zod": "^3.24.2"
 	},

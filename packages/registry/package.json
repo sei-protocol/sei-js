@@ -2,20 +2,24 @@
 	"name": "@sei-js/registry",
 	"version": "1.0.3",
 	"description": "TypeScript library for Sei chain constants and assets",
-	"main": "./dist/cjs/src/index.js",
-	"module": "./dist/esm/src/index.js",
-	"types": "./dist/types/src/index.d.ts",
+	"type": "module",
+	"main": "./dist/src/index.js",
+	"module": "./dist/src/index.js",
+	"types": "./dist/src/index.d.ts",
 	"sideEffects": false,
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
-		"build": "rimraf dist && pnpm run build:cjs && pnpm run build:esm && pnpm run build:types",
-		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
-		"build:esm": "tsc --outDir dist/esm --module esnext",
-		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"test": "jest",
+		"build": "tsc -b",
+		"dev": "tsc --watch",
+		"clean": "rm -rf dist",
+		"test": "bun test",
 		"postinstall": "git submodule update --init --recursive"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/src/index.d.ts",
+			"default": "./dist/src/index.js"
+		}
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [

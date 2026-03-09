@@ -23,20 +23,35 @@ please refer to the table below.
 
 ### Prerequisites
 
-This project uses Yarn 4.7.0 with Corepack for package management. To get started:
+This project uses [Bun](https://bun.sh) for package management and testing. To get started:
 
-1. **Enable Corepack** (if not already enabled):
+1. **Install Bun** (if not already installed):
    ```bash
-   corepack enable
+   curl -fsSL https://bun.sh/install | bash
    ```
 
 2. **Install dependencies**:
    ```bash
-   yarn install
+   bun install
    ```
-
-The correct Yarn version will be automatically used thanks to the `packageManager` field in `package.json` and Corepack.
 
 ### Building
 
-To build all packages and docs, run `pnpm install` then `pnpm build:all`
+To build all packages, run:
+```bash
+bun run build
+```
+
+### Testing
+
+```bash
+bun test packages/*
+```
+
+### Linting & Formatting
+
+This project uses [Biome](https://biomejs.dev) for linting and formatting:
+```bash
+bun run check      # lint + format check
+bun run check:fix  # lint + format fix
+```

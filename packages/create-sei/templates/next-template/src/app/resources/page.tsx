@@ -1,7 +1,18 @@
-import { developerResources, socialLinks } from '@/app/resources/resources';
-import { Shell } from '@/components';
-import { Card, Code, Container, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
-import { IconBook, IconRobot, IconTerminal } from '@tabler/icons-react';
+import { developerResources, socialLinks } from "@/app/resources/resources";
+import { Shell } from "@/components";
+import {
+	Card,
+	Code,
+	Container,
+	Group,
+	Paper,
+	SimpleGrid,
+	Stack,
+	Text,
+	ThemeIcon,
+	Title,
+} from "@mantine/core";
+import { IconBook, IconRobot, IconTerminal } from "@tabler/icons-react";
 
 export default function ResourcesPage() {
 	return (
@@ -19,7 +30,8 @@ export default function ResourcesPage() {
 									Developer Resources
 								</Title>
 								<Text size="lg" c="gray.6" mt={4}>
-									Everything you need to build on Sei. Documentation, tools, community links, and development guides.
+									Everything you need to build on Sei. Documentation, tools,
+									community links, and development guides.
 								</Text>
 							</div>
 						</Group>
@@ -32,23 +44,40 @@ export default function ResourcesPage() {
 								📚 Documentation & Tools
 							</Title>
 							<SimpleGrid cols={{ base: 1, sm: 2, lg: 2 }} spacing="lg">
-								{developerResources.map(({ title, description, href, icon: Icon, color }) => (
-									<Card key={title} withBorder radius="lg" p="xl" component="a" href={href} target="_blank" rel="noreferrer" shadow="sm">
-										<Group align="flex-start" wrap="nowrap" gap="md">
-											<ThemeIcon variant="light" color={color} size={40} radius="md">
-												<Icon size={22} />
-											</ThemeIcon>
-											<Stack gap={6} flex={1}>
-												<Text fw={600} size="lg" c="gray.9">
-													{title}
-												</Text>
-												<Text size="sm" c="dimmed" lh={1.5}>
-													{description}
-												</Text>
-											</Stack>
-										</Group>
-									</Card>
-								))}
+								{developerResources.map(
+									({ title, description, href, icon: Icon, color }) => (
+										<Card
+											key={title}
+											withBorder
+											radius="lg"
+											p="xl"
+											component="a"
+											href={href}
+											target="_blank"
+											rel="noreferrer"
+											shadow="sm"
+										>
+											<Group align="flex-start" wrap="nowrap" gap="md">
+												<ThemeIcon
+													variant="light"
+													color={color}
+													size={40}
+													radius="md"
+												>
+													<Icon size={22} />
+												</ThemeIcon>
+												<Stack gap={6} flex={1}>
+													<Text fw={600} size="lg" c="gray.9">
+														{title}
+													</Text>
+													<Text size="sm" c="dimmed" lh={1.5}>
+														{description}
+													</Text>
+												</Stack>
+											</Group>
+										</Card>
+									),
+								)}
 							</SimpleGrid>
 						</Stack>
 					</Card>
@@ -63,7 +92,12 @@ export default function ResourcesPage() {
 								<Stack gap="lg">
 									<Stack gap="xs">
 										<Group gap="md">
-											<ThemeIcon size={40} radius="md" color="orange" variant="light">
+											<ThemeIcon
+												size={40}
+												radius="md"
+												color="orange"
+												variant="light"
+											>
 												<IconRobot size={20} />
 											</ThemeIcon>
 											<Title order={4} fw={600} c="gray.9">
@@ -71,14 +105,18 @@ export default function ResourcesPage() {
 											</Title>
 										</Group>
 										<Text size="sm" c="dimmed" lh={1.5} maw={500}>
-											Teach your IDE or LLM how to be an expert on Sei through the Model Context Protocol (MCP).
+											Teach your IDE or LLM how to be an expert on Sei through
+											the Model Context Protocol (MCP).
 										</Text>
 									</Stack>
 
 									<Paper p="md" radius="md" withBorder bg="gray.0">
 										<Stack gap="sm">
 											<Group gap="xs">
-												<IconTerminal size={16} color="var(--mantine-color-gray-6)" />
+												<IconTerminal
+													size={16}
+													color="var(--mantine-color-gray-6)"
+												/>
 												<Text size="xs" fw={500} c="dimmed">
 													Configuration
 												</Text>
@@ -97,9 +135,22 @@ export default function ResourcesPage() {
 									</Paper>
 
 									<SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-										<Card withBorder radius="md" p="md" component="a" href="https://sei-js.docs.sei.io/mcp-server/quickstart" target="_blank" rel="noreferrer">
+										<Card
+											withBorder
+											radius="md"
+											p="md"
+											component="a"
+											href="https://sei-js.docs.sei.io/mcp-server/quickstart"
+											target="_blank"
+											rel="noreferrer"
+										>
 											<Group gap="sm">
-												<ThemeIcon size={32} radius="md" color="orange" variant="light">
+												<ThemeIcon
+													size={32}
+													radius="md"
+													color="orange"
+													variant="light"
+												>
 													<IconBook size={16} />
 												</ThemeIcon>
 												<Stack gap={2} flex={1}>
@@ -122,7 +173,12 @@ export default function ResourcesPage() {
 											rel="noreferrer"
 										>
 											<Group gap="sm">
-												<ThemeIcon size={32} radius="md" color="orange" variant="light">
+												<ThemeIcon
+													size={32}
+													radius="md"
+													color="orange"
+													variant="light"
+												>
 													<IconTerminal size={16} />
 												</ThemeIcon>
 												<Stack gap={2} flex={1}>
@@ -148,23 +204,40 @@ export default function ResourcesPage() {
 								🌐 Community & Social
 							</Title>
 							<SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
-								{socialLinks.map(({ title, description, href, icon: Icon, color }) => (
-									<Card key={title} withBorder radius="lg" p="lg" component="a" href={href} target="_blank" rel="noreferrer" shadow="sm">
-										<Group align="flex-start" wrap="nowrap" gap="md">
-											<ThemeIcon variant="light" color={color === 'dark' ? 'gray' : (color as any)} size={36} radius="md">
-												<Icon size={20} />
-											</ThemeIcon>
-											<Stack gap={4} flex={1}>
-												<Text fw={600} c="gray.9">
-													{title}
-												</Text>
-												<Text size="sm" c="dimmed" lh={1.4}>
-													{description}
-												</Text>
-											</Stack>
-										</Group>
-									</Card>
-								))}
+								{socialLinks.map(
+									({ title, description, href, icon: Icon, color }) => (
+										<Card
+											key={title}
+											withBorder
+											radius="lg"
+											p="lg"
+											component="a"
+											href={href}
+											target="_blank"
+											rel="noreferrer"
+											shadow="sm"
+										>
+											<Group align="flex-start" wrap="nowrap" gap="md">
+												<ThemeIcon
+													variant="light"
+													color={color === "dark" ? "gray" : (color as any)}
+													size={36}
+													radius="md"
+												>
+													<Icon size={20} />
+												</ThemeIcon>
+												<Stack gap={4} flex={1}>
+													<Text fw={600} c="gray.9">
+														{title}
+													</Text>
+													<Text size="sm" c="dimmed" lh={1.4}>
+														{description}
+													</Text>
+												</Stack>
+											</Group>
+										</Card>
+									),
+								)}
 							</SimpleGrid>
 						</Stack>
 					</Card>

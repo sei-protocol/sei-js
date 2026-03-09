@@ -1,63 +1,50 @@
-import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { PrivateKeyWalletProvider } from '../../../../core/wallet/providers/private-key.js';
-import { WalletProviderError } from '../../../../core/wallet/types.js';
-import { createWalletClient, http } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
+import { afterEach, beforeEach, describe, expect, type Mock, spyOn, test } from "bun:test";
+import type { Client } from "viem";
+import * as viemModule from "viem";
+import * as viemAccountsModule from "viem/accounts";
+import * as chainsModule from "../../../../core/chains.js";
+import * as configModule from "../../../../core/config.js";
+import { PrivateKeyWalletProvider, WalletProviderError } from "../../../../core/wallet";
 
-// Mock dependencies
-jest.mock('../../../../core/config.js', () => ({
-  getPrivateKeyAsHex: jest.fn()
-}));
-
-jest.mock('../../../../core/chains.js', () => ({
-  getChain: jest.fn(),
-  getRpcUrl: jest.fn()
-}));
-
-jest.mock('viem', () => ({
-  createWalletClient: jest.fn(),
-  http: jest.fn()
-}));
-
-jest.mock('viem/accounts', () => ({
-  privateKeyToAccount: jest.fn()
-}));
-
-import { getPrivateKeyAsHex } from '../../../../core/config.js';
-import { getChain, getRpcUrl } from '../../../../core/chains.js';
-
-describe('PrivateKeyWalletProvider', () => {
-  const mockPrivateKey = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
-  const mockAddress = '0x1234567890123456789012345678901234567890';
+describe("PrivateKeyWalletProvider", () => {
+  const mockPrivateKey = "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
+  const mockAddress = "0x1234567890123456789012345678901234567890";
   const mockAccount = { address: mockAddress };
-  const mockChain = { id: 1, name: 'Sei' };
-  const mockRpcUrl = 'https://rpc.sei.io';
+  const mockChain = { id: 1, name: "Sei" };
+  const mockRpcUrl = "https://rpc.sei.io";
   const mockTransport = {};
-  const mockWalletClient = { account: mockAccount, chain: mockChain };
+  const mockWalletClient = { account: mockAccount, chain: mockChain } as Client;
+
+  const spies: { mockRestore(): void }[] = [];
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    
-    // Setup default mocks
-    (getChain as jest.Mock).mockReturnValue(mockChain);
-    (getRpcUrl as jest.Mock).mockReturnValue(mockRpcUrl);
-    (http as jest.Mock).mockReturnValue(mockTransport);
-    (privateKeyToAccount as jest.Mock).mockReturnValue(mockAccount);
-    (createWalletClient as jest.Mock).mockReturnValue(mockWalletClient);
+    spies.length = 0;
+
+    // Spy on module exports
+    spies.push(spyOn(configModule, "getPrivateKeyAsHex").mockReturnValue(undefined as never));
+    spies.push(spyOn(chainsModule, "getChain").mockReturnValue(mockChain as never));
+    spies.push(spyOn(chainsModule, "getRpcUrl").mockReturnValue(mockRpcUrl));
+    spies.push(spyOn(viemModule, "http").mockReturnValue(mockTransport as never));
+    spies.push(spyOn(viemAccountsModule, "privateKeyToAccount").mockReturnValue(mockAccount as never));
+    spies.push(spyOn(viemModule, "createWalletClient").mockReturnValue(mockWalletClient as never));
   });
 
-  describe('constructor and isAvailable', () => {
-    test('should be available when private key is configured', () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
+  afterEach(() => {
+    for (const s of spies) s.mockRestore();
+  });
+
+  describe("constructor and isAvailable", () => {
+    test("should be available when private key is configured", () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(mockPrivateKey);
 
       const provider = new PrivateKeyWalletProvider();
 
       expect(provider.isAvailable()).toBe(true);
-      expect(getPrivateKeyAsHex).toHaveBeenCalled();
+      expect(configModule.getPrivateKeyAsHex).toHaveBeenCalled();
     });
 
-    test('should not be available when private key is not configured', () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(undefined);
+    test("should not be available when private key is not configured", () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(undefined);
 
       const provider = new PrivateKeyWalletProvider();
 
@@ -65,85 +52,85 @@ describe('PrivateKeyWalletProvider', () => {
     });
   });
 
-  describe('getName', () => {
+  describe("getName", () => {
     test('should return "private-key"', () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(mockPrivateKey);
 
       const provider = new PrivateKeyWalletProvider();
 
-      expect(provider.getName()).toBe('private-key');
+      expect(provider.getName()).toBe("private-key");
     });
   });
 
-  describe('getAddress', () => {
-    test('should return address when private key is configured', async () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
+  describe("getAddress", () => {
+    test("should return address when private key is configured", async () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(mockPrivateKey);
 
       const provider = new PrivateKeyWalletProvider();
       const address = await provider.getAddress();
 
-      expect(privateKeyToAccount).toHaveBeenCalledWith(mockPrivateKey);
+      expect(viemAccountsModule.privateKeyToAccount).toHaveBeenCalledWith(mockPrivateKey);
       expect(address).toBe(mockAddress);
     });
 
-    test('should throw WalletProviderError when private key is not configured', async () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(undefined);
+    test("should throw WalletProviderError when private key is not configured", async () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(undefined);
 
       const provider = new PrivateKeyWalletProvider();
 
-      await expect(provider.getAddress()).rejects.toThrow(WalletProviderError);
-      await expect(provider.getAddress()).rejects.toThrow('Private key not configured');
+      expect(provider.getAddress()).rejects.toThrow(WalletProviderError);
+      expect(provider.getAddress()).rejects.toThrow("Private key not configured");
     });
   });
 
-  describe('signTransaction', () => {
-    test('should throw not implemented error when private key is configured', async () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
+  describe("signTransaction", () => {
+    test("should throw not implemented error when private key is configured", async () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(mockPrivateKey);
 
       const provider = new PrivateKeyWalletProvider();
-      const mockTx = { to: '0x123', value: '0x1' };
+      const mockTx = { to: "0x123", value: BigInt(1) } as const;
 
-      await expect(provider.signTransaction(mockTx)).rejects.toThrow(WalletProviderError);
-      await expect(provider.signTransaction(mockTx)).rejects.toThrow('Direct transaction signing not implemented');
+      expect(provider.signTransaction(mockTx)).rejects.toThrow(WalletProviderError);
+      expect(provider.signTransaction(mockTx)).rejects.toThrow("Direct transaction signing not implemented");
     });
 
-    test('should throw private key error when private key is not configured', async () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(undefined);
+    test("should throw private key error when private key is not configured", async () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(undefined);
 
       const provider = new PrivateKeyWalletProvider();
-      const mockTx = { to: '0x123', value: '0x1' };
+      const mockTx = { to: "0x123", value: BigInt(1) } as const;
 
-      await expect(provider.signTransaction(mockTx)).rejects.toThrow(WalletProviderError);
-      await expect(provider.signTransaction(mockTx)).rejects.toThrow('Private key not configured');
+      expect(provider.signTransaction(mockTx)).rejects.toThrow(WalletProviderError);
+      expect(provider.signTransaction(mockTx)).rejects.toThrow("Private key not configured");
     });
   });
 
-  describe('getWalletClient', () => {
-    test('should create and return wallet client when private key is configured', async () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
+  describe("getWalletClient", () => {
+    test("should create and return wallet client when private key is configured", async () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(mockPrivateKey);
 
       const provider = new PrivateKeyWalletProvider();
-      const client = await provider.getWalletClient('sei');
+      const client = await provider.getWalletClient("sei");
 
-      expect(getChain).toHaveBeenCalledWith('sei');
-      expect(getRpcUrl).toHaveBeenCalledWith('sei');
-      expect(http).toHaveBeenCalledWith(mockRpcUrl);
-      expect(privateKeyToAccount).toHaveBeenCalledWith(mockPrivateKey);
-      expect(createWalletClient).toHaveBeenCalledWith({
+      expect(chainsModule.getChain).toHaveBeenCalledWith("sei");
+      expect(chainsModule.getRpcUrl).toHaveBeenCalledWith("sei");
+      expect(viemModule.http).toHaveBeenCalledWith(mockRpcUrl);
+      expect(viemAccountsModule.privateKeyToAccount).toHaveBeenCalledWith(mockPrivateKey);
+      expect(viemModule.createWalletClient).toHaveBeenCalledWith({
         account: mockAccount,
         chain: mockChain,
-        transport: mockTransport
+        transport: mockTransport,
       });
       expect(client).toBe(mockWalletClient);
     });
 
-    test('should throw WalletProviderError when private key is not configured', async () => {
-      (getPrivateKeyAsHex as jest.Mock).mockReturnValue(undefined);
+    test("should throw WalletProviderError when private key is not configured", async () => {
+      (configModule.getPrivateKeyAsHex as Mock<typeof configModule.getPrivateKeyAsHex>).mockReturnValue(undefined);
 
       const provider = new PrivateKeyWalletProvider();
 
-      await expect(provider.getWalletClient('sei')).rejects.toThrow(WalletProviderError);
-      await expect(provider.getWalletClient('sei')).rejects.toThrow('Private key not configured');
+      expect(provider.getWalletClient("sei")).rejects.toThrow(WalletProviderError);
+      expect(provider.getWalletClient("sei")).rejects.toThrow("Private key not configured");
     });
   });
 });
