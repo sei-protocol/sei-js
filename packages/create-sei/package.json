@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/create-sei",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sei-protocol/sei-js.git",
