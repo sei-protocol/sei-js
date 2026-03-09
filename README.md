@@ -17,6 +17,7 @@ please refer to the table below.
 | [@sei-js/create-sei](packages/create-sei)               | CLI Tool used to quickly spin up Sei Projects and dApps in either the cosmos or EVM ecosystem                                   |
 | [@sei-js/mcp-server](packages/mcp-server)               | MCP server for interacting with Sei via LLM's and agents                                                                        |
 | [@sei-js/sei-global-wallet](packages/sei-global-wallet) | A global wallet conforming to EIP-6963 allowing for AA across dApps.                                                            |
+| [@sei-js/registry](packages/registry)                   | Typed constants for Sei chain info, tokens, networks, IBC, and gas configuration.                                               |
 | [@sei-js/ledger](packages/ledger)                       | TypeScript library transacting on Sei using a Ledger device.                                                                    |
 
 ## Development
@@ -40,3 +41,13 @@ The correct Yarn version will be automatically used thanks to the `packageManage
 ### Building
 
 To build all packages and docs, run `pnpm install` then `pnpm build:all`
+
+### Testing
+
+```bash
+# Sequential (all packages via package scripts)
+pnpm run test:all
+
+# Parallel (all packages concurrently)
+pnpm run test:parallel
+```

@@ -1,0 +1,177 @@
+---
+title: "Usage"
+description: "Detailed examples for every @sei-js/registry export"
+icon: "code"
+---
+
+## Chain IDs
+
+The `CHAIN_IDS` constant maps human-readable network names to their official chain identifiers. The `Network` type represents the valid chain ID strings.
+
+```typescript
+import { CHAIN_IDS, type Network } from "@sei-js/registry";
+
+console.log(CHAIN_IDS.mainnet);  // "pacific-1"
+console.log(CHAIN_IDS.testnet);  // "atlantic-2"
+console.log(CHAIN_IDS.devnet);   // "arctic-1"
+
+// Use the Network type for type-safe chain references
+function getExplorerUrl(network: Network): string {
+  const explorers: Record<Network, string> = {
+    "pacific-1": "https://seitrace.com",
+    "atlantic-2": "https://seitrace.com/?chain=atlantic-2",
+    "arctic-1": "https://seitrace.com/?chain=arctic-1",
+  };
+  return explorers[network];
+}
+```
+
+## Chain Info
+
+`CHAIN_INFO` contains core metadata about the Sei blockchain sourced from the official [chain registry](https://github.com/sei-protocol/chain-registry).
+
+```typescript
+import { CHAIN_INFO } from "@sei-js/registry";
+
+console.log(CHAIN_INFO.chain_name);       // "Sei"
+console.log(CHAIN_INFO.bech32_prefix);    // "sei"
+console.log(CHAIN_INFO.slip44);           // 118
+console.log(CHAIN_INFO.fee_token);        // "usei"
+console.log(CHAIN_INFO.daemon_name);      // "seid"
+console.log(CHAIN_INFO.supported_wallets); // ["compass", "keplr", ...]
+```
+
+<Tip>
+Use `CHAIN_INFO.bech32_prefix` when configuring CosmJS clients instead of hardcoding `"sei"`.
+</Tip>
+
+## Networks
+
+`NETWORKS` provides endpoint configurations for each Sei network, including RPC, REST, gRPC, EVM RPC, EVM WebSocket, explorer, and faucet URLs.
+
+```typescript
+import { NETWORKS } from "@sei-js/registry";
+
+// Access mainnet configuration
+const mainnet = NETWORKS["pacific-1"];
+
+// Get the first RPC endpoint
+const rpcUrl = mainnet.rpc[0].url;
+const restUrl = mainnet.rest[0].url;
+
+// EVM endpoints (optional, may not exist on all networks)
+const evmRpcUrl = mainnet.evm_rpc?.[0]?.url;
+const evmWsUrl = mainnet.evm_ws?.[0]?.url;
+
+// Testnet faucets
+const testnet = NETWORKS["atlantic-2"];
+const faucetUrl = testnet.faucets?.[0]?.url;
+
+// Get all explorers for a network
+const explorers = mainnet.explorers ?? [];
+for (const explorer of explorers) {
+  console.log(`${explorer.name}: ${explorer.url}`);
+}
+```
+
+### Configuring a Viem client with registry endpoints
+
+```typescript
+import { createPublicClient, http } from "viem";
+import { sei } from "viem/chains";
+import { NETWORKS } from "@sei-js/registry";
+
+const evmRpc = NETWORKS["pacific-1"].evm_rpc?.[0]?.url;
+
+const client = createPublicClient({
+  chain: sei,
+  transport: http(evmRpc),
+});
+
+const blockNumber = await client.getBlockNumber();
+console.log("Current block:", blockNumber);
+```
+
+## Token List
+
+`TOKEN_LIST` is a community-maintained mapping of tokens per network. Each token includes its name, symbol, denominations, and optional image URLs.
+
+<Warning>
+The token list is community-driven and subject to change. Always verify and filter tokens before use in production.
+</Warning>
+
+```typescript
+import { TOKEN_LIST } from "@sei-js/registry";
+
+// Find a specific token on mainnet
+const seiToken = TOKEN_LIST["pacific-1"].find((t) => t.symbol === "sei");
+console.log(seiToken?.name);        // "Sei"
+console.log(seiToken?.base);        // "usei"
+console.log(seiToken?.display);     // "sei"
+console.log(seiToken?.denom_units); // [{ denom: "usei", exponent: 0, aliases: [] }, ...]
+
+// Get all token symbols on testnet
+const testnetSymbols = TOKEN_LIST["atlantic-2"].map((t) => t.symbol);
+console.log(testnetSymbols);
+
+// Access token images
+const tokenWithImage = TOKEN_LIST["pacific-1"].find((t) => t.images?.png);
+console.log(tokenWithImage?.images.png);
+```
+
+## IBC Info
+
+`IBC_INFO` provides IBC channel configurations for cross-chain communication on each Sei network.
+
+```typescript
+import { IBC_INFO } from "@sei-js/registry";
+
+// Find the Cosmos Hub IBC channel on mainnet
+const cosmosChannel = IBC_INFO["pacific-1"].find(
+  (ch) => ch.counterparty_chain_name === "cosmoshub-4"
+);
+
+if (cosmosChannel) {
+  console.log(cosmosChannel.src_channel);  // Sei-side channel
+  console.log(cosmosChannel.dst_channel);  // Cosmos Hub-side channel
+  console.log(cosmosChannel.port_id);      // "transfer"
+}
+
+// List all IBC connections for a network
+for (const channel of IBC_INFO["pacific-1"]) {
+  console.log(`${channel.counterparty_chain_name}: ${channel.src_channel} → ${channel.dst_channel}`);
+}
+```
+
+## Gas Info
+
+`GAS_INFO` contains gas denomination, minimum gas prices, and module-specific gas adjustments per network.
+
+```typescript
+import { GAS_INFO } from "@sei-js/registry";
+
+const mainnetGas = GAS_INFO["pacific-1"];
+
+console.log(mainnetGas.denom);         // "usei"
+console.log(mainnetGas.min_gas_price); // minimum gas price
+
+// Module-specific gas adjustments
+const dexGas = mainnetGas.module_adjustments.dex;
+console.log(dexGas.order_placement);    // gas price for DEX order placement
+console.log(dexGas.order_cancellation); // gas price for DEX order cancellation
+console.log(dexGas.sudo_gas_price);     // superuser gas price
+```
+
+### Setting gas in a CosmJS transaction
+
+```typescript
+import { GAS_INFO } from "@sei-js/registry";
+import type { StdFee } from "@cosmjs/stargate";
+
+const gasInfo = GAS_INFO["pacific-1"];
+
+const fee: StdFee = {
+  amount: [{ denom: gasInfo.denom, amount: "20000" }],
+  gas: "200000",
+};
+```
