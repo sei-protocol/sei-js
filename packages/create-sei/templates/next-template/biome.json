@@ -50,6 +50,7 @@
 		}
 	},
 	"files": {
-		"includes": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.css"]
+		"includes": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.css", "*.json", "*.md"],
+		"ignore": ["node_modules/**", "dist/**", ".next/**", ".yarn/**"]
 	}
 }
