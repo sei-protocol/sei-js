@@ -21,33 +21,81 @@ export default function Landing() {
 
 					{/* Tech Stack Badges */}
 					<Group gap="xs" mt="sm">
-						<Badge variant="light" color="blue" style={{ backgroundColor: 'rgb(239 246 255)', color: 'rgb(29 78 216)', border: '1px solid rgb(191 219 254)' }}>
+						<Badge
+							variant="light"
+							color="blue"
+							style={{
+								backgroundColor: 'rgb(239 246 255)',
+								color: 'rgb(29 78 216)',
+								border: '1px solid rgb(191 219 254)',
+							}}
+						>
 							Next.js 14
 						</Badge>
 						<Badge
 							variant="light"
 							color="violet"
-							style={{ backgroundColor: 'rgb(250 245 255)', color: 'rgb(109 40 217)', border: '1px solid rgb(196 181 253)' }}
+							style={{
+								backgroundColor: 'rgb(250 245 255)',
+								color: 'rgb(109 40 217)',
+								border: '1px solid rgb(196 181 253)',
+							}}
 						>
 							Mantine UI
 						</Badge>
-						<Badge variant="light" color="cyan" style={{ backgroundColor: 'rgb(236 254 255)', color: 'rgb(14 116 144)', border: '1px solid rgb(165 243 252)' }}>
+						<Badge
+							variant="light"
+							color="cyan"
+							style={{
+								backgroundColor: 'rgb(236 254 255)',
+								color: 'rgb(14 116 144)',
+								border: '1px solid rgb(165 243 252)',
+							}}
+						>
 							Tailwind CSS
 						</Badge>
-						<Badge variant="light" color="yellow" style={{ backgroundColor: 'rgb(254 249 195)', color: 'rgb(161 98 7)', border: '1px solid rgb(254 240 138)' }}>
+						<Badge
+							variant="light"
+							color="yellow"
+							style={{
+								backgroundColor: 'rgb(254 249 195)',
+								color: 'rgb(161 98 7)',
+								border: '1px solid rgb(254 240 138)',
+							}}
+						>
 							Biome
 						</Badge>
 						<Badge
 							variant="light"
 							color="orange"
-							style={{ backgroundColor: 'rgb(255 247 237)', color: 'rgb(194 65 12)', border: '1px solid rgb(254 215 170)' }}
+							style={{
+								backgroundColor: 'rgb(255 247 237)',
+								color: 'rgb(194 65 12)',
+								border: '1px solid rgb(254 215 170)',
+							}}
 						>
 							RainbowKit
 						</Badge>
-						<Badge variant="light" color="teal" style={{ backgroundColor: 'rgb(240 253 250)', color: 'rgb(15 118 110)', border: '1px solid rgb(153 246 228)' }}>
+						<Badge
+							variant="light"
+							color="teal"
+							style={{
+								backgroundColor: 'rgb(240 253 250)',
+								color: 'rgb(15 118 110)',
+								border: '1px solid rgb(153 246 228)',
+							}}
+						>
 							Wagmi + Viem
 						</Badge>
-						<Badge variant="light" color="dark" style={{ backgroundColor: 'rgb(249 250 251)', color: 'rgb(17 24 39)', border: '1px solid rgb(209 213 219)' }}>
+						<Badge
+							variant="light"
+							color="dark"
+							style={{
+								backgroundColor: 'rgb(249 250 251)',
+								color: 'rgb(17 24 39)',
+								border: '1px solid rgb(209 213 219)',
+							}}
+						>
 							Vercel
 						</Badge>
 					</Group>
