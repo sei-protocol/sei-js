@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import { ActionIcon, AppShell, Container, Group } from '@mantine/core';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { IconBook, IconCode, IconLogout } from '@tabler/icons-react';
-import Link from 'next/link';
-import type { PropsWithChildren } from 'react';
-import { useAccount, useDisconnect } from 'wagmi';
+import { ActionIcon, AppShell, Container, Group } from "@mantine/core";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { IconBook, IconCode, IconLogout } from "@tabler/icons-react";
+import Image from "next/image";
+import Link from "next/link";
+import type { PropsWithChildren } from "react";
+import { useAccount, useDisconnect } from "wagmi";
 
 export default function Shell({ children }: PropsWithChildren) {
 	const { address, isConnected } = useAccount();
@@ -17,7 +18,7 @@ export default function Shell({ children }: PropsWithChildren) {
 				<Container size="xl" h="100%">
 					<Group justify="space-between" align="center" h="100%">
 						<Link href="/" aria-label="Sei">
-							<img src="https://cdn.sei.io/assets/sei-icon.svg" alt="Sei" style={{ height: 28, display: 'block' }} />
+							<Image src="https://cdn.sei.io/assets/sei-icon.svg" alt="Sei" width={28} height={28} style={{ display: "block" }} />
 						</Link>
 						<Group align="center" gap="md">
 							<ActionIcon
@@ -29,10 +30,10 @@ export default function Shell({ children }: PropsWithChildren) {
 								radius="md"
 								aria-label="View Resources"
 								style={{
-									transition: 'all 0.2s ease',
-									'&:hover': {
-										transform: 'translateY(-1px)',
-										boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+									transition: "all 0.2s ease",
+									"&:hover": {
+										transform: "translateY(-1px)",
+										boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
 									},
 								}}
 							>
@@ -47,10 +48,10 @@ export default function Shell({ children }: PropsWithChildren) {
 								radius="md"
 								aria-label="View Development Guide"
 								style={{
-									transition: 'all 0.2s ease',
-									'&:hover': {
-										transform: 'translateY(-1px)',
-										boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+									transition: "all 0.2s ease",
+									"&:hover": {
+										transform: "translateY(-1px)",
+										boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
 									},
 								}}
 							>
@@ -65,10 +66,10 @@ export default function Shell({ children }: PropsWithChildren) {
 									onClick={() => disconnect()}
 									aria-label="Disconnect Wallet"
 									style={{
-										transition: 'all 0.2s ease',
-										'&:hover': {
-											transform: 'translateY(-1px)',
-											boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+										transition: "all 0.2s ease",
+										"&:hover": {
+											transform: "translateY(-1px)",
+											boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
 										},
 									}}
 								>

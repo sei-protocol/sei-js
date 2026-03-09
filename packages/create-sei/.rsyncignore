@@ -2,8 +2,6 @@ node_modules/
 .next/
 dist/
 build/
-.yarn/
-yarn.lock
 package-lock.json
 .git/
 .DS_Store
