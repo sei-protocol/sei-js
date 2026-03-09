@@ -1,1 +1,1 @@
-export { createSeiJSDocsSearchTool } from './search.js';
+export { createSeiJSDocsSearchTool } from "./search.js";

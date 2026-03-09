@@ -1,5 +1,5 @@
-import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { WASM_PRECOMPILE_ABI, WASM_PRECOMPILE_ADDRESS } from '../precompiles';
+import { Contract, type ContractRunner, type InterfaceAbi } from "ethers";
+import { WASM_PRECOMPILE_ABI, WASM_PRECOMPILE_ADDRESS } from "../precompiles";
 
 /**
  * The ABI for the Wasm precompile contract, used to create an Ethers contract.
@@ -30,5 +30,5 @@ export const ETHERS_WASM_PRECOMPILE_ABI = WASM_PRECOMPILE_ABI as InterfaceAbi;
  * @category Contract Factory
  */
 export const getWasmPrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new Contract(WASM_PRECOMPILE_ADDRESS, ETHERS_WASM_PRECOMPILE_ABI, runner);
+  return new Contract(WASM_PRECOMPILE_ADDRESS, ETHERS_WASM_PRECOMPILE_ABI, runner);
 };

@@ -1,17 +1,40 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { CodeHighlight } from '@mantine/code-highlight';
-import { ActionIcon, Badge, Button, Card, Collapse, Container, Flex, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { BANK_PRECOMPILE_ADDRESS, VIEM_BANK_PRECOMPILE_ABI } from '@sei-js/precompiles';
-import { IconBulb, IconChevronDown, IconChevronUp, IconCopy, IconDatabase } from '@tabler/icons-react';
-import { useState } from 'react';
-import { type ReadContractParameters, formatEther } from 'viem';
-import { useAccount, usePublicClient } from 'wagmi';
+import React from "react";
+import { CodeHighlight } from "@mantine/code-highlight";
+import {
+	ActionIcon,
+	Badge,
+	Button,
+	Card,
+	Collapse,
+	Container,
+	Flex,
+	Group,
+	Paper,
+	Stack,
+	Text,
+	ThemeIcon,
+	Title,
+} from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import {
+	BANK_PRECOMPILE_ADDRESS,
+	VIEM_BANK_PRECOMPILE_ABI,
+} from "@sei-js/precompiles";
+import {
+	IconBulb,
+	IconChevronDown,
+	IconChevronUp,
+	IconCopy,
+	IconDatabase,
+} from "@tabler/icons-react";
+import { useState } from "react";
+import { type ReadContractParameters, formatEther } from "viem";
+import { useAccount, usePublicClient } from "wagmi";
 
 function Examples() {
-	const [supply, setSupply] = useState('');
+	const [supply, setSupply] = useState("");
 	const [showCode, setShowCode] = useState(false);
 
 	const publicClient = usePublicClient();
@@ -19,10 +42,13 @@ function Examples() {
 
 	const formatLargeSeiNumber = (num: string, decimals: number): string => {
 		if (num.length > 10) {
-			return `${(Number(num) / 1000000 / 1000000000).toLocaleString(navigator.language, {
-				minimumFractionDigits: decimals,
-				maximumFractionDigits: decimals
-			})} B`;
+			return `${(Number(num) / 1000000 / 1000000000).toLocaleString(
+				navigator.language,
+				{
+					minimumFractionDigits: decimals,
+					maximumFractionDigits: decimals,
+				},
+			)} B`;
 		}
 		return (Number(num) / 1000000).toLocaleString(navigator.language);
 	};
@@ -31,17 +57,17 @@ function Examples() {
 		try {
 			navigator.clipboard.writeText(text).then(() => {
 				notifications.show({
-					title: 'Copied!',
-					message: 'Code copied to clipboard',
-					color: 'green'
+					title: "Copied!",
+					message: "Code copied to clipboard",
+					color: "green",
 				});
 			});
 		} catch (err) {
-			console.error('Failed to copy text: ', err);
+			console.error("Failed to copy text: ", err);
 			notifications.show({
-				title: 'Error',
-				message: 'Failed to copy to clipboard',
-				color: 'red'
+				title: "Error",
+				message: "Failed to copy to clipboard",
+				color: "red",
 			});
 		}
 	};
@@ -54,19 +80,19 @@ function Examples() {
 		const readContractParams: ReadContractParameters = {
 			abi: VIEM_BANK_PRECOMPILE_ABI,
 			address: BANK_PRECOMPILE_ADDRESS,
-			functionName: 'supply',
-			args: ['usei']
+			functionName: "supply",
+			args: ["usei"],
 		};
 
 		try {
 			const result = await publicClient.readContract(readContractParams);
 			setSupply((result as bigint).toString());
 		} catch (error) {
-			console.error('Error fetching supply:', error);
+			console.error("Error fetching supply:", error);
 			notifications.show({
-				title: 'Error',
-				message: 'Failed to fetch SEI supply',
-				color: 'red'
+				title: "Error",
+				message: "Failed to fetch SEI supply",
+				color: "red",
 			});
 		}
 	};
@@ -103,7 +129,8 @@ const getSeiSupply = async () => {
 								Sei Precompiles
 							</Title>
 							<Text size="lg" c="gray.6" mt={4}>
-								Access native Sei blockchain functionality through EVM precompiles
+								Access native Sei blockchain functionality through EVM
+								precompiles
 							</Text>
 						</div>
 					</Group>
@@ -115,7 +142,12 @@ const getSeiSupply = async () => {
 						<Flex justify="space-between" align="flex-start">
 							<Stack gap="xs">
 								<Group gap="md">
-									<ThemeIcon size={40} radius="md" color="orange" variant="light">
+									<ThemeIcon
+										size={40}
+										radius="md"
+										color="orange"
+										variant="light"
+									>
 										<IconDatabase size={20} />
 									</ThemeIcon>
 									<Title order={3} fw={600} c="gray.9">
@@ -123,8 +155,14 @@ const getSeiSupply = async () => {
 									</Title>
 								</Group>
 								<Text size="sm" c="gray.6">
-									Query total SEI supply using Sei's native{' '}
-									<Text component="a" href="https://www.docs.sei.io/dev-interoperability/precompiles/bank" target="_blank" c="orange" td="underline">
+									Query total SEI supply using Sei's native{" "}
+									<Text
+										component="a"
+										href="https://www.docs.sei.io/dev-interoperability/precompiles/bank"
+										target="_blank"
+										c="orange"
+										td="underline"
+									>
 										Bank precompile
 									</Text>
 								</Text>
@@ -162,8 +200,15 @@ const getSeiSupply = async () => {
 										</Paper>
 									)}
 								</Flex>
-								<Button onClick={getSeiSupply} size="sm" radius="md" variant="light" color="orange" leftSection={<IconDatabase size={14} />}>
-									{supply ? 'Refresh' : 'Query Supply'}
+								<Button
+									onClick={getSeiSupply}
+									size="sm"
+									radius="md"
+									variant="light"
+									color="orange"
+									leftSection={<IconDatabase size={14} />}
+								>
+									{supply ? "Refresh" : "Query Supply"}
 								</Button>
 							</Flex>
 						</Paper>
@@ -174,13 +219,25 @@ const getSeiSupply = async () => {
 								color="gray"
 								size="sm"
 								radius="md"
-								leftSection={showCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
+								leftSection={
+									showCode ? (
+										<IconChevronUp size={14} />
+									) : (
+										<IconChevronDown size={14} />
+									)
+								}
 								onClick={() => setShowCode(!showCode)}
 							>
-								{showCode ? 'Hide' : 'View'} Implementation
+								{showCode ? "Hide" : "View"} Implementation
 							</Button>
 							{showCode && (
-								<ActionIcon variant="subtle" color="gray" size="sm" radius="md" onClick={() => copyToClipboard(codeExample)}>
+								<ActionIcon
+									variant="subtle"
+									color="gray"
+									size="sm"
+									radius="md"
+									onClick={() => copyToClipboard(codeExample)}
+								>
 									<IconCopy size={14} />
 								</ActionIcon>
 							)}
@@ -188,7 +245,13 @@ const getSeiSupply = async () => {
 
 						<Collapse in={showCode}>
 							<Paper mt="sm" p="md" bg="gray.0" radius="md" withBorder>
-								<CodeHighlight code={codeExample} language="tsx" withCopyButton={false} expandCodeLabel="" collapseCodeLabel="" />
+								<CodeHighlight
+									code={codeExample}
+									language="tsx"
+									withCopyButton={false}
+									expandCodeLabel=""
+									collapseCodeLabel=""
+								/>
 							</Paper>
 						</Collapse>
 					</Stack>

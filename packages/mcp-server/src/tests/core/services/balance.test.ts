@@ -1,215 +1,139 @@
-import { afterEach, describe, expect, jest, test } from '@jest/globals';
-import { getBalance, getERC20Balance, getERC721Balance, getERC1155Balance, isNFTOwner } from '../../../core/services';
+import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
+import * as viemModule from "viem";
+import { getBalance, getERC20Balance, getERC721Balance, getERC1155Balance, isNFTOwner } from "../../../core/services";
+import * as clientsModule from "../../../core/services/clients.js";
+import * as contractsModule from "../../../core/services/contracts.js";
 
 // Create valid test addresses with proper type assertions
-const VALID_ADDRESS = '0x1234567890123456789012345678901234567890' as `0x${string}`;
-const VALID_TOKEN_ADDRESS = '0xabcdef1234567890123456789012345678901234' as `0x${string}`;
-const VALID_OWNER_ADDRESS = '0x0987654321098765432109876543210987654321' as `0x${string}`;
+const VALID_ADDRESS = "0x1234567890123456789012345678901234567890" as `0x${string}`;
+const VALID_TOKEN_ADDRESS = "0xabcdef1234567890123456789012345678901234" as `0x${string}`;
+const VALID_OWNER_ADDRESS = "0x0987654321098765432109876543210987654321" as `0x${string}`;
 
-// Mock modules
-jest.mock('../../../core/services/clients.js', () => ({
-	getPublicClient: jest.fn()
-}));
+describe("Balance Service", () => {
+  const spies: { mockRestore(): void }[] = [];
 
-jest.mock('../../../core/services/utils.js', () => ({
-	utils: {
-		validateAddress: jest.fn((address) => address)
-	}
-}));
+  beforeEach(() => {
+    spies.length = 0;
+  });
 
-jest.mock('../../../core/services/contracts.js', () => ({
-	readContract: jest.fn()
-}));
+  afterEach(() => {
+    for (const s of spies) s.mockRestore();
+  });
 
-jest.mock('viem', () => ({
-	formatEther: jest.fn(() => '1'),
-	getContract: jest.fn(),
-	formatUnits: jest.fn(() => '1')
-}));
+  describe("getBalance", () => {
+    test("should return the native token balance", async () => {
+      const mockClient = {
+        getBalance: mock().mockImplementation(() => Promise.resolve(BigInt("1000000000000000000"))),
+      };
 
-describe('Balance Service', () => {
-	// Reset all mocks after each test
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
+      spies.push(spyOn(clientsModule, "getPublicClient").mockReturnValue(mockClient as never));
+      spies.push(spyOn(viemModule, "formatEther").mockReturnValue("1"));
 
-	describe('getBalance', () => {
-		test('should return the native token balance', async () => {
-			// Import mocked modules
-			const { getPublicClient } = await import('../../../core/services/clients.js');
-			const { formatEther } = await import('viem');
+      const result = await getBalance(VALID_ADDRESS);
 
-			// Setup mock client with proper type casting
-			const mockClient = {
-				getBalance: jest.fn().mockImplementation(() => Promise.resolve(BigInt('1000000000000000000')))
-			};
+      expect(result).toEqual({
+        wei: BigInt(1000000000000000000),
+        sei: "1",
+      });
+    });
+  });
 
-			// Configure mocks for this test
-			(getPublicClient as jest.Mock).mockReturnValue(mockClient);
-			(formatEther as jest.Mock).mockReturnValue('1');
+  describe("getERC20Balance", () => {
+    test("should return the ERC20 token balance with metadata", async () => {
+      const mockContract = {
+        read: {
+          balanceOf: mock().mockImplementation(() => Promise.resolve(BigInt("1000000000"))),
+          symbol: mock().mockImplementation(() => Promise.resolve("TOKEN")),
+          decimals: mock().mockImplementation(() => Promise.resolve(9)),
+        },
+      };
 
-			// Call the function
-			const result = await getBalance(VALID_ADDRESS);
+      spies.push(spyOn(clientsModule, "getPublicClient").mockReturnValue({} as never));
+      spies.push(spyOn(viemModule, "getContract").mockReturnValue(mockContract as never));
+      spies.push(spyOn(viemModule, "formatUnits").mockReturnValue("1"));
 
-			// Verify results
-			expect(result).toEqual({
-				wei: 1000000000000000000n,
-				sei: '1'
-			});
-		});
-	});
+      const result = await getERC20Balance(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS);
 
-	describe('getERC20Balance', () => {
-		test('should return the ERC20 token balance with metadata', async () => {
-			// Import mocked modules
-			const { getContract } = await import('viem');
-			const { formatUnits } = await import('viem');
+      expect(result).toEqual({
+        raw: BigInt(1000000000),
+        formatted: "1",
+        token: {
+          symbol: "TOKEN",
+          decimals: 9,
+        },
+      });
+    });
+  });
 
-			// Setup mock contract
-			const mockContract = {
-				read: {
-					balanceOf: jest.fn().mockImplementation(() => Promise.resolve(BigInt('1000000000'))),
-					symbol: jest.fn().mockImplementation(() => Promise.resolve('TOKEN')),
-					decimals: jest.fn().mockImplementation(() => Promise.resolve(9))
-				}
-			};
+  describe("isNFTOwner", () => {
+    test("should return true if address owns the NFT", async () => {
+      spies.push(spyOn(contractsModule, "readContract").mockImplementation(() => Promise.resolve(VALID_OWNER_ADDRESS) as never));
 
-			// Configure mocks for this test
-			(getContract as jest.Mock).mockReturnValue(mockContract);
-			(formatUnits as jest.Mock).mockReturnValue('1');
+      const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, BigInt(1));
 
-			// Call the function
-			const result = await getERC20Balance(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS);
+      expect(result).toBe(true);
+    });
 
-			// Verify results
-			expect(result).toEqual({
-				raw: 1000000000n,
-				formatted: '1',
-				token: {
-					symbol: 'TOKEN',
-					decimals: 9
-				}
-			});
-		});
-	});
+    test("should return false if address does not own the NFT", async () => {
+      spies.push(spyOn(contractsModule, "readContract").mockImplementation(() => Promise.resolve("0xDifferentAddress" as `0x${string}`) as never));
 
-	describe('isNFTOwner', () => {
-		test('should return true if address owns the NFT', async () => {
-			// Import mocked modules
-			const { readContract } = await import('../../../core/services/contracts.js');
-			const { utils } = await import('../../../core/services/utils.js');
+      const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, BigInt(1));
 
-			// Configure mocks for this test
-			(readContract as jest.Mock).mockImplementation(() => Promise.resolve(VALID_OWNER_ADDRESS));
-			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
+      expect(result).toBe(false);
+    });
 
-			// Call the function
-			const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n);
+    test("should return false if there is an error", async () => {
+      spies.push(
+        spyOn(contractsModule, "readContract").mockImplementation(() => {
+          throw new Error("NFT does not exist");
+        }),
+      );
 
-			// Verify results
-			expect(result).toBe(true);
-		});
+      const originalConsoleError = console.error;
+      console.error = () => {};
 
-		test('should return false if address does not own the NFT', async () => {
-			// Import mocked modules
-			const { readContract } = await import('../../../core/services/contracts.js');
-			const { utils } = await import('../../../core/services/utils.js');
+      const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, BigInt(1));
 
-			// Configure mocks for this test
-			(readContract as jest.Mock).mockImplementation(() => Promise.resolve('0xDifferentAddress' as `0x${string}`));
-			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
+      expect(result).toBe(false);
 
-			// Call the function
-			const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n);
+      console.error = originalConsoleError;
+    });
 
-			// Verify results
-			expect(result).toBe(false);
-		});
+    test("should return false if there is a non-Error object thrown", async () => {
+      spies.push(
+        spyOn(contractsModule, "readContract").mockImplementation(() => {
+          throw "String error message";
+        }),
+      );
 
-		test('should return false if there is an error', async () => {
-			// Import mocked modules
-			const { readContract } = await import('../../../core/services/contracts.js');
-			const { utils } = await import('../../../core/services/utils.js');
+      const originalConsoleError = console.error;
+      console.error = () => {};
 
-			// Configure mocks for this test
-			(readContract as jest.Mock).mockImplementation(() => {
-				throw new Error('NFT does not exist');
-			});
-			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
+      const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, BigInt(1));
 
-			// Mock console.error to avoid cluttering test output
-			const originalConsoleError = console.error;
-			console.error = () => {};
+      expect(result).toBe(false);
 
-			// Call the function
-			const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n);
+      console.error = originalConsoleError;
+    });
+  });
 
-			// Verify results
-			expect(result).toBe(false);
+  describe("getERC721Balance", () => {
+    test("should return the ERC721 token balance with metadata", async () => {
+      spies.push(spyOn(contractsModule, "readContract").mockResolvedValue(BigInt("5") as never));
 
-			// Restore console.error
-			console.error = originalConsoleError;
-		});
+      const result = await getERC721Balance(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS);
 
-		test('should return false if there is a non-Error object thrown', async () => {
-			// Import mocked modules
-			const { readContract } = await import('../../../core/services/contracts.js');
-			const { utils } = await import('../../../core/services/utils.js');
+      expect(result).toBe(BigInt(5));
+    });
+  });
 
-			// Configure mocks for this test
-			(readContract as jest.Mock).mockImplementation(() => {
-				throw 'String error message'; // Non-Error object
-			});
-			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
+  describe("getERC1155Balance", () => {
+    test("should return the balance of the ERC1155 token", async () => {
+      spies.push(spyOn(contractsModule, "readContract").mockImplementation(() => Promise.resolve(BigInt("10")) as never));
 
-			// Mock console.error to avoid cluttering test output
-			const originalConsoleError = console.error;
-			console.error = () => {};
+      const result = await getERC1155Balance(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, BigInt(2));
 
-			// Call the function
-			const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n);
-
-			// Verify results
-			expect(result).toBe(false);
-
-			// Restore console.error
-			console.error = originalConsoleError;
-		});
-	});
-
-	describe('getERC721Balance', () => {
-		test('should return the ERC721 token balance with metadata', async () => {
-			// Import mocked modules
-			const { readContract } = await import('../../../core/services/contracts.js');
-			const { utils } = await import('../../../core/services/utils.js');
-
-			// Configure mocks for this test
-			(readContract as jest.Mock).mockResolvedValue(BigInt('5'));
-			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
-
-			// Call the function
-			const result = await getERC721Balance(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS);
-
-			// Verify results
-			expect(result).toBe(5n);
-		});
-	});
-
-	describe('getERC1155Balance', () => {
-		test('should return the balance of the ERC1155 token', async () => {
-			// Import mocked modules
-			const { readContract } = await import('../../../core/services/contracts.js');
-			const { utils } = await import('../../../core/services/utils.js');
-
-			// Configure mocks for this test
-			(readContract as jest.Mock).mockImplementation(() => Promise.resolve(BigInt('10')));
-			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
-
-			// Call the function
-			const result = await getERC1155Balance(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 2n);
-
-			// Verify results
-			expect(result).toBe(10n);
-		});
-	});
+      expect(result).toBe(BigInt(10));
+    });
+  });
 });

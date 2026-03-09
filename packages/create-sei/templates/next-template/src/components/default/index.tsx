@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { CodeHighlight } from '@mantine/code-highlight';
+import { CodeHighlight } from "@mantine/code-highlight";
 import {
 	ActionIcon,
 	Alert,
@@ -19,18 +19,37 @@ import {
 	TextInput,
 	ThemeIcon,
 	Title,
-} from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { IconBulb, IconChevronDown, IconChevronUp, IconCoins, IconCopy, IconLogout, IconSend, IconWallet } from '@tabler/icons-react';
-import { useState } from 'react';
-import { formatEther, parseEther } from 'viem';
-import { useAccount, useDisconnect, usePublicClient, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi';
-import { balanceCodeExample, transactionCodeExample, walletCodeExample } from './examples';
+} from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import {
+	IconBulb,
+	IconChevronDown,
+	IconChevronUp,
+	IconCoins,
+	IconCopy,
+	IconLogout,
+	IconSend,
+	IconWallet,
+} from "@tabler/icons-react";
+import { useState } from "react";
+import { formatEther, parseEther } from "viem";
+import {
+	useAccount,
+	useDisconnect,
+	usePublicClient,
+	useSendTransaction,
+	useWaitForTransactionReceipt,
+} from "wagmi";
+import {
+	balanceCodeExample,
+	transactionCodeExample,
+	walletCodeExample,
+} from "./examples";
 
 function Examples() {
-	const [balance, setBalance] = useState('');
-	const [recipient, setRecipient] = useState('');
-	const [amount, setAmount] = useState('');
+	const [balance, setBalance] = useState("");
+	const [recipient, setRecipient] = useState("");
+	const [amount, setAmount] = useState("");
 
 	// Code visibility toggles
 	const [showWalletCode, setShowWalletCode] = useState(false);
@@ -43,25 +62,26 @@ function Examples() {
 
 	// Transaction hooks
 	const { data: hash, sendTransaction, isPending } = useSendTransaction();
-	const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-		hash,
-	});
+	const { isLoading: isConfirming, isSuccess: isConfirmed } =
+		useWaitForTransactionReceipt({
+			hash,
+		});
 
 	const copyToClipboard = (text: string) => {
 		try {
 			navigator.clipboard.writeText(text).then(() => {
 				notifications.show({
-					title: 'Copied!',
-					message: 'Code copied to clipboard',
-					color: 'green',
+					title: "Copied!",
+					message: "Code copied to clipboard",
+					color: "green",
 				});
 			});
 		} catch (err) {
-			console.error('Failed to copy text: ', err);
+			console.error("Failed to copy text: ", err);
 			notifications.show({
-				title: 'Error',
-				message: 'Failed to copy to clipboard',
-				color: 'red',
+				title: "Error",
+				message: "Failed to copy to clipboard",
+				color: "red",
 			});
 		}
 	};
@@ -78,9 +98,9 @@ function Examples() {
 	const sendSei = async () => {
 		if (!recipient || !amount) {
 			notifications.show({
-				title: 'Missing Information',
-				message: 'Please enter recipient address and amount',
-				color: 'orange',
+				title: "Missing Information",
+				message: "Please enter recipient address and amount",
+				color: "orange",
 			});
 			return;
 		}
@@ -91,11 +111,11 @@ function Examples() {
 				value: parseEther(amount),
 			});
 		} catch (error) {
-			console.error('Transaction error:', error);
+			console.error("Transaction error:", error);
 			notifications.show({
-				title: 'Transaction Error',
-				message: 'Failed to send transaction',
-				color: 'red',
+				title: "Transaction Error",
+				message: "Failed to send transaction",
+				color: "red",
 			});
 		}
 	};
@@ -147,14 +167,28 @@ function Examples() {
 							</Text>
 							<Flex justify="space-between" align="center">
 								<Code bg="white" p="xs">
-									{address || 'No wallet connected'}
+									{address || "No wallet connected"}
 								</Code>
 								{isConnected && address && (
 									<Group gap="xs">
-										<ActionIcon variant="light" color="blue" size="sm" radius="md" onClick={() => copyToClipboard(address)} aria-label="Copy address">
+										<ActionIcon
+											variant="light"
+											color="blue"
+											size="sm"
+											radius="md"
+											onClick={() => copyToClipboard(address)}
+											aria-label="Copy address"
+										>
 											<IconCopy size={14} />
 										</ActionIcon>
-										<ActionIcon variant="light" color="red" size="sm" radius="md" onClick={() => disconnect()} aria-label="Disconnect wallet">
+										<ActionIcon
+											variant="light"
+											color="red"
+											size="sm"
+											radius="md"
+											onClick={() => disconnect()}
+											aria-label="Disconnect wallet"
+										>
 											<IconLogout size={14} />
 										</ActionIcon>
 									</Group>
@@ -168,13 +202,25 @@ function Examples() {
 								color="gray"
 								size="sm"
 								radius="md"
-								leftSection={showWalletCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
+								leftSection={
+									showWalletCode ? (
+										<IconChevronUp size={14} />
+									) : (
+										<IconChevronDown size={14} />
+									)
+								}
 								onClick={() => setShowWalletCode(!showWalletCode)}
 							>
-								{showWalletCode ? 'Hide' : 'View'} Implementation
+								{showWalletCode ? "Hide" : "View"} Implementation
 							</Button>
 							{showWalletCode && (
-								<ActionIcon variant="subtle" color="gray" size="sm" radius="md" onClick={() => copyToClipboard(walletCodeExample)}>
+								<ActionIcon
+									variant="subtle"
+									color="gray"
+									size="sm"
+									radius="md"
+									onClick={() => copyToClipboard(walletCodeExample)}
+								>
 									<IconCopy size={14} />
 								</ActionIcon>
 							)}
@@ -182,7 +228,13 @@ function Examples() {
 
 						<Collapse in={showWalletCode}>
 							<Paper mt="sm" p="md" bg="gray.0" radius="md" withBorder>
-								<CodeHighlight code={walletCodeExample} language="tsx" withCopyButton={false} expandCodeLabel="" collapseCodeLabel="" />
+								<CodeHighlight
+									code={walletCodeExample}
+									language="tsx"
+									withCopyButton={false}
+									expandCodeLabel=""
+									collapseCodeLabel=""
+								/>
 							</Paper>
 						</Collapse>
 					</Stack>
@@ -195,7 +247,12 @@ function Examples() {
 							<Flex justify="space-between" align="flex-start">
 								<Stack gap="xs">
 									<Flex align="center" gap="md">
-										<ThemeIcon size={40} radius="md" color="green" variant="light">
+										<ThemeIcon
+											size={40}
+											radius="md"
+											color="green"
+											variant="light"
+										>
 											<IconCoins size={20} />
 										</ThemeIcon>
 										<Title order={3} size="h3" fw={600}>
@@ -203,7 +260,8 @@ function Examples() {
 										</Title>
 									</Flex>
 									<Text size="sm" c="gray.6">
-										Query your wallet's SEI balance using Wagmi's usePublicClient hook
+										Query your wallet's SEI balance using Wagmi's
+										usePublicClient hook
 									</Text>
 								</Stack>
 								<Badge color="green" variant="light" size="md" radius="md">
@@ -247,7 +305,7 @@ function Examples() {
 										color="green"
 										leftSection={<IconCoins size={14} />}
 									>
-										{balance ? 'Refresh' : 'Check Balance'}
+										{balance ? "Refresh" : "Check Balance"}
 									</Button>
 								</Flex>
 							</Paper>
@@ -258,13 +316,25 @@ function Examples() {
 									color="gray"
 									size="sm"
 									radius="md"
-									leftSection={showBalanceCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
+									leftSection={
+										showBalanceCode ? (
+											<IconChevronUp size={14} />
+										) : (
+											<IconChevronDown size={14} />
+										)
+									}
 									onClick={() => setShowBalanceCode(!showBalanceCode)}
 								>
-									{showBalanceCode ? 'Hide' : 'View'} Implementation
+									{showBalanceCode ? "Hide" : "View"} Implementation
 								</Button>
 								{showBalanceCode && (
-									<ActionIcon variant="subtle" color="gray" size="sm" radius="md" onClick={() => copyToClipboard(balanceCodeExample)}>
+									<ActionIcon
+										variant="subtle"
+										color="gray"
+										size="sm"
+										radius="md"
+										onClick={() => copyToClipboard(balanceCodeExample)}
+									>
 										<IconCopy size={14} />
 									</ActionIcon>
 								)}
@@ -272,7 +342,13 @@ function Examples() {
 
 							<Collapse in={showBalanceCode}>
 								<Paper mt="sm" p="md" bg="gray.0" radius="md" withBorder>
-									<CodeHighlight code={balanceCodeExample} language="tsx" withCopyButton={false} expandCodeLabel="" collapseCodeLabel="" />
+									<CodeHighlight
+										code={balanceCodeExample}
+										language="tsx"
+										withCopyButton={false}
+										expandCodeLabel=""
+										collapseCodeLabel=""
+									/>
 								</Paper>
 							</Collapse>
 						</Stack>
@@ -284,7 +360,12 @@ function Examples() {
 							<Flex direction="row" justify="space-between" align="flex-start">
 								<Stack gap="xs">
 									<Flex direction="row" align="center" gap="md" mb="md">
-										<ThemeIcon size={40} radius="md" color="blue" variant="light">
+										<ThemeIcon
+											size={40}
+											radius="md"
+											color="blue"
+											variant="light"
+										>
 											<IconSend size={20} />
 										</ThemeIcon>
 										<Title order={3} size="h3" fw={600} c="gray.9">
@@ -292,7 +373,8 @@ function Examples() {
 										</Title>
 									</Flex>
 									<Text c="gray.6" size="sm" maw={400}>
-										Send SEI tokens using Wagmi's transaction hooks with real-time status
+										Send SEI tokens using Wagmi's transaction hooks with
+										real-time status
 									</Text>
 								</Stack>
 								<Badge color="blue" variant="light" size="md" radius="md">
@@ -305,7 +387,13 @@ function Examples() {
 										<Text size="xs" fw={500} c="gray.6" mb={4}>
 											Recipient Address
 										</Text>
-										<TextInput placeholder="0x..." value={recipient} onChange={(e) => setRecipient(e.currentTarget.value)} radius="md" size="md" />
+										<TextInput
+											placeholder="0x..."
+											value={recipient}
+											onChange={(e) => setRecipient(e.currentTarget.value)}
+											radius="md"
+											size="md"
+										/>
 									</Flex>
 									<Flex w={128} direction="column">
 										<Text size="xs" fw={500} c="gray.6" mb={4}>
@@ -374,13 +462,25 @@ function Examples() {
 									color="gray"
 									size="sm"
 									radius="xl"
-									leftSection={showTransactionCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
+									leftSection={
+										showTransactionCode ? (
+											<IconChevronUp size={14} />
+										) : (
+											<IconChevronDown size={14} />
+										)
+									}
 									onClick={() => setShowTransactionCode(!showTransactionCode)}
 								>
-									{showTransactionCode ? 'Hide' : 'View'} Implementation
+									{showTransactionCode ? "Hide" : "View"} Implementation
 								</Button>
 								{showTransactionCode && (
-									<ActionIcon variant="subtle" color="gray" size="sm" radius="xl" onClick={() => copyToClipboard(transactionCodeExample)}>
+									<ActionIcon
+										variant="subtle"
+										color="gray"
+										size="sm"
+										radius="xl"
+										onClick={() => copyToClipboard(transactionCodeExample)}
+									>
 										<IconCopy size={14} />
 									</ActionIcon>
 								)}
@@ -388,7 +488,13 @@ function Examples() {
 
 							<Collapse in={showTransactionCode}>
 								<Paper mt="sm" p="md" bg="gray.0" radius="md" withBorder>
-									<CodeHighlight code={transactionCodeExample} language="tsx" withCopyButton={false} expandCodeLabel="" collapseCodeLabel="" />
+									<CodeHighlight
+										code={transactionCodeExample}
+										language="tsx"
+										withCopyButton={false}
+										expandCodeLabel=""
+										collapseCodeLabel=""
+									/>
 								</Paper>
 							</Collapse>
 						</Stack>

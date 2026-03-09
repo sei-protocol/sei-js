@@ -1,5 +1,5 @@
-import type { Abi } from 'viem';
-import { ADDRESS_PRECOMPILE_ABI } from '../precompiles';
+import type { Abi } from "viem";
+import { ADDRESS_PRECOMPILE_ABI } from "../precompiles";
 
 /**
  * The Viem ABI for the Address precompile contract.

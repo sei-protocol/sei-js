@@ -1,56 +1,60 @@
 // utils.spec.ts
-import { createTransportAndApp, getAddresses } from '../utils';
+import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { createTransportAndApp, getAddresses } from "../utils";
 
-jest.mock('@ledgerhq/hw-transport-node-hid');
-jest.mock('@zondax/ledger-sei');
+const mockTransport = {};
+const mockGetEVMAddress = mock();
+const mockGetCosmosAddress = mock();
 
-import Transport from '@ledgerhq/hw-transport-node-hid';
-import { SeiApp } from '@zondax/ledger-sei';
+mock.module("@ledgerhq/hw-transport-node-hid", () => ({
+  default: {
+    create: mock(() => Promise.resolve(mockTransport)),
+  },
+}));
 
-describe('Ledger utils', () => {
-	const mockTransport = {};
-	const mockGetEVMAddress = jest.fn();
-	const mockGetCosmosAddress = jest.fn();
+mock.module("@zondax/ledger-sei", () => ({
+  SeiApp: mock(() => ({
+    getEVMAddress: mockGetEVMAddress,
+    getCosmosAddress: mockGetCosmosAddress,
+  })),
+}));
 
-	beforeEach(() => {
-		(Transport.create as jest.Mock).mockResolvedValue(mockTransport);
+import Transport from "@ledgerhq/hw-transport-node-hid";
+import { SeiApp } from "@zondax/ledger-sei";
 
-		(SeiApp as unknown as jest.Mock).mockImplementation(() => ({
-			getEVMAddress: mockGetEVMAddress,
-			getCosmosAddress: mockGetCosmosAddress
-		}));
+describe("Ledger utils", () => {
+  beforeEach(() => {
+    mockGetEVMAddress.mockReset();
+    mockGetCosmosAddress.mockReset();
+  });
 
-		mockGetEVMAddress.mockReset();
-		mockGetCosmosAddress.mockReset();
-	});
+  it("createTransportAndApp returns correct transport and app", async () => {
+    const result = await createTransportAndApp();
 
-	it('createTransportAndApp returns correct transport and app', async () => {
-		const result = await createTransportAndApp();
+    expect(Transport.create).toHaveBeenCalled();
+    expect(SeiApp).toHaveBeenCalledWith(mockTransport);
+    expect(result).toEqual({
+      transport: mockTransport,
+      app: expect.any(Object),
+    });
+  });
 
-		expect(Transport.create).toHaveBeenCalled();
-		expect(SeiApp).toHaveBeenCalledWith(mockTransport);
-		expect(result).toEqual({
-			transport: mockTransport,
-			app: expect.any(Object)
-		});
-	});
+  it("getAddresses returns both EVM and native address", async () => {
+    const mockEvmAddress = "0x123";
+    const mockNativeAddress = { address: "sei123", pubKey: "abcd" };
 
-	it('getAddresses returns both EVM and native address', async () => {
-		const mockEvmAddress = '0x123';
-		const mockNativeAddress = { address: 'sei123', pubKey: 'abcd' };
+    mockGetEVMAddress.mockResolvedValueOnce(mockEvmAddress);
+    mockGetCosmosAddress.mockResolvedValueOnce(mockNativeAddress);
 
-		mockGetEVMAddress.mockResolvedValueOnce(mockEvmAddress);
-		mockGetCosmosAddress.mockResolvedValueOnce(mockNativeAddress);
+    const { app } = await createTransportAndApp();
+    const path = "m/44'/60'/0'/0/0";
+    const result = await getAddresses(app, path);
 
-		const { app } = await createTransportAndApp();
-		const path = "m/44'/60'/0'/0/0";
-		const result = await getAddresses(app, path);
-
-		expect(mockGetEVMAddress).toHaveBeenCalledWith(path);
-		expect(mockGetCosmosAddress).toHaveBeenCalledWith(path);
-		expect(result).toEqual({
-			evmAddress: mockEvmAddress,
-			nativeAddress: mockNativeAddress
-		});
-	});
+    expect(mockGetEVMAddress).toHaveBeenCalledWith(path);
+    expect(mockGetCosmosAddress).toHaveBeenCalledWith(path);
+    expect(result).toEqual({
+      evmAddress: mockEvmAddress,
+      nativeAddress: mockNativeAddress,
+    });
+  });
 });

@@ -1,0 +1,10 @@
+src
+node_modules
+docs
+coverage/
+
+tsconfig.json
+tsconfig.tsbuildinfo
+
+# Compiled test files
+dist/lib/__tests__

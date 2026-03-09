@@ -18,32 +18,29 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch the full history instead of a shallow clone
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version-file: '.nvmrc'
+          bun-version: "1.3.x"
 
       - uses: browser-actions/setup-chrome@v1
       - run: chrome --version
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install -y rsync
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Build packages
-        run: pnpm build:all
+        run: bun run build
 
-      - name: Run Jest tests
-        run: pnpm test:coverage
+      - name: Run tests with coverage
+        run: bun test --coverage --coverage-reporter=lcov packages/*
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: '**/coverage-final.json'
+          files: '**/lcov.info'
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true

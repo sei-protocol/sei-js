@@ -1,17 +1,44 @@
 {
 	"compilerOptions": {
-		"target": "ES2020",
-		"module": "ES2020",
+		// Environment setup & latest features (Bun recommended)
+		"target": "ESNext",
+		"module": "Preserve",
+		"lib": ["ESNext", "DOM"],
+		"moduleDetection": "force",
+		"jsx": "react-jsx",
+		"allowJs": true,
+
+		// Bundler mode (Bun recommended)
+		"moduleResolution": "bundler",
+		"verbatimModuleSyntax": true,
+
+		// Emit settings (required for library builds)
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"composite": true,
+
+		// Best practices (Bun recommended)
 		"strict": true,
-		"moduleResolution": "Node",
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"noImplicitAny": false,
-		"lib": ["ES2022"],
-		"resolveJsonModule": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
 		"forceConsistentCasingInFileNames": true,
-		"declaration": false
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+
+		// Stricter flags (disabled)
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noPropertyAccessFromIndexSignature": false,
+
+		// Project settings
+		"baseUrl": ".",
+		"paths": {
+			"@sei-js/*": ["packages/*/src"]
+		},
+		"types": ["bun"]
 	},
-	"exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "**/*.spec.js", "**/*.test.js", "**/__tests__/**/*"]
+	"exclude": ["node_modules", "dist"]
 }

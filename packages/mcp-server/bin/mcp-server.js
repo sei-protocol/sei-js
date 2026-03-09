@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-import('../dist/esm/index.js');
+import('../dist/index.js');

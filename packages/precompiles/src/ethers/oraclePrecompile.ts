@@ -1,5 +1,5 @@
-import { Contract, type ContractRunner, type InterfaceAbi } from 'ethers';
-import { ORACLE_PRECOMPILE_ABI, ORACLE_PRECOMPILE_ADDRESS } from '../precompiles';
+import { Contract, type ContractRunner, type InterfaceAbi } from "ethers";
+import { ORACLE_PRECOMPILE_ABI, ORACLE_PRECOMPILE_ADDRESS } from "../precompiles";
 
 /**
  * The ABI for the Oracle precompile contract, used to create an Ethers contract.
@@ -30,5 +30,5 @@ export const ETHERS_ORACLE_PRECOMPILE_ABI = ORACLE_PRECOMPILE_ABI as InterfaceAb
  * @category Contract Factory
  */
 export const getOraclePrecompileEthersV6Contract = (runner: ContractRunner) => {
-	return new Contract(ORACLE_PRECOMPILE_ADDRESS, ETHERS_ORACLE_PRECOMPILE_ABI, runner);
+  return new Contract(ORACLE_PRECOMPILE_ADDRESS, ETHERS_ORACLE_PRECOMPILE_ABI, runner);
 };

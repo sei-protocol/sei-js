@@ -1,15 +1,14 @@
-import type { GetLogsParameters, Hash, Hex, Log, ReadContractParameters, WriteContractParameters } from 'viem';
-import { DEFAULT_NETWORK } from '../chains.js';
-import { getPrivateKeyAsHex } from '../config.js';
-import { getPublicClient, getWalletClientFromProvider } from './clients.js';
-import * as services from './index.js';
+import type { Abi, Address, GetLogsParameters, Hash, Hex, Log, ReadContractParameters, WriteContractParameters } from "viem";
+import { DEFAULT_NETWORK } from "../chains.js";
+import { getPublicClient, getWalletClientFromProvider } from "./clients.js";
+import * as services from "./index.js";
 
 /**
  * Read from a contract for a specific network
  */
 export async function readContract(params: ReadContractParameters, network = DEFAULT_NETWORK) {
-	const client = getPublicClient(network);
-	return await client.readContract(params);
+  const client = getPublicClient(network);
+  return await client.readContract(params);
 }
 
 /**
@@ -19,24 +18,17 @@ export async function readContract(params: ReadContractParameters, network = DEF
  * @returns Transaction hash
  * @throws Error if no private key is available
  */
-export async function writeContract(params: Record<string, any>, network = DEFAULT_NETWORK): Promise<Hash> {
-	// Get private key from environment
-	const key = getPrivateKeyAsHex();
-
-	if (!key) {
-		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
-	}
-
-	const client = await getWalletClientFromProvider(network);
-	return await client.writeContract(params as any);
+export async function writeContract(params: WriteContractParameters, network = DEFAULT_NETWORK): Promise<Hash> {
+  const client = await getWalletClientFromProvider(network);
+  return await client.writeContract(params);
 }
 
 /**
  * Get logs for a specific network
  */
 export async function getLogs(params: GetLogsParameters, network = DEFAULT_NETWORK): Promise<Log[]> {
-	const client = getPublicClient(network);
-	return await client.getLogs(params);
+  const client = getPublicClient(network);
+  return await client.getLogs(params);
 }
 
 /**
@@ -46,11 +38,11 @@ export async function getLogs(params: GetLogsParameters, network = DEFAULT_NETWO
  * @returns True if the address is a contract, false if it's an EOA
  */
 export async function isContract(address: string, network = DEFAULT_NETWORK): Promise<boolean> {
-	const validatedAddress = services.helpers.validateAddress(address);
+  const validatedAddress = services.helpers.validateAddress(address);
 
-	const client = getPublicClient(network);
-	const code = await client.getBytecode({ address: validatedAddress });
-	return code !== undefined && code !== '0x';
+  const client = getPublicClient(network);
+  const code = await client.getBytecode({ address: validatedAddress });
+  return code !== undefined && code !== "0x";
 }
 
 /**
@@ -63,43 +55,36 @@ export async function isContract(address: string, network = DEFAULT_NETWORK): Pr
  * @throws Error if no private key is available or deployment fails
  */
 export async function deployContract(
-	bytecode: Hex,
-	abi: any[],
-	args?: any[],
-	network = DEFAULT_NETWORK
-): Promise<{ address: Hash; transactionHash: Hash }> {
-	// Get private key from environment
-	const key = getPrivateKeyAsHex();
+  bytecode: Hex,
+  abi: Abi,
+  args?: unknown[],
+  network = DEFAULT_NETWORK,
+): Promise<{ address: Address; transactionHash: Hash }> {
+  const client = await getWalletClientFromProvider(network);
 
-	if (!key) {
-		throw new Error('Private key not available. Set the PRIVATE_KEY environment variable and restart the MCP server.');
-	}
+  if (!client.account) {
+    throw new Error("Wallet client account not available for contract deployment.");
+  }
 
-	const client = await getWalletClientFromProvider(network);
-	
-	if (!client.account) {
-		throw new Error('Wallet client account not available for contract deployment.');
-	}
-	
-	// Deploy the contract
-	const hash = await client.deployContract({
-		abi,
-		bytecode,
-		args: args || [],
-		account: client.account,
-		chain: client.chain,
-	});
+  // Deploy the contract
+  const hash = await client.deployContract({
+    abi,
+    bytecode,
+    args: args || [],
+    account: client.account,
+    chain: client.chain,
+  });
 
-	// Wait for the transaction to be mined and get the contract address
-	const publicClient = getPublicClient(network);
-	const receipt = await publicClient.waitForTransactionReceipt({ hash });
-	
-	if (!receipt.contractAddress) {
-		throw new Error('Contract deployment failed - no contract address returned');
-	}
+  // Wait for the transaction to be mined and get the contract address
+  const publicClient = getPublicClient(network);
+  const receipt = await publicClient.waitForTransactionReceipt({ hash });
 
-	return {
-		address: receipt.contractAddress,
-		transactionHash: hash,
-	};
+  if (!receipt.contractAddress) {
+    throw new Error("Contract deployment failed - no contract address returned");
+  }
+
+  return {
+    address: receipt.contractAddress,
+    transactionHash: hash,
+  };
 }

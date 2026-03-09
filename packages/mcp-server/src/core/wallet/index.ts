@@ -1,7 +1,7 @@
-import { getWalletMode } from '../config.js';
-import { DisabledWalletProvider } from './providers/disabled.js';
-import { PrivateKeyWalletProvider } from './providers/private-key.js';
-import type { WalletProvider } from './types.js';
+import { getWalletMode } from "../config.js";
+import { DisabledWalletProvider } from "./providers/disabled.js";
+import { PrivateKeyWalletProvider } from "./providers/private-key.js";
+import type { WalletProvider } from "./types.js";
 
 // Cache wallet provider instance
 let walletProviderInstance: WalletProvider | null = null;
@@ -10,34 +10,34 @@ let walletProviderInstance: WalletProvider | null = null;
  * Get the wallet provider instance based on configuration
  */
 export function getWalletProvider(): WalletProvider {
-	if (walletProviderInstance) {
-		return walletProviderInstance;
-	}
+  if (walletProviderInstance) {
+    return walletProviderInstance;
+  }
 
-	const mode = getWalletMode();
+  const mode = getWalletMode();
 
-	switch (mode) {
-		case 'private-key':
-			walletProviderInstance = new PrivateKeyWalletProvider();
-			break;
-		case 'disabled':
-			walletProviderInstance = new DisabledWalletProvider();
-			break;
-		default:
-			throw new Error(`Unknown wallet mode: ${mode}`);
-	}
+  switch (mode) {
+    case "private-key":
+      walletProviderInstance = new PrivateKeyWalletProvider();
+      break;
+    case "disabled":
+      walletProviderInstance = new DisabledWalletProvider();
+      break;
+    default:
+      throw new Error(`Unknown wallet mode: ${mode}`);
+  }
 
-	return walletProviderInstance;
+  return walletProviderInstance;
 }
 
 /**
  * Reset the wallet provider instance (useful for testing)
  */
 export function resetWalletProvider(): void {
-	walletProviderInstance = null;
+  walletProviderInstance = null;
 }
 
+export { DisabledWalletProvider } from "./providers/disabled.js";
+export { PrivateKeyWalletProvider } from "./providers/private-key.js";
 // Export types and classes
-export * from './types.js';
-export { PrivateKeyWalletProvider } from './providers/private-key.js';
-export { DisabledWalletProvider } from './providers/disabled.js';
+export * from "./types.js";
