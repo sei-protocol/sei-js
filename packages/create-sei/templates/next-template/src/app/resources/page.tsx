@@ -1,7 +1,7 @@
-import { Card, Code, Container, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
-import { IconBook, IconRobot, IconTerminal } from "@tabler/icons-react";
-import { developerResources, socialLinks } from "@/app/resources/resources";
-import { Shell } from "@/components";
+import { developerResources, socialLinks } from '@/app/resources/resources';
+import { Shell } from '@/components';
+import { Card, Code, Container, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
+import { IconBook, IconRobot, IconTerminal } from '@tabler/icons-react';
 
 export default function ResourcesPage() {
 	return (
@@ -151,7 +151,7 @@ export default function ResourcesPage() {
 								{socialLinks.map(({ title, description, href, icon: Icon, color }) => (
 									<Card key={title} withBorder radius="lg" p="lg" component="a" href={href} target="_blank" rel="noreferrer" shadow="sm">
 										<Group align="flex-start" wrap="nowrap" gap="md">
-											<ThemeIcon variant="light" color={color === "dark" ? "gray" : (color as any)} size={36} radius="md">
+											<ThemeIcon variant="light" color={color === 'dark' ? 'gray' : (color as any)} size={36} radius="md">
 												<Icon size={20} />
 											</ThemeIcon>
 											<Stack gap={4} flex={1}>

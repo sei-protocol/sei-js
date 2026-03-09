@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Badge, Button, Card, Code, Container, Group, Stack, Text, ThemeIcon, Title } from "@mantine/core";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { IconBook, IconCode, IconRocket } from "@tabler/icons-react";
-import Link from "next/link";
+import { Badge, Button, Card, Code, Container, Group, Stack, Text, ThemeIcon, Title } from '@mantine/core';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { IconBook, IconCode, IconRocket } from '@tabler/icons-react';
+import Link from 'next/link';
 
 export default function Landing() {
 	return (
@@ -25,9 +25,9 @@ export default function Landing() {
 							variant="light"
 							color="blue"
 							style={{
-								backgroundColor: "rgb(239 246 255)",
-								color: "rgb(29 78 216)",
-								border: "1px solid rgb(191 219 254)",
+								backgroundColor: 'rgb(239 246 255)',
+								color: 'rgb(29 78 216)',
+								border: '1px solid rgb(191 219 254)',
 							}}
 						>
 							Next.js 14
@@ -36,9 +36,9 @@ export default function Landing() {
 							variant="light"
 							color="violet"
 							style={{
-								backgroundColor: "rgb(250 245 255)",
-								color: "rgb(109 40 217)",
-								border: "1px solid rgb(196 181 253)",
+								backgroundColor: 'rgb(250 245 255)',
+								color: 'rgb(109 40 217)',
+								border: '1px solid rgb(196 181 253)',
 							}}
 						>
 							Mantine UI
@@ -47,9 +47,9 @@ export default function Landing() {
 							variant="light"
 							color="cyan"
 							style={{
-								backgroundColor: "rgb(236 254 255)",
-								color: "rgb(14 116 144)",
-								border: "1px solid rgb(165 243 252)",
+								backgroundColor: 'rgb(236 254 255)',
+								color: 'rgb(14 116 144)',
+								border: '1px solid rgb(165 243 252)',
 							}}
 						>
 							Tailwind CSS
@@ -58,9 +58,9 @@ export default function Landing() {
 							variant="light"
 							color="yellow"
 							style={{
-								backgroundColor: "rgb(254 249 195)",
-								color: "rgb(161 98 7)",
-								border: "1px solid rgb(254 240 138)",
+								backgroundColor: 'rgb(254 249 195)',
+								color: 'rgb(161 98 7)',
+								border: '1px solid rgb(254 240 138)',
 							}}
 						>
 							Biome
@@ -69,9 +69,9 @@ export default function Landing() {
 							variant="light"
 							color="orange"
 							style={{
-								backgroundColor: "rgb(255 247 237)",
-								color: "rgb(194 65 12)",
-								border: "1px solid rgb(254 215 170)",
+								backgroundColor: 'rgb(255 247 237)',
+								color: 'rgb(194 65 12)',
+								border: '1px solid rgb(254 215 170)',
 							}}
 						>
 							RainbowKit
@@ -80,9 +80,9 @@ export default function Landing() {
 							variant="light"
 							color="teal"
 							style={{
-								backgroundColor: "rgb(240 253 250)",
-								color: "rgb(15 118 110)",
-								border: "1px solid rgb(153 246 228)",
+								backgroundColor: 'rgb(240 253 250)',
+								color: 'rgb(15 118 110)',
+								border: '1px solid rgb(153 246 228)',
 							}}
 						>
 							Wagmi + Viem
@@ -91,9 +91,9 @@ export default function Landing() {
 							variant="light"
 							color="dark"
 							style={{
-								backgroundColor: "rgb(249 250 251)",
-								color: "rgb(17 24 39)",
-								border: "1px solid rgb(209 213 219)",
+								backgroundColor: 'rgb(249 250 251)',
+								color: 'rgb(17 24 39)',
+								border: '1px solid rgb(209 213 219)',
 							}}
 						>
 							Vercel
@@ -109,7 +109,7 @@ export default function Landing() {
 					bg="gradient-to-r from-blue-50 to-purple-50"
 					w="100%"
 					maw={600}
-					style={{ border: "2px solid var(--mantine-color-blue-2)" }}
+					style={{ border: '2px solid var(--mantine-color-blue-2)' }}
 				>
 					<Stack gap="lg" align="center" ta="center">
 						<ThemeIcon size={64} radius="xl" color="blue" variant="light">
@@ -130,7 +130,7 @@ export default function Landing() {
 				{/* Development Tip */}
 				<Card withBorder radius="md" p="md" bg="gray.0" maw={600}>
 					<Text size="xs" c="dimmed" ta="center">
-						💡 <strong>Development Tip:</strong> Start by exploring the examples in the connected app, then customize{" "}
+						💡 <strong>Development Tip:</strong> Start by exploring the examples in the connected app, then customize{' '}
 						<Code>src/components/default/index.tsx</Code> to build your unique dApp features.
 					</Text>
 				</Card>

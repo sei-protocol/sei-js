@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useAccount } from "wagmi";
-import { Default, Landing, Shell } from "@/components";
+import { Default, Landing, Shell } from '@/components';
+import { useAccount } from 'wagmi';
 
 export default function Home() {
 	const { isConnected } = useAccount();

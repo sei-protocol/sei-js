@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Button, Card, Code, Container, Group, Paper, Stack, Text, ThemeIcon, Title } from "@mantine/core";
-import { IconCode, IconExternalLink } from "@tabler/icons-react";
-import { Shell } from "@/components";
+import { Shell } from '@/components';
+import { Button, Card, Code, Container, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
+import { IconCode, IconExternalLink } from '@tabler/icons-react';
 
 export default function DevelopmentPage() {
 	return (
@@ -42,7 +42,7 @@ export default function DevelopmentPage() {
 									component="a"
 									href="https://wagmi.sh/react/getting-started"
 									target="_blank"
-									style={{ textDecoration: "none", cursor: "pointer" }}
+									style={{ textDecoration: 'none', cursor: 'pointer' }}
 								>
 									<Group gap="sm" justify="space-between">
 										<Group gap="sm">
@@ -62,7 +62,7 @@ export default function DevelopmentPage() {
 									component="a"
 									href="https://viem.sh/"
 									target="_blank"
-									style={{ textDecoration: "none", cursor: "pointer" }}
+									style={{ textDecoration: 'none', cursor: 'pointer' }}
 								>
 									<Group gap="sm" justify="space-between">
 										<Group gap="sm">
@@ -82,7 +82,7 @@ export default function DevelopmentPage() {
 									component="a"
 									href="https://www.rainbowkit.com/docs/introduction"
 									target="_blank"
-									style={{ textDecoration: "none", cursor: "pointer" }}
+									style={{ textDecoration: 'none', cursor: 'pointer' }}
 								>
 									<Group gap="sm" justify="space-between">
 										<Group gap="sm">
