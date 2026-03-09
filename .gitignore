@@ -48,3 +48,4 @@ Thumbs.db
 
 packages/registry/chain-registry
 packages/registry/community-assetlist
+packages/create-sei/test-output-*

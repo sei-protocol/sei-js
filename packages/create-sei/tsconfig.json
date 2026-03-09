@@ -1,8 +1,8 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"exclude": ["node_modules", "dist", "test"],
 	"compilerOptions": {
 		"outDir": "./dist",
+		"rootDir": "./src",
 		"target": "ES2020",
 		"useDefineForClassFields": true,
 		"lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -15,5 +15,14 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src"]
+	"include": ["src/**/*"],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"test",
+		"src/__tests__",
+		"src/**/__tests__",
+		"src/tests",
+		"src/**/*.test.ts"
+	]
 }
