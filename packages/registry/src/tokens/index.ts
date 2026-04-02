@@ -56,7 +56,7 @@ type SeiTokens = {
 };
 
 /**
- * A constant that maps each Sei networks to its respective tokens, imported from the community ran [assetlist](https://github.com/Sei-Public-Goods/sei-assetlist).
+ * A constant that maps each Sei networks to its respective tokens, imported from the community ran [assetlist](https://github.com/Seitrace/sei-assetlist).
  *
  * @remarks
  * **Important**: This token list is community-driven and subject to change.
