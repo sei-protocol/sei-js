@@ -40,12 +40,12 @@ export class HttpSseTransport implements McpTransport {
 
 		this.app.get(this.path, (req: Request, res: Response) => {
 			console.error(`SSE connection from ${req.ip}`);
-			
+
 			// Create SSE transport - it will handle headers automatically
 			const transport = new SSEServerTransport(`${this.path}/message`, res);
-			const sessionId = Date.now().toString();
+			const sessionId = transport.sessionId
 			this.connections.set(sessionId, transport);
-			
+
 			// Connect transport to MCP server
 			if (this.mcpServer) {
 				this.mcpServer.connect(transport);
@@ -61,10 +61,15 @@ export class HttpSseTransport implements McpTransport {
 		// Message endpoint for SSE transport
 		this.app.post(`${this.path}/message`, async (req: Request, res: Response) => {
 			try {
-				// Find the first available transport (simple approach for now)
-				const transport = Array.from(this.connections.values())[0];
+				const sessionId = typeof req.query.sessionId === 'string' ? req.query.sessionId : undefined;
+				if (!sessionId) {
+					res.status(400).json({ error: 'Missing sessionId' });
+					return;
+				}
+
+				const transport = this.connections.get(sessionId);
 				if (!transport) {
-					res.status(404).json({ error: 'No active SSE connection' });
+					res.status(404).json({ error: 'Session not found' });
 					return;
 				}
 
