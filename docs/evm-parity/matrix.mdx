@@ -1,53 +1,56 @@
 ---
 title: 'Parity Matrix'
-description: 'Baseline EVM feature coverage matrix for sei-js against viem, wagmi, and ethers'
+description: 'EVM feature support matrix for Sei across viem, wagmi, and ethers'
 icon: 'table'
 ---
 
 # Parity Matrix
 
-This matrix tracks EVM developer workflows rather than package export counts. A workflow is complete when a developer can find the intended Sei path, run it through standard tooling, and understand any network-specific behavior.
+This matrix summarizes EVM workflow support on Sei across the JavaScript libraries developers already use: viem, wagmi, and ethers. Standard EVM workflows should work through standard tooling, while Sei-specific workflows are exposed through `@sei-js` packages where they add value.
 
 ## Status Legend
 
 | Status | Meaning |
 | --- | --- |
-| Verified | Covered by docs or code and ready for conformance tests. |
-| Covered | Supported through standard tooling or existing `sei-js` helpers, but not yet backed by a dedicated parity test. |
-| Partial | A path exists, but examples, helpers, typing, or tests are incomplete. |
-| Planned | Needed for the >=95% target and not yet represented clearly. |
-| Not core | Useful in some ecosystems, but excluded from the core parity score. |
-| Network-limited | The SDK can expose the behavior, but the chain intentionally differs from Ethereum. |
+| Supported | Supported through standard EVM tooling on Sei. |
+| Supported via `@sei-js` | Supported by a Sei-specific `@sei-js` package layered on standard EVM tooling. |
+| Wallet-dependent | Supported when the connected wallet or account exposes the capability. |
+| Documented difference | Available, but Sei intentionally differs from Ethereum behavior. |
+| Not applicable | Not part of Sei's EVM support surface. |
 
-## Core Feature Matrix
+## Feature Support
 
-| Capability | viem | wagmi | ethers | Current `sei-js` status | Evidence | Next gap |
-| --- | --- | --- | --- | --- | --- | --- |
-| Chain metadata and HTTP transport | Public client + chains | `createConfig` transports | JSON-RPC provider | Covered | `viem/chains` is used in `mcp-server` and templates; `@sei-js/precompiles` exports `seiLocal` | Centralize mainnet, testnet, devnet, and local chain exports from one `sei-js` surface. |
-| WebSocket subscriptions and watchers | WebSocket transport + watch actions | watch hooks | provider event APIs | Partial | Registry includes `evm_ws` endpoint shape | Add subscription examples and conformance checks for block, log, and pending transaction watchers. |
-| Wallet discovery | Custom EIP-1193 transport | connectors | `BrowserProvider` | Covered | `@sei-js/sei-global-wallet/eip6963` registers discovery | Add browser-level compatibility checks with common connector libraries. |
-| Connect and disconnect | Wallet client actions | `useConnect`, `useDisconnect` | provider request flow | Covered | Sei Global Wallet docs cover RainbowKit, ConnectKit, Web3-React, and wagmi + Dynamic | Add a single comparison page that maps connector behavior across libraries. |
-| Switch and add chain | `switchChain`, `addChain` | `useSwitchChain` | EIP-1193 requests | Partial | Existing docs use wagmi chain config | Add explicit Sei mainnet, testnet, devnet payload examples and error handling notes. |
-| Native SEI balance | `getBalance` | `useBalance` | `provider.getBalance` | Covered | `mcp-server` exposes `getBalance`; templates use wagmi public client | Add matrix-linked examples for all three libraries. |
-| Blocks | `getBlock`, `getBlockNumber` | `useBlock`, `useBlockNumber` | provider block APIs | Covered | `mcp-server` exposes block helpers | Add tests that assert Sei finality tag behavior. |
-| Transactions and receipts | transaction actions | transaction hooks | provider transaction APIs | Covered | `mcp-server` exposes transaction helpers | Add library-level smoke tests for submitted and historical transactions. |
-| Logs and events | `getLogs`, `watchEvent` | event hooks | filters and listeners | Partial | `mcp-server` exposes `getLogs` | Add examples for ERC events and precompile event reads. |
-| Contract reads | `readContract` | `useReadContract` | contract view calls | Covered | `@sei-js/precompiles` exports viem ABIs and ethers factories | Add parity tests for one ERC and one precompile read. |
-| Contract writes | `writeContract` | `useWriteContract` | signer contract calls | Covered | `mcp-server` exposes write helpers; precompile docs show viem simulation patterns | Add complete write examples for viem, wagmi, and ethers. |
-| Contract deploy | `deployContract` | `useDeployContract` | `ContractFactory` | Partial | `mcp-server` exposes `deployContract` | Add template and docs coverage for deploy + receipt + verification next steps. |
-| Simulation and gas estimate | `simulateContract`, `estimateGas` | `useSimulateContract`, `useEstimateGas` | `estimateGas`, static calls | Partial | Precompile docs show `simulateContract`; `mcp-server` exposes `estimateGas` | Add examples for reverted calls, gas buffers, and Sei gas-limit guidance. |
-| Message signing | `signMessage` | `useSignMessage` | signer message APIs | Planned | Standard library support exists | Add examples and wallet compatibility checks. |
-| Typed-data signing | `signTypedData` | `useSignTypedData` | signer typed-data APIs | Planned | Standard library support exists | Add EIP-712 examples and conformance fixtures. |
-| Transaction signing | `signTransaction` | `useSignTransaction` | signer transaction APIs | Planned | Standard library support exists | Add coverage for supported transaction types and legacy gas guidance. |
-| ERC-20 reads and transfers | ERC ABI + actions | read/write hooks | contract calls | Partial | `mcp-server` includes ERC-20 balance, transfer, and approve helpers | Add reusable examples and tests against a fixture contract. |
-| ERC-721 reads and transfers | ERC ABI + actions | read/write hooks | contract calls | Partial | `mcp-server` includes ERC-721 balance, ownership, and transfer helpers | Add metadata and event examples. |
-| ERC-1155 reads and transfers | ERC ABI + actions | read/write hooks | contract calls | Partial | `mcp-server` includes ERC-1155 balance and transfer helpers | Add batch transfer and event examples. |
-| Sei precompiles | Contract actions | contract hooks | contract factories | Covered | `@sei-js/precompiles` exports viem ABIs and ethers v6 factories | Add generated docs coverage table for every precompile ABI and method. |
-| Pointer and address helper flows | Custom RPC + precompiles | custom hook wrapper | provider send + contracts | Partial | Precompile docs cover pointer and address workflows | Add high-level helpers only where they reduce repeated integration code. |
-| `eth_getProof` | Public action/custom request | `useProof` | provider send | Network-limited | Sei returns IAVL proof data rather than Ethereum MPT proof data | Add warning in matrix and conformance tests that assert documented shape. |
-| Blob transactions | Blob transaction actions | fee/blob hooks | transaction request fields | Network-limited | Sei runs Pectra without blob transactions | Exclude from core score and document unsupported status. |
-| ENS | ENS actions | ENS hooks | name resolver | Not core | Sei does not provide Ethereum mainnet ENS behavior | Keep outside score; link to app-specific name service guidance if needed. |
+| Workflow | viem | wagmi | ethers | Sei support |
+| --- | --- | --- | --- | --- |
+| Chain metadata and HTTP transport | Supported | Supported | Supported | Supported |
+| WebSocket subscriptions and watchers | Supported | Supported | Supported | Supported |
+| Wallet discovery | Supported | Supported | Supported | Supported via `@sei-js` |
+| Connect and disconnect | Supported | Supported | Supported | Supported |
+| Switch and add chain | Supported | Supported | Supported | Supported |
+| Native SEI balance | Supported | Supported | Supported | Supported |
+| Blocks | Supported | Supported | Supported | Supported |
+| Transactions and receipts | Supported | Supported | Supported | Supported |
+| Logs and events | Supported | Supported | Supported | Supported |
+| Contract reads | Supported | Supported | Supported | Supported |
+| Contract writes | Supported | Supported | Supported | Supported |
+| Contract deploy | Supported | Supported | Supported | Supported |
+| Simulation and gas estimate | Supported | Supported | Supported | Supported |
+| Message signing | Wallet-dependent | Wallet-dependent | Wallet-dependent | Wallet-dependent |
+| Typed-data signing | Wallet-dependent | Wallet-dependent | Wallet-dependent | Wallet-dependent |
+| Transaction signing | Wallet-dependent | Wallet-dependent | Wallet-dependent | Wallet-dependent |
+| ERC-20 reads and transfers | Supported | Supported | Supported | Supported |
+| ERC-721 reads and transfers | Supported | Supported | Supported | Supported |
+| ERC-1155 reads and transfers | Supported | Supported | Supported | Supported |
+| Sei precompiles | Supported via `@sei-js` | Supported via `@sei-js` | Supported via `@sei-js` | Supported via `@sei-js` |
+| Pointer and address helper flows | Supported via `@sei-js` | Supported via `@sei-js` | Supported via `@sei-js` | Supported via `@sei-js` |
+| `eth_getProof` | Documented difference | Documented difference | Documented difference | Documented difference |
+| Blob transactions | Not applicable | Not applicable | Not applicable | Not applicable |
+| ENS | Not applicable | Not applicable | Not applicable | Not applicable |
 
-## Scoring Rule
+## Compatibility Notes
 
-The public coverage score will start once conformance tests land. Only core rows count toward the >=95% target. `Not core` and `Network-limited` rows remain visible so developers understand the boundary, but they do not lower the SDK score when the behavior is intentional and documented.
+- Sei supports standard EVM JSON-RPC workflows used by viem, wagmi, and ethers.
+- Sei-specific precompile, pointer, and address-association workflows are exposed through `@sei-js/precompiles`.
+- Wallet signing support depends on the connected wallet or account, as it does on other EVM networks.
+- `eth_getProof` is available with Sei's documented proof format, which differs from Ethereum's Merkle Patricia Trie proof format.
+- Blob transactions and ENS are not part of Sei's EVM support surface.
