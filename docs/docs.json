@@ -83,14 +83,9 @@
 			},
 			{
 				"dropdown": "EVM Parity",
-				"description": "Compatibility matrix and execution plan",
-				"icon": "check-double",
-				"pages": [
-					{
-						"group": "Program",
-						"pages": ["evm-parity/plan", "evm-parity/matrix", "evm-parity/rpc-conformance", "evm-parity/issue-sla"]
-					}
-				]
+				"description": "Compatibility matrix",
+				"icon": "table",
+				"pages": ["evm-parity/matrix"]
 			},
 			{
 				"dropdown": "@sei-js/sei-global-wallet",

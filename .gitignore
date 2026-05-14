@@ -4,6 +4,7 @@
 packages/*/coverage
 
 examples/
+.internal/
 
 # compiled output
 dist
