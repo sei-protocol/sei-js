@@ -1,0 +1,54 @@
+---
+title: 'Issue SLA'
+description: 'Compatibility issue triage and aging rules for EVM parity work'
+icon: 'stopwatch'
+---
+
+# Issue SLA
+
+The operational target is simple: no open GitHub issue tagged `evm-compat` should be older than 14 days.
+
+## Label
+
+Use `evm-compat` for reports where a developer expected standard EVM behavior through viem, wagmi, ethers, wallet connectors, JSON-RPC, or common ERC/token flows.
+
+## Required Triage Fields
+
+Each issue should include:
+
+- Library or tool: viem, wagmi, ethers, wallet connector, RPC, template, docs, or other
+- Network: mainnet, testnet, devnet, local, or unknown
+- Expected EVM behavior
+- Observed Sei behavior
+- Minimal reproduction
+- Error output or transaction hash when available
+- Classification: SDK gap, network issue, upstream issue, docs issue, or intentional divergence
+
+## Aging Rules
+
+| Age | Required action |
+| --- | --- |
+| 0-2 days | Confirm scope, request missing reproduction details, and add classification. |
+| 3-7 days | Assign owner and link to a matrix row or create one. |
+| 8-13 days | Post status, define next action, and split network/upstream work if needed. |
+| 14 days | Escalate until the issue is closed, transferred, or converted into tracked implementation work. |
+
+## Closure Rules
+
+Close an `evm-compat` issue when one of these is true:
+
+- A fix has landed and a release path is identified.
+- The behavior is documented as an intentional Sei divergence.
+- The issue belongs to network infrastructure and has been transferred to the right tracker.
+- The issue belongs upstream and a linked upstream report or workaround exists.
+- The reporter cannot provide enough detail to reproduce after follow-up.
+
+## Weekly Review
+
+Run a weekly review with:
+
+- Count of open `evm-compat` issues.
+- Count older than 14 days.
+- New matrix rows added from reports.
+- SDK, docs, network, and upstream classifications.
+- Release notes needed for resolved issues.
