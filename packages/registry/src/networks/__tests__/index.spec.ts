@@ -24,4 +24,25 @@ describe('Networks configuration', () => {
 			}
 		}
 	});
+
+	it('should have RPC URLs starting with https:// or wss://', () => {
+		for (const [networkId, networkConfig] of Object.entries(NETWORKS)) {
+			for (const endpoint of networkConfig.rpc) {
+				const url = endpoint.url;
+				const isValid = url.startsWith('https://') || url.startsWith('wss://');
+				expect(isValid).toBe(true);
+				if (!isValid) {
+					throw new Error(`Network ${networkId} has invalid RPC URL: ${url}`);
+				}
+			}
+		}
+	});
+
+	it('should have a non-empty provider name for each RPC endpoint', () => {
+		for (const networkConfig of Object.values(NETWORKS)) {
+			for (const endpoint of networkConfig.rpc) {
+				expect(endpoint.provider.trim().length).toBeGreaterThan(0);
+			}
+		}
+	});
 });

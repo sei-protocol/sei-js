@@ -32,4 +32,19 @@ describe('GasInfo Tests', () => {
 		expect(pacific1.min_gas_price).toBeGreaterThanOrEqual(0.01);
 		expect(pacific1.module_adjustments.dex.sudo_gas_price).toBeLessThanOrEqual(0.02);
 	});
+
+	it('all networks have a positive min_gas_price', () => {
+		for (const [network, info] of Object.entries(GAS_INFO)) {
+			expect(info.min_gas_price).toBeGreaterThan(0);
+			if (info.min_gas_price <= 0) {
+				throw new Error(`Network ${network} has non-positive min_gas_price: ${info.min_gas_price}`);
+			}
+		}
+	});
+
+	it('all networks use usei as the fee denom', () => {
+		for (const info of Object.values(GAS_INFO)) {
+			expect(info.denom).toBe('usei');
+		}
+	});
 });

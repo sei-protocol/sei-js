@@ -9,6 +9,9 @@ const mockR = new Uint8Array([0, 1, 2]); // should be stripped
 const mockS = new Uint8Array([0, 3, 4]); // should be stripped
 const path = "m/44'/118'/0'/0/0";
 
+/** BIP44 derivation path pattern: m/purpose'/coin_type'/account'/change/index */
+const BIP44_PATTERN = /^m\/44'\/\d+'\/\d+'\/\d+\/\d+$/;
+
 const mockSeiApp = {
 	getCosmosAddress: jest.fn().mockResolvedValue({
 		address: mockAddress,
@@ -19,6 +22,28 @@ const mockSeiApp = {
 		s: mockS
 	})
 };
+
+describe('BIP44 derivation paths', () => {
+	it('standard Cosmos derivation path matches BIP44 pattern', () => {
+		expect("m/44'/118'/0'/0/0").toMatch(BIP44_PATTERN);
+	});
+
+	it('EVM-compatible derivation path matches BIP44 pattern', () => {
+		expect("m/44'/60'/0'/0/0").toMatch(BIP44_PATTERN);
+	});
+
+	it('non-zero account indices match BIP44 pattern', () => {
+		expect("m/44'/118'/1'/0/0").toMatch(BIP44_PATTERN);
+		expect("m/44'/118'/0'/0/5").toMatch(BIP44_PATTERN);
+	});
+
+	it('path is passed through to getCosmosAddress unchanged', async () => {
+		const customPath = "m/44'/118'/0'/0/3";
+		const signer = new SeiLedgerOfflineAminoSigner(mockSeiApp as never, customPath);
+		await signer.getAccounts();
+		expect(mockSeiApp.getCosmosAddress).toHaveBeenCalledWith(customPath);
+	});
+});
 
 describe('SeiLedgerOfflineAminoSigner', () => {
 	let signer: SeiLedgerOfflineAminoSigner;

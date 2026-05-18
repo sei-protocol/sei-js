@@ -82,12 +82,6 @@
 				]
 			},
 			{
-				"dropdown": "EVM Parity",
-				"description": "Compatibility matrix",
-				"icon": "table",
-				"pages": ["evm-parity/matrix"]
-			},
-			{
 				"dropdown": "@sei-js/sei-global-wallet",
 				"description": "User friendly wallet connect",
 				"icon": "wallet",

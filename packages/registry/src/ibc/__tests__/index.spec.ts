@@ -31,4 +31,28 @@ describe('IBCInfo Tests', () => {
 		expect(firstChannel.counterparty_chain_name).not.toBe('');
 		expect(firstChannel.dst_channel.startsWith('channel-')).toBeTruthy();
 	});
+
+	it('all channel IDs follow the channel-N format across all networks', () => {
+		const channelPattern = /^channel-\d+$/;
+		for (const [network, channels] of Object.entries(IBC_INFO)) {
+			for (const channel of channels) {
+				expect(channel.src_channel).toMatch(channelPattern);
+				expect(channel.dst_channel).toMatch(channelPattern);
+				if (!channelPattern.test(channel.src_channel)) {
+					throw new Error(`Network ${network} has invalid src_channel: ${channel.src_channel}`);
+				}
+				if (!channelPattern.test(channel.dst_channel)) {
+					throw new Error(`Network ${network} has invalid dst_channel: ${channel.dst_channel}`);
+				}
+			}
+		}
+	});
+
+	it('all counterparty chain names are non-empty strings', () => {
+		for (const channels of Object.values(IBC_INFO)) {
+			for (const channel of channels) {
+				expect(channel.counterparty_chain_name.trim().length).toBeGreaterThan(0);
+			}
+		}
+	});
 });

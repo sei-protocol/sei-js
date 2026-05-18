@@ -44,3 +44,37 @@ it('should contain the "sei" asset with correct properties in each network', () 
 		}
 	}
 });
+
+describe('Token image URL validation', () => {
+	it('all token image URLs use https:// scheme', () => {
+		for (const [network, assets] of Object.entries(TOKEN_LIST)) {
+			for (const asset of assets) {
+				if (asset.images?.png) {
+					expect(asset.images.png).toMatch(/^https:\/\//);
+					if (!asset.images.png.startsWith('https://')) {
+						throw new Error(`Network ${network} token "${asset.symbol}" has non-https PNG image URL: ${asset.images.png}`);
+					}
+				}
+				if (asset.images?.svg) {
+					expect(asset.images.svg).toMatch(/^https:\/\//);
+					if (!asset.images.svg.startsWith('https://')) {
+						throw new Error(`Network ${network} token "${asset.symbol}" has non-https SVG image URL: ${asset.images.svg}`);
+					}
+				}
+			}
+		}
+	});
+
+	it('all token image URLs are non-empty when present', () => {
+		for (const assets of Object.values(TOKEN_LIST)) {
+			for (const asset of assets) {
+				if (asset.images?.png) {
+					expect(asset.images.png.trim().length).toBeGreaterThan(0);
+				}
+				if (asset.images?.svg) {
+					expect(asset.images.svg.trim().length).toBeGreaterThan(0);
+				}
+			}
+		}
+	});
+});
