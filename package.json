@@ -25,5 +25,13 @@
 		"ts-node": "2.1.2",
 		"typescript": "^5.8.2"
 	},
-	"packageManager": "pnpm@9.0.0"
+	"packageManager": "pnpm@9.0.0",
+	"pnpm": {
+		"overrides": {
+			"@asyncapi/specs": "6.11.1",
+			"@asyncapi/generator": "3.3.0",
+			"@asyncapi/generator-helpers": "1.1.0",
+			"@asyncapi/generator-components": "1.0.0"
+		}
+	}
 }
