@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.3
+
+### Patch Changes
+
+- bc17ace: Fix session binding and response isolation in the HTTP SSE transport.
+
+  - POST handler now validates `sessionId` on every request — rejects missing session IDs (400) and unknown session IDs (404)
+  - Each POST is routed to the transport instance that owns the matching session ID, preventing cross-client request injection
+  - Session IDs now use the MCP SDK's `transport.sessionId` rather than `Date.now()`
+
+- 2666156: Harden the workspace against the 2026-07-14 "Miasma RAT" AsyncAPI supply-chain incident by pinning `@asyncapi/*` packages to non-compromised versions via root `pnpm.overrides`.
+
+  This stops a fresh install or lockfile regeneration from floating `@asyncapi/specs` up into the compromised `6.11.2` through the `mint` docs toolchain (`mint` → `@asyncapi/parser`). Resolved change: `@asyncapi/specs` `6.10.0` → `6.11.1`; `@asyncapi/generator`, `@asyncapi/generator-helpers`, and `@asyncapi/generator-components` are pinned preventively.
+
+  No shipped code or public API changes in this package — this is a repository/CI hardening release.
+
 ## 0.3.2
 
 ### Patch Changes
