@@ -1,12 +1,14 @@
 {
 	"name": "@sei-js/ledger",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"description": "TypeScript library for SEI Ledger app helper functions",
 	"main": "./dist/cjs/src/index.js",
 	"module": "./dist/esm/src/index.js",
 	"types": "./dist/types/src/index.d.ts",
 	"sideEffects": false,
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "rimraf dist && pnpm run build:cjs && pnpm run build:esm && pnpm run build:types",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
@@ -15,7 +17,12 @@
 		"test": "jest"
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
-	"keywords": ["sei", "javascript", "typescript", "ledger"],
+	"keywords": [
+		"sei",
+		"javascript",
+		"typescript",
+		"ledger"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sei-protocol/sei-js.git",
