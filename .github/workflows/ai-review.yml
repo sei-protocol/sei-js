@@ -1,0 +1,20 @@
+name: AI Review
+on:
+  pull_request:
+    # `labeled`/`unlabeled` let the `ai: skip-review` label take effect immediately rather
+    # than on the next push. UCI ignores those two events for every other label.
+    types: [ opened, ready_for_review, synchronize, reopened, labeled, unlabeled ]
+jobs:
+  ai-review:
+    # See: https://github.com/sei-protocol/uci/releases/tag/v0.0.15
+    uses: sei-protocol/uci/.github/workflows/ai-review.yml@65901242783550521f25a19199a6b10e54550b97
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+      id-token: write
+    secrets: inherit
+    with:
+      # See: https://github.com/sei-protocol/uci/releases/tag/v0.0.15
+      uci-ref: 65901242783550521f25a19199a6b10e54550b97
+      enable-cursor: false # Disabled for now since there is a dedicated Bugbot flow built into Cursor currently enabled on repo.
