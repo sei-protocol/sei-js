@@ -10,7 +10,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.sha }}
+  # Keyed on the ref, not the SHA: consecutive cron runs on an unchanged default
+  # branch share a SHA, and a manual dispatch would otherwise cancel a running sweep.
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -26,3 +28,7 @@ jobs:
     uses: sei-protocol/uci/.github/workflows/stale-check.yml@65901242783550521f25a19199a6b10e54550b97
     with:
       days-before-pr-stale: 28
+      # Issue triage is not automated here. Without this the UCI defaults apply
+      # (stale after 8 days, closed 2 days later), which would let a daily cron
+      # close community issues nobody agreed to close. -1 disables issue staling.
+      days-before-issue-stale: -1
