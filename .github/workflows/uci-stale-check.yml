@@ -10,10 +10,10 @@ permissions:
   contents: read
 
 concurrency:
-  # Keyed on the ref, not the SHA: consecutive cron runs on an unchanged default
-  # branch share a SHA, and a manual dispatch would otherwise cancel a running sweep.
+  # A sweep is cheap and idempotent, but cancelling one part-way leaves the triage
+  # half-applied, so queue behind a running sweep instead of superseding it.
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   stale:
