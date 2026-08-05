@@ -16,7 +16,10 @@ concurrency:
 jobs:
   stale:
     name: Stale
+    # Job-level `permissions` replaces the workflow-level block rather than merging,
+    # so `contents: read` has to be repeated here to survive.
     permissions:
+      contents: read
       issues: write
       pull-requests: write
     # See: https://github.com/sei-protocol/uci/releases/tag/v0.0.15
