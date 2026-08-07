@@ -1,6 +1,6 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import type { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { StreamableHTTPClientTransport, StreamableHTTPError } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 
 import {
@@ -101,29 +101,31 @@ describe('documentation search', () => {
 		expect(listTools).toHaveBeenCalledTimes(2);
 	});
 
-	it('falls back to another advertised documentation search tool', async () => {
+	it('does not dispatch queries to a renamed lookalike tool', async () => {
 		const { callTool, factory } = createMockClient(undefined, ['search_product_docs']);
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 
-		expect(callTool).toHaveBeenCalledWith(
-			{
-				name: 'search_product_docs',
-				arguments: { query: 'Sei precompiles' }
-			},
-			undefined,
-			{ timeout: 30_000 }
-		);
+		expect(result).toEqual({
+			content: [
+				{
+					type: 'text',
+					text: 'Error searching Sei docs: The Sei docs MCP server does not advertise a documentation search tool (available: search_product_docs)'
+				}
+			],
+			isError: true
+		});
+		expect(callTool).not.toHaveBeenCalled();
 	});
 
-	it('rejects fallback tools that do not accept a query argument', async () => {
+	it('rejects the preferred tool when it does not accept a query argument', async () => {
 		const { factory, listTools } = createMockClient();
 		listTools.mockResolvedValueOnce({
 			tools: [
 				{
-					name: 'search_product_docs',
+					name: 'search_sei_docs',
 					inputSchema: { type: 'object', properties: { command: { type: 'string' } } }
 				}
 			]
@@ -137,7 +139,7 @@ describe('documentation search', () => {
 			content: [
 				{
 					type: 'text',
-					text: 'Error searching Sei docs: The Sei docs MCP server does not advertise a documentation search tool (available: search_product_docs)'
+					text: 'Error searching Sei docs: The Sei docs MCP server does not advertise a documentation search tool (available: search_sei_docs)'
 				}
 			],
 			isError: true
@@ -223,6 +225,40 @@ describe('documentation search', () => {
 			isError: true
 		});
 		expect(close).toHaveBeenCalled();
+	});
+
+	it('closes the outbound docs session when the local MCP server closes', async () => {
+		const { close, factory } = createMockClient();
+		const { registeredTools, server } = createMockServer();
+		const previousOnClose = jest.fn();
+		server.server.onclose = previousOnClose;
+		createDocsSearchTool(server, docsClientInfo, factory);
+
+		await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
+		server.server.onclose?.();
+		await new Promise((resolve) => setImmediate(resolve));
+
+		expect(previousOnClose).toHaveBeenCalled();
+		expect(close).toHaveBeenCalledTimes(1);
+	});
+
+	it('reconnects after the remote session expires', async () => {
+		const { callTool, close, connect, factory, listTools } = createMockClient();
+		callTool.mockRejectedValueOnce(new StreamableHTTPError(404, 'Session not found') as never);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+		const tool = registeredTools.get('search_docs')!;
+
+		const failedResult = await tool.handler({ query: 'first' });
+		const recoveredResult = await tool.handler({ query: 'second' });
+
+		expect(failedResult.isError).toBe(true);
+		expect(recoveredResult).toEqual({
+			content: [{ type: 'text', text: 'Documentation result' }]
+		});
+		expect(close).toHaveBeenCalledTimes(1);
+		expect(connect).toHaveBeenCalledTimes(2);
+		expect(listTools).toHaveBeenCalledTimes(2);
 	});
 
 	it('keeps the shared session available after an individual tool failure', async () => {

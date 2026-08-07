@@ -70,6 +70,9 @@ export function createMockServer(): { server: McpServer; registeredTools: Map<st
   const registeredTools = new Map<string, Tool>();
   
   const server = {
+    server: {
+      onclose: undefined as (() => void) | undefined
+    },
     tool: jest.fn((name: string, description: string, schema: ToolSchema, handler: ToolHandler) => {
       registeredTools.set(name, { name, description, schema, handler });
     })

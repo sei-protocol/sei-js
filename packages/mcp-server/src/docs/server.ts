@@ -1,5 +1,5 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { StreamableHTTPClientTransport, StreamableHTTPError } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
@@ -59,15 +59,6 @@ const selectRemoteSearchTool = async (client: DocsMcpClient): Promise<string> =>
 
 	if (preferred) {
 		return preferred.name;
-	}
-
-	const fallback = tools.find((tool) => {
-		const name = tool.name.toLowerCase();
-		return name.startsWith('search') && (name.includes('docs') || name.includes('documentation')) && acceptsQuery(tool);
-	});
-
-	if (fallback) {
-		return fallback.name;
 	}
 
 	const availableTools = tools.map((tool) => tool.name).join(', ') || 'none';
@@ -135,7 +126,7 @@ export const createDocsSearch = (createClient: DocsMcpClientFactory) => {
 		return remoteToolPromise;
 	};
 
-	return async (query: string): Promise<CallToolResult> => {
+	const search = async (query: string): Promise<CallToolResult> => {
 		let client: DocsMcpClient | undefined;
 
 		try {
@@ -153,9 +144,30 @@ export const createDocsSearch = (createClient: DocsMcpClientFactory) => {
 
 			return sanitizeSearchResult(result);
 		} catch (error) {
+			if (client && error instanceof StreamableHTTPError && (error.code === 404 || error.code === 410)) {
+				await closeClient(client);
+			}
+
 			return formatSearchError(error);
 		}
 	};
+
+	const close = async (): Promise<void> => {
+		const pendingClient = clientPromise;
+		clearConnection();
+
+		if (!pendingClient) {
+			return;
+		}
+
+		try {
+			await closeClient(await pendingClient);
+		} catch {
+			// Connection setup already performs its own cleanup.
+		}
+	};
+
+	return { close, search };
 };
 
 export const createDocsSearchTool = (
@@ -167,7 +179,13 @@ export const createDocsSearchTool = (
 			version: clientInfo.version
 		})
 ): void => {
-	const searchDocs = createDocsSearch(createClient);
+	const docsSearch = createDocsSearch(createClient);
+	const previousOnClose = server.server.onclose;
+
+	server.server.onclose = () => {
+		previousOnClose?.();
+		void docsSearch.close();
+	};
 
 	server.tool(
 		'search_docs',
@@ -175,6 +193,6 @@ export const createDocsSearchTool = (
 		{
 			query: z.string().min(1)
 		},
-		async ({ query }) => searchDocs(query)
+		async ({ query }) => docsSearch.search(query)
 	);
 };
