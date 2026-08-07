@@ -9,7 +9,7 @@
 
 **Enable AI assistants to interact with the Sei blockchain**
 
-[Documentation](https://sei-js.docs.sei.io/mcp-server/introduction) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/mcp-server) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
+[Documentation](https://docs.sei.io/ai/mcp-server) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/mcp-server) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
 
 </div>
 
@@ -51,7 +51,4 @@ To enable transactions and wallet tools, add the wallet mode flag and private ke
 
 ## 📚 Documentation
 
-For complete documentation, examples, and guides, visit:
-**[sei-js.docs.sei.io/mcp-server](https://sei-js.docs.sei.io/mcp-server/introduction)**
-
-
+See the [Sei MCP Server guide](https://docs.sei.io/ai/mcp-server) for setup instructions, available tools, and usage examples.

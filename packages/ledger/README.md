@@ -9,7 +9,7 @@
 
 **Hardware wallet integration for secure transaction signing**
 
-[Documentation](https://sei-js.docs.sei.io/ledger/introduction) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/ledger) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
+[GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/ledger) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
 
 </div>
 
@@ -18,10 +18,3 @@
 ```bash
 npm install @sei-js/ledger
 ```
-
-## 📚 Documentation
-
-For complete documentation, examples, and guides, visit:
-**[sei-js.docs.sei.io/ledger](https://sei-js.docs.sei.io/ledger/introduction)**
-
-

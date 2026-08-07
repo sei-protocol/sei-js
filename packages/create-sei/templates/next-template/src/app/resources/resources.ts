@@ -9,13 +9,6 @@ export const developerResources = [
 		color: 'violet',
 	},
 	{
-		title: '@sei-js docs',
-		description: 'SDKs, examples, templates, and tooling for Sei.',
-		href: 'https://sei-js.docs.sei.io/introduction',
-		icon: IconBook,
-		color: 'grape',
-	},
-	{
 		title: 'Wagmi',
 		description: 'React hooks for Ethereum development.',
 		href: 'https://wagmi.sh/',
