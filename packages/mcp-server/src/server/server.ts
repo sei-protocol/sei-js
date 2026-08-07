@@ -17,7 +17,7 @@ export const getServer = async () => {
 		registerEVMResources(server);
 		registerEVMTools(server);
 		registerEVMPrompts(server);
-		createDocsSearchTool(server);
+		createDocsSearchTool(server, packageInfo);
 
 		console.error('Supported networks:', getSupportedNetworks().join(', '));
 

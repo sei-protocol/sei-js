@@ -1,68 +1,180 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { CallToolResultSchema, type CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 
 export const DOCS_MCP_URL = 'https://docs.sei.io/mcp';
+export const MAX_DOCS_RESPONSE_CHARS = 40_000;
 
-const REMOTE_DOCS_SEARCH_TOOL = 'search_sei_docs';
+const PREFERRED_REMOTE_DOCS_SEARCH_TOOL = 'search_sei_docs';
 const CONNECT_TIMEOUT_MS = 10_000;
 const SEARCH_TIMEOUT_MS = 30_000;
+const TRUNCATION_NOTICE = '\n\n[Documentation response truncated]';
 
-type DocsMcpClient = Pick<Client, 'connect' | 'callTool' | 'close'>;
+type DocsMcpClient = Pick<Client, 'connect' | 'callTool' | 'close' | 'listTools'>;
 
 export type DocsMcpClientFactory = () => DocsMcpClient;
 
-const createDocsMcpClient: DocsMcpClientFactory = () =>
-	new Client({
-		name: '@sei-js/mcp-server',
-		version: '1.0.0'
+interface DocsClientInfo {
+	name: string;
+	version: string;
+}
+
+const formatSearchError = (error: unknown): CallToolResult => ({
+	content: [
+		{
+			type: 'text',
+			text: `Error searching Sei docs: ${error instanceof Error ? error.message : String(error)}`
+		}
+	],
+	isError: true
+});
+
+const sanitizeSearchResult = (result: CallToolResult): CallToolResult => {
+	const text = result.content.flatMap((block) => (block.type === 'text' ? [block.text] : [])).join('\n\n');
+
+	if (!text) {
+		return formatSearchError(new Error('The Sei docs MCP server returned no text content'));
+	}
+
+	const safeText =
+		text.length > MAX_DOCS_RESPONSE_CHARS
+			? `${text.slice(0, MAX_DOCS_RESPONSE_CHARS - TRUNCATION_NOTICE.length)}${TRUNCATION_NOTICE}`
+			: text;
+
+	return {
+		content: [{ type: 'text', text: safeText }],
+		...(result.isError ? { isError: true } : {})
+	};
+};
+
+const selectRemoteSearchTool = async (client: DocsMcpClient): Promise<string> => {
+	const { tools } = await client.listTools(undefined, { timeout: CONNECT_TIMEOUT_MS });
+	const preferred = tools.find((tool) => tool.name === PREFERRED_REMOTE_DOCS_SEARCH_TOOL);
+
+	if (preferred) {
+		return preferred.name;
+	}
+
+	const fallback = tools.find((tool) => {
+		const name = tool.name.toLowerCase();
+		return name.startsWith('search') && (name.includes('docs') || name.includes('documentation'));
 	});
 
-export const searchDocs = async (query: string, createClient: DocsMcpClientFactory = createDocsMcpClient): Promise<CallToolResult> => {
-	const client = createClient();
-	const transport = new StreamableHTTPClientTransport(new URL(DOCS_MCP_URL));
+	if (fallback) {
+		return fallback.name;
+	}
 
-	try {
-		await client.connect(transport, { timeout: CONNECT_TIMEOUT_MS });
+	const availableTools = tools.map((tool) => tool.name).join(', ') || 'none';
+	throw new Error(`The Sei docs MCP server does not advertise a documentation search tool (available: ${availableTools})`);
+};
 
-		const result = await client.callTool(
-			{
-				name: REMOTE_DOCS_SEARCH_TOOL,
-				arguments: { query }
-			},
-			undefined,
-			{ timeout: SEARCH_TIMEOUT_MS }
-		);
+export const createDocsSearch = (createClient: DocsMcpClientFactory) => {
+	let activeClient: DocsMcpClient | undefined;
+	let clientPromise: Promise<DocsMcpClient> | undefined;
+	let remoteToolPromise: Promise<string> | undefined;
 
-		return CallToolResultSchema.parse(result);
-	} catch (error) {
-		return {
-			content: [
-				{
-					type: 'text',
-					text: `Error searching Sei docs: ${error instanceof Error ? error.message : String(error)}`
-				}
-			],
-			isError: true
-		};
-	} finally {
+	const clearConnection = () => {
+		activeClient = undefined;
+		clientPromise = undefined;
+		remoteToolPromise = undefined;
+	};
+
+	const closeClient = async (client: DocsMcpClient) => {
+		if (activeClient === client) {
+			clearConnection();
+		}
+
 		try {
 			await client.close();
 		} catch {
-			// The search result is more useful than a connection cleanup error.
+			// Preserve the search or connection error that caused cleanup.
 		}
-	}
+	};
+
+	const getClient = (): Promise<DocsMcpClient> => {
+		if (!clientPromise) {
+			clientPromise = (async () => {
+				const client = createClient();
+				const transport = new StreamableHTTPClientTransport(new URL(DOCS_MCP_URL));
+
+				transport.onclose = () => {
+					if (activeClient === client) {
+						clearConnection();
+					}
+				};
+
+				try {
+					await client.connect(transport, { timeout: CONNECT_TIMEOUT_MS });
+					activeClient = client;
+					return client;
+				} catch (error) {
+					clientPromise = undefined;
+					await closeClient(client);
+					throw error;
+				}
+			})();
+		}
+
+		return clientPromise;
+	};
+
+	const getRemoteTool = (client: DocsMcpClient): Promise<string> => {
+		if (!remoteToolPromise) {
+			remoteToolPromise = selectRemoteSearchTool(client).catch((error) => {
+				remoteToolPromise = undefined;
+				throw error;
+			});
+		}
+
+		return remoteToolPromise;
+	};
+
+	return async (query: string): Promise<CallToolResult> => {
+		let client: DocsMcpClient | undefined;
+
+		try {
+			client = await getClient();
+			const remoteTool = await getRemoteTool(client);
+			// callTool validates CallToolResultSchema by default; narrow the SDK's compatibility union before filtering.
+			const result = (await client.callTool(
+				{
+					name: remoteTool,
+					arguments: { query }
+				},
+				undefined,
+				{ timeout: SEARCH_TIMEOUT_MS }
+			)) as CallToolResult;
+
+			return sanitizeSearchResult(result);
+		} catch (error) {
+			if (client) {
+				await closeClient(client);
+			}
+
+			return formatSearchError(error);
+		}
+	};
 };
 
-export const createDocsSearchTool = (server: McpServer, createClient: DocsMcpClientFactory = createDocsMcpClient): void => {
+export const createDocsSearchTool = (
+	server: McpServer,
+	clientInfo: DocsClientInfo,
+	createClient: DocsMcpClientFactory = () =>
+		new Client({
+			name: clientInfo.name,
+			version: clientInfo.version
+		})
+): void => {
+	const searchDocs = createDocsSearch(createClient);
+
 	server.tool(
 		'search_docs',
 		'Search the official Sei documentation at docs.sei.io for chain information, developer guides, integrations, and @sei-js references.',
 		{
 			query: z.string().min(1)
 		},
-		async ({ query }) => searchDocs(query, createClient)
+		async ({ query }) => searchDocs(query)
 	);
 };

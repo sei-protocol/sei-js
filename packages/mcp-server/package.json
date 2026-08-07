@@ -28,7 +28,7 @@
 		"typescript": "^5.8.3"
 	},
 	"dependencies": {
-		"@modelcontextprotocol/sdk": "^1.7.0",
+		"@modelcontextprotocol/sdk": "^1.17.5",
 		"@noble/hashes": "^1.8.0",
 		"commander": "^14.0.0",
 		"cors": "^2.8.5",

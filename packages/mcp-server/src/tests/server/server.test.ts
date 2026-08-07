@@ -106,7 +106,10 @@ describe('Server Module', () => {
 			expect(mockRegisterEVMResources).toHaveBeenCalled();
 			expect(mockRegisterEVMTools).toHaveBeenCalled();
 			expect(mockRegisterEVMPrompts).toHaveBeenCalled();
-			expect(mockCreateDocsSearchTool).toHaveBeenCalled();
+			expect(mockCreateDocsSearchTool).toHaveBeenCalledWith(expect.anything(), {
+				name: '@sei-js/mcp-server',
+				version: '1.0.0'
+			});
 			expect(mockGetSupportedNetworks).toHaveBeenCalled();
 		});
 

@@ -98,7 +98,7 @@ importers:
   packages/mcp-server:
     dependencies:
       '@modelcontextprotocol/sdk':
-        specifier: ^1.7.0
+        specifier: ^1.17.5
         version: 1.17.5
       '@noble/hashes':
         specifier: ^1.8.0

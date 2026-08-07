@@ -2,4 +2,4 @@
 '@sei-js/mcp-server': minor
 ---
 
-Replace the legacy SeiJS-specific Mintlify/Trieve search with the official docs.sei.io MCP endpoint.
+Remove the `search_sei_js_docs` tool and route the remaining `search_docs` tool through the official docs.sei.io MCP endpoint instead of the legacy Mintlify/Trieve backends.

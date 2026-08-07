@@ -3,21 +3,32 @@ import type { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 
-import { createDocsSearchTool, DOCS_MCP_URL, type DocsMcpClientFactory } from '../../docs/server.js';
+import {
+	createDocsSearchTool,
+	DOCS_MCP_URL,
+	MAX_DOCS_RESPONSE_CHARS,
+	type DocsMcpClientFactory
+} from '../../docs/server.js';
 import { createMockServer } from '../core/helpers/tool-test-helpers.js';
 
-const createMockClient = (result: CallToolResult) => {
+const docsClientInfo = { name: '@sei-js/mcp-server', version: '0.3.3' };
+
+const createMockClient = (
+	result: CallToolResult = { content: [{ type: 'text', text: 'Documentation result' }] },
+	tools = ['search_sei_docs']
+) => {
 	const connect = jest.fn().mockResolvedValue(undefined as never);
 	const callTool = jest.fn().mockResolvedValue(result as never);
 	const close = jest.fn().mockResolvedValue(undefined as never);
-	const client = { connect, callTool, close } as unknown as Pick<Client, 'connect' | 'callTool' | 'close'>;
+	const listTools = jest.fn().mockResolvedValue({ tools: tools.map((name) => ({ name })) } as never);
+	const client = { connect, callTool, close, listTools } as unknown as Pick<Client, 'connect' | 'callTool' | 'close' | 'listTools'>;
 	const factory: DocsMcpClientFactory = () => client;
 
-	return { callTool, close, connect, factory };
+	return { callTool, close, connect, factory, listTools };
 };
 
 describe('documentation search', () => {
-	it('proxies search_docs to the official docs.sei.io MCP server', async () => {
+	it('reuses one docs.sei.io session and discovered tool across searches', async () => {
 		const remoteResult: CallToolResult = {
 			content: [
 				{
@@ -26,19 +37,24 @@ describe('documentation search', () => {
 				}
 			]
 		};
-		const { callTool, close, connect, factory } = createMockClient(remoteResult);
+		const { callTool, close, connect, factory, listTools } = createMockClient(remoteResult);
 		const { registeredTools, server } = createMockServer();
 
-		createDocsSearchTool(server, factory);
+		createDocsSearchTool(server, docsClientInfo, factory);
 
 		const tool = registeredTools.get('search_docs');
 		expect(tool).toBeDefined();
 
-		const result = await tool!.handler({ query: 'Sei precompiles' });
+		const firstResult = await tool!.handler({ query: 'Sei precompiles' });
+		const secondResult = await tool!.handler({ query: 'Sei SDK' });
 
 		expect(DOCS_MCP_URL).toBe('https://docs.sei.io/mcp');
 		expect(connect).toHaveBeenCalledWith(expect.any(StreamableHTTPClientTransport), { timeout: 10_000 });
-		expect(callTool).toHaveBeenCalledWith(
+		expect(connect).toHaveBeenCalledTimes(1);
+		expect(listTools).toHaveBeenCalledWith(undefined, { timeout: 10_000 });
+		expect(listTools).toHaveBeenCalledTimes(1);
+		expect(callTool).toHaveBeenNthCalledWith(
+			1,
 			{
 				name: 'search_sei_docs',
 				arguments: { query: 'Sei precompiles' }
@@ -46,16 +62,118 @@ describe('documentation search', () => {
 			undefined,
 			{ timeout: 30_000 }
 		);
-		expect(result).toEqual(remoteResult);
+		expect(callTool).toHaveBeenNthCalledWith(
+			2,
+			{
+				name: 'search_sei_docs',
+				arguments: { query: 'Sei SDK' }
+			},
+			undefined,
+			{ timeout: 30_000 }
+		);
+		expect(firstResult).toEqual(remoteResult);
+		expect(secondResult).toEqual(remoteResult);
+		expect(close).not.toHaveBeenCalled();
+	});
+
+	it('reconnects and rediscovers tools after the transport closes', async () => {
+		const { connect, factory, listTools } = createMockClient();
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+		const tool = registeredTools.get('search_docs')!;
+
+		await tool.handler({ query: 'first' });
+		const [transport] = connect.mock.calls[0] as unknown as [StreamableHTTPClientTransport];
+		transport.onclose?.();
+		await tool.handler({ query: 'second' });
+
+		expect(connect).toHaveBeenCalledTimes(2);
+		expect(listTools).toHaveBeenCalledTimes(2);
+	});
+
+	it('falls back to another advertised documentation search tool', async () => {
+		const { callTool, factory } = createMockClient(undefined, ['search_product_docs']);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+
+		await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
+
+		expect(callTool).toHaveBeenCalledWith(
+			{
+				name: 'search_product_docs',
+				arguments: { query: 'Sei precompiles' }
+			},
+			undefined,
+			{ timeout: 30_000 }
+		);
+	});
+
+	it('reports an explicit contract error when no search tool is advertised', async () => {
+		const { close, factory } = createMockClient(undefined, ['submit_feedback']);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
+
+		expect(result).toEqual({
+			content: [
+				{
+					type: 'text',
+					text: 'Error searching Sei docs: The Sei docs MCP server does not advertise a documentation search tool (available: submit_feedback)'
+				}
+			],
+			isError: true
+		});
 		expect(close).toHaveBeenCalled();
 	});
 
-	it('returns an MCP tool error when docs.sei.io is unavailable', async () => {
-		const { close, connect, factory } = createMockClient({ content: [] });
-		connect.mockRejectedValueOnce(new Error('connection failed') as never);
+	it('filters non-text blocks and caps remote text', async () => {
+		const remoteResult = {
+			content: [
+				{ type: 'image', data: 'aW1hZ2U=', mimeType: 'image/png' },
+				{ type: 'text', text: 'x'.repeat(MAX_DOCS_RESPONSE_CHARS + 100) }
+			]
+		} as CallToolResult;
+		const { factory } = createMockClient(remoteResult);
 		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
 
-		createDocsSearchTool(server, factory);
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'large result' });
+		const [content] = result.content;
+
+		expect(result.content).toHaveLength(1);
+		expect(content.type).toBe('text');
+		expect(content.type === 'text' ? content.text.length : 0).toBe(MAX_DOCS_RESPONSE_CHARS);
+		expect((content.type === 'text' ? content.text : '').endsWith('[Documentation response truncated]')).toBe(true);
+	});
+
+	it('rejects remote responses without text content', async () => {
+		const remoteResult = {
+			content: [{ type: 'image', data: 'aW1hZ2U=', mimeType: 'image/png' }]
+		} as CallToolResult;
+		const { factory } = createMockClient(remoteResult);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'image only' });
+
+		expect(result).toEqual({
+			content: [
+				{
+					type: 'text',
+					text: 'Error searching Sei docs: The Sei docs MCP server returned no text content'
+				}
+			],
+			isError: true
+		});
+	});
+
+	it('preserves a connection error when cleanup also fails', async () => {
+		const { close, connect, factory } = createMockClient();
+		connect.mockRejectedValueOnce(new Error('connection failed') as never);
+		close.mockRejectedValueOnce(new Error('cleanup failed') as never);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
 
 		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 
@@ -69,5 +187,27 @@ describe('documentation search', () => {
 			isError: true
 		});
 		expect(close).toHaveBeenCalled();
+	});
+
+	it('handles a non-Error tool failure and reconnects on the next search', async () => {
+		const { callTool, close, connect, factory, listTools } = createMockClient();
+		callTool.mockRejectedValueOnce('remote failure' as never);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+		const tool = registeredTools.get('search_docs')!;
+
+		const failedResult = await tool.handler({ query: 'first' });
+		const recoveredResult = await tool.handler({ query: 'second' });
+
+		expect(failedResult).toEqual({
+			content: [{ type: 'text', text: 'Error searching Sei docs: remote failure' }],
+			isError: true
+		});
+		expect(recoveredResult).toEqual({
+			content: [{ type: 'text', text: 'Documentation result' }]
+		});
+		expect(close).toHaveBeenCalledTimes(1);
+		expect(connect).toHaveBeenCalledTimes(2);
+		expect(listTools).toHaveBeenCalledTimes(2);
 	});
 });
