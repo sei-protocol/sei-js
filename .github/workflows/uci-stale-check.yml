@@ -10,8 +10,10 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.sha }}
-  cancel-in-progress: true
+  # A sweep is cheap and idempotent, but cancelling one part-way leaves the triage
+  # half-applied, so queue behind a running sweep instead of superseding it.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   stale:
@@ -26,3 +28,7 @@ jobs:
     uses: sei-protocol/uci/.github/workflows/stale-check.yml@65901242783550521f25a19199a6b10e54550b97
     with:
       days-before-pr-stale: 28
+      # Disable both paths: -1 stops new stale labels, while the close setting
+      # protects issues that already carry the stale label.
+      days-before-issue-stale: -1
+      days-before-issue-close: -1

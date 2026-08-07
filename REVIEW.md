@@ -37,10 +37,6 @@ overridable through `MAINNET_RPC_URL` / `TESTNET_RPC_URL` / `DEVNET_RPC_URL` in
 `src/core/config.ts` and must never reach a log line, an error message, or a
 tool response.
 
-Note that `.github/workflows/pr-to-slack-codex.yml` already runs a separate
-AppSec pass to Slack. Overlapping findings are expected; don't suppress a real
-issue because you assume the other reviewer caught it.
-
 ## 2. Precompile addresses and ABIs are hand-maintained source
 
 `packages/precompiles/src/precompiles/*.ts` is not generated — there is no
@@ -78,15 +74,19 @@ defect.
   path reachable from stdio breaks the transport.
 - **The CORS middleware sets no `Access-Control-Allow-Origin`.**
   `createCorsMiddleware()` answers preflights with a bare 204 and no CORS
-  headers. That is deny-by-default: a browser treats the missing header as a
-  failure and blocks the request. It is not an oversight and not a permissive
-  wildcard.
+  headers. The *absence of a permissive wildcard* is deliberate, so don't file
+  it as a misconfiguration. Note the limit of that guarantee: it only binds
+  browsers that honour the missing header. Neither `http-sse.ts` nor
+  `streamable-http.ts` validates `Origin` or `Host`, so a non-browser client or
+  a DNS-rebinding attack still reaches the tool surface — that gap is a
+  separate question and is fair to raise.
 - **`process.exit(1)` inside `validateSecurityConfig()`.** Failing closed at
   startup is the intent. Do not ask for a thrown error the caller might swallow.
 - **`packages/registry/chain-registry` and `.../community-assetlist` are
   missing from the tree.** Both are git submodules (`.gitmodules`) and are
-  listed in `.gitignore`; they are populated by the `registry` package's
-  `postinstall` and by CI's submodule checkout. Their JSON is vendored
+  listed in `.gitignore`. Only `release.yml` checks them out with
+  `submodules: recursive`; the PR gate in `checks.yml` does a plain checkout
+  and relies on the `registry` package's `postinstall`. Their JSON is vendored
   upstream — review the TypeScript wrappers, not the data.
 - **Biome findings are not enforced anywhere.** `biome.json` configures tabs,
   160-column lines, single quotes and no trailing commas, but no package
