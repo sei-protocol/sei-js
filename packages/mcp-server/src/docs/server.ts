@@ -12,7 +12,7 @@ const CONNECT_TIMEOUT_MS = 10_000;
 const SEARCH_TIMEOUT_MS = 30_000;
 const TRUNCATION_NOTICE = '\n\n[Documentation response truncated]';
 
-type DocsMcpClient = Pick<Client, 'connect' | 'callTool' | 'close' | 'listTools'>;
+type DocsMcpClient = Pick<Client, 'connect' | 'callTool' | 'close' | 'listTools' | 'onclose'>;
 
 export type DocsMcpClientFactory = () => DocsMcpClient;
 
@@ -51,7 +51,11 @@ const sanitizeSearchResult = (result: CallToolResult): CallToolResult => {
 
 const selectRemoteSearchTool = async (client: DocsMcpClient): Promise<string> => {
 	const { tools } = await client.listTools(undefined, { timeout: CONNECT_TIMEOUT_MS });
-	const preferred = tools.find((tool) => tool.name === PREFERRED_REMOTE_DOCS_SEARCH_TOOL);
+	const acceptsQuery = (tool: (typeof tools)[number]) => {
+		const properties = tool.inputSchema.properties;
+		return properties !== undefined && 'query' in properties;
+	};
+	const preferred = tools.find((tool) => tool.name === PREFERRED_REMOTE_DOCS_SEARCH_TOOL && acceptsQuery(tool));
 
 	if (preferred) {
 		return preferred.name;
@@ -59,7 +63,7 @@ const selectRemoteSearchTool = async (client: DocsMcpClient): Promise<string> =>
 
 	const fallback = tools.find((tool) => {
 		const name = tool.name.toLowerCase();
-		return name.startsWith('search') && (name.includes('docs') || name.includes('documentation'));
+		return name.startsWith('search') && (name.includes('docs') || name.includes('documentation')) && acceptsQuery(tool);
 	});
 
 	if (fallback) {
@@ -99,7 +103,7 @@ export const createDocsSearch = (createClient: DocsMcpClientFactory) => {
 				const client = createClient();
 				const transport = new StreamableHTTPClientTransport(new URL(DOCS_MCP_URL));
 
-				transport.onclose = () => {
+				client.onclose = () => {
 					if (activeClient === client) {
 						clearConnection();
 					}
@@ -149,10 +153,6 @@ export const createDocsSearch = (createClient: DocsMcpClientFactory) => {
 
 			return sanitizeSearchResult(result);
 		} catch (error) {
-			if (client) {
-				await closeClient(client);
-			}
-
 			return formatSearchError(error);
 		}
 	};

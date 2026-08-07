@@ -20,11 +20,22 @@ const createMockClient = (
 	const connect = jest.fn().mockResolvedValue(undefined as never);
 	const callTool = jest.fn().mockResolvedValue(result as never);
 	const close = jest.fn().mockResolvedValue(undefined as never);
-	const listTools = jest.fn().mockResolvedValue({ tools: tools.map((name) => ({ name })) } as never);
-	const client = { connect, callTool, close, listTools } as unknown as Pick<Client, 'connect' | 'callTool' | 'close' | 'listTools'>;
+	const listTools = jest.fn().mockResolvedValue({
+		tools: tools.map((name) => ({
+			name,
+			inputSchema: { type: 'object', properties: { query: { type: 'string' } } }
+		}))
+	} as never);
+	const client = {
+		connect,
+		callTool,
+		close,
+		listTools,
+		onclose: undefined as (() => void) | undefined
+	} as Pick<Client, 'connect' | 'callTool' | 'close' | 'listTools' | 'onclose'>;
 	const factory: DocsMcpClientFactory = () => client;
 
-	return { callTool, close, connect, factory, listTools };
+	return { callTool, client, close, connect, factory, listTools };
 };
 
 describe('documentation search', () => {
@@ -77,14 +88,13 @@ describe('documentation search', () => {
 	});
 
 	it('reconnects and rediscovers tools after the transport closes', async () => {
-		const { connect, factory, listTools } = createMockClient();
+		const { client, connect, factory, listTools } = createMockClient();
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 		const tool = registeredTools.get('search_docs')!;
 
 		await tool.handler({ query: 'first' });
-		const [transport] = connect.mock.calls[0] as unknown as [StreamableHTTPClientTransport];
-		transport.onclose?.();
+		client.onclose?.();
 		await tool.handler({ query: 'second' });
 
 		expect(connect).toHaveBeenCalledTimes(2);
@@ -108,6 +118,32 @@ describe('documentation search', () => {
 		);
 	});
 
+	it('rejects fallback tools that do not accept a query argument', async () => {
+		const { factory, listTools } = createMockClient();
+		listTools.mockResolvedValueOnce({
+			tools: [
+				{
+					name: 'search_product_docs',
+					inputSchema: { type: 'object', properties: { command: { type: 'string' } } }
+				}
+			]
+		} as never);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
+
+		expect(result).toEqual({
+			content: [
+				{
+					type: 'text',
+					text: 'Error searching Sei docs: The Sei docs MCP server does not advertise a documentation search tool (available: search_product_docs)'
+				}
+			],
+			isError: true
+		});
+	});
+
 	it('reports an explicit contract error when no search tool is advertised', async () => {
 		const { close, factory } = createMockClient(undefined, ['submit_feedback']);
 		const { registeredTools, server } = createMockServer();
@@ -124,7 +160,7 @@ describe('documentation search', () => {
 			],
 			isError: true
 		});
-		expect(close).toHaveBeenCalled();
+		expect(close).not.toHaveBeenCalled();
 	});
 
 	it('filters non-text blocks and caps remote text', async () => {
@@ -189,7 +225,7 @@ describe('documentation search', () => {
 		expect(close).toHaveBeenCalled();
 	});
 
-	it('handles a non-Error tool failure and reconnects on the next search', async () => {
+	it('keeps the shared session available after an individual tool failure', async () => {
 		const { callTool, close, connect, factory, listTools } = createMockClient();
 		callTool.mockRejectedValueOnce('remote failure' as never);
 		const { registeredTools, server } = createMockServer();
@@ -206,8 +242,8 @@ describe('documentation search', () => {
 		expect(recoveredResult).toEqual({
 			content: [{ type: 'text', text: 'Documentation result' }]
 		});
-		expect(close).toHaveBeenCalledTimes(1);
-		expect(connect).toHaveBeenCalledTimes(2);
-		expect(listTools).toHaveBeenCalledTimes(2);
+		expect(close).not.toHaveBeenCalled();
+		expect(connect).toHaveBeenCalledTimes(1);
+		expect(listTools).toHaveBeenCalledTimes(1);
 	});
 });
