@@ -27,5 +27,8 @@ jobs:
       - name: Build All Packages
         run: pnpm build:all
 
+      - name: Validate Published Packages
+        run: pnpm lint:pack:all
+
       - name: Test
         run: pnpm test:all

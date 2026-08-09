@@ -1,6 +1,6 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import type { SeiSearchResponse } from '../mintlify/types';
+import type { SeiSearchResponse } from '../mintlify/types.js';
 
 const DOCS_SEARCH_URL = 'https://docs.sei-apis.io/search';
 

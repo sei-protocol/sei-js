@@ -1,4 +1,4 @@
-import Wallet from './lib/wallet';
+import Wallet from './lib/wallet.js';
 
 export * from '@dynamic-labs/global-wallet-client/features';
 

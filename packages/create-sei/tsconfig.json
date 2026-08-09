@@ -1,6 +1,6 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"exclude": ["node_modules", "dist", "test"],
+	"exclude": ["node_modules", "dist", "test", "**/*.spec.ts", "**/*.test.ts", "**/*.spec.js", "**/*.test.js", "**/__tests__/**/*"],
 	"compilerOptions": {
 		"outDir": "./dist",
 		"target": "ES2020",
