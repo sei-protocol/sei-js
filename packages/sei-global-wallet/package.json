@@ -12,7 +12,7 @@
 	"module": "dist/esm/index.js",
 	"types": "dist/types/index.d.ts",
 	"typings": "./dist/types/index.d.ts",
-	"license": "MIT",
+	"license": "ISC",
 	"files": [
 		"dist"
 	],
