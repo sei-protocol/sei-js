@@ -9,7 +9,7 @@
 
 **Universal wallet connections using the EIP-6963 standard**
 
-[Documentation](https://sei-js.docs.sei.io/sei-global-wallet/introduction) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/sei-global-wallet) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
+[GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/sei-global-wallet) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
 
 </div>
 
@@ -26,10 +26,3 @@ import '@sei-js/sei-global-wallet/eip6963';
 ```
 
 This single import enables Sei Global Wallet across all compatible wallet libraries (RainbowKit, ConnectKit, Web3-React, Wagmi, etc.).
-
-## 📚 Documentation
-
-For complete documentation, examples, and guides, visit:
-**[sei-js.docs.sei.io/sei-global-wallet](https://sei-js.docs.sei.io/sei-global-wallet/introduction)**
-
-

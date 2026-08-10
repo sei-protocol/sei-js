@@ -41,6 +41,9 @@ jobs:
       - name: Build Packages
         run: pnpm build:all
 
+      - name: Validate Published Packages
+        run: pnpm lint:pack:all
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1

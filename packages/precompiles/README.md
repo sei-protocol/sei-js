@@ -9,7 +9,7 @@
 
 **TypeScript utilities for interacting with Sei's precompile contracts**
 
-[Documentation](https://sei-js.docs.sei.io/precompiles/introduction) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/precompiles) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
+[GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/precompiles) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
 
 </div>
 
@@ -24,10 +24,3 @@ Works seamlessly with your favorite Ethereum development tools:
 - **Ethers.js** - Contract factories and utilities
 - **Wagmi** - React hooks for precompile contracts
 - **Hardhat/Foundry** - Testing and deployment
-
-## 📚 Documentation
-
-For complete documentation, examples, and guides, visit:
-**[sei-js.docs.sei.io/precompiles](https://sei-js.docs.sei.io/precompiles/introduction)**
-
-

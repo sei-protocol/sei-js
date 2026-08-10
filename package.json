@@ -5,8 +5,10 @@
 	"license": "MIT",
 	"scripts": {
 		"build:all": "pnpm -r run build",
-		"docs": "cd docs && pnpm dlx mint dev",
-		"lint:pack:all": "pnpm --recursive --filter './packages/*' exec publint run --pack npm --strict --level warning && pnpm --recursive --filter './packages/*' --filter '!@sei-js/create-sei' --filter '!@sei-js/mcp-server' exec attw --pack . --profile node16 && pnpm --filter @sei-js/mcp-server exec attw --pack . --profile esm-only",
+		"lint:pack:all": "pnpm lint:pack:publint && pnpm lint:pack:types && pnpm lint:pack:types:mcp",
+		"lint:pack:publint": "pnpm --recursive --filter './packages/*' exec publint --pack npm --strict --level warning",
+		"lint:pack:types": "pnpm --recursive --filter './packages/*' --filter '!@sei-js/create-sei' --filter '!@sei-js/mcp-server' exec attw --pack . --profile node16",
+		"lint:pack:types:mcp": "pnpm --filter @sei-js/mcp-server exec attw --pack . --profile esm-only",
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "pnpm build:all && pnpm changeset && pnpm changeset version --snapshot internal && pnpm changeset publish --no-git-tag --snapshot --tag internal",
 		"test:all": "pnpm -r run test",
@@ -22,20 +24,11 @@
 		"@types/node": "^22.13.13",
 		"esbuild": "^0.28.2",
 		"jest": "^29.7.0",
-		"mint": "^4.1.57",
 		"publint": "^0.3.23",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^29.3.0",
 		"ts-node": "2.1.2",
 		"typescript": "^5.8.2"
 	},
-	"packageManager": "pnpm@9.0.0",
-	"pnpm": {
-		"overrides": {
-			"@asyncapi/specs": "6.11.1",
-			"@asyncapi/generator": "3.3.0",
-			"@asyncapi/generator-helpers": "1.1.0",
-			"@asyncapi/generator-components": "1.0.0"
-		}
-	}
+	"packageManager": "pnpm@9.0.0"
 }

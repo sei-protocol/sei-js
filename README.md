@@ -2,14 +2,9 @@
 
 SeiJS is a monorepo that contains multiple NPM libraries for writing applications that interact with Sei.
 
-## Documentation
-
-Please check [our documentation](https://sei-js.docs.sei.io) for notes on how to get up and running. 
-
 ## Packages
 
-SeiJS consists of smaller NPM packages within the @sei-js namespace. For more detailed documentation on each package,
-please refer to the table below.
+SeiJS consists of smaller NPM packages within the @sei-js namespace. See the package READMEs below for usage details.
 
 | Package                                                 | Description                                                                                                                     |
 |---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
@@ -39,4 +34,4 @@ The correct Yarn version will be automatically used thanks to the `packageManage
 
 ### Building
 
-To build all packages and docs, run `pnpm install` then `pnpm build:all`
+To build all packages, run `pnpm install` then `pnpm build:all`
