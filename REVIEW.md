@@ -84,10 +84,10 @@ defect.
   startup is the intent. Do not ask for a thrown error the caller might swallow.
 - **`packages/registry/chain-registry` and `.../community-assetlist` are
   missing from the tree.** Both are git submodules (`.gitmodules`) and are
-  listed in `.gitignore`. Only `release.yml` checks them out with
-  `submodules: recursive`; the PR gate in `checks.yml` does a plain checkout
-  and relies on the `registry` package's `postinstall`. Their JSON is vendored
-  upstream — review the TypeScript wrappers, not the data.
+  listed in `.gitignore`. Workflows that build the registry check them out with
+  `submodules: recursive`; local source builds must initialize them explicitly.
+  Their JSON is vendored upstream — review the TypeScript wrappers, not the
+  data.
 - **Biome findings are not enforced anywhere.** `biome.json` configures tabs,
   160-column lines, single quotes and no trailing commas, but no package
   defines a `biome` script and `.github/workflows/checks.yml` runs only
