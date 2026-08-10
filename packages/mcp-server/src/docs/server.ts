@@ -38,10 +38,7 @@ const sanitizeSearchResult = (result: CallToolResult): CallToolResult => {
 		return formatSearchError(new Error('The Sei docs MCP server returned no text content'));
 	}
 
-	const safeText =
-		text.length > MAX_DOCS_RESPONSE_CHARS
-			? `${text.slice(0, MAX_DOCS_RESPONSE_CHARS - TRUNCATION_NOTICE.length)}${TRUNCATION_NOTICE}`
-			: text;
+	const safeText = text.length > MAX_DOCS_RESPONSE_CHARS ? `${text.slice(0, MAX_DOCS_RESPONSE_CHARS - TRUNCATION_NOTICE.length)}${TRUNCATION_NOTICE}` : text;
 
 	return {
 		content: [{ type: 'text', text: safeText }],
@@ -127,28 +124,37 @@ export const createDocsSearch = (createClient: DocsMcpClientFactory) => {
 	};
 
 	const search = async (query: string): Promise<CallToolResult> => {
-		let client: DocsMcpClient | undefined;
+		let shouldRetryExpiredSession = true;
 
-		try {
-			client = await getClient();
-			const remoteTool = await getRemoteTool(client);
-			// callTool validates CallToolResultSchema by default; narrow the SDK's compatibility union before filtering.
-			const result = (await client.callTool(
-				{
-					name: remoteTool,
-					arguments: { query }
-				},
-				undefined,
-				{ timeout: SEARCH_TIMEOUT_MS }
-			)) as CallToolResult;
+		while (true) {
+			let client: DocsMcpClient | undefined;
 
-			return sanitizeSearchResult(result);
-		} catch (error) {
-			if (client && error instanceof StreamableHTTPError && (error.code === 404 || error.code === 410)) {
-				await closeClient(client);
+			try {
+				client = await getClient();
+				const remoteTool = await getRemoteTool(client);
+				// callTool validates CallToolResultSchema by default; narrow the SDK's compatibility union before filtering.
+				const result = (await client.callTool(
+					{
+						name: remoteTool,
+						arguments: { query }
+					},
+					undefined,
+					{ timeout: SEARCH_TIMEOUT_MS }
+				)) as CallToolResult;
+
+				return sanitizeSearchResult(result);
+			} catch (error) {
+				if (client && error instanceof StreamableHTTPError && (error.code === 404 || error.code === 410)) {
+					await closeClient(client);
+
+					if (shouldRetryExpiredSession) {
+						shouldRetryExpiredSession = false;
+						continue;
+					}
+				}
+
+				return formatSearchError(error);
 			}
-
-			return formatSearchError(error);
 		}
 	};
 

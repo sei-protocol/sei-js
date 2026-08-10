@@ -3,20 +3,12 @@ import type { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport, StreamableHTTPError } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 
-import {
-	createDocsSearchTool,
-	DOCS_MCP_URL,
-	MAX_DOCS_RESPONSE_CHARS,
-	type DocsMcpClientFactory
-} from '../../docs/server.js';
+import { createDocsSearchTool, DOCS_MCP_URL, MAX_DOCS_RESPONSE_CHARS, type DocsMcpClientFactory } from '../../docs/server.js';
 import { createMockServer } from '../core/helpers/tool-test-helpers.js';
 
 const docsClientInfo = { name: '@sei-js/mcp-server', version: '0.3.3' };
 
-const createMockClient = (
-	result: CallToolResult = { content: [{ type: 'text', text: 'Documentation result' }] },
-	tools = ['search_sei_docs']
-) => {
+const createMockClient = (result: CallToolResult = { content: [{ type: 'text', text: 'Documentation result' }] }, tools = ['search_sei_docs']) => {
 	const connect = jest.fn().mockResolvedValue(undefined as never);
 	const callTool = jest.fn().mockResolvedValue(result as never);
 	const close = jest.fn().mockResolvedValue(undefined as never);
@@ -242,21 +234,35 @@ describe('documentation search', () => {
 		expect(close).toHaveBeenCalledTimes(1);
 	});
 
-	it('reconnects after the remote session expires', async () => {
+	it.each([404, 410])('transparently retries after the remote session expires with status %i', async (status) => {
 		const { callTool, close, connect, factory, listTools } = createMockClient();
-		callTool.mockRejectedValueOnce(new StreamableHTTPError(404, 'Session not found') as never);
+		callTool.mockRejectedValueOnce(new StreamableHTTPError(status, 'Session not found') as never);
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 		const tool = registeredTools.get('search_docs')!;
 
-		const failedResult = await tool.handler({ query: 'first' });
-		const recoveredResult = await tool.handler({ query: 'second' });
+		const result = await tool.handler({ query: 'Sei precompiles' });
 
-		expect(failedResult.isError).toBe(true);
-		expect(recoveredResult).toEqual({
+		expect(result).toEqual({
 			content: [{ type: 'text', text: 'Documentation result' }]
 		});
+		expect(callTool).toHaveBeenCalledTimes(2);
 		expect(close).toHaveBeenCalledTimes(1);
+		expect(connect).toHaveBeenCalledTimes(2);
+		expect(listTools).toHaveBeenCalledTimes(2);
+	});
+
+	it('returns an error after one retry if the replacement session also expires', async () => {
+		const { callTool, close, connect, factory, listTools } = createMockClient();
+		callTool.mockRejectedValue(new StreamableHTTPError(410, 'Session expired') as never);
+		const { registeredTools, server } = createMockServer();
+		createDocsSearchTool(server, docsClientInfo, factory);
+
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
+
+		expect(result.isError).toBe(true);
+		expect(callTool).toHaveBeenCalledTimes(2);
+		expect(close).toHaveBeenCalledTimes(2);
 		expect(connect).toHaveBeenCalledTimes(2);
 		expect(listTools).toHaveBeenCalledTimes(2);
 	});
