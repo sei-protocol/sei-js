@@ -16,7 +16,7 @@ importers:
         version: 2.29.6(@types/node@22.18.0)
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: ^0.18.5
+        specifier: 0.18.5
         version: 0.18.5
       '@types/jest':
         specifier: ^29.5.14
@@ -31,7 +31,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.18.0)(ts-node@2.1.2)
       publint:
-        specifier: ^0.3.23
+        specifier: 0.3.23
         version: 0.3.23
       rimraf:
         specifier: ^3.0.2
