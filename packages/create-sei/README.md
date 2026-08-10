@@ -9,7 +9,7 @@
 
 **Scaffold new Sei applications with pre-configured templates and tooling**
 
-[Documentation](https://sei-js.docs.sei.io/create-sei/welcome) • [GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/create-sei) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
+[GitHub](https://github.com/sei-protocol/sei-js) • [NPM](https://www.npmjs.com/package/@sei-js/create-sei) • [Telegram](https://t.me/+LPW_1djQwRQwMzlk)
 
 </div>
 
@@ -18,10 +18,3 @@
 ```bash
 npx @sei-js/create-sei app -n my-sei-app
 ```
-
-## 📚 Documentation
-
-For complete documentation, examples, and guides, visit:
-**[sei-js.docs.sei.io/create-sei](https://sei-js.docs.sei.io/create-sei/welcome)**
-
-

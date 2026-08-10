@@ -96,46 +96,29 @@ export default function ResourcesPage() {
 										</Stack>
 									</Paper>
 
-									<SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-										<Card withBorder radius="md" p="md" component="a" href="https://sei-js.docs.sei.io/mcp-server/quickstart" target="_blank" rel="noreferrer">
-											<Group gap="sm">
-												<ThemeIcon size={32} radius="md" color="orange" variant="light">
-													<IconBook size={16} />
-												</ThemeIcon>
-												<Stack gap={2} flex={1}>
-													<Text fw={600} size="sm" c="gray.9">
-														Quickstart Guide
-													</Text>
-													<Text size="xs" c="dimmed">
-														Get started with MCP setup
-													</Text>
-												</Stack>
-											</Group>
-										</Card>
-										<Card
-											withBorder
-											radius="md"
-											p="md"
-											component="a"
-											href="https://sei-js.docs.sei.io/mcp-server/environment-variables"
-											target="_blank"
-											rel="noreferrer"
-										>
-											<Group gap="sm">
-												<ThemeIcon size={32} radius="md" color="orange" variant="light">
-													<IconTerminal size={16} />
-												</ThemeIcon>
-												<Stack gap={2} flex={1}>
-													<Text fw={600} size="sm" c="gray.9">
-														Environment Variables
-													</Text>
-													<Text size="xs" c="dimmed">
-														Configure your setup
-													</Text>
-												</Stack>
-											</Group>
-										</Card>
-									</SimpleGrid>
+									<Card
+										withBorder
+										radius="md"
+										p="md"
+										component="a"
+										href="https://docs.sei.io/ai/mcp-server"
+										target="_blank"
+										rel="noreferrer"
+									>
+										<Group gap="sm">
+											<ThemeIcon size={32} radius="md" color="orange" variant="light">
+												<IconBook size={16} />
+											</ThemeIcon>
+											<Stack gap={2} flex={1}>
+												<Text fw={600} size="sm" c="gray.9">
+													MCP Server Guide
+												</Text>
+												<Text size="xs" c="dimmed">
+													Setup instructions and available tools
+												</Text>
+											</Stack>
+										</Group>
+									</Card>
 								</Stack>
 							</Card>
 						</Stack>

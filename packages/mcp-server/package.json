@@ -28,14 +28,13 @@
 		"typescript": "^5.8.3"
 	},
 	"dependencies": {
-		"@modelcontextprotocol/sdk": "^1.7.0",
+		"@modelcontextprotocol/sdk": "^1.17.5",
 		"@noble/hashes": "^1.8.0",
 		"commander": "^14.0.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
 		"express": "^4.21.2",
 		"jest": "^30.0.3",
-		"trieve-ts-sdk": "^0.0.121",
 		"tsx": "^4.20.3",
 		"viem": "^2.30.5",
 		"zod": "^3.24.2"
