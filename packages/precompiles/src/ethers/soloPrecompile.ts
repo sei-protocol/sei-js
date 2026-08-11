@@ -26,7 +26,7 @@ export const ETHERS_SOLO_PRECOMPILE_ABI = SOLO_PRECOMPILE_ABI as InterfaceAbi;
  * ```
  *
  * @param runner A [Provider](https://docs.ethers.org/v6/api/providers/) (read-only) or ethers.Signer to use with the contract.
- * @returns The typed contract instance for interacting with the Oracle precompile contract.
+ * @returns The typed contract instance for interacting with the Solo precompile contract.
  * @category Contract Factory
  */
 export const getSoloPrecompileEthersV6Contract = (runner: ContractRunner) => {

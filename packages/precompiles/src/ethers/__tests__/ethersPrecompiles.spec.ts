@@ -10,6 +10,7 @@ import {
 	ETHERS_ORACLE_PRECOMPILE_ABI,
 	ETHERS_POINTERVIEW_PRECOMPILE_ABI,
 	ETHERS_POINTER_PRECOMPILE_ABI,
+	ETHERS_SOLO_PRECOMPILE_ABI,
 	ETHERS_STAKING_PRECOMPILE_ABI,
 	ETHERS_WASM_PRECOMPILE_ABI,
 	getAddressPrecompileEthersV6Contract,
@@ -21,6 +22,7 @@ import {
 	getOraclePrecompileEthersV6Contract,
 	getPointerPrecompileEthersV6Contract,
 	getPointerviewPrecompileEthersV6Contract,
+	getSoloPrecompileEthersV6Contract,
 	getStakingPrecompileEthersV6Contract,
 	getWasmPrecompileEthersV6Contract
 } from '../';
@@ -51,7 +53,6 @@ import {
 	WASM_PRECOMPILE_ABI,
 	WASM_PRECOMPILE_ADDRESS
 } from '../../precompiles';
-import { ETHERS_SOLO_PRECOMPILE_ABI, getSoloPrecompileEthersV6Contract } from '../soloPrecompile';
 
 const FACTORIES: [string, string, InterfaceAbi, unknown, (runner: ContractRunner) => Contract][] = [
 	['ADDRESS', ADDRESS_PRECOMPILE_ADDRESS, ADDRESS_PRECOMPILE_ABI, ETHERS_ADDRESS_PRECOMPILE_ABI, getAddressPrecompileEthersV6Contract],
