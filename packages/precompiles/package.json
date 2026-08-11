@@ -3,13 +3,16 @@
 	"version": "2.1.3",
 	"description": "TypeScript library for EVM interactions on the Sei blockchain",
 	"main": "./dist/cjs/index.js",
-	"module": "./dist/esm/index.js",
+	"module": "./dist/esm/index.mjs",
 	"types": "./dist/types/index.d.ts",
 	"sideEffects": false,
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "rimraf dist && pnpm run build:types && pnpm run build:cjs && pnpm run build:esm",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
-		"build:esm": "tsc --outDir dist/esm --module esnext",
+		"build:esm": "esbuild src/index.ts --bundle --format=esm --platform=neutral --packages=external --target=es2020 --outfile=dist/esm/index.mjs",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"test": "jest --passWithNoTests"
 	},

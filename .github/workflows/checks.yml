@@ -30,3 +30,6 @@ jobs:
 
       - name: Test
         run: pnpm test:all
+
+      - name: Validate Published Packages
+        run: pnpm lint:pack:all

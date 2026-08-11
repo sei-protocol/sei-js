@@ -1,7 +1,7 @@
 import type { DataURIImage } from '@dynamic-labs/global-wallet-client';
 import { announceEip6963Provider, createEIP1193Provider } from '@dynamic-labs/global-wallet-client/ethereum';
-import { config } from './config';
-import Wallet from './wallet';
+import { config } from './config.js';
+import Wallet from './wallet.js';
 
 export const EIP6963Emitter = () => {
 	announceEip6963Provider({

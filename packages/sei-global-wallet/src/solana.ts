@@ -1,4 +1,4 @@
-import { registerSolanaStandard } from './lib/registerSolanaStandard';
+import { registerSolanaStandard } from './lib/registerSolanaStandard.js';
 
 registerSolanaStandard();
 

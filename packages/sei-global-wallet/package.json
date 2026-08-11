@@ -13,8 +13,14 @@
 	"types": "dist/types/index.d.ts",
 	"typings": "./dist/types/index.d.ts",
 	"license": "ISC",
+	"files": [
+		"dist"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
-		"build": "rimraf dist && pnpm run build:types && pnpm run build:cjs && pnpm run build:esm",
+		"build": "rimraf dist && pnpm run build:types && pnpm run build:cjs && pnpm run build:esm && node ./scripts/finalize-package.mjs",
 		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
 		"build:esm": "tsc --outDir dist/esm --module esnext",
 		"build:types": "tsc --project ./tsconfig.declaration.json",
@@ -74,34 +80,62 @@
 			],
 			"solana": [
 				"./dist/types/solana.d.ts"
+			],
+			"zerodev": [
+				"./dist/types/zerodev.d.ts"
 			]
 		}
 	},
 	"exports": {
 		".": {
-			"types": "./dist/types/index.d.ts",
-			"import": "./dist/esm/index.js",
-			"default": "./dist/cjs/index.js"
+			"import": {
+				"types": "./dist/types/index.d.ts",
+				"default": "./dist/esm/index.js"
+			},
+			"require": {
+				"types": "./dist/types-cjs/index.d.ts",
+				"default": "./dist/cjs/index.js"
+			}
 		},
 		"./eip6963": {
-			"types": "./dist/types/eip6963.d.ts",
-			"import": "./dist/esm/eip6963.js",
-			"default": "./dist/cjs/eip6963.js"
+			"import": {
+				"types": "./dist/types/eip6963.d.ts",
+				"default": "./dist/esm/eip6963.js"
+			},
+			"require": {
+				"types": "./dist/types-cjs/eip6963.d.ts",
+				"default": "./dist/cjs/eip6963.js"
+			}
 		},
 		"./ethereum": {
-			"types": "./dist/types/ethereum.d.ts",
-			"import": "./dist/esm/ethereum.js",
-			"default": "./dist/cjs/ethereum.js"
+			"import": {
+				"types": "./dist/types/ethereum.d.ts",
+				"default": "./dist/esm/ethereum.js"
+			},
+			"require": {
+				"types": "./dist/types-cjs/ethereum.d.ts",
+				"default": "./dist/cjs/ethereum.js"
+			}
 		},
 		"./solana": {
-			"types": "./dist/types/solana.d.ts",
-			"import": "./dist/esm/solana.js",
-			"default": "./dist/cjs/solana.js"
+			"import": {
+				"types": "./dist/types/solana.d.ts",
+				"default": "./dist/esm/solana.js"
+			},
+			"require": {
+				"types": "./dist/types-cjs/solana.d.ts",
+				"default": "./dist/cjs/solana.js"
+			}
 		},
 		"./zerodev": {
-			"types": "./dist/types/zerodev.d.ts",
-			"import": "./dist/esm/zerodev.js",
-			"default": "./dist/cjs/zerodev.js"
+			"import": {
+				"types": "./dist/types/zerodev.d.ts",
+				"default": "./dist/esm/zerodev.js"
+			},
+			"require": {
+				"types": "./dist/types-cjs/zerodev.d.ts",
+				"default": "./dist/cjs/zerodev.js"
+			}
 		}
 	}
 }

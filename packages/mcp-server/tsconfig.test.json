@@ -3,7 +3,10 @@
 	"compilerOptions": {
 		"types": ["jest", "node"],
 		"isolatedModules": true,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"module": "ES2020",
+		"moduleResolution": "Bundler"
 	},
+	"exclude": ["node_modules", "dist"],
 	"include": ["src/tests/**/*.test.ts"]
 }

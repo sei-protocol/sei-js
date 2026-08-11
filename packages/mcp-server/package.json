@@ -6,14 +6,15 @@
 	"bin": "./bin/mcp-server.js",
 	"main": "./dist/esm/index.js",
 	"module": "./dist/esm/index.js",
+	"types": "./dist/types/index.d.ts",
 	"files": [
-		"dist/",
-		"bin/",
-		"README.md",
-		"LICENSE"
+		"dist",
+		"bin"
 	],
 	"scripts": {
-		"build": "rm -rf dist && tsc",
+		"build": "rm -rf dist && pnpm run build:esm && pnpm run build:types",
+		"build:esm": "tsc --project ./tsconfig.build.json",
+		"build:types": "tsc --project ./tsconfig.declaration.json",
 		"start": "node dist/esm/index.js",
 		"start:http": "node dist/esm/index.js --streamable-http",
 		"start:http-sse": "node dist/esm/index.js --http-sse",

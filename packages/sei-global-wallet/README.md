@@ -3,7 +3,7 @@
 # @sei-js/sei-global-wallet
 
 [![npm version](https://badge.fury.io/js/@sei-js%2Fsei-global-wallet.svg)](https://badge.fury.io/js/@sei-js%2Fsei-global-wallet)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Sei Network](https://img.shields.io/badge/Sei-Network-red)](https://sei.io)
 
