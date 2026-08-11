@@ -30,9 +30,12 @@ describe('Precompile barrel parity', () => {
 		expect(viemNames).toEqual(precompileNames);
 	});
 
-	it('exposes one ethers contract factory per precompile', () => {
-		const factories = Object.keys(ethersBarrel).filter((key) => /^get[A-Za-z]+PrecompileEthersV6Contract$/.test(key));
+	it('exposes an ethers contract factory for each precompile', () => {
+		const factories = Object.keys(ethersBarrel)
+			.map((key) => /^get([A-Za-z]+)PrecompileEthersV6Contract$/.exec(key)?.[1]?.toUpperCase())
+			.filter((name): name is string => name !== undefined)
+			.sort();
 
-		expect(factories).toHaveLength(precompileNames.length);
+		expect(factories).toEqual(precompileNames);
 	});
 });
