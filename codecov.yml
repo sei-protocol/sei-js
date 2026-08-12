@@ -5,9 +5,6 @@ flags:
   precompiles:
     paths:
       - packages/precompiles/**
-  ledger:
-    paths:
-      - packages/ledger/**
   registry:
     paths:
       - packages/registry/**
@@ -25,10 +22,6 @@ coverage:
         target: 80%
         flags:
           - precompiles
-      ledger:
-        target: 80%
-        flags:
-          - ledger
       registry:
         target: 80%
         flags:

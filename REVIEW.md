@@ -94,12 +94,12 @@ defect.
   `pnpm build:all` and `pnpm test:all`. Match the surrounding style; do not
   file formatting-only findings as blocking.
 - **Test file naming is inconsistent across packages.** `mcp-server` and
-  `create-sei` use `*.test.ts`; `precompiles`, `ledger`, `registry` and
+  `create-sei` use `*.test.ts`; `precompiles`, `registry` and
   `sei-global-wallet` use `*.spec.ts` under `__tests__/`. Follow the
   convention of the package being changed rather than proposing a repo-wide
   rename.
 - **`mcp-server` has no Codecov target.** `codecov.yml` defines 80% project
-  targets for the other five packages only. Thin coverage on an mcp-server PR
+  targets for the other four packages only. Thin coverage on an mcp-server PR
   is worth mentioning on its merits, but it does not fail a gate.
 - **`noImplicitAny: false` in `tsconfig.base.json`.** This is a deliberate
   repo-wide setting. Flag an untyped value when it actually causes an unsound
