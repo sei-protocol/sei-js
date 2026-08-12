@@ -1,7 +1,7 @@
 # Review guidelines for AI agents
 
 Repo-specific conventions for automated PR review (Codex, Cursor, Claude, and
-any other AI reviewer). This is a pnpm workspace that publishes six
+any other AI reviewer). This is a pnpm workspace that publishes five
 independently versioned `@sei-js/*` packages to npm, so a defect ships to every
 downstream dApp that upgrades rather than to a single deployment we control.
 Calibrate accordingly: a wrong precompile address or a weakened wallet guard is
