@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
+import { afterAll, afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 
 /**
  * Integration Tests for MCP Tools
@@ -121,6 +121,10 @@ describe('EVM Tools', () => {
 
 	afterEach(() => {
 		jest.clearAllMocks();
+	});
+
+	afterAll(() => {
+		jest.restoreAllMocks();
 	});
 
 	// Helper function to check if a tool exists

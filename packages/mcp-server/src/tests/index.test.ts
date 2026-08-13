@@ -66,6 +66,11 @@ describe('index', () => {
 		processExitSpy.mockRestore();
 	});
 
+	it('does not execute a stale or missing entrypoint path', async () => {
+		const indexModule = await import('../index.js');
+		expect(indexModule.isDirectExecution(import.meta.url, '/__sei_js_missing_entrypoint__')).toBe(false);
+	});
+
 	it('should start server successfully with wallet enabled', async () => {
 		// Import and call the main function
 		const indexModule = await import('../index.js');

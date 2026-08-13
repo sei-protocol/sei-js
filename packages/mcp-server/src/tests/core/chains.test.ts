@@ -81,6 +81,9 @@ describe('chains module', () => {
 
 		test('defaults to DEFAULT_CHAIN_ID for unknown network names', () => {
 			expect(resolveChainId('unknown-network')).toBe(DEFAULT_CHAIN_ID);
+			expect(resolveChainId('')).toBe(DEFAULT_CHAIN_ID);
+			expect(resolveChainId('   ')).toBe(DEFAULT_CHAIN_ID);
+			expect(resolveChainId('1e3')).toBe(DEFAULT_CHAIN_ID);
 		});
 	});
 

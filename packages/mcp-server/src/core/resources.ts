@@ -4,6 +4,9 @@ import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
 import * as services from './services/index.js';
 
 export function parseBlockNumber(blockNumber: string): number {
+	if (!/^(?:\d+|0x[0-9a-f]+)$/i.test(blockNumber)) {
+		throw new Error(`Invalid block number: ${blockNumber}`);
+	}
 	const parsed = Number(blockNumber);
 	if (!Number.isSafeInteger(parsed) || parsed < 0) {
 		throw new Error(`Invalid block number: ${blockNumber}`);

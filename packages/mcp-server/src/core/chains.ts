@@ -46,9 +46,11 @@ export function resolveChainId(chainIdentifier: number | string): number {
 	}
 
 	// Try parsing as a number
-	const parsedId = Number(networkName);
-	if (Number.isSafeInteger(parsedId) && parsedId >= 0) {
-		return parsedId;
+	if (/^(?:\d+|0x[0-9a-f]+)$/i.test(networkName)) {
+		const parsedId = Number(networkName);
+		if (Number.isSafeInteger(parsedId) && parsedId >= 0) {
+			return parsedId;
+		}
 	}
 
 	// Default to mainnet if not found

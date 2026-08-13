@@ -7,7 +7,7 @@ describe('parseBlockNumber', () => {
 		expect(parseBlockNumber('0x1a2b')).toBe(6699);
 	});
 
-	it.each(['abc', '-1', '1.5', '9007199254740992'])('rejects invalid block number %s', (value) => {
+	it.each(['', '   ', '1e3', 'abc', '-1', '1.5', '9007199254740992'])('rejects invalid block number %s', (value) => {
 		expect(() => parseBlockNumber(value)).toThrow(`Invalid block number: ${value}`);
 	});
 });

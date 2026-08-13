@@ -19,6 +19,15 @@ export const main = async () => {
 	}
 };
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
+export const isDirectExecution = (moduleUrl: string, entrypoint = process.argv[1]): boolean => {
+	if (!entrypoint) return false;
+	try {
+		return moduleUrl === pathToFileURL(realpathSync(entrypoint)).href;
+	} catch {
+		return false;
+	}
+};
+
+if (isDirectExecution(import.meta.url)) {
 	await main();
 }
