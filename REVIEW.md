@@ -96,12 +96,10 @@ question, not a defect.
   `sei-global-wallet` use `*.spec.ts` under `__tests__/`. Follow the
   convention of the package being changed rather than proposing a repo-wide
   rename.
-- **`mcp-server` has no Codecov target.** `codecov.yml` defines 80% project
-  targets for the other four packages only. Thin coverage on an mcp-server PR
-  is worth mentioning on its merits, but it does not fail a gate.
-- **`bun test --coverage` only instruments files the tests import.** A large
-  Codecov swing after this migration is usually an instrumentation change, not
-  a real coverage win or loss. Judge coverage from the files that still exist.
+- **`mcp-server` and `create-sei` have no Codecov target.** `codecov.yml`
+  defines 80% project targets for the three library packages with meaningful
+  source coverage. Thin coverage elsewhere is worth mentioning on its merits,
+  but it does not fail a gate.
 - **`noImplicitAny: false` in `tsconfig.base.json`.** This is a deliberate
   repo-wide setting. Flag an untyped value when it actually causes an unsound
   path, not because the compiler permitted it.

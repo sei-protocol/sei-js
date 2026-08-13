@@ -17,7 +17,7 @@ describe('Blocks Service', () => {
 	const mockNetwork = 'sei';
 
 	// Create a simplified mock block response
-	const mockBlockResponse = { hash: mockBlockHash, number: mockBlockNumber };
+	const mockBlockResponse = { hash: mockBlockHash, number: mockBlockNumber } as unknown as Awaited<ReturnType<typeof getBlockByNumber>>;
 
 	// Mock public client
 	const mockPublicClient = {

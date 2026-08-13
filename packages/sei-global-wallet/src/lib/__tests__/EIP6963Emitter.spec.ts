@@ -22,7 +22,7 @@ jest.mock('../config', () => ({
 describe('EIP6963Emitter', () => {
 	it('should announce the provider with correct config and provider instance', () => {
 		const mockProvider = { foo: 'bar' };
-		(createEIP1193Provider as jest.Mock).mockReturnValue(mockProvider);
+		(createEIP1193Provider as unknown as jest.Mock).mockReturnValue(mockProvider);
 
 		EIP6963Emitter();
 

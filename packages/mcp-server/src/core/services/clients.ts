@@ -5,6 +5,10 @@ import { getWalletProvider } from '../wallet/index.js';
 // Cache for clients to avoid recreating them for each request
 const clientCache = new Map<string, PublicClient>();
 
+export function resetPublicClientCache(): void {
+	clientCache.clear();
+}
+
 /**
  * Get a public client for a specific network
  */

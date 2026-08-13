@@ -35,15 +35,25 @@ import {
 const spyFunctions = (mod: object) => {
 	for (const [key, value] of Object.entries(mod)) {
 		if (typeof value === 'function') {
-			jest.spyOn(mod as Record<string, CallableFunction>, key);
+			(jest.spyOn(mod as Record<string, CallableFunction>, key) as jest.Mock).mockImplementation(() => undefined);
 		}
 	}
 };
 
-spyFunctions(chains);
-spyFunctions(config);
-spyFunctions(services);
-spyFunctions(wallet);
+const spiedModules = [chains, config, services, wallet];
+for (const module of spiedModules) {
+	spyFunctions(module);
+}
+
+const resetSpiedFunctions = (mod: object) => {
+	for (const value of Object.values(mod)) {
+		if (typeof value === 'function') {
+			const mock = value as jest.Mock;
+			mock.mockReset();
+			mock.mockImplementation(() => undefined);
+		}
+	}
+};
 
 const { getRpcUrl, getSupportedNetworks } = chains;
 const { getPrivateKeyAsHex, getWalletMode, isWalletEnabled } = config;
@@ -62,6 +72,10 @@ describe('EVM Tools', () => {
 	let registeredTools: Map<string, Tool>;
 
 	beforeEach(async () => {
+		for (const module of spiedModules) {
+			resetSpiedFunctions(module);
+		}
+
 		// Create fresh mock server for each test
 		const mockServerResult = createMockServer();
 		server = mockServerResult.server;
@@ -91,9 +105,18 @@ describe('EVM Tools', () => {
 		// Register tools after mocks are set up
 		registerEVMTools(server);
 
-		jest.spyOn(services.helpers, 'formatJson').mockImplementation((data: unknown) => JSON.stringify(data));
-		jest.spyOn(services.helpers, 'parseEther');
-		jest.spyOn(services.helpers, 'validateAddress').mockImplementation((address: string) => address as `0x${string}`);
+		jest
+			.spyOn(services.helpers, 'formatJson')
+			.mockReset()
+			.mockImplementation((data: unknown) => JSON.stringify(data));
+		jest
+			.spyOn(services.helpers, 'parseEther')
+			.mockReset()
+			.mockImplementation(() => undefined as never);
+		jest
+			.spyOn(services.helpers, 'validateAddress')
+			.mockReset()
+			.mockImplementation((address: string) => address as `0x${string}`);
 	});
 
 	afterEach(() => {
@@ -104,7 +127,7 @@ describe('EVM Tools', () => {
 	const checkToolExists = (toolName: string) => {
 		const tool = registeredTools.get(toolName);
 		if (!tool) {
-			console.log(`Tool '${toolName}' not found. Available tools: ${Array.from(registeredTools.keys()).join(', ')}`);
+			throw new Error(`Tool '${toolName}' not found. Available tools: ${Array.from(registeredTools.keys()).join(', ')}`);
 		}
 		return tool;
 	};

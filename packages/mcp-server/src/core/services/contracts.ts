@@ -1,4 +1,4 @@
-import type { GetLogsParameters, Hash, Hex, Log, ReadContractParameters } from 'viem';
+import type { Abi, GetLogsParameters, Hash, Hex, Log, ReadContractParameters } from 'viem';
 import { DEFAULT_NETWORK } from '../chains.js';
 import { getPrivateKeyAsHex } from '../config.js';
 import { getPublicClient, getWalletClientFromProvider } from './clients.js';
@@ -19,7 +19,7 @@ export async function readContract(params: ReadContractParameters, network = DEF
  * @returns Transaction hash
  * @throws Error if no private key is available
  */
-export async function writeContract(params: Record<string, any>, network = DEFAULT_NETWORK): Promise<Hash> {
+export async function writeContract(params: Record<string, unknown>, network = DEFAULT_NETWORK): Promise<Hash> {
 	// Get private key from environment
 	const key = getPrivateKeyAsHex();
 
@@ -28,7 +28,7 @@ export async function writeContract(params: Record<string, any>, network = DEFAU
 	}
 
 	const client = await getWalletClientFromProvider(network);
-	return await client.writeContract(params as any);
+	return await client.writeContract(params as unknown as Parameters<typeof client.writeContract>[0]);
 }
 
 /**
@@ -62,7 +62,12 @@ export async function isContract(address: string, network = DEFAULT_NETWORK): Pr
  * @returns Object with contract address and transaction hash
  * @throws Error if no private key is available or deployment fails
  */
-export async function deployContract(bytecode: Hex, abi: any[], args?: any[], network = DEFAULT_NETWORK): Promise<{ address: Hash; transactionHash: Hash }> {
+export async function deployContract(
+	bytecode: Hex,
+	abi: Abi,
+	args?: readonly unknown[],
+	network = DEFAULT_NETWORK
+): Promise<{ address: Hash; transactionHash: Hash }> {
 	// Get private key from environment
 	const key = getPrivateKeyAsHex();
 
@@ -77,13 +82,14 @@ export async function deployContract(bytecode: Hex, abi: any[], args?: any[], ne
 	}
 
 	// Deploy the contract
-	const hash = await client.deployContract({
+	const deployment = {
 		abi,
 		bytecode,
 		args: args || [],
 		account: client.account,
 		chain: client.chain
-	});
+	} as unknown as Parameters<typeof client.deployContract>[0];
+	const hash = await client.deployContract(deployment);
 
 	// Wait for the transaction to be mined and get the contract address
 	const publicClient = getPublicClient(network);

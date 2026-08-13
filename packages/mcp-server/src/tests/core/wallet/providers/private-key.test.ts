@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
-import { createWalletClient, http } from 'viem';
+import { createWalletClient, http, type WalletClient } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { PrivateKeyWalletProvider } from '../../../../core/wallet/providers/private-key.js';
-import { WalletProviderError } from '../../../../core/wallet/types.js';
+import { type TransactionRequest, WalletProviderError } from '../../../../core/wallet/types.js';
 
 // Mock dependencies
 jest.mock('../../../../core/config.js', () => ({
@@ -33,7 +33,7 @@ describe('PrivateKeyWalletProvider', () => {
 	const mockChain = { id: 1, name: 'Sei' };
 	const mockRpcUrl = 'https://rpc.sei.io';
 	const mockTransport = {};
-	const mockWalletClient = { account: mockAccount, chain: mockChain };
+	const mockWalletClient = { account: mockAccount, chain: mockChain } as unknown as WalletClient;
 
 	beforeEach(() => {
 		jest.resetAllMocks();
@@ -101,7 +101,7 @@ describe('PrivateKeyWalletProvider', () => {
 			(getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
 
 			const provider = new PrivateKeyWalletProvider();
-			const mockTx = { to: '0x123', value: '0x1' };
+			const mockTx: TransactionRequest = { to: '0x1234567890123456789012345678901234567890', value: 1n };
 
 			await expect(provider.signTransaction(mockTx)).rejects.toThrow(WalletProviderError);
 			await expect(provider.signTransaction(mockTx)).rejects.toThrow('Direct transaction signing not implemented');
@@ -111,7 +111,7 @@ describe('PrivateKeyWalletProvider', () => {
 			(getPrivateKeyAsHex as jest.Mock).mockReturnValue(undefined);
 
 			const provider = new PrivateKeyWalletProvider();
-			const mockTx = { to: '0x123', value: '0x1' };
+			const mockTx: TransactionRequest = { to: '0x1234567890123456789012345678901234567890', value: 1n };
 
 			await expect(provider.signTransaction(mockTx)).rejects.toThrow(WalletProviderError);
 			await expect(provider.signTransaction(mockTx)).rejects.toThrow('Private key not configured');

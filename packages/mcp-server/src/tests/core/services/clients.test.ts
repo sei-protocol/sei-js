@@ -1,8 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
-import { createPublicClient, createWalletClient, http } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
+import { createPublicClient, http, type PublicClient, type WalletClient } from 'viem';
 import { getChain, getRpcUrl } from '../../../core/chains.js';
-import { getAddressFromPrivateKey, getAddressFromProvider, getPublicClient, getWalletClientFromProvider } from '../../../core/services/clients.js';
+import { getAddressFromProvider, getPublicClient, getWalletClientFromProvider, resetPublicClientCache } from '../../../core/services/clients.js';
 import { getWalletProvider } from '../../../core/wallet/index.js';
 
 // Mock dependencies
@@ -11,14 +10,9 @@ jest.mock('viem', () => {
 	// we'll just mock the specific functions we need
 	return {
 		createPublicClient: jest.fn(),
-		createWalletClient: jest.fn(),
 		http: jest.fn()
 	};
 });
-
-jest.mock('viem/accounts', () => ({
-	privateKeyToAccount: jest.fn()
-}));
 
 jest.mock('../../../core/chains.js', () => ({
 	DEFAULT_NETWORK: 'sei',
@@ -34,22 +28,19 @@ describe('Client Service', () => {
 	const mockChain = { id: 1, name: 'Sei' };
 	const mockRpcUrl = 'https://rpc.sei.io';
 	const mockHttpTransport = {} as ReturnType<typeof http>;
-	const mockPublicClient = { readContract: jest.fn() };
-	const mockWalletClient = { writeContract: jest.fn() };
-	const mockAccount = { address: '0x1234567890123456789012345678901234567890' };
-	const mockPrivateKey = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
+	const mockPublicClient = { readContract: jest.fn() } as unknown as PublicClient;
+	const mockWalletClient = { writeContract: jest.fn() } as unknown as WalletClient;
 
 	beforeEach(() => {
 		// Reset all mocks
 		jest.resetAllMocks();
+		resetPublicClientCache();
 
 		// Setup default mock implementations
 		(getChain as jest.Mock).mockReturnValue(mockChain);
 		(getRpcUrl as jest.Mock).mockReturnValue(mockRpcUrl);
 		(http as jest.Mock).mockReturnValue(mockHttpTransport);
 		(createPublicClient as jest.Mock).mockReturnValue(mockPublicClient);
-		(createWalletClient as jest.Mock).mockReturnValue(mockWalletClient);
-		(privateKeyToAccount as jest.Mock).mockReturnValue(mockAccount);
 	});
 
 	describe('getPublicClient', () => {
@@ -85,10 +76,6 @@ describe('Client Service', () => {
 			// First, get a reference to the client
 			getPublicClient('sei');
 
-			// Use Object.getOwnPropertyDescriptor to access the module's private variable
-			// @ts-expect-error - Accessing private implementation for testing
-			const clientCacheMap = new Map([['sei', undefined]]);
-
 			// Replace the Map.prototype.get method temporarily to simulate the edge case
 			const originalMapGet = Map.prototype.get;
 			Map.prototype.get = function (key) {
@@ -120,7 +107,7 @@ describe('Client Service', () => {
 			// Setup mocks for 'ethereum' network
 			const ethereumChain = { id: 1, name: 'Ethereum' };
 			const ethereumRpcUrl = 'https://rpc.ethereum.io';
-			const ethereumPublicClient = { readContract: jest.fn() };
+			const ethereumPublicClient = { readContract: jest.fn() } as unknown as PublicClient;
 
 			(getChain as jest.Mock).mockReturnValue(ethereumChain);
 			(getRpcUrl as jest.Mock).mockReturnValue(ethereumRpcUrl);

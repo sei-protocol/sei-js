@@ -13,7 +13,7 @@
 	"scripts": {
 		"build": "rm -rf dist && bun run build:types && bun run build:esm",
 		"build:types": "tsc --project ./tsconfig.json && bun ../../scripts/fix-dts-extensions.ts dist",
-		"build:esm": "esbuild src/index.ts src/ethers/index.ts src/viem/index.ts src/precompiles/index.ts --bundle --format=esm --platform=neutral --packages=external --target=es2020 --outdir=dist --outbase=src",
+		"build:esm": "esbuild src/index.ts src/ethers/index.ts src/viem/index.ts src/precompiles/index.ts --bundle --splitting --format=esm --platform=neutral --packages=external --target=es2020 --outdir=dist --outbase=src --chunk-names=chunks/[name]-[hash]",
 		"test": "bun test --isolate src"
 	},
 	"exports": {

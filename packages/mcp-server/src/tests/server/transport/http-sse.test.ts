@@ -45,10 +45,10 @@ describe('HttpSseTransport', () => {
 		const securityModule = await import('../../../server/transport/security.js');
 		const { SSEServerTransport } = await import('@modelcontextprotocol/sdk/server/sse.js');
 
-		mockExpress = (expressModule.default ?? expressModule) as jest.MockedFunction<any>;
+		mockExpress = (expressModule.default ?? expressModule) as unknown as jest.MockedFunction<any>;
 		mockCreateCorsMiddleware = securityModule.createCorsMiddleware as jest.MockedFunction<any>;
 		mockValidateSecurityConfig = securityModule.validateSecurityConfig as jest.MockedFunction<any>;
-		mockSSEServerTransport = SSEServerTransport as jest.MockedFunction<any>;
+		mockSSEServerTransport = SSEServerTransport as unknown as jest.MockedFunction<any>;
 
 		// Setup mock objects
 		mockApp = {
@@ -84,7 +84,7 @@ describe('HttpSseTransport', () => {
 		HttpSseTransport = ImportedHttpSseTransport;
 
 		// Spy on console.error
-		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 	});
 
 	afterEach(() => {
@@ -180,7 +180,7 @@ describe('HttpSseTransport', () => {
 			sseHandler(mockReq, mockRes);
 
 			// Get the close handler
-			const closeHandler = mockReq.on.mock.calls.find((call) => call[0] === 'close')[1];
+			const closeHandler = mockReq.on.mock.calls.find((call) => call[0] === 'close')![1];
 			closeHandler();
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith(`SSE connection closed for session ${mockTransport.sessionId}`);
@@ -382,7 +382,7 @@ describe('HttpSseTransport', () => {
 
 		it('should setup process signal handlers', async () => {
 			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const processOnSpy = jest.spyOn(process, 'on').mockImplementation();
+			const processOnSpy = jest.spyOn(process, 'on').mockImplementation(() => process);
 
 			mockApp.listen.mockImplementation((port, host, callback) => {
 				callback();
@@ -399,7 +399,7 @@ describe('HttpSseTransport', () => {
 
 		it('should handle cleanup on SIGINT', async () => {
 			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const processOnSpy = jest.spyOn(process, 'on').mockImplementation();
+			const processOnSpy = jest.spyOn(process, 'on').mockImplementation(() => process);
 
 			mockApp.listen.mockImplementation((port, host, callback) => {
 				callback();
@@ -409,7 +409,7 @@ describe('HttpSseTransport', () => {
 			await transport.start(mockMcpServer);
 
 			// Get the SIGINT handler
-			const sigintHandler = processOnSpy.mock.calls.find((call) => call[0] === 'SIGINT')[1];
+			const sigintHandler = processOnSpy.mock.calls.find((call) => call[0] === 'SIGINT')![1];
 			sigintHandler();
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Shutting down HTTP SSE server...');
@@ -420,7 +420,7 @@ describe('HttpSseTransport', () => {
 
 		it('should handle cleanup when httpServer is null', async () => {
 			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const processOnSpy = jest.spyOn(process, 'on').mockImplementation();
+			const processOnSpy = jest.spyOn(process, 'on').mockImplementation(() => process);
 
 			// Don't start the server, so httpServer remains null
 
@@ -436,7 +436,7 @@ describe('HttpSseTransport', () => {
 			(transport as any).httpServer = null;
 
 			// Get the SIGINT handler
-			const sigintHandler = processOnSpy.mock.calls.find((call) => call[0] === 'SIGINT')[1];
+			const sigintHandler = processOnSpy.mock.calls.find((call) => call[0] === 'SIGINT')![1];
 			sigintHandler();
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Shutting down HTTP SSE server...');
@@ -531,7 +531,7 @@ describe('HttpSseTransport', () => {
 			expect((transport as any).connections.size).toBe(2);
 
 			// Close first connection
-			const closeHandler1 = mockReq1.on.mock.calls.find((call) => call[0] === 'close')[1];
+			const closeHandler1 = mockReq1.on.mock.calls.find((call) => call[0] === 'close')![1];
 			closeHandler1();
 
 			expect((transport as any).connections.size).toBe(1);

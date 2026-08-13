@@ -20,14 +20,17 @@ This project uses [Bun](https://bun.sh) for package management, tests, and scrip
 
 ### Prerequisites
 
-Install Bun 1.3.x: https://bun.sh/docs/installation
+Install Bun 1.3.14: https://bun.sh/docs/installation
+
+Node.js 24 is pinned in `.nvmrc` for npm package validation and OIDC publishing; Bun remains the workspace package manager and test runner.
 
 ### Install, build, test
 
 ```bash
+git submodule update --init --recursive
 bun install
 bun run build
-bun test
+bun run test
 ```
 
 Lint and format with Biome:

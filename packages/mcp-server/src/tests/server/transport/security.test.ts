@@ -11,7 +11,7 @@ describe('Security Module', () => {
 		jest.clearAllMocks();
 
 		// Spy on console.error
-		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 		// Spy on process.exit to prevent actual exit
 		processExitSpy = jest.spyOn(process, 'exit').mockImplementation((code?: number | string | null | undefined) => {

@@ -48,8 +48,8 @@ describe('documentation search', () => {
 		const tool = registeredTools.get('search_docs');
 		expect(tool).toBeDefined();
 
-		const firstResult = await tool?.handler({ query: 'Sei precompiles' });
-		const secondResult = await tool?.handler({ query: 'Sei SDK' });
+		const firstResult = await tool!.handler({ query: 'Sei precompiles' });
+		const secondResult = await tool!.handler({ query: 'Sei SDK' });
 
 		expect(DOCS_MCP_URL).toBe('https://docs.sei.io/mcp');
 		expect(connect).toHaveBeenCalledWith(expect.any(StreamableHTTPClientTransport), { timeout: 10_000 });
@@ -74,8 +74,8 @@ describe('documentation search', () => {
 			undefined,
 			{ timeout: 30_000 }
 		);
-		expect(firstResult).toEqual(remoteResult);
-		expect(secondResult).toEqual(remoteResult);
+		expect(firstResult).toEqual(remoteResult as unknown as typeof firstResult);
+		expect(secondResult).toEqual(remoteResult as unknown as typeof secondResult);
 		expect(close).not.toHaveBeenCalled();
 	});
 
@@ -98,7 +98,7 @@ describe('documentation search', () => {
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		const result = await registeredTools.get('search_docs')?.handler({ query: 'Sei precompiles' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 
 		expect(result).toEqual({
 			content: [
@@ -125,7 +125,7 @@ describe('documentation search', () => {
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		const result = await registeredTools.get('search_docs')?.handler({ query: 'Sei precompiles' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 
 		expect(result).toEqual({
 			content: [
@@ -143,7 +143,7 @@ describe('documentation search', () => {
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		const result = await registeredTools.get('search_docs')?.handler({ query: 'Sei precompiles' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 
 		expect(result).toEqual({
 			content: [
@@ -168,7 +168,7 @@ describe('documentation search', () => {
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		const result = await registeredTools.get('search_docs')?.handler({ query: 'large result' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'large result' });
 		const [content] = result.content;
 
 		expect(result.content).toHaveLength(1);
@@ -185,7 +185,7 @@ describe('documentation search', () => {
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		const result = await registeredTools.get('search_docs')?.handler({ query: 'image only' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'image only' });
 
 		expect(result).toEqual({
 			content: [
@@ -205,7 +205,7 @@ describe('documentation search', () => {
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		const result = await registeredTools.get('search_docs')?.handler({ query: 'Sei precompiles' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 
 		expect(result).toEqual({
 			content: [
@@ -226,7 +226,7 @@ describe('documentation search', () => {
 		server.server.onclose = previousOnClose;
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		await registeredTools.get('search_docs')?.handler({ query: 'Sei precompiles' });
+		await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 		server.server.onclose?.();
 		await new Promise((resolve) => setImmediate(resolve));
 
@@ -258,7 +258,7 @@ describe('documentation search', () => {
 		const { registeredTools, server } = createMockServer();
 		createDocsSearchTool(server, docsClientInfo, factory);
 
-		const result = await registeredTools.get('search_docs')?.handler({ query: 'Sei precompiles' });
+		const result = await registeredTools.get('search_docs')!.handler({ query: 'Sei precompiles' });
 
 		expect(result.isError).toBe(true);
 		expect(callTool).toHaveBeenCalledTimes(2);

@@ -95,8 +95,6 @@ describe('chains module', () => {
 
 		test('returns sei chain when network name exists but chain mapping is missing', () => {
 			// Create a temporary entry in networkNameMap for a non-existent chain ID
-			const originalNetworkNameMap = { ...networkNameMap };
-			// @ts-expect-error - Intentionally modifying for test
 			networkNameMap['test-network'] = 9999;
 
 			try {
@@ -104,10 +102,8 @@ describe('chains module', () => {
 				expect(getChain('test-network')).toBe(sei);
 			} finally {
 				// Restore the original map
-				// @ts-expect-error - Restoring original state
 				for (const key of Object.keys(networkNameMap)) {
 					if (key !== 'sei' && key !== 'sei-testnet' && key !== 'sei-devnet') {
-						// @ts-expect-error - Cleanup
 						delete networkNameMap[key];
 					}
 				}

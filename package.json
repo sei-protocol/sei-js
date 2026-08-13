@@ -9,7 +9,7 @@
 	"scripts": {
 		"build": "bun run --filter '*' build",
 		"build:all": "bun run build",
-		"check": "biome check .",
+		"check": "biome check . && bun run typecheck",
 		"check:fix": "biome check --write .",
 		"format": "biome format --write .",
 		"lint": "biome lint .",
@@ -20,9 +20,10 @@
 		"lint:pack:exports": "bun scripts/check-precompile-exports.ts",
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "bun run build && bunx changeset && bunx changeset version --snapshot internal && bunx changeset publish --no-git-tag --snapshot --tag internal",
-		"test": "bun test --isolate packages",
-		"test:all": "bun test --isolate packages",
-		"test:coverage": "bun test --isolate --coverage --coverage-reporter=lcov packages"
+		"test": "bun run --filter '*' test",
+		"test:all": "bun run test",
+		"test:coverage": "bun test --isolate --coverage --coverage-reporter=lcov packages",
+		"typecheck": "tsc --project tsconfig.test.json"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "0.18.5",

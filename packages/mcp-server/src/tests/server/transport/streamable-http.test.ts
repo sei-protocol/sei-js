@@ -10,8 +10,10 @@ jest.mock('express', () => {
 		post: jest.fn(),
 		listen: jest.fn()
 	};
-	const express = jest.fn(() => mockApp);
-	express.json = jest.fn();
+	const express = Object.assign(
+		jest.fn(() => mockApp),
+		{ json: jest.fn() }
+	);
 	return { default: express };
 });
 
@@ -30,7 +32,7 @@ jest.mock('../../../server/server.js', () => ({
 
 describe('StreamableHttpTransport', () => {
 	let StreamableHttpTransport: any;
-	let mockExpress: jest.MockedFunction<any>;
+	let mockExpress: jest.MockedFunction<any> & { json: jest.Mock };
 	let mockApp: any;
 	let mockServer: any;
 	let mockGetServer: jest.MockedFunction<() => Promise<any>>;
@@ -47,7 +49,7 @@ describe('StreamableHttpTransport', () => {
 		const serverModule = await import('../../../server/server.js');
 		const { StreamableHTTPServerTransport } = await import('@modelcontextprotocol/sdk/server/streamableHttp.js');
 
-		mockExpress = (expressModule.default ?? expressModule) as jest.MockedFunction<any>;
+		mockExpress = (expressModule.default ?? expressModule) as unknown as typeof mockExpress;
 		mockGetServer = serverModule.getServer as jest.MockedFunction<() => Promise<any>>;
 
 		// Setup mock objects
@@ -80,7 +82,7 @@ describe('StreamableHttpTransport', () => {
 		mockExpress.json = jest.fn().mockReturnValue('json-middleware');
 		mockApp.listen.mockReturnValue(mockServer);
 		mockGetServer.mockResolvedValue(mockMcpServer);
-		(StreamableHTTPServerTransport as jest.Mock).mockImplementation(() => mockStreamableTransport);
+		(StreamableHTTPServerTransport as unknown as jest.Mock).mockImplementation(() => mockStreamableTransport);
 
 		// Setup spies
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -189,9 +191,9 @@ describe('StreamableHttpTransport', () => {
 			const mockRes = {
 				on: jest.fn(),
 				headersSent: false
-			} as any as Response;
+			};
 
-			await postHandler(mockReq, mockRes);
+			await postHandler(mockReq, mockRes as unknown as Response);
 
 			expect(mockGetServer).toHaveBeenCalled();
 			expect(mockMcpServer.connect).toHaveBeenCalledWith(mockStreamableTransport);
@@ -207,16 +209,16 @@ describe('StreamableHttpTransport', () => {
 			const mockRes = {
 				on: jest.fn(),
 				headersSent: false
-			} as any as Response;
+			};
 
-			await postHandler(mockReq, mockRes);
+			await postHandler(mockReq, mockRes as unknown as Response);
 
 			// Get the close event handler
 			const closeHandler = mockRes.on.mock.calls.find((call) => call[0] === 'close')?.[1];
 			expect(closeHandler).toBeDefined();
 
 			// Trigger close event
-			closeHandler();
+			closeHandler!();
 
 			expect(consoleLogSpy).toHaveBeenCalledWith('Request closed');
 			expect(mockStreamableTransport.close).toHaveBeenCalled();
@@ -277,7 +279,7 @@ describe('StreamableHttpTransport', () => {
 		});
 
 		it('should log server ready message', () => {
-			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 			// Mock the listen method to accept a callback as the third parameter
 			mockApp.listen.mockImplementation((port, host, callback) => {

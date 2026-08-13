@@ -33,18 +33,28 @@ for (const subpath of required) {
 	}
 }
 
-const { getBankPrecompileEthersV6Contract } = await import(join(pkgDir, 'dist/ethers/index.js'));
-const { seiLocal } = await import(join(pkgDir, 'dist/viem/index.js'));
-const { BANK_PRECOMPILE_ADDRESS } = await import(join(pkgDir, 'dist/precompiles/index.js'));
+const rootModule = await import(join(pkgDir, 'dist/index.js'));
+const ethersModule = await import(join(pkgDir, 'dist/ethers/index.js'));
+const viemModule = await import(join(pkgDir, 'dist/viem/index.js'));
+const precompilesModule = await import(join(pkgDir, 'dist/precompiles/index.js'));
 
-if (typeof getBankPrecompileEthersV6Contract !== 'function') {
+if (typeof ethersModule.getBankPrecompileEthersV6Contract !== 'function') {
 	missing.push('getBankPrecompileEthersV6Contract is not a function');
 }
-if (!seiLocal?.id) {
+if (!viemModule.seiLocal?.id) {
 	missing.push('seiLocal chain export missing');
 }
-if (!BANK_PRECOMPILE_ADDRESS) {
+if (!precompilesModule.BANK_PRECOMPILE_ADDRESS) {
 	missing.push('BANK_PRECOMPILE_ADDRESS missing');
+}
+if (rootModule.BANK_PRECOMPILE_ABI !== precompilesModule.BANK_PRECOMPILE_ABI) {
+	missing.push('root and precompiles subpaths do not share ABI identity');
+}
+if (rootModule.VIEM_BANK_PRECOMPILE_ABI !== viemModule.VIEM_BANK_PRECOMPILE_ABI) {
+	missing.push('root and viem subpaths do not share ABI identity');
+}
+if (rootModule.getBankPrecompileEthersV6Contract !== ethersModule.getBankPrecompileEthersV6Contract) {
+	missing.push('root and ethers subpaths do not share factory identity');
 }
 
 if (missing.length > 0) {

@@ -7,8 +7,6 @@
 		"rootDir": "./src",
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
-		"declaration": true,
-		"declarationMap": true,
-		"sourceMap": true
+		"declaration": true
 	}
 }

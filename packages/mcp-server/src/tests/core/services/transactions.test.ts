@@ -22,7 +22,7 @@ describe('Transactions Service', () => {
 		from: mockAddress,
 		to: '0x0987654321098765432109876543210987654321' as Address,
 		value: 1000000000000000000n
-	};
+	} as unknown as Awaited<ReturnType<typeof getTransaction>>;
 
 	// Mock transaction receipt
 	const mockReceipt: TransactionReceipt = {

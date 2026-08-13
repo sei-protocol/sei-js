@@ -1,7 +1,0 @@
-{
-	"root": false,
-	"extends": ["../../biome.json"],
-	"files": {
-		"includes": ["!templates"]
-	}
-}

@@ -43,6 +43,7 @@ describe('Contract Service', () => {
 	const mockHash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' as Hash;
 	const mockAddress = '0x1234567890123456789012345678901234567890' as Address;
 	const mockAbi = [] as unknown as Abi;
+	const mockLogs = ['mockLog1', 'mockLog2'] as unknown as Awaited<ReturnType<typeof getLogs>>;
 
 	beforeEach(() => {
 		// Reset all mocks
@@ -55,7 +56,7 @@ describe('Contract Service', () => {
 
 		// Use mockImplementation instead of mockResolvedValue to properly type the return values
 		mockPublicClient.readContract.mockImplementation(() => Promise.resolve('mockContractData'));
-		mockPublicClient.getLogs.mockImplementation(() => Promise.resolve(['mockLog1', 'mockLog2']));
+		mockPublicClient.getLogs.mockImplementation(() => Promise.resolve(mockLogs));
 		mockWalletClient.writeContract.mockImplementation(() => Promise.resolve(mockHash));
 
 		// Setup validateAddress mock to return the input address
@@ -139,7 +140,7 @@ describe('Contract Service', () => {
 
 			expect(getPublicClient).toHaveBeenCalledWith('sei');
 			expect(mockPublicClient.getLogs).toHaveBeenCalledWith(params);
-			expect(result).toEqual(['mockLog1', 'mockLog2']);
+			expect(result).toEqual(mockLogs);
 		});
 
 		test('should use default network when none is specified', async () => {
@@ -207,7 +208,7 @@ describe('Contract Service', () => {
 				stateMutability: 'nonpayable',
 				type: 'constructor'
 			}
-		];
+		] as const satisfies Abi;
 		const mockArgs = ['TestToken', 'TTK'];
 		const mockContractAddress = '0x9876543210987654321098765432109876543210' as Address;
 		const mockTransactionHash = '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890' as Hash;

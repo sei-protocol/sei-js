@@ -2,6 +2,7 @@
 
 # testing
 packages/*/coverage
+packages/*/coverage.json
 
 examples/
 

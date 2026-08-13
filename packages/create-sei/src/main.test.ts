@@ -37,4 +37,14 @@ describe('Extension System', () => {
 		const extensionFiles = await fs.readdir(extensionsDir);
 		expect(extensionFiles).toContain('precompiles');
 	});
+
+	test('should scaffold the new precompiles major', async () => {
+		const [templatePackage, extensionPackage] = await Promise.all([
+			fs.readFile(path.join(packageRoot, 'templates/next-template/package.json'), 'utf8').then((contents) => JSON.parse(contents)),
+			fs.readFile(path.join(extensionsDir, 'precompiles/package.json'), 'utf8').then((contents) => JSON.parse(contents))
+		]);
+
+		expect(templatePackage.dependencies['@sei-js/precompiles']).toBe('^3.0.0');
+		expect(extensionPackage.dependencies['@sei-js/precompiles']).toBe('^3.0.0');
+	});
 });

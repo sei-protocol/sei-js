@@ -66,8 +66,8 @@ describe('Args Module', () => {
 		});
 
 		// Spy on console.error and process.exit
-		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
-		processExitSpy = jest.spyOn(process, 'exit').mockImplementation();
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		processExitSpy = jest.spyOn(process, 'exit').mockImplementation(() => undefined as never);
 
 		// Import the function after mocks are set up
 		const argsModule = await import('../../server/args.js');

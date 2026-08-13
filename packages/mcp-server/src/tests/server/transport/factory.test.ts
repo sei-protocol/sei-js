@@ -99,7 +99,7 @@ describe('Transport Factory', () => {
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
-			} as TransportConfig;
+			} as unknown as TransportConfig;
 
 			expect(() => createTransport(config)).toThrow('Unsupported transport mode: unsupported-mode');
 		});

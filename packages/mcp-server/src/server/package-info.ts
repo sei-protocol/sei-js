@@ -19,8 +19,8 @@ export const getPackageInfo = (): PackageInfo => {
 	}
 
 	try {
-		// When compiled, we're in dist/esm/core/, so we need to go up 3 levels to reach package.json
-		const packageJsonPath = join(__dirname, '../../../package.json');
+		// Both src/server/ and dist/server/ are two levels below the package root.
+		const packageJsonPath = join(__dirname, '../../package.json');
 		const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 
 		cachedPackageInfo = {

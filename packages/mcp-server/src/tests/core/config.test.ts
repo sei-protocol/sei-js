@@ -1,19 +1,19 @@
-import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
-import { config, formatPrivateKey, getPrivateKeyAsHex } from '../../core/config.js';
-
-const loadConfig = () => import(`../../core/config.js?reload=${Date.now()}-${Math.random()}`);
+import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
+import { config, formatPrivateKey, getPrivateKeyAsHex, getWalletMode, isWalletEnabled, loadConfig } from '../../core/config.js';
 
 describe('Config Module - Actual Implementation', () => {
-	const originalEnv = { ...process.env };
+	const originalConfig = { ...config };
 
 	beforeEach(() => {
-		process.env.PRIVATE_KEY = undefined;
-		// @ts-expect-error - Accessing private implementation
-		config.privateKey = undefined;
+		Object.assign(config, {
+			privateKey: undefined,
+			walletMode: 'disabled',
+			walletApiKey: undefined
+		});
 	});
 
 	afterEach(() => {
-		process.env = { ...originalEnv };
+		Object.assign(config, originalConfig);
 	});
 
 	describe('formatPrivateKey', () => {
@@ -38,65 +38,55 @@ describe('Config Module - Actual Implementation', () => {
 		});
 	});
 
-	describe('config initialization', () => {
-		test('should set privateKey when env parsing succeeds', async () => {
-			process.env.PRIVATE_KEY = 'abcdef1234567890';
-			const { config: freshConfig } = await loadConfig();
+	describe('configuration parsing', () => {
+		test('should set privateKey when env parsing succeeds', () => {
+			const freshConfig = loadConfig({ PRIVATE_KEY: 'abcdef1234567890' });
 			expect(freshConfig.privateKey).toBe('0xabcdef1234567890');
 		});
 
-		test('should set privateKey to undefined when env parsing fails', async () => {
-			// @ts-expect-error - Intentionally setting to a non-string value
-			process.env.PRIVATE_KEY = 123;
-			const { config: freshConfig } = await loadConfig();
+		test('should fall back to a disabled wallet when env parsing fails', () => {
+			const freshConfig = loadConfig({ PRIVATE_KEY: 123, WALLET_MODE: 'private-key' });
 			expect(freshConfig.privateKey).toBeUndefined();
+			expect(freshConfig.walletMode).toBe('disabled');
 		});
 	});
 
 	describe('getPrivateKeyAsHex', () => {
 		test('should return undefined if private key is not set', () => {
-			// @ts-expect-error - Accessing private implementation
 			config.privateKey = undefined;
 			expect(getPrivateKeyAsHex()).toBeUndefined();
 		});
 
 		test('should return private key as Hex if set', () => {
-			// @ts-expect-error - Accessing private implementation
 			config.privateKey = '0xabcdef1234567890';
 			expect(getPrivateKeyAsHex()).toBe('0xabcdef1234567890');
 		});
 	});
 
 	describe('isWalletEnabled', () => {
-		test('should return true when wallet mode is private-key', async () => {
-			process.env.WALLET_MODE = 'private-key';
-			const { isWalletEnabled } = await loadConfig();
+		test('should return true when wallet mode is private-key', () => {
+			config.walletMode = 'private-key';
 			expect(isWalletEnabled()).toBe(true);
 		});
 
-		test('should return false when wallet mode is disabled', async () => {
-			process.env.WALLET_MODE = 'disabled';
-			const { isWalletEnabled } = await loadConfig();
+		test('should return false when wallet mode is disabled', () => {
+			config.walletMode = 'disabled';
 			expect(isWalletEnabled()).toBe(false);
 		});
 
-		test('should return false when wallet mode is not set (defaults to disabled)', async () => {
-			delete process.env.WALLET_MODE;
-			const { isWalletEnabled } = await loadConfig();
-			expect(isWalletEnabled()).toBe(false);
+		test('should default to disabled when wallet mode is not set', () => {
+			expect(loadConfig({}).walletMode).toBe('disabled');
 		});
 	});
 
 	describe('getWalletMode', () => {
-		test('should return the configured wallet mode', async () => {
-			process.env.WALLET_MODE = 'private-key';
-			const { getWalletMode } = await loadConfig();
+		test('should return the configured wallet mode', () => {
+			config.walletMode = 'private-key';
 			expect(getWalletMode()).toBe('private-key');
 		});
 
-		test('should return disabled as default when not set', async () => {
-			delete process.env.WALLET_MODE;
-			const { getWalletMode } = await loadConfig();
+		test('should return disabled as default when not set', () => {
+			config.walletMode = 'disabled';
 			expect(getWalletMode()).toBe('disabled');
 		});
 	});

@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url';
 import { isWalletEnabled } from './core/config.js';
 import { parseArgs } from './server/args.js';
 import { getServer } from './server/server.js';
@@ -17,4 +18,6 @@ export const main = async () => {
 	}
 };
 
-main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+	await main();
+}

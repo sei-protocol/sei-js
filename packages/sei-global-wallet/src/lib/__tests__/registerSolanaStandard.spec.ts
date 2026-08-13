@@ -18,7 +18,7 @@ jest.mock('../config', () => ({
 describe('registerSolanaStandard', () => {
 	it('calls createSolanaWallet and registers it', () => {
 		const mockWalletObject = { id: 'sei' };
-		(createSolanaWallet as jest.Mock).mockReturnValue(mockWalletObject);
+		(createSolanaWallet as unknown as jest.Mock).mockReturnValue(mockWalletObject);
 
 		registerSolanaStandard();
 

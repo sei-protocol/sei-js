@@ -15,9 +15,6 @@ const envSchema = z.object({
 	WALLET_API_KEY: z.string().optional() // Used for wallet providers
 });
 
-// Parse and validate environment variables
-const env = envSchema.safeParse(process.env);
-
 // Format private key with 0x prefix if it exists
 export const formatPrivateKey = (key?: string): string | undefined => {
 	if (!key) return undefined;
@@ -26,12 +23,24 @@ export const formatPrivateKey = (key?: string): string | undefined => {
 	return key.startsWith('0x') ? key : `0x${key}`;
 };
 
-// Export validated environment variables with formatted private key
-export const config = {
-	privateKey: env.success ? formatPrivateKey(env.data.PRIVATE_KEY) : undefined,
-	walletMode: (env.success ? env.data.WALLET_MODE : 'disabled') as WalletMode,
-	walletApiKey: env.success ? env.data.WALLET_API_KEY : undefined
+export interface AppConfig {
+	privateKey: string | undefined;
+	walletMode: WalletMode;
+	walletApiKey: string | undefined;
+}
+
+export const loadConfig = (environment: Record<string, unknown> = process.env): AppConfig => {
+	const env = envSchema.safeParse(environment);
+
+	return {
+		privateKey: env.success ? formatPrivateKey(env.data.PRIVATE_KEY) : undefined,
+		walletMode: (env.success ? env.data.WALLET_MODE : 'disabled') as WalletMode,
+		walletApiKey: env.success ? env.data.WALLET_API_KEY : undefined
+	};
 };
+
+// Export validated environment variables with formatted private key
+export const config = loadConfig();
 
 /**
  * Get the private key from environment variable as a Hex type for viem.

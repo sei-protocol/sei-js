@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:tes
 import { getWalletProvider, resetWalletProvider } from '../../../core/wallet/index.js';
 import { DisabledWalletProvider } from '../../../core/wallet/providers/disabled.js';
 import { PrivateKeyWalletProvider } from '../../../core/wallet/providers/private-key.js';
+import type { WalletProvider } from '../../../core/wallet/types.js';
 
 // Mock dependencies
 jest.mock('../../../core/config.js', () => ({
@@ -19,14 +20,20 @@ jest.mock('../../../core/wallet/providers/disabled.js', () => ({
 import { getWalletMode } from '../../../core/config.js';
 
 describe('Wallet Provider', () => {
-	const mockPrivateKeyProvider = {
+	const mockPrivateKeyProvider: WalletProvider = {
 		getName: () => 'private-key',
-		isAvailable: () => true
+		isAvailable: () => true,
+		getAddress: jest.fn(),
+		signTransaction: jest.fn(),
+		getWalletClient: jest.fn()
 	};
 
-	const mockDisabledProvider = {
+	const mockDisabledProvider: WalletProvider = {
 		getName: () => 'disabled',
-		isAvailable: () => false
+		isAvailable: () => false,
+		getAddress: jest.fn(),
+		signTransaction: jest.fn(),
+		getWalletClient: jest.fn()
 	};
 
 	beforeEach(() => {
@@ -37,8 +44,8 @@ describe('Wallet Provider', () => {
 		jest.resetAllMocks();
 
 		// Setup default mock implementations
-		(PrivateKeyWalletProvider as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
-		(DisabledWalletProvider as jest.Mock).mockImplementation(() => mockDisabledProvider);
+		(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
+		(DisabledWalletProvider as unknown as jest.Mock).mockImplementation(() => mockDisabledProvider);
 	});
 
 	describe('getWalletProvider', () => {
@@ -91,17 +98,23 @@ describe('Wallet Provider', () => {
 			(getWalletMode as jest.Mock).mockReturnValue('private-key');
 
 			// Create separate mock instances for each call
-			const mockProvider1 = {
+			const mockProvider1: WalletProvider = {
 				getName: () => 'private-key',
-				isAvailable: () => true
+				isAvailable: () => true,
+				getAddress: jest.fn(),
+				signTransaction: jest.fn(),
+				getWalletClient: jest.fn()
 			};
-			const mockProvider2 = {
+			const mockProvider2: WalletProvider = {
 				getName: () => 'private-key',
-				isAvailable: () => true
+				isAvailable: () => true,
+				getAddress: jest.fn(),
+				signTransaction: jest.fn(),
+				getWalletClient: jest.fn()
 			};
 
 			// Mock constructor to return different instances on each call
-			(PrivateKeyWalletProvider as jest.Mock).mockImplementationOnce(() => mockProvider1).mockImplementationOnce(() => mockProvider2);
+			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementationOnce(() => mockProvider1).mockImplementationOnce(() => mockProvider2);
 
 			// Create provider instance
 			const provider1 = getWalletProvider();
