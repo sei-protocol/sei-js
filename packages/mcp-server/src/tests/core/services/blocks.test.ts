@@ -1,10 +1,14 @@
-import { beforeEach, describe, expect, jest, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Hash } from 'viem';
 import { getBlockByHash, getBlockByNumber, getBlockNumber, getLatestBlock } from '../../../core/services/blocks.js';
 import { getPublicClient } from '../../../core/services/clients.js';
 
 // Mock dependencies
-jest.mock('../../../core/services/clients.js');
+jest.mock('../../../core/services/clients.js', () => ({
+	getPublicClient: jest.fn(),
+	getWalletClientFromProvider: jest.fn(),
+	getAddressFromProvider: jest.fn()
+}));
 
 describe('Blocks Service', () => {
 	// Mock values

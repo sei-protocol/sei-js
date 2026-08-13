@@ -1,4 +1,4 @@
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 
 // Mock all dependencies
 jest.mock('../server/server.js', () => ({
@@ -85,9 +85,7 @@ describe('index', () => {
 		const indexModule = await import('../index.js');
 		await indexModule.main();
 
-		expect(consoleErrorSpy).toHaveBeenCalledWith(
-			'Wallet functionality is disabled. Wallet-dependent tools will not be available.'
-		);
+		expect(consoleErrorSpy).toHaveBeenCalledWith('Wallet functionality is disabled. Wallet-dependent tools will not be available.');
 	});
 
 	it('should handle server startup errors', async () => {
@@ -95,7 +93,7 @@ describe('index', () => {
 		mockGetServer.mockRejectedValue(testError);
 
 		const indexModule = await import('../index.js');
-		
+
 		try {
 			await indexModule.main();
 		} catch (error) {
@@ -114,7 +112,7 @@ describe('index', () => {
 		});
 
 		const indexModule = await import('../index.js');
-		
+
 		try {
 			await indexModule.main();
 		} catch (error) {
@@ -131,7 +129,7 @@ describe('index', () => {
 		mockTransport.start.mockRejectedValue(testError);
 
 		const indexModule = await import('../index.js');
-		
+
 		try {
 			await indexModule.main();
 		} catch (error) {
@@ -142,6 +140,4 @@ describe('index', () => {
 		expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting MCP server:', testError);
 		expect(processExitSpy).toHaveBeenCalledWith(1);
 	});
-
-
 });

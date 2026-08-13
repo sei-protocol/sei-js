@@ -1,5 +1,6 @@
 export * from './addressPrecompile';
 export * from './bankPrecompile';
+export * from './chain';
 export * from './distributionPrecompile';
 export * from './governancePrecompile';
 export * from './jsonPrecompile';
@@ -8,5 +9,3 @@ export * from './pointerviewPrecompile';
 export * from './soloPrecompile';
 export * from './stakingPrecompile';
 export * from './wasmPrecompile';
-
-export * from './chain';

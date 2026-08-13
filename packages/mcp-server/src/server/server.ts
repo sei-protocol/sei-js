@@ -1,10 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { registerEVMTools } from '../core/tools.js';
-import { registerEVMResources } from '../core/resources.js';
+import { getSupportedNetworks } from '../core/chains.js';
 import { registerEVMPrompts } from '../core/prompts.js';
+import { registerEVMResources } from '../core/resources.js';
+import { registerEVMTools } from '../core/tools.js';
 import { createDocsSearchTool } from '../docs/index.js';
 import { getPackageInfo } from './package-info.js';
-import { getSupportedNetworks } from '../core/chains.js';
 
 export const getServer = async () => {
 	try {

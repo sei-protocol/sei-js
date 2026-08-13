@@ -37,7 +37,7 @@ export function resetWalletProvider(): void {
 	walletProviderInstance = null;
 }
 
+export { DisabledWalletProvider } from './providers/disabled.js';
+export { PrivateKeyWalletProvider } from './providers/private-key.js';
 // Export types and classes
 export * from './types.js';
-export { PrivateKeyWalletProvider } from './providers/private-key.js';
-export { DisabledWalletProvider } from './providers/disabled.js';

@@ -3,7 +3,7 @@ This package contains TypeScript typed exports for the Sei registry repository a
 
 ## Installation
 ```bash
-yarn add @sei-js/registry
+bun add @sei-js/registry
 ```
 
 ## Usage

@@ -1,5 +1,5 @@
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import type { McpTransport, TransportMode } from './types.js';
 
 export class StdioTransport implements McpTransport {

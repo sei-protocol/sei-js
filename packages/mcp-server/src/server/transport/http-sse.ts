@@ -1,9 +1,9 @@
+import type { Server } from 'node:http';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import express, { type Request, type Response } from 'express';
-import type { Server } from 'node:http';
-import type { McpTransport, WalletMode } from './types.js';
 import { createCorsMiddleware, validateSecurityConfig } from './security.js';
+import type { McpTransport, WalletMode } from './types.js';
 
 export class HttpSseTransport implements McpTransport {
 	readonly mode = 'http-sse' as const;
@@ -27,14 +27,14 @@ export class HttpSseTransport implements McpTransport {
 
 	private setupMiddleware() {
 		this.app.use(express.json());
-		
+
 		// Secure CORS - no cross-origin allowed by default
 		this.app.use(createCorsMiddleware());
 	}
 
 	private setupRoutes() {
 		// Health check endpoint
-		this.app.get('/health', (req: Request, res: Response) => {
+		this.app.get('/health', (_req: Request, res: Response) => {
 			res.json({ status: 'ok', timestamp: new Date().toISOString() });
 		});
 
@@ -43,7 +43,7 @@ export class HttpSseTransport implements McpTransport {
 
 			// Create SSE transport - it will handle headers automatically
 			const transport = new SSEServerTransport(`${this.path}/message`, res);
-			const sessionId = transport.sessionId
+			const sessionId = transport.sessionId;
 			this.connections.set(sessionId, transport);
 
 			// Connect transport to MCP server

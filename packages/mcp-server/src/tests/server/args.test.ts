@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 
 // Mock dependencies
 jest.mock('commander', () => ({
@@ -84,9 +84,9 @@ describe('Args Module', () => {
 	describe('getEnvValue (helper)', () => {
 		it('should return environment variable value when set', () => {
 			process.env.TEST_VAR = 'test-value';
-			
+
 			const result = parseArgs();
-			
+
 			// Indirectly test getEnvValue through parseArgs behavior
 			expect(mockDotenvConfig).toHaveBeenCalled();
 		});
@@ -94,7 +94,7 @@ describe('Args Module', () => {
 		it('should return default value when environment variable not set', () => {
 			// Test through loadConfig defaults
 			const result = parseArgs();
-			
+
 			expect(result.mode).toBe('stdio'); // Default transport
 			expect(result.port).toBe(8080); // Default port
 			expect(result.host).toBe('localhost'); // Default host
@@ -206,9 +206,7 @@ describe('Args Module', () => {
 
 			parseArgs();
 
-			expect(consoleErrorSpy).toHaveBeenCalledWith(
-				"Error: Invalid wallet mode 'invalid-mode'. Valid modes are: private-key, disabled"
-			);
+			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid wallet mode 'invalid-mode'. Valid modes are: private-key, disabled");
 			expect(processExitSpy).toHaveBeenCalledWith(1);
 		});
 
@@ -217,9 +215,7 @@ describe('Args Module', () => {
 
 			parseArgs();
 
-			expect(consoleErrorSpy).toHaveBeenCalledWith(
-				"Error: Invalid transport mode 'invalid-transport'. Valid modes are: stdio, streamable-http, http-sse"
-			);
+			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid transport mode 'invalid-transport'. Valid modes are: stdio, streamable-http, http-sse");
 			expect(processExitSpy).toHaveBeenCalledWith(1);
 		});
 
@@ -228,9 +224,7 @@ describe('Args Module', () => {
 
 			parseArgs();
 
-			expect(consoleErrorSpy).toHaveBeenCalledWith(
-				"Error: Invalid port '0'. Port must be a number between 1 and 65535."
-			);
+			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid port '0'. Port must be a number between 1 and 65535.");
 			expect(processExitSpy).toHaveBeenCalledWith(1);
 		});
 
@@ -239,9 +233,7 @@ describe('Args Module', () => {
 
 			parseArgs();
 
-			expect(consoleErrorSpy).toHaveBeenCalledWith(
-				"Error: Invalid port '65536'. Port must be a number between 1 and 65535."
-			);
+			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid port '65536'. Port must be a number between 1 and 65535.");
 			expect(processExitSpy).toHaveBeenCalledWith(1);
 		});
 

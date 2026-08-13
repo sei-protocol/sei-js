@@ -1,6 +1,13 @@
 name: Checks
 
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -9,27 +16,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch the full history instead of a shallow clone
+          fetch-depth: 0
           submodules: recursive
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version-file: '.nvmrc'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+          bun-version: '1.3.x'
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install -y rsync
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
+
+      - name: Lint & Format Check
+        run: bun run check
 
       - name: Build All Packages
-        run: pnpm build:all
+        run: bun run build
 
       - name: Test
-        run: pnpm test:all
+        run: bun test --isolate packages
 
       - name: Validate Published Packages
-        run: pnpm lint:pack:all
+        run: bun run lint:pack:all

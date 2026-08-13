@@ -87,7 +87,7 @@ export function registerEVMResources(server: McpServer) {
 		try {
 			const network = params.network as string;
 			const blockNumber = params.blockNumber as string;
-			const block = await services.getBlockByNumber(Number.parseInt(blockNumber), network);
+			const block = await services.getBlockByNumber(Number.parseInt(blockNumber, 10), network);
 
 			return {
 				contents: [
@@ -541,7 +541,7 @@ export function registerEVMResources(server: McpServer) {
 					if (isOwner) {
 						owner = params.address as string;
 					}
-				} catch (e) {
+				} catch (_e) {
 					// Owner info not available
 				}
 

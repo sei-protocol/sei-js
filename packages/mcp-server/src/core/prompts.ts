@@ -72,8 +72,6 @@ function registerReadOnlyPrompts(server: McpServer) {
 		})
 	);
 
-
-
 	// Address analysis prompt
 	server.prompt(
 		'analyze_address',

@@ -8,10 +8,9 @@
 		"directory": "packages/sei-global-wallet"
 	},
 	"type": "module",
-	"main": "dist/cjs/index.js",
-	"module": "dist/esm/index.js",
-	"types": "dist/types/index.d.ts",
-	"typings": "./dist/types/index.d.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"license": "ISC",
 	"files": [
 		"dist"
@@ -20,18 +19,16 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "rimraf dist && pnpm run build:types && pnpm run build:cjs && pnpm run build:esm && node ./scripts/finalize-package.mjs",
-		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
-		"build:esm": "tsc --outDir dist/esm --module esnext",
-		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"test": "jest"
+		"build": "rm -rf dist && tsc --project ./tsconfig.json",
+		"test": "bun test --isolate src"
 	},
 	"dependencies": {
 		"@dynamic-labs/global-wallet-client": "^4.60.1",
 		"@wallet-standard/wallet": "^1.1.0"
 	},
 	"devDependencies": {
-		"tsc-alias": "^1.8.10",
+		"@solana/wallet-standard-features": "^1.2.0",
+		"@solana/web3.js": "^1.92.1",
 		"typescript": "^5.7.3"
 	},
 	"peerDependencies": {
@@ -73,69 +70,44 @@
 	"typesVersions": {
 		"*": {
 			"eip6963": [
-				"./dist/types/eip6963.d.ts"
+				"./dist/eip6963.d.ts"
 			],
 			"ethereum": [
-				"./dist/types/ethereum.d.ts"
+				"./dist/ethereum.d.ts"
 			],
 			"solana": [
-				"./dist/types/solana.d.ts"
+				"./dist/solana.d.ts"
 			],
 			"zerodev": [
-				"./dist/types/zerodev.d.ts"
+				"./dist/zerodev.d.ts"
 			]
 		}
 	},
 	"exports": {
 		".": {
-			"import": {
-				"types": "./dist/types/index.d.ts",
-				"default": "./dist/esm/index.js"
-			},
-			"require": {
-				"types": "./dist/types-cjs/index.d.ts",
-				"default": "./dist/cjs/index.js"
-			}
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
 		},
 		"./eip6963": {
-			"import": {
-				"types": "./dist/types/eip6963.d.ts",
-				"default": "./dist/esm/eip6963.js"
-			},
-			"require": {
-				"types": "./dist/types-cjs/eip6963.d.ts",
-				"default": "./dist/cjs/eip6963.js"
-			}
+			"types": "./dist/eip6963.d.ts",
+			"import": "./dist/eip6963.js",
+			"default": "./dist/eip6963.js"
 		},
 		"./ethereum": {
-			"import": {
-				"types": "./dist/types/ethereum.d.ts",
-				"default": "./dist/esm/ethereum.js"
-			},
-			"require": {
-				"types": "./dist/types-cjs/ethereum.d.ts",
-				"default": "./dist/cjs/ethereum.js"
-			}
+			"types": "./dist/ethereum.d.ts",
+			"import": "./dist/ethereum.js",
+			"default": "./dist/ethereum.js"
 		},
 		"./solana": {
-			"import": {
-				"types": "./dist/types/solana.d.ts",
-				"default": "./dist/esm/solana.js"
-			},
-			"require": {
-				"types": "./dist/types-cjs/solana.d.ts",
-				"default": "./dist/cjs/solana.js"
-			}
+			"types": "./dist/solana.d.ts",
+			"import": "./dist/solana.js",
+			"default": "./dist/solana.js"
 		},
 		"./zerodev": {
-			"import": {
-				"types": "./dist/types/zerodev.d.ts",
-				"default": "./dist/esm/zerodev.js"
-			},
-			"require": {
-				"types": "./dist/types-cjs/zerodev.d.ts",
-				"default": "./dist/cjs/zerodev.js"
-			}
+			"types": "./dist/zerodev.d.ts",
+			"import": "./dist/zerodev.js",
+			"default": "./dist/zerodev.js"
 		}
 	}
 }

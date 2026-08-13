@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import { utils } from '../../../core/services/utils.js';
 
 describe('Utils Module', () => {

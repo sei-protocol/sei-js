@@ -4,26 +4,30 @@
 	"type": "module",
 	"version": "0.3.3",
 	"bin": "./bin/mcp-server.js",
-	"main": "./dist/esm/index.js",
-	"module": "./dist/esm/index.js",
-	"types": "./dist/types/index.d.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"files": [
 		"dist",
 		"bin"
 	],
 	"scripts": {
-		"build": "rm -rf dist && pnpm run build:esm && pnpm run build:types",
-		"build:esm": "tsc --project ./tsconfig.build.json",
-		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"start": "node dist/esm/index.js",
-		"start:http": "node dist/esm/index.js --streamable-http",
-		"start:http-sse": "node dist/esm/index.js --http-sse",
+		"build": "rm -rf dist && tsc --project ./tsconfig.json",
+		"start": "node dist/index.js",
+		"start:http": "node dist/index.js --streamable-http",
+		"start:http-sse": "node dist/index.js --http-sse",
 		"inspect": "npx -y @modelcontextprotocol/inspector",
-		"dev": "tsx watch src/index.ts",
-		"test": "jest"
+		"dev": "bun --watch src/index.ts",
+		"test": "bun test --isolate src"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
 	},
 	"devDependencies": {
-		"@jest/globals": "^30.0.3",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.0",
 		"typescript": "^5.8.3"
@@ -35,9 +39,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
 		"express": "^4.21.2",
-		"jest": "^30.0.3",
-		"tsx": "^4.20.3",
-		"viem": "^2.30.5",
+		"viem": "2.37.2",
 		"zod": "^3.24.2"
 	},
 	"keywords": [

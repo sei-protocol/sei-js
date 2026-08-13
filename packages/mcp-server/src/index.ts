@@ -1,7 +1,7 @@
-import { getServer } from './server/server.js';
-import { createTransport } from './server/transport/index.js';
 import { isWalletEnabled } from './core/config.js';
 import { parseArgs } from './server/args.js';
+import { getServer } from './server/server.js';
+import { createTransport } from './server/transport/index.js';
 
 export const main = async () => {
 	try {

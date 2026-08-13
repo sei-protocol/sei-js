@@ -1,10 +1,14 @@
-import { beforeEach, describe, expect, jest, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Address, EstimateGasParameters, Hash, TransactionReceipt } from 'viem';
 import { getPublicClient } from '../../../core/services/clients.js';
 import { estimateGas, getChainId, getTransaction, getTransactionCount, getTransactionReceipt } from '../../../core/services/transactions.js';
 
 // Mock dependencies
-jest.mock('../../../core/services/clients.js');
+jest.mock('../../../core/services/clients.js', () => ({
+	getPublicClient: jest.fn(),
+	getWalletClientFromProvider: jest.fn(),
+	getAddressFromProvider: jest.fn()
+}));
 
 describe('Transactions Service', () => {
 	// Mock values

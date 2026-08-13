@@ -1,4 +1,4 @@
-import { jest, describe, it, expect, beforeEach, afterEach } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 
 // Mock all dependencies
@@ -47,7 +47,6 @@ describe('Server Module', () => {
 
 	beforeEach(async () => {
 		jest.clearAllMocks();
-		jest.resetModules();
 
 		// Create mock server instance
 		mockServerInstance = {

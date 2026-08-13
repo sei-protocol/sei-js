@@ -1,11 +1,11 @@
-import { describe, expect, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Chain } from 'viem';
 import { sei, seiDevnet, seiTestnet } from 'viem/chains';
 import {
+	chainMap,
 	DEFAULT_CHAIN_ID,
 	DEFAULT_NETWORK,
 	DEFAULT_RPC_URL,
-	chainMap,
 	getChain,
 	getRpcUrl,
 	getSupportedNetworks,
@@ -96,7 +96,7 @@ describe('chains module', () => {
 		test('returns sei chain when network name exists but chain mapping is missing', () => {
 			// Create a temporary entry in networkNameMap for a non-existent chain ID
 			const originalNetworkNameMap = { ...networkNameMap };
-			// @ts-ignore - Intentionally modifying for test
+			// @ts-expect-error - Intentionally modifying for test
 			networkNameMap['test-network'] = 9999;
 
 			try {
@@ -104,10 +104,10 @@ describe('chains module', () => {
 				expect(getChain('test-network')).toBe(sei);
 			} finally {
 				// Restore the original map
-				// @ts-ignore - Restoring original state
+				// @ts-expect-error - Restoring original state
 				for (const key of Object.keys(networkNameMap)) {
 					if (key !== 'sei' && key !== 'sei-testnet' && key !== 'sei-devnet') {
-						// @ts-ignore - Cleanup
+						// @ts-expect-error - Cleanup
 						delete networkNameMap[key];
 					}
 				}

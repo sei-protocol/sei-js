@@ -1,11 +1,15 @@
-import { beforeEach, describe, expect, jest, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Address } from 'viem';
 import { formatUnits, getContract } from 'viem';
 import { getPublicClient } from '../../../core/services/clients.js';
 import { getERC20TokenInfo, getERC721TokenMetadata, getERC1155TokenURI } from '../../../core/services/tokens.js';
 
 // Only mock the clients service
-jest.mock('../../../core/services/clients.js');
+jest.mock('../../../core/services/clients.js', () => ({
+	getPublicClient: jest.fn(),
+	getWalletClientFromProvider: jest.fn(),
+	getAddressFromProvider: jest.fn()
+}));
 
 // Mock viem module
 jest.mock('viem', () => ({

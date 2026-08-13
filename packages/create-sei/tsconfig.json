@@ -3,10 +3,12 @@
 	"exclude": ["node_modules", "dist", "test", "**/*.spec.ts", "**/*.test.ts", "**/*.spec.js", "**/*.test.js", "**/__tests__/**/*"],
 	"compilerOptions": {
 		"outDir": "./dist",
+		"rootDir": "./src",
 		"target": "ES2020",
 		"useDefineForClassFields": true,
 		"lib": ["ES2020", "DOM", "DOM.Iterable"],
 		"module": "ESNext",
+		"moduleResolution": "Bundler",
 		"skipLibCheck": true,
 		"isolatedModules": true,
 		"jsx": "react-jsx",

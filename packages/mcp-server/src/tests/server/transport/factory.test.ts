@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { TransportConfig } from '../../../server/transport/types.js';
 
 // Mock transport classes
@@ -250,17 +250,13 @@ describe('Transport Factory', () => {
 				{ mode: 'http-sse', walletMode: 'disabled', port: 9000, host: '127.0.0.1', path: '/sse' }
 			];
 
-			const mockInstances = [
-				{ mode: 'stdio' },
-				{ mode: 'streamable-http' },
-				{ mode: 'http-sse' }
-			];
+			const mockInstances = [{ mode: 'stdio' }, { mode: 'streamable-http' }, { mode: 'http-sse' }];
 
 			StdioTransport.mockImplementation(() => mockInstances[0]);
 			StreamableHttpTransport.mockImplementation(() => mockInstances[1]);
 			HttpSseTransport.mockImplementation(() => mockInstances[2]);
 
-			const transports = configs.map(config => createTransport(config));
+			const transports = configs.map((config) => createTransport(config));
 
 			expect(transports).toHaveLength(3);
 			expect(StdioTransport).toHaveBeenCalledTimes(1);
@@ -287,8 +283,7 @@ describe('Transport Factory', () => {
 				{ mode: 'streamable-http', id: 3 }
 			];
 
-			StreamableHttpTransport
-				.mockImplementationOnce(() => mockInstances[0])
+			StreamableHttpTransport.mockImplementationOnce(() => mockInstances[0])
 				.mockImplementationOnce(() => mockInstances[1])
 				.mockImplementationOnce(() => mockInstances[2]);
 

@@ -12,27 +12,15 @@ export class DisabledWalletProvider implements WalletProvider {
 	}
 
 	async getAddress(): Promise<Address> {
-		throw new WalletProviderError(
-			'Wallet functionality is disabled. Enable wallet functionality to use this feature.',
-			'disabled',
-			'WALLET_DISABLED'
-		);
+		throw new WalletProviderError('Wallet functionality is disabled. Enable wallet functionality to use this feature.', 'disabled', 'WALLET_DISABLED');
 	}
 
-	async signTransaction(tx: TransactionRequest): Promise<Hash> {
-		throw new WalletProviderError(
-			'Wallet functionality is disabled. Enable wallet functionality to sign transactions.',
-			'disabled',
-			'WALLET_DISABLED'
-		);
+	async signTransaction(_tx: TransactionRequest): Promise<Hash> {
+		throw new WalletProviderError('Wallet functionality is disabled. Enable wallet functionality to sign transactions.', 'disabled', 'WALLET_DISABLED');
 	}
 
-	async getWalletClient(network: string): Promise<WalletClient> {
-		throw new WalletProviderError(
-			'Wallet functionality is disabled. Enable wallet functionality to create wallet clients.',
-			'disabled',
-			'WALLET_DISABLED'
-		);
+	async getWalletClient(_network: string): Promise<WalletClient> {
+		throw new WalletProviderError('Wallet functionality is disabled. Enable wallet functionality to create wallet clients.', 'disabled', 'WALLET_DISABLED');
 	}
 
 	getName(): string {
