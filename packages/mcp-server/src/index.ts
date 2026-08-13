@@ -1,3 +1,4 @@
+import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { isWalletEnabled } from './core/config.js';
 import { parseArgs } from './server/args.js';
@@ -18,6 +19,6 @@ export const main = async () => {
 	}
 };
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
 	await main();
 }

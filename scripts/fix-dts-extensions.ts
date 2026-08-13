@@ -11,7 +11,7 @@ const walk = async (dir: string): Promise<string[]> => {
 		const path = join(dir, entry.name);
 		if (entry.isDirectory()) {
 			files.push(...(await walk(path)));
-		} else if (entry.name.endsWith('.d.ts') && !entry.name.endsWith('.d.ts.map')) {
+		} else if (entry.name.endsWith('.d.ts')) {
 			files.push(path);
 		}
 	}

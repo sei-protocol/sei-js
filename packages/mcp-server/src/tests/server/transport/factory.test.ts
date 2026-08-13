@@ -31,6 +31,9 @@ describe('Transport Factory', () => {
 		StdioTransport = stdioModule.StdioTransport as jest.MockedClass<any>;
 		StreamableHttpTransport = streamableHttpModule.StreamableHttpTransport as jest.MockedClass<any>;
 		HttpSseTransport = httpSseModule.HttpSseTransport as jest.MockedClass<any>;
+		StdioTransport.mockReset().mockImplementation(() => undefined);
+		StreamableHttpTransport.mockReset().mockImplementation(() => undefined);
+		HttpSseTransport.mockReset().mockImplementation(() => undefined);
 
 		// Import factory after mocks are set up
 		const factoryModule = await import('../../../server/transport/factory.js');

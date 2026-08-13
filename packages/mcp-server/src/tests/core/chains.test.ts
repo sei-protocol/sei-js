@@ -74,6 +74,11 @@ describe('chains module', () => {
 			expect(resolveChainId('713715')).toBe(713715);
 		});
 
+		test('resolves hex-encoded chain IDs', () => {
+			expect(resolveChainId('0x531')).toBe(1329);
+			expect(resolveChainId('0x530')).toBe(1328);
+		});
+
 		test('defaults to DEFAULT_CHAIN_ID for unknown network names', () => {
 			expect(resolveChainId('unknown-network')).toBe(DEFAULT_CHAIN_ID);
 		});

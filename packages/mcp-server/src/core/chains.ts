@@ -46,8 +46,8 @@ export function resolveChainId(chainIdentifier: number | string): number {
 	}
 
 	// Try parsing as a number
-	const parsedId = Number.parseInt(networkName, 10);
-	if (!Number.isNaN(parsedId)) {
+	const parsedId = Number(networkName);
+	if (Number.isSafeInteger(parsedId) && parsedId >= 0) {
 		return parsedId;
 	}
 

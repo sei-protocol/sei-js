@@ -103,6 +103,6 @@ question, not a defect.
 - **`noImplicitAny: false` in `tsconfig.base.json`.** This is a deliberate
   repo-wide setting. Flag an untyped value when it actually causes an unsound
   path, not because the compiler permitted it.
-- **The `create-sei` templates are excluded from the root Biome config** and
-  carry their own toolchain. Do not apply root formatting rules to anything
-  under `packages/create-sei/templates/`.
+- **The `create-sei` templates and extensions are excluded from the root Biome
+  config** and carry their own toolchain. Do not apply root formatting rules to
+  scaffold sources under `packages/create-sei/{templates,extensions}/`.

@@ -48,15 +48,21 @@ describe('Transfer Service', () => {
 	};
 
 	beforeEach(() => {
-		// Reset all mocks before each test
-		jest.resetAllMocks();
-
-		// Setup default mock implementations with type assertions
-		(getPublicClient as jest.Mock).mockReturnValue(mockPublicClient);
-		(getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClient));
-		(getPrivateKeyAsHex as jest.MockedFunction<typeof getPrivateKeyAsHex>).mockReturnValue(
-			'0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
-		);
+		jest.clearAllMocks();
+		(getPublicClient as jest.Mock).mockReset().mockReturnValue(mockPublicClient);
+		(getWalletClientFromProvider as jest.Mock).mockReset().mockReturnValue(Promise.resolve(mockWalletClient));
+		(getPrivateKeyAsHex as jest.MockedFunction<typeof getPrivateKeyAsHex>)
+			.mockReset()
+			.mockReturnValue('0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef');
+		mockPublicClient.readContract.mockReset().mockImplementation((params: { functionName: string }) => {
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'decimals') return 18;
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'symbol') return 'TEST';
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'name') return 'Test NFT';
+			return null;
+		});
+		mockPublicClient.getContract.mockReset();
+		mockWalletClient.sendTransaction.mockReset().mockImplementation(() => Promise.resolve(defaultMockHash));
+		mockWalletClient.writeContract.mockReset().mockImplementation(() => Promise.resolve(defaultMockHash));
 	});
 
 	describe('transferSei', () => {

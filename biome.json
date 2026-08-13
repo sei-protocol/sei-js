@@ -14,6 +14,7 @@
 			"!**/node_modules",
 			"!**/bun.lock",
 			"!packages/create-sei/templates",
+			"!packages/create-sei/extensions",
 			"!packages/registry/chain-registry",
 			"!packages/registry/community-assetlist"
 		]
