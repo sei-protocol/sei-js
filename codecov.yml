@@ -1,7 +1,4 @@
 flags:
-  create-sei:
-    paths:
-      - packages/create-sei/**
   precompiles:
     paths:
       - packages/precompiles/**
@@ -11,13 +8,12 @@ flags:
   sei-global-wallet:
     paths:
       - packages/sei-global-wallet/**
+  mcp-server:
+    paths:
+      - packages/mcp-server/**
 coverage:
   status:
     project:
-      create-sei:
-        target: 80%
-        flags:
-          - create-sei
       precompiles:
         target: 80%
         flags:

@@ -1,7 +1,9 @@
-import { getServer } from './server/server.js';
-import { createTransport } from './server/transport/index.js';
+import { realpathSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import { isWalletEnabled } from './core/config.js';
 import { parseArgs } from './server/args.js';
+import { getServer } from './server/server.js';
+import { createTransport } from './server/transport/index.js';
 
 export const main = async () => {
 	try {
@@ -17,4 +19,15 @@ export const main = async () => {
 	}
 };
 
-main();
+export const isDirectExecution = (moduleUrl: string, entrypoint = process.argv[1]): boolean => {
+	if (!entrypoint) return false;
+	try {
+		return moduleUrl === pathToFileURL(realpathSync(entrypoint)).href;
+	} catch {
+		return false;
+	}
+};
+
+if (isDirectExecution(import.meta.url)) {
+	await main();
+}

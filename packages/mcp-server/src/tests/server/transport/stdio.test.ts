@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 
 // Mock dependencies
 jest.mock('@modelcontextprotocol/sdk/server/stdio.js', () => ({
@@ -28,7 +28,7 @@ describe('StdioTransport', () => {
 		};
 
 		// Spy on console
-		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 	});
 
 	afterEach(() => {
@@ -75,7 +75,7 @@ describe('StdioTransport', () => {
 		it('should handle server connection errors', async () => {
 			const mockTransportInstance = {};
 			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
-			
+
 			const connectionError = new Error('Connection failed');
 			mockServer.connect.mockRejectedValue(connectionError);
 
@@ -102,12 +102,12 @@ describe('StdioTransport', () => {
 	describe('stop', () => {
 		it('should set transport to undefined', async () => {
 			const transport = new StdioTransport();
-			
+
 			// Set up transport first
 			const mockTransportInstance = {};
 			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
 			await transport.start(mockServer);
-			
+
 			// Verify transport is set
 			expect((transport as any).transport).toBe(mockTransportInstance);
 
@@ -119,7 +119,7 @@ describe('StdioTransport', () => {
 
 		it('should resolve immediately if no transport exists', async () => {
 			const transport = new StdioTransport();
-			
+
 			// Don't start transport, just stop
 			await expect(transport.stop()).resolves.toBeUndefined();
 			expect((transport as any).transport).toBeUndefined();
@@ -127,12 +127,12 @@ describe('StdioTransport', () => {
 
 		it('should not throw errors during stop', async () => {
 			const transport = new StdioTransport();
-			
+
 			// Start and then stop multiple times
 			const mockTransportInstance = {};
 			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
 			await transport.start(mockServer);
-			
+
 			await expect(transport.stop()).resolves.toBeUndefined();
 			await expect(transport.stop()).resolves.toBeUndefined();
 			await expect(transport.stop()).resolves.toBeUndefined();
@@ -143,7 +143,7 @@ describe('StdioTransport', () => {
 		it('should always return stdio', () => {
 			const transport = new StdioTransport();
 			expect(transport.mode).toBe('stdio');
-			
+
 			// Verify it's readonly - TypeScript prevents assignment but doesn't throw at runtime
 			// The readonly modifier is enforced at compile time, not runtime
 			expect(transport.mode).toBe('stdio');
@@ -171,7 +171,7 @@ describe('StdioTransport', () => {
 		it('should handle multiple start calls', async () => {
 			const mockTransportInstance1 = { id: 1 };
 			const mockTransportInstance2 = { id: 2 };
-			
+
 			let callCount = 0;
 			mockStdioServerTransport.mockImplementation(() => {
 				callCount++;

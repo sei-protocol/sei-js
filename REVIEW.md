@@ -1,7 +1,7 @@
 # Review guidelines for AI agents
 
 Repo-specific conventions for automated PR review (Codex, Cursor, Claude, and
-any other AI reviewer). This is a pnpm workspace that publishes five
+any other AI reviewer). This is a Bun workspace that publishes five
 independently versioned `@sei-js/*` packages to npm, so a defect ships to every
 downstream dApp that upgrades rather than to a single deployment we control.
 Calibrate accordingly: a wrong precompile address or a weakened wallet guard is
@@ -59,10 +59,9 @@ the code without releasing it, which is the common miss on this repo.
 Ask for a changeset when a published package's behaviour, types, or
 dependencies change. Docs-only, CI-only, and changes confined to
 `packages/create-sei/templates/**` generally don't need one, though the repo
-has deliberately added patch changesets across all six packages for
-release-note visibility (the `@asyncapi` pinning in `pnpm.overrides` is the
-precedent). Absence of a changeset on that kind of PR is a question, not a
-defect.
+has deliberately added patch changesets across all five packages for
+release-note visibility. Absence of a changeset on that kind of PR is a
+question, not a defect.
 
 ## 4. Known non-issues — do not flag these
 
@@ -88,22 +87,22 @@ defect.
   `submodules: recursive`; local source builds must initialize them explicitly.
   Their JSON is vendored upstream — review the TypeScript wrappers, not the
   data.
-- **Biome findings are not enforced anywhere.** `biome.json` configures tabs,
-  160-column lines, single quotes and no trailing commas, but no package
-  defines a `biome` script and `.github/workflows/checks.yml` runs only
-  `pnpm build:all` and `pnpm test:all`. Match the surrounding style; do not
-  file formatting-only findings as blocking.
+- **Biome is enforced in CI.** `bun run check` runs in `.github/workflows/checks.yml`
+  with tabs, 160-column lines, single quotes and no trailing commas. Match that
+  style; formatting-only findings that `biome check` already catches do not
+  need a separate review comment.
 - **Test file naming is inconsistent across packages.** `mcp-server` and
   `create-sei` use `*.test.ts`; `precompiles`, `registry` and
   `sei-global-wallet` use `*.spec.ts` under `__tests__/`. Follow the
   convention of the package being changed rather than proposing a repo-wide
   rename.
-- **`mcp-server` has no Codecov target.** `codecov.yml` defines 80% project
-  targets for the other four packages only. Thin coverage on an mcp-server PR
-  is worth mentioning on its merits, but it does not fail a gate.
+- **`mcp-server` and `create-sei` have no Codecov target.** `codecov.yml`
+  defines 80% project targets for the three library packages with meaningful
+  source coverage. Thin coverage elsewhere is worth mentioning on its merits,
+  but it does not fail a gate.
 - **`noImplicitAny: false` in `tsconfig.base.json`.** This is a deliberate
   repo-wide setting. Flag an untyped value when it actually causes an unsound
   path, not because the compiler permitted it.
-- **The `create-sei` templates are excluded from the root Biome config** and
-  carry their own toolchain. Do not apply root formatting rules to anything
-  under `packages/create-sei/templates/`.
+- **The `create-sei` templates and extensions are excluded from the root Biome
+  config** and carry their own toolchain. Do not apply root formatting rules to
+  scaffold sources under `packages/create-sei/{templates,extensions}/`.

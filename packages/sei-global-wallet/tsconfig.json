@@ -1,7 +1,12 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"include": ["src"],
+	"exclude": ["src/**/__tests__", "src/**/*.spec.ts", "src/**/*.test.ts"],
 	"compilerOptions": {
-		"outDir": "./dist/types"
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"declaration": true
 	}
 }

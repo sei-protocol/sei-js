@@ -4,9 +4,10 @@
 	"exclude": ["node_modules", "dist", "src/tests/**/*", "**/*.spec.ts", "**/*.test.ts", "**/*.spec.js", "**/*.test.js", "**/__tests__/**/*"],
 	"compilerOptions": {
 		"rootDir": "./src",
-		"outDir": "./dist/esm",
+		"outDir": "./dist",
 		"moduleResolution": "Node16",
 		"module": "Node16",
-		"target": "ES2020"
+		"target": "ES2020",
+		"declaration": true
 	}
 }

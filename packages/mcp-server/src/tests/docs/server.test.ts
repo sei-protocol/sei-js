@@ -1,9 +1,9 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport, StreamableHTTPError } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 
-import { createDocsSearchTool, DOCS_MCP_URL, MAX_DOCS_RESPONSE_CHARS, type DocsMcpClientFactory } from '../../docs/server.js';
+import { createDocsSearchTool, DOCS_MCP_URL, type DocsMcpClientFactory, MAX_DOCS_RESPONSE_CHARS } from '../../docs/server.js';
 import { createMockServer } from '../core/helpers/tool-test-helpers.js';
 
 const docsClientInfo = { name: '@sei-js/mcp-server', version: '0.3.3' };
@@ -74,8 +74,8 @@ describe('documentation search', () => {
 			undefined,
 			{ timeout: 30_000 }
 		);
-		expect(firstResult).toEqual(remoteResult);
-		expect(secondResult).toEqual(remoteResult);
+		expect(firstResult).toEqual(remoteResult as unknown as typeof firstResult);
+		expect(secondResult).toEqual(remoteResult as unknown as typeof secondResult);
 		expect(close).not.toHaveBeenCalled();
 	});
 

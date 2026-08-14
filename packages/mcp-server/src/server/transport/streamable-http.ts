@@ -1,10 +1,10 @@
-import express, { type Request, type Response } from 'express';
 import type { Server } from 'node:http';
-import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { McpTransport, TransportMode, WalletMode } from './types.js';
-import { createCorsMiddleware, validateSecurityConfig } from './security.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import express, { type Request, type Response } from 'express';
 import { getServer } from '../server.js';
+import { createCorsMiddleware, validateSecurityConfig } from './security.js';
+import type { McpTransport, TransportMode, WalletMode } from './types.js';
 
 export class StreamableHttpTransport implements McpTransport {
 	public readonly mode: TransportMode = 'streamable-http';
@@ -30,7 +30,7 @@ export class StreamableHttpTransport implements McpTransport {
 
 		this.app = express();
 		this.app.use(express.json());
-		
+
 		// Secure CORS - no cross-origin allowed by default
 		this.app.use(createCorsMiddleware());
 
@@ -43,7 +43,7 @@ export class StreamableHttpTransport implements McpTransport {
 			try {
 				// Create fresh MCP server for this request (stateless design)
 				const mcpServer = await getServer();
-				
+
 				const transport = new StreamableHTTPServerTransport({
 					sessionIdGenerator: undefined // For stateless servers
 				});

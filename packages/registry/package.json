@@ -2,19 +2,26 @@
 	"name": "@sei-js/registry",
 	"version": "1.0.4",
 	"description": "TypeScript library for Sei chain constants and assets",
-	"main": "./dist/cjs/src/index.js",
-	"module": "./dist/esm/src/index.mjs",
-	"types": "./dist/types/src/index.d.ts",
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"sideEffects": false,
 	"files": [
 		"dist"
 	],
 	"scripts": {
-		"build": "rimraf dist && pnpm run build:cjs && pnpm run build:esm && pnpm run build:types",
-		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
-		"build:esm": "esbuild src/index.ts --bundle --format=esm --platform=neutral --packages=external --target=es2020 --outfile=dist/esm/src/index.mjs",
-		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"test": "jest"
+		"build": "rm -rf dist && bun run build:types && bun run build:esm",
+		"build:types": "tsc --project ./tsconfig.json && printf \"export * from './src/index.js';\\n\" > dist/index.d.ts && bun ../../scripts/fix-dts-extensions.ts dist",
+		"build:esm": "esbuild src/index.ts --bundle --format=esm --platform=neutral --packages=external --target=es2020 --outfile=dist/index.js",
+		"test": "bun test --isolate src"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [
@@ -31,5 +38,9 @@
 	"license": "MIT",
 	"publishConfig": {
 		"access": "public"
+	},
+	"devDependencies": {
+		"esbuild": "^0.28.2",
+		"typescript": "^5.8.2"
 	}
 }

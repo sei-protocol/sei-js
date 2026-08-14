@@ -1,8 +1,11 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"include": ["./src/**/*", "./chain-registry/**/*", "./community-assetlist/**/*"],
+	"exclude": ["src/**/__tests__", "src/**/*.spec.ts", "src/**/*.test.ts"],
 	"compilerOptions": {
-		"outDir": "./dist/types",
-		"rootDir": "./"
+		"outDir": "./dist",
+		"rootDir": "./",
+		"declaration": true,
+		"emitDeclarationOnly": true
 	}
 }

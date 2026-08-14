@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-import boxen from 'boxen';
-import inquirer from 'inquirer';
 
 import fs from 'node:fs';
-import path from 'node:path';
-import { dirname } from 'node:path';
+import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import boxen from 'boxen';
 import { Command } from 'commander';
+import inquirer from 'inquirer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -77,7 +76,7 @@ async function listExtensions(): Promise<void> {
 		for (const ext of extensionDirs) {
 			console.log(`  - ${ext}`);
 		}
-	} catch (error) {
+	} catch (_error) {
 		console.log('No extensions directory found.');
 	}
 }
@@ -121,14 +120,14 @@ async function runWizard(options: WizardOptions): Promise<void> {
 			await fs.promises.access(extensionPath);
 			await fs.promises.cp(extensionPath, dst, { recursive: true });
 			console.log(`Applied extension: ${options.extension}`);
-		} catch (error) {
+		} catch (_error) {
 			console.log(`Warning: Extension '${options.extension}' not found. Continuing with base template.`);
 		}
 	}
 
 	const extensionText = options.extension ? ` with ${options.extension} extension` : '';
 	console.log(`Project setup complete! Using template ${templateName}${extensionText}\n`);
-	console.log(`To start your app, run: \n > cd ${dAppName} \n > pnpm \n > pnpm dev\n`);
+	console.log(`To start your app, run: \n > cd ${dAppName} \n > bun install \n > bun run dev\n`);
 }
 
 program

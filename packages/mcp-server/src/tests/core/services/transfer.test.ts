@@ -1,11 +1,29 @@
-import { describe, test, expect, beforeEach, jest } from '@jest/globals';
-import { getPublicClient, getWalletClientFromProvider, transferSei, transferERC20, approveERC20, transferERC721, transferERC1155 } from '../../../core/services';
-import { getPrivateKeyAsHex } from '../../../core/config.js';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Hash } from 'viem';
+import { getPrivateKeyAsHex } from '../../../core/config.js';
+import {
+	approveERC20,
+	getPublicClient,
+	getWalletClientFromProvider,
+	transferERC20,
+	transferERC721,
+	transferERC1155,
+	transferSei
+} from '../../../core/services';
 
 // Mock the dependencies
-jest.mock('../../../core/services/clients.js');
-jest.mock('../../../core/config.js');
+jest.mock('../../../core/services/clients.js', () => ({
+	getPublicClient: jest.fn(),
+	getWalletClientFromProvider: jest.fn(),
+	getAddressFromProvider: jest.fn()
+}));
+jest.mock('../../../core/config.js', () => ({
+	getPrivateKeyAsHex: jest.fn(),
+	isWalletEnabled: jest.fn(),
+	getWalletMode: jest.fn(),
+	formatPrivateKey: jest.fn(),
+	config: {}
+}));
 
 describe('Transfer Service', () => {
 	const mockPublicClient = {
@@ -30,15 +48,21 @@ describe('Transfer Service', () => {
 	};
 
 	beforeEach(() => {
-		// Reset all mocks before each test
-		jest.resetAllMocks();
-
-		// Setup default mock implementations with type assertions
-		(getPublicClient as jest.Mock).mockReturnValue(mockPublicClient);
-		(getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClient));
-		(getPrivateKeyAsHex as jest.MockedFunction<typeof getPrivateKeyAsHex>).mockReturnValue(
-			'0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
-		);
+		jest.clearAllMocks();
+		(getPublicClient as jest.Mock).mockReset().mockReturnValue(mockPublicClient);
+		(getWalletClientFromProvider as jest.Mock).mockReset().mockReturnValue(Promise.resolve(mockWalletClient));
+		(getPrivateKeyAsHex as jest.MockedFunction<typeof getPrivateKeyAsHex>)
+			.mockReset()
+			.mockReturnValue('0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef');
+		mockPublicClient.readContract.mockReset().mockImplementation((params: { functionName: string }) => {
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'decimals') return 18;
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'symbol') return 'TEST';
+			if (params && typeof params === 'object' && 'functionName' in params && params.functionName === 'name') return 'Test NFT';
+			return null;
+		});
+		mockPublicClient.getContract.mockReset();
+		mockWalletClient.sendTransaction.mockReset().mockImplementation(() => Promise.resolve(defaultMockHash));
+		mockWalletClient.writeContract.mockReset().mockImplementation(() => Promise.resolve(defaultMockHash));
 	});
 
 	describe('transferSei', () => {
@@ -107,7 +131,9 @@ describe('Transfer Service', () => {
 		test('should throw error when wallet provider fails', async () => {
 			(getWalletClientFromProvider as jest.Mock).mockRejectedValue(new Error('Wallet provider unavailable'));
 
-			await expect(transferERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Wallet provider unavailable');
+			await expect(transferERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow(
+				'Wallet provider unavailable'
+			);
 		});
 
 		test('should throw error when wallet account is not initialized', async () => {
@@ -118,7 +144,9 @@ describe('Transfer Service', () => {
 			};
 			(getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClientWithoutAccount));
 
-			await expect(transferERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Wallet account not initialized properly');
+			await expect(transferERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow(
+				'Wallet account not initialized properly'
+			);
 		});
 	});
 
@@ -154,7 +182,9 @@ describe('Transfer Service', () => {
 		test('should throw error when wallet provider fails', async () => {
 			(getWalletClientFromProvider as jest.Mock).mockRejectedValue(new Error('Wallet provider unavailable'));
 
-			await expect(approveERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Wallet provider unavailable');
+			await expect(approveERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow(
+				'Wallet provider unavailable'
+			);
 		});
 
 		test('should throw error when wallet account is not initialized', async () => {
@@ -165,7 +195,9 @@ describe('Transfer Service', () => {
 			};
 			(getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClientWithoutAccount));
 
-			await expect(approveERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow('Wallet account not initialized properly');
+			await expect(approveERC20('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', '1.0')).rejects.toThrow(
+				'Wallet account not initialized properly'
+			);
 		});
 	});
 
@@ -198,7 +230,9 @@ describe('Transfer Service', () => {
 		test('should throw error when wallet provider fails', async () => {
 			(getWalletClientFromProvider as jest.Mock).mockRejectedValue(new Error('Wallet provider unavailable'));
 
-			await expect(transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n)).rejects.toThrow('Wallet provider unavailable');
+			await expect(transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n)).rejects.toThrow(
+				'Wallet provider unavailable'
+			);
 		});
 
 		test('should throw error when wallet account is not initialized', async () => {
@@ -209,15 +243,17 @@ describe('Transfer Service', () => {
 			};
 			(getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClientWithoutAccount));
 
-			await expect(transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n)).rejects.toThrow('Wallet account not initialized properly');
+			await expect(transferERC721('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n)).rejects.toThrow(
+				'Wallet account not initialized properly'
+			);
 		});
 
 		test('should handle errors when fetching NFT metadata', async () => {
 			const mockHash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' as Hash;
-			
+
 			// Mock successful transaction but failed metadata fetch
 			(mockWalletClient.writeContract as jest.Mock).mockImplementation(() => Promise.resolve(mockHash));
-			
+
 			// Mock read contract to throw error for metadata
 			(mockPublicClient.readContract as jest.Mock).mockImplementation(() => {
 				throw new Error('Failed to fetch metadata');
@@ -257,7 +293,9 @@ describe('Transfer Service', () => {
 		test('should throw error when wallet provider fails', async () => {
 			(getWalletClientFromProvider as jest.Mock).mockRejectedValue(new Error('Wallet provider unavailable'));
 
-			await expect(transferERC1155('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n, '1')).rejects.toThrow('Wallet provider unavailable');
+			await expect(transferERC1155('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n, '1')).rejects.toThrow(
+				'Wallet provider unavailable'
+			);
 		});
 
 		test('should throw error when wallet account is not initialized', async () => {
@@ -268,7 +306,9 @@ describe('Transfer Service', () => {
 			};
 			(getWalletClientFromProvider as jest.Mock).mockReturnValue(Promise.resolve(mockWalletClientWithoutAccount));
 
-			await expect(transferERC1155('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n, '1')).rejects.toThrow('Wallet account not initialized properly');
+			await expect(transferERC1155('0x1234567890123456789012345678901234567890', '0x0987654321098765432109876543210987654321', 1n, '1')).rejects.toThrow(
+				'Wallet account not initialized properly'
+			);
 		});
 	});
 });

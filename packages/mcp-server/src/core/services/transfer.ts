@@ -1,4 +1,4 @@
-import { type Address, type Hash, getContract, parseEther, parseUnits } from 'viem';
+import { type Address, getContract, type Hash, parseEther, parseUnits } from 'viem';
 import { DEFAULT_NETWORK } from '../chains.js';
 import { getPublicClient, getWalletClientFromProvider } from './clients.js';
 import * as services from './index.js';

@@ -1,21 +1,19 @@
 'use client';
 
-import React from 'react';
 import { CodeHighlight } from '@mantine/code-highlight';
 import { ActionIcon, Badge, Button, Card, Collapse, Container, Flex, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { BANK_PRECOMPILE_ADDRESS, VIEM_BANK_PRECOMPILE_ABI } from '@sei-js/precompiles';
 import { IconBulb, IconChevronDown, IconChevronUp, IconCopy, IconDatabase } from '@tabler/icons-react';
 import { useState } from 'react';
-import { type ReadContractParameters, formatEther } from 'viem';
-import { useAccount, usePublicClient } from 'wagmi';
+import type { ReadContractParameters } from 'viem';
+import { usePublicClient } from 'wagmi';
 
 function Examples() {
 	const [supply, setSupply] = useState('');
 	const [showCode, setShowCode] = useState(false);
 
 	const publicClient = usePublicClient();
-	const { address } = useAccount();
 
 	const formatLargeSeiNumber = (num: string, decimals: number): string => {
 		if (num.length > 10) {

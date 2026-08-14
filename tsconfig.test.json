@@ -1,0 +1,12 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true,
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"types": ["bun"],
+		"lib": ["ES2022", "DOM", "DOM.Iterable"]
+	},
+	"include": ["bun-test.d.ts", "packages/**/*.test.ts", "packages/**/*.spec.ts", "packages/**/__tests__/**/*.ts"],
+	"exclude": ["node_modules", "dist", "packages/create-sei/templates"]
+}

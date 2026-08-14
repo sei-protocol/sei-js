@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, jest, test } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import { getBalance, getERC20Balance, getERC721Balance, getERC1155Balance, isNFTOwner } from '../../../core/services';
 
 // Create valid test addresses with proper type assertions

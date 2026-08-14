@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
-import type { Request, Response, NextFunction } from 'express';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
+import type { NextFunction, Request, Response } from 'express';
 
 describe('Security Module', () => {
 	let createCorsMiddleware: typeof import('../../../server/transport/security.js').createCorsMiddleware;
@@ -9,10 +9,10 @@ describe('Security Module', () => {
 
 	beforeEach(async () => {
 		jest.clearAllMocks();
-		
+
 		// Spy on console.error
-		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
-		
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
 		// Spy on process.exit to prevent actual exit
 		processExitSpy = jest.spyOn(process, 'exit').mockImplementation((code?: number | string | null | undefined) => {
 			throw new Error(`process.exit called with code ${code}`);
@@ -37,7 +37,7 @@ describe('Security Module', () => {
 
 		it('should return 204 for OPTIONS preflight requests', () => {
 			const middleware = createCorsMiddleware();
-			
+
 			const mockReq = { method: 'OPTIONS' } as Request;
 			const mockRes = {
 				sendStatus: jest.fn().mockReturnThis()
@@ -52,7 +52,7 @@ describe('Security Module', () => {
 
 		it('should call next() for non-OPTIONS requests', () => {
 			const middleware = createCorsMiddleware();
-			
+
 			const mockReq = { method: 'POST' } as Request;
 			const mockRes = {
 				sendStatus: jest.fn()
@@ -67,7 +67,7 @@ describe('Security Module', () => {
 
 		it('should call next() for GET requests', () => {
 			const middleware = createCorsMiddleware();
-			
+
 			const mockReq = { method: 'GET' } as Request;
 			const mockRes = {} as Response;
 			const mockNext = jest.fn() as NextFunction;
@@ -172,4 +172,3 @@ describe('Security Module', () => {
 		});
 	});
 });
-

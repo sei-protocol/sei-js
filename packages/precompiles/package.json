@@ -2,19 +2,54 @@
 	"name": "@sei-js/precompiles",
 	"version": "2.1.3",
 	"description": "TypeScript library for EVM interactions on the Sei blockchain",
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/esm/index.mjs",
-	"types": "./dist/types/index.d.ts",
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"sideEffects": false,
 	"files": [
 		"dist"
 	],
 	"scripts": {
-		"build": "rimraf dist && pnpm run build:types && pnpm run build:cjs && pnpm run build:esm",
-		"build:cjs": "tsc --outDir dist/cjs --module commonjs",
-		"build:esm": "esbuild src/index.ts --bundle --format=esm --platform=neutral --packages=external --target=es2020 --outfile=dist/esm/index.mjs",
-		"build:types": "tsc --project ./tsconfig.declaration.json",
-		"test": "jest --passWithNoTests"
+		"build": "rm -rf dist && bun run build:types && bun run build:esm",
+		"build:types": "tsc --project ./tsconfig.json && bun ../../scripts/fix-dts-extensions.ts dist",
+		"build:esm": "esbuild src/index.ts src/ethers/index.ts src/viem/index.ts src/precompiles/index.ts --bundle --splitting --format=esm --platform=neutral --packages=external --target=es2020 --outdir=dist --outbase=src --chunk-names=chunks/[name]-[hash]",
+		"test": "bun test --isolate src"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./ethers": {
+			"types": "./dist/ethers/index.d.ts",
+			"import": "./dist/ethers/index.js",
+			"default": "./dist/ethers/index.js"
+		},
+		"./viem": {
+			"types": "./dist/viem/index.d.ts",
+			"import": "./dist/viem/index.js",
+			"default": "./dist/viem/index.js"
+		},
+		"./precompiles": {
+			"types": "./dist/precompiles/index.d.ts",
+			"import": "./dist/precompiles/index.js",
+			"default": "./dist/precompiles/index.js"
+		}
+	},
+	"typesVersions": {
+		"*": {
+			"ethers": [
+				"./dist/ethers/index.d.ts"
+			],
+			"viem": [
+				"./dist/viem/index.d.ts"
+			],
+			"precompiles": [
+				"./dist/precompiles/index.d.ts"
+			]
+		}
 	},
 	"homepage": "https://github.com/sei-protocol/sei-js#readme",
 	"keywords": [
@@ -38,7 +73,9 @@
 		"viem": "2.x"
 	},
 	"devDependencies": {
+		"esbuild": "^0.28.2",
 		"ethers": "^6.0.0",
-		"viem": "2.x"
+		"typescript": "^5.8.2",
+		"viem": "2.37.2"
 	}
 }

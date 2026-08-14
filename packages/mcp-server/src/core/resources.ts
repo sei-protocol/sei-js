@@ -3,6 +3,17 @@ import type { Address, Hash } from 'viem';
 import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
 import * as services from './services/index.js';
 
+export function parseBlockNumber(blockNumber: string): number {
+	if (!/^(?:\d+|0x[0-9a-f]+)$/i.test(blockNumber)) {
+		throw new Error(`Invalid block number: ${blockNumber}`);
+	}
+	const parsed = Number(blockNumber);
+	if (!Number.isSafeInteger(parsed) || parsed < 0) {
+		throw new Error(`Invalid block number: ${blockNumber}`);
+	}
+	return parsed;
+}
+
 /**
  * Register all EVM-related resources
  * @param server The MCP server instance
@@ -87,7 +98,7 @@ export function registerEVMResources(server: McpServer) {
 		try {
 			const network = params.network as string;
 			const blockNumber = params.blockNumber as string;
-			const block = await services.getBlockByNumber(Number.parseInt(blockNumber), network);
+			const block = await services.getBlockByNumber(parseBlockNumber(blockNumber), network);
 
 			return {
 				contents: [
@@ -541,7 +552,7 @@ export function registerEVMResources(server: McpServer) {
 					if (isOwner) {
 						owner = params.address as string;
 					}
-				} catch (e) {
+				} catch (_e) {
 					// Owner info not available
 				}
 

@@ -1,8 +1,8 @@
-export * from './tokens';
 export * from './chain-info';
 export * from './gas';
-export * from './networks';
 export * from './ibc';
+export * from './networks';
+export * from './tokens';
 
 /**
  * A TypeScript type representing the official Sei network chain identifiers.

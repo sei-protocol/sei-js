@@ -1,4 +1,5 @@
-import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
+import { afterAll, afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
+
 /**
  * Integration Tests for MCP Tools
  *
@@ -13,29 +14,50 @@ import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globa
  * - Verifies proper integration between tools and the MCP server
  */
 
-import type { Address } from 'viem';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { getRpcUrl, getSupportedNetworks } from '../../core/chains.js';
-import { getPrivateKeyAsHex, isWalletEnabled, getWalletMode } from '../../core/config.js';
-import { registerEVMTools } from '../../core/tools.js';
+import type { Address } from 'viem';
+import * as chains from '../../core/chains.js';
+import * as config from '../../core/config.js';
 import * as services from '../../core/services/index.js';
-import { getWalletProvider } from '../../core/wallet/index.js';
+import { registerEVMTools } from '../../core/tools.js';
+import * as wallet from '../../core/wallet/index.js';
 import {
 	createMockServer,
 	setupBalanceMocks,
 	setupTransactionMocks,
+	type Tool,
 	testToolError,
 	testToolSuccess,
 	verifyErrorResponse,
-	verifySuccessResponse,
-	type Tool
+	verifySuccessResponse
 } from './helpers/tool-test-helpers.js';
 
-// Mock all service functions
-jest.mock('../../core/services/index.js');
-jest.mock('../../core/chains.js');
-jest.mock('../../core/config.js');
-jest.mock('../../core/wallet/index.js');
+const spyFunctions = (mod: object) => {
+	for (const [key, value] of Object.entries(mod)) {
+		if (typeof value === 'function') {
+			(jest.spyOn(mod as Record<string, CallableFunction>, key) as jest.Mock).mockImplementation(() => undefined);
+		}
+	}
+};
+
+const spiedModules = [chains, config, services, wallet];
+for (const module of spiedModules) {
+	spyFunctions(module);
+}
+
+const resetSpiedFunctions = (mod: object) => {
+	for (const value of Object.values(mod)) {
+		if (typeof value === 'function') {
+			const mock = value as jest.Mock;
+			mock.mockReset();
+			mock.mockImplementation(() => undefined);
+		}
+	}
+};
+
+const { getRpcUrl, getSupportedNetworks } = chains;
+const { getPrivateKeyAsHex, getWalletMode, isWalletEnabled } = config;
+const { getWalletProvider } = wallet;
 
 describe('EVM Tools', () => {
 	// Common test variables
@@ -50,6 +72,10 @@ describe('EVM Tools', () => {
 	let registeredTools: Map<string, Tool>;
 
 	beforeEach(async () => {
+		for (const module of spiedModules) {
+			resetSpiedFunctions(module);
+		}
+
 		// Create fresh mock server for each test
 		const mockServerResult = createMockServer();
 		server = mockServerResult.server;
@@ -79,28 +105,33 @@ describe('EVM Tools', () => {
 		// Register tools after mocks are set up
 		registerEVMTools(server);
 
-		// Mock formatJson function
-		// Create a type for the helpers object to avoid read-only property error
-		type ServiceHelpers = typeof services.helpers;
-		const helpersObj: ServiceHelpers = {
-			formatJson: jest.fn().mockImplementation((data: unknown) => JSON.stringify(data)) as unknown as (obj: unknown) => string,
-			parseEther: jest.fn() as unknown as (ether: string, unit?: 'wei' | 'gwei') => bigint,
-			validateAddress: jest.fn() as unknown as (address: string) => `0x${string}`
-		};
-
-		// Use Object.assign to avoid the read-only property error
-		Object.assign(services, { helpers: helpersObj });
+		jest
+			.spyOn(services.helpers, 'formatJson')
+			.mockReset()
+			.mockImplementation((data: unknown) => JSON.stringify(data));
+		jest
+			.spyOn(services.helpers, 'parseEther')
+			.mockReset()
+			.mockImplementation(() => undefined as never);
+		jest
+			.spyOn(services.helpers, 'validateAddress')
+			.mockReset()
+			.mockImplementation((address: string) => address as `0x${string}`);
 	});
 
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
 
+	afterAll(() => {
+		jest.restoreAllMocks();
+	});
+
 	// Helper function to check if a tool exists
 	const checkToolExists = (toolName: string) => {
 		const tool = registeredTools.get(toolName);
 		if (!tool) {
-			console.log(`Tool '${toolName}' not found. Available tools: ${Array.from(registeredTools.keys()).join(', ')}`);
+			throw new Error(`Tool '${toolName}' not found. Available tools: ${Array.from(registeredTools.keys()).join(', ')}`);
 		}
 		return tool;
 	};
@@ -644,7 +675,8 @@ describe('EVM Tools', () => {
 			const tokenId = 'abc';
 			const response = await tool.handler({ tokenAddress, tokenId, ownerAddress: address, network: mockNetwork });
 
-			verifyErrorResponse(response, 'Error fetching ERC1155 token balance: Cannot convert abc to a BigInt');
+			verifyErrorResponse(response, 'Error fetching ERC1155 token balance:');
+			expect(response.content[0].text).toMatch(/BigInt/i);
 		});
 
 		test('get_erc1155_balance - success path with default network', async () => {

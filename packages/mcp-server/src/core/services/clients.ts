@@ -1,10 +1,13 @@
-import { http, type Address, type Hex, type PublicClient, type WalletClient, createPublicClient, createWalletClient } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
+import { type Address, createPublicClient, http, type PublicClient, type WalletClient } from 'viem';
 import { DEFAULT_NETWORK, getChain, getRpcUrl } from '../chains.js';
 import { getWalletProvider } from '../wallet/index.js';
 
 // Cache for clients to avoid recreating them for each request
 const clientCache = new Map<string, PublicClient>();
+
+export function resetPublicClientCache(): void {
+	clientCache.clear();
+}
 
 /**
  * Get a public client for a specific network

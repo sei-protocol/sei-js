@@ -32,11 +32,11 @@ const loadConfig = () => {
 
 	// Parse numeric values
 	const port = Number.parseInt(getEnvValue('SERVER_PORT', DEFAULT_CONFIG.server.port.toString()), 10);
-	
+
 	// Normalize path to ensure it starts with /
 	const rawPath = getEnvValue('SERVER_PATH', DEFAULT_CONFIG.server.path);
 	const normalizedPath = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
-	
+
 	const config = {
 		server: {
 			port: Number.isNaN(port) ? DEFAULT_CONFIG.server.port : port,
@@ -54,7 +54,7 @@ const loadConfig = () => {
 			devnet: getEnvValue('DEVNET_RPC_URL', DEFAULT_CONFIG.rpc.devnet)
 		}
 	};
-	
+
 	return config;
 };
 
@@ -65,14 +65,14 @@ const validateConfig = (config: ReturnType<typeof loadConfig>) => {
 		console.error(`Error: Invalid wallet mode '${config.wallet.mode}'. Valid modes are: ${validWalletModes.join(', ')}`);
 		process.exit(1);
 	}
-	
+
 	// Validate transport mode
 	const validTransportModes = ['stdio', 'streamable-http', 'http-sse'];
 	if (!validTransportModes.includes(config.server.transport)) {
 		console.error(`Error: Invalid transport mode '${config.server.transport}'. Valid modes are: ${validTransportModes.join(', ')}`);
 		process.exit(1);
 	}
-	
+
 	// Validate port
 	if (config.server.port < 1 || config.server.port > 65535) {
 		console.error(`Error: Invalid port '${config.server.port}'. Port must be a number between 1 and 65535.`);
@@ -86,7 +86,9 @@ export const parseArgs = (): TransportConfig => {
 		.name(packageInfo.name)
 		.description(packageInfo.description)
 		.version(packageInfo.version)
-		.addHelpText('after', `
+		.addHelpText(
+			'after',
+			`
 Examples:
   Default (STDIO transport):
     $ npx ${packageInfo.name}
@@ -114,18 +116,19 @@ Environment Variables:
 Security Note:
   Wallet mode is only supported with stdio transport. HTTP transports block
   wallet mode to prevent cross-origin attacks from malicious websites.
-`);
+`
+		);
 
 	program.parse();
-	
+
 	const config = loadConfig();
-	
+
 	validateConfig(config);
 
-	return { 
-		mode: config.server.transport, 
-		port: config.server.port, 
-		host: config.server.host, 
+	return {
+		mode: config.server.transport,
+		port: config.server.port,
+		host: config.server.host,
 		path: config.server.path,
 		walletMode: config.wallet.mode
 	};

@@ -1,6 +1,6 @@
-import { jest } from '@jest/globals';
-import type { Request, Response } from 'express';
+import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Server } from 'node:http';
+import type { Request, Response } from 'express';
 
 // Mock dependencies
 jest.mock('express', () => {
@@ -10,9 +10,11 @@ jest.mock('express', () => {
 		post: jest.fn(),
 		listen: jest.fn()
 	};
-	const express = jest.fn(() => mockApp);
-	express.json = jest.fn();
-	return express;
+	const express = Object.assign(
+		jest.fn(() => mockApp),
+		{ json: jest.fn() }
+	);
+	return { default: express };
 });
 
 jest.mock('../../../server/transport/security.js', () => ({
@@ -30,7 +32,7 @@ jest.mock('../../../server/server.js', () => ({
 
 describe('StreamableHttpTransport', () => {
 	let StreamableHttpTransport: any;
-	let mockExpress: jest.MockedFunction<any>;
+	let mockExpress: jest.MockedFunction<any> & { json: jest.Mock };
 	let mockApp: any;
 	let mockServer: any;
 	let mockGetServer: jest.MockedFunction<() => Promise<any>>;
@@ -47,7 +49,7 @@ describe('StreamableHttpTransport', () => {
 		const serverModule = await import('../../../server/server.js');
 		const { StreamableHTTPServerTransport } = await import('@modelcontextprotocol/sdk/server/streamableHttp.js');
 
-		mockExpress = expressModule.default as jest.MockedFunction<any>;
+		mockExpress = (expressModule.default ?? expressModule) as unknown as typeof mockExpress;
 		mockGetServer = serverModule.getServer as jest.MockedFunction<() => Promise<any>>;
 
 		// Setup mock objects
@@ -80,7 +82,7 @@ describe('StreamableHttpTransport', () => {
 		mockExpress.json = jest.fn().mockReturnValue('json-middleware');
 		mockApp.listen.mockReturnValue(mockServer);
 		mockGetServer.mockResolvedValue(mockMcpServer);
-		(StreamableHTTPServerTransport as jest.Mock).mockImplementation(() => mockStreamableTransport);
+		(StreamableHTTPServerTransport as unknown as jest.Mock).mockImplementation(() => mockStreamableTransport);
 
 		// Setup spies
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -144,7 +146,7 @@ describe('StreamableHttpTransport', () => {
 		it('should call validateSecurityConfig on start', async () => {
 			const securityModule = await import('../../../server/transport/security.js');
 			const mockValidateSecurityConfig = securityModule.validateSecurityConfig as jest.MockedFunction<any>;
-			
+
 			const transport = new StreamableHttpTransport(8080, 'localhost', '/mcp', 'disabled');
 			await transport.start({ mock: 'server' });
 
@@ -164,9 +166,7 @@ describe('StreamableHttpTransport', () => {
 			await transport.start({ mock: 'server' });
 
 			// Get the health endpoint handler
-			const healthHandler = mockApp.get.mock.calls.find(
-				(call: any[]) => call[0] === '/health'
-			)?.[1];
+			const healthHandler = mockApp.get.mock.calls.find((call: any[]) => call[0] === '/health')?.[1];
 			expect(healthHandler).toBeDefined();
 
 			const mockReq = {};
@@ -188,12 +188,12 @@ describe('StreamableHttpTransport', () => {
 			const postHandler = mockApp.post.mock.calls[0][1];
 
 			const mockReq = { body: { test: 'data' } } as Request;
-			const mockRes = { 
+			const mockRes = {
 				on: jest.fn(),
-				headersSent: false 
-			} as any as Response;
+				headersSent: false
+			};
 
-			await postHandler(mockReq, mockRes);
+			await postHandler(mockReq, mockRes as unknown as Response);
 
 			expect(mockGetServer).toHaveBeenCalled();
 			expect(mockMcpServer.connect).toHaveBeenCalledWith(mockStreamableTransport);
@@ -206,19 +206,19 @@ describe('StreamableHttpTransport', () => {
 
 			const postHandler = mockApp.post.mock.calls[0][1];
 			const mockReq = { body: {} } as Request;
-			const mockRes = { 
+			const mockRes = {
 				on: jest.fn(),
-				headersSent: false 
-			} as any as Response;
+				headersSent: false
+			};
 
-			await postHandler(mockReq, mockRes);
+			await postHandler(mockReq, mockRes as unknown as Response);
 
 			// Get the close event handler
-			const closeHandler = mockRes.on.mock.calls.find(call => call[0] === 'close')?.[1];
+			const closeHandler = mockRes.on.mock.calls.find((call) => call[0] === 'close')?.[1];
 			expect(closeHandler).toBeDefined();
 
 			// Trigger close event
-			closeHandler();
+			closeHandler!();
 
 			expect(consoleLogSpy).toHaveBeenCalledWith('Request closed');
 			expect(mockStreamableTransport.close).toHaveBeenCalled();
@@ -234,7 +234,7 @@ describe('StreamableHttpTransport', () => {
 
 			const postHandler = mockApp.post.mock.calls[0][1];
 			const mockReq = { body: {} } as Request;
-			const mockRes = { 
+			const mockRes = {
 				on: jest.fn(),
 				headersSent: false,
 				status: jest.fn().mockReturnThis(),
@@ -264,7 +264,7 @@ describe('StreamableHttpTransport', () => {
 
 			const postHandler = mockApp.post.mock.calls[0][1];
 			const mockReq = { body: {} } as Request;
-			const mockRes = { 
+			const mockRes = {
 				on: jest.fn(),
 				headersSent: true,
 				status: jest.fn(),
@@ -279,7 +279,7 @@ describe('StreamableHttpTransport', () => {
 		});
 
 		it('should log server ready message', () => {
-			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 			// Mock the listen method to accept a callback as the third parameter
 			mockApp.listen.mockImplementation((port, host, callback) => {
@@ -300,7 +300,7 @@ describe('StreamableHttpTransport', () => {
 			await transport.start({ mock: 'server' });
 
 			// Get the error handler
-			const errorHandler = mockServer.on.mock.calls.find(call => call[0] === 'error')?.[1];
+			const errorHandler = mockServer.on.mock.calls.find((call) => call[0] === 'error')?.[1];
 			const testError = new Error('Server startup error');
 
 			errorHandler(testError);
@@ -339,7 +339,7 @@ describe('StreamableHttpTransport', () => {
 		it('should handle server becoming null during stop process', async () => {
 			const transport = new StreamableHttpTransport();
 			transport.start();
-			
+
 			// Mock the server to become null after the outer if check but before inner if check
 			const originalServer = (transport as any).server;
 			let callCount = 0;

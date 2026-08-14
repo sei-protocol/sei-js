@@ -3,8 +3,8 @@ import type { Address, Hash, Hex } from 'viem';
 import { z } from 'zod';
 import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
 import { isWalletEnabled } from './config.js';
-import { getWalletProvider } from './wallet/index.js';
 import * as services from './services/index.js';
+import { getWalletProvider } from './wallet/index.js';
 
 /**
  * Register all EVM-related tools with the MCP server
@@ -1079,7 +1079,7 @@ function registerWalletTools(server: McpServer) {
 						functionName: 'ownerOf',
 						args: [BigInt(tokenId)]
 					});
-				} catch (e) {
+				} catch (_e) {
 					// Ownership info not available
 				}
 

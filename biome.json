@@ -1,26 +1,33 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.5.8/schema.json",
 	"vcs": {
-		"enabled": false,
+		"enabled": true,
 		"clientKind": "git",
-		"useIgnoreFile": false
+		"useIgnoreFile": true
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["*/coverage/*", "*/dist/*", "packages/create-sei/templates/**"]
+		"includes": [
+			"**",
+			"!**/coverage",
+			"!**/dist",
+			"!**/node_modules",
+			"!**/bun.lock",
+			"!packages/create-sei/templates",
+			"!packages/create-sei/extensions",
+			"!packages/registry/chain-registry",
+			"!packages/registry/community-assetlist"
+		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
 		"lineWidth": 160
 	},
-	"organizeImports": {
-		"enabled": true
-	},
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
 			"correctness": {
 				"useExhaustiveDependencies": "off"
 			},
@@ -35,5 +42,32 @@
 			"jsxQuoteStyle": "double",
 			"trailingCommas": "none"
 		}
-	}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__/**", "**/tests/**"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off"
+					},
+					"style": {
+						"noNonNullAssertion": "off"
+					},
+					"correctness": {
+						"noUnusedFunctionParameters": "off",
+						"noUnusedImports": "off",
+						"noUnusedVariables": "off"
+					}
+				}
+			}
+		}
+	]
 }

@@ -23,41 +23,25 @@ export class PrivateKeyWalletProvider implements WalletProvider {
 
 	async getAddress(): Promise<Address> {
 		if (!this.privateKey) {
-			throw new WalletProviderError(
-				'Private key not configured. Set PRIVATE_KEY environment variable.',
-				'private-key',
-				'MISSING_PRIVATE_KEY'
-			);
+			throw new WalletProviderError('Private key not configured. Set PRIVATE_KEY environment variable.', 'private-key', 'MISSING_PRIVATE_KEY');
 		}
 
 		const account = privateKeyToAccount(this.privateKey as `0x${string}`);
 		return account.address;
 	}
 
-	async signTransaction(tx: TransactionRequest): Promise<Hash> {
+	async signTransaction(_tx: TransactionRequest): Promise<Hash> {
 		if (!this.privateKey) {
-			throw new WalletProviderError(
-				'Private key not configured. Cannot sign transaction.',
-				'private-key',
-				'MISSING_PRIVATE_KEY'
-			);
+			throw new WalletProviderError('Private key not configured. Cannot sign transaction.', 'private-key', 'MISSING_PRIVATE_KEY');
 		}
 
 		// For now, return a placeholder - full implementation would involve actual signing
-		throw new WalletProviderError(
-			'Direct transaction signing not implemented for private key provider.',
-			'private-key',
-			'NOT_IMPLEMENTED'
-		);
+		throw new WalletProviderError('Direct transaction signing not implemented for private key provider.', 'private-key', 'NOT_IMPLEMENTED');
 	}
 
 	async getWalletClient(network: string): Promise<WalletClient> {
 		if (!this.privateKey) {
-			throw new WalletProviderError(
-				'Private key not configured. Cannot create wallet client.',
-				'private-key',
-				'MISSING_PRIVATE_KEY'
-			);
+			throw new WalletProviderError('Private key not configured. Cannot create wallet client.', 'private-key', 'MISSING_PRIVATE_KEY');
 		}
 
 		const chain = getChain(network);

@@ -1,2 +1,4 @@
 #!/usr/bin/env node
-import('../dist/esm/index.js');
+import { main } from '../dist/index.js';
+
+await main();
