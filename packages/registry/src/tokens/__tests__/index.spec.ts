@@ -3,7 +3,9 @@ import { type DenomUnit, TOKEN_LIST } from '../index';
 
 describe('AssetList Tests', () => {
 	it('should have the correct structure for each network', () => {
-		const networks: Network[] = ['pacific-1', 'atlantic-2', 'arctic-1'];
+		const networks: Network[] = ['pacific-1', 'atlantic-2'];
+		expect(Object.keys(TOKEN_LIST).sort()).toEqual([...networks].sort());
+
 		for (const network of networks) {
 			expect(Array.isArray(TOKEN_LIST[network])).toBeTruthy();
 			for (const asset of TOKEN_LIST[network]) {

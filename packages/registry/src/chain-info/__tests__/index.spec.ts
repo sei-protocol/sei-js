@@ -3,7 +3,7 @@ import { CHAIN_INFO } from '../index';
 describe('ChainInfo Tests', () => {
 	it('has the required properties with correct types', () => {
 		expect(typeof CHAIN_INFO.chain_name).toBe('string');
-		expect(['mainnet', 'testnet', 'devnet']).toContain(CHAIN_INFO.network_type);
+		expect(['mainnet', 'testnet']).toContain(CHAIN_INFO.network_type);
 		expect(typeof CHAIN_INFO.chain_id).toBe('string');
 		expect(typeof CHAIN_INFO.daemon_name).toBe('string');
 		expect(typeof CHAIN_INFO.bech32_prefix).toBe('string');

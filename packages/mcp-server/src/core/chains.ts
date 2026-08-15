@@ -1,5 +1,5 @@
 import type { Chain } from 'viem';
-import { sei, seiDevnet, seiTestnet } from 'viem/chains';
+import { sei, seiTestnet } from 'viem/chains';
 
 // Default configuration values
 export const DEFAULT_NETWORK = 'sei';
@@ -9,22 +9,19 @@ export const DEFAULT_CHAIN_ID = 1329;
 // Map chain IDs to chains
 export const chainMap: Record<number, Chain> = {
 	1329: sei,
-	1328: seiTestnet,
-	713715: seiDevnet
+	1328: seiTestnet
 };
 
 // Map network names to chain IDs for easier reference
 export const networkNameMap: Record<string, number> = {
 	sei: 1329,
-	'sei-testnet': 1328,
-	'sei-devnet': 713_715
+	'sei-testnet': 1328
 };
 
 // Map chain IDs to RPC URLs
 export const rpcUrlMap: Record<number, string> = {
 	1329: process.env.MAINNET_RPC_URL || 'https://evm-rpc.sei-apis.com',
-	1328: process.env.TESTNET_RPC_URL || 'https://evm-rpc-testnet.sei-apis.com',
-	713715: process.env.DEVNET_RPC_URL || 'https://evm-rpc-arctic-1.sei-apis.com'
+	1328: process.env.TESTNET_RPC_URL || 'https://evm-rpc-testnet.sei-apis.com'
 };
 
 /**

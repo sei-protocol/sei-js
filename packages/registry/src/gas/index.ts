@@ -1,5 +1,5 @@
 import GasInfoJSON from '../../chain-registry/gas.json';
-import type { Network } from '../index';
+import { type Network, pickSupportedNetworks } from '../supported-networks';
 
 /**
  * Defines the gas price adjustments for specific modules within the Sei blockchain,
@@ -50,4 +50,4 @@ type GasInfo = {
  * console.log(pacific1Info.denom); // 'usei'
  * ```
  */
-export const GAS_INFO: GasInfo = GasInfoJSON as GasInfo;
+export const GAS_INFO: GasInfo = pickSupportedNetworks(GasInfoJSON);

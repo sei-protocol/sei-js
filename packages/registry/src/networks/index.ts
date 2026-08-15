@@ -1,5 +1,5 @@
 import NetworksJSON from '../../chain-registry/chains.json';
-import type { Network } from '../index';
+import { type Network, pickSupportedNetworks } from '../supported-networks';
 
 /**
  * Describes an endpoint with a provider name and its associated URL.
@@ -31,8 +31,8 @@ interface Explorer {
 export interface NetworkConfig {
 	/** The unique identifier of the Sei network. */
 	chainId: string;
-	/** The type of the network, which can be mainnet, testnet, or devnet. */
-	network_type: 'mainnet' | 'testnet' | 'devnet';
+	/** The type of the network. */
+	network_type: 'mainnet' | 'testnet';
 	/** An array of RPC endpoints available for the network. */
 	rpc: Endpoint[];
 	/** An array of REST endpoints for accessing the network's RESTful services. */
@@ -45,7 +45,7 @@ export interface NetworkConfig {
 	evm_ws?: Endpoint[];
 	/** Optional array of blockchain explorer that support this network. */
 	explorers?: Explorer[];
-	/** An array of faucet endpoints for obtaining test tokens on networks like testnets or devnets. */
+	/** An array of faucet endpoints for obtaining test tokens on testnets. */
 	faucets?: Endpoint[];
 }
 
@@ -67,4 +67,4 @@ type NetworksConfig = {
  * const pacific1 = NETWORKS.find((network) => network.chainId === 'pacific-1');
  * ```
  */
-export const NETWORKS: NetworksConfig = NetworksJSON as NetworksConfig;
+export const NETWORKS: NetworksConfig = pickSupportedNetworks(NetworksJSON) as NetworksConfig;

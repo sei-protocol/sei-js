@@ -4,7 +4,9 @@ import { IBC_INFO } from '../index';
 describe('IBCInfo Tests', () => {
 	// Check if IBCInfo contains all expected networks
 	it('contains all required networks', () => {
-		const expectedNetworks: Network[] = ['pacific-1', 'atlantic-2', 'arctic-1'];
+		const expectedNetworks: Network[] = ['pacific-1', 'atlantic-2'];
+		expect(Object.keys(IBC_INFO).sort()).toEqual([...expectedNetworks].sort());
+
 		for (const network of expectedNetworks) {
 			expect(IBC_INFO).toHaveProperty(network);
 		}

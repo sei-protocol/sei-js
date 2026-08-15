@@ -1,5 +1,5 @@
 import IBCInfoJSON from '../../chain-registry/ibc_info.json';
-import type { Network } from '../index';
+import { type Network, pickSupportedNetworks } from '../supported-networks';
 
 /**
  * Represents information about an IBC channel, facilitating communication
@@ -50,4 +50,4 @@ type IBCInfo = {
  * const pacific1 = IBC_INFO['pacific-1'].find((ibcInfo) => ibcInfo.counterparty_chain_name === 'cosmoshub-4');
  * ```
  */
-export const IBC_INFO: IBCInfo = IBCInfoJSON as IBCInfo;
+export const IBC_INFO: IBCInfo = pickSupportedNetworks(IBCInfoJSON);

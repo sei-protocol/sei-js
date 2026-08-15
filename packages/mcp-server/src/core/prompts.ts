@@ -28,10 +28,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'Explore information about a specific block',
 		{
 			blockNumber: z.string().optional().describe('Block number to explore. If not provided, latest block will be used.'),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet' etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		({ blockNumber, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -54,10 +51,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'Analyze a specific transaction',
 		{
 			txHash: z.string().describe('Transaction hash to analyze'),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet' etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		({ txHash, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -78,10 +72,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'Analyze an EVM address',
 		{
 			address: z.string().describe('Sei 0x address to analyze'),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet' etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		({ address, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -145,7 +136,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'compare_networks',
 		'Compare Sei networks',
 		{
-			networkList: z.string().describe("Comma-separated list of networks to compare (e.g., 'sei,sei-testnet,sei-devnet')")
+			networkList: z.string().describe("Comma-separated list of networks to compare (for example, 'sei,sei-testnet')")
 		},
 		({ networkList }) => {
 			const networks = networkList.split(',').map((n) => n.trim());
@@ -171,10 +162,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 			tokenAddress: z.string().describe('Token contract address to analyze'),
 			tokenType: z.string().optional().describe('Type of token to analyze (erc20, erc721/nft, or auto-detect). Defaults to auto.'),
 			tokenId: z.string().optional().describe('Token ID (required for NFT analysis)'),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		({ tokenAddress, tokenType = 'auto', tokenId, network = DEFAULT_NETWORK }) => {
 			let promptText = '';

@@ -24,3 +24,12 @@ Works seamlessly with your favorite Ethereum development tools:
 - **Ethers.js** - Contract factories and utilities
 - **Wagmi** - React hooks for precompile contracts
 - **Hardhat/Foundry** - Testing and deployment
+
+## Sei chain definitions
+
+Import the canonical Sei mainnet and testnet definitions from the package root or the `viem` entrypoint:
+
+```ts
+import { sei, seiTestnet } from '@sei-js/precompiles';
+// or: import { sei, seiTestnet } from '@sei-js/precompiles/viem';
+```

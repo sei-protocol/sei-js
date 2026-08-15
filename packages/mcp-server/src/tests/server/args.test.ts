@@ -37,7 +37,6 @@ describe('Args Module', () => {
 		delete process.env.PRIVATE_KEY;
 		delete process.env.MAINNET_RPC_URL;
 		delete process.env.TESTNET_RPC_URL;
-		delete process.env.DEVNET_RPC_URL;
 
 		// Import mocked modules
 		const { Command } = await import('commander');
@@ -183,7 +182,6 @@ describe('Args Module', () => {
 		it('should handle all RPC URL environment variables', () => {
 			process.env.MAINNET_RPC_URL = 'https://mainnet.example.com';
 			process.env.TESTNET_RPC_URL = 'https://testnet.example.com';
-			process.env.DEVNET_RPC_URL = 'https://devnet.example.com';
 
 			// RPC URLs are loaded but not returned in the final config
 			// This tests that they don't cause errors

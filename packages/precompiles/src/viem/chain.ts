@@ -1,5 +1,7 @@
 import { defineChain } from 'viem';
 
+export { sei, seiTestnet } from 'viem/chains';
+
 /**
  * The Viem chain definition for the Sei local chain.
  * @category Chain
