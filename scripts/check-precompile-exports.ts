@@ -41,8 +41,18 @@ const precompilesModule = await import(join(pkgDir, 'dist/precompiles/index.js')
 if (typeof ethersModule.getBankPrecompileEthersV6Contract !== 'function') {
 	missing.push('getBankPrecompileEthersV6Contract is not a function');
 }
-if (!viemModule.seiLocal?.id) {
-	missing.push('seiLocal chain export missing');
+for (const [name, chainId] of [
+	['sei', 1329],
+	['seiTestnet', 1328],
+	['seiDevnet', 713715],
+	['seiLocal', 713714]
+] as const) {
+	if (viemModule[name]?.id !== chainId) {
+		missing.push(`${name} chain export missing or invalid`);
+	}
+	if (rootModule[name] !== viemModule[name]) {
+		missing.push(`root and viem subpaths do not share ${name} chain identity`);
+	}
 }
 if (!precompilesModule.BANK_PRECOMPILE_ADDRESS) {
 	missing.push('BANK_PRECOMPILE_ADDRESS missing');
