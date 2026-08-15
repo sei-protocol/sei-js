@@ -44,7 +44,6 @@ if (typeof ethersModule.getBankPrecompileEthersV6Contract !== 'function') {
 for (const [name, chainId] of [
 	['sei', 1329],
 	['seiTestnet', 1328],
-	['seiDevnet', 713715],
 	['seiLocal', 713714]
 ] as const) {
 	if (viemModule[name]?.id !== chainId) {

@@ -6,9 +6,9 @@ import ChainInfoJSON from '../../chain-registry/chain_info.json';
 export interface ChainInfo {
 	/** The name of the chain. (Sei) */
 	chain_name: string;
-	/** The type of network, indicating whether it's a mainnet, testnet, or devnet. */
-	network_type: 'mainnet' | 'testnet' | 'devnet';
-	/** The unique identifier for the Sei network. 'pacific-1' | 'atlantic-2' | 'arctic-1' */
+	/** The type of network. */
+	network_type: 'mainnet' | 'testnet';
+	/** The unique identifier for the Sei network. */
 	chain_id: string;
 	/** The name of the daemon process that runs the node software for the blockchain. (seid) */
 	daemon_name: string;

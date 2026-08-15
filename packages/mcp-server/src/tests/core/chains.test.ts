@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import type { Chain } from 'viem';
-import { sei, seiDevnet, seiTestnet } from 'viem/chains';
+import { sei, seiTestnet } from 'viem/chains';
 import {
 	chainMap,
 	DEFAULT_CHAIN_ID,
@@ -32,19 +32,16 @@ describe('chains module', () => {
 		test('chainMap contains expected chains', () => {
 			expect(chainMap[1329]).toBe(sei);
 			expect(chainMap[1328]).toBe(seiTestnet);
-			expect(chainMap[713715]).toBe(seiDevnet);
 		});
 
 		test('networkNameMap contains expected mappings', () => {
 			expect(networkNameMap.sei).toBe(1329);
 			expect(networkNameMap['sei-testnet']).toBe(1328);
-			expect(networkNameMap['sei-devnet']).toBe(713715);
 		});
 
 		test('rpcUrlMap contains expected URLs', () => {
 			expect(rpcUrlMap[1329]).toBe('https://evm-rpc.sei-apis.com');
 			expect(rpcUrlMap[1328]).toBe('https://evm-rpc-testnet.sei-apis.com');
-			expect(rpcUrlMap[713715]).toBe('https://evm-rpc-arctic-1.sei-apis.com');
 		});
 	});
 
@@ -53,25 +50,21 @@ describe('chains module', () => {
 		test('resolves number chain IDs directly', () => {
 			expect(resolveChainId(1329)).toBe(1329);
 			expect(resolveChainId(1328)).toBe(1328);
-			expect(resolveChainId(713715)).toBe(713715);
 		});
 
 		test('resolves network names to chain IDs', () => {
 			expect(resolveChainId('sei')).toBe(1329);
 			expect(resolveChainId('sei-testnet')).toBe(1328);
-			expect(resolveChainId('sei-devnet')).toBe(713715);
 		});
 
 		test('resolves case-insensitive network names', () => {
 			expect(resolveChainId('SEI')).toBe(1329);
 			expect(resolveChainId('Sei-Testnet')).toBe(1328);
-			expect(resolveChainId('SEI-DEVNET')).toBe(713715);
 		});
 
 		test('resolves string numbers to chain IDs', () => {
 			expect(resolveChainId('1329')).toBe(1329);
 			expect(resolveChainId('1328')).toBe(1328);
-			expect(resolveChainId('713715')).toBe(713715);
 		});
 
 		test('resolves hex-encoded chain IDs', () => {
@@ -92,13 +85,11 @@ describe('chains module', () => {
 		test('returns chain for numeric chain ID', () => {
 			expect(getChain(1329)).toBe(sei);
 			expect(getChain(1328)).toBe(seiTestnet);
-			expect(getChain(713715)).toBe(seiDevnet);
 		});
 
 		test('returns chain for network name', () => {
 			expect(getChain('sei')).toBe(sei);
 			expect(getChain('sei-testnet')).toBe(seiTestnet);
-			expect(getChain('sei-devnet')).toBe(seiDevnet);
 		});
 
 		test('returns sei chain when network name exists but chain mapping is missing', () => {
@@ -111,7 +102,7 @@ describe('chains module', () => {
 			} finally {
 				// Restore the original map
 				for (const key of Object.keys(networkNameMap)) {
-					if (key !== 'sei' && key !== 'sei-testnet' && key !== 'sei-devnet') {
+					if (key !== 'sei' && key !== 'sei-testnet') {
 						delete networkNameMap[key];
 					}
 				}
@@ -121,7 +112,6 @@ describe('chains module', () => {
 		test('returns chain for case-insensitive network name', () => {
 			expect(getChain('SEI')).toBe(sei);
 			expect(getChain('Sei-Testnet')).toBe(seiTestnet);
-			expect(getChain('SEI-DEVNET')).toBe(seiDevnet);
 		});
 
 		test('returns default chain when no parameter is provided', () => {
@@ -147,13 +137,11 @@ describe('chains module', () => {
 		test('returns correct RPC URL for numeric chain ID', () => {
 			expect(getRpcUrl(1329)).toBe('https://evm-rpc.sei-apis.com');
 			expect(getRpcUrl(1328)).toBe('https://evm-rpc-testnet.sei-apis.com');
-			expect(getRpcUrl(713715)).toBe('https://evm-rpc-arctic-1.sei-apis.com');
 		});
 
 		test('returns correct RPC URL for network name', () => {
 			expect(getRpcUrl('sei')).toBe('https://evm-rpc.sei-apis.com');
 			expect(getRpcUrl('sei-testnet')).toBe('https://evm-rpc-testnet.sei-apis.com');
-			expect(getRpcUrl('sei-devnet')).toBe('https://evm-rpc-arctic-1.sei-apis.com');
 		});
 
 		test('returns default RPC URL for unknown chain ID', () => {
@@ -173,7 +161,6 @@ describe('chains module', () => {
 			// Check that all expected networks are included
 			expect(networks).toContain('sei');
 			expect(networks).toContain('sei-testnet');
-			expect(networks).toContain('sei-devnet');
 
 			// Check that the list is sorted
 			expect(networks).toEqual([...networks].sort());

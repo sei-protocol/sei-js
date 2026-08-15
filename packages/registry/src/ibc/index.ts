@@ -50,4 +50,7 @@ type IBCInfo = {
  * const pacific1 = IBC_INFO['pacific-1'].find((ibcInfo) => ibcInfo.counterparty_chain_name === 'cosmoshub-4');
  * ```
  */
-export const IBC_INFO: IBCInfo = IBCInfoJSON as IBCInfo;
+export const IBC_INFO: IBCInfo = {
+	'pacific-1': IBCInfoJSON['pacific-1'],
+	'atlantic-2': IBCInfoJSON['atlantic-2']
+} as IBCInfo;

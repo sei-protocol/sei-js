@@ -32,10 +32,7 @@ function registerReadOnlyTools(server: McpServer) {
 		'get_chain_info',
 		'Get information about Sei network',
 		{
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ network = DEFAULT_NETWORK }) => {
 			try {
@@ -183,10 +180,7 @@ function registerReadOnlyTools(server: McpServer) {
 		'Get the native token balance (Sei) for an address',
 		{
 			address: z.string().describe("The wallet address name (e.g., '0x1234...') to check the balance for"),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ address, network = DEFAULT_NETWORK }) => {
 			try {
@@ -278,10 +272,7 @@ function registerReadOnlyTools(server: McpServer) {
 		{
 			tokenAddress: z.string().describe("The contract address name of the ERC20 token (e.g., '0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1')"),
 			ownerAddress: z.string().describe("The wallet address name to check the balance for (e.g., '0x1234...')"),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, ownerAddress, network = DEFAULT_NETWORK }) => {
 			try {
@@ -329,7 +320,7 @@ function registerReadOnlyTools(server: McpServer) {
 		'Get detailed information about a specific transaction by its hash. Includes sender, recipient, value, data, and more.',
 		{
 			txHash: z.string().describe("The transaction hash to look up (e.g., '0x1234...')"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ txHash, network = DEFAULT_NETWORK }) => {
 			try {
@@ -458,7 +449,7 @@ function registerWalletTools(server: McpServer) {
 		{
 			to: z.string().describe("The recipient address (e.g., '0x1234...'"),
 			amount: z.string().describe("Amount to send in SEI (or the native token of the network), as a string (e.g., '0.1')"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ to, amount, network = DEFAULT_NETWORK }) => {
 			try {
@@ -504,7 +495,7 @@ function registerWalletTools(server: McpServer) {
 			tokenAddress: z.string().describe('The address of the ERC20 token contract'),
 			toAddress: z.string().describe('The recipient address'),
 			amount: z.string().describe("The amount of tokens to send (in token units, e.g., '10' for 10 tokens)"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, toAddress, amount, network = DEFAULT_NETWORK }) => {
 			try {
@@ -556,7 +547,7 @@ function registerWalletTools(server: McpServer) {
 				.describe(
 					"The amount of tokens to approve in token units, not wei (e.g., '1000' to approve spending 1000 tokens). Use a very large number for unlimited approval."
 				),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, spenderAddress, amount, network = DEFAULT_NETWORK }) => {
 			try {
@@ -604,10 +595,7 @@ function registerWalletTools(server: McpServer) {
 			tokenAddress: z.string().describe("The contract address of the NFT collection (e.g., '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D')"),
 			tokenId: z.string().describe("The ID of the specific NFT to transfer (e.g., '1234')"),
 			toAddress: z.string().describe('The recipient wallet address that will receive the NFT'),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Most NFTs are on Sei mainnet, which is the default.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Most NFTs are on Sei mainnet, which is the default.")
 		},
 		async ({ tokenAddress, tokenId, toAddress, network = DEFAULT_NETWORK }) => {
 			try {
@@ -657,10 +645,7 @@ function registerWalletTools(server: McpServer) {
 			tokenId: z.string().describe("The ID of the specific token to transfer (e.g., '1234')"),
 			amount: z.string().describe("The quantity of tokens to send (e.g., '1' for a single NFT or '10' for 10 fungible tokens)"),
 			toAddress: z.string().describe('The recipient wallet address that will receive the tokens'),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. ERC1155 tokens exist across many networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, tokenId, amount, toAddress, network = DEFAULT_NETWORK }) => {
 			try {
@@ -708,10 +693,7 @@ function registerWalletTools(server: McpServer) {
 			tokenAddress: z.string().describe("The contract address of the ERC20 token to transfer (e.g., '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')"),
 			toAddress: z.string().describe("The recipient address that will receive the tokens (e.g., '0x1234...')"),
 			amount: z.string().describe("Amount of tokens to send as a string (e.g., '100' for 100 tokens). This will be adjusted for the token's decimals."),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, toAddress, amount, network = DEFAULT_NETWORK }) => {
 			try {
@@ -762,7 +744,7 @@ function registerWalletTools(server: McpServer) {
 			abi: z.array(z.any()).describe('The ABI (Application Binary Interface) of the smart contract function, as a JSON array'),
 			functionName: z.string().describe("The name of the function to call on the contract (e.g., 'balanceOf')"),
 			args: z.array(z.any()).optional().describe("The arguments to pass to the function, as an array (e.g., ['0x1234...'])"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ contractAddress, abi, functionName, args = [], network = DEFAULT_NETWORK }) => {
 			try {
@@ -809,7 +791,7 @@ function registerWalletTools(server: McpServer) {
 			abi: z.array(z.any()).describe('The ABI (Application Binary Interface) of the smart contract function, as a JSON array'),
 			functionName: z.string().describe("The name of the function to call on the contract (e.g., 'transfer')"),
 			args: z.array(z.any()).describe("The arguments to pass to the function, as an array (e.g., ['0x1234...', '1000000000000000000'])"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ contractAddress, abi, functionName, args, network = DEFAULT_NETWORK }) => {
 			try {
@@ -868,7 +850,7 @@ function registerWalletTools(server: McpServer) {
 				.describe(
 					"The constructor arguments to pass during deployment, as an array (e.g., ['param1', 'param2']). Leave empty if constructor has no parameters."
 				),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ bytecode, abi, args = [], network = DEFAULT_NETWORK }) => {
 			try {
@@ -918,10 +900,7 @@ function registerWalletTools(server: McpServer) {
 		'Check if an address is a smart contract or an externally owned account (EOA)',
 		{
 			address: z.string().describe("The wallet or contract address to check (e.g., '0x1234...')"),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet', etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ address, network = DEFAULT_NETWORK }) => {
 			try {
@@ -964,7 +943,7 @@ function registerWalletTools(server: McpServer) {
 		'Get comprehensive information about an ERC20 token including name, symbol, decimals, total supply, and other metadata. Use this to analyze any token on EVM chains.',
 		{
 			tokenAddress: z.string().describe("The contract address of the ERC20 token (e.g., '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')"),
-			network: z.string().optional().describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, network = DEFAULT_NETWORK }) => {
 			try {
@@ -1123,10 +1102,7 @@ function registerWalletTools(server: McpServer) {
 			tokenAddress: z.string().describe("The contract address of the NFT collection (e.g., '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D')"),
 			tokenId: z.string().describe("The ID of the NFT to check (e.g., '1234')"),
 			ownerAddress: z.string().describe("The wallet address to check ownership against (e.g., '0x1234...')"),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet' etc.) or chain ID. Supports all Sei networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, tokenId, ownerAddress, network = DEFAULT_NETWORK }) => {
 			try {
@@ -1172,10 +1148,7 @@ function registerWalletTools(server: McpServer) {
 		{
 			tokenAddress: z.string().describe("The contract address of the ERC1155 token collection (e.g., '0x5B6D32f2B55b62da7a8cd553857EB6Dc26bFDC63')"),
 			tokenId: z.string().describe("The ID of the specific token to query metadata for (e.g., '1234')"),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. ERC1155 tokens exist across many networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, tokenId, network = DEFAULT_NETWORK }) => {
 			try {
@@ -1219,10 +1192,7 @@ function registerWalletTools(server: McpServer) {
 		{
 			tokenAddress: z.string().describe("The contract address of the NFT collection (e.g., '0x5B6D32f2B55b62da7a8cd553857EB6Dc26bFDC63')"),
 			ownerAddress: z.string().describe("The wallet address to check the NFT balance for (e.g., '0x1234...')"),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. Most NFTs are on Sei mainnet, which is the default.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Most NFTs are on Sei mainnet, which is the default.")
 		},
 		async ({ tokenAddress, ownerAddress, network = DEFAULT_NETWORK }) => {
 			try {
@@ -1267,10 +1237,7 @@ function registerWalletTools(server: McpServer) {
 			tokenAddress: z.string().describe("The contract address of the ERC1155 token collection (e.g., '0x5B6D32f2B55b62da7a8cd553857EB6Dc26bFDC63')"),
 			tokenId: z.string().describe("The ID of the specific token to check the balance for (e.g., '1234')"),
 			ownerAddress: z.string().describe("The wallet address to check the token balance for (e.g., '0x1234...')"),
-			network: z
-				.string()
-				.optional()
-				.describe("Network name (e.g., 'sei', 'sei-testnet', 'sei-devnet') or chain ID. ERC1155 tokens exist across many networks. Defaults to Sei mainnet.")
+			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
 		},
 		async ({ tokenAddress, tokenId, ownerAddress, network = DEFAULT_NETWORK }) => {
 			try {

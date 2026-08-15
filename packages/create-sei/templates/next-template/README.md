@@ -34,9 +34,9 @@ In addition, this app uses [RainbowKit](https://www.rainbowkit.com/docs/wallet-b
 To change the list of supported wallets, as well as connection configurations you can modify the `src/app/components/Web3Provider.tsx` component.
 
 ### Changing the Chain
-This application connects to the arctic-1 devnet by default, using chain configurations uploaded to viem.
+This application connects to Sei mainnet by default.
 
-To change the chain the app connects to, edit the `selectedChain` variable in the `chain.ts` file in `src/app/constants`
+Set `NEXT_PUBLIC_CHAIN=testnet` in `.env.local` to use Sei testnet. The chain selection logic is in `src/components/providers/providers.tsx`.
 
 ## Learn More
 

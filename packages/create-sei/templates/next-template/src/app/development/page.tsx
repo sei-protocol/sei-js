@@ -109,8 +109,7 @@ export default function DevelopmentPage() {
 								<Code block>
 									{`# .env.local
 NEXT_PUBLIC_CHAIN=mainnet    # Default: Sei Pacific-1
-# NEXT_PUBLIC_CHAIN=testnet  # Sei Atlantic-2  
-# NEXT_PUBLIC_CHAIN=devnet   # Sei Devnet`}
+# NEXT_PUBLIC_CHAIN=testnet  # Sei Atlantic-2`}
 								</Code>
 							</Paper>
 							<Text size="sm" c="gray.6">

@@ -79,7 +79,7 @@ describe('Server Module', () => {
 			name: '@sei-js/mcp-server',
 			version: '1.0.0'
 		});
-		mockGetSupportedNetworks.mockReturnValue(['sei', 'sei-testnet', 'sei-devnet']);
+		mockGetSupportedNetworks.mockReturnValue(['sei', 'sei-testnet']);
 
 		// Spy on console.error and process.exit
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -117,7 +117,7 @@ describe('Server Module', () => {
 
 			await getServer();
 
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Supported networks:', 'sei, sei-testnet, sei-devnet');
+			expect(consoleErrorSpy).toHaveBeenCalledWith('Supported networks:', 'sei, sei-testnet');
 		});
 
 		it('should handle server initialization error and exit', async () => {

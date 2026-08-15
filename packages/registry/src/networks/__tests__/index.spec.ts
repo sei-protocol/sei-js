@@ -2,7 +2,9 @@ import { NETWORKS } from '../index';
 
 describe('Networks configuration', () => {
 	it('should contain configurations for all expected Sei networks', () => {
-		const expectedNetworkIds = ['pacific-1', 'atlantic-2', 'arctic-1'];
+		const expectedNetworkIds = ['pacific-1', 'atlantic-2'];
+
+		expect(Object.keys(NETWORKS).sort()).toEqual([...expectedNetworkIds].sort());
 
 		for (const id of expectedNetworkIds) {
 			expect(NETWORKS).toHaveProperty(id);

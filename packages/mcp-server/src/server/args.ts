@@ -16,8 +16,7 @@ const DEFAULT_CONFIG = {
 	},
 	rpc: {
 		mainnet: '',
-		testnet: '',
-		devnet: ''
+		testnet: ''
 	}
 };
 
@@ -50,8 +49,7 @@ const loadConfig = () => {
 		},
 		rpc: {
 			mainnet: getEnvValue('MAINNET_RPC_URL', DEFAULT_CONFIG.rpc.mainnet),
-			testnet: getEnvValue('TESTNET_RPC_URL', DEFAULT_CONFIG.rpc.testnet),
-			devnet: getEnvValue('DEVNET_RPC_URL', DEFAULT_CONFIG.rpc.devnet)
+			testnet: getEnvValue('TESTNET_RPC_URL', DEFAULT_CONFIG.rpc.testnet)
 		}
 	};
 
@@ -111,7 +109,6 @@ Environment Variables:
   WALLET_MODE         Wallet mode: private-key, disabled (default: disabled)
   MAINNET_RPC_URL     Custom RPC URL for Sei mainnet (optional)
   TESTNET_RPC_URL     Custom RPC URL for Sei testnet (optional)
-  DEVNET_RPC_URL      Custom RPC URL for Sei devnet (optional)
 
 Security Note:
   Wallet mode is only supported with stdio transport. HTTP transports block

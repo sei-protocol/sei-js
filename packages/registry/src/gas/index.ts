@@ -50,4 +50,7 @@ type GasInfo = {
  * console.log(pacific1Info.denom); // 'usei'
  * ```
  */
-export const GAS_INFO: GasInfo = GasInfoJSON as GasInfo;
+export const GAS_INFO: GasInfo = {
+	'pacific-1': GasInfoJSON['pacific-1'],
+	'atlantic-2': GasInfoJSON['atlantic-2']
+} as GasInfo;

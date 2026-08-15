@@ -2,4 +2,4 @@
 '@sei-js/precompiles': minor
 ---
 
-Export Sei chain definitions from the package root and `viem` entrypoint. Mainnet and testnet re-export Viem's canonical definitions, while devnet remains locally defined because current Viem releases no longer export it.
+Export Viem's canonical Sei mainnet and testnet definitions from the package root and `viem` entrypoint. Viem 2.55.16 or newer is now required.

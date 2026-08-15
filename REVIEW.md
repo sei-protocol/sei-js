@@ -32,8 +32,8 @@ invariants are load-bearing and are enforced in code rather than by convention:
 Beyond those, scrutinise anything that widens what a caller controls: contract
 ABIs reach `JSON.parse` from tool arguments in `src/core/tools.ts`, addresses
 and call arguments arrive unvalidated from the model, and RPC endpoints are
-overridable through `MAINNET_RPC_URL` / `TESTNET_RPC_URL` / `DEVNET_RPC_URL` in
-`src/core/chains.ts`. Private keys are read from the environment in
+overridable through `MAINNET_RPC_URL` / `TESTNET_RPC_URL` in `src/core/chains.ts`.
+Private keys are read from the environment in
 `src/core/config.ts` and must never reach a log line, an error message, or a
 tool response.
 

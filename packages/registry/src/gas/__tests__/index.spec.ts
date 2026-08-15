@@ -4,7 +4,9 @@ import { type ChainGasInfo, GAS_INFO, type ModuleAdjustments } from '../index';
 describe('GasInfo Tests', () => {
 	// Check if GasInfo contains all expected networks
 	it('contains all required networks', () => {
-		const expectedNetworks: Network[] = ['pacific-1', 'atlantic-2', 'arctic-1'];
+		const expectedNetworks: Network[] = ['pacific-1', 'atlantic-2'];
+		expect(Object.keys(GAS_INFO).sort()).toEqual([...expectedNetworks].sort());
+
 		for (const network of expectedNetworks) {
 			expect(GAS_INFO).toHaveProperty(network);
 		}

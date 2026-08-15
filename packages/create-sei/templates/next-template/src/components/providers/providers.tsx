@@ -9,26 +9,7 @@ import { type ReactNode, useMemo } from "react";
 import { createConfig, http, WagmiProvider } from "wagmi";
 
 import "@rainbow-me/rainbowkit/styles.css";
-import { defineChain } from "viem";
 import { sei, seiTestnet } from "viem/chains";
-
-const seiDevnet = defineChain({
-	id: 713715,
-	name: "Sei Devnet",
-	nativeCurrency: { name: "Sei", symbol: "SEI", decimals: 18 },
-	rpcUrls: {
-		default: {
-			http: ["https://evm-rpc-arctic-1.sei-apis.com"],
-		},
-	},
-	blockExplorers: {
-		default: {
-			name: "Seitrace",
-			url: "https://seitrace.com",
-		},
-	},
-	testnet: true,
-});
 
 const queryClient = new QueryClient();
 
@@ -56,8 +37,6 @@ export default function Providers({ children }: ProvidersProps) {
 		switch (chainName.toLowerCase()) {
 			case "testnet":
 				return seiTestnet;
-			case "devnet":
-				return seiDevnet;
 			default:
 				return sei;
 		}
@@ -73,7 +52,6 @@ export default function Providers({ children }: ProvidersProps) {
 				transports: {
 					[sei.id]: http(),
 					[seiTestnet.id]: http(),
-					[seiDevnet.id]: http(),
 				},
 				ssr: true,
 			}),
