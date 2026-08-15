@@ -2,17 +2,6 @@ export * from './chain-info';
 export * from './gas';
 export * from './ibc';
 export * from './networks';
+export type { Network } from './supported-networks';
+export { CHAIN_IDS } from './supported-networks';
 export * from './tokens';
-
-/**
- * A TypeScript type representing the official Sei network chain identifiers.
- */
-export type Network = 'pacific-1' | 'atlantic-2';
-
-/**
- * An object for referencing the official Sei network chain identifiers.
- */
-export const CHAIN_IDS = {
-	mainnet: 'pacific-1',
-	testnet: 'atlantic-2'
-};

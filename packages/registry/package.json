@@ -13,7 +13,7 @@
 	"scripts": {
 		"build": "rm -rf dist && bun run build:types && bun run build:esm",
 		"build:types": "tsc --project ./tsconfig.json && printf \"export * from './src/index.js';\\n\" > dist/index.d.ts && bun ../../scripts/fix-dts-extensions.ts dist",
-		"build:esm": "esbuild src/index.ts --bundle --format=esm --platform=neutral --packages=external --target=es2020 --outfile=dist/index.js",
+		"build:esm": "bun ../../scripts/build-registry.ts",
 		"test": "bun test --isolate src"
 	},
 	"exports": {

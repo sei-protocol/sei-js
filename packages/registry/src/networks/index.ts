@@ -1,5 +1,5 @@
 import NetworksJSON from '../../chain-registry/chains.json';
-import type { Network } from '../index';
+import { type Network, pickSupportedNetworks } from '../supported-networks';
 
 /**
  * Describes an endpoint with a provider name and its associated URL.
@@ -67,7 +67,4 @@ type NetworksConfig = {
  * const pacific1 = NETWORKS.find((network) => network.chainId === 'pacific-1');
  * ```
  */
-export const NETWORKS: NetworksConfig = {
-	'pacific-1': NetworksJSON['pacific-1'],
-	'atlantic-2': NetworksJSON['atlantic-2']
-} as NetworksConfig;
+export const NETWORKS: NetworksConfig = pickSupportedNetworks(NetworksJSON) as NetworksConfig;
