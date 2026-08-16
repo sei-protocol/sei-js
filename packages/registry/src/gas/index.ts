@@ -2,32 +2,14 @@ import GasInfoJSON from '../../chain-registry/gas.json';
 import { type Network, pickSupportedNetworks } from '../supported-networks';
 
 /**
- * Defines the gas price adjustments for specific modules within the Sei blockchain,
- * allowing for differentiated gas pricing based on transaction type.
- */
-export interface ModuleAdjustments {
-	/** Adjustments specifically for decentralized exchange (DEX) transactions. */
-	dex: {
-		/** The sudo (superuser) gas price for critical operations. */
-		sudo_gas_price: number;
-		/** The gas price for placing orders on the DEX. */
-		order_placement: number;
-		/** The gas price for canceling orders on the DEX. */
-		order_cancellation: number;
-	};
-}
-
-/**
  * Represents the gas information for a specific Sei network,
- * including the default minimum gas price and module-specific adjustments.
+ * including the fee denomination and default minimum gas price.
  */
 export interface ChainGasInfo {
 	/** The denomination of the gas fee. */
 	denom: string;
 	/** The minimum gas price required for transactions on the network. */
 	min_gas_price: number;
-	/** Gas price adjustments for specific modules. */
-	module_adjustments: ModuleAdjustments;
 }
 
 /**
@@ -40,7 +22,7 @@ type GasInfo = {
 
 /**
  * A constant holding the gas information for each official Sei network, imported from the official Sei [chain-registry](https://github.com/sei-protocol/chain-registry).
- * This includes details such as the gas denomination, minimum gas price, and module-specific adjustments.
+ * This includes the gas denomination and minimum gas price.
  *
  * @example
  * ```tsx

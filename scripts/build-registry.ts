@@ -4,14 +4,23 @@ import { fileURLToPath } from 'node:url';
 import { build, type Plugin } from 'esbuild';
 import { CHAIN_IDS } from '../packages/registry/src/supported-networks';
 
+interface RegistryAssetMetadata {
+	base: string;
+	denom_units: readonly {
+		denom: string;
+	}[];
+	type_asset?: string;
+}
+
+const isIbcDenomination = (denomination: string): boolean => denomination.toLowerCase().startsWith('ibc/');
+
+const isIbcAsset = (asset: RegistryAssetMetadata): boolean =>
+	isIbcDenomination(asset.base) || asset.denom_units.some(({ denom }) => isIbcDenomination(denom)) || asset.type_asset?.toLowerCase() === 'ics20';
+
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const packageDir = join(root, 'packages/registry');
-const networkDataFiles = new Set([
-	join(packageDir, 'chain-registry/chains.json'),
-	join(packageDir, 'chain-registry/gas.json'),
-	join(packageDir, 'chain-registry/ibc_info.json'),
-	join(packageDir, 'community-assetlist/assetlist.json')
-]);
+const assetListFile = join(packageDir, 'community-assetlist/assetlist.json');
+const networkDataFiles = new Set([join(packageDir, 'chain-registry/chains.json'), join(packageDir, 'chain-registry/gas.json'), assetListFile]);
 const supportedNetworks = Object.values(CHAIN_IDS);
 
 const filterNetworkData: Plugin = {
@@ -29,6 +38,15 @@ const filterNetworkData: Plugin = {
 					if (value === undefined) {
 						throw new Error(`${path} is missing supported network ${network}`);
 					}
+
+					if (path === assetListFile) {
+						if (!Array.isArray(value)) {
+							throw new Error(`${path} must contain an asset array for supported network ${network}`);
+						}
+
+						return [network, value.filter((asset) => !isIbcAsset(asset as RegistryAssetMetadata))];
+					}
+
 					return [network, value];
 				})
 			);

@@ -40,7 +40,7 @@ export interface Wallet {
  * ```tsx
  * import { WALLETS } from '@sei-js/registry';
  *
- * const compass = WALLETS.find((wallet) => wallet.identifier === 'compass');
+ * const keplr = WALLETS.find((wallet) => wallet.identifier === 'keplr');
  * ```
  */
 export const WALLETS: Wallet[] = WalletsJSON.extensions as Wallet[];

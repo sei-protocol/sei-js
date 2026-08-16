@@ -1,6 +1,13 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"include": ["./src/**/*", "./chain-registry/**/*", "./community-assetlist/**/*"],
+	"include": [
+		"./src/**/*",
+		"./chain-registry/chain_info.json",
+		"./chain-registry/chains.json",
+		"./chain-registry/gas.json",
+		"./chain-registry/wallets.json",
+		"./community-assetlist/assetlist.json"
+	],
 	"exclude": ["src/**/__tests__", "src/**/*.spec.ts", "src/**/*.test.ts"],
 	"compilerOptions": {
 		"outDir": "./dist",
