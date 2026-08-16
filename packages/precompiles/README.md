@@ -41,12 +41,11 @@ Oracle and IBC are intentionally excluded: the [v6.6.1 Oracle implementation ret
 
 ## Usage
 
-Addresses and raw ABIs are available from the package root and the `precompiles` entrypoint. Ethers factories and Viem-compatible ABIs have separate entrypoints.
+Addresses and raw `as const` ABIs are available from the package root and the `precompiles` and `viem` entrypoints. They work directly with Viem and preserve full type inference. Ethers factories are available from the `ethers` entrypoint.
 
 ```ts
 import { STAKING_PRECOMPILE_ABI, STAKING_PRECOMPILE_ADDRESS } from '@sei-js/precompiles';
 import { getStakingPrecompileEthersV6Contract } from '@sei-js/precompiles/ethers';
-import { VIEM_STAKING_PRECOMPILE_ABI } from '@sei-js/precompiles/viem';
 ```
 
 With a configured Viem public client, the v6.6 staking query methods can be called directly:

@@ -1,3 +1,5 @@
+import type { Abi } from 'viem';
+
 /**
  * The address of the Pointerview precompile contract.
  * @category Address
@@ -55,4 +57,4 @@ export const POINTERVIEW_PRECOMPILE_ABI = [
 		stateMutability: 'view',
 		type: 'function'
 	}
-] as const;
+] as const satisfies Abi;

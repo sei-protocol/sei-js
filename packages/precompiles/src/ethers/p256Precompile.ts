@@ -11,7 +11,9 @@ export const ETHERS_P256_PRECOMPILE_ABI = P256_PRECOMPILE_ABI as InterfaceAbi;
  * Creates an Ethers v6 contract instance for the P256 signature verification precompile.
  *
  * Invalid signatures return no data on-chain, which makes Ethers reject the high-level
- * call with `BAD_DATA`. Treat that error as a failed verification, but rethrow other errors.
+ * call with `BAD_DATA`. The same error can mean that the precompile is unavailable, such
+ * as on a non-Sei network or after governance disables it. Verify availability independently
+ * before interpreting `BAD_DATA` as an invalid signature, and rethrow other errors.
  *
  * @example
  * ```ts
@@ -26,6 +28,7 @@ export const ETHERS_P256_PRECOMPILE_ABI = P256_PRECOMPILE_ABI as InterfaceAbi;
  *   try {
  *     return (await p256.verify(input)) === zeroPadValue('0x01', 32);
  *   } catch (error) {
+ *     // This assumes the P256 precompile's availability was verified separately.
  *     if (isError(error, 'BAD_DATA')) return false;
  *     throw error;
  *   }

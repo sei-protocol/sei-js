@@ -65,13 +65,13 @@ if (!precompilesModule.P256_PRECOMPILE_ADDRESS) {
 if (rootModule.BANK_PRECOMPILE_ABI !== precompilesModule.BANK_PRECOMPILE_ABI) {
 	missing.push('root and precompiles subpaths do not share ABI identity');
 }
-if (rootModule.VIEM_BANK_PRECOMPILE_ABI !== viemModule.VIEM_BANK_PRECOMPILE_ABI) {
+if (rootModule.BANK_PRECOMPILE_ABI !== viemModule.BANK_PRECOMPILE_ABI) {
 	missing.push('root and viem subpaths do not share ABI identity');
 }
 if (rootModule.P256_PRECOMPILE_ABI !== precompilesModule.P256_PRECOMPILE_ABI) {
 	missing.push('root and precompiles subpaths do not share P256 ABI identity');
 }
-if (rootModule.VIEM_P256_PRECOMPILE_ABI !== viemModule.VIEM_P256_PRECOMPILE_ABI) {
+if (rootModule.P256_PRECOMPILE_ABI !== viemModule.P256_PRECOMPILE_ABI) {
 	missing.push('root and viem subpaths do not share P256 ABI identity');
 }
 if (rootModule.getBankPrecompileEthersV6Contract !== ethersModule.getBankPrecompileEthersV6Contract) {

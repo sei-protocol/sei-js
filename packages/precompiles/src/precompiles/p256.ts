@@ -1,3 +1,5 @@
+import type { Abi } from 'viem';
+
 /**
  * The address of the P256 precompile contract.
  * @category Address
@@ -25,4 +27,4 @@ export const P256_PRECOMPILE_ABI = [
 		stateMutability: 'view',
 		type: 'function'
 	}
-] as const;
+] as const satisfies Abi;

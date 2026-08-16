@@ -26,22 +26,19 @@ const weiBalance = await publicClient.getBalance({ address });
 const seiBalance = formatEther(weiBalance);`;
 
 export const precompileCodeExample = `// Import Sei precompiles
-import { VIEM_BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '@sei-js/precompiles';
+import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '@sei-js/precompiles';
 import { usePublicClient } from 'wagmi';
-import { type ReadContractParameters } from 'viem';
 
 // Use the hook
 const publicClient = usePublicClient();
 
 // Call precompile
-const readContractParams: ReadContractParameters = {
-  abi: VIEM_BANK_PRECOMPILE_ABI,
+const result = await publicClient.readContract({
+  abi: BANK_PRECOMPILE_ABI,
   address: BANK_PRECOMPILE_ADDRESS,
   functionName: 'supply',
   args: ['usei']
-};
-
-const result = await publicClient.readContract(readContractParams);`;
+});`;
 
 export const transactionCodeExample = `// Import transaction hooks
 import { useSendTransaction, useWaitForTransactionReceipt } from 'wagmi';

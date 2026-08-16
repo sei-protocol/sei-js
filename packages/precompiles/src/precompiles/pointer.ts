@@ -1,3 +1,5 @@
+import type { Abi } from 'viem';
+
 /**
  * The address of the Pointer precompile contract.
  * @category Address
@@ -39,4 +41,4 @@ export const POINTER_PRECOMPILE_ABI = [
 		stateMutability: 'payable',
 		type: 'function'
 	}
-] as const;
+] as const satisfies Abi;

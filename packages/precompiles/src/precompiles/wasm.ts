@@ -1,3 +1,5 @@
+import type { Abi } from 'viem';
+
 /**
  * The address of the Wasm precompile contract.
  * @category Address
@@ -66,4 +68,4 @@ export const WASM_PRECOMPILE_ABI = [
 		stateMutability: 'view',
 		type: 'function'
 	}
-] as const;
+] as const satisfies Abi;

@@ -1,3 +1,5 @@
+import type { Abi } from 'viem';
+
 /**
  * The address of the Distribution precompile contract.
  * @category Address
@@ -120,4 +122,4 @@ export const DISTRIBUTION_PRECOMPILE_ABI = [
 		stateMutability: 'nonpayable',
 		type: 'function'
 	}
-] as const;
+] as const satisfies Abi;

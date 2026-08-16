@@ -1,3 +1,5 @@
+import type { Abi } from 'viem';
+
 /**
  * The address of the Solo precompile contract.
  * @category Address
@@ -25,4 +27,4 @@ export const SOLO_PRECOMPILE_ABI = [
 		stateMutability: 'nonpayable',
 		type: 'function'
 	}
-] as const;
+] as const satisfies Abi;
