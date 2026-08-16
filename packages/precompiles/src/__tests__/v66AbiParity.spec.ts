@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { readdirSync, readFileSync } from 'node:fs';
 import {
 	ADDRESS_PRECOMPILE_ABI,
 	ADDRESS_PRECOMPILE_ADDRESS,
@@ -24,94 +24,61 @@ import {
 	WASM_PRECOMPILE_ADDRESS
 } from '../precompiles';
 
-/**
- * SHA-256 fingerprints of JSON.stringify(abi) for Sei Chain v6.6.1's frozen
- * legacy/v66 ABI files. IBC and Oracle are intentionally excluded because
- * those precompiles are no longer supported by the published package.
- */
+const V66_FIXTURE_DIRECTORY = new URL('./fixtures/v66/', import.meta.url);
+const INTENTIONALLY_UNEXPORTED_V66_ABIS = ['ibc.json', 'oracle.json'] as const;
+
+const loadAbiFixture = (fileName: string): readonly unknown[] => {
+	const fixture: unknown = JSON.parse(readFileSync(new URL(fileName, V66_FIXTURE_DIRECTORY), 'utf8'));
+	if (!Array.isArray(fixture)) {
+		throw new TypeError(`Expected ${fileName} to contain an ABI array`);
+	}
+	return fixture;
+};
+
+const canonicalizeValue = (value: unknown): unknown => {
+	if (Array.isArray(value)) {
+		return value.map(canonicalizeValue);
+	}
+	if (value !== null && typeof value === 'object') {
+		return Object.fromEntries(
+			Object.entries(value)
+				.sort(([left], [right]) => left.localeCompare(right))
+				.map(([key, entry]) => [key, canonicalizeValue(entry)])
+		);
+	}
+	return value;
+};
+
+const canonicalizeAbi = (abi: readonly unknown[]): unknown[] => {
+	return abi.map(canonicalizeValue).sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right)));
+};
+
 const V66_PRECOMPILES = [
-	[
-		'Address',
-		ADDRESS_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001004',
-		ADDRESS_PRECOMPILE_ABI,
-		'edc2ebe304d592cd1c6b2c190761a7b29f81858e4bec8f04979d06473c17568b'
-	],
-	[
-		'Bank',
-		BANK_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001001',
-		BANK_PRECOMPILE_ABI,
-		'2ecf0752c9f8f2e27010dba032fb968db751939091b5ad2de227b3d8ad2e7756'
-	],
-	[
-		'Distribution',
-		DISTRIBUTION_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001007',
-		DISTRIBUTION_PRECOMPILE_ABI,
-		'f0846d0d841d118ac9524b14881d48eb3599c03456dba43e57f6dc76a7cc6be6'
-	],
-	[
-		'Governance',
-		GOVERNANCE_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001006',
-		GOVERNANCE_PRECOMPILE_ABI,
-		'e03123bc8c4149b464285c184ee8438ca92e40980f41815c28684eba2a432f38'
-	],
-	[
-		'JSON',
-		JSON_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001003',
-		JSON_PRECOMPILE_ABI,
-		'8498e400c3deaa715e6829dcdaf1cba44b528b149d46d69d5af24d40530823d1'
-	],
-	[
-		'P256',
-		P256_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001011',
-		P256_PRECOMPILE_ABI,
-		'938b1e9fb18ea7f6d6a903e4f2a3fa8e60b4c573374ec1e9b956799c9d847ec2'
-	],
-	[
-		'Pointer',
-		POINTER_PRECOMPILE_ADDRESS,
-		'0x000000000000000000000000000000000000100B',
-		POINTER_PRECOMPILE_ABI,
-		'14a87db920be055a11a44f25f5761ace50ebb73aec3f658c4b0f3cdcebd978d1'
-	],
-	[
-		'Pointerview',
-		POINTERVIEW_PRECOMPILE_ADDRESS,
-		'0x000000000000000000000000000000000000100A',
-		POINTERVIEW_PRECOMPILE_ABI,
-		'48f91868d21678824a057a48ff5c4eed6e21cdfb83a3a74af1d20b1578ecf9bd'
-	],
-	[
-		'Solo',
-		SOLO_PRECOMPILE_ADDRESS,
-		'0x000000000000000000000000000000000000100C',
-		SOLO_PRECOMPILE_ABI,
-		'866b98e0e831b3c446e7a58dae56d53fbe8b976265aa9f3ac9b9e625dd98eb04'
-	],
-	[
-		'Staking',
-		STAKING_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001005',
-		STAKING_PRECOMPILE_ABI,
-		'd6515756e72a7a8803c505ffcb250515fcb39f362a001a49cd42575d0f86122e'
-	],
-	[
-		'Wasm',
-		WASM_PRECOMPILE_ADDRESS,
-		'0x0000000000000000000000000000000000001002',
-		WASM_PRECOMPILE_ABI,
-		'748ad692954494514fbcd43582a0b7f6ffaddae1ad476eebffa6060218549981'
-	]
+	['Address', ADDRESS_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001004', ADDRESS_PRECOMPILE_ABI, 'addr.json'],
+	['Bank', BANK_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001001', BANK_PRECOMPILE_ABI, 'bank.json'],
+	['Distribution', DISTRIBUTION_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001007', DISTRIBUTION_PRECOMPILE_ABI, 'distribution.json'],
+	['Governance', GOVERNANCE_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001006', GOVERNANCE_PRECOMPILE_ABI, 'gov.json'],
+	['JSON', JSON_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001003', JSON_PRECOMPILE_ABI, 'json.json'],
+	['P256', P256_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001011', P256_PRECOMPILE_ABI, 'p256.json'],
+	['Pointer', POINTER_PRECOMPILE_ADDRESS, '0x000000000000000000000000000000000000100B', POINTER_PRECOMPILE_ABI, 'pointer.json'],
+	['Pointerview', POINTERVIEW_PRECOMPILE_ADDRESS, '0x000000000000000000000000000000000000100A', POINTERVIEW_PRECOMPILE_ABI, 'pointerview.json'],
+	['Solo', SOLO_PRECOMPILE_ADDRESS, '0x000000000000000000000000000000000000100C', SOLO_PRECOMPILE_ABI, 'solo.json'],
+	['Staking', STAKING_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001005', STAKING_PRECOMPILE_ABI, 'staking.json'],
+	['Wasm', WASM_PRECOMPILE_ADDRESS, '0x0000000000000000000000000000000000001002', WASM_PRECOMPILE_ABI, 'wasmd.json']
 ] as const;
 
 describe('Sei Chain v6.6.1 precompile parity', () => {
-	it.each(V66_PRECOMPILES)('%s address and ABI match the frozen v6.6 snapshot', (_name, address, expectedAddress, abi, expectedHash) => {
+	it('accounts for every ABI in the frozen v6.6 snapshot', () => {
+		const fixtureFiles = readdirSync(V66_FIXTURE_DIRECTORY)
+			.filter((fileName) => fileName.endsWith('.json'))
+			.sort();
+		const accountedForFiles = [...V66_PRECOMPILES.map(([, , , , fileName]) => fileName), ...INTENTIONALLY_UNEXPORTED_V66_ABIS].sort();
+
+		expect(fixtureFiles).toEqual(accountedForFiles);
+	});
+
+	it.each(V66_PRECOMPILES)('%s address and ABI match the vendored v6.6 snapshot', (_name, address, expectedAddress, abi, fixtureFile) => {
 		expect(address).toBe(expectedAddress);
-		expect(createHash('sha256').update(JSON.stringify(abi)).digest('hex')).toBe(expectedHash);
+		expect(canonicalizeAbi(abi)).toEqual(canonicalizeAbi(loadAbiFixture(fixtureFile)));
 	});
 });
