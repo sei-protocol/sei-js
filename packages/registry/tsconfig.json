@@ -4,7 +4,6 @@
 		"./src/**/*",
 		"./chain-registry/chain_info.json",
 		"./chain-registry/chains.json",
-		"./chain-registry/gas.json",
 		"./chain-registry/wallets.json",
 		"./community-assetlist/assetlist.json"
 	],

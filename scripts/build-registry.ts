@@ -20,7 +20,7 @@ const isIbcAsset = (asset: RegistryAssetMetadata): boolean =>
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const packageDir = join(root, 'packages/registry');
 const assetListFile = join(packageDir, 'community-assetlist/assetlist.json');
-const networkDataFiles = new Set([join(packageDir, 'chain-registry/chains.json'), join(packageDir, 'chain-registry/gas.json'), assetListFile]);
+const networkDataFiles = new Set([join(packageDir, 'chain-registry/chains.json'), assetListFile]);
 const supportedNetworks = Object.values(CHAIN_IDS);
 
 const filterNetworkData: Plugin = {
