@@ -23,7 +23,7 @@ export const ETHERS_STAKING_PRECOMPILE_ABI = STAKING_PRECOMPILE_ABI as Interface
  *
  * const contract = getStakingPrecompileEthersV6Contract(signer);
  *
- * const response = await contract.delegate('0xVALIDATOR_ADDRESS', parseEther(1));
+ * const response = await contract.delegate('seivaloper1...', { value: parseEther('1') });
  * console.log('Delegate Response:', response);
  * ```
  *

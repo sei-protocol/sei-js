@@ -6,6 +6,8 @@ export const BANK_PRECOMPILE_ADDRESS: `0x${string}` = '0x00000000000000000000000
 
 /**
  * The ABI for the Bank precompile contract.
+ * Synced from the frozen Sei Chain v6.6.1 precompile snapshot.
+ * @see https://github.com/sei-protocol/sei-chain/blob/v6.6.1/precompiles/bank/legacy/v66/abi.json
  * @category ABI
  */
 export const BANK_PRECOMPILE_ABI = [

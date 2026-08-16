@@ -4,6 +4,7 @@ export * from './chain';
 export * from './distributionPrecompile';
 export * from './governancePrecompile';
 export * from './jsonPrecompile';
+export * from './p256Precompile';
 export * from './pointerPrecompile';
 export * from './pointerviewPrecompile';
 export * from './soloPrecompile';
