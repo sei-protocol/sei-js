@@ -21,7 +21,7 @@ npm install @sei-js/precompiles
 
 ## Sei Chain compatibility
 
-The exported ABIs match the frozen precompile snapshot in [Sei Chain v6.6.1](https://github.com/sei-protocol/sei-chain/tree/v6.6.1/precompiles). Each ABI source links to its corresponding `legacy/v66/abi.json` file.
+The exported ABIs match [Sei Chain v6.6.1](https://github.com/sei-protocol/sei-chain/tree/v6.6.1/precompiles). The `legacy/v66` directory is a frozen historical snapshot for that release, not a moving view of the current chain surface. Chain and package versions are independent; adopting a later Sei Chain minor snapshot is treated as at least a minor release of `@sei-js/precompiles`.
 
 This package exports:
 
@@ -37,7 +37,7 @@ This package exports:
 - Solo migration at `0x000000000000000000000000000000000000100C`
 - P256 verification at `0x0000000000000000000000000000000000001011`
 
-Oracle and IBC are intentionally excluded because they are no longer supported on live Sei. Some ABI methods can also be disabled by chain governance. Check the [Sei precompile docs](https://docs.sei.io/evm/precompiles/example-usage) before using a deprecated module or method.
+Oracle and IBC are intentionally excluded: the [v6.6.1 Oracle implementation returns a retired error for every query](https://github.com/sei-protocol/sei-chain/blob/v6.6.1/precompiles/oracle/oracle.go#L85-L104), and [SIP-03 disabled IBC in both directions](https://docs.sei.io/learn/sip-03-migration#ibc-is-disabled). Calls to either cannot succeed on live Sei. Some ABI methods can also be disabled by chain governance. Check the [Sei precompile docs](https://docs.sei.io/evm/precompiles/example-usage) before using a deprecated module or method.
 
 ## Usage
 
