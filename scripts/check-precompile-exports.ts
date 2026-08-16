@@ -41,6 +41,9 @@ const precompilesModule = await import(join(pkgDir, 'dist/precompiles/index.js')
 if (typeof ethersModule.getBankPrecompileEthersV6Contract !== 'function') {
 	missing.push('getBankPrecompileEthersV6Contract is not a function');
 }
+if (typeof ethersModule.getP256PrecompileEthersV6Contract !== 'function') {
+	missing.push('getP256PrecompileEthersV6Contract is not a function');
+}
 for (const [name, chainId] of [
 	['sei', 1329],
 	['seiTestnet', 1328],
@@ -56,14 +59,26 @@ for (const [name, chainId] of [
 if (!precompilesModule.BANK_PRECOMPILE_ADDRESS) {
 	missing.push('BANK_PRECOMPILE_ADDRESS missing');
 }
+if (!precompilesModule.P256_PRECOMPILE_ADDRESS) {
+	missing.push('P256_PRECOMPILE_ADDRESS missing');
+}
 if (rootModule.BANK_PRECOMPILE_ABI !== precompilesModule.BANK_PRECOMPILE_ABI) {
 	missing.push('root and precompiles subpaths do not share ABI identity');
 }
-if (rootModule.VIEM_BANK_PRECOMPILE_ABI !== viemModule.VIEM_BANK_PRECOMPILE_ABI) {
+if (rootModule.BANK_PRECOMPILE_ABI !== viemModule.BANK_PRECOMPILE_ABI) {
 	missing.push('root and viem subpaths do not share ABI identity');
+}
+if (rootModule.P256_PRECOMPILE_ABI !== precompilesModule.P256_PRECOMPILE_ABI) {
+	missing.push('root and precompiles subpaths do not share P256 ABI identity');
+}
+if (rootModule.P256_PRECOMPILE_ABI !== viemModule.P256_PRECOMPILE_ABI) {
+	missing.push('root and viem subpaths do not share P256 ABI identity');
 }
 if (rootModule.getBankPrecompileEthersV6Contract !== ethersModule.getBankPrecompileEthersV6Contract) {
 	missing.push('root and ethers subpaths do not share factory identity');
+}
+if (rootModule.getP256PrecompileEthersV6Contract !== ethersModule.getP256PrecompileEthersV6Contract) {
+	missing.push('root and ethers subpaths do not share P256 factory identity');
 }
 
 if (missing.length > 0) {

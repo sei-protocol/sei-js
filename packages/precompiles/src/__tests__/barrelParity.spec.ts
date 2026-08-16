@@ -2,7 +2,7 @@ import * as ethersBarrel from '../ethers';
 import * as precompilesBarrel from '../precompiles';
 import * as viemBarrel from '../viem';
 
-const precompileNamesFrom = (barrel: Record<string, unknown>, prefix: '' | 'ETHERS_' | 'VIEM_'): string[] => {
+const precompileNamesFrom = (barrel: Record<string, unknown>, prefix: '' | 'ETHERS_'): string[] => {
 	const pattern = new RegExp(`^${prefix}([A-Z0-9]+)_PRECOMPILE_ABI$`);
 
 	return Object.keys(barrel)
@@ -14,7 +14,7 @@ const precompileNamesFrom = (barrel: Record<string, unknown>, prefix: '' | 'ETHE
 describe('Precompile barrel parity', () => {
 	const precompileNames = precompileNamesFrom(precompilesBarrel, '');
 	const ethersNames = precompileNamesFrom(ethersBarrel, 'ETHERS_');
-	const viemNames = precompileNamesFrom(viemBarrel, 'VIEM_');
+	const viemNames = precompileNamesFrom(viemBarrel, '');
 
 	// Without this the three comparisons below would pass on three empty sets if the
 	// ABI naming convention ever changes out from under the pattern above.

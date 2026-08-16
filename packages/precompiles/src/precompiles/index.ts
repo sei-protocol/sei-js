@@ -3,6 +3,7 @@ export * from './bank';
 export * from './distribution';
 export * from './governance';
 export * from './json';
+export * from './p256';
 export * from './pointer';
 export * from './pointerview';
 export * from './solo';

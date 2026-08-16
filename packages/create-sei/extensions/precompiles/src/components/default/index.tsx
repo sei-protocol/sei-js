@@ -3,10 +3,9 @@
 import { CodeHighlight } from '@mantine/code-highlight';
 import { ActionIcon, Badge, Button, Card, Collapse, Container, Flex, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { BANK_PRECOMPILE_ADDRESS, VIEM_BANK_PRECOMPILE_ABI } from '@sei-js/precompiles';
+import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '@sei-js/precompiles';
 import { IconBulb, IconChevronDown, IconChevronUp, IconCopy, IconDatabase } from '@tabler/icons-react';
 import { useState } from 'react';
-import type { ReadContractParameters } from 'viem';
 import { usePublicClient } from 'wagmi';
 
 function Examples() {
@@ -49,16 +48,14 @@ function Examples() {
 			return undefined;
 		}
 
-		const readContractParams: ReadContractParameters = {
-			abi: VIEM_BANK_PRECOMPILE_ABI,
-			address: BANK_PRECOMPILE_ADDRESS,
-			functionName: 'supply',
-			args: ['usei']
-		};
-
 		try {
-			const result = await publicClient.readContract(readContractParams);
-			setSupply((result as bigint).toString());
+			const result = await publicClient.readContract({
+				abi: BANK_PRECOMPILE_ABI,
+				address: BANK_PRECOMPILE_ADDRESS,
+				functionName: 'supply',
+				args: ['usei']
+			});
+			setSupply(result.toString());
 		} catch (error) {
 			console.error('Error fetching supply:', error);
 			notifications.show({
@@ -70,21 +67,19 @@ function Examples() {
 	};
 
 	const codeExample = `// Sei Precompile Example - Bank Precompile
-import { BANK_PRECOMPILE_ADDRESS, VIEM_BANK_PRECOMPILE_ABI } from '@sei-js/precompiles';
+import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '@sei-js/precompiles';
 import { usePublicClient } from 'wagmi';
 
 const publicClient = usePublicClient();
 
 const getSeiSupply = async () => {
-  const readContractParams = {
-    abi: VIEM_BANK_PRECOMPILE_ABI,
+  const result = await publicClient?.readContract({
+    abi: BANK_PRECOMPILE_ABI,
     address: BANK_PRECOMPILE_ADDRESS,
     functionName: 'supply',
     args: ['usei'],
-  };
-
-  const result = await publicClient?.readContract(readContractParams);
-  return (result as bigint).toString();
+  });
+  return result?.toString();
 };`;
 
 	return (
