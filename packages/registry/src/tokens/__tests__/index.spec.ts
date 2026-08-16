@@ -27,7 +27,17 @@ describe('AssetList Tests', () => {
 					if (asset.images.svg) expect(typeof asset.images.svg).toBe('string');
 				}
 				if (asset.coingecko_id) expect(typeof asset.coingecko_id).toBe('string');
-				if (asset.type_token) expect(typeof asset.type_token).toBe('string');
+				if (asset.type_asset) expect(typeof asset.type_asset).toBe('string');
+			}
+		}
+	});
+
+	it('excludes IBC assets', () => {
+		for (const assets of Object.values(TOKEN_LIST)) {
+			for (const asset of assets) {
+				expect(asset.base.toLowerCase().startsWith('ibc/')).toBeFalse();
+				expect(asset.denom_units.some(({ denom }) => denom.toLowerCase().startsWith('ibc/'))).toBeFalse();
+				expect(asset.type_asset?.toLowerCase()).not.toBe('ics20');
 			}
 		}
 	});

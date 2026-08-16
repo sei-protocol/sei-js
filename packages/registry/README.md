@@ -8,7 +8,8 @@ bun add @sei-js/registry
 
 ## Usage
 ```typescript
-import { TOKEN_LIST, NETWORKS, IBC_INFO, GAS_INFO } from '@sei-js/registry'
+import { TOKEN_LIST, NETWORKS, WALLETS } from '@sei-js/registry'
 
-const uAtom = TOKEN_LIST.find(asset => asset.denom === 'uatom')
+const sei = TOKEN_LIST['pacific-1'].find(asset => asset.base === 'usei')
+const keplr = WALLETS.find(wallet => wallet.identifier === 'keplr')
 ```

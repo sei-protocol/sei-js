@@ -64,7 +64,7 @@ type NetworksConfig = {
  * ```tsx
  * import { NETWORKS } from '@sei-js/registry';
  *
- * const pacific1 = NETWORKS.find((network) => network.chainId === 'pacific-1');
+ * const pacific1 = NETWORKS['pacific-1'];
  * ```
  */
 export const NETWORKS: NetworksConfig = pickSupportedNetworks(NetworksJSON) as NetworksConfig;

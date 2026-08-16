@@ -26,4 +26,18 @@ describe('Networks configuration', () => {
 			}
 		}
 	});
+
+	it('contains the current RPC, EVM, and explorer metadata', () => {
+		const mainnet = NETWORKS['pacific-1'];
+		expect(mainnet.rpc.some(({ provider, url }) => provider === 'Rhino' && url === 'https://rpc.sei-apis.com')).toBeTrue();
+		expect(mainnet.evm_rpc?.some(({ provider, url }) => provider === 'dRPC' && url === 'https://sei.drpc.org')).toBeTrue();
+		expect(mainnet.evm_ws?.some(({ provider, url }) => provider === 'dRPC' && url === 'wss://sei.drpc.org')).toBeTrue();
+		expect(mainnet.explorers?.some(({ name }) => name === 'Seistream')).toBeTrue();
+
+		const testnet = NETWORKS['atlantic-2'];
+		expect(testnet.rpc.some(({ provider, url }) => provider === 'Sei' && url === 'https://rpc.atlantic-2.seinetwork.io')).toBeTrue();
+		expect(testnet.evm_rpc?.some(({ provider, url }) => provider === 'dRPC' && url === 'https://sei-testnet.drpc.org')).toBeTrue();
+		expect(testnet.evm_ws?.some(({ provider, url }) => provider === 'dRPC' && url === 'wss://sei-testnet.drpc.org')).toBeTrue();
+		expect(testnet.explorers?.some(({ name }) => name === 'Seiscan')).toBeTrue();
+	});
 });

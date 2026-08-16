@@ -1,4 +1,4 @@
-import { WALLETS, type Wallet } from '../index';
+import { WALLETS } from '../../index';
 
 describe('Wallet Extensions Configuration Tests', () => {
 	it('contains an array of wallet extensions', () => {
@@ -15,14 +15,19 @@ describe('Wallet Extensions Configuration Tests', () => {
 		}
 	});
 
-	it('contains specific wallet extension by identifier', () => {
-		const identifierToCheck = 'compass'; // Example identifier
+	it('contains only the current wallet identifiers', () => {
+		expect(WALLETS.map(({ identifier }) => identifier)).toEqual(['metamask', 'keplr', 'coin98']);
+	});
+
+	it('contains the Keplr wallet metadata', () => {
+		const identifierToCheck = 'keplr';
 		const extension = WALLETS.find((ext) => ext.identifier === identifierToCheck);
 		expect(extension).toBeDefined();
 		if (extension) {
-			expect(extension.name).toBe('Compass Wallet');
-			expect(extension.url).toBe('https://compasswallet.io/');
+			expect(extension.name).toBe('Keplr Wallet');
+			expect(extension.url).toBe('https://www.keplr.app');
 			expect(extension.capabilities).toContain('native');
+			expect(extension.capabilities).toContain('evm');
 		}
 	});
 });

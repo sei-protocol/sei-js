@@ -16,4 +16,8 @@ describe('ChainInfo Tests', () => {
 	it("includes 'secp256k1' in key_algos", () => {
 		expect(CHAIN_INFO.key_algos).toContain('secp256k1');
 	});
+
+	it('contains the current supported wallets', () => {
+		expect(CHAIN_INFO.supported_wallets).toEqual(['keplr', 'coin98']);
+	});
 });
