@@ -1,9 +1,27 @@
-import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
+const packageRoot = path.resolve(import.meta.dir, '..');
+
+describe('CLI', () => {
+	test('documents the short name option', async () => {
+		const subprocess = Bun.spawn({
+			cmd: [process.execPath, path.join(packageRoot, 'src/main.ts'), 'app', '--help'],
+			cwd: packageRoot,
+			stdout: 'pipe',
+			stderr: 'pipe'
+		});
+
+		const [stdout, stderr, exitCode] = await Promise.all([new Response(subprocess.stdout).text(), new Response(subprocess.stderr).text(), subprocess.exited]);
+
+		expect(exitCode).toBe(0);
+		expect(stderr).toBe('');
+		expect(stdout).toContain('-n, --name <name>');
+	});
+});
+
 describe('Extension System', () => {
-	const packageRoot = path.resolve(import.meta.dir, '..');
 	const testDir = path.join(packageRoot, 'test-output');
 	const extensionsDir = path.join(packageRoot, 'extensions');
 

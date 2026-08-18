@@ -117,7 +117,7 @@ const getSeiSupply = async () => {
 								</Group>
 								<Text size="sm" c="gray.6">
 									Query total SEI supply using Sei's native{' '}
-									<Text component="a" href="https://www.docs.sei.io/dev-interoperability/precompiles/bank" target="_blank" c="orange" td="underline">
+									<Text component="a" href="https://docs.sei.io/evm/precompiles/cosmwasm-precompiles/bank" target="_blank" c="orange" td="underline">
 										Bank precompile
 									</Text>
 								</Text>

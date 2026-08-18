@@ -133,7 +133,7 @@ async function runWizard(options: WizardOptions): Promise<void> {
 program
 	.command('app')
 	.description('Create a new SEI dApp')
-	.option('--name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
+	.option('-n, --name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
 	.option('--extension <extension>', 'Specify an extension to apply to the base template')
 
 	.action(async (options: WizardOptions) => {
