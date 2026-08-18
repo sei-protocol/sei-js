@@ -55,7 +55,7 @@ describe('Precompile ABIs — function entry structure', () => {
 			expect(Array.isArray(fn.inputs)).toBe(true);
 			expect(Array.isArray(fn.outputs)).toBe(true);
 			expect(typeof fn.stateMutability).toBe('string');
-			expect(['view', 'nonpayable', 'payable', 'pure']).toContain(fn.stateMutability);
+			expect(['view', 'nonpayable', 'payable', 'pure']).toContain(fn.stateMutability ?? '');
 		}
 	});
 });
