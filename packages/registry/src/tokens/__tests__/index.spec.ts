@@ -56,3 +56,31 @@ it('should contain the "sei" asset with correct properties in each network', () 
 		}
 	}
 });
+
+describe('Token image URL validation', () => {
+	it('all token image URLs use https:// scheme', () => {
+		for (const assets of Object.values(TOKEN_LIST)) {
+			for (const asset of assets) {
+				if (asset.images?.png) {
+					expect(asset.images.png).toMatch(/^https:\/\//);
+				}
+				if (asset.images?.svg) {
+					expect(asset.images.svg).toMatch(/^https:\/\//);
+				}
+			}
+		}
+	});
+
+	it('all token image URLs are non-empty when present', () => {
+		for (const assets of Object.values(TOKEN_LIST)) {
+			for (const asset of assets) {
+				if (asset.images?.png) {
+					expect(asset.images.png.trim().length).toBeGreaterThan(0);
+				}
+				if (asset.images?.svg) {
+					expect(asset.images.svg.trim().length).toBeGreaterThan(0);
+				}
+			}
+		}
+	});
+});
