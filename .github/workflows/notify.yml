@@ -1,4 +1,4 @@
-# runs if /packages/registry/** is updated and the release workflow completes successfully
+# Notify the registry API after the release workflow completes successfully.
 name: Update Registry Submodules
 
 on:
@@ -6,26 +6,21 @@ on:
     workflows: ["Release"]
     types:
       - completed
-  push:
-    paths:
-      - 'packages/registry/**'
+
+permissions:
+  contents: write
 
 jobs:
-  release:
+  notify:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.conclusion == 'success'
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch the full history instead of a shallow clone
-
-      - name: Delay for 90 seconds to allow NPM package to propagate
+      - name: Delay for 90 seconds to allow npm package to propagate
         run: sleep 90
 
       - name: Update registry API
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: workflow_completed
