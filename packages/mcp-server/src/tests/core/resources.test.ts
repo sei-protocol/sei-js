@@ -12,7 +12,9 @@ type ResourceRegistration = { template: string | ResourceTemplate; handler: Reso
 const spyFunctions = (mod: object) => {
 	for (const [key, value] of Object.entries(mod)) {
 		if (typeof value === 'function') {
-			(jest.spyOn(mod as Record<string, CallableFunction>, key) as jest.Mock).mockImplementation(() => undefined);
+			(jest.spyOn(mod as Record<string, CallableFunction>, key) as jest.Mock).mockImplementation(() => {
+				throw new Error(`Unmocked function: ${key}`);
+			});
 		}
 	}
 };

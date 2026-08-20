@@ -151,11 +151,10 @@ export async function getERC721Owner(tokenAddress: string, tokenId: bigint, netw
  * @returns True if the address owns the NFT
  */
 export async function isNFTOwner(tokenAddress: string, ownerAddress: string, tokenId: bigint, network = DEFAULT_NETWORK): Promise<boolean> {
-	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 	const validatedOwnerAddress = services.helpers.validateAddress(ownerAddress);
 
 	try {
-		const actualOwner = await getERC721Owner(validatedTokenAddress, tokenId, network);
+		const actualOwner = await getERC721Owner(tokenAddress, tokenId, network);
 
 		return actualOwner.toLowerCase() === validatedOwnerAddress.toLowerCase();
 	} catch (error: unknown) {
