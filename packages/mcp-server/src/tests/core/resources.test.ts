@@ -407,4 +407,14 @@ describe('registerEVMResources', () => {
 		const result = await invoke('evm_block_by_number', { ...RESOURCE_CASES.evm_block_by_number.params, blockNumber: 'abc' });
 		expect(textOf(result)).toBe('Error fetching block: Invalid block number: abc');
 	});
+
+	it('surfaces invalid token IDs through the ERC-721 error path', async () => {
+		const result = await invoke('erc721_nft_token_details', { ...RESOURCE_CASES.erc721_nft_token_details.params, tokenId: 'abc' });
+		expect(textOf(result)).toMatch(/^Error fetching NFT info: .*bigint/i);
+	});
+
+	it('surfaces invalid token IDs through the ERC-1155 error path', async () => {
+		const result = await invoke('erc1155_token_metadata_uri', { ...RESOURCE_CASES.erc1155_token_metadata_uri.params, tokenId: 'abc' });
+		expect(textOf(result)).toMatch(/^Error fetching ERC1155 token URI: .*bigint/i);
+	});
 });
