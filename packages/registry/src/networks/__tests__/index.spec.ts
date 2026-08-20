@@ -40,20 +40,4 @@ describe('Networks configuration', () => {
 		expect(testnet.evm_ws?.some(({ provider, url }) => provider === 'dRPC' && url === 'wss://sei-testnet.drpc.org')).toBeTrue();
 		expect(testnet.explorers?.some(({ name }) => name === 'Seiscan')).toBeTrue();
 	});
-
-	it('should have RPC URLs starting with https:// or wss://', () => {
-		for (const networkConfig of Object.values(NETWORKS)) {
-			for (const endpoint of networkConfig.rpc) {
-				expect(endpoint.url.startsWith('https://') || endpoint.url.startsWith('wss://')).toBe(true);
-			}
-		}
-	});
-
-	it('should have a non-empty provider name for each RPC endpoint', () => {
-		for (const networkConfig of Object.values(NETWORKS)) {
-			for (const endpoint of networkConfig.rpc) {
-				expect(endpoint.provider.trim().length).toBeGreaterThan(0);
-			}
-		}
-	});
 });

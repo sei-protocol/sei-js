@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, jest } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, jest } from 'bun:test';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Address } from 'viem';
 import * as chains from '../../core/chains.js';
@@ -16,34 +16,33 @@ const spyFunctions = (mod: object) => {
 	}
 };
 
-spyFunctions(chains);
-spyFunctions(services);
-
-const resetSpiedFunctions = (mod: object) => {
-	for (const value of Object.values(mod)) {
-		if (typeof value === 'function') {
-			const mock = value as jest.Mock;
-			mock.mockReset();
-			mock.mockImplementation(() => undefined);
-		}
-	}
-};
-
-const { getRpcUrl, getSupportedNetworks } = chains;
-
 const ADDRESS = '0x1234567890123456789012345678901234567890' as Address;
 const TOKEN = '0x0987654321098765432109876543210987654321' as Address;
 const TX_HASH = '0xabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabca';
 const BLOCK_HASH = '0xdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefd';
-const FAT_PARAMS = {
-	network: 'sei-testnet',
-	address: ADDRESS,
-	tokenAddress: TOKEN,
-	blockNumber: '123',
-	blockHash: BLOCK_HASH,
-	txHash: TX_HASH,
-	tokenId: '7'
-};
+const NETWORK = 'sei-testnet';
+const RESOURCE_PARAMS = {
+	chain_info_by_network: { network: NETWORK },
+	sei_chain_info: {},
+	evm_block_by_number: { network: NETWORK, blockNumber: '123' },
+	block_by_hash: { network: NETWORK, blockHash: BLOCK_HASH },
+	evm_latest_block: { network: NETWORK },
+	default_latest_block: {},
+	evm_address_native_balance: { network: NETWORK, address: ADDRESS },
+	default_sei_balance: { address: ADDRESS },
+	erc20_balance: { network: NETWORK, address: ADDRESS, tokenAddress: TOKEN },
+	default_erc20_balance: { address: ADDRESS, tokenAddress: TOKEN },
+	evm_transaction_details: { network: NETWORK, txHash: TX_HASH },
+	default_transaction_by_hash: { txHash: TX_HASH },
+	supported_networks: {},
+	erc20_token_details: { network: NETWORK, tokenAddress: TOKEN },
+	erc20_token_address_balance: { network: NETWORK, tokenAddress: TOKEN, address: ADDRESS },
+	erc721_nft_token_details: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7' },
+	erc721_nft_ownership_check: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7', address: ADDRESS },
+	erc1155_token_metadata_uri: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7' },
+	erc1155_token_address_balance: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7', address: ADDRESS }
+} satisfies Record<string, Record<string, string>>;
+type ResourceName = keyof typeof RESOURCE_PARAMS;
 
 function createMockResourceServer(): { server: McpServer; registered: Map<string, ResourceHandler> } {
 	const registered = new Map<string, ResourceHandler>();
@@ -74,7 +73,7 @@ describe('parseBlockNumber', () => {
 describe('registerEVMResources', () => {
 	let registered: Map<string, ResourceHandler>;
 
-	const invoke = async (name: string, params: Record<string, string> = FAT_PARAMS): Promise<ResourceResult> => {
+	const invoke = async (name: ResourceName, params: Record<string, string> = RESOURCE_PARAMS[name]): Promise<ResourceResult> => {
 		const handler = registered.get(name);
 		if (!handler) {
 			throw new Error(`Resource ${name} was not registered`);
@@ -83,23 +82,23 @@ describe('registerEVMResources', () => {
 	};
 
 	beforeEach(() => {
-		resetSpiedFunctions(chains);
-		resetSpiedFunctions(services);
+		spyFunctions(chains);
+		spyFunctions(services);
 
-		(getRpcUrl as jest.Mock).mockReturnValue('https://rpc.sei.io');
-		(getSupportedNetworks as jest.Mock).mockReturnValue(['sei', 'sei-testnet']);
+		(chains.getRpcUrl as jest.Mock).mockReturnValue('https://rpc.sei.io');
+		(chains.getSupportedNetworks as jest.Mock).mockReturnValue(['sei', 'sei-testnet']);
 		(services.getChainId as jest.Mock).mockResolvedValue(1329);
 		(services.getBlockNumber as jest.Mock).mockResolvedValue(100n);
-		(services.getBlockByNumber as jest.Mock).mockResolvedValue({ number: 123 });
-		(services.getBlockByHash as jest.Mock).mockResolvedValue({ hash: BLOCK_HASH });
-		(services.getLatestBlock as jest.Mock).mockResolvedValue({ number: 999 });
+		(services.getBlockByNumber as jest.Mock).mockResolvedValue({ number: 123n });
+		(services.getBlockByHash as jest.Mock).mockResolvedValue({ hash: BLOCK_HASH, number: 123n });
+		(services.getLatestBlock as jest.Mock).mockResolvedValue({ number: 999n });
 		(services.getBalance as jest.Mock).mockResolvedValue({ wei: 1n, sei: '0.000000000000000001' });
 		(services.getERC20Balance as jest.Mock).mockResolvedValue({
 			raw: 1000n,
 			formatted: '1.0',
 			token: { symbol: 'TEST', decimals: 18 }
 		});
-		(services.getTransaction as jest.Mock).mockResolvedValue({ hash: TX_HASH });
+		(services.getTransaction as jest.Mock).mockResolvedValue({ hash: TX_HASH, blockNumber: 123n });
 		(services.getERC20TokenInfo as jest.Mock).mockResolvedValue({
 			name: 'Test',
 			symbol: 'TEST',
@@ -115,11 +114,14 @@ describe('registerEVMResources', () => {
 		(services.isNFTOwner as jest.Mock).mockResolvedValue(false);
 		(services.getERC1155TokenURI as jest.Mock).mockResolvedValue('ipfs://1155');
 		(services.getERC1155Balance as jest.Mock).mockResolvedValue(5n);
-		jest.spyOn(services.helpers, 'formatJson').mockImplementation((data: unknown) => JSON.stringify(data));
 
 		const mockServer = createMockResourceServer();
 		registerEVMResources(mockServer.server);
 		registered = mockServer.registered;
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
 	});
 
 	it('registers every EVM resource', () => {
@@ -170,25 +172,25 @@ describe('registerEVMResources', () => {
 
 	it('returns a block by number', async () => {
 		const result = await invoke('evm_block_by_number');
-		expect(textOf(result)).toBe(JSON.stringify({ number: 123 }));
+		expect(JSON.parse(textOf(result))).toEqual({ number: '123' });
 		expect(services.getBlockByNumber).toHaveBeenCalledWith(123, 'sei-testnet');
 	});
 
 	it('returns a block by hash', async () => {
 		const result = await invoke('block_by_hash');
-		expect(textOf(result)).toBe(JSON.stringify({ hash: BLOCK_HASH }));
+		expect(JSON.parse(textOf(result))).toEqual({ hash: BLOCK_HASH, number: '123' });
 		expect(services.getBlockByHash).toHaveBeenCalledWith(BLOCK_HASH, 'sei-testnet');
 	});
 
 	it('returns the latest block for a named network', async () => {
 		const result = await invoke('evm_latest_block');
-		expect(textOf(result)).toBe(JSON.stringify({ number: 999 }));
+		expect(JSON.parse(textOf(result))).toEqual({ number: '999' });
 		expect(services.getLatestBlock).toHaveBeenCalledWith('sei-testnet');
 	});
 
 	it('returns the default latest block', async () => {
 		const result = await invoke('default_latest_block');
-		expect(textOf(result)).toBe(JSON.stringify({ number: 999 }));
+		expect(JSON.parse(textOf(result))).toEqual({ number: '999' });
 		expect(services.getLatestBlock).toHaveBeenCalledWith('sei');
 	});
 
@@ -225,14 +227,14 @@ describe('registerEVMResources', () => {
 
 	it('returns a transaction for a named network', async () => {
 		const result = await invoke('evm_transaction_details');
-		expect(textOf(result)).toBe(JSON.stringify({ hash: TX_HASH }));
+		expect(JSON.parse(textOf(result))).toEqual({ hash: TX_HASH, blockNumber: '123' });
 		expect(services.getTransaction).toHaveBeenCalledWith(TX_HASH, 'sei-testnet');
 	});
 
 	it('returns the default transaction', async () => {
 		const result = await invoke('default_transaction_by_hash');
 		expect(services.getTransaction).toHaveBeenCalledWith(TX_HASH, 'sei');
-		expect(JSON.parse(textOf(result))).toEqual({ hash: TX_HASH });
+		expect(JSON.parse(textOf(result))).toEqual({ hash: TX_HASH, blockNumber: '123' });
 	});
 
 	it('lists supported networks', async () => {
@@ -266,7 +268,7 @@ describe('registerEVMResources', () => {
 		});
 	});
 
-	it('returns NFT metadata with unknown owner when the caller is not the owner', async () => {
+	it('returns NFT metadata with unknown owner because the resource template has no address parameter', async () => {
 		const result = await invoke('erc721_nft_token_details');
 		expect(JSON.parse(textOf(result))).toEqual({
 			contract: TOKEN,
@@ -277,18 +279,6 @@ describe('registerEVMResources', () => {
 			tokenURI: 'ipfs://nft',
 			owner: 'Unknown'
 		});
-	});
-
-	it('returns NFT metadata with the caller as owner when isNFTOwner is true', async () => {
-		(services.isNFTOwner as jest.Mock).mockResolvedValue(true);
-		const result = await invoke('erc721_nft_token_details');
-		expect(JSON.parse(textOf(result)).owner).toBe(ADDRESS);
-	});
-
-	it('keeps NFT owner as Unknown when the ownership check fails', async () => {
-		(services.isNFTOwner as jest.Mock).mockRejectedValue(new Error('owner lookup failed'));
-		const result = await invoke('erc721_nft_token_details');
-		expect(JSON.parse(textOf(result)).owner).toBe('Unknown');
 	});
 
 	it('checks NFT ownership', async () => {
@@ -324,35 +314,36 @@ describe('registerEVMResources', () => {
 		});
 	});
 
-	const errorCases: [string, unknown, string, 'async' | 'sync'][] = [
-		['chain_info_by_network', services.getChainId, 'Error fetching chain info', 'async'],
-		['sei_chain_info', services.getChainId, 'Error fetching chain info', 'async'],
-		['evm_block_by_number', services.getBlockByNumber, 'Error fetching block', 'async'],
-		['block_by_hash', services.getBlockByHash, 'Error fetching block with hash', 'async'],
-		['evm_latest_block', services.getLatestBlock, 'Error fetching latest block', 'async'],
-		['default_latest_block', services.getLatestBlock, 'Error fetching latest block', 'async'],
-		['evm_address_native_balance', services.getBalance, 'Error fetching Sei balance', 'async'],
-		['default_sei_balance', services.getBalance, 'Error fetching Sei balance', 'async'],
-		['erc20_balance', services.getERC20Balance, 'Error fetching ERC20 balance', 'async'],
-		['default_erc20_balance', services.getERC20Balance, 'Error fetching ERC20 balance', 'async'],
-		['evm_transaction_details', services.getTransaction, 'Error fetching transaction', 'async'],
-		['default_transaction_by_hash', services.getTransaction, 'Error fetching transaction', 'async'],
-		['supported_networks', getSupportedNetworks, 'Error fetching supported networks', 'sync'],
-		['erc20_token_details', services.getERC20TokenInfo, 'Error fetching ERC20 token info', 'async'],
-		['erc20_token_address_balance', services.getERC20Balance, 'Error fetching ERC20 token balance', 'async'],
-		['erc721_nft_token_details', services.getERC721TokenMetadata, 'Error fetching NFT info', 'async'],
-		['erc721_nft_ownership_check', services.isNFTOwner, 'Error checking NFT ownership', 'async'],
-		['erc1155_token_metadata_uri', services.getERC1155TokenURI, 'Error fetching ERC1155 token URI', 'async'],
-		['erc1155_token_address_balance', services.getERC1155Balance, 'Error fetching ERC1155 token balance', 'async']
+	const errorCases: [ResourceName, () => jest.Mock, string, 'async' | 'sync'][] = [
+		['chain_info_by_network', () => services.getChainId as jest.Mock, 'Error fetching chain info', 'async'],
+		['sei_chain_info', () => services.getChainId as jest.Mock, 'Error fetching chain info', 'async'],
+		['evm_block_by_number', () => services.getBlockByNumber as jest.Mock, 'Error fetching block', 'async'],
+		['block_by_hash', () => services.getBlockByHash as jest.Mock, 'Error fetching block with hash', 'async'],
+		['evm_latest_block', () => services.getLatestBlock as jest.Mock, 'Error fetching latest block', 'async'],
+		['default_latest_block', () => services.getLatestBlock as jest.Mock, 'Error fetching latest block', 'async'],
+		['evm_address_native_balance', () => services.getBalance as jest.Mock, 'Error fetching Sei balance', 'async'],
+		['default_sei_balance', () => services.getBalance as jest.Mock, 'Error fetching Sei balance', 'async'],
+		['erc20_balance', () => services.getERC20Balance as jest.Mock, 'Error fetching ERC20 balance', 'async'],
+		['default_erc20_balance', () => services.getERC20Balance as jest.Mock, 'Error fetching ERC20 balance', 'async'],
+		['evm_transaction_details', () => services.getTransaction as jest.Mock, 'Error fetching transaction', 'async'],
+		['default_transaction_by_hash', () => services.getTransaction as jest.Mock, 'Error fetching transaction', 'async'],
+		['supported_networks', () => chains.getSupportedNetworks as jest.Mock, 'Error fetching supported networks', 'sync'],
+		['erc20_token_details', () => services.getERC20TokenInfo as jest.Mock, 'Error fetching ERC20 token info', 'async'],
+		['erc20_token_address_balance', () => services.getERC20Balance as jest.Mock, 'Error fetching ERC20 token balance', 'async'],
+		['erc721_nft_token_details', () => services.getERC721TokenMetadata as jest.Mock, 'Error fetching NFT info', 'async'],
+		['erc721_nft_ownership_check', () => services.isNFTOwner as jest.Mock, 'Error checking NFT ownership', 'async'],
+		['erc1155_token_metadata_uri', () => services.getERC1155TokenURI as jest.Mock, 'Error fetching ERC1155 token URI', 'async'],
+		['erc1155_token_address_balance', () => services.getERC1155Balance as jest.Mock, 'Error fetching ERC1155 token balance', 'async']
 	];
 
-	it.each(errorCases)('%s returns the Error message', async (name, fn, prefix, kind) => {
+	it.each(errorCases)('%s returns the Error message', async (name, getMock, prefix, kind) => {
+		const fn = getMock();
 		if (kind === 'sync') {
-			(fn as jest.Mock).mockImplementation(() => {
+			fn.mockImplementation(() => {
 				throw new Error('fail');
 			});
 		} else {
-			(fn as jest.Mock).mockRejectedValue(new Error('fail'));
+			fn.mockRejectedValue(new Error('fail'));
 		}
 
 		const result = await invoke(name);
@@ -360,13 +351,14 @@ describe('registerEVMResources', () => {
 		expect(result.contents[0].uri).toBe(`evm://test/${name}`);
 	});
 
-	it.each(errorCases)('%s stringifies a non-Error rejection', async (name, fn, prefix, kind) => {
+	it.each(errorCases)('%s stringifies a non-Error rejection', async (name, getMock, prefix, kind) => {
+		const fn = getMock();
 		if (kind === 'sync') {
-			(fn as jest.Mock).mockImplementation(() => {
+			fn.mockImplementation(() => {
 				throw 'nope';
 			});
 		} else {
-			(fn as jest.Mock).mockRejectedValue('nope');
+			fn.mockRejectedValue('nope');
 		}
 
 		const result = await invoke(name);
@@ -374,7 +366,7 @@ describe('registerEVMResources', () => {
 	});
 
 	it('surfaces invalid block numbers through the block-by-number error path', async () => {
-		const result = await invoke('evm_block_by_number', { ...FAT_PARAMS, blockNumber: 'abc' });
+		const result = await invoke('evm_block_by_number', { ...RESOURCE_PARAMS.evm_block_by_number, blockNumber: 'abc' });
 		expect(textOf(result)).toBe('Error fetching block: Invalid block number: abc');
 	});
 });

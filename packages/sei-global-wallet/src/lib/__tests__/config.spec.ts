@@ -21,12 +21,11 @@ describe('sei-global-wallet config', () => {
 		expect(config.eip6963.rdns).toMatch(/^io\.sei\./);
 	});
 
-	it('walletIcon is a non-empty string', () => {
+	it('walletIcon is an SVG data URI', () => {
 		expect(typeof config.walletIcon).toBe('string');
-		expect((config.walletIcon as string).trim().length).toBeGreaterThan(0);
-	});
-
-	it('walletIcon is a valid data URI', () => {
-		expect(config.walletIcon as string).toMatch(/^data:/);
+		if (typeof config.walletIcon !== 'string') {
+			throw new TypeError('Expected walletIcon to be a string');
+		}
+		expect(config.walletIcon).toMatch(/^data:image\/svg\+xml;base64,.+/);
 	});
 });
