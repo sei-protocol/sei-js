@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from 'bun:test';
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Address } from 'viem';
 import * as chains from '../../core/chains.js';
 import { parseBlockNumber, registerEVMResources } from '../../core/resources.js';
@@ -7,6 +7,7 @@ import * as services from '../../core/services/index.js';
 
 type ResourceResult = { contents: Array<{ uri: string; text: string }> };
 type ResourceHandler = (uri: { href: string }, params?: Record<string, string>) => Promise<ResourceResult>;
+type ResourceRegistration = { template: string | ResourceTemplate; handler: ResourceHandler };
 
 const spyFunctions = (mod: object) => {
 	for (const [key, value] of Object.entries(mod)) {
@@ -21,34 +22,55 @@ const TOKEN = '0x0987654321098765432109876543210987654321' as Address;
 const TX_HASH = '0xabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabca';
 const BLOCK_HASH = '0xdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefdefd';
 const NETWORK = 'sei-testnet';
-const RESOURCE_PARAMS = {
-	chain_info_by_network: { network: NETWORK },
-	sei_chain_info: {},
-	evm_block_by_number: { network: NETWORK, blockNumber: '123' },
-	block_by_hash: { network: NETWORK, blockHash: BLOCK_HASH },
-	evm_latest_block: { network: NETWORK },
-	default_latest_block: {},
-	evm_address_native_balance: { network: NETWORK, address: ADDRESS },
-	default_sei_balance: { address: ADDRESS },
-	erc20_balance: { network: NETWORK, address: ADDRESS, tokenAddress: TOKEN },
-	default_erc20_balance: { address: ADDRESS, tokenAddress: TOKEN },
-	evm_transaction_details: { network: NETWORK, txHash: TX_HASH },
-	default_transaction_by_hash: { txHash: TX_HASH },
-	supported_networks: {},
-	erc20_token_details: { network: NETWORK, tokenAddress: TOKEN },
-	erc20_token_address_balance: { network: NETWORK, tokenAddress: TOKEN, address: ADDRESS },
-	erc721_nft_token_details: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7' },
-	erc721_nft_ownership_check: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7', address: ADDRESS },
-	erc1155_token_metadata_uri: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7' },
-	erc1155_token_address_balance: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7', address: ADDRESS }
-} satisfies Record<string, Record<string, string>>;
-type ResourceName = keyof typeof RESOURCE_PARAMS;
+const RESOURCE_CASES = {
+	chain_info_by_network: { uri: 'evm://{network}/chain', params: { network: NETWORK } },
+	sei_chain_info: { uri: 'evm://chain', params: {} },
+	evm_block_by_number: { uri: 'evm://{network}/block/{blockNumber}', params: { network: NETWORK, blockNumber: '123' } },
+	block_by_hash: { uri: 'evm://{network}/block/hash/{blockHash}', params: { network: NETWORK, blockHash: BLOCK_HASH } },
+	evm_latest_block: { uri: 'evm://{network}/block/latest', params: { network: NETWORK } },
+	default_latest_block: { uri: 'evm://block/latest', params: {} },
+	evm_address_native_balance: { uri: 'evm://{network}/address/{address}/balance', params: { network: NETWORK, address: ADDRESS } },
+	default_sei_balance: { uri: 'evm://address/{address}/sei-balance', params: { address: ADDRESS } },
+	erc20_balance: {
+		uri: 'evm://{network}/address/{address}/token/{tokenAddress}/balance',
+		params: { network: NETWORK, address: ADDRESS, tokenAddress: TOKEN }
+	},
+	default_erc20_balance: {
+		uri: 'evm://address/{address}/token/{tokenAddress}/balance',
+		params: { address: ADDRESS, tokenAddress: TOKEN }
+	},
+	evm_transaction_details: { uri: 'evm://{network}/tx/{txHash}', params: { network: NETWORK, txHash: TX_HASH } },
+	default_transaction_by_hash: { uri: 'evm://tx/{txHash}', params: { txHash: TX_HASH } },
+	supported_networks: { uri: 'evm://networks', params: {} },
+	erc20_token_details: { uri: 'evm://{network}/token/{tokenAddress}', params: { network: NETWORK, tokenAddress: TOKEN } },
+	erc20_token_address_balance: {
+		uri: 'evm://{network}/token/{tokenAddress}/balanceOf/{address}',
+		params: { network: NETWORK, tokenAddress: TOKEN, address: ADDRESS }
+	},
+	erc721_nft_token_details: {
+		uri: 'evm://{network}/nft/{tokenAddress}/{tokenId}',
+		params: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7' }
+	},
+	erc721_nft_ownership_check: {
+		uri: 'evm://{network}/nft/{tokenAddress}/{tokenId}/isOwnedBy/{address}',
+		params: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7', address: ADDRESS }
+	},
+	erc1155_token_metadata_uri: {
+		uri: 'evm://{network}/erc1155/{tokenAddress}/{tokenId}/uri',
+		params: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7' }
+	},
+	erc1155_token_address_balance: {
+		uri: 'evm://{network}/erc1155/{tokenAddress}/{tokenId}/balanceOf/{address}',
+		params: { network: NETWORK, tokenAddress: TOKEN, tokenId: '7', address: ADDRESS }
+	}
+} satisfies Record<string, { uri: string; params: Record<string, string> }>;
+type ResourceName = keyof typeof RESOURCE_CASES;
 
-function createMockResourceServer(): { server: McpServer; registered: Map<string, ResourceHandler> } {
-	const registered = new Map<string, ResourceHandler>();
+function createMockResourceServer(): { server: McpServer; registered: Map<string, ResourceRegistration> } {
+	const registered = new Map<string, ResourceRegistration>();
 	const server = {
-		resource: jest.fn((name: string, _template: unknown, handler: ResourceHandler) => {
-			registered.set(name, handler);
+		resource: jest.fn((name: string, template: string | ResourceTemplate, handler: ResourceHandler) => {
+			registered.set(name, { template, handler });
 		})
 	} as unknown as McpServer;
 
@@ -57,6 +79,10 @@ function createMockResourceServer(): { server: McpServer; registered: Map<string
 
 function textOf(result: ResourceResult): string {
 	return result.contents[0].text;
+}
+
+function uriOf(template: string | ResourceTemplate): string {
+	return typeof template === 'string' ? template : template.uriTemplate.toString();
 }
 
 describe('parseBlockNumber', () => {
@@ -71,14 +97,14 @@ describe('parseBlockNumber', () => {
 });
 
 describe('registerEVMResources', () => {
-	let registered: Map<string, ResourceHandler>;
+	let registered: Map<string, ResourceRegistration>;
 
-	const invoke = async (name: ResourceName, params: Record<string, string> = RESOURCE_PARAMS[name]): Promise<ResourceResult> => {
-		const handler = registered.get(name);
-		if (!handler) {
+	const invoke = async (name: ResourceName, params: Record<string, string> = RESOURCE_CASES[name].params): Promise<ResourceResult> => {
+		const registration = registered.get(name);
+		if (!registration) {
 			throw new Error(`Resource ${name} was not registered`);
 		}
-		return handler({ href: `evm://test/${name}` }, params);
+		return registration.handler({ href: `evm://test/${name}` }, params);
 	};
 
 	beforeEach(() => {
@@ -111,6 +137,7 @@ describe('registerEVMResources', () => {
 			symbol: 'NFTS',
 			tokenURI: 'ipfs://nft'
 		});
+		(services.getERC721Owner as jest.Mock).mockResolvedValue(ADDRESS);
 		(services.isNFTOwner as jest.Mock).mockResolvedValue(false);
 		(services.getERC1155TokenURI as jest.Mock).mockResolvedValue('ipfs://1155');
 		(services.getERC1155Balance as jest.Mock).mockResolvedValue(5n);
@@ -125,27 +152,17 @@ describe('registerEVMResources', () => {
 	});
 
 	it('registers every EVM resource', () => {
-		expect([...registered.keys()]).toEqual([
-			'chain_info_by_network',
-			'sei_chain_info',
-			'evm_block_by_number',
-			'block_by_hash',
-			'evm_latest_block',
-			'default_latest_block',
-			'evm_address_native_balance',
-			'default_sei_balance',
-			'erc20_balance',
-			'default_erc20_balance',
-			'evm_transaction_details',
-			'default_transaction_by_hash',
-			'supported_networks',
-			'erc20_token_details',
-			'erc20_token_address_balance',
-			'erc721_nft_token_details',
-			'erc721_nft_ownership_check',
-			'erc1155_token_metadata_uri',
-			'erc1155_token_address_balance'
-		]);
+		expect([...registered.keys()].sort()).toEqual(Object.keys(RESOURCE_CASES).sort());
+	});
+
+	it('registers every EVM resource with its expected URI template', () => {
+		for (const [name, { uri }] of Object.entries(RESOURCE_CASES)) {
+			const registration = registered.get(name);
+			if (!registration) {
+				throw new Error(`Resource ${name} was not registered`);
+			}
+			expect(uriOf(registration.template)).toBe(uri);
+		}
 	});
 
 	it('returns chain info for a named network', async () => {
@@ -268,7 +285,7 @@ describe('registerEVMResources', () => {
 		});
 	});
 
-	it('returns NFT metadata with unknown owner because the resource template has no address parameter', async () => {
+	it('returns NFT metadata with its current owner', async () => {
 		const result = await invoke('erc721_nft_token_details');
 		expect(JSON.parse(textOf(result))).toEqual({
 			contract: TOKEN,
@@ -277,8 +294,15 @@ describe('registerEVMResources', () => {
 			name: 'NFT',
 			symbol: 'NFTS',
 			tokenURI: 'ipfs://nft',
-			owner: 'Unknown'
+			owner: ADDRESS
 		});
+		expect(services.getERC721Owner).toHaveBeenCalledWith(TOKEN, 7n, 'sei-testnet');
+	});
+
+	it('returns NFT metadata with an unknown owner when owner lookup fails', async () => {
+		(services.getERC721Owner as jest.Mock).mockRejectedValue(new Error('owner lookup failed'));
+		const result = await invoke('erc721_nft_token_details');
+		expect(JSON.parse(textOf(result)).owner).toBe('Unknown');
 	});
 
 	it('checks NFT ownership', async () => {
@@ -366,7 +390,7 @@ describe('registerEVMResources', () => {
 	});
 
 	it('surfaces invalid block numbers through the block-by-number error path', async () => {
-		const result = await invoke('evm_block_by_number', { ...RESOURCE_PARAMS.evm_block_by_number, blockNumber: 'abc' });
+		const result = await invoke('evm_block_by_number', { ...RESOURCE_CASES.evm_block_by_number.params, blockNumber: 'abc' });
 		expect(textOf(result)).toBe('Error fetching block: Invalid block number: abc');
 	});
 });

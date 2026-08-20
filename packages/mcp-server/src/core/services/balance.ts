@@ -122,6 +122,27 @@ export async function getERC20Balance(
 }
 
 /**
+ * Get the current owner of a specific NFT
+ * @param tokenAddress NFT contract address
+ * @param tokenId Token ID to query
+ * @param network Network name or chain ID
+ * @returns Current owner address
+ */
+export async function getERC721Owner(tokenAddress: string, tokenId: bigint, network = DEFAULT_NETWORK): Promise<Address> {
+	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
+
+	return (await readContract(
+		{
+			address: validatedTokenAddress,
+			abi: erc721Abi,
+			functionName: 'ownerOf',
+			args: [tokenId]
+		},
+		network
+	)) as Address;
+}
+
+/**
  * Check if an address owns a specific NFT
  * @param tokenAddress NFT contract address
  * @param ownerAddress Owner address
@@ -134,15 +155,7 @@ export async function isNFTOwner(tokenAddress: string, ownerAddress: string, tok
 	const validatedOwnerAddress = services.helpers.validateAddress(ownerAddress);
 
 	try {
-		const actualOwner = (await readContract(
-			{
-				address: validatedTokenAddress,
-				abi: erc721Abi,
-				functionName: 'ownerOf',
-				args: [tokenId]
-			},
-			network
-		)) as Address;
+		const actualOwner = await getERC721Owner(validatedTokenAddress, tokenId, network);
 
 		return actualOwner.toLowerCase() === validatedOwnerAddress.toLowerCase();
 	} catch (error: unknown) {

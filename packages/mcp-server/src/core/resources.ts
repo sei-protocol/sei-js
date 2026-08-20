@@ -545,13 +545,9 @@ export function registerEVMResources(server: McpServer) {
 
 				const nftInfo = await services.getERC721TokenMetadata(tokenAddress, tokenId, network);
 
-				// Get owner separately
 				let owner = 'Unknown';
 				try {
-					const isOwner = await services.isNFTOwner(tokenAddress, params.address as Address, tokenId, network);
-					if (isOwner) {
-						owner = params.address as string;
-					}
+					owner = await services.getERC721Owner(tokenAddress, tokenId, network);
 				} catch (_e) {
 					// Owner info not available
 				}
