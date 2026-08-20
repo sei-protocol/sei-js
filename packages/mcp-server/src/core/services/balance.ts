@@ -61,6 +61,18 @@ const erc1155Abi = [
 	}
 ] as const;
 
+async function readERC721Owner(tokenAddress: Address, tokenId: bigint, network: string): Promise<Address> {
+	return (await readContract(
+		{
+			address: tokenAddress,
+			abi: erc721Abi,
+			functionName: 'ownerOf',
+			args: [tokenId]
+		},
+		network
+	)) as Address;
+}
+
 /**
  * Get the Sei balance for an address
  * @param address Sei address
@@ -131,15 +143,7 @@ export async function getERC20Balance(
 export async function getERC721Owner(tokenAddress: string, tokenId: bigint, network = DEFAULT_NETWORK): Promise<Address> {
 	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 
-	return (await readContract(
-		{
-			address: validatedTokenAddress,
-			abi: erc721Abi,
-			functionName: 'ownerOf',
-			args: [tokenId]
-		},
-		network
-	)) as Address;
+	return readERC721Owner(validatedTokenAddress, tokenId, network);
 }
 
 /**
@@ -151,10 +155,11 @@ export async function getERC721Owner(tokenAddress: string, tokenId: bigint, netw
  * @returns True if the address owns the NFT
  */
 export async function isNFTOwner(tokenAddress: string, ownerAddress: string, tokenId: bigint, network = DEFAULT_NETWORK): Promise<boolean> {
+	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 	const validatedOwnerAddress = services.helpers.validateAddress(ownerAddress);
 
 	try {
-		const actualOwner = await getERC721Owner(tokenAddress, tokenId, network);
+		const actualOwner = await readERC721Owner(validatedTokenAddress, tokenId, network);
 
 		return actualOwner.toLowerCase() === validatedOwnerAddress.toLowerCase();
 	} catch (error: unknown) {

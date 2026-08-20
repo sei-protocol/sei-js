@@ -113,6 +113,25 @@ describe('Balance Service', () => {
 				'sei'
 			);
 		});
+
+		test('should propagate owner lookup errors', async () => {
+			const { readContract } = await import('../../../core/services/contracts.js');
+			const { utils } = await import('../../../core/services/utils.js');
+
+			(readContract as jest.Mock).mockRejectedValue(new Error('NFT does not exist'));
+			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
+
+			await expect(getERC721Owner(VALID_TOKEN_ADDRESS, 1n)).rejects.toThrow('NFT does not exist');
+		});
+
+		test('should propagate token address validation errors', async () => {
+			const { utils } = await import('../../../core/services/utils.js');
+			(utils.validateAddress as jest.Mock).mockImplementation(() => {
+				throw new Error('Invalid address');
+			});
+
+			await expect(getERC721Owner('invalid', 1n)).rejects.toThrow('Invalid address');
+		});
 	});
 
 	describe('isNFTOwner', () => {
@@ -146,6 +165,18 @@ describe('Balance Service', () => {
 
 			// Verify results
 			expect(result).toBe(false);
+		});
+
+		test('should propagate token address validation errors', async () => {
+			const { utils } = await import('../../../core/services/utils.js');
+			(utils.validateAddress as jest.Mock).mockImplementation((address) => {
+				if (address === 'invalid') {
+					throw new Error('Invalid address');
+				}
+				return address as `0x${string}`;
+			});
+
+			await expect(isNFTOwner('invalid', VALID_OWNER_ADDRESS, 1n)).rejects.toThrow('Invalid address');
 		});
 
 		test('should return false if there is an error', async () => {
