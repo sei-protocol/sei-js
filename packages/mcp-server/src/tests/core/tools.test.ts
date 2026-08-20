@@ -2290,6 +2290,7 @@ describe('EVM Tools', () => {
 			beforeEach(() => {
 				(services.getERC20TokenInfo as jest.Mock).mockResolvedValue(mockTokenInfo as never);
 				(services.getERC721TokenMetadata as jest.Mock).mockResolvedValue(mockNftInfo as never);
+				(services.getERC721Owner as jest.Mock).mockResolvedValue(mockAddress as never);
 			});
 
 			test('get_token_info - success path', async () => {
@@ -2370,9 +2371,34 @@ describe('EVM Tools', () => {
 				const response = await testToolSuccess(tool, { tokenAddress: mockTokenAddress, tokenId: mockTokenId, network: mockNetwork });
 
 				expect(services.getERC721TokenMetadata).toHaveBeenCalledWith(mockTokenAddress, BigInt(mockTokenId), mockNetwork);
+				expect(services.getERC721Owner).toHaveBeenCalledWith(mockTokenAddress, BigInt(mockTokenId), mockNetwork);
 
 				expect(response).toHaveProperty('content');
 				expect(response.content[0]).toHaveProperty('type', 'text');
+				expect(JSON.parse(response.content[0].text).owner).toBe(mockAddress);
+			});
+
+			test('get_nft_info - returns Unknown when owner lookup fails', async () => {
+				const tool = checkToolExists('get_nft_info');
+				if (!tool) return;
+
+				(services.getERC721Owner as jest.Mock).mockRejectedValue(new Error('owner lookup failed'));
+				const response = await tool.handler({ tokenAddress: mockTokenAddress, tokenId: mockTokenId, network: mockNetwork });
+
+				expect(JSON.parse(response.content[0].text)).toMatchObject({
+					owner: 'Unknown',
+					ownerError: 'owner lookup failed'
+				});
+			});
+
+			test('get_nft_info - stringifies non-Error owner lookup failures', async () => {
+				const tool = checkToolExists('get_nft_info');
+				if (!tool) return;
+
+				(services.getERC721Owner as jest.Mock).mockRejectedValue('owner unavailable');
+				const response = await tool.handler({ tokenAddress: mockTokenAddress, tokenId: mockTokenId, network: mockNetwork });
+
+				expect(JSON.parse(response.content[0].text).ownerError).toBe('owner unavailable');
 			});
 
 			test('get_nft_info - error path', async () => {
@@ -2410,6 +2436,7 @@ describe('EVM Tools', () => {
 					BigInt(mockTokenId),
 					'sei' // DEFAULT_NETWORK
 				);
+				expect(services.getERC721Owner).toHaveBeenCalledWith(mockTokenAddress, BigInt(mockTokenId), 'sei');
 
 				expect(response).toHaveProperty('content');
 				expect(response.content[0]).toHaveProperty('type', 'text');

@@ -1038,28 +1038,15 @@ function registerWalletTools(server: McpServer) {
 		},
 		async ({ tokenAddress, tokenId, network = DEFAULT_NETWORK }) => {
 			try {
-				const nftInfo = await services.getERC721TokenMetadata(tokenAddress as Address, BigInt(tokenId), network);
+				const parsedTokenId = BigInt(tokenId);
+				const nftInfo = await services.getERC721TokenMetadata(tokenAddress as Address, parsedTokenId, network);
 
-				// Check ownership separately
 				let owner: `0x${string}` | null = null;
+				let ownerError: string | undefined;
 				try {
-					// This may fail if tokenId doesn't exist
-					owner = await services.getPublicClient(network).readContract({
-						address: tokenAddress as Address,
-						abi: [
-							{
-								inputs: [{ type: 'uint256' }],
-								name: 'ownerOf',
-								outputs: [{ type: 'address' }],
-								stateMutability: 'view',
-								type: 'function'
-							}
-						],
-						functionName: 'ownerOf',
-						args: [BigInt(tokenId)]
-					});
-				} catch (_e) {
-					// Ownership info not available
+					owner = await services.getERC721Owner(tokenAddress, parsedTokenId, network);
+				} catch (error) {
+					ownerError = error instanceof Error ? error.message : String(error);
 				}
 
 				return {
@@ -1072,7 +1059,8 @@ function registerWalletTools(server: McpServer) {
 									tokenId,
 									network,
 									...nftInfo,
-									owner: owner || 'Unknown'
+									owner: owner || 'Unknown',
+									...(ownerError === undefined ? {} : { ownerError })
 								},
 								null,
 								2
