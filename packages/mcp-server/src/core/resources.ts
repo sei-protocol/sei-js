@@ -546,10 +546,11 @@ export function registerEVMResources(server: McpServer) {
 				const nftInfo = await services.getERC721TokenMetadata(tokenAddress, tokenId, network);
 
 				let owner = 'Unknown';
+				let ownerError: string | undefined;
 				try {
 					owner = await services.getERC721Owner(tokenAddress, tokenId, network);
-				} catch (_e) {
-					// Owner info not available
+				} catch (error) {
+					ownerError = error instanceof Error ? error.message : String(error);
 				}
 
 				return {
@@ -562,7 +563,8 @@ export function registerEVMResources(server: McpServer) {
 									tokenId: tokenId.toString(),
 									network,
 									...nftInfo,
-									owner
+									owner,
+									...(ownerError === undefined ? {} : { ownerError })
 								},
 								null,
 								2

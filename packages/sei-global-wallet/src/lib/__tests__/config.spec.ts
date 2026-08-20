@@ -1,6 +1,7 @@
 import { config } from '../config';
 
 describe('sei-global-wallet config', () => {
+	// These values intentionally pin the published EIP-6963 identity.
 	it('matches the published wallet identity', () => {
 		expect(config.walletName).toBe('Sei Global Wallet');
 		expect(config.walletUrl).toBe('https://global-wallet.sei.io');
@@ -9,9 +10,7 @@ describe('sei-global-wallet config', () => {
 	});
 
 	it('walletIcon is an SVG data URI', () => {
-		if (typeof config.walletIcon !== 'string') {
-			throw new TypeError('Expected walletIcon to be a string');
-		}
+		expect(typeof config.walletIcon).toBe('string');
 		expect(config.walletIcon).toMatch(/^data:image\/svg\+xml;base64,.+/);
 	});
 });

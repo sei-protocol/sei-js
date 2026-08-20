@@ -2385,7 +2385,20 @@ describe('EVM Tools', () => {
 				(services.getERC721Owner as jest.Mock).mockRejectedValue(new Error('owner lookup failed'));
 				const response = await tool.handler({ tokenAddress: mockTokenAddress, tokenId: mockTokenId, network: mockNetwork });
 
-				expect(JSON.parse(response.content[0].text).owner).toBe('Unknown');
+				expect(JSON.parse(response.content[0].text)).toMatchObject({
+					owner: 'Unknown',
+					ownerError: 'owner lookup failed'
+				});
+			});
+
+			test('get_nft_info - stringifies non-Error owner lookup failures', async () => {
+				const tool = checkToolExists('get_nft_info');
+				if (!tool) return;
+
+				(services.getERC721Owner as jest.Mock).mockRejectedValue('owner unavailable');
+				const response = await tool.handler({ tokenAddress: mockTokenAddress, tokenId: mockTokenId, network: mockNetwork });
+
+				expect(JSON.parse(response.content[0].text).ownerError).toBe('owner unavailable');
 			});
 
 			test('get_nft_info - error path', async () => {

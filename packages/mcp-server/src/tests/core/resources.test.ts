@@ -9,6 +9,9 @@ type ResourceResult = { contents: Array<{ uri: string; text: string }> };
 type ResourceHandler = (uri: { href: string }, params?: Record<string, string>) => Promise<ResourceResult>;
 type ResourceRegistration = { template: string | ResourceTemplate; handler: ResourceHandler };
 
+// Default spies throw so a new handler dependency fails loudly. That mutates the real
+// `chains`/`services` module namespaces, which is only safe because this package's `test`
+// script and the root `test:coverage` job both run `bun test --isolate`.
 const spyFunctions = (mod: object) => {
 	for (const [key, value] of Object.entries(mod)) {
 		if (typeof value === 'function') {
@@ -304,7 +307,16 @@ describe('registerEVMResources', () => {
 	it('returns NFT metadata with an unknown owner when owner lookup fails', async () => {
 		(services.getERC721Owner as jest.Mock).mockRejectedValue(new Error('owner lookup failed'));
 		const result = await invoke('erc721_nft_token_details');
-		expect(JSON.parse(textOf(result)).owner).toBe('Unknown');
+		expect(JSON.parse(textOf(result))).toMatchObject({
+			owner: 'Unknown',
+			ownerError: 'owner lookup failed'
+		});
+	});
+
+	it('stringifies non-Error NFT owner lookup failures', async () => {
+		(services.getERC721Owner as jest.Mock).mockRejectedValue('owner unavailable');
+		const result = await invoke('erc721_nft_token_details');
+		expect(JSON.parse(textOf(result)).ownerError).toBe('owner unavailable');
 	});
 
 	it('checks NFT ownership', async () => {
