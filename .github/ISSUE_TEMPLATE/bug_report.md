@@ -3,34 +3,45 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG] Issue Title"
 labels: bug, linear
-assignees: ''
+assignees: ""
 
 ---
 
-**Seid version**
-Show us output of `seid version --long | head`
+**Affected package and version**
+Select the affected package and provide its exact version:
 
-**SeiJS package & version**
-Check your `package.json` for version number and package (core/react/proto) 
+- [ ] `@sei-js/create-sei`
+- [ ] `@sei-js/mcp-server`
+- [ ] `@sei-js/precompiles`
+- [ ] `@sei-js/registry`
+- [ ] `@sei-js/sei-global-wallet`
 
-**Chain ID**
-Which chain are you running into issues with?
+Version:
+
+**Environment**
+- Runtime or browser and version:
+- Operating system:
+- Wallet or provider, if applicable:
+- Sei network and chain ID:
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+**To reproduce**
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
+Include a minimal reproduction or code sample when possible.
+
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Logs or screenshots**
+If applicable, add logs or screenshots that help explain the problem. Remove private keys, seed phrases, and other secrets first.
 
 **Additional context**
 Add any other context about the problem here.
