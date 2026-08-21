@@ -1,24 +1,31 @@
 import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
 import { promises as fs } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 
 const packageRoot = path.resolve(import.meta.dir, '..');
 
 describe('CLI', () => {
-	test('documents the short name option', async () => {
-		const subprocess = Bun.spawn({
-			cmd: [process.execPath, path.join(packageRoot, 'src/main.ts'), 'app', '--help'],
-			cwd: packageRoot,
-			stdout: 'pipe',
-			stderr: 'pipe'
-		});
+	test('supports the short name option', async () => {
+		const testDir = await fs.mkdtemp(path.join(os.tmpdir(), 'create-sei-cli-'));
 
-		const [stdout, stderr, exitCode] = await Promise.all([new Response(subprocess.stdout).text(), new Response(subprocess.stderr).text(), subprocess.exited]);
+		try {
+			const subprocess = Bun.spawn({
+				cmd: [process.execPath, path.join(packageRoot, 'src/main.ts'), 'app', '-n', 'Invalid Name'],
+				cwd: testDir,
+				stdout: 'pipe',
+				stderr: 'ignore'
+			});
 
-		expect(exitCode).toBe(0);
-		expect(stderr).toBe('');
-		expect(stdout).toContain('-n, --name <name>');
-	});
+			const [stdout, exitCode] = await Promise.all([new Response(subprocess.stdout).text(), subprocess.exited]);
+
+			expect(exitCode).toBe(0);
+			expect(stdout).toContain('Invalid package name.');
+			expect(await fs.readdir(testDir)).toEqual([]);
+		} finally {
+			await fs.rm(testDir, { recursive: true, force: true });
+		}
+	}, 10_000);
 });
 
 describe('Extension System', () => {

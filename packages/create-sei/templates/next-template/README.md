@@ -13,24 +13,40 @@ bun run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Check and build
+
+Run `bun run check` before building. If it reports fixable issues, run `bun run check:fix`. The build's prebuild hook runs the same check.
+
+```bash
+bun run check
+bun run build
+```
+
 ## Project structure
 
 - `src/app/layout.tsx` wraps every route with the wallet and UI providers.
 - `src/app/page.tsx` shows the landing page until a wallet connects, then shows the interactive examples.
-- `src/components/providers/providers.tsx` configures Wagmi, RainbowKit, WalletConnect, and the selected Sei network.
+- `src/components/providers/providers.tsx` configures Wagmi, RainbowKit, and the selected Sei network. It registers MetaMask by default; add other wallets to its `wallets` list.
+- `src/components/shell/shell.tsx` provides the shared app shell around the landing and connected views.
 - `src/components/landing/index.tsx` contains the disconnected landing page.
 - `src/components/default/index.tsx` contains the connected wallet, balance, and transaction examples.
 - `src/app/development/page.tsx` and `src/app/resources/page.tsx` contain development notes and links.
 
 ## Network configuration
 
-The app connects to Sei mainnet when `NEXT_PUBLIC_CHAIN` is unset. To use Sei testnet, add this to `.env.local`:
+The app connects to Sei mainnet when `NEXT_PUBLIC_CHAIN` is unset. The included `.env.example` sets it to `testnet`, so copying that file to `.env.local` selects Sei testnet. To select testnet explicitly, add this to `.env.local`:
 
 ```dotenv
 NEXT_PUBLIC_CHAIN=testnet
 ```
 
-You can also set `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` in `.env.local`. Without it, the template uses a placeholder project ID.
+WalletConnect-based wallets require a real project ID from [WalletConnect Cloud](https://cloud.walletconnect.com). Set it in `.env.local`:
+
+```dotenv
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your-project-id
+```
+
+The fallback value in the template is only a placeholder, so WalletConnect-based wallets will not connect until you replace it. The bundled MetaMask connector works without a WalletConnect project ID.
 
 ## Learn more
 
