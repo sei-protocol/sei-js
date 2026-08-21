@@ -101,7 +101,7 @@ export default function ResourcesPage() {
 										radius="md"
 										p="md"
 										component="a"
-										href="https://docs.sei.io/ai/mcp-server"
+										href="https://github.com/sei-protocol/sei-js/tree/main/packages/mcp-server#readme"
 										target="_blank"
 										rel="noreferrer"
 									>
