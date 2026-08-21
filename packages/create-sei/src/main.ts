@@ -52,7 +52,7 @@ const validateOptions = (options: WizardOptions): boolean => {
 
 	if (options.name) {
 		if (!isValidDirectoryName(options.name)) {
-			console.log('Invalid package name. Please use a valid npm package name.');
+			console.error('Invalid package name. Please use a valid npm package name.');
 			valid = false;
 		}
 	}
@@ -83,6 +83,7 @@ async function listExtensions(): Promise<void> {
 
 async function runWizard(options: WizardOptions): Promise<void> {
 	if (!validateOptions(options)) {
+		process.exitCode = 1;
 		return;
 	}
 

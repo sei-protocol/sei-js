@@ -46,7 +46,7 @@ WalletConnect-based wallets require a real project ID from [WalletConnect Cloud]
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your-project-id
 ```
 
-The fallback value in the template is only a placeholder, so WalletConnect-based wallets will not connect until you replace it. The bundled MetaMask connector works without a WalletConnect project ID.
+The fallback value in the template is only a placeholder, so WalletConnect-based wallets will not connect until you replace it. The bundled MetaMask connector works without a WalletConnect project ID when the MetaMask browser extension is installed.
 
 ## Learn more
 
