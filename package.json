@@ -27,9 +27,10 @@
 		"release:internal": "bun run build && bun run changeset && bun run changeset version --snapshot internal && bun run sync-lockfile && bun run changeset publish --no-git-tag --snapshot --tag internal",
 		"sync-lockfile": "bun install --lockfile-only && bun scripts/sync-workspace-versions.ts",
 		"version-packages": "changeset version && bun run sync-lockfile",
-		"test": "bun run --filter '*' test",
+		"test": "bun run --filter '*' test && bun run test:scripts",
 		"test:all": "bun run test",
 		"test:coverage": "bun test --isolate --coverage --coverage-reporter=lcov packages",
+		"test:scripts": "bun test --isolate scripts",
 		"typecheck": "tsc --project tsconfig.test.json"
 	},
 	"devDependencies": {
