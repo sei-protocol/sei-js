@@ -106,10 +106,9 @@ describe('index', () => {
 
 		const indexModule = await import('../index.js');
 
-		expect(await indexModule.main()).toBeUndefined();
+		await expect(indexModule.main()).rejects.toBe(testError);
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting MCP server:', 'Server startup failed');
-		expect(process.exitCode).toBe(1);
 		expect(processExitSpy).not.toHaveBeenCalled();
 	});
 
@@ -121,11 +120,10 @@ describe('index', () => {
 
 		const indexModule = await import('../index.js');
 
-		expect(await indexModule.main()).toBeUndefined();
+		await expect(indexModule.main()).rejects.toBe(testError);
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting MCP server:', 'Transport creation failed');
 		expect(mockServer.close).toHaveBeenCalled();
-		expect(process.exitCode).toBe(1);
 		expect(processExitSpy).not.toHaveBeenCalled();
 	});
 
@@ -135,13 +133,25 @@ describe('index', () => {
 
 		const indexModule = await import('../index.js');
 
-		expect(await indexModule.main()).toBeUndefined();
+		await expect(indexModule.main()).rejects.toBe(testError);
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting MCP server:', 'listen EADDRINUSE');
 		expect(mockTransport.stop).toHaveBeenCalled();
 		expect(mockServer.close).toHaveBeenCalled();
-		expect(process.exitCode).toBe(1);
 		expect(processExitSpy).not.toHaveBeenCalled();
+	});
+
+	it('terminates direct CLI startup after cleanup while embedders receive exceptions', async () => {
+		const testError = new Error('unsafe HTTP wallet configuration');
+		mockTransport.start.mockRejectedValue(testError);
+		const indexModule = await import('../index.js');
+
+		await expect(indexModule.runCli()).rejects.toThrow('process.exit called');
+
+		expect(mockTransport.stop).toHaveBeenCalled();
+		expect(mockServer.close).toHaveBeenCalled();
+		expect(processExitSpy).toHaveBeenCalledWith(1);
+		expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting MCP server:', 'unsafe HTTP wallet configuration');
 	});
 
 	it('attempts all shutdown operations and aggregates their failures', async () => {

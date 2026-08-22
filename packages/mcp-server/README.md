@@ -100,12 +100,15 @@ HTTP transports do not authenticate callers or validate `Origin`/`Host`. Bind to
 
 Each legacy SSE connection has an isolated MCP server session. Both HTTP transports close active MCP request/session resources during graceful shutdown, and listener startup failures (including an occupied port) terminate startup with a nonzero exit status.
 
+Legacy SSE accepts at most 100 concurrent sessions by default. Set `SSE_MAX_SESSIONS` to a positive integer to tune the limit; excess connections receive HTTP 503. This limit reduces unauthenticated memory exhaustion risk but does not replace an authenticating reverse proxy.
+
 ## Configuration
 
 - `SERVER_TRANSPORT`: `stdio` (default), `streamable-http`, or `http-sse`
 - `SERVER_HOST`: Nonempty HTTP listener host (default: `localhost`)
 - `SERVER_PORT`: HTTP listener port (default: `8080`)
 - `SERVER_PATH`: HTTP endpoint path (default: `/mcp`). For `http-sse`, this is the GET event stream; clients POST messages to `{SERVER_PATH}/message?sessionId=<id>`.
+- `SSE_MAX_SESSIONS`: Maximum concurrent legacy SSE sessions (default: `100`)
 - `WALLET_MODE`: `disabled` (default) or `private-key`
 - `PRIVATE_KEY`: Private key used when `WALLET_MODE=private-key`
 - `MAINNET_RPC_URL`: Optional custom Sei mainnet RPC URL

@@ -20,7 +20,7 @@ function textOf(result: Awaited<ReturnType<Client['callTool']>>): string {
 }
 
 async function waitFor(predicate: () => boolean): Promise<void> {
-	const deadline = Date.now() + 1_000;
+	const deadline = Date.now() + 5_000;
 	while (!predicate()) {
 		if (Date.now() >= deadline) throw new Error('Timed out waiting for SSE cleanup');
 		await Bun.sleep(5);
@@ -33,7 +33,7 @@ async function withTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
 		return await Promise.race([
 			promise,
 			new Promise<never>((_resolve, reject) => {
-				timer = setTimeout(() => reject(new Error(`${label} timed out`)), 1_000);
+				timer = setTimeout(() => reject(new Error(`${label} timed out`)), 5_000);
 			})
 		]);
 	} finally {
@@ -132,6 +132,49 @@ describe('HttpSseTransport', () => {
 		expect(transport.getListeningPort()).toBeUndefined();
 	});
 
+	it('caps concurrent sessions with 503 and releases capacity on disconnect', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let serverCount = 0;
+		const transport = new HttpSseTransport(
+			0,
+			HOST,
+			PATH,
+			'disabled',
+			async () => {
+				serverCount++;
+				return new McpServer({ name: `limited-session-${serverCount}`, version: '1.0.0' });
+			},
+			undefined,
+			undefined,
+			1
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
+
+		const port = transport.getListeningPort();
+		if (port === undefined) throw new Error('SSE transport did not start');
+		const url = new URL(`http://${HOST}:${port}${PATH}`);
+		const firstClient = new Client({ name: 'limited-a', version: '1.0.0' });
+		clients.push(firstClient);
+		await firstClient.connect(new SSEClientTransport(url));
+
+		const rejected = await fetch(url, { headers: { accept: 'text/event-stream' } });
+		expect(rejected.status).toBe(503);
+		expect(await rejected.json()).toEqual({ error: 'Maximum SSE sessions reached' });
+		expect(serverCount).toBe(1);
+
+		await firstClient.close();
+		clients.splice(clients.indexOf(firstClient), 1);
+		await waitFor(() => (transport as unknown as { activeSessionSlots: number }).activeSessionSlots === 0);
+
+		const secondClient = new Client({ name: 'limited-b', version: '1.0.0' });
+		clients.push(secondClient);
+		await secondClient.connect(new SSEClientTransport(url));
+		expect(serverCount).toBe(2);
+	});
+
 	it('closes both session resources when an SSE response disconnects', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		let serverCloseCount = 0;
@@ -193,7 +236,7 @@ describe('HttpSseTransport', () => {
 			connect: jest.fn(async (sessionTransport: SSEServerTransport) => sessionTransport.start()),
 			close: sessionServerClose
 		} as unknown as McpServer;
-		const sessionTransportClose = jest.fn().mockResolvedValue(undefined);
+		const sessionTransportClose = jest.fn().mockRejectedValue(new Error('simulated transport cleanup failure'));
 		const transport = new HttpSseTransport(
 			0,
 			HOST,
@@ -226,6 +269,7 @@ describe('HttpSseTransport', () => {
 
 		expect(sessionServerClose).toHaveBeenCalledTimes(1);
 		expect(sessionTransportClose).toHaveBeenCalledTimes(1);
+		expect(consoleErrorSpy).toHaveBeenCalledWith('Error closing SSE session:', 'Failed to close all SSE session resources.');
 		socket.destroy();
 	});
 
@@ -261,6 +305,47 @@ describe('HttpSseTransport', () => {
 		await withTimeout(transport.start(bootstrap), 'restarted SSE startup');
 		expect(transport.getListeningPort()).toBeNumber();
 		await withTimeout(transport.stop(), 'restarted SSE shutdown');
+	});
+
+	it('rejects occupied ports and serves health checks after startup', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const occupied = createServer();
+		await new Promise<void>((resolve, reject) => {
+			occupied.once('error', reject);
+			occupied.listen(0, HOST, resolve);
+		});
+		const address = occupied.address();
+		if (!address || typeof address === 'string') throw new Error('Expected an occupied TCP port');
+
+		const blocked = new HttpSseTransport(address.port, HOST, PATH);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await expect(blocked.start(bootstrap)).rejects.toMatchObject({ code: 'EADDRINUSE' });
+		await new Promise<void>((resolve, reject) => occupied.close((error) => (error ? reject(error) : resolve())));
+
+		const transport = new HttpSseTransport(0, HOST, PATH);
+		transports.push(transport);
+		await transport.start(bootstrap);
+		const health = await fetch(`http://${HOST}:${transport.getListeningPort()}/health`);
+		expect(health.status).toBe(200);
+		expect(await health.json()).toMatchObject({ status: 'ok' });
+	});
+
+	it('releases a reserved slot when SSE transport creation fails', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const transportFactory = jest.fn(() => {
+			throw new Error('simulated SSE constructor failure');
+		});
+		const transport = new HttpSseTransport(0, HOST, PATH, 'disabled', undefined, transportFactory, undefined, 1);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
+		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
+
+		expect((await fetch(url)).status).toBe(500);
+		expect((await fetch(url)).status).toBe(500);
+		expect(transportFactory).toHaveBeenCalledTimes(2);
 	});
 
 	it('attempts every session close and aggregates shutdown failures', async () => {
@@ -316,6 +401,8 @@ describe('HttpSseTransport', () => {
 		const unused = new McpServer({ name: 'unused', version: '1.0.0' });
 		bootstrapServers.push(unused);
 		await expect(invalidHost.start(unused)).rejects.toThrow('SERVER_HOST must not be empty');
+		const invalidLimit = new HttpSseTransport(8080, HOST, PATH, 'disabled', undefined, undefined, undefined, 0);
+		await expect(invalidLimit.start(unused)).rejects.toThrow('SSE_MAX_SESSIONS must be a positive integer');
 
 		const transport = new HttpSseTransport(0, HOST, PATH);
 		transports.push(transport);

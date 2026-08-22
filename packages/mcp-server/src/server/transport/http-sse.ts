@@ -12,11 +12,13 @@ import type { McpTransport, WalletMode } from './types.js';
 export type McpServerFactory = () => Promise<McpServer>;
 export type SseServerTransportFactory = (endpoint: string, response: Response) => SSEServerTransport;
 export type SseListenFactory = (app: express.Application, port: number, host: string) => Server;
+export const DEFAULT_MAX_SSE_SESSIONS = 100;
 type LifecycleState = 'idle' | 'starting' | 'running' | 'stopping';
 
 interface SseSession {
 	server: McpServer;
 	transport: SSEServerTransport;
+	releaseSlot: () => void;
 	closing?: Promise<void>;
 }
 
@@ -34,6 +36,7 @@ export class HttpSseTransport implements McpTransport {
 	private cleanupStartupListeners: (() => void) | undefined;
 	private runtimeErrorHandler: ((error: Error) => void) | undefined;
 	private connectionHandler: ((socket: Socket) => void) | undefined;
+	private activeSessionSlots = 0;
 
 	constructor(
 		private readonly port: number,
@@ -42,7 +45,8 @@ export class HttpSseTransport implements McpTransport {
 		private readonly walletMode: WalletMode = 'disabled',
 		private readonly serverFactory: McpServerFactory = getServer,
 		private readonly transportFactory: SseServerTransportFactory = (endpoint, response) => new SSEServerTransport(endpoint, response),
-		private readonly listenFactory: SseListenFactory = (app, port, host) => app.listen(port, host)
+		private readonly listenFactory: SseListenFactory = (app, port, host) => app.listen(port, host),
+		private readonly maxSessions: number = DEFAULT_MAX_SSE_SESSIONS
 	) {
 		this.app = express();
 		this.setupMiddleware();
@@ -64,8 +68,27 @@ export class HttpSseTransport implements McpTransport {
 				res.status(503).json({ error: 'Server is shutting down' });
 				return;
 			}
+			if (this.activeSessionSlots >= this.maxSessions) {
+				res.status(503).json({ error: 'Maximum SSE sessions reached' });
+				return;
+			}
 
-			const transport = this.transportFactory(`${this.path}/message`, res);
+			this.activeSessionSlots++;
+			let slotReleased = false;
+			const releaseSlot = () => {
+				if (slotReleased) return;
+				slotReleased = true;
+				this.activeSessionSlots--;
+			};
+			let transport: SSEServerTransport;
+			try {
+				transport = this.transportFactory(`${this.path}/message`, res);
+			} catch (error) {
+				releaseSlot();
+				console.error('Error creating SSE transport:', sanitizeError(error));
+				res.status(500).json({ error: 'Internal server error' });
+				return;
+			}
 			const sessionId = transport.sessionId;
 			let session: SseSession | undefined;
 			let disconnected = false;
@@ -91,7 +114,7 @@ export class HttpSseTransport implements McpTransport {
 
 			try {
 				const server = await this.serverFactory();
-				session = { server, transport };
+				session = { server, transport, releaseSlot };
 
 				if (this.stopping || disconnected) {
 					await this.closeDetachedSession(session);
@@ -111,7 +134,7 @@ export class HttpSseTransport implements McpTransport {
 						if (this.connections.has(sessionId)) await this.closeSession(sessionId);
 						else await this.closeDetachedSession(session);
 					} else {
-						await runAllOperations([() => transport.close()], 'Failed to close an incomplete SSE session.');
+						await runAllOperations([() => transport.close()], 'Failed to close an incomplete SSE session.').finally(releaseSlot);
 					}
 				} catch (closeError) {
 					console.error('Error closing failed SSE session:', sanitizeError(closeError));
@@ -150,7 +173,9 @@ export class HttpSseTransport implements McpTransport {
 
 	private closeDetachedSession(session: SseSession): Promise<void> {
 		if (!session.closing) {
-			session.closing = runAllOperations([() => session.transport.close(), () => session.server.close()], 'Failed to close all SSE session resources.');
+			session.closing = runAllOperations([() => session.transport.close(), () => session.server.close()], 'Failed to close all SSE session resources.').finally(
+				session.releaseSlot
+			);
 		}
 		return session.closing;
 	}
@@ -172,6 +197,9 @@ export class HttpSseTransport implements McpTransport {
 		validateSecurityConfig(this.mode, this.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
+		}
+		if (!Number.isInteger(this.maxSessions) || this.maxSessions < 1) {
+			throw new Error('SSE_MAX_SESSIONS must be a positive integer.');
 		}
 		if (this.state === 'starting' && this.startPromise) {
 			await this.startPromise;

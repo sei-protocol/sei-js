@@ -33,6 +33,7 @@ describe('Args Module', () => {
 		delete process.env.SERVER_PORT;
 		delete process.env.SERVER_HOST;
 		delete process.env.SERVER_PATH;
+		delete process.env.SSE_MAX_SESSIONS;
 		delete process.env.WALLET_MODE;
 		delete process.env.PRIVATE_KEY;
 		delete process.env.MAINNET_RPC_URL;
@@ -110,7 +111,8 @@ describe('Args Module', () => {
 				port: 8080,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'disabled'
+				walletMode: 'disabled',
+				maxSseSessions: 100
 			});
 		});
 
@@ -129,7 +131,8 @@ describe('Args Module', () => {
 				port: 3001,
 				host: '0.0.0.0',
 				path: '/api/mcp',
-				walletMode: 'private-key'
+				walletMode: 'private-key',
+				maxSseSessions: 100
 			});
 		});
 
@@ -175,6 +178,20 @@ describe('Args Module', () => {
 			parseArgs();
 
 			expect(mockDotenvConfig).toHaveBeenCalled();
+		});
+
+		it('loads and validates the legacy SSE session limit', () => {
+			process.env.SSE_MAX_SESSIONS = '12';
+			expect(parseArgs().maxSseSessions).toBe(12);
+
+			process.env.SSE_MAX_SESSIONS = '0';
+			expect(() => parseArgs()).toThrow("Invalid SSE_MAX_SESSIONS '0'");
+
+			process.env.SSE_MAX_SESSIONS = '1.5';
+			expect(() => parseArgs()).toThrow("Invalid SSE_MAX_SESSIONS '1.5'");
+
+			process.env.SSE_MAX_SESSIONS = 'not-a-number';
+			expect(() => parseArgs()).toThrow("Invalid SSE_MAX_SESSIONS 'NaN'");
 		});
 
 		it('should handle all RPC URL environment variables', () => {
@@ -353,7 +370,8 @@ describe('Args Module', () => {
 				port: 9000,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'private-key'
+				walletMode: 'private-key',
+				maxSseSessions: 100
 			});
 		});
 	});

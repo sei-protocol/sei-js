@@ -46,6 +46,8 @@ describe('EVM prompts', () => {
 
 		expect(prompt.schema.network.parse('1329')).toBe('sei');
 		expect(prompt.schema.network.parse('0x530')).toBe('sei-testnet');
+		expect(prompt.schema.network.parse(' SEI ')).toBe('sei');
+		expect(prompt.schema.network.parse('0X530')).toBe('sei-testnet');
 		expect(prompt.schema.network.safeParse('unknown-network').success).toBe(false);
 	});
 

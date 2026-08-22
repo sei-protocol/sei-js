@@ -12,7 +12,10 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 			return new StreamableHttpTransport(config.port, config.host, config.path, config.walletMode);
 
 		case 'http-sse':
-			return new HttpSseTransport(config.port, config.host, config.path, config.walletMode);
+			if (config.maxSseSessions === undefined) {
+				return new HttpSseTransport(config.port, config.host, config.path, config.walletMode);
+			}
+			return new HttpSseTransport(config.port, config.host, config.path, config.walletMode, undefined, undefined, undefined, config.maxSseSessions);
 
 		default:
 			throw new Error(`Unsupported transport mode: ${config.mode}`);

@@ -15,6 +15,7 @@ export interface TransportConfig {
 	port: number; // Required for HTTP-based transports
 	host: string; // Required for HTTP-based transports
 	path: string; // Required for HTTP-based transports
+	maxSseSessions?: number; // Applied only to the legacy SSE transport
 }
 
 // Re-export WalletMode for convenience

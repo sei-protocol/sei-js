@@ -7,19 +7,29 @@ import { sanitizeError } from './errors.js';
 import * as services from './services/index.js';
 import { getWalletProvider } from './wallet/index.js';
 
-const WALLET_TOOL_NAMES = new Set([
-	'approve_token_spending',
-	'deploy_contract',
-	'get_address_from_private_key',
-	'transfer_erc1155',
-	'transfer_erc20',
-	'transfer_nft',
-	'transfer_sei',
-	'transfer_token',
-	'write_contract'
+const READ_ONLY_TOOL_NAMES = new Set([
+	'check_nft_ownership',
+	'estimate_gas',
+	'get_balance',
+	'get_block_by_number',
+	'get_chain_info',
+	'get_erc1155_balance',
+	'get_erc1155_token_uri',
+	'get_erc20_balance',
+	'get_latest_block',
+	'get_nft_balance',
+	'get_nft_info',
+	'get_supported_networks',
+	'get_token_balance',
+	'get_token_balance_erc20',
+	'get_token_info',
+	'get_transaction',
+	'get_transaction_receipt',
+	'is_contract',
+	'read_contract'
 ]);
 
-function withToolRegistrationPolicy(server: McpServer, walletEnabled: boolean): McpServer {
+export function withToolRegistrationPolicy(server: McpServer, walletEnabled: boolean): McpServer {
 	const registerTool = server.tool.bind(server) as unknown as (
 		name: string,
 		description: string,
@@ -27,12 +37,19 @@ function withToolRegistrationPolicy(server: McpServer, walletEnabled: boolean): 
 		handler: (...args: never[]) => unknown
 	) => unknown;
 
-	return {
-		tool: (name: string, description: string, schema: Record<string, z.ZodTypeAny>, handler: (...args: never[]) => unknown) => {
-			if (!walletEnabled && WALLET_TOOL_NAMES.has(name)) return undefined;
-			return registerTool(name, description, 'network' in schema ? { ...schema, network: networkSchema.optional() } : schema, handler);
+	return new Proxy(server, {
+		get(target, property) {
+			if (property === 'tool') {
+				return (name: string, description: string, schema: Record<string, z.ZodTypeAny>, handler: (...args: never[]) => unknown) => {
+					if (!walletEnabled && !READ_ONLY_TOOL_NAMES.has(name)) return undefined;
+					return registerTool(name, description, 'network' in schema ? { ...schema, network: networkSchema.optional() } : schema, handler);
+				};
+			}
+
+			const value = Reflect.get(target, property, target);
+			return typeof value === 'function' ? value.bind(target) : value;
 		}
-	} as unknown as McpServer;
+	});
 }
 
 /**

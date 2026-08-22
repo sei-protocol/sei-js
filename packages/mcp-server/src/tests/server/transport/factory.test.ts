@@ -83,7 +83,8 @@ describe('Transport Factory', () => {
 				walletMode: 'disabled',
 				port: 9000,
 				host: '127.0.0.1',
-				path: '/sse'
+				path: '/sse',
+				maxSseSessions: 25
 			};
 
 			const mockSseInstance = { mode: 'http-sse' };
@@ -91,7 +92,7 @@ describe('Transport Factory', () => {
 
 			const transport = createTransport(config);
 
-			expect(HttpSseTransport).toHaveBeenCalledWith(9000, '127.0.0.1', '/sse', 'disabled');
+			expect(HttpSseTransport).toHaveBeenCalledWith(9000, '127.0.0.1', '/sse', 'disabled', undefined, undefined, undefined, 25);
 			expect(transport).toBe(mockSseInstance);
 		});
 

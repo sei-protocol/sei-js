@@ -19,7 +19,7 @@ import type { Address } from 'viem';
 import * as chains from '../../core/chains.js';
 import * as config from '../../core/config.js';
 import * as services from '../../core/services/index.js';
-import { registerEVMTools } from '../../core/tools.js';
+import { registerEVMTools, withToolRegistrationPolicy } from '../../core/tools.js';
 import * as wallet from '../../core/wallet/index.js';
 import {
 	createMockServer,
@@ -975,6 +975,20 @@ describe('EVM Tools', () => {
 			);
 		});
 
+		test('hides unknown future tools by default and forwards non-tool methods', () => {
+			const tool = jest.fn();
+			const auxiliary = jest.fn(function (this: { marker: string }) {
+				return this.marker;
+			});
+			const target = { tool, auxiliary, marker: 'forwarded' } as unknown as McpServer;
+			const policy = withToolRegistrationPolicy(target, false);
+
+			policy.tool('future_signing_tool', 'unknown future tool', {}, async () => ({ content: [] }));
+			expect(tool).not.toHaveBeenCalled();
+			expect((policy as unknown as { auxiliary(): string }).auxiliary()).toBe('forwarded');
+			expect(auxiliary).toHaveBeenCalledTimes(1);
+		});
+
 		test('advertises and normalizes only supported network selectors', () => {
 			const network = checkToolExists('get_balance').schema.network as {
 				safeParse(value: unknown): { success: boolean; data?: string };
@@ -982,6 +996,7 @@ describe('EVM Tools', () => {
 
 			expect(['sei', '1329', '0x531'].map((value) => network.safeParse(value).data)).toEqual(['sei', 'sei', 'sei']);
 			expect(['sei-testnet', '1328', '0x530'].map((value) => network.safeParse(value).data)).toEqual(['sei-testnet', 'sei-testnet', 'sei-testnet']);
+			expect(['SEI', ' Sei-Testnet ', '0X531'].map((value) => network.safeParse(value).data)).toEqual(['sei', 'sei-testnet', 'sei']);
 			expect(network.safeParse('unknown-network').success).toBe(false);
 		});
 
@@ -1998,7 +2013,7 @@ describe('EVM Tools', () => {
 				const response = await tool.handler(transferParams);
 
 				expect(response).toHaveProperty('isError', true);
-				expect(response.content[0].text).toContain('Error transferring tokens: Sensitive error details redacted.');
+				expect(response.content[0].text).toContain('Error transferring tokens: Unsupported token type');
 			});
 
 			test('transfer_token - success path with default network', async () => {

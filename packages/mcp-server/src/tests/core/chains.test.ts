@@ -100,7 +100,14 @@ describe('chains module', () => {
 		test('accepts only advertised supported string selectors', () => {
 			expect(['sei', '1329', '0x531'].map((selector) => networkSchema.parse(selector))).toEqual(['sei', 'sei', 'sei']);
 			expect(['sei-testnet', '1328', '0x530'].map((selector) => networkSchema.parse(selector))).toEqual(['sei-testnet', 'sei-testnet', 'sei-testnet']);
+			expect(['SEI', ' Sei-Testnet ', '0X531', ' 0X530 '].map((selector) => networkSchema.parse(selector))).toEqual([
+				'sei',
+				'sei-testnet',
+				'sei',
+				'sei-testnet'
+			]);
 			expect(networkSchema.safeParse('unknown-network').success).toBe(false);
+			expect(networkSchema.safeParse(' 9999 ').success).toBe(false);
 			expect(networkSchema.safeParse(1329).success).toBe(false);
 		});
 	});

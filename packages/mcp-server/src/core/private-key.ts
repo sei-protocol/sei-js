@@ -14,3 +14,13 @@ export function isValidPrivateKey(key?: string): boolean {
 	const scalar = BigInt(formattedKey);
 	return scalar > 0n && scalar < SECP256K1_ORDER;
 }
+
+export function validatePrivateKeyConfiguration(walletMode: 'private-key' | 'disabled', privateKey?: string): void {
+	if (walletMode !== 'private-key') return;
+	if (!privateKey) {
+		throw new Error('PRIVATE_KEY is required when WALLET_MODE=private-key.');
+	}
+	if (!isValidPrivateKey(privateKey)) {
+		throw new Error('PRIVATE_KEY must be a valid 32-byte secp256k1 private key.');
+	}
+}

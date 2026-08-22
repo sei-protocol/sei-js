@@ -1,5 +1,14 @@
 import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
-import { config, formatPrivateKey, getPrivateKeyAsHex, getWalletMode, isValidPrivateKey, isWalletEnabled, loadConfig } from '../../core/config.js';
+import {
+	config,
+	formatPrivateKey,
+	getPrivateKeyAsHex,
+	getWalletMode,
+	initializeConfig,
+	isValidPrivateKey,
+	isWalletEnabled,
+	loadConfig
+} from '../../core/config.js';
 
 describe('Config Module - Actual Implementation', () => {
 	const originalConfig = { ...config };
@@ -61,6 +70,16 @@ describe('Config Module - Actual Implementation', () => {
 			const privateKey = '1'.repeat(64);
 			expect(isValidPrivateKey(privateKey)).toBe(true);
 			expect(loadConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: privateKey })).toEqual({
+				privateKey: `0x${privateKey}`,
+				walletMode: 'private-key',
+				walletApiKey: undefined
+			});
+		});
+
+		test('initializes the shared runtime config only when explicitly requested', () => {
+			const privateKey = '2'.repeat(64);
+			expect(initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: privateKey })).toBe(config);
+			expect(config).toEqual({
 				privateKey: `0x${privateKey}`,
 				walletMode: 'private-key',
 				walletApiKey: undefined

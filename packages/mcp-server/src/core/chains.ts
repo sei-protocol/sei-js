@@ -15,7 +15,7 @@ export type SupportedNetworkName = (typeof SUPPORTED_NETWORK_NAMES)[number];
 export type NetworkIdentifier = number | string;
 
 export const networkSchema = z
-	.enum(SUPPORTED_NETWORK_INPUTS)
+	.preprocess((value) => (typeof value === 'string' ? value.trim().toLowerCase() : value), z.enum(SUPPORTED_NETWORK_INPUTS))
 	.transform((network) => normalizeNetwork(network))
 	.describe("Supported network: 'sei', 'sei-testnet', '1329', '1328', '0x531', or '0x530'. Defaults to Sei mainnet.");
 

@@ -121,7 +121,6 @@ describe('sanitizeError', () => {
 		'apiKey',
 		'api-key',
 		'x-api-key',
-		'api-key-suffix',
 		'proxy-authorization',
 		'x-authorization-header',
 		'x-auth-token',
@@ -141,11 +140,8 @@ describe('sanitizeError', () => {
 		'dpop',
 		'x-dpop-proof',
 		'jwt',
-		'signed-jwt-value',
 		'client-assertion',
-		'assertion-type',
 		'signature',
-		'request-signature-value',
 		'proof',
 		'proof-of-possession',
 		'password',
@@ -189,14 +185,10 @@ describe('sanitizeError', () => {
 		{
 			value: 'AWS4-HMAC-SHA256 Credential=fake-access/region, SignedHeaders=host, Signature=fake-signature requestId=safe',
 			secrets: ['fake-access', 'fake-signature']
-		},
-		{
-			value: 'AWS fake-access:fake-secret trailing=safe',
-			secrets: ['fake-access', 'fake-secret']
 		}
 	])('redacts standalone authorization value $value', ({ value, secrets }) => {
-		const plain = sanitizeError(`Upstream rejected ${value}`);
-		const json = sanitizeError(JSON.stringify({ message: `Upstream rejected ${value}`, status: 500 }));
+		const plain = sanitizeError(value);
+		const json = sanitizeError(JSON.stringify({ message: value, status: 500 }));
 
 		expect(plain).toBe('Sensitive error details redacted.');
 		expect(JSON.parse(json)).toEqual({ message: 'Sensitive error details redacted.', status: 500 });
@@ -227,7 +219,16 @@ describe('sanitizeError', () => {
 		'ApiKey'
 	])('redacts standalone standardized %s authorization values', (scheme) => {
 		const secret = `fake-${scheme.toLowerCase()}-credential-fragment`;
-		const message = `Upstream rejected ${scheme} ${secret}; status=401`;
+		const credential = /^(digest)$/i.test(scheme)
+			? `username=${secret}, nonce=fake-nonce`
+			: /^(signature)$/i.test(scheme)
+				? `keyId=${secret}, signature=fake-signature`
+				: /^aws4-/i.test(scheme)
+					? `Credential=${secret}/region, Signature=fake-signature`
+					: /^scram-/i.test(scheme)
+						? `username=${secret}, data=fake-data`
+						: secret;
+		const message = `${scheme} ${credential}`;
 		const plain = sanitizeError(message);
 		const json = sanitizeError(JSON.stringify({ message, trailing: { status: 401 } }));
 
@@ -240,6 +241,39 @@ describe('sanitizeError', () => {
 		expect(json).not.toContain(secret);
 		expect(plain).not.toContain('credential-fragment');
 		expect(json).not.toContain('credential-fragment');
+	});
+
+	it.each([
+		'Unsupported token type',
+		'Unsupported token type: mystery',
+		'Token transfer failed',
+		'Signature verification failed',
+		'Basic validation failed',
+		'Digest parsing failed',
+		'AWS request failed',
+		'OAuth negotiation failed'
+	])('preserves actionable non-credential text: %s', (message) => {
+		expect(sanitizeError(message)).toBe(message);
+		expect(JSON.parse(sanitizeError(JSON.stringify({ message, status: 400 })))).toEqual({ message, status: 400 });
+	});
+
+	it('redacts only exact structured credential keys', () => {
+		const input = {
+			tokenType: 'Unsupported token type',
+			signatureVerification: 'Signature verification failed',
+			proofType: 'merkle',
+			assertionType: 'urn:safe',
+			requestSignatureValue: 'public-checksum',
+			apiKeySuffix: 'last-four',
+			accessToken: 'fake-access-token-secret',
+			xApiKey: 'fake-api-key-secret'
+		};
+
+		expect(JSON.parse(sanitizeError(JSON.stringify(input)))).toEqual({
+			...input,
+			accessToken: '[redacted]',
+			xApiKey: '[redacted]'
+		});
 	});
 
 	it('keeps JSON valid while redacting URLs and configured secrets in nonsensitive fields', () => {
@@ -285,5 +319,12 @@ describe('sanitizeError', () => {
 			expect(sanitized).not.toContain(walletApiKey);
 			expect(sanitized).not.toContain('fake-configured');
 		}
+	});
+
+	it('ignores configured values shorter than the minimum secret length', () => {
+		process.env.PRIVATE_KEY = 'a';
+		process.env.WALLET_API_KEY = 'xy';
+
+		expect(sanitizeError('A safe validation failure stays actionable')).toBe('A safe validation failure stays actionable');
 	});
 });

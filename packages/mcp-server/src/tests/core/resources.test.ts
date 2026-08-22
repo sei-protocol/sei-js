@@ -118,7 +118,7 @@ describe('registerEVMResources', () => {
 
 		(chains.getSupportedNetworks as jest.Mock).mockReturnValue(['sei', 'sei-testnet']);
 		(chains.normalizeNetwork as jest.Mock).mockImplementation((network: string) => {
-			const normalized = network.toLowerCase();
+			const normalized = network.trim().toLowerCase();
 			if (normalized === 'sei' || normalized === '1329' || normalized === '0x531') return 'sei';
 			if (normalized === 'sei-testnet' || normalized === '1328' || normalized === '0x530') return 'sei-testnet';
 			throw new Error(`Unsupported network: ${network}`);
@@ -185,7 +185,7 @@ describe('registerEVMResources', () => {
 		expect(services.getChainId).toHaveBeenCalledWith('sei-testnet');
 	});
 
-	it.each(['sei-testnet', '1328', '0x530'])('normalizes supported testnet selector %s', async (network) => {
+	it.each(['sei-testnet', '1328', '0x530', ' Sei-Testnet ', '0X530'])('normalizes supported testnet selector %s', async (network) => {
 		const result = await invoke('chain_info_by_network', { network });
 		expect(JSON.parse(textOf(result)).network).toBe('sei-testnet');
 		expect(services.getChainId).toHaveBeenCalledWith('sei-testnet');

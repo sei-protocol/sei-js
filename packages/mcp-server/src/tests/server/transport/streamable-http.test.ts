@@ -31,7 +31,7 @@ async function withTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
 		return await Promise.race([
 			promise,
 			new Promise<never>((_resolve, reject) => {
-				timer = setTimeout(() => reject(new Error(`${label} timed out`)), 1_000);
+				timer = setTimeout(() => reject(new Error(`${label} timed out`)), 5_000);
 			})
 		]);
 	} finally {

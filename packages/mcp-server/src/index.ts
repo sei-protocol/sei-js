@@ -76,8 +76,15 @@ export const main = async (): Promise<RunningMcpServer | undefined> => {
 		return await startMcpServer();
 	} catch (error) {
 		console.error('Error starting MCP server:', sanitizeError(error));
-		process.exitCode = 1;
-		return undefined;
+		throw error;
+	}
+};
+
+export const runCli = async (): Promise<RunningMcpServer | undefined> => {
+	try {
+		return await main();
+	} catch {
+		process.exit(1);
 	}
 };
 
@@ -91,5 +98,5 @@ export const isDirectExecution = (moduleUrl: string, entrypoint = process.argv[1
 };
 
 if (isDirectExecution(import.meta.url)) {
-	await main();
+	await runCli();
 }
