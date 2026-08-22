@@ -52,7 +52,7 @@ const validateOptions = (options: WizardOptions): boolean => {
 
 	if (options.name) {
 		if (!isValidDirectoryName(options.name)) {
-			console.log('Invalid package name. Please use a valid npm package name.');
+			console.error('Invalid package name. Please use a valid npm package name.');
 			valid = false;
 		}
 	}
@@ -83,6 +83,7 @@ async function listExtensions(): Promise<void> {
 
 async function runWizard(options: WizardOptions): Promise<void> {
 	if (!validateOptions(options)) {
+		process.exitCode = 1;
 		return;
 	}
 
@@ -133,7 +134,7 @@ async function runWizard(options: WizardOptions): Promise<void> {
 program
 	.command('app')
 	.description('Create a new SEI dApp')
-	.option('--name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
+	.option('-n, --name <name>', 'Specify the name of your dApp. Name must be a valid package name.')
 	.option('--extension <extension>', 'Specify an extension to apply to the base template')
 
 	.action(async (options: WizardOptions) => {

@@ -1,7 +1,7 @@
-import { developerResources, socialLinks } from '@/app/resources/resources';
-import { Shell } from '@/components';
-import { Card, Code, Container, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
-import { IconBook, IconRobot, IconTerminal } from '@tabler/icons-react';
+import { Card, Code, Container, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import { IconBook, IconRobot, IconTerminal } from "@tabler/icons-react";
+import { developerResources, socialLinks } from "@/app/resources/resources";
+import { Shell } from "@/components";
 
 export default function ResourcesPage() {
 	return (
@@ -96,15 +96,7 @@ export default function ResourcesPage() {
 										</Stack>
 									</Paper>
 
-									<Card
-										withBorder
-										radius="md"
-										p="md"
-										component="a"
-										href="https://github.com/sei-protocol/sei-js/tree/main/packages/mcp-server#readme"
-										target="_blank"
-										rel="noreferrer"
-									>
+									<Card withBorder radius="md" p="md" component="a" href="https://github.com/sei-protocol/sei-js/tree/main/packages/mcp-server#readme" target="_blank" rel="noreferrer">
 										<Group gap="sm">
 											<ThemeIcon size={32} radius="md" color="orange" variant="light">
 												<IconBook size={16} />
@@ -134,7 +126,7 @@ export default function ResourcesPage() {
 								{socialLinks.map(({ title, description, href, icon: Icon, color }) => (
 									<Card key={title} withBorder radius="lg" p="lg" component="a" href={href} target="_blank" rel="noreferrer" shadow="sm">
 										<Group align="flex-start" wrap="nowrap" gap="md">
-											<ThemeIcon variant="light" color={color === 'dark' ? 'gray' : (color as any)} size={36} radius="md">
+											<ThemeIcon variant="light" color={color === "dark" ? "gray" : (color as any)} size={36} radius="md">
 												<Icon size={20} />
 											</ThemeIcon>
 											<Stack gap={4} flex={1}>
