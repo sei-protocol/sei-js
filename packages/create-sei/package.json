@@ -27,7 +27,8 @@
 	"scripts": {
 		"build": "rm -rf dist && tsc --project ./tsconfig.json && chmod +x dist/main.js && rsync -av --exclude-from=.rsyncignore ./templates/ ./dist/templates/ && rsync -av --exclude-from=.rsyncignore ./extensions/ ./dist/extensions/",
 		"dev": "bun src/main.ts",
-		"test": "bun test --isolate src"
+		"test": "bun test --isolate src",
+		"test:release": "bun scripts/smoke-generated-app.ts"
 	},
 	"dependencies": {
 		"boxen": "^7.1.1",

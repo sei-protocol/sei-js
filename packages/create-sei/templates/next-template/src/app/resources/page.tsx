@@ -11,11 +11,11 @@ export default function ResourcesPage() {
 					{/* Header */}
 					<div>
 						<Group gap="md" align="center" mb="lg">
-							<ThemeIcon size={48} radius="md" c="grape" variant="light">
+							<ThemeIcon size={48} radius="md" variant="outline" color="seiMaroon">
 								<IconBook size={24} />
 							</ThemeIcon>
 							<div>
-								<Title order={1} fw={700} c="gray.9">
+								<Title order={1} fw={700} c="seiMaroon.9" className="sei-heading">
 									Developer Resources
 								</Title>
 								<Text size="lg" c="gray.6" mt={4}>
@@ -32,10 +32,10 @@ export default function ResourcesPage() {
 								📚 Documentation & Tools
 							</Title>
 							<SimpleGrid cols={{ base: 1, sm: 2, lg: 2 }} spacing="lg">
-								{developerResources.map(({ title, description, href, icon: Icon, color }) => (
+								{developerResources.map(({ title, description, href, icon: Icon }) => (
 									<Card key={title} withBorder radius="lg" p="xl" component="a" href={href} target="_blank" rel="noreferrer" shadow="sm">
 										<Group align="flex-start" wrap="nowrap" gap="md">
-											<ThemeIcon variant="light" color={color} size={40} radius="md">
+											<ThemeIcon variant="outline" color="gray" size={40} radius="md">
 												<Icon size={22} />
 											</ThemeIcon>
 											<Stack gap={6} flex={1}>
@@ -63,7 +63,7 @@ export default function ResourcesPage() {
 								<Stack gap="lg">
 									<Stack gap="xs">
 										<Group gap="md">
-											<ThemeIcon size={40} radius="md" color="orange" variant="light">
+											<ThemeIcon size={40} radius="md" variant="outline" color="seiMaroon">
 												<IconRobot size={20} />
 											</ThemeIcon>
 											<Title order={4} fw={600} c="gray.9">
@@ -96,9 +96,17 @@ export default function ResourcesPage() {
 										</Stack>
 									</Paper>
 
-									<Card withBorder radius="md" p="md" component="a" href="https://github.com/sei-protocol/sei-js/tree/main/packages/mcp-server#readme" target="_blank" rel="noreferrer">
+									<Card
+										withBorder
+										radius="md"
+										p="md"
+										component="a"
+										href="https://github.com/sei-protocol/sei-js/tree/main/packages/mcp-server#readme"
+										target="_blank"
+										rel="noreferrer"
+									>
 										<Group gap="sm">
-											<ThemeIcon size={32} radius="md" color="orange" variant="light">
+											<ThemeIcon size={32} radius="md" variant="outline" color="seiMaroon">
 												<IconBook size={16} />
 											</ThemeIcon>
 											<Stack gap={2} flex={1}>
@@ -123,10 +131,10 @@ export default function ResourcesPage() {
 								🌐 Community & Social
 							</Title>
 							<SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
-								{socialLinks.map(({ title, description, href, icon: Icon, color }) => (
+								{socialLinks.map(({ title, description, href, icon: Icon }) => (
 									<Card key={title} withBorder radius="lg" p="lg" component="a" href={href} target="_blank" rel="noreferrer" shadow="sm">
 										<Group align="flex-start" wrap="nowrap" gap="md">
-											<ThemeIcon variant="light" color={color === "dark" ? "gray" : (color as any)} size={36} radius="md">
+											<ThemeIcon variant="outline" color="gray" size={36} radius="md">
 												<Icon size={20} />
 											</ThemeIcon>
 											<Stack gap={4} flex={1}>

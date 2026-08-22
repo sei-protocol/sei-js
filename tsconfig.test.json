@@ -7,6 +7,13 @@
 		"types": ["bun"],
 		"lib": ["ES2022", "DOM", "DOM.Iterable"]
 	},
-	"include": ["bun-test.d.ts", "packages/**/*.test.ts", "packages/**/*.spec.ts", "packages/**/__tests__/**/*.ts", "scripts/**/*.ts"],
+	"include": [
+		"bun-test.d.ts",
+		"packages/**/*.test.ts",
+		"packages/**/*.spec.ts",
+		"packages/**/__tests__/**/*.ts",
+		"packages/create-sei/scripts/**/*.ts",
+		"scripts/**/*.ts"
+	],
 	"exclude": ["node_modules", "dist", "packages/create-sei/templates"]
 }
