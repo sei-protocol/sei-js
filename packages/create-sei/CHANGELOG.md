@@ -1,5 +1,21 @@
 # @sei-js/create-sei-app
 
+## 2.0.0
+
+### Major Changes
+
+- 29311bc: Migrate the monorepo to Bun and publish ESM-only packages.
+
+  **Breaking:** all packages drop CommonJS (`require`) entry points and flatten `dist/`. Consumers must use ESM `import`. `@sei-js/precompiles` now ships an `exports` map with working `./ethers`, `./viem`, and `./precompiles` subpaths. `@sei-js/sei-global-wallet` keeps the `./solana` entrypoint.
+
+  Install, build, and test with Bun (`bun install`, `bun run build`, `bun run test`). `@sei-js/mcp-server` now requires Node.js 20 or newer. The MCP server and precompiles development toolchain use Viem 2.55.16. Generated apps target the new `@sei-js/precompiles` major. Packages continue to publish to npm via Changesets.
+
+### Patch Changes
+
+- 656e1d2: Add the documented `-n` app name option and correct the generated template documentation and Bank precompile link.
+- b730fba: Fix the HTTP start scripts to select their transports through `SERVER_TRANSPORT`, document the current Node.js, wallet, and HTTP configuration, and direct generated apps to the current package guide.
+- da59b19: Standardize published package contents, licensing, and type resolution.
+
 ## 1.0.1
 
 ### Patch Changes

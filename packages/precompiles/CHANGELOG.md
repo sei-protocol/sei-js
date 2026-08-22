@@ -1,5 +1,37 @@
 # @sei-js/precompiles
 
+## 3.0.0
+
+### Major Changes
+
+- 29311bc: Migrate the monorepo to Bun and publish ESM-only packages.
+
+  **Breaking:** all packages drop CommonJS (`require`) entry points and flatten `dist/`. Consumers must use ESM `import`. `@sei-js/precompiles` now ships an `exports` map with working `./ethers`, `./viem`, and `./precompiles` subpaths. `@sei-js/sei-global-wallet` keeps the `./solana` entrypoint.
+
+  Install, build, and test with Bun (`bun install`, `bun run build`, `bun run test`). `@sei-js/mcp-server` now requires Node.js 20 or newer. The MCP server and precompiles development toolchain use Viem 2.55.16. Generated apps target the new `@sei-js/precompiles` major. Packages continue to publish to npm via Changesets.
+
+- c928ae9: **Breaking:** remove the unsupported IBC and Oracle precompile addresses, ABIs, and Ethers factories.
+
+  Neither precompile is supported on Sei any more, so calls to them fail on-chain regardless of where the address and ABI come from. There is no drop-in replacement: re-declaring them locally will not restore working calls, and code still depending on them needs to move off these precompiles.
+
+  Also remove the redundant Viem-specific ABI aliases. Import the raw `*_PRECOMPILE_ABI` constants instead; they work directly with Viem and preserve literal types for contract inference. The `viem` subpath re-exports these raw constants alongside the Sei chain definitions.
+
+- 96d9e1c: Export Viem's canonical Sei mainnet and testnet definitions from the package root and `viem` entrypoint. Viem 2.55.16 or newer is now required.
+
+### Minor Changes
+
+- b3db3e8: Export the Solo precompile from the `ethers` entrypoint. `ETHERS_SOLO_PRECOMPILE_ABI` and `getSoloPrecompileEthersV6Contract` were implemented but never re-exported from `src/ethers/index.ts`, so they were unreachable from the `@sei-js/precompiles` package root.
+
+  The `@sei-js/precompiles/ethers` subpath shown in the doc examples remains unresolvable and is unchanged here — the package still publishes no `exports` map. That is tracked separately.
+
+- 5675fcf: Sync the exported precompile ABIs with Sei Chain v6.6.1.
+
+  This adds the P256 precompile address, ABI, and Ethers factory. It also adds the missing staking queries and events, governance proposal methods, distribution events and validator commission withdrawal, JSON array extraction, and CW1155 pointer methods.
+
+### Patch Changes
+
+- da59b19: Standardize published package contents, licensing, and type resolution.
+
 ## 2.1.3
 
 ### Patch Changes
