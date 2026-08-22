@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/create-sei",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"description": "Scaffold new Sei applications with pre-configured templates and tooling",
 	"homepage": "https://github.com/sei-protocol/sei-js/tree/main/packages/create-sei#readme",
 	"repository": {

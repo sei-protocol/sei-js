@@ -1,5 +1,37 @@
 # @sei-js/create-sei
 
+## 2.0.0
+
+### Major Changes
+
+- 29311bc: Migrate the monorepo to Bun and publish ESM-only packages.
+
+  **Breaking:** all packages drop CommonJS (`require`) entry points and flatten `dist/`. Consumers must use ESM `import`. `@sei-js/precompiles` now ships an `exports` map with working `./ethers`, `./viem`, and `./precompiles` subpaths. `@sei-js/sei-global-wallet` keeps the `./solana` entrypoint.
+
+  Install, build, and test with Bun (`bun install`, `bun run build`, `bun run test`). `@sei-js/mcp-server` now requires Node.js 20 or newer. The MCP server and precompiles development toolchain use Viem 2.55.16. Generated apps target the new `@sei-js/precompiles` major. Packages continue to publish to npm via Changesets.
+
+### Minor Changes
+
+- 6fade5f: Harden scaffolding against destination overwrites and extension traversal, propagate generation failures, and write the selected project name into generated manifests. Project names are now intentionally limited to unscoped lowercase npm-style directory names; scoped names, tildes, and other shell-significant characters are rejected.
+
+  Generate buildable base and precompiles apps with patched Next.js and React versions, an exact independently validated `@sei-js/precompiles` dependency, preserved Biome tooling, conventional favicon handling, and a safe `.gitignore`.
+
+  Keep the secure Sharp 0.35 line while disabling Next 15's incompatible image optimizer. The dedicated smoke uses a local candidate only when its pending or already-versioned manifest matches the template pin; otherwise it checks the exact npm release. It validates clean Bun installs, reports low and moderate advisories, blocks candidate checks on high and critical advisories, and exercises Biome, production builds, routes, and assets without coupling unrelated package releases to the scaffold audit.
+
+  Apply the official Sei lockup, app mark, and Powered by Sei artwork with the black-and-white base palette, restrained Maroon and Gold accents, and license-safe typography fallbacks.
+
+  Map Mantine neutrals to the accessible official ramp and pin React 19-compatible external-store synchronization.
+
+  Remove the stale Vercel deploy script and badge, and replace the MetaMask-specific default connector with the generic injected-wallet connector.
+
+  Keep default CLI failures concise while exposing full errors and stacks when `DEBUG` is set.
+
+### Patch Changes
+
+- 656e1d2: Add the documented `-n` app name option and correct the generated template documentation and Bank precompile link.
+- b730fba: Fix the HTTP start scripts to select their transports through `SERVER_TRANSPORT`, document the current Node.js, wallet, and HTTP configuration, and direct generated apps to the current package guide.
+- da59b19: Standardize published package contents, licensing, and type resolution.
+
 ## 1.0.1
 
 ### Patch Changes
