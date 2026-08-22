@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { findStaleDynamicPackages } from './dynamic-package-lock.js';
 
 interface ProcessResult {
 	exitCode: number;
@@ -515,9 +516,7 @@ const assertNpmDynamicGraph = (lock: PackageLock) => {
 	assert.equal(lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version, '4.96.3');
 	assert.equal(lock.packages['node_modules/@dynamic-labs/ethereum-aa']?.version, '4.96.3');
 
-	const stale = Object.entries(lock.packages).filter(
-		([location, metadata]) => location.includes('/node_modules/@dynamic-labs/') && metadata.version === '4.96.1'
-	);
+	const stale = findStaleDynamicPackages(lock.packages);
 	assert.deepEqual(stale, [], `Unexpected stale Dynamic 4.96.1 npm resolutions: ${stale.map(([location]) => location).join(', ')}`);
 };
 

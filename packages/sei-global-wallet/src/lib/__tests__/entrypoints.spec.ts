@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'bun:test';
+import packageJson from '../../../package.json';
 
 describe('public entrypoints', () => {
-	it('imports the root and every subpath during SSR', async () => {
-		const [root, eip6963, ethereum, solana, zerodev] = await Promise.all([
+	it('imports the root and every non-AA subpath during SSR', async () => {
+		const [root, eip6963, ethereum, solana] = await Promise.all([
 			import('../../index'),
 			import('../../eip6963'),
 			import('../../ethereum'),
-			import('../../solana'),
-			import('../../zerodev')
+			import('../../solana')
 		]);
 
 		expect(root.default).toBe(root.Wallet);
@@ -17,6 +17,15 @@ describe('public entrypoints', () => {
 		expect(typeof ethereum.createEIP1193Provider).toBe('function');
 		expect(typeof solana.createSolanaWallet).toBe('function');
 		expect(typeof solana.registerSolanaStandard).toBe('function');
-		expect(typeof zerodev.createKernelClient).toBe('function');
+	});
+
+	it('keeps the optional zerodev export for consumers that install Dynamic AA', () => {
+		expect(packageJson.exports['./zerodev']).toEqual({
+			types: './dist/zerodev.d.ts',
+			import: './dist/zerodev.js',
+			default: './dist/zerodev.js'
+		});
+		expect(packageJson.peerDependencies['@dynamic-labs/ethereum-aa']).toBe('4.96.3');
+		expect(packageJson.peerDependenciesMeta['@dynamic-labs/ethereum-aa']).toEqual({ optional: true });
 	});
 });
