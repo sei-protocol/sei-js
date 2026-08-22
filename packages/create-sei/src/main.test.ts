@@ -3,15 +3,12 @@ import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { BRAND_ASSET_HASHES } from '../brand-assets';
+import { selectPrecompilesSource } from '../scripts/select-precompiles-source';
 import { SEI_NEUTRAL_RAMP } from '../templates/next-template/src/theme';
 
 const packageRoot = path.resolve(import.meta.dir, '..');
 const cliPath = path.join(packageRoot, 'dist/main.js');
-const brandAssetHashes = {
-	'powered-by-sei-light.png': '2e34eff9ed947367797d5ab7936bad56e15bd5bde34c3d338bb051e20c1ebe0e',
-	'sei-lockup-light.svg': 'dd74e3718d5aa5b45a4a681629b4012f439e5273a5587cbb9bbaad272636ea7a',
-	'sei-mark.png': '659b876c0cd7b7d12d284ddd541c9900fb86abdb88c0d39c7561bdae9b6bffdf'
-} as const;
 
 interface ProcessResult {
 	stdout: string;
@@ -28,10 +25,11 @@ interface GeneratedManifest {
 	[key: string]: unknown;
 }
 
-async function runProcess(cmd: string[], cwd: string): Promise<ProcessResult> {
+async function runProcess(cmd: string[], cwd: string, environment: Record<string, string> = {}): Promise<ProcessResult> {
 	const subprocess = Bun.spawn({
 		cmd,
 		cwd,
+		env: { ...process.env, ...environment },
 		stdout: 'pipe',
 		stderr: 'pipe'
 	});
@@ -41,8 +39,8 @@ async function runProcess(cmd: string[], cwd: string): Promise<ProcessResult> {
 	return { stdout, stderr, exitCode };
 }
 
-async function runCli(args: string[], cwd: string, entrypoint = cliPath): Promise<ProcessResult> {
-	return runProcess([process.execPath, entrypoint, ...args], cwd);
+async function runCli(args: string[], cwd: string, entrypoint = cliPath, environment: Record<string, string> = {}): Promise<ProcessResult> {
+	return runProcess([process.execPath, entrypoint, ...args], cwd, environment);
 }
 
 async function pathExists(target: string): Promise<boolean> {
@@ -55,6 +53,35 @@ async function pathExists(target: string): Promise<boolean> {
 async function readManifest(projectPath: string): Promise<GeneratedManifest> {
 	return JSON.parse(await fs.readFile(path.join(projectPath, 'package.json'), 'utf8')) as GeneratedManifest;
 }
+
+describe('precompiles source selection', () => {
+	test('uses a candidate for an exact pending release', async () => {
+		const selection = await selectPrecompilesSource(
+			{ currentVersion: '2.1.3', pendingVersion: '3.0.0', requestedSource: 'auto', targetVersion: '3.0.0' },
+			async () => false
+		);
+		expect(selection).toEqual({ basis: 'pending-release', source: 'local' });
+	});
+
+	test('uses an exact current manifest after Changesets versioning', async () => {
+		const selection = await selectPrecompilesSource({ currentVersion: '3.0.0', requestedSource: 'auto', targetVersion: '3.0.0' }, async () => false);
+		expect(selection).toEqual({ basis: 'current-manifest', source: 'local' });
+	});
+
+	test('uses the exact published registry version when local state does not match', async () => {
+		const selection = await selectPrecompilesSource(
+			{ currentVersion: '3.1.0', requestedSource: 'auto', targetVersion: '3.0.0' },
+			async (version) => version === '3.0.0'
+		);
+		expect(selection).toEqual({ basis: 'published-registry', source: 'registry' });
+	});
+
+	test('rejects mismatched local state when the exact registry version is unavailable', async () => {
+		await expect(
+			selectPrecompilesSource({ currentVersion: '3.0.0', pendingVersion: '3.1.0', requestedSource: 'auto', targetVersion: '3.0.0' }, async () => false)
+		).rejects.toThrow('neither a matching local source nor the exact npm release is available');
+	});
+});
 
 describe('CLI', () => {
 	beforeAll(async () => {
@@ -164,6 +191,25 @@ describe('CLI', () => {
 		}
 	}, 10_000);
 
+	test('prints error stacks only in DEBUG mode', async () => {
+		const testDir = await fs.mkdtemp(path.join(os.tmpdir(), 'create-sei-cli-'));
+		const args = ['app', '-n', 'debug-app', '--extension', '../invalid'];
+
+		try {
+			const conciseResult = await runCli(args, testDir, cliPath, { DEBUG: '' });
+			const debugResult = await runCli(args, testDir, cliPath, { DEBUG: '1' });
+
+			expect(conciseResult.exitCode).toBe(1);
+			expect(conciseResult.stderr).toContain("An error occurred: Invalid extension '../invalid'.");
+			expect(conciseResult.stderr).not.toContain('\n    at ');
+			expect(debugResult.exitCode).toBe(1);
+			expect(debugResult.stderr).toContain("Error: Invalid extension '../invalid'.");
+			expect(debugResult.stderr).toContain('\n    at ');
+		} finally {
+			await fs.rm(testDir, { recursive: true, force: true });
+		}
+	}, 10_000);
+
 	test('returns a nonzero status and removes partial output when template copying fails', async () => {
 		const testDir = await fs.mkdtemp(path.join(os.tmpdir(), 'create-sei-cli-'));
 		const fixtureRoot = path.join(testDir, 'cli-fixture');
@@ -223,7 +269,7 @@ describe('CLI', () => {
 			expect(extensionResult.stdout).toContain('Applied extension: precompiles');
 			expect(extensionResult.stdout).toContain('with precompiles extension');
 
-			const [baseManifest, extensionManifest, gitignore, extensionComponent, lockup, poweredBy, mark, layout, globals] = await Promise.all([
+			const [baseManifest, extensionManifest, gitignore, extensionComponent, lockup, poweredBy, mark, layout, faviconRoute, globals] = await Promise.all([
 				readManifest(basePath),
 				readManifest(extensionPath),
 				fs.readFile(path.join(basePath, '.gitignore'), 'utf8'),
@@ -232,6 +278,7 @@ describe('CLI', () => {
 				fs.readFile(path.join(basePath, 'public/brand/powered-by-sei-light.png')),
 				fs.readFile(path.join(basePath, 'public/brand/sei-mark.png')),
 				fs.readFile(path.join(basePath, 'src/app/layout.tsx'), 'utf8'),
+				fs.readFile(path.join(basePath, 'src/app/favicon.ico/route.ts'), 'utf8'),
 				fs.readFile(path.join(basePath, 'src/app/globals.css'), 'utf8')
 			]);
 
@@ -239,6 +286,7 @@ describe('CLI', () => {
 			expect(extensionManifest.name).toBe(extensionName);
 			expect({ ...extensionManifest, name: baseName }).toEqual(baseManifest);
 			expect(baseManifest.scripts.prebuild).toBe('biome check .');
+			expect(baseManifest.scripts.dev).toBe('next dev');
 			expect(baseManifest.devDependencies['@biomejs/biome']).toBeDefined();
 			expect(baseManifest.dependencies['@sei-js/precompiles']).toMatch(/^\d+\.\d+\.\d+/);
 			for (const requiredOverride of ['@metamask/sdk', 'sharp', 'use-sync-external-store', 'uuid', 'ws']) {
@@ -249,13 +297,14 @@ describe('CLI', () => {
 			expect(gitignore).toContain('!.env.example');
 			expect(await pathExists(path.join(basePath, 'gitignore'))).toBe(false);
 			expect(extensionComponent).toContain('Sei Precompiles');
-			expect((await fs.readdir(path.join(basePath, 'public/brand'))).sort()).toEqual(Object.keys(brandAssetHashes).sort());
-			expect(createHash('sha256').update(lockup).digest('hex')).toBe(brandAssetHashes['sei-lockup-light.svg']);
-			expect(createHash('sha256').update(poweredBy).digest('hex')).toBe(brandAssetHashes['powered-by-sei-light.png']);
-			expect(createHash('sha256').update(mark).digest('hex')).toBe(brandAssetHashes['sei-mark.png']);
+			expect((await fs.readdir(path.join(basePath, 'public/brand'))).sort()).toEqual(Object.keys(BRAND_ASSET_HASHES).sort());
+			expect(createHash('sha256').update(lockup).digest('hex')).toBe(BRAND_ASSET_HASHES['sei-lockup-light.svg']);
+			expect(createHash('sha256').update(poweredBy).digest('hex')).toBe(BRAND_ASSET_HASHES['powered-by-sei-light.png']);
+			expect(createHash('sha256').update(mark).digest('hex')).toBe(BRAND_ASSET_HASHES['sei-mark.png']);
 			expect(lockup.toString('utf8')).toContain('<svg width="312" height="120"');
 			expect(layout).toContain('icon: "/brand/sei-mark.png"');
 			expect(layout).toContain('apple: "/brand/sei-mark.png"');
+			expect(faviconRoute).toContain('"/brand/sei-mark.png"');
 			expect(SEI_NEUTRAL_RAMP).toEqual(['#f5f5f7', '#f5f5f7', '#cccccc', '#999999', '#666666', '#666666', '#333333', '#333333', '#131313', '#000000']);
 			for (const neutralToken of ['25', '50', '100', '200', '400', '600']) {
 				expect(globals).toContain(`--color-sei-neutral-${neutralToken}:`);
@@ -330,7 +379,7 @@ describe('CLI', () => {
 			expect(await pathExists(path.join(consumerPath, 'packed-base/.gitignore'))).toBe(true);
 			expect(await fs.readFile(path.join(consumerPath, 'packed-precompiles/src/components/default/index.tsx'), 'utf8')).toContain('Sei Precompiles');
 			for (const projectName of ['packed-base', 'packed-precompiles']) {
-				expect((await fs.readdir(path.join(consumerPath, projectName, 'public/brand'))).sort()).toEqual(Object.keys(brandAssetHashes).sort());
+				expect((await fs.readdir(path.join(consumerPath, projectName, 'public/brand'))).sort()).toEqual(Object.keys(BRAND_ASSET_HASHES).sort());
 			}
 		} finally {
 			await fs.rm(testDir, { recursive: true, force: true });

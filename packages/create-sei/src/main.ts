@@ -66,6 +66,14 @@ const validateOptions = (options: WizardOptions): boolean => {
 
 const extensionsPath = path.join(__dirname, 'extensions');
 
+function printCliError(error: unknown): void {
+	if (process.env.DEBUG && error instanceof Error) {
+		console.error(error.stack ?? error);
+		return;
+	}
+	console.error('An error occurred:', error instanceof Error ? error.message : error);
+}
+
 async function discoverExtensions(): Promise<string[]> {
 	const extensions = await fs.promises.readdir(extensionsPath, { withFileTypes: true });
 	return extensions.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
@@ -228,7 +236,7 @@ program
 		try {
 			await runWizard(options);
 		} catch (error) {
-			console.error('An error occurred:', error instanceof Error ? error.message : error);
+			printCliError(error);
 			process.exitCode = 1;
 		}
 	});
@@ -240,7 +248,7 @@ program
 		try {
 			await listExtensions();
 		} catch (error) {
-			console.error('An error occurred:', error instanceof Error ? error.message : error);
+			printCliError(error);
 			process.exitCode = 1;
 		}
 	});

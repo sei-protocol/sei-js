@@ -9,7 +9,6 @@ on:
       - 'bun.lock'
       - 'package.json'
       - 'packages/create-sei/**'
-      - 'packages/precompiles/**'
       - 'scripts/fix-dts-extensions.ts'
       - 'tsconfig.base.json'
       - 'tsconfig.test.json'
@@ -25,7 +24,7 @@ on:
           - local
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs['precompiles-source'] || 'local' }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs['precompiles-source'] || 'auto' }}
   cancel-in-progress: true
 
 permissions:
@@ -33,11 +32,11 @@ permissions:
 
 jobs:
   generated-apps:
-    name: Generated apps (${{ github.event_name == 'pull_request' && 'local' || inputs['precompiles-source'] }})
+    name: Generated apps (${{ github.event_name == 'pull_request' && 'auto' || inputs['precompiles-source'] }})
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      PRECOMPILES_SOURCE: ${{ github.event_name == 'pull_request' && 'local' || inputs['precompiles-source'] }}
+      PRECOMPILES_SOURCE: ${{ github.event_name == 'pull_request' && 'auto' || inputs['precompiles-source'] }}
 
     steps:
       - name: Checkout repository

@@ -19,8 +19,10 @@
 npx @sei-js/create-sei app -n my-sei-app
 ```
 
+Generated applications require Bun 1.3.14 or newer. Their dependency overrides and smoke coverage are Bun-specific; using npm, Yarn, or pnpm can resolve a different, unverified security graph.
+
 ## Release verification
 
-`bun run test:create-sei-release -- --precompiles-source local` builds a candidate `@sei-js/precompiles` tarball at the version computed by Changesets and validates both generated variants. Pull requests run this mode in the dedicated create-sei smoke workflow.
+Pull requests run `auto` mode in the dedicated create-sei smoke workflow. It uses a local candidate when pending Changesets computes the template's exact `@sei-js/precompiles` pin, or when a Version Packages PR has already set the local manifest to that exact version. Otherwise it validates the exact published npm version. A mismatched source tree is never relabeled as an older package.
 
-After `@sei-js/precompiles` has been staged to npm, dispatch the same workflow in `registry` mode. Registry mode leaves the generated manifest untouched, verifies npm resolves the exact computed release version, and reports audit findings without blocking verification of install, check, build, and production runtime behavior.
+After `@sei-js/precompiles` has been staged to npm, dispatch the same workflow in `registry` mode. Registry mode always leaves the generated manifest untouched and verifies npm resolves the exact template pin. Audit findings are report-only in registry mode; local candidate mode blocks only on high or critical findings while reporting lower severities.

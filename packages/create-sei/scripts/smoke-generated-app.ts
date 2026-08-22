@@ -2,19 +2,14 @@ import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { BRAND_ASSET_HASHES } from '../brand-assets';
+import { type PrecompilesSource, type PrecompilesSourceSelection, type RequestedPrecompilesSource, selectPrecompilesSource } from './select-precompiles-source';
 
 const packageRoot = path.resolve(import.meta.dir, '..');
 const repositoryRoot = path.resolve(packageRoot, '../..');
 const precompilesRoot = path.join(repositoryRoot, 'packages/precompiles');
 const cliPath = path.join(packageRoot, 'dist/main.js');
 const templateManifestPath = path.join(packageRoot, 'templates/next-template/package.json');
-const brandAssetHashes = {
-	'powered-by-sei-light.png': '2e34eff9ed947367797d5ab7936bad56e15bd5bde34c3d338bb051e20c1ebe0e',
-	'sei-lockup-light.svg': 'dd74e3718d5aa5b45a4a681629b4012f439e5273a5587cbb9bbaad272636ea7a',
-	'sei-mark.png': '659b876c0cd7b7d12d284ddd541c9900fb86abdb88c0d39c7561bdae9b6bffdf'
-} as const;
-
-type PrecompilesSource = 'local' | 'registry';
 
 interface Variant {
 	name: string;
@@ -28,6 +23,18 @@ interface ReleasePlan {
 	}>;
 }
 
+interface PrecompilesTarget {
+	currentVersion: string;
+	pendingVersion?: string;
+	version: string;
+}
+
+interface AuditAdvisory {
+	severity: string;
+	title?: string;
+	url?: string;
+}
+
 const variants: Variant[] = [{ name: 'release-smoke-base' }, { name: 'release-smoke-precompiles', extension: 'precompiles' }];
 
 const smokeEnvironment = {
@@ -36,11 +43,11 @@ const smokeEnvironment = {
 	NEXT_TELEMETRY_DISABLED: '1'
 };
 
-function readPrecompilesSource(): PrecompilesSource {
+function readPrecompilesSource(): RequestedPrecompilesSource {
 	const optionIndex = process.argv.indexOf('--precompiles-source');
-	const source = optionIndex === -1 ? 'local' : process.argv[optionIndex + 1];
-	if (source !== 'local' && source !== 'registry') {
-		throw new Error("Use '--precompiles-source local' or '--precompiles-source registry'.");
+	const source = optionIndex === -1 ? 'auto' : process.argv[optionIndex + 1];
+	if (source !== 'auto' && source !== 'local' && source !== 'registry') {
+		throw new Error("Use '--precompiles-source auto', '--precompiles-source local', or '--precompiles-source registry'.");
 	}
 	return source;
 }
@@ -62,6 +69,18 @@ async function run(label: string, command: string[], cwd: string, fatal = true):
 	return exitCode;
 }
 
+async function capture(command: string[], cwd: string): Promise<{ exitCode: number; stderr: string; stdout: string }> {
+	const subprocess = Bun.spawn({
+		cmd: command,
+		cwd,
+		env: smokeEnvironment,
+		stdout: 'pipe',
+		stderr: 'pipe'
+	});
+	const [stdout, stderr, exitCode] = await Promise.all([new Response(subprocess.stdout).text(), new Response(subprocess.stderr).text(), subprocess.exited]);
+	return { exitCode, stderr, stdout };
+}
+
 async function pathExists(target: string): Promise<boolean> {
 	return fs
 		.access(target)
@@ -69,7 +88,7 @@ async function pathExists(target: string): Promise<boolean> {
 		.catch(() => false);
 }
 
-async function resolvePrecompilesTarget(tempRoot: string): Promise<string> {
+async function resolvePrecompilesTarget(tempRoot: string): Promise<PrecompilesTarget> {
 	const templateManifest = JSON.parse(await fs.readFile(templateManifestPath, 'utf8')) as {
 		dependencies?: Record<string, string>;
 	};
@@ -85,23 +104,37 @@ async function resolvePrecompilesTarget(tempRoot: string): Promise<string> {
 	const currentManifest = JSON.parse(await fs.readFile(path.join(precompilesRoot, 'package.json'), 'utf8')) as {
 		version: string;
 	};
-	const computedTarget = pendingRelease?.newVersion ?? currentManifest.version;
 
-	if (computedTarget !== templateTarget) {
-		throw new Error(`Template pins @sei-js/precompiles@${templateTarget}, but release metadata computes ${computedTarget}.`);
-	}
-
-	console.log(`\nValidated @sei-js/precompiles target: ${computedTarget}`);
-	return computedTarget;
+	console.log(`\nTemplate pins @sei-js/precompiles@${templateTarget}.`);
+	return { version: templateTarget, currentVersion: currentManifest.version, pendingVersion: pendingRelease?.newVersion };
 }
 
-async function makePrecompilesCandidate(tempRoot: string, targetVersion: string): Promise<string> {
+async function registryHasPrecompilesVersion(version: string): Promise<boolean> {
+	const result = await capture(['npm', 'view', `@sei-js/precompiles@${version}`, 'version', '--json'], repositoryRoot);
+	if (result.exitCode !== 0) {
+		return false;
+	}
+	try {
+		const resolvedVersion = JSON.parse(result.stdout) as unknown;
+		return resolvedVersion === version || (Array.isArray(resolvedVersion) && resolvedVersion.includes(version));
+	} catch {
+		return false;
+	}
+}
+
+async function makePrecompilesCandidate(tempRoot: string, targetVersion: string, selection: PrecompilesSourceSelection): Promise<string> {
 	await run('Build local precompiles candidate', [process.execPath, 'run', 'build'], precompilesRoot);
 
 	const candidateRoot = path.join(tempRoot, 'precompiles-candidate');
 	const tarballRoot = path.join(tempRoot, 'tarballs');
-	const sourceManifest = JSON.parse(await fs.readFile(path.join(precompilesRoot, 'package.json'), 'utf8')) as Record<string, unknown>;
-	const candidateManifest = { ...sourceManifest, version: targetVersion };
+	const sourceManifest = JSON.parse(await fs.readFile(path.join(precompilesRoot, 'package.json'), 'utf8')) as Record<string, unknown> & { version: string };
+	if (selection.source !== 'local') {
+		throw new Error('A registry selection cannot be packed as a local candidate.');
+	}
+	if (selection.basis === 'current-manifest' && sourceManifest.version !== targetVersion) {
+		throw new Error(`Current local manifest changed to ${sourceManifest.version}; refusing to package it as ${targetVersion}.`);
+	}
+	const candidateManifest = selection.basis === 'pending-release' ? { ...sourceManifest, version: targetVersion } : sourceManifest;
 
 	await fs.mkdir(candidateRoot);
 	await fs.mkdir(tarballRoot);
@@ -119,6 +152,79 @@ async function makePrecompilesCandidate(tempRoot: string, targetVersion: string)
 		throw new Error(`Expected one local precompiles tarball, found ${tarballs.length}`);
 	}
 	return path.join(tarballRoot, tarballs[0]);
+}
+
+async function auditVariant(projectRoot: string, variantName: string, precompilesSource: PrecompilesSource): Promise<void> {
+	console.log(`\n==> Audit ${variantName}`);
+	const result = await capture([process.execPath, 'audit', '--json'], projectRoot);
+	if (result.stderr) {
+		process.stderr.write(result.stderr);
+	}
+
+	let advisories: AuditAdvisory[];
+	try {
+		const report = JSON.parse(result.stdout) as unknown;
+		if (!report || Array.isArray(report) || typeof report !== 'object') {
+			throw new Error('audit response was not an advisory object');
+		}
+		advisories = Object.values(report).flatMap((packageAdvisories) => {
+			if (!Array.isArray(packageAdvisories)) {
+				throw new Error('audit response contained a non-array package entry');
+			}
+			return packageAdvisories.map((advisory) => {
+				if (!advisory || typeof advisory !== 'object' || !('severity' in advisory) || typeof advisory.severity !== 'string') {
+					throw new Error('audit advisory did not include a severity');
+				}
+				return advisory as AuditAdvisory;
+			});
+		});
+	} catch (error) {
+		const message = `Could not interpret JSON audit results for ${variantName}: ${error instanceof Error ? error.message : String(error)}`;
+		if (precompilesSource === 'registry') {
+			console.warn(`${message}. Registry-mode audit is report-only.`);
+			return;
+		}
+		throw new Error(message);
+	}
+
+	if (advisories.length === 0) {
+		if (result.exitCode !== 0) {
+			const message = `Audit exited ${result.exitCode} without reporting an advisory for ${variantName}`;
+			if (precompilesSource === 'registry') {
+				console.warn(`${message}. Registry-mode audit is report-only.`);
+				return;
+			}
+			throw new Error(message);
+		}
+		console.log('No vulnerabilities found');
+		return;
+	}
+
+	const severityCounts = new Map<string, number>();
+	for (const advisory of advisories) {
+		const severity = advisory.severity.toLowerCase();
+		severityCounts.set(severity, (severityCounts.get(severity) ?? 0) + 1);
+	}
+	const summary = [...severityCounts.entries()]
+		.sort(([left], [right]) => left.localeCompare(right))
+		.map(([severity, count]) => `${count} ${severity}`)
+		.join(', ');
+	console.warn(`Audit reported ${summary} finding(s) for ${variantName}.`);
+	process.stdout.write(result.stdout.endsWith('\n') ? result.stdout : `${result.stdout}\n`);
+
+	if (precompilesSource === 'registry') {
+		console.warn('Registry-mode audit is report-only; install, check, build, and runtime verification will continue.');
+		return;
+	}
+
+	const blockingAdvisories = advisories.filter((advisory) => {
+		const severity = advisory.severity.toLowerCase();
+		return severity === 'high' || severity === 'critical';
+	});
+	if (blockingAdvisories.length > 0) {
+		throw new Error(`Audit found ${blockingAdvisories.length} high/critical vulnerability finding(s) in ${variantName}.`);
+	}
+	console.warn('Only low/moderate audit findings were reported; local candidate verification will continue.');
 }
 
 async function verifyProductionRuntime(projectRoot: string, variantName: string): Promise<void> {
@@ -144,26 +250,27 @@ async function verifyProductionRuntime(projectRoot: string, variantName: string)
 		});
 		const stdoutPromise = new Response(subprocess.stdout).text();
 		const stderrPromise = new Response(subprocess.stderr).text();
-		const deadline = Date.now() + 30_000;
+		const readinessDeadline = Date.now() + 30_000;
 		let failure: unknown;
 
-		const fetchBeforeDeadline = (url: string, maximumTimeout = 10_000) => {
-			const remaining = deadline - Date.now();
+		const fetchBeforeReadinessDeadline = (url: string) => {
+			const remaining = readinessDeadline - Date.now();
 			if (remaining <= 0) {
-				throw new Error('Production runtime exceeded its 30 second wall-clock deadline');
+				throw new Error('Production server exceeded its 30 second readiness deadline');
 			}
-			return fetch(url, { signal: AbortSignal.timeout(Math.min(maximumTimeout, remaining)) });
+			return fetch(url, { signal: AbortSignal.timeout(Math.min(1_000, remaining)) });
 		};
+		const probe = (url: string) => fetch(url, { signal: AbortSignal.timeout(10_000) });
 
 		try {
 			let ready = false;
-			while (Date.now() < deadline) {
+			while (Date.now() < readinessDeadline) {
 				if (subprocess.exitCode !== null) {
 					throw new Error(`Production server exited early with code ${subprocess.exitCode}`);
 				}
 
 				try {
-					const response = await fetchBeforeDeadline(baseUrl, 1_000);
+					const response = await fetchBeforeReadinessDeadline(baseUrl);
 					if (response.ok) {
 						ready = true;
 						break;
@@ -171,7 +278,7 @@ async function verifyProductionRuntime(projectRoot: string, variantName: string)
 				} catch {
 					// Server is still starting.
 				}
-				await Bun.sleep(Math.min(250, Math.max(0, deadline - Date.now())));
+				await Bun.sleep(Math.min(250, Math.max(0, readinessDeadline - Date.now())));
 			}
 
 			if (!ready) {
@@ -180,7 +287,7 @@ async function verifyProductionRuntime(projectRoot: string, variantName: string)
 
 			const routeBodies = new Map<string, string>();
 			for (const route of ['/', '/development', '/resources']) {
-				const response = await fetchBeforeDeadline(`${baseUrl}${route}`);
+				const response = await probe(`${baseUrl}${route}`);
 				if (!response.ok) {
 					throw new Error(`${route} returned ${response.status}`);
 				}
@@ -198,8 +305,8 @@ async function verifyProductionRuntime(projectRoot: string, variantName: string)
 				throw new Error('Home page did not render the official Sei assets and icon metadata directly');
 			}
 
-			for (const [assetName, expectedHash] of Object.entries(brandAssetHashes)) {
-				const response = await fetchBeforeDeadline(`${baseUrl}/brand/${assetName}`);
+			for (const [assetName, expectedHash] of Object.entries(BRAND_ASSET_HASHES)) {
+				const response = await probe(`${baseUrl}/brand/${assetName}`);
 				const bytes = await response.arrayBuffer();
 				const expectedContentType = assetName.endsWith('.png') ? 'image/png' : 'image/svg+xml';
 				if (
@@ -211,11 +318,21 @@ async function verifyProductionRuntime(projectRoot: string, variantName: string)
 				}
 			}
 
+			const faviconResponse = await probe(`${baseUrl}/favicon.ico`);
+			const faviconBytes = await faviconResponse.arrayBuffer();
+			if (
+				!faviconResponse.ok ||
+				faviconResponse.headers.get('content-type') !== 'image/png' ||
+				createHash('sha256').update(new Uint8Array(faviconBytes)).digest('hex') !== BRAND_ASSET_HASHES['sei-mark.png']
+			) {
+				throw new Error('/favicon.ico did not resolve to the official PNG app mark');
+			}
+
 			const staticAssetPath = homeBody.match(/(?:src|href)="(\/_next\/static\/[^"]+)"/)?.[1];
 			if (!staticAssetPath) {
 				throw new Error('Home page did not reference a Next.js static asset');
 			}
-			const staticAssetResponse = await fetchBeforeDeadline(new URL(staticAssetPath, baseUrl).toString());
+			const staticAssetResponse = await probe(new URL(staticAssetPath, baseUrl).toString());
 			if (!staticAssetResponse.ok) {
 				throw new Error(`${staticAssetPath} returned ${staticAssetResponse.status}`);
 			}
@@ -284,10 +401,10 @@ async function verifyVariant(
 	}
 	const brandRoot = path.join(projectRoot, 'public/brand');
 	const brandAssets = (await fs.readdir(brandRoot)).sort();
-	if (JSON.stringify(brandAssets) !== JSON.stringify(Object.keys(brandAssetHashes).sort())) {
+	if (JSON.stringify(brandAssets) !== JSON.stringify(Object.keys(BRAND_ASSET_HASHES).sort())) {
 		throw new Error(`${variant.name} included an unexpected public/brand asset set: ${brandAssets.join(', ')}`);
 	}
-	for (const [brandAsset, expectedHash] of Object.entries(brandAssetHashes)) {
+	for (const [brandAsset, expectedHash] of Object.entries(BRAND_ASSET_HASHES)) {
 		const actualHash = createHash('sha256')
 			.update(await fs.readFile(path.join(brandRoot, brandAsset)))
 			.digest('hex');
@@ -322,10 +439,7 @@ async function verifyVariant(
 	}
 	console.log(`${variant.name} resolved @sei-js/precompiles@${installedPrecompiles.version} from ${precompilesSource}.`);
 
-	const auditExitCode = await run(`Audit ${variant.name}`, [process.execPath, 'audit'], projectRoot, precompilesSource === 'local');
-	if (auditExitCode !== 0) {
-		console.warn(`Audit reported findings for staged registry verification of ${variant.name}; install, build, and runtime verification will continue.`);
-	}
+	await auditVariant(projectRoot, variant.name, precompilesSource);
 	await run(`Biome check ${variant.name}`, [process.execPath, 'run', 'check'], projectRoot);
 	await run(`Next production build ${variant.name}`, [process.execPath, 'run', 'build'], projectRoot);
 	await verifyProductionRuntime(projectRoot, variant.name);
@@ -334,16 +448,32 @@ async function verifyVariant(
 const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'create-sei-release-smoke-'));
 
 try {
-	const precompilesSource = readPrecompilesSource();
+	const requestedSource = readPrecompilesSource();
 	await run('Build create-sei', [process.execPath, 'run', 'build'], packageRoot);
 	const precompilesTarget = await resolvePrecompilesTarget(tempRoot);
-	const candidateTarball = precompilesSource === 'local' ? await makePrecompilesCandidate(tempRoot, precompilesTarget) : undefined;
+	const selection = await selectPrecompilesSource(
+		{
+			currentVersion: precompilesTarget.currentVersion,
+			pendingVersion: precompilesTarget.pendingVersion,
+			requestedSource,
+			targetVersion: precompilesTarget.version
+		},
+		registryHasPrecompilesVersion
+	);
+	if (selection.basis === 'pending-release') {
+		console.log(`Changesets computes the exact template pin; using a local @sei-js/precompiles@${precompilesTarget.version} candidate.`);
+	} else if (selection.basis === 'current-manifest') {
+		console.log(`The local manifest already matches the exact template pin; using @sei-js/precompiles@${precompilesTarget.version} without retagging it.`);
+	} else {
+		console.log(`Using published @sei-js/precompiles@${precompilesTarget.version} from npm.`);
+	}
+	const candidateTarball = selection.source === 'local' ? await makePrecompilesCandidate(tempRoot, precompilesTarget.version, selection) : undefined;
 
 	for (const variant of variants) {
-		await verifyVariant(tempRoot, precompilesSource, precompilesTarget, candidateTarball, variant);
+		await verifyVariant(tempRoot, selection.source, precompilesTarget.version, candidateTarball, variant);
 	}
 
-	console.log(`\ncreate-sei ${precompilesSource} smoke passed for base and precompiles variants at @sei-js/precompiles@${precompilesTarget}.`);
+	console.log(`\ncreate-sei ${selection.source} smoke passed for base and precompiles variants at @sei-js/precompiles@${precompilesTarget.version}.`);
 } finally {
 	await fs.rm(tempRoot, { recursive: true, force: true });
 }

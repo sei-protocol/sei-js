@@ -155,7 +155,7 @@ const customSeiChain = defineChain({
 							<Text c="gray.7">You're all set to build! Here are some ideas to get you started:</Text>
 							<Stack gap="sm">
 								<Group gap="sm">
-									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
+									<Text fw={600} c="gray.7" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">
@@ -163,7 +163,7 @@ const customSeiChain = defineChain({
 									</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
+									<Text fw={600} c="gray.7" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">
@@ -171,7 +171,7 @@ const customSeiChain = defineChain({
 									</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
+									<Text fw={600} c="gray.7" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">
@@ -179,13 +179,13 @@ const customSeiChain = defineChain({
 									</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
+									<Text fw={600} c="gray.7" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">Implement multi-chain support by extending the chain configuration</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
+									<Text fw={600} c="gray.7" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">Add more Sei precompiles for advanced blockchain interactions</Text>
