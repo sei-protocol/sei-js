@@ -15,15 +15,11 @@ place in the repo where a subtle regression can cost users funds. Two
 invariants are load-bearing and are enforced in code rather than by convention:
 
 - **Wallet mode is stdio-only.** `validateSecurityConfig()` in
-  `src/server/transport/security.ts` throws before any listener is opened when
-  the wallet is enabled and the transport is `streamable-http` or `http-sse`.
-  The direct packaged CLI catches the propagated startup failure, prints a
-  sanitized concise diagnostic, and calls `process.exit(1)`. Embedded callers
-  receive the exception after cleanup, with no running transport or reachable
-  signing surface. HTTP transports are reachable cross-origin, so a signing
-  key behind one is a drain-the-wallet primitive. Any change that narrows this
-  check, moves it after listener startup, or adds a transport that bypasses it
-  is a finding.
+  `src/server/transport/security.ts` halts the process when the wallet is
+  enabled and the transport is `streamable-http` or `http-sse`. HTTP
+  transports are reachable cross-origin, so a signing key behind one is a
+  drain-the-wallet primitive. Any change that narrows this check, makes it
+  non-fatal, or adds a transport that bypasses it is a finding.
 - **SSE messages are bound to their session.**
   `src/server/transport/http-sse.ts` keys `connections` by
   `transport.sessionId` and requires a matching `?sessionId=` on
@@ -83,12 +79,8 @@ question, not a defect.
   `streamable-http.ts` validates `Origin` or `Host`, so a non-browser client or
   a DNS-rebinding attack still reaches the tool surface — that gap is a
   separate question and is fair to raise.
-- **The split wallet/HTTP failure contract.** `validateSecurityConfig()` throws
-  before listener startup so it remains testable and safe for embedding.
-  `packages/mcp-server/bin/mcp-server.js` invokes the direct-CLI wrapper, which
-  sanitizes the diagnostic and calls `process.exit(1)` after cleanup. Do not
-  request `process.exit()` inside the validator, and do not replace the
-  packaged CLI's fatal path with the embedder-facing `main()` call.
+- **`process.exit(1)` inside `validateSecurityConfig()`.** Failing closed at
+  startup is the intent. Do not ask for a thrown error the caller might swallow.
 - **`packages/registry/chain-registry` and `.../community-assetlist` are
   missing from the tree.** Both are git submodules (`.gitmodules`) and are
   listed in `.gitignore`. Workflows that build the registry check them out with

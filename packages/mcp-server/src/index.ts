@@ -38,14 +38,14 @@ export function registerShutdownHandlers(stop: () => Promise<void>): () => void 
 
 export async function startMcpServer(): Promise<RunningMcpServer> {
 	const config = parseArgs();
-	const server = await getServer();
+	const server = config.mode === 'stdio' ? await getServer() : undefined;
 	let transport: McpTransport | undefined;
 
 	try {
 		transport = createTransport(config);
 		await transport.start(server);
 	} catch (error) {
-		const cleanupErrors = await collectOperationErrors([() => transport?.stop(), () => server.close()]);
+		const cleanupErrors = await collectOperationErrors([() => transport?.stop(), () => server?.close()]);
 		if (cleanupErrors.length > 0) {
 			throw new AggregateError([error, ...cleanupErrors], sanitizeError(error));
 		}
@@ -60,7 +60,7 @@ export async function startMcpServer(): Promise<RunningMcpServer> {
 		if (!stopPromise) {
 			removeShutdownHandlers();
 			stopPromise = (async () => {
-				const errors = await collectOperationErrors([() => transport.stop(), () => server.close()]);
+				const errors = await collectOperationErrors([() => transport.stop(), () => server?.close()]);
 				throwCollectedErrors(errors, 'Failed to stop all MCP server resources.');
 			})();
 		}

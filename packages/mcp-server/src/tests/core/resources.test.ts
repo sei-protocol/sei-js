@@ -230,7 +230,7 @@ describe('registerEVMResources', () => {
 			expect(text).not.toContain('fake-password');
 			expect(text).not.toContain(fakePathSecret);
 			expect(text).not.toContain(fakeQuerySecret);
-			expect(text).not.toContain('rpc.example.test');
+			expect(text).toContain('https://rpc.example.test/[redacted]?[redacted]');
 		} finally {
 			chains.rpcUrlMap[1328] = originalRpcUrl;
 		}

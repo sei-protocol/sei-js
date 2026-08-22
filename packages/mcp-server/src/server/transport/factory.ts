@@ -9,13 +9,22 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 			return new StdioTransport();
 
 		case 'streamable-http':
-			return new StreamableHttpTransport(config.port, config.host, config.path, config.walletMode);
+			return new StreamableHttpTransport({
+				port: config.port,
+				host: config.host,
+				path: config.path,
+				walletMode: config.walletMode,
+				maxActiveRequests: config.maxStreamableRequests
+			});
 
 		case 'http-sse':
-			if (config.maxSseSessions === undefined) {
-				return new HttpSseTransport(config.port, config.host, config.path, config.walletMode);
-			}
-			return new HttpSseTransport(config.port, config.host, config.path, config.walletMode, undefined, undefined, undefined, config.maxSseSessions);
+			return new HttpSseTransport({
+				port: config.port,
+				host: config.host,
+				path: config.path,
+				walletMode: config.walletMode,
+				maxSessions: config.maxSseSessions
+			});
 
 		default:
 			throw new Error(`Unsupported transport mode: ${config.mode}`);

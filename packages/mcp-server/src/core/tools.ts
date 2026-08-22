@@ -41,7 +41,10 @@ export function withToolRegistrationPolicy(server: McpServer, walletEnabled: boo
 		get(target, property) {
 			if (property === 'tool') {
 				return (name: string, description: string, schema: Record<string, z.ZodTypeAny>, handler: (...args: never[]) => unknown) => {
-					if (!walletEnabled && !READ_ONLY_TOOL_NAMES.has(name)) return undefined;
+					if (!walletEnabled && !READ_ONLY_TOOL_NAMES.has(name)) {
+						console.error(`Tool registration suppressed by wallet policy: ${name}`);
+						return undefined;
+					}
 					return registerTool(name, description, 'network' in schema ? { ...schema, network: networkSchema.optional() } : schema, handler);
 				};
 			}

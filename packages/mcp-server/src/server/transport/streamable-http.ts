@@ -12,11 +12,27 @@ import type { McpTransport, TransportMode, WalletMode } from './types.js';
 export type StreamableServerFactory = () => Promise<McpServer>;
 export type StreamableTransportFactory = () => StreamableHTTPServerTransport;
 export type StreamableListenFactory = (app: express.Application, port: number, host: string) => Server;
+export const DEFAULT_MAX_STREAMABLE_REQUESTS = 100;
 type LifecycleState = 'idle' | 'starting' | 'running' | 'stopping';
+
+export interface StreamableHttpTransportOptions {
+	port?: number;
+	host?: string;
+	path?: string;
+	walletMode?: WalletMode;
+	maxActiveRequests?: number;
+}
+
+export interface StreamableHttpTransportDependencies {
+	serverFactory?: StreamableServerFactory;
+	transportFactory?: StreamableTransportFactory;
+	listenFactory?: StreamableListenFactory;
+}
 
 interface ActiveRequest {
 	server: McpServer;
 	transport: StreamableHTTPServerTransport;
+	releaseSlot: () => void;
 	closing?: Promise<void>;
 }
 
@@ -26,7 +42,6 @@ export class StreamableHttpTransport implements McpTransport {
 	private httpServer?: Server;
 	private readonly activeRequests = new Set<ActiveRequest>();
 	private readonly sockets = new Set<Socket>();
-	private stopping = false;
 	private state: LifecycleState = 'idle';
 	private startPromise: Promise<void> | undefined;
 	private stopPromise: Promise<void> | undefined;
@@ -34,19 +49,31 @@ export class StreamableHttpTransport implements McpTransport {
 	private cleanupStartupListeners: (() => void) | undefined;
 	private runtimeErrorHandler: ((error: Error) => void) | undefined;
 	private connectionHandler: ((socket: Socket) => void) | undefined;
+	private activeRequestSlots = 0;
+	private readonly port: number;
+	private readonly host: string;
+	private readonly path: string;
+	private readonly walletMode: WalletMode;
+	private readonly serverFactory: StreamableServerFactory;
+	private readonly transportFactory: StreamableTransportFactory;
+	private readonly listenFactory: StreamableListenFactory;
+	private readonly maxActiveRequests: number;
 
-	constructor(
-		private readonly port = 8080,
-		private readonly host = 'localhost',
-		private readonly path = '/mcp',
-		private readonly walletMode: WalletMode = 'disabled',
-		private readonly serverFactory: StreamableServerFactory = getServer,
-		private readonly transportFactory: StreamableTransportFactory = () =>
-			new StreamableHTTPServerTransport({
-				sessionIdGenerator: undefined
-			}),
-		private readonly listenFactory: StreamableListenFactory = (app, port, host) => app.listen(port, host)
-	) {}
+	constructor(options: StreamableHttpTransportOptions = {}, dependencies: StreamableHttpTransportDependencies = {}) {
+		this.port = options.port ?? 8080;
+		this.host = options.host ?? 'localhost';
+		this.path = options.path ?? '/mcp';
+		this.walletMode = options.walletMode ?? 'disabled';
+		this.maxActiveRequests = options.maxActiveRequests ?? DEFAULT_MAX_STREAMABLE_REQUESTS;
+		this.serverFactory = dependencies.serverFactory ?? getServer;
+		this.transportFactory =
+			dependencies.transportFactory ??
+			(() =>
+				new StreamableHTTPServerTransport({
+					sessionIdGenerator: undefined
+				}));
+		this.listenFactory = dependencies.listenFactory ?? ((app, port, host) => app.listen(port, host));
+	}
 
 	private async closeRequest(request: ActiveRequest): Promise<void> {
 		if (!request.closing) {
@@ -55,6 +82,7 @@ export class StreamableHttpTransport implements McpTransport {
 				'Failed to close all Streamable HTTP request resources.'
 			).finally(() => {
 				this.activeRequests.delete(request);
+				request.releaseSlot();
 			});
 		}
 		await request.closing;
@@ -65,10 +93,13 @@ export class StreamableHttpTransport implements McpTransport {
 		return address && typeof address === 'object' ? address.port : undefined;
 	}
 
-	async start(_server: McpServer): Promise<void> {
+	async start(_server?: McpServer): Promise<void> {
 		validateSecurityConfig(this.mode, this.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
+		}
+		if (!Number.isInteger(this.maxActiveRequests) || this.maxActiveRequests < 1) {
+			throw new Error('STREAMABLE_HTTP_MAX_REQUESTS must be a positive integer.');
 		}
 		if (this.state === 'starting' && this.startPromise) {
 			await this.startPromise;
@@ -82,7 +113,6 @@ export class StreamableHttpTransport implements McpTransport {
 			throw new Error('Streamable HTTP transport is already started.');
 		}
 
-		this.stopping = false;
 		this.state = 'starting';
 		this.app = express();
 		this.app.use(express.json());
@@ -93,21 +123,36 @@ export class StreamableHttpTransport implements McpTransport {
 		});
 
 		this.app.post(this.path, async (req: Request, res: Response) => {
-			if (this.stopping) {
+			if (this.state !== 'running') {
 				res.status(503).json({ error: 'Server is shutting down' });
 				return;
 			}
+			if (this.activeRequestSlots >= this.maxActiveRequests) {
+				res.status(503).json({ error: 'Maximum Streamable HTTP requests reached' });
+				return;
+			}
 
+			this.activeRequestSlots++;
+			let slotReleased = false;
+			const releaseSlot = () => {
+				if (slotReleased) return;
+				slotReleased = true;
+				this.activeRequestSlots--;
+			};
 			let activeRequest: ActiveRequest | undefined;
 			let requestServer: McpServer | undefined;
 			try {
 				const server = await this.serverFactory();
 				requestServer = server;
 				const transport = this.transportFactory();
-				activeRequest = { server, transport };
+				activeRequest = { server, transport, releaseSlot };
 				this.activeRequests.add(activeRequest);
 
 				let cleanupStarted = false;
+				const removeCompletionListeners = () => {
+					res.off('finish', complete);
+					res.off('close', complete);
+				};
 				const removeErrorListeners = () => {
 					res.off('error', cleanup);
 					req.off('error', cleanup);
@@ -116,26 +161,24 @@ export class StreamableHttpTransport implements McpTransport {
 				const cleanup = (error?: Error) => {
 					if (cleanupStarted) return;
 					cleanupStarted = true;
+					removeCompletionListeners();
 					if (error) console.error('Streamable HTTP request error:', sanitizeError(error));
 					if (activeRequest) {
-						void this.closeRequest(activeRequest).catch((closeError) => {
-							console.error('Error closing Streamable HTTP request:', sanitizeError(closeError));
-						});
-					}
+						void this.closeRequest(activeRequest)
+							.catch((closeError) => {
+								console.error('Error closing Streamable HTTP request:', sanitizeError(closeError));
+							})
+							.finally(removeErrorListeners);
+					} else removeErrorListeners();
 				};
-				const complete = () => {
-					cleanup();
-					res.off('finish', complete);
-					res.off('close', complete);
-					removeErrorListeners();
-				};
+				const complete = () => cleanup();
 				res.once('finish', complete);
 				res.once('close', complete);
 				res.on('error', cleanup);
 				req.on('error', cleanup);
 				req.socket.on('error', cleanup);
 
-				if (this.stopping) {
+				if (this.state !== 'running') {
 					await this.closeRequest(activeRequest);
 					if (!res.headersSent) {
 						res.status(503).json({ error: 'Server is shutting down' });
@@ -165,10 +208,12 @@ export class StreamableHttpTransport implements McpTransport {
 					}
 				} else if (requestServer) {
 					try {
-						await runAllOperations([() => requestServer?.close()], 'Failed to close an incomplete Streamable HTTP request.');
+						await runAllOperations([() => requestServer?.close()], 'Failed to close an incomplete Streamable HTTP request.').finally(releaseSlot);
 					} catch (closeError) {
 						console.error('Error closing incomplete Streamable HTTP request:', sanitizeError(closeError));
 					}
+				} else {
+					releaseSlot();
 				}
 			}
 		});
@@ -235,12 +280,10 @@ export class StreamableHttpTransport implements McpTransport {
 			return this.stopPromise;
 		}
 		if (this.state === 'idle' && !this.httpServer && this.activeRequests.size === 0) {
-			this.stopping = false;
 			this.app = undefined;
 			return;
 		}
 
-		this.stopping = true;
 		const wasStarting = this.state === 'starting';
 		this.state = 'stopping';
 		const httpServer = this.httpServer;
@@ -270,7 +313,6 @@ export class StreamableHttpTransport implements McpTransport {
 				this.sockets.clear();
 				this.app = undefined;
 				this.state = 'idle';
-				this.stopping = false;
 				if (this.stopPromise === stopPromise) this.stopPromise = undefined;
 			}
 		})();

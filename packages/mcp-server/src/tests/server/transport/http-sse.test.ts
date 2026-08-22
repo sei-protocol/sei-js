@@ -54,6 +54,20 @@ describe('HttpSseTransport', () => {
 		consoleErrorSpy?.mockRestore();
 	});
 
+	it('terminates wallet-enabled HTTP before invoking the listener', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const processExit = jest.spyOn(process, 'exit').mockImplementation((code) => {
+			throw new Error(`process.exit called with code ${code}`);
+		});
+		const listenFactory = jest.fn();
+		const transport = new HttpSseTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key' }, { listenFactory });
+
+		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
+		expect(processExit).toHaveBeenCalledWith(1);
+		expect(listenFactory).not.toHaveBeenCalled();
+		processExit.mockRestore();
+	});
+
 	it('isolates two concurrent clients and closes every session on shutdown', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		const sessionServerCloseCounts: number[] = [];
@@ -61,34 +75,33 @@ describe('HttpSseTransport', () => {
 		let nextSession = 0;
 
 		const transport = new HttpSseTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => {
-				const sessionIndex = nextSession++;
-				sessionServerCloseCounts[sessionIndex] = 0;
-				const server = new McpServer({ name: `session-${sessionIndex}`, version: '1.0.0' });
-				server.tool('session_identity', 'Return the server session identity', {}, async () => ({
-					content: [{ type: 'text', text: `session-${sessionIndex}` }]
-				}));
-				const originalClose = server.close.bind(server);
-				server.close = async () => {
-					sessionServerCloseCounts[sessionIndex]++;
-					await originalClose();
-				};
-				return server;
-			},
-			(endpoint, response) => {
-				const sessionIndex = sessionTransportCloseCounts.length;
-				sessionTransportCloseCounts[sessionIndex] = 0;
-				const sessionTransport = new SSEServerTransport(endpoint, response);
-				const originalClose = sessionTransport.close.bind(sessionTransport);
-				sessionTransport.close = async () => {
-					sessionTransportCloseCounts[sessionIndex]++;
-					await originalClose();
-				};
-				return sessionTransport;
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => {
+					const sessionIndex = nextSession++;
+					sessionServerCloseCounts[sessionIndex] = 0;
+					const server = new McpServer({ name: `session-${sessionIndex}`, version: '1.0.0' });
+					server.tool('session_identity', 'Return the server session identity', {}, async () => ({
+						content: [{ type: 'text', text: `session-${sessionIndex}` }]
+					}));
+					const originalClose = server.close.bind(server);
+					server.close = async () => {
+						sessionServerCloseCounts[sessionIndex]++;
+						await originalClose();
+					};
+					return server;
+				},
+				transportFactory: (endpoint, response) => {
+					const sessionIndex = sessionTransportCloseCounts.length;
+					sessionTransportCloseCounts[sessionIndex] = 0;
+					const sessionTransport = new SSEServerTransport(endpoint, response);
+					const originalClose = sessionTransport.close.bind(sessionTransport);
+					sessionTransport.close = async () => {
+						sessionTransportCloseCounts[sessionIndex]++;
+						await originalClose();
+					};
+					return sessionTransport;
+				}
 			}
 		);
 		transports.push(transport);
@@ -136,17 +149,13 @@ describe('HttpSseTransport', () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		let serverCount = 0;
 		const transport = new HttpSseTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => {
-				serverCount++;
-				return new McpServer({ name: `limited-session-${serverCount}`, version: '1.0.0' });
-			},
-			undefined,
-			undefined,
-			1
+			{ port: 0, host: HOST, path: PATH, maxSessions: 1 },
+			{
+				serverFactory: async () => {
+					serverCount++;
+					return new McpServer({ name: `limited-session-${serverCount}`, version: '1.0.0' });
+				}
+			}
 		);
 		transports.push(transport);
 		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
@@ -180,27 +189,26 @@ describe('HttpSseTransport', () => {
 		let serverCloseCount = 0;
 		let transportCloseCount = 0;
 		const transport = new HttpSseTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => {
-				const server = new McpServer({ name: 'disconnect-session', version: '1.0.0' });
-				const originalClose = server.close.bind(server);
-				server.close = async () => {
-					serverCloseCount++;
-					await originalClose();
-				};
-				return server;
-			},
-			(endpoint, response) => {
-				const sessionTransport = new SSEServerTransport(endpoint, response);
-				const originalClose = sessionTransport.close.bind(sessionTransport);
-				sessionTransport.close = async () => {
-					transportCloseCount++;
-					await originalClose();
-				};
-				return sessionTransport;
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => {
+					const server = new McpServer({ name: 'disconnect-session', version: '1.0.0' });
+					const originalClose = server.close.bind(server);
+					server.close = async () => {
+						serverCloseCount++;
+						await originalClose();
+					};
+					return server;
+				},
+				transportFactory: (endpoint, response) => {
+					const sessionTransport = new SSEServerTransport(endpoint, response);
+					const originalClose = sessionTransport.close.bind(sessionTransport);
+					sessionTransport.close = async () => {
+						transportCloseCount++;
+						await originalClose();
+					};
+					return sessionTransport;
+				}
 			}
 		);
 		transports.push(transport);
@@ -238,16 +246,15 @@ describe('HttpSseTransport', () => {
 		} as unknown as McpServer;
 		const sessionTransportClose = jest.fn().mockRejectedValue(new Error('simulated transport cleanup failure'));
 		const transport = new HttpSseTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => sessionServer,
-			(endpoint, sessionResponse) => {
-				response = sessionResponse;
-				const sessionTransport = new SSEServerTransport(endpoint, sessionResponse);
-				sessionTransport.close = sessionTransportClose;
-				return sessionTransport;
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => sessionServer,
+				transportFactory: (endpoint, sessionResponse) => {
+					response = sessionResponse;
+					const sessionTransport = new SSEServerTransport(endpoint, sessionResponse);
+					sessionTransport.close = sessionTransportClose;
+					return sessionTransport;
+				}
 			}
 		);
 		transports.push(transport);
@@ -284,13 +291,12 @@ describe('HttpSseTransport', () => {
 		}) as typeof delayedServer.close;
 		let listenCount = 0;
 		const transport = new HttpSseTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => new McpServer({ name: 'session', version: '1.0.0' }),
-			(endpoint, sessionResponse) => new SSEServerTransport(endpoint, sessionResponse),
-			(app, port, host) => (listenCount++ === 0 ? delayedServer : app.listen(port, host))
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => new McpServer({ name: 'session', version: '1.0.0' }),
+				transportFactory: (endpoint, sessionResponse) => new SSEServerTransport(endpoint, sessionResponse),
+				listenFactory: (app, port, host) => (listenCount++ === 0 ? delayedServer : app.listen(port, host))
+			}
 		);
 		transports.push(transport);
 		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
@@ -317,13 +323,13 @@ describe('HttpSseTransport', () => {
 		const address = occupied.address();
 		if (!address || typeof address === 'string') throw new Error('Expected an occupied TCP port');
 
-		const blocked = new HttpSseTransport(address.port, HOST, PATH);
+		const blocked = new HttpSseTransport({ port: address.port, host: HOST, path: PATH });
 		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
 		bootstrapServers.push(bootstrap);
 		await expect(blocked.start(bootstrap)).rejects.toMatchObject({ code: 'EADDRINUSE' });
 		await new Promise<void>((resolve, reject) => occupied.close((error) => (error ? reject(error) : resolve())));
 
-		const transport = new HttpSseTransport(0, HOST, PATH);
+		const transport = new HttpSseTransport({ port: 0, host: HOST, path: PATH });
 		transports.push(transport);
 		await transport.start(bootstrap);
 		const health = await fetch(`http://${HOST}:${transport.getListeningPort()}/health`);
@@ -336,7 +342,7 @@ describe('HttpSseTransport', () => {
 		const transportFactory = jest.fn(() => {
 			throw new Error('simulated SSE constructor failure');
 		});
-		const transport = new HttpSseTransport(0, HOST, PATH, 'disabled', undefined, transportFactory, undefined, 1);
+		const transport = new HttpSseTransport({ port: 0, host: HOST, path: PATH, maxSessions: 1 }, { transportFactory });
 		transports.push(transport);
 		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
 		bootstrapServers.push(bootstrap);
@@ -357,15 +363,14 @@ describe('HttpSseTransport', () => {
 		} as unknown as McpServer;
 		const sessionTransportClose = jest.fn().mockRejectedValue(new Error('transport close failed'));
 		const transport = new HttpSseTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => sessionServer,
-			(endpoint, response) => {
-				const sessionTransport = new SSEServerTransport(endpoint, response);
-				sessionTransport.close = sessionTransportClose;
-				return sessionTransport;
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => sessionServer,
+				transportFactory: (endpoint, response) => {
+					const sessionTransport = new SSEServerTransport(endpoint, response);
+					sessionTransport.close = sessionTransportClose;
+					return sessionTransport;
+				}
 			}
 		);
 		transports.push(transport);
@@ -397,14 +402,14 @@ describe('HttpSseTransport', () => {
 
 	it('rejects messages without a valid session and validates a nonempty host', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-		const invalidHost = new HttpSseTransport(8080, '   ', PATH);
+		const invalidHost = new HttpSseTransport({ port: 8080, host: '   ', path: PATH });
 		const unused = new McpServer({ name: 'unused', version: '1.0.0' });
 		bootstrapServers.push(unused);
 		await expect(invalidHost.start(unused)).rejects.toThrow('SERVER_HOST must not be empty');
-		const invalidLimit = new HttpSseTransport(8080, HOST, PATH, 'disabled', undefined, undefined, undefined, 0);
+		const invalidLimit = new HttpSseTransport({ port: 8080, host: HOST, path: PATH, maxSessions: 0 });
 		await expect(invalidLimit.start(unused)).rejects.toThrow('SSE_MAX_SESSIONS must be a positive integer');
 
-		const transport = new HttpSseTransport(0, HOST, PATH);
+		const transport = new HttpSseTransport({ port: 0, host: HOST, path: PATH });
 		transports.push(transport);
 		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
 		bootstrapServers.push(bootstrap);

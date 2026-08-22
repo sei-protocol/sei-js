@@ -73,7 +73,13 @@ describe('Transport Factory', () => {
 
 			const transport = createTransport(config);
 
-			expect(StreamableHttpTransport).toHaveBeenCalledWith(8080, '0.0.0.0', '/api/mcp', 'private-key');
+			expect(StreamableHttpTransport).toHaveBeenCalledWith({
+				port: 8080,
+				host: '0.0.0.0',
+				path: '/api/mcp',
+				walletMode: 'private-key',
+				maxActiveRequests: undefined
+			});
 			expect(transport).toBe(mockStreamableInstance);
 		});
 
@@ -92,7 +98,13 @@ describe('Transport Factory', () => {
 
 			const transport = createTransport(config);
 
-			expect(HttpSseTransport).toHaveBeenCalledWith(9000, '127.0.0.1', '/sse', 'disabled', undefined, undefined, undefined, 25);
+			expect(HttpSseTransport).toHaveBeenCalledWith({
+				port: 9000,
+				host: '127.0.0.1',
+				path: '/sse',
+				walletMode: 'disabled',
+				maxSessions: 25
+			});
 			expect(transport).toBe(mockSseInstance);
 		});
 
@@ -127,7 +139,11 @@ describe('Transport Factory', () => {
 
 				const transport = createTransport(config);
 
-				expect(StreamableHttpTransport).toHaveBeenCalledWith(params.port, params.host, params.path, 'disabled');
+				expect(StreamableHttpTransport).toHaveBeenCalledWith({
+					...params,
+					walletMode: 'disabled',
+					maxActiveRequests: undefined
+				});
 				expect(transport).toBe(mockInstance);
 
 				jest.clearAllMocks();
@@ -149,7 +165,13 @@ describe('Transport Factory', () => {
 
 			const transport1 = createTransport(config1);
 
-			expect(HttpSseTransport).toHaveBeenCalledWith(1, '::1', '/', 'private-key');
+			expect(HttpSseTransport).toHaveBeenCalledWith({
+				port: 1,
+				host: '::1',
+				path: '/',
+				walletMode: 'private-key',
+				maxSessions: undefined
+			});
 			expect(transport1).toBe(mockInstance1);
 
 			jest.clearAllMocks();
@@ -168,7 +190,13 @@ describe('Transport Factory', () => {
 
 			const transport2 = createTransport(config2);
 
-			expect(StreamableHttpTransport).toHaveBeenCalledWith(65535, '0.0.0.0', '/very/long/path/to/test/edge/cases', 'disabled');
+			expect(StreamableHttpTransport).toHaveBeenCalledWith({
+				port: 65535,
+				host: '0.0.0.0',
+				path: '/very/long/path/to/test/edge/cases',
+				walletMode: 'disabled',
+				maxActiveRequests: undefined
+			});
 			expect(transport2).toBe(mockInstance2);
 		});
 	});

@@ -6,4 +6,4 @@ Harden MCP transport lifecycle and startup behavior. Chain-info responses no lon
 
 NFT ownership lookup failures now propagate instead of reporting `false`. ERC-721 transfers now use `safeTransferFrom`, so contract recipients must implement `onERC721Received`.
 
-Wallet-disabled servers retain the complete explicit read-only tool surface while signing and broadcasting tools remain hidden. Invalid host, wallet mode, and private-key configuration now fail startup; direct CLI startup errors terminate nonzero after cleanup while embedded callers receive the exception.
+Wallet-disabled servers retain the complete explicit read-only tool surface while signing and broadcasting tools remain hidden. HTTP listeners validate their host and concurrency limits, cap both SSE sessions and Streamable HTTP requests, and avoid allocating an unused bootstrap MCP server. Wallet-enabled HTTP still exits immediately before listen. For other startup failures, embedded `main()` callers receive the exception while the packaged `runCli()` path reports a sanitized error and exits nonzero.

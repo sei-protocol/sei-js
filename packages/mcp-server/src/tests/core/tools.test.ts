@@ -277,7 +277,7 @@ describe('EVM Tools', () => {
 				expect(text).not.toContain('fake-password');
 				expect(text).not.toContain(fakePathSecret);
 				expect(text).not.toContain(fakeQuerySecret);
-				expect(text).not.toContain('rpc.example.test');
+				expect(text).toContain('https://rpc.example.test/[redacted]?[redacted]');
 			} finally {
 				chains.rpcUrlMap[1329] = originalRpcUrl;
 			}
@@ -911,6 +911,7 @@ describe('EVM Tools', () => {
 			const mockServerResult = createMockServer();
 			const disabledWalletServer = mockServerResult.server;
 			const disabledWalletTools = mockServerResult.registeredTools;
+			const diagnostic = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 			(isWalletEnabled as jest.Mock).mockReturnValue(false);
 			registerEVMTools(disabledWalletServer);
@@ -938,6 +939,20 @@ describe('EVM Tools', () => {
 					'read_contract'
 				].sort()
 			);
+			expect(diagnostic.mock.calls.map(([message]) => message).sort()).toEqual(
+				[
+					'Tool registration suppressed by wallet policy: approve_token_spending',
+					'Tool registration suppressed by wallet policy: deploy_contract',
+					'Tool registration suppressed by wallet policy: get_address_from_private_key',
+					'Tool registration suppressed by wallet policy: transfer_erc1155',
+					'Tool registration suppressed by wallet policy: transfer_erc20',
+					'Tool registration suppressed by wallet policy: transfer_nft',
+					'Tool registration suppressed by wallet policy: transfer_sei',
+					'Tool registration suppressed by wallet policy: transfer_token',
+					'Tool registration suppressed by wallet policy: write_contract'
+				].sort()
+			);
+			diagnostic.mockRestore();
 		});
 
 		test('registers the exact wallet-enabled surface', () => {
@@ -977,6 +992,7 @@ describe('EVM Tools', () => {
 
 		test('hides unknown future tools by default and forwards non-tool methods', () => {
 			const tool = jest.fn();
+			const diagnostic = jest.spyOn(console, 'error').mockImplementation(() => {});
 			const auxiliary = jest.fn(function (this: { marker: string }) {
 				return this.marker;
 			});
@@ -985,8 +1001,10 @@ describe('EVM Tools', () => {
 
 			policy.tool('future_signing_tool', 'unknown future tool', {}, async () => ({ content: [] }));
 			expect(tool).not.toHaveBeenCalled();
+			expect(diagnostic).toHaveBeenCalledWith('Tool registration suppressed by wallet policy: future_signing_tool');
 			expect((policy as unknown as { auxiliary(): string }).auxiliary()).toBe('forwarded');
 			expect(auxiliary).toHaveBeenCalledTimes(1);
+			diagnostic.mockRestore();
 		});
 
 		test('advertises and normalizes only supported network selectors', () => {

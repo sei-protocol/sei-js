@@ -102,6 +102,10 @@ Each legacy SSE connection has an isolated MCP server session. Both HTTP transpo
 
 Legacy SSE accepts at most 100 concurrent sessions by default. Set `SSE_MAX_SESSIONS` to a positive integer to tune the limit; excess connections receive HTTP 503. This limit reduces unauthenticated memory exhaustion risk but does not replace an authenticating reverse proxy.
 
+Streamable HTTP accepts at most 100 active requests by default. Set `STREAMABLE_HTTP_MAX_REQUESTS` to a positive integer to tune the limit; excess requests receive HTTP 503.
+
+HTTP transports create and close an isolated MCP server for each session or request; startup does not allocate an unused bootstrap server. Programmatic callers can use `main()`, which reports and rethrows ordinary startup failures. The packaged executable uses `runCli()` to convert those failures into exit code 1. The wallet-on-HTTP guard is stricter: it terminates immediately with exit code 1 before any listener or signing surface is created.
+
 ## Configuration
 
 - `SERVER_TRANSPORT`: `stdio` (default), `streamable-http`, or `http-sse`
@@ -109,6 +113,7 @@ Legacy SSE accepts at most 100 concurrent sessions by default. Set `SSE_MAX_SESS
 - `SERVER_PORT`: HTTP listener port (default: `8080`)
 - `SERVER_PATH`: HTTP endpoint path (default: `/mcp`). For `http-sse`, this is the GET event stream; clients POST messages to `{SERVER_PATH}/message?sessionId=<id>`.
 - `SSE_MAX_SESSIONS`: Maximum concurrent legacy SSE sessions (default: `100`)
+- `STREAMABLE_HTTP_MAX_REQUESTS`: Maximum concurrent Streamable HTTP requests (default: `100`)
 - `WALLET_MODE`: `disabled` (default) or `private-key`
 - `PRIVATE_KEY`: Private key used when `WALLET_MODE=private-key`
 - `MAINNET_RPC_URL`: Optional custom Sei mainnet RPC URL

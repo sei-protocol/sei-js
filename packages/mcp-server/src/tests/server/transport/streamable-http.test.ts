@@ -54,10 +54,24 @@ describe('StreamableHttpTransport', () => {
 		consoleErrorSpy?.mockRestore();
 	});
 
+	it('terminates wallet-enabled HTTP before invoking the listener', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const processExit = jest.spyOn(process, 'exit').mockImplementation((code) => {
+			throw new Error(`process.exit called with code ${code}`);
+		});
+		const listenFactory = jest.fn();
+		const transport = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key' }, { listenFactory });
+
+		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
+		expect(processExit).toHaveBeenCalledWith(1);
+		expect(listenFactory).not.toHaveBeenCalled();
+		processExit.mockRestore();
+	});
+
 	it('resolves start only after listening and rejects an empty host', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		const bootstrap = { close: jest.fn() } as unknown as McpServer;
-		const transport = new StreamableHttpTransport(0, HOST, PATH);
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH });
 		transports.push(transport);
 
 		await transport.start(bootstrap);
@@ -67,19 +81,26 @@ describe('StreamableHttpTransport', () => {
 		expect(health.status).toBe(200);
 		expect(await health.json()).toMatchObject({ status: 'ok' });
 
-		const invalidHost = new StreamableHttpTransport(8080, '   ', PATH);
+		const invalidHost = new StreamableHttpTransport({ port: 8080, host: '   ', path: PATH });
 		await expect(invalidHost.start(bootstrap)).rejects.toThrow('SERVER_HOST must not be empty');
+		const invalidLimit = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, maxActiveRequests: 0 });
+		await expect(invalidLimit.start(bootstrap)).rejects.toThrow('STREAMABLE_HTTP_MAX_REQUESTS must be a positive integer');
 	});
 
 	it('serves a real local MCP client request', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-		const transport = new StreamableHttpTransport(0, HOST, PATH, 'disabled', async () => {
-			const server = new McpServer({ name: 'request-server', version: '1.0.0' });
-			server.tool('local_identity', 'Return a local test response', {}, async () => ({
-				content: [{ type: 'text', text: 'local-streamable-response' }]
-			}));
-			return server;
-		});
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => {
+					const server = new McpServer({ name: 'request-server', version: '1.0.0' });
+					server.tool('local_identity', 'Return a local test response', {}, async () => ({
+						content: [{ type: 'text', text: 'local-streamable-response' }]
+					}));
+					return server;
+				}
+			}
+		);
 		transports.push(transport);
 		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
 		bootstrapServers.push(bootstrap);
@@ -94,12 +115,63 @@ describe('StreamableHttpTransport', () => {
 		expect(result.content[0]).toMatchObject({ type: 'text', text: 'local-streamable-response' });
 	});
 
+	it('caps active requests with 503 and releases capacity after completion', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let releaseFirst!: () => void;
+		const firstReleased = new Promise<void>((resolve) => {
+			releaseFirst = resolve;
+		});
+		let firstStarted!: () => void;
+		const started = new Promise<void>((resolve) => {
+			firstStarted = resolve;
+		});
+		let requestCount = 0;
+		const serverFactory = jest.fn(async () => ({ connect: jest.fn(), close: jest.fn() }) as unknown as McpServer);
+		const transportFactory = jest.fn(
+			() =>
+				({
+					close: jest.fn(),
+					handleRequest: jest.fn(async (_request: Request, response: Response) => {
+						requestCount++;
+						if (requestCount === 1) {
+							firstStarted();
+							await firstReleased;
+						}
+						response.status(200).json({ jsonrpc: '2.0', result: {}, id: requestCount });
+					})
+				}) as unknown as StreamableHTTPServerTransport
+		);
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, maxActiveRequests: 1 }, { serverFactory, transportFactory });
+		transports.push(transport);
+		await transport.start();
+		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
+		const body = JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} });
+		const first = fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+		await started;
+
+		const rejected = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+		expect(rejected.status).toBe(503);
+		expect(await rejected.json()).toEqual({ error: 'Maximum Streamable HTTP requests reached' });
+		expect(serverFactory).toHaveBeenCalledTimes(1);
+
+		releaseFirst();
+		expect((await first).status).toBe(200);
+		await withTimeout(
+			(async () => {
+				while ((transport as unknown as { activeRequestSlots: number }).activeRequestSlots !== 0) await Bun.sleep(5);
+			})(),
+			'request capacity release'
+		);
+		expect((await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body })).status).toBe(200);
+		expect(serverFactory).toHaveBeenCalledTimes(2);
+	});
+
 	it('rejects EADDRINUSE when the configured port is occupied', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		const occupied = createServer();
 		occupiedServers.push(occupied);
 		const port = await listenOnRandomPort(occupied);
-		const transport = new StreamableHttpTransport(port, HOST, PATH);
+		const transport = new StreamableHttpTransport({ port, host: HOST, path: PATH });
 		transports.push(transport);
 
 		try {
@@ -109,6 +181,29 @@ describe('StreamableHttpTransport', () => {
 			expect((error as NodeJS.ErrnoException).code).toBe('EADDRINUSE');
 		}
 		expect(transport.getListeningPort()).toBeUndefined();
+	});
+
+	it('releases reserved capacity when request transport creation fails', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const requestServerClose = jest.fn();
+		const serverFactory = jest.fn(async () => ({ close: requestServerClose }) as unknown as McpServer);
+		const transportFactory = jest.fn(() => {
+			throw new Error('simulated request transport constructor failure');
+		});
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, maxActiveRequests: 1 }, { serverFactory, transportFactory });
+		transports.push(transport);
+		await transport.start();
+		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
+		const request = {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} })
+		};
+
+		expect((await fetch(url, request)).status).toBe(500);
+		expect((await fetch(url, request)).status).toBe(500);
+		expect(transportFactory).toHaveBeenCalledTimes(2);
+		expect(requestServerClose).toHaveBeenCalledTimes(2);
 	});
 
 	it('closes active request transports and MCP servers during shutdown', async () => {
@@ -136,12 +231,11 @@ describe('StreamableHttpTransport', () => {
 		} as unknown as StreamableHTTPServerTransport;
 
 		const transport = new StreamableHttpTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => requestServer,
-			() => requestTransport
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => requestServer,
+				transportFactory: () => requestTransport
+			}
 		);
 		transports.push(transport);
 		await transport.start({ close: jest.fn() } as unknown as McpServer);
@@ -186,12 +280,11 @@ describe('StreamableHttpTransport', () => {
 			})
 		} as unknown as StreamableHTTPServerTransport;
 		const transport = new StreamableHttpTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => requestServer,
-			() => requestTransport
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => requestServer,
+				transportFactory: () => requestTransport
+			}
 		);
 		transports.push(transport);
 		await transport.start({ close: jest.fn() } as unknown as McpServer);
@@ -230,13 +323,12 @@ describe('StreamableHttpTransport', () => {
 		}) as typeof delayedServer.close;
 		let listenCount = 0;
 		const transport = new StreamableHttpTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => new McpServer({ name: 'request', version: '1.0.0' }),
-			() => ({ close: jest.fn() }) as unknown as StreamableHTTPServerTransport,
-			(app, port, host) => (listenCount++ === 0 ? delayedServer : app.listen(port, host))
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => new McpServer({ name: 'request', version: '1.0.0' }),
+				transportFactory: () => ({ close: jest.fn() }) as unknown as StreamableHTTPServerTransport,
+				listenFactory: (app, port, host) => (listenCount++ === 0 ? delayedServer : app.listen(port, host))
+			}
 		);
 		transports.push(transport);
 		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
@@ -271,12 +363,11 @@ describe('StreamableHttpTransport', () => {
 			})
 		} as unknown as StreamableHTTPServerTransport;
 		const transport = new StreamableHttpTransport(
-			0,
-			HOST,
-			PATH,
-			'disabled',
-			async () => requestServer,
-			() => requestTransport
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => requestServer,
+				transportFactory: () => requestTransport
+			}
 		);
 		transports.push(transport);
 		await transport.start({ close: jest.fn() } as unknown as McpServer);

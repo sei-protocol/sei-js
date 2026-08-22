@@ -37,7 +37,7 @@ describe('sanitizeError', () => {
 		expect(sanitized).not.toContain('fake-password');
 		expect(sanitized).not.toContain(fakePathSecret);
 		expect(sanitized).not.toContain(fakeQuerySecret);
-		expect(sanitized).not.toContain('rpc.example.test');
+		expect(sanitized).toContain('https://rpc.example.test/[redacted]?[redacted]');
 	});
 
 	it.each([
@@ -59,7 +59,7 @@ describe('sanitizeError', () => {
 		},
 		{
 			input: String.raw`apiKey="fake\api\key" trailingField=safe`,
-			secrets: ['fake', 'api', 'key']
+			secrets: [String.raw`fake\api\key`]
 		},
 		{
 			input: String.raw`{\"authorization\":\"Digest fake-nonce fake-response\",\"status\":401}`,
@@ -73,25 +73,32 @@ describe('sanitizeError', () => {
 			input: "'password': 'fake-single-quoted-secret', status: 500",
 			secrets: ['fake-single-quoted-secret']
 		}
-	])('fails closed for ambiguous sensitive text: $input', ({ input, secrets }) => {
+	])('redacts or fails closed for adversarial sensitive text: $input', ({ input, secrets }) => {
 		const sanitized = sanitizeError(input);
 
-		expect(sanitized).toBe('Sensitive error details redacted.');
+		expect(sanitized).toContain('redacted');
 		for (const secret of secrets) expect(sanitized).not.toContain(secret);
 	});
 
+	it('redacts parseable credential values while preserving diagnostics', () => {
+		expect(sanitizeError('Authorization: ApiKey fake-api-key status=500')).toBe('Authorization: [redacted] status=500');
+		expect(sanitizeError('authorization=Token fake-token, status=401')).toBe('authorization=[redacted], status=401');
+		expect(sanitizeError('password="fake-password"; status=401')).toBe('password="[redacted]"; status=401');
+		expect(sanitizeError('AUTHORIZATION: Custom opaque credential; nextField=value')).toBe('AUTHORIZATION: [redacted]; nextField=value');
+	});
+
 	it('recursively redacts normalized sensitive keys in nested JSON arrays and objects', () => {
-		const secrets = ['fake-auth', 'fake-private', 'fake-api', 'fake-token', 'fake-secret', 'fake-password', 'fake-nested', 'fake-embedded'];
+		const secrets = ['fake-auth', 'fake-private', 'fake-api', 'fake-secret', 'fake-password', 'fake-embedded'];
 		const input = JSON.stringify({
 			status: 500,
 			headers: { Authorization: `Custom ${secrets[0]}`, accept: 'application/json' },
 			payload: [
 				{ private_key: secrets[1], safe: 'preserved' },
 				{ API_KEY: { escaped: `${secrets[2]}\\"suffix` } },
-				{ tokens: [secrets[3], { nested: secrets[6] }] },
-				{ child: { Secrets: secrets[4], PASSWORDS: `${secrets[5]}\\with\\backslashes` } }
+				{ tokens: ['erc20', { nested: 'public-token-data' }], signature: '0xpublic-signature', proof: '0xpublic-proof', sessionId: 'session-123' },
+				{ child: { Secrets: secrets[3], PASSWORDS: `${secrets[4]}\\with\\backslashes` } }
 			],
-			notes: `Authorization: Custom ${secrets[7]}`,
+			notes: `Authorization: Custom ${secrets[5]}`,
 			trailing: { requestId: 'request-123' }
 		});
 
@@ -104,10 +111,10 @@ describe('sanitizeError', () => {
 			payload: [
 				{ private_key: '[redacted]', safe: 'preserved' },
 				{ API_KEY: '[redacted]' },
-				{ tokens: '[redacted]' },
+				{ tokens: ['erc20', { nested: 'public-token-data' }], signature: '0xpublic-signature', proof: '0xpublic-proof', sessionId: 'session-123' },
 				{ child: { Secrets: '[redacted]', PASSWORDS: '[redacted]' } }
 			],
-			notes: 'Sensitive error details redacted.',
+			notes: 'Authorization: [redacted]',
 			trailing: { requestId: 'request-123' }
 		});
 		for (const secret of secrets) expect(sanitized).not.toContain(secret);
@@ -124,8 +131,6 @@ describe('sanitizeError', () => {
 		'proxy-authorization',
 		'x-authorization-header',
 		'x-auth-token',
-		'token',
-		'tokens',
 		'access_token',
 		'refreshToken',
 		'id-token',
@@ -141,15 +146,11 @@ describe('sanitizeError', () => {
 		'x-dpop-proof',
 		'jwt',
 		'client-assertion',
-		'signature',
-		'proof',
 		'proof-of-possession',
 		'password',
 		'passwords',
 		'db-passphrase',
 		'Set-Cookie',
-		'session',
-		'session-id',
 		'x-session-cookie'
 	])('redacts every JSON value under normalized key %s', (key) => {
 		const secret = `fake-${key}-fragment`;
@@ -190,8 +191,9 @@ describe('sanitizeError', () => {
 		const plain = sanitizeError(value);
 		const json = sanitizeError(JSON.stringify({ message: value, status: 500 }));
 
-		expect(plain).toBe('Sensitive error details redacted.');
-		expect(JSON.parse(json)).toEqual({ message: 'Sensitive error details redacted.', status: 500 });
+		expect(plain).toContain('[redacted]');
+		expect(plain).not.toBe('Sensitive error details redacted.');
+		expect(JSON.parse(json).message).toContain('[redacted]');
 		for (const secret of secrets) {
 			expect(plain).not.toContain(secret);
 			expect(json).not.toContain(secret);
@@ -232,11 +234,8 @@ describe('sanitizeError', () => {
 		const plain = sanitizeError(message);
 		const json = sanitizeError(JSON.stringify({ message, trailing: { status: 401 } }));
 
-		expect(plain).toBe('Sensitive error details redacted.');
-		expect(JSON.parse(json)).toEqual({
-			message: 'Sensitive error details redacted.',
-			trailing: { status: 401 }
-		});
+		expect(plain).toBe(`${scheme} [redacted]`);
+		expect(JSON.parse(json)).toEqual({ message: `${scheme} [redacted]`, trailing: { status: 401 } });
 		expect(plain).not.toContain(secret);
 		expect(json).not.toContain(secret);
 		expect(plain).not.toContain('credential-fragment');
@@ -247,7 +246,12 @@ describe('sanitizeError', () => {
 		'Unsupported token type',
 		'Unsupported token type: mystery',
 		'Token transfer failed',
+		'token: ERC20 transfer failed',
 		'Signature verification failed',
+		'signature: 0xpublic-transaction-signature',
+		'proof: 0xpublic-merkle-proof',
+		'session: disconnected after response',
+		'sessionId: public-request-session',
 		'Basic validation failed',
 		'Digest parsing failed',
 		'AWS request failed',
@@ -259,6 +263,11 @@ describe('sanitizeError', () => {
 
 	it('redacts only exact structured credential keys', () => {
 		const input = {
+			token: 'public-token-address',
+			signature: '0xpublic-signature',
+			proof: '0xpublic-proof',
+			session: 'public-session-state',
+			sessionId: 'public-session-id',
 			tokenType: 'Unsupported token type',
 			signatureVerification: 'Signature verification failed',
 			proofType: 'merkle',
@@ -288,12 +297,17 @@ describe('sanitizeError', () => {
 		);
 
 		expect(JSON.parse(sanitized)).toEqual({
-			message: 'request to [redacted URL] failed',
+			message: 'request to https://rpc.example.test/[redacted] failed',
 			detached: '[redacted]',
 			status: 500
 		});
 		expect(sanitized).not.toContain(configuredSecret);
-		expect(sanitized).not.toContain('rpc.example.test');
+		expect(sanitized).toContain('rpc.example.test');
+	});
+
+	it('preserves known public RPC and docs URLs', () => {
+		const message = 'RPC https://evm-rpc.sei-apis.com and testnet https://evm-rpc-testnet.sei-apis.com failed; docs: https://docs.sei.io/mcp';
+		expect(sanitizeError(message)).toBe(message);
 	});
 
 	it('redacts configured private and wallet keys wherever upstream errors embed them', () => {

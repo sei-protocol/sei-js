@@ -4,6 +4,7 @@ const URL_PATTERN = /\bhttps?:\/\/[^\s"'<>[\]{}()]+/gi;
 const REDACTED = '[redacted]';
 const REDACTED_MESSAGE = 'Sensitive error details redacted.';
 const MIN_SECRET_LENGTH = 6;
+const PUBLIC_URLS = new Set(['https://evm-rpc.sei-apis.com', 'https://evm-rpc-testnet.sei-apis.com', 'https://docs.sei.io/mcp']);
 const SENSITIVE_KEYS = new Set([
 	'accesskey',
 	'accesskeyid',
@@ -31,19 +32,13 @@ const SENSITIVE_KEYS = new Set([
 	'passwords',
 	'passphrase',
 	'privatekey',
-	'proof',
 	'proofofpossession',
 	'proxyauthorization',
 	'refreshtoken',
 	'secret',
 	'secrets',
-	'session',
 	'sessioncookie',
-	'sessionid',
-	'signature',
 	'setcookie',
-	'token',
-	'tokens',
 	'webhookkey',
 	'xapikey',
 	'xauthorization',
@@ -74,6 +69,7 @@ const STANDARD_AUTH_SCHEME_PATTERNS = [
 const POSSIBLE_FIELD_PATTERN = /(?:\\?["'])?([a-z][a-z0-9 _-]{0,80})(?:\\?["'])?\s*[:=]/gi;
 const STANDARD_AUTHORIZATION_AT_START = new RegExp(`^\\s*(${STANDARD_AUTH_SCHEME_PATTERNS.join('|')})\\s+(.+)$`, 'i');
 const PARAMETERIZED_AUTH_SCHEMES = new Set(['aws4hmac', 'digest', 'scram', 'signature']);
+const TRAILING_DIAGNOSTIC_FIELD_PATTERN = /(?:[;,]\s*|\s+)(?=(?:nextfield|requestid|retry|status|trailingfield)\s*[:=])/i;
 
 function addSecretVariants(secrets: Set<string>, value: string | undefined, minimumLength = MIN_SECRET_LENGTH): void {
 	if (!value || value.length < minimumLength) return;
@@ -122,36 +118,107 @@ function isSensitiveKey(key: string): boolean {
 	return SENSITIVE_KEYS.has(normalized);
 }
 
-function startsWithCredentialAuthorization(message: string): boolean {
+function isCredentialAuthorizationMatch(message: string): RegExpMatchArray | undefined {
 	const match = message.match(STANDARD_AUTHORIZATION_AT_START);
-	if (!match) return false;
+	if (!match) return undefined;
 
 	const scheme = normalizeKey(match[1] ?? '');
 	const value = (match[2] ?? '').trim();
-	if (!value) return false;
+	if (!value) return undefined;
 
 	if ([...PARAMETERIZED_AUTH_SCHEMES].some((candidate) => scheme.startsWith(candidate))) {
-		return /(?:^|[,\s])(?:credential|data|keyid|nonce|response|signature|username)=[^\s,;]+/i.test(value);
+		return /(?:^|[,\s])(?:credential|data|keyid|nonce|response|signature|username)=[^\s,;]+/i.test(value) ? match : undefined;
 	}
 
 	const credential = value.split(/[\s,;]/, 1)[0] ?? '';
 	if (scheme === 'basic' || scheme === 'negotiate') {
-		return credential.length >= 12 && /^[a-z0-9+/_-]+={0,2}$/i.test(credential) && !/^[a-z]+$/i.test(credential);
+		return credential.length >= 12 && /^[a-z0-9+/_-]+={0,2}$/i.test(credential) && !/^[a-z]+$/i.test(credential) ? match : undefined;
 	}
 
-	return credential.length >= 12 && (!/^[a-z]+$/i.test(credential) || credential.length >= 24);
+	return credential.length >= 12 && (!/^[a-z]+$/i.test(credential) || credential.length >= 24) ? match : undefined;
 }
 
-function containsSensitiveText(message: string): boolean {
+interface ValueRange {
+	start: number;
+	end: number;
+}
+
+function findCredentialValueRange(message: string, valueOffset: number): ValueRange | undefined {
+	let start = valueOffset;
+	while (/\s/.test(message[start] ?? '')) start++;
+	if (message.startsWith('\\"', start) || message.startsWith("\\'", start)) return undefined;
+
+	const quote = message[start];
+	if (quote === '"' || quote === "'") {
+		for (let index = start + 1; index < message.length; index++) {
+			if (message[index] === '\\') {
+				index++;
+				continue;
+			}
+			if (message[index] === quote) return { start: start + 1, end: index };
+		}
+		return undefined;
+	}
+
+	const remaining = message.slice(start);
+	const boundary = remaining.match(TRAILING_DIAGNOSTIC_FIELD_PATTERN);
+	const end = boundary?.index === undefined ? message.length : start + boundary.index;
+	return { start, end };
+}
+
+function applyRedactions(message: string, ranges: ValueRange[]): string {
+	const merged: ValueRange[] = [];
+	for (const range of ranges.sort((left, right) => left.start - right.start)) {
+		const previous = merged.at(-1);
+		if (previous && range.start <= previous.end) previous.end = Math.max(previous.end, range.end);
+		else merged.push({ ...range });
+	}
+
+	let sanitized = message;
+	for (const range of merged.reverse()) {
+		sanitized = `${sanitized.slice(0, range.start)}${REDACTED}${sanitized.slice(range.end)}`;
+	}
+	return sanitized;
+}
+
+function redactCredentialText(message: string): string | null | undefined {
+	const ranges: ValueRange[] = [];
 	POSSIBLE_FIELD_PATTERN.lastIndex = 0;
 	for (const field of message.matchAll(POSSIBLE_FIELD_PATTERN)) {
-		if (field[1] && isSensitiveKey(field[1])) return true;
+		if (!field[1] || !isSensitiveKey(field[1]) || field.index === undefined) continue;
+		const valueOffset = field.index + field[0].length;
+		const range = findCredentialValueRange(message, valueOffset);
+		if (!range) return null;
+		ranges.push(range);
 	}
-	return startsWithCredentialAuthorization(message);
+	if (ranges.length > 0) return applyRedactions(message, ranges);
+
+	const authorization = isCredentialAuthorizationMatch(message);
+	if (!authorization) return undefined;
+	const value = authorization[2] ?? '';
+	const valueOffset = message.indexOf(value, authorization.index ?? 0);
+	const range = findCredentialValueRange(message, valueOffset);
+	return range ? applyRedactions(message, [range]) : null;
+}
+
+function sanitizeUrl(rawUrl: string): string {
+	try {
+		const url = new URL(rawUrl);
+		if (!url.username && !url.password && !url.search && !url.hash && PUBLIC_URLS.has(`${url.origin}${url.pathname.replace(/\/$/, '')}`)) {
+			return rawUrl;
+		}
+
+		const path = url.pathname && url.pathname !== '/' ? '/[redacted]' : url.pathname;
+		const query = url.search ? '?[redacted]' : '';
+		const hash = url.hash ? '#[redacted]' : '';
+		return `${url.origin}${path}${query}${hash}`;
+	} catch {
+		return '[redacted URL]';
+	}
 }
 
 function redactConfiguredSecrets(message: string, secrets: string[]): string {
-	let sanitized = message.replace(URL_PATTERN, '[redacted URL]');
+	let sanitized = message.replace(URL_PATTERN, sanitizeUrl);
 	for (const secret of secrets) {
 		sanitized = sanitized.split(secret).join(REDACTED);
 	}
@@ -161,8 +228,9 @@ function redactConfiguredSecrets(message: string, secrets: string[]): string {
 function redactJsonValue(value: unknown, secrets: string[]): unknown {
 	if (typeof value === 'string') {
 		const sanitized = redactConfiguredSecrets(value, secrets);
-		if (containsSensitiveText(sanitized)) return REDACTED_MESSAGE;
-		return sanitized;
+		const credentialSafe = redactCredentialText(sanitized);
+		if (credentialSafe === null) return REDACTED_MESSAGE;
+		return credentialSafe ?? sanitized;
 	}
 	if (Array.isArray(value)) return value.map((entry) => redactJsonValue(entry, secrets));
 	if (!value || typeof value !== 'object') return value;
@@ -188,6 +256,7 @@ export function sanitizeError(error: unknown): string {
 	const json = sanitizeJson(rawMessage, secrets);
 	if (json !== undefined) return json;
 	const sanitized = redactConfiguredSecrets(rawMessage, secrets);
-	if (containsSensitiveText(sanitized)) return REDACTED_MESSAGE;
-	return sanitized;
+	const credentialSafe = redactCredentialText(sanitized);
+	if (credentialSafe === null) return REDACTED_MESSAGE;
+	return credentialSafe ?? sanitized;
 }

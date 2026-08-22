@@ -24,7 +24,14 @@ const checkVersion = async (entrypoint: string) => {
 const redactDiagnostics = (value: string, secrets: string[]): string =>
 	secrets.reduce((sanitized, secret) => (secret ? sanitized.split(secret).join('[redacted]') : sanitized), value);
 
-const checkPackagedBinFailure = async (name: string, environment: Record<string, string>, expectedError: string, secrets: string[]): Promise<void> => {
+const checkPackagedBinFailure = async (
+	name: string,
+	environment: Record<string, string>,
+	expectedError: string,
+	secrets: string[],
+	allowAdditionalLines = false,
+	forbiddenText: string[] = []
+): Promise<void> => {
 	const entrypoint = join(packageDir, 'bin/mcp-server.js');
 	const child = Bun.spawn(['node', entrypoint], {
 		cwd: root,
@@ -43,9 +50,18 @@ const checkPackagedBinFailure = async (name: string, environment: Record<string,
 		.map((line) => line.trim())
 		.filter((line) => line && line !== expectedError && !line.startsWith('Supported networks:'));
 	const leakedSecret = secrets.some((secret) => secret && output.includes(secret));
+	const containsForbiddenText = forbiddenText.some((value) => output.includes(value));
 	const hasUncaughtStack = /(?:^|\n)\s*(?:at\s|file:\/\/|node:internal\/)|uncaught|unhandled(?:Promise)?rejection/i.test(output);
 
-	if (exitCode !== 1 || stdout.trim() || !stderr.split(/\r?\n/).includes(expectedError) || unexpectedLines.length > 0 || leakedSecret || hasUncaughtStack) {
+	if (
+		exitCode !== 1 ||
+		stdout.trim() ||
+		!stderr.split(/\r?\n/).includes(expectedError) ||
+		(!allowAdditionalLines && unexpectedLines.length > 0) ||
+		leakedSecret ||
+		containsForbiddenText ||
+		hasUncaughtStack
+	) {
 		throw new Error(
 			`MCP packaged-bin failure check failed for ${name}: exit=${exitCode}, stdout=${JSON.stringify(redactDiagnostics(stdout.trim(), secrets))}, stderr=${JSON.stringify(
 				redactDiagnostics(stderr.trim(), secrets)
@@ -180,8 +196,10 @@ await checkPackagedBinFailure(
 		SERVER_HOST: '127.0.0.1',
 		SERVER_PORT: String(await getAvailablePort())
 	},
-	'Error starting MCP server: Wallet mode cannot be used with HTTP transports. Use the stdio transport for signing operations.',
-	[httpWalletPrivateKey]
+	'║ Wallet mode cannot be used with HTTP transports!               ║',
+	[httpWalletPrivateKey],
+	true,
+	['Supported networks:']
 );
 await checkHttpStart('start:http', 'streamable-http');
 await checkHttpStart('start:http-sse', 'http-sse');

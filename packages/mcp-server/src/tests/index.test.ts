@@ -53,7 +53,7 @@ describe('index', () => {
 		};
 
 		// Setup default mock implementations
-		mockParseArgs.mockReturnValue({ transport: 'stdio' });
+		mockParseArgs.mockReturnValue({ mode: 'stdio' });
 		mockGetServer.mockResolvedValue(mockServer);
 		mockCreateTransport.mockReturnValue(mockTransport);
 		mockIsWalletEnabled.mockReturnValue(true);
@@ -129,6 +129,7 @@ describe('index', () => {
 
 	it('sets a nonzero exit code when HTTP startup rejects EADDRINUSE', async () => {
 		const testError = Object.assign(new Error('listen EADDRINUSE'), { code: 'EADDRINUSE' });
+		mockParseArgs.mockReturnValue({ mode: 'streamable-http' });
 		mockTransport.start.mockRejectedValue(testError);
 
 		const indexModule = await import('../index.js');
@@ -137,8 +138,20 @@ describe('index', () => {
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting MCP server:', 'listen EADDRINUSE');
 		expect(mockTransport.stop).toHaveBeenCalled();
-		expect(mockServer.close).toHaveBeenCalled();
+		expect(mockGetServer).not.toHaveBeenCalled();
+		expect(mockServer.close).not.toHaveBeenCalled();
 		expect(processExitSpy).not.toHaveBeenCalled();
+	});
+
+	it('does not construct an unused bootstrap server for HTTP transports', async () => {
+		mockParseArgs.mockReturnValue({ mode: 'http-sse' });
+		const indexModule = await import('../index.js');
+		const runtime = await indexModule.main();
+
+		expect(mockGetServer).not.toHaveBeenCalled();
+		expect(mockTransport.start).toHaveBeenCalledWith(undefined);
+		await runtime?.stop();
+		expect(mockServer.close).not.toHaveBeenCalled();
 	});
 
 	it('terminates direct CLI startup after cleanup while embedders receive exceptions', async () => {

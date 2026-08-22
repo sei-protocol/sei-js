@@ -34,6 +34,7 @@ describe('Args Module', () => {
 		delete process.env.SERVER_HOST;
 		delete process.env.SERVER_PATH;
 		delete process.env.SSE_MAX_SESSIONS;
+		delete process.env.STREAMABLE_HTTP_MAX_REQUESTS;
 		delete process.env.WALLET_MODE;
 		delete process.env.PRIVATE_KEY;
 		delete process.env.MAINNET_RPC_URL;
@@ -112,7 +113,8 @@ describe('Args Module', () => {
 				host: 'localhost',
 				path: '/mcp',
 				walletMode: 'disabled',
-				maxSseSessions: 100
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
 			});
 		});
 
@@ -132,7 +134,8 @@ describe('Args Module', () => {
 				host: '0.0.0.0',
 				path: '/api/mcp',
 				walletMode: 'private-key',
-				maxSseSessions: 100
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
 			});
 		});
 
@@ -160,18 +163,15 @@ describe('Args Module', () => {
 			expect(result.port).toBe(8080); // Should fallback to default
 		});
 
-		it('should reject negative port numbers', () => {
+		it('should reject invalid nonblank ports for HTTP transports', () => {
+			process.env.SERVER_TRANSPORT = 'streamable-http';
+			process.env.SERVER_PORT = 'invalid-port';
+			expect(() => parseArgs()).toThrow("Invalid port 'NaN'");
+
 			process.env.SERVER_PORT = '-1';
-
 			expect(() => parseArgs()).toThrow("Invalid port '-1'");
-		});
-
-		it('should handle floating point port numbers by truncating', () => {
 			process.env.SERVER_PORT = '3000.5';
-
-			const result = parseArgs();
-
-			expect(result.port).toBe(3000); // parseInt truncates
+			expect(() => parseArgs()).toThrow("Invalid port '3000.5'");
 		});
 
 		it('should call dotenv config to load .env file', () => {
@@ -181,6 +181,7 @@ describe('Args Module', () => {
 		});
 
 		it('loads and validates the legacy SSE session limit', () => {
+			process.env.SERVER_TRANSPORT = 'http-sse';
 			process.env.SSE_MAX_SESSIONS = '12';
 			expect(parseArgs().maxSseSessions).toBe(12);
 
@@ -192,6 +193,31 @@ describe('Args Module', () => {
 
 			process.env.SSE_MAX_SESSIONS = 'not-a-number';
 			expect(() => parseArgs()).toThrow("Invalid SSE_MAX_SESSIONS 'NaN'");
+		});
+
+		it('loads and validates the Streamable HTTP request limit', () => {
+			process.env.SERVER_TRANSPORT = 'streamable-http';
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = '12';
+			expect(parseArgs().maxStreamableRequests).toBe(12);
+
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = '0';
+			expect(() => parseArgs()).toThrow("Invalid STREAMABLE_HTTP_MAX_REQUESTS '0'");
+
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = 'not-a-number';
+			expect(() => parseArgs()).toThrow("Invalid STREAMABLE_HTTP_MAX_REQUESTS 'NaN'");
+		});
+
+		it('ignores invalid HTTP-only settings for stdio', () => {
+			process.env.SERVER_TRANSPORT = 'stdio';
+			process.env.SERVER_PORT = 'not-a-port';
+			process.env.SSE_MAX_SESSIONS = 'not-a-limit';
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = 'also-not-a-limit';
+
+			expect(parseArgs()).toMatchObject({
+				port: 8080,
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
+			});
 		});
 
 		it('should handle all RPC URL environment variables', () => {
@@ -229,6 +255,7 @@ describe('Args Module', () => {
 		});
 
 		it('should throw for port below valid range', () => {
+			process.env.SERVER_TRANSPORT = 'http-sse';
 			process.env.SERVER_PORT = '0';
 
 			expect(() => parseArgs()).toThrow("Invalid port '0'. Port must be a number between 1 and 65535.");
@@ -236,6 +263,7 @@ describe('Args Module', () => {
 		});
 
 		it('should throw for port above valid range', () => {
+			process.env.SERVER_TRANSPORT = 'streamable-http';
 			process.env.SERVER_PORT = '65536';
 
 			expect(() => parseArgs()).toThrow("Invalid port '65536'. Port must be a number between 1 and 65535.");
@@ -371,17 +399,31 @@ describe('Args Module', () => {
 				host: 'localhost',
 				path: '/mcp',
 				walletMode: 'private-key',
-				maxSseSessions: 100
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
 			});
 		});
 	});
 
 	describe('edge cases and error scenarios', () => {
-		it('should reject an empty server host', () => {
+		it('treats blank optional HTTP and stdio values as defaults', () => {
 			process.env.SERVER_HOST = '';
 			process.env.SERVER_PATH = '';
+			process.env.SERVER_PORT = '';
+			process.env.SSE_MAX_SESSIONS = '';
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = '';
 
-			expect(() => parseArgs()).toThrow('SERVER_HOST must not be empty');
+			expect(parseArgs()).toMatchObject({
+				mode: 'stdio',
+				host: 'localhost',
+				path: '/mcp',
+				port: 8080,
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
+			});
+
+			process.env.SERVER_TRANSPORT = 'http-sse';
+			expect(parseArgs()).toMatchObject({ host: 'localhost', port: 8080, maxSseSessions: 100 });
 		});
 
 		it('should handle whitespace in environment variables', () => {

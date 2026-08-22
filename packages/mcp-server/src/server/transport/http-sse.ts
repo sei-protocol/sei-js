@@ -15,6 +15,20 @@ export type SseListenFactory = (app: express.Application, port: number, host: st
 export const DEFAULT_MAX_SSE_SESSIONS = 100;
 type LifecycleState = 'idle' | 'starting' | 'running' | 'stopping';
 
+export interface HttpSseTransportOptions {
+	port: number;
+	host: string;
+	path: string;
+	walletMode?: WalletMode;
+	maxSessions?: number;
+}
+
+export interface HttpSseTransportDependencies {
+	serverFactory?: McpServerFactory;
+	transportFactory?: SseServerTransportFactory;
+	listenFactory?: SseListenFactory;
+}
+
 interface SseSession {
 	server: McpServer;
 	transport: SSEServerTransport;
@@ -28,7 +42,6 @@ export class HttpSseTransport implements McpTransport {
 	private httpServer: Server | undefined;
 	private readonly connections = new Map<string, SseSession>();
 	private readonly sockets = new Set<Socket>();
-	private stopping = false;
 	private state: LifecycleState = 'idle';
 	private startPromise: Promise<void> | undefined;
 	private stopPromise: Promise<void> | undefined;
@@ -37,17 +50,24 @@ export class HttpSseTransport implements McpTransport {
 	private runtimeErrorHandler: ((error: Error) => void) | undefined;
 	private connectionHandler: ((socket: Socket) => void) | undefined;
 	private activeSessionSlots = 0;
+	private readonly port: number;
+	private readonly host: string;
+	private readonly path: string;
+	private readonly walletMode: WalletMode;
+	private readonly serverFactory: McpServerFactory;
+	private readonly transportFactory: SseServerTransportFactory;
+	private readonly listenFactory: SseListenFactory;
+	private readonly maxSessions: number;
 
-	constructor(
-		private readonly port: number,
-		private readonly host: string,
-		private readonly path: string,
-		private readonly walletMode: WalletMode = 'disabled',
-		private readonly serverFactory: McpServerFactory = getServer,
-		private readonly transportFactory: SseServerTransportFactory = (endpoint, response) => new SSEServerTransport(endpoint, response),
-		private readonly listenFactory: SseListenFactory = (app, port, host) => app.listen(port, host),
-		private readonly maxSessions: number = DEFAULT_MAX_SSE_SESSIONS
-	) {
+	constructor(options: HttpSseTransportOptions, dependencies: HttpSseTransportDependencies = {}) {
+		this.port = options.port;
+		this.host = options.host;
+		this.path = options.path;
+		this.walletMode = options.walletMode ?? 'disabled';
+		this.maxSessions = options.maxSessions ?? DEFAULT_MAX_SSE_SESSIONS;
+		this.serverFactory = dependencies.serverFactory ?? getServer;
+		this.transportFactory = dependencies.transportFactory ?? ((endpoint, response) => new SSEServerTransport(endpoint, response));
+		this.listenFactory = dependencies.listenFactory ?? ((app, port, host) => app.listen(port, host));
 		this.app = express();
 		this.setupMiddleware();
 		this.setupRoutes();
@@ -64,7 +84,7 @@ export class HttpSseTransport implements McpTransport {
 		});
 
 		this.app.get(this.path, async (req: Request, res: Response) => {
-			if (this.stopping) {
+			if (this.state !== 'running') {
 				res.status(503).json({ error: 'Server is shutting down' });
 				return;
 			}
@@ -93,18 +113,25 @@ export class HttpSseTransport implements McpTransport {
 			let session: SseSession | undefined;
 			let disconnected = false;
 
-			const removeLifecycleListeners = () => {
+			const removeCloseListeners = () => {
 				res.off('close', onDisconnect);
 				req.socket.off('close', onDisconnect);
+			};
+			const removeErrorListeners = () => {
+				res.off('error', onDisconnect);
+				req.off('error', onDisconnect);
+				req.socket.off('error', onDisconnect);
 			};
 			const onDisconnect = (error?: Error) => {
 				if (disconnected) return;
 				disconnected = true;
-				removeLifecycleListeners();
+				removeCloseListeners();
 				if (error) console.error('SSE connection error:', sanitizeError(error));
-				void this.closeSession(sessionId).catch((closeError) => {
-					console.error('Error closing SSE session:', sanitizeError(closeError));
-				});
+				void this.closeSession(sessionId)
+					.catch((closeError) => {
+						console.error('Error closing SSE session:', sanitizeError(closeError));
+					})
+					.finally(removeErrorListeners);
 			};
 			res.once('close', onDisconnect);
 			req.socket.once('close', onDisconnect);
@@ -116,7 +143,7 @@ export class HttpSseTransport implements McpTransport {
 				const server = await this.serverFactory();
 				session = { server, transport, releaseSlot };
 
-				if (this.stopping || disconnected) {
+				if (this.state !== 'running' || disconnected) {
 					await this.closeDetachedSession(session);
 					return;
 				}
@@ -124,7 +151,7 @@ export class HttpSseTransport implements McpTransport {
 				this.connections.set(sessionId, session);
 				await server.connect(transport);
 
-				if (this.stopping || disconnected) {
+				if (this.state !== 'running' || disconnected) {
 					await this.closeSession(sessionId);
 				}
 			} catch (error) {
@@ -193,7 +220,7 @@ export class HttpSseTransport implements McpTransport {
 		return address && typeof address === 'object' ? address.port : undefined;
 	}
 
-	async start(_server: McpServer): Promise<void> {
+	async start(_server?: McpServer): Promise<void> {
 		validateSecurityConfig(this.mode, this.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
@@ -213,7 +240,6 @@ export class HttpSseTransport implements McpTransport {
 			throw new Error('HTTP SSE transport is already started.');
 		}
 
-		this.stopping = false;
 		this.state = 'starting';
 		let httpServer: Server;
 		try {
@@ -275,11 +301,9 @@ export class HttpSseTransport implements McpTransport {
 			return this.stopPromise;
 		}
 		if (this.state === 'idle' && !this.httpServer && this.connections.size === 0) {
-			this.stopping = false;
 			return;
 		}
 
-		this.stopping = true;
 		const wasStarting = this.state === 'starting';
 		this.state = 'stopping';
 		const httpServer = this.httpServer;
@@ -309,7 +333,6 @@ export class HttpSseTransport implements McpTransport {
 				this.connections.clear();
 				this.sockets.clear();
 				this.state = 'idle';
-				this.stopping = false;
 				if (this.stopPromise === stopPromise) this.stopPromise = undefined;
 			}
 		})();

@@ -11,7 +11,8 @@ const DEFAULT_CONFIG = {
 		host: 'localhost',
 		path: '/mcp',
 		transport: 'stdio' as const,
-		sseMaxSessions: 100
+		sseMaxSessions: 100,
+		streamableMaxRequests: 100
 	},
 	wallet: {
 		mode: 'disabled' as const,
@@ -25,7 +26,8 @@ const DEFAULT_CONFIG = {
 
 // Helper to get env value with default
 const getEnvValue = (key: string, defaultValue: string) => {
-	return process.env[key] ?? defaultValue;
+	const value = process.env[key];
+	return value === undefined || value.trim().length === 0 ? defaultValue : value;
 };
 
 const loadConfig = () => {
@@ -33,8 +35,9 @@ const loadConfig = () => {
 	dotenvConfig();
 
 	// Parse numeric values
-	const port = Number.parseInt(getEnvValue('SERVER_PORT', DEFAULT_CONFIG.server.port.toString()), 10);
+	const port = Number(getEnvValue('SERVER_PORT', DEFAULT_CONFIG.server.port.toString()));
 	const sseMaxSessions = Number(getEnvValue('SSE_MAX_SESSIONS', DEFAULT_CONFIG.server.sseMaxSessions.toString()));
+	const streamableMaxRequests = Number(getEnvValue('STREAMABLE_HTTP_MAX_REQUESTS', DEFAULT_CONFIG.server.streamableMaxRequests.toString()));
 
 	// Normalize path to ensure it starts with /
 	const rawPath = getEnvValue('SERVER_PATH', DEFAULT_CONFIG.server.path);
@@ -42,11 +45,12 @@ const loadConfig = () => {
 
 	const config = {
 		server: {
-			port: Number.isNaN(port) ? DEFAULT_CONFIG.server.port : port,
+			port,
 			host: getEnvValue('SERVER_HOST', DEFAULT_CONFIG.server.host),
 			path: normalizedPath,
 			transport: getEnvValue('SERVER_TRANSPORT', DEFAULT_CONFIG.server.transport) as TransportMode,
-			sseMaxSessions
+			sseMaxSessions,
+			streamableMaxRequests
 		},
 		wallet: {
 			mode: getEnvValue('WALLET_MODE', DEFAULT_CONFIG.wallet.mode) as 'private-key' | 'disabled',
@@ -74,17 +78,18 @@ const validateConfig = (config: ReturnType<typeof loadConfig>) => {
 		throw new Error(`Invalid transport mode '${config.server.transport}'. Valid modes are: ${validTransportModes.join(', ')}`);
 	}
 
-	// Validate port
-	if (config.server.port < 1 || config.server.port > 65535) {
+	const isHttpTransport = config.server.transport === 'streamable-http' || config.server.transport === 'http-sse';
+	if (isHttpTransport && (!Number.isInteger(config.server.port) || config.server.port < 1 || config.server.port > 65535)) {
 		throw new Error(`Invalid port '${config.server.port}'. Port must be a number between 1 and 65535.`);
 	}
-
-	if (config.server.host.trim().length === 0) {
+	if (isHttpTransport && config.server.host.trim().length === 0) {
 		throw new Error('SERVER_HOST must not be empty.');
 	}
-
-	if (!Number.isInteger(config.server.sseMaxSessions) || config.server.sseMaxSessions < 1) {
+	if (config.server.transport === 'http-sse' && (!Number.isInteger(config.server.sseMaxSessions) || config.server.sseMaxSessions < 1)) {
 		throw new Error(`Invalid SSE_MAX_SESSIONS '${config.server.sseMaxSessions}'. Value must be a positive integer.`);
+	}
+	if (config.server.transport === 'streamable-http' && (!Number.isInteger(config.server.streamableMaxRequests) || config.server.streamableMaxRequests < 1)) {
+		throw new Error(`Invalid STREAMABLE_HTTP_MAX_REQUESTS '${config.server.streamableMaxRequests}'. Value must be a positive integer.`);
 	}
 
 	validatePrivateKeyConfiguration(config.wallet.mode, config.wallet.privateKey);
@@ -118,6 +123,8 @@ Environment Variables:
   SERVER_HOST         Server host (default: localhost)
   SERVER_PATH         Server path for HTTP transports (default: /mcp)
   SSE_MAX_SESSIONS    Maximum concurrent legacy SSE sessions (default: 100)
+  STREAMABLE_HTTP_MAX_REQUESTS
+                      Maximum concurrent Streamable HTTP requests (default: 100)
   PRIVATE_KEY         Required valid 32-byte key when WALLET_MODE=private-key
   WALLET_MODE         Wallet mode: private-key, disabled (default: disabled)
   MAINNET_RPC_URL     Custom RPC URL for Sei mainnet (optional)
@@ -144,10 +151,15 @@ Security Note:
 
 	return {
 		mode: config.server.transport,
-		port: config.server.port,
+		port: Number.isNaN(config.server.port) ? DEFAULT_CONFIG.server.port : config.server.port,
 		host: config.server.host,
 		path: config.server.path,
 		walletMode: config.wallet.mode,
-		maxSseSessions: config.server.sseMaxSessions
+		maxSseSessions:
+			Number.isInteger(config.server.sseMaxSessions) && config.server.sseMaxSessions > 0 ? config.server.sseMaxSessions : DEFAULT_CONFIG.server.sseMaxSessions,
+		maxStreamableRequests:
+			Number.isInteger(config.server.streamableMaxRequests) && config.server.streamableMaxRequests > 0
+				? config.server.streamableMaxRequests
+				: DEFAULT_CONFIG.server.streamableMaxRequests
 	};
 };

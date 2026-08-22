@@ -17,13 +17,26 @@ export function createCorsMiddleware(): RequestHandler {
 
 /**
  * Validates that wallet mode is not used with HTTP transports
- * Throws if an unsafe configuration is detected
+ * Exits the process if unsafe configuration detected
  */
 export function validateSecurityConfig(transportMode: TransportMode, walletMode: WalletMode): void {
 	const isHttpTransport = transportMode === 'streamable-http' || transportMode === 'http-sse';
 	const isWalletEnabled = walletMode !== 'disabled';
 
 	if (isHttpTransport && isWalletEnabled) {
-		throw new Error('Wallet mode cannot be used with HTTP transports. Use the stdio transport for signing operations.');
+		console.error('');
+		console.error('╔════════════════════════════════════════════════════════════════╗');
+		console.error('║                     SECURITY ERROR                             ║');
+		console.error('╠════════════════════════════════════════════════════════════════╣');
+		console.error('║ Wallet mode cannot be used with HTTP transports!               ║');
+		console.error('║                                                                ║');
+		console.error('║ HTTP transports expose the server to cross-origin requests,    ║');
+		console.error('║ allowing malicious websites to steal funds from your wallet.   ║');
+		console.error('║                                                                ║');
+		console.error('║ Use stdio transport instead (default, works with Claude):      ║');
+		console.error('║   $ WALLET_MODE=private-key PRIVATE_KEY=... npx @sei-js/mcp-server');
+		console.error('╚════════════════════════════════════════════════════════════════╝');
+		console.error('');
+		process.exit(1);
 	}
 }
