@@ -46,6 +46,12 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
+      - name: Establish Changesets base branch
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: git update-ref refs/heads/main "refs/remotes/origin/$BASE_REF"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
