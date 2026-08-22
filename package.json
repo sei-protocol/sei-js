@@ -25,6 +25,7 @@
 		"lint:pack:runtime": "bun scripts/check-mcp-cli.ts",
 		"release": "changeset publish && git push --follow-tags",
 		"release:internal": "bun run build && bun run changeset && bun run changeset version --snapshot internal && bun run changeset publish --no-git-tag --snapshot --tag internal",
+		"version-packages": "changeset version && bun scripts/sync-workspace-versions.ts",
 		"test": "bun run --filter '*' test",
 		"test:all": "bun run test",
 		"test:coverage": "bun test --isolate --coverage --coverage-reporter=lcov packages",

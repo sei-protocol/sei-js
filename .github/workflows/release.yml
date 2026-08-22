@@ -39,8 +39,14 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
 
+      - name: Lint, Format & Type Check
+        run: bun run check
+
       - name: Build Packages
         run: bun run build
+
+      - name: Test
+        run: bun run test
 
       - name: Validate Published Packages
         run: bun run lint:pack:all
@@ -49,6 +55,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
+          version: bun run version-packages
           publish: bun run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
