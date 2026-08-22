@@ -116,8 +116,13 @@ describe('registerEVMResources', () => {
 		spyFunctions(chains);
 		spyFunctions(services);
 
-		(chains.getRpcUrl as jest.Mock).mockReturnValue('https://rpc.sei.io');
 		(chains.getSupportedNetworks as jest.Mock).mockReturnValue(['sei', 'sei-testnet']);
+		(chains.normalizeNetwork as jest.Mock).mockImplementation((network: string) => {
+			const normalized = network.toLowerCase();
+			if (normalized === 'sei' || normalized === '1329' || normalized === '0x531') return 'sei';
+			if (normalized === 'sei-testnet' || normalized === '1328' || normalized === '0x530') return 'sei-testnet';
+			throw new Error(`Unsupported network: ${network}`);
+		});
 		(services.getChainId as jest.Mock).mockResolvedValue(1329);
 		(services.getBlockNumber as jest.Mock).mockResolvedValue(100n);
 		(services.getBlockByNumber as jest.Mock).mockResolvedValue({ number: 123n });
@@ -175,10 +180,21 @@ describe('registerEVMResources', () => {
 		expect(JSON.parse(textOf(result))).toEqual({
 			network: 'sei-testnet',
 			chainId: 1329,
-			blockNumber: '100',
-			rpcUrl: 'https://rpc.sei.io'
+			blockNumber: '100'
 		});
 		expect(services.getChainId).toHaveBeenCalledWith('sei-testnet');
+	});
+
+	it.each(['sei-testnet', '1328', '0x530'])('normalizes supported testnet selector %s', async (network) => {
+		const result = await invoke('chain_info_by_network', { network });
+		expect(JSON.parse(textOf(result)).network).toBe('sei-testnet');
+		expect(services.getChainId).toHaveBeenCalledWith('sei-testnet');
+	});
+
+	it('rejects unknown network selectors without falling back', async () => {
+		const result = await invoke('chain_info_by_network', { network: 'unknown-network' });
+		expect(textOf(result)).toBe('Error fetching chain info: Unsupported network: unknown-network');
+		expect(services.getChainId).not.toHaveBeenCalled();
 	});
 
 	it('returns default chain info for Sei mainnet', async () => {
@@ -186,10 +202,38 @@ describe('registerEVMResources', () => {
 		expect(JSON.parse(textOf(result))).toEqual({
 			network: 'sei',
 			chainId: 1329,
-			blockNumber: '100',
-			rpcUrl: 'https://rpc.sei.io'
+			blockNumber: '100'
 		});
 		expect(services.getChainId).toHaveBeenCalledWith('sei');
+	});
+
+	it('redacts configured RPC secrets from upstream resource errors', async () => {
+		const originalRpcUrl = chains.rpcUrlMap[1328];
+		const fakePathSecret = 'fake-path-secret';
+		const fakeQuerySecret = 'fake-query-secret';
+		const configuredUrl = new URL('https://rpc.example.test');
+		configuredUrl.username = 'fake-user';
+		configuredUrl.password = 'fake-password';
+		configuredUrl.pathname = `/v2/${fakePathSecret}`;
+		configuredUrl.searchParams.set('token', fakeQuerySecret);
+		chains.rpcUrlMap[1328] = configuredUrl.href;
+		(services.getBlockByNumber as jest.Mock).mockRejectedValue(
+			new Error(`HTTP request failed. Status: 500. URL: ${chains.rpcUrlMap[1328]}. Details: ${fakeQuerySecret}`)
+		);
+
+		try {
+			const result = await invoke('evm_block_by_number', { network: '1328', blockNumber: '7' });
+			const text = textOf(result);
+			expect(text).toContain('Status: 500');
+			expect(text).toContain('[redacted');
+			expect(text).not.toContain('fake-user');
+			expect(text).not.toContain('fake-password');
+			expect(text).not.toContain(fakePathSecret);
+			expect(text).not.toContain(fakeQuerySecret);
+			expect(text).not.toContain('rpc.example.test');
+		} finally {
+			chains.rpcUrlMap[1328] = originalRpcUrl;
+		}
 	});
 
 	it('returns a block by number', async () => {

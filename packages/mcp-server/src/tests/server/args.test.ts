@@ -120,7 +120,7 @@ describe('Args Module', () => {
 			process.env.SERVER_HOST = '0.0.0.0';
 			process.env.SERVER_PATH = '/api/mcp';
 			process.env.WALLET_MODE = 'private-key';
-			process.env.PRIVATE_KEY = 'test-key';
+			process.env.PRIVATE_KEY = '1'.repeat(64);
 
 			const result = parseArgs();
 
@@ -157,12 +157,10 @@ describe('Args Module', () => {
 			expect(result.port).toBe(8080); // Should fallback to default
 		});
 
-		it('should handle negative port numbers by using parsed value', () => {
+		it('should reject negative port numbers', () => {
 			process.env.SERVER_PORT = '-1';
 
-			const result = parseArgs();
-
-			expect(result.port).toBe(-1); // parseInt returns -1, validation will catch this
+			expect(() => parseArgs()).toThrow("Invalid port '-1'");
 		});
 
 		it('should handle floating point port numbers by truncating', () => {
@@ -199,40 +197,32 @@ describe('Args Module', () => {
 			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for invalid wallet mode', () => {
+		it('should throw for invalid wallet mode', () => {
 			process.env.WALLET_MODE = 'invalid-mode';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid wallet mode 'invalid-mode'. Valid modes are: private-key, disabled");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid wallet mode 'invalid-mode'. Valid modes are: private-key, disabled");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for invalid transport mode', () => {
+		it('should throw for invalid transport mode', () => {
 			process.env.SERVER_TRANSPORT = 'invalid-transport';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid transport mode 'invalid-transport'. Valid modes are: stdio, streamable-http, http-sse");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid transport mode 'invalid-transport'. Valid modes are: stdio, streamable-http, http-sse");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for port below valid range', () => {
+		it('should throw for port below valid range', () => {
 			process.env.SERVER_PORT = '0';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid port '0'. Port must be a number between 1 and 65535.");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid port '0'. Port must be a number between 1 and 65535.");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for port above valid range', () => {
+		it('should throw for port above valid range', () => {
 			process.env.SERVER_PORT = '65536';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid port '65536'. Port must be a number between 1 and 65535.");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid port '65536'. Port must be a number between 1 and 65535.");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
 		it('should accept minimum valid port', () => {
@@ -267,9 +257,27 @@ describe('Args Module', () => {
 			for (const mode of validModes) {
 				jest.clearAllMocks();
 				process.env.WALLET_MODE = mode;
+				process.env.PRIVATE_KEY = mode === 'private-key' ? '1'.repeat(64) : undefined;
 
 				expect(() => parseArgs()).not.toThrow();
 				expect(processExitSpy).not.toHaveBeenCalled();
+			}
+		});
+
+		it('requires PRIVATE_KEY in private-key wallet mode', () => {
+			process.env.WALLET_MODE = 'private-key';
+			delete process.env.PRIVATE_KEY;
+			expect(() => parseArgs()).toThrow('PRIVATE_KEY is required when WALLET_MODE=private-key');
+		});
+
+		it('rejects an invalid PRIVATE_KEY without including it in the error', () => {
+			process.env.WALLET_MODE = 'private-key';
+			process.env.PRIVATE_KEY = 'clearly-invalid-test-value';
+			expect(() => parseArgs()).toThrow('PRIVATE_KEY must be a valid 32-byte secp256k1 private key');
+			try {
+				parseArgs();
+			} catch (error) {
+				expect(String(error)).not.toContain(process.env.PRIVATE_KEY);
 			}
 		});
 	});
@@ -326,6 +334,7 @@ describe('Args Module', () => {
 			process.env.SERVER_TRANSPORT = 'streamable-http';
 			process.env.SERVER_PORT = '9000';
 			process.env.WALLET_MODE = 'private-key';
+			process.env.PRIVATE_KEY = '1'.repeat(64);
 
 			const result = parseArgs();
 
@@ -350,14 +359,11 @@ describe('Args Module', () => {
 	});
 
 	describe('edge cases and error scenarios', () => {
-		it('should handle empty string environment variables', () => {
+		it('should reject an empty server host', () => {
 			process.env.SERVER_HOST = '';
 			process.env.SERVER_PATH = '';
 
-			const result = parseArgs();
-
-			expect(result.host).toBe(''); // Empty string should be preserved
-			expect(result.path).toBe('/'); // Empty path should be normalized to /
+			expect(() => parseArgs()).toThrow('SERVER_HOST must not be empty');
 		});
 
 		it('should handle whitespace in environment variables', () => {
@@ -378,16 +384,13 @@ describe('Args Module', () => {
 			expect(result.path).toBe('/api/mcp-v1.0_test@special');
 		});
 
-		it('should handle multiple validation errors by exiting on first', () => {
+		it('should report the first of multiple validation errors', () => {
 			process.env.WALLET_MODE = 'invalid';
 			process.env.SERVER_TRANSPORT = 'also-invalid';
 			process.env.SERVER_PORT = '0';
 
-			parseArgs();
-
-			// Should exit on first validation error (wallet mode)
-			expect(processExitSpy).toHaveBeenCalledWith(1);
-			expect(processExitSpy).toHaveBeenCalled();
+			expect(() => parseArgs()).toThrow("Invalid wallet mode 'invalid'");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
 		it('should handle process.env being undefined for specific keys', () => {

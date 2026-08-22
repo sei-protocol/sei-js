@@ -55,7 +55,7 @@ const resetSpiedFunctions = (mod: object) => {
 	}
 };
 
-const { getRpcUrl, getSupportedNetworks } = chains;
+const { getSupportedNetworks } = chains;
 const { getPrivateKeyAsHex, getWalletMode, isWalletEnabled } = config;
 const { getWalletProvider } = wallet;
 
@@ -82,8 +82,12 @@ describe('EVM Tools', () => {
 		registeredTools = mockServerResult.registeredTools;
 
 		// Setup configuration mocks first
-		(getRpcUrl as jest.Mock).mockReturnValue('https://rpc.sei.io');
 		(getSupportedNetworks as jest.Mock).mockReturnValue(['sei', 'sei-testnet']);
+		(chains.normalizeNetwork as jest.Mock).mockImplementation((network: string) => {
+			if (network === 'sei' || network === '1329' || network === '0x531') return 'sei';
+			if (network === 'sei-testnet' || network === '1328' || network === '0x530') return 'sei-testnet';
+			throw new Error(`Unsupported network: ${network}`);
+		});
 		(getPrivateKeyAsHex as jest.Mock).mockReturnValue('0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890');
 		(isWalletEnabled as jest.Mock).mockReturnValue(true); // Enable wallet for testing
 		(getWalletMode as jest.Mock).mockReturnValue('private-key'); // Set wallet mode
@@ -146,13 +150,11 @@ describe('EVM Tools', () => {
 
 			expect(services.getChainId).toHaveBeenCalledWith(mockNetwork);
 			expect(services.getBlockNumber).toHaveBeenCalledWith(mockNetwork);
-			expect(getRpcUrl).toHaveBeenCalledWith(mockNetwork);
 
 			verifySuccessResponse(response, {
 				network: mockNetwork,
 				chainId: 1,
-				blockNumber: '12345678',
-				rpcUrl: 'https://rpc.sei.io'
+				blockNumber: '12345678'
 			});
 		});
 
@@ -174,13 +176,11 @@ describe('EVM Tools', () => {
 
 			expect(services.getChainId).toHaveBeenCalledWith('sei'); // DEFAULT_NETWORK is mocked as 'sei'
 			expect(services.getBlockNumber).toHaveBeenCalledWith('sei');
-			expect(getRpcUrl).toHaveBeenCalledWith('sei');
 
 			verifySuccessResponse(response, {
 				network: 'sei', // DEFAULT_NETWORK
 				chainId: 1,
-				blockNumber: '12345678',
-				rpcUrl: 'https://rpc.sei.io'
+				blockNumber: '12345678'
 			});
 		});
 
@@ -252,6 +252,35 @@ describe('EVM Tools', () => {
 
 			expect(response).toHaveProperty('isError', true);
 			expect(response.content[0].text).toContain('Error fetching supported networks: This is a string error');
+		});
+
+		test('redacts configured RPC secrets from simulated upstream failures', async () => {
+			const originalRpcUrl = chains.rpcUrlMap[1329];
+			const fakePathSecret = 'fake-path-secret';
+			const fakeQuerySecret = 'fake-query-secret';
+			const configuredUrl = new URL('https://rpc.example.test');
+			configuredUrl.username = 'fake-user';
+			configuredUrl.password = 'fake-password';
+			configuredUrl.pathname = `/v2/${fakePathSecret}`;
+			configuredUrl.searchParams.set('token', fakeQuerySecret);
+			chains.rpcUrlMap[1329] = configuredUrl.href;
+			(services.getChainId as jest.Mock).mockRejectedValue(
+				new Error(`HTTP request failed. Status: 500. URL: ${chains.rpcUrlMap[1329]}. Details: ${fakePathSecret}`)
+			);
+
+			try {
+				const response = await checkToolExists('get_chain_info').handler({ network: 'sei' });
+				const text = response.content[0].text;
+				expect(text).toContain('Status: 500');
+				expect(text).toContain('[redacted');
+				expect(text).not.toContain('fake-user');
+				expect(text).not.toContain('fake-password');
+				expect(text).not.toContain(fakePathSecret);
+				expect(text).not.toContain(fakeQuerySecret);
+				expect(text).not.toContain('rpc.example.test');
+			} finally {
+				chains.rpcUrlMap[1329] = originalRpcUrl;
+			}
 		});
 	});
 
@@ -878,71 +907,82 @@ describe('EVM Tools', () => {
 		});
 
 		// Test disabled wallet scenario
-		test('should handle disabled wallet mode', () => {
-			// Create a new server for this test
+		test('registers the exact read-only surface when wallet mode is disabled', () => {
 			const mockServerResult = createMockServer();
 			const disabledWalletServer = mockServerResult.server;
 			const disabledWalletTools = mockServerResult.registeredTools;
 
-			// Mock wallet as disabled
 			(isWalletEnabled as jest.Mock).mockReturnValue(false);
-
-			// Register tools with disabled wallet
 			registerEVMTools(disabledWalletServer);
 
-			// Verify wallet tools are not registered
-			expect(disabledWalletTools.has('get_address_from_private_key')).toBe(false);
-			expect(disabledWalletTools.has('transfer_sei')).toBe(false);
-			expect(disabledWalletTools.has('transfer_erc20')).toBe(false);
-			expect(disabledWalletTools.has('transfer_erc721')).toBe(false);
-
-			// Verify read-only tools are still registered
-			expect(disabledWalletTools.has('get_chain_info')).toBe(true);
-			expect(disabledWalletTools.has('get_balance')).toBe(true);
-
-			// Restore wallet enabled for other tests
-			(isWalletEnabled as jest.Mock).mockReturnValue(true);
+			expect([...disabledWalletTools.keys()].sort()).toEqual(
+				[
+					'check_nft_ownership',
+					'estimate_gas',
+					'get_balance',
+					'get_block_by_number',
+					'get_chain_info',
+					'get_erc1155_balance',
+					'get_erc1155_token_uri',
+					'get_erc20_balance',
+					'get_latest_block',
+					'get_nft_balance',
+					'get_nft_info',
+					'get_supported_networks',
+					'get_token_balance',
+					'get_token_balance_erc20',
+					'get_token_info',
+					'get_transaction',
+					'get_transaction_receipt',
+					'is_contract',
+					'read_contract'
+				].sort()
+			);
 		});
 
-		// Verify all expected tools are registered
-		test('should register all expected tools', () => {
-			// Log the registered tools for debugging
-			console.log('Registered tools:', Array.from(registeredTools.keys()));
+		test('registers the exact wallet-enabled surface', () => {
+			expect([...registeredTools.keys()].sort()).toEqual(
+				[
+					'approve_token_spending',
+					'check_nft_ownership',
+					'deploy_contract',
+					'estimate_gas',
+					'get_address_from_private_key',
+					'get_balance',
+					'get_block_by_number',
+					'get_chain_info',
+					'get_erc1155_balance',
+					'get_erc1155_token_uri',
+					'get_erc20_balance',
+					'get_latest_block',
+					'get_nft_balance',
+					'get_nft_info',
+					'get_supported_networks',
+					'get_token_balance',
+					'get_token_balance_erc20',
+					'get_token_info',
+					'get_transaction',
+					'get_transaction_receipt',
+					'is_contract',
+					'read_contract',
+					'transfer_erc1155',
+					'transfer_erc20',
+					'transfer_nft',
+					'transfer_sei',
+					'transfer_token',
+					'write_contract'
+				].sort()
+			);
+		});
 
-			// Verify network information tools
-			expect(registeredTools.has('get_chain_info')).toBe(true);
-			expect(registeredTools.has('get_supported_networks')).toBe(true);
+		test('advertises and normalizes only supported network selectors', () => {
+			const network = checkToolExists('get_balance').schema.network as {
+				safeParse(value: unknown): { success: boolean; data?: string };
+			};
 
-			// Verify block tools
-			expect(registeredTools.has('get_block_by_number')).toBe(true);
-			expect(registeredTools.has('get_latest_block')).toBe(true);
-
-			// Verify balance tools
-			expect(registeredTools.has('get_balance')).toBe(true);
-			expect(registeredTools.has('get_token_balance')).toBe(true);
-			expect(registeredTools.has('get_nft_balance')).toBe(true);
-			expect(registeredTools.has('get_erc1155_balance')).toBe(true);
-
-			// Verify wallet tools
-			expect(registeredTools.has('get_address_from_private_key')).toBe(true);
-
-			// Verify transaction tools
-			expect(registeredTools.has('get_transaction')).toBe(true);
-			expect(registeredTools.has('get_transaction_receipt')).toBe(true);
-
-			// Verify transfer tools
-			expect(registeredTools.has('transfer_sei')).toBe(true);
-			expect(registeredTools.has('transfer_token')).toBe(true);
-			expect(registeredTools.has('transfer_nft')).toBe(true);
-
-			// Verify token information tools
-			expect(registeredTools.has('get_token_info')).toBe(true);
-			expect(registeredTools.has('get_nft_info')).toBe(true);
-
-			// Verify contract interaction tools
-			expect(registeredTools.has('read_contract')).toBe(true);
-			expect(registeredTools.has('write_contract')).toBe(true);
-			expect(registeredTools.has('deploy_contract')).toBe(true);
+			expect(['sei', '1329', '0x531'].map((value) => network.safeParse(value).data)).toEqual(['sei', 'sei', 'sei']);
+			expect(['sei-testnet', '1328', '0x530'].map((value) => network.safeParse(value).data)).toEqual(['sei-testnet', 'sei-testnet', 'sei-testnet']);
+			expect(network.safeParse('unknown-network').success).toBe(false);
 		});
 
 		// Group 4: Transaction Tools
@@ -1958,7 +1998,7 @@ describe('EVM Tools', () => {
 				const response = await tool.handler(transferParams);
 
 				expect(response).toHaveProperty('isError', true);
-				expect(response.content[0].text).toContain('Error transferring tokens: Unsupported token type');
+				expect(response.content[0].text).toContain('Error transferring tokens: Sensitive error details redacted.');
 			});
 
 			test('transfer_token - success path with default network', async () => {

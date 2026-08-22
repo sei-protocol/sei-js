@@ -1,5 +1,5 @@
 import { type Address, createPublicClient, http, type PublicClient, type WalletClient } from 'viem';
-import { DEFAULT_NETWORK, getChain, getRpcUrl } from '../chains.js';
+import { DEFAULT_NETWORK, getChain, getRpcUrl, type NetworkIdentifier, normalizeNetwork } from '../chains.js';
 import { getWalletProvider } from '../wallet/index.js';
 
 // Cache for clients to avoid recreating them for each request
@@ -12,22 +12,23 @@ export function resetPublicClientCache(): void {
 /**
  * Get a public client for a specific network
  */
-export function getPublicClient(network = DEFAULT_NETWORK): PublicClient {
-	const cacheKey = String(network);
+export function getPublicClient(network: NetworkIdentifier = DEFAULT_NETWORK): PublicClient {
+	const normalizedNetwork = normalizeNetwork(network);
+	const cacheKey = normalizedNetwork;
 
 	// Return cached client if available
 	if (clientCache.has(cacheKey)) {
 		const cachedClient = clientCache.get(cacheKey);
 		// This should never happen as we just checked with has(), but better to be safe
 		if (!cachedClient) {
-			throw new Error(`Client cache inconsistency for network ${network}`);
+			throw new Error(`Client cache inconsistency for network ${normalizedNetwork}`);
 		}
 		return cachedClient;
 	}
 
 	// Create a new client
-	const chain = getChain(network);
-	const rpcUrl = getRpcUrl(network);
+	const chain = getChain(normalizedNetwork);
+	const rpcUrl = getRpcUrl(normalizedNetwork);
 
 	const client = createPublicClient({
 		chain,

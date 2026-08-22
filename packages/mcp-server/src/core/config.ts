@@ -1,6 +1,9 @@
 import dotenv from 'dotenv';
 import type { Hex } from 'viem';
 import { z } from 'zod';
+import { formatPrivateKey, isValidPrivateKey } from './private-key.js';
+
+export { formatPrivateKey, isValidPrivateKey } from './private-key.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -15,14 +18,6 @@ const envSchema = z.object({
 	WALLET_API_KEY: z.string().optional() // Used for wallet providers
 });
 
-// Format private key with 0x prefix if it exists
-export const formatPrivateKey = (key?: string): string | undefined => {
-	if (!key) return undefined;
-
-	// Ensure the private key has 0x prefix
-	return key.startsWith('0x') ? key : `0x${key}`;
-};
-
 export interface AppConfig {
 	privateKey: string | undefined;
 	walletMode: WalletMode;
@@ -30,13 +25,17 @@ export interface AppConfig {
 }
 
 export const loadConfig = (environment: Record<string, unknown> = process.env): AppConfig => {
-	const env = envSchema.safeParse(environment);
+	const env = envSchema.parse(environment);
+	const privateKey = formatPrivateKey(env.PRIVATE_KEY);
 
-	return {
-		privateKey: env.success ? formatPrivateKey(env.data.PRIVATE_KEY) : undefined,
-		walletMode: (env.success ? env.data.WALLET_MODE : 'disabled') as WalletMode,
-		walletApiKey: env.success ? env.data.WALLET_API_KEY : undefined
-	};
+	if (env.WALLET_MODE === 'private-key' && !env.PRIVATE_KEY) {
+		throw new Error('PRIVATE_KEY is required when WALLET_MODE=private-key.');
+	}
+	if (env.WALLET_MODE === 'private-key' && !isValidPrivateKey(env.PRIVATE_KEY)) {
+		throw new Error('PRIVATE_KEY must be a valid 32-byte secp256k1 private key.');
+	}
+
+	return { privateKey, walletMode: env.WALLET_MODE, walletApiKey: env.WALLET_API_KEY };
 };
 
 // Export validated environment variables with formatted private key

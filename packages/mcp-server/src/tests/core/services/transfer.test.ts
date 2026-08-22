@@ -225,6 +225,13 @@ describe('Transfer Service', () => {
 					symbol: mockSymbol
 				}
 			});
+			expect(mockWalletClient.writeContract).toHaveBeenCalledWith(
+				expect.objectContaining({
+					functionName: 'safeTransferFrom',
+					args: [mockWalletClient.account.address, '0x0987654321098765432109876543210987654321', 1n],
+					abi: expect.arrayContaining([expect.objectContaining({ name: 'safeTransferFrom' })])
+				})
+			);
 		});
 
 		test('should throw error when wallet provider fails', async () => {

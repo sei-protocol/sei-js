@@ -1,6 +1,7 @@
 import { type McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Address, Hash } from 'viem';
-import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
+import { DEFAULT_NETWORK, getSupportedNetworks, normalizeNetwork } from './chains.js';
+import { sanitizeError } from './errors.js';
 import * as services from './services/index.js';
 
 export function parseBlockNumber(blockNumber: string): number {
@@ -22,10 +23,9 @@ export function registerEVMResources(server: McpServer) {
 	// Get EVM info for a specific network
 	server.resource('chain_info_by_network', new ResourceTemplate('evm://{network}/chain', { list: undefined }), async (uri, params) => {
 		try {
-			const network = params.network as string;
+			const network = normalizeNetwork(params.network as string);
 			const chainId = await services.getChainId(network);
 			const blockNumber = await services.getBlockNumber(network);
-			const rpcUrl = getRpcUrl(network);
 
 			return {
 				contents: [
@@ -35,8 +35,7 @@ export function registerEVMResources(server: McpServer) {
 							{
 								network,
 								chainId,
-								blockNumber: blockNumber.toString(),
-								rpcUrl
+								blockNumber: blockNumber.toString()
 							},
 							null,
 							2
@@ -49,7 +48,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching chain info: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching chain info: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -62,7 +61,6 @@ export function registerEVMResources(server: McpServer) {
 			const network = DEFAULT_NETWORK;
 			const chainId = await services.getChainId(network);
 			const blockNumber = await services.getBlockNumber(network);
-			const rpcUrl = getRpcUrl(network);
 
 			return {
 				contents: [
@@ -72,8 +70,7 @@ export function registerEVMResources(server: McpServer) {
 							{
 								network,
 								chainId,
-								blockNumber: blockNumber.toString(),
-								rpcUrl
+								blockNumber: blockNumber.toString()
 							},
 							null,
 							2
@@ -86,7 +83,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching chain info: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching chain info: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -96,7 +93,7 @@ export function registerEVMResources(server: McpServer) {
 	// Get block by number for a specific network
 	server.resource('evm_block_by_number', new ResourceTemplate('evm://{network}/block/{blockNumber}', { list: undefined }), async (uri, params) => {
 		try {
-			const network = params.network as string;
+			const network = normalizeNetwork(params.network as string);
 			const blockNumber = params.blockNumber as string;
 			const block = await services.getBlockByNumber(parseBlockNumber(blockNumber), network);
 
@@ -113,7 +110,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching block: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching block: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -123,7 +120,7 @@ export function registerEVMResources(server: McpServer) {
 	// Get block by hash for a specific network
 	server.resource('block_by_hash', new ResourceTemplate('evm://{network}/block/hash/{blockHash}', { list: undefined }), async (uri, params) => {
 		try {
-			const network = params.network as string;
+			const network = normalizeNetwork(params.network as string);
 			const blockHash = params.blockHash as string;
 			const block = await services.getBlockByHash(blockHash as Hash, network);
 
@@ -140,7 +137,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching block with hash: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching block with hash: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -150,7 +147,7 @@ export function registerEVMResources(server: McpServer) {
 	// Get latest block for a specific network
 	server.resource('evm_latest_block', new ResourceTemplate('evm://{network}/block/latest', { list: undefined }), async (uri, params) => {
 		try {
-			const network = params.network as string;
+			const network = normalizeNetwork(params.network as string);
 			const block = await services.getLatestBlock(network);
 
 			return {
@@ -166,7 +163,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching latest block: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching latest block: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -192,7 +189,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching latest block: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching latest block: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -202,7 +199,7 @@ export function registerEVMResources(server: McpServer) {
 	// Get native token balance for a specific network
 	server.resource('evm_address_native_balance', new ResourceTemplate('evm://{network}/address/{address}/balance', { list: undefined }), async (uri, params) => {
 		try {
-			const network = params.network as string;
+			const network = normalizeNetwork(params.network as string);
 			const address = params.address as string;
 			const balance = await services.getBalance(address as Address, network);
 
@@ -230,7 +227,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching Sei balance: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching Sei balance: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -268,7 +265,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching Sei balance: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching Sei balance: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -281,7 +278,7 @@ export function registerEVMResources(server: McpServer) {
 		new ResourceTemplate('evm://{network}/address/{address}/token/{tokenAddress}/balance', { list: undefined }),
 		async (uri, params) => {
 			try {
-				const network = params.network as string;
+				const network = normalizeNetwork(params.network as string);
 				const address = params.address as string;
 				const tokenAddress = params.tokenAddress as string;
 
@@ -313,7 +310,7 @@ export function registerEVMResources(server: McpServer) {
 					contents: [
 						{
 							uri: uri.href,
-							text: `Error fetching ERC20 balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC20 balance: ${sanitizeError(error)}`
 						}
 					]
 				};
@@ -359,7 +356,7 @@ export function registerEVMResources(server: McpServer) {
 					contents: [
 						{
 							uri: uri.href,
-							text: `Error fetching ERC20 balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC20 balance: ${sanitizeError(error)}`
 						}
 					]
 				};
@@ -370,7 +367,7 @@ export function registerEVMResources(server: McpServer) {
 	// Get transaction by hash for a specific network
 	server.resource('evm_transaction_details', new ResourceTemplate('evm://{network}/tx/{txHash}', { list: undefined }), async (uri, params) => {
 		try {
-			const network = params.network as string;
+			const network = normalizeNetwork(params.network as string);
 			const txHash = params.txHash as string;
 			const tx = await services.getTransaction(txHash as Hash, network);
 
@@ -387,7 +384,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching transaction: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching transaction: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -414,7 +411,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching transaction: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching transaction: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -445,7 +442,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching supported networks: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching supported networks: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -455,7 +452,7 @@ export function registerEVMResources(server: McpServer) {
 	// Add ERC20 token info resource
 	server.resource('erc20_token_details', new ResourceTemplate('evm://{network}/token/{tokenAddress}', { list: undefined }), async (uri, params) => {
 		try {
-			const network = params.network as string;
+			const network = normalizeNetwork(params.network as string);
 			const tokenAddress = params.tokenAddress as Address;
 
 			const tokenInfo = await services.getERC20TokenInfo(tokenAddress, network);
@@ -481,7 +478,7 @@ export function registerEVMResources(server: McpServer) {
 				contents: [
 					{
 						uri: uri.href,
-						text: `Error fetching ERC20 token info: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching ERC20 token info: ${sanitizeError(error)}`
 					}
 				]
 			};
@@ -494,7 +491,7 @@ export function registerEVMResources(server: McpServer) {
 		new ResourceTemplate('evm://{network}/token/{tokenAddress}/balanceOf/{address}', { list: undefined }),
 		async (uri, params) => {
 			try {
-				const network = params.network as string;
+				const network = normalizeNetwork(params.network as string);
 				const tokenAddress = params.tokenAddress as Address;
 				const address = params.address as Address;
 
@@ -525,7 +522,7 @@ export function registerEVMResources(server: McpServer) {
 					contents: [
 						{
 							uri: uri.href,
-							text: `Error fetching ERC20 token balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC20 token balance: ${sanitizeError(error)}`
 						}
 					]
 				};
@@ -539,7 +536,7 @@ export function registerEVMResources(server: McpServer) {
 		new ResourceTemplate('evm://{network}/nft/{tokenAddress}/{tokenId}', { list: undefined }),
 		async (uri, params) => {
 			try {
-				const network = params.network as string;
+				const network = normalizeNetwork(params.network as string);
 				const tokenAddress = params.tokenAddress as Address;
 				const tokenId = BigInt(params.tokenId as string);
 
@@ -550,7 +547,7 @@ export function registerEVMResources(server: McpServer) {
 				try {
 					owner = await services.getERC721Owner(tokenAddress, tokenId, network);
 				} catch (error) {
-					ownerError = error instanceof Error ? error.message : String(error);
+					ownerError = sanitizeError(error);
 				}
 
 				return {
@@ -577,7 +574,7 @@ export function registerEVMResources(server: McpServer) {
 					contents: [
 						{
 							uri: uri.href,
-							text: `Error fetching NFT info: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching NFT info: ${sanitizeError(error)}`
 						}
 					]
 				};
@@ -591,7 +588,7 @@ export function registerEVMResources(server: McpServer) {
 		new ResourceTemplate('evm://{network}/nft/{tokenAddress}/{tokenId}/isOwnedBy/{address}', { list: undefined }),
 		async (uri, params) => {
 			try {
-				const network = params.network as string;
+				const network = normalizeNetwork(params.network as string);
 				const tokenAddress = params.tokenAddress as Address;
 				const tokenId = BigInt(params.tokenId as string);
 				const address = params.address as Address;
@@ -621,7 +618,7 @@ export function registerEVMResources(server: McpServer) {
 					contents: [
 						{
 							uri: uri.href,
-							text: `Error checking NFT ownership: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error checking NFT ownership: ${sanitizeError(error)}`
 						}
 					]
 				};
@@ -635,7 +632,7 @@ export function registerEVMResources(server: McpServer) {
 		new ResourceTemplate('evm://{network}/erc1155/{tokenAddress}/{tokenId}/uri', { list: undefined }),
 		async (uri, params) => {
 			try {
-				const network = params.network as string;
+				const network = normalizeNetwork(params.network as string);
 				const tokenAddress = params.tokenAddress as Address;
 				const tokenId = BigInt(params.tokenId as string);
 
@@ -663,7 +660,7 @@ export function registerEVMResources(server: McpServer) {
 					contents: [
 						{
 							uri: uri.href,
-							text: `Error fetching ERC1155 token URI: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC1155 token URI: ${sanitizeError(error)}`
 						}
 					]
 				};
@@ -677,7 +674,7 @@ export function registerEVMResources(server: McpServer) {
 		new ResourceTemplate('evm://{network}/erc1155/{tokenAddress}/{tokenId}/balanceOf/{address}', { list: undefined }),
 		async (uri, params) => {
 			try {
-				const network = params.network as string;
+				const network = normalizeNetwork(params.network as string);
 				const tokenAddress = params.tokenAddress as Address;
 				const tokenId = BigInt(params.tokenId as string);
 				const address = params.address as Address;
@@ -707,7 +704,7 @@ export function registerEVMResources(server: McpServer) {
 					contents: [
 						{
 							uri: uri.href,
-							text: `Error fetching ERC1155 token balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC1155 token balance: ${sanitizeError(error)}`
 						}
 					]
 				};

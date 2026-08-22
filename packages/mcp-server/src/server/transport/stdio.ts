@@ -13,6 +13,7 @@ export class StdioTransport implements McpTransport {
 	}
 
 	async stop(): Promise<void> {
+		await this.transport?.close?.();
 		this.transport = undefined;
 	}
 }

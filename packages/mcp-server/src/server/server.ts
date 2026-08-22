@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { getSupportedNetworks } from '../core/chains.js';
+import { sanitizeError } from '../core/errors.js';
 import { registerEVMPrompts } from '../core/prompts.js';
 import { registerEVMResources } from '../core/resources.js';
 import { registerEVMTools } from '../core/tools.js';
@@ -23,7 +24,7 @@ export const getServer = async () => {
 
 		return server;
 	} catch (error) {
-		console.error('Failed to initialize server:', error);
-		process.exit(1);
+		console.error('Failed to initialize server:', sanitizeError(error));
+		throw error;
 	}
 };

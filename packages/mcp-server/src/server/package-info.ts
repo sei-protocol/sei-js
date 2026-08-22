@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sanitizeError } from '../core/errors.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -31,7 +32,7 @@ export const getPackageInfo = (): PackageInfo => {
 
 		return cachedPackageInfo;
 	} catch (error) {
-		console.error('Failed to read package.json:', error);
+		console.error('Failed to read package.json:', sanitizeError(error));
 		// Fallback values
 		return {
 			name: 'sei-mcp-server',

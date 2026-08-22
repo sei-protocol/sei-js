@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 import { config as dotenvConfig } from 'dotenv';
+import { isValidPrivateKey } from '../core/private-key.js';
 import { getPackageInfo } from './package-info.js';
 import type { TransportConfig, TransportMode } from './transport/types.js';
 
@@ -60,21 +61,30 @@ const validateConfig = (config: ReturnType<typeof loadConfig>) => {
 	// Validate wallet mode
 	const validWalletModes = ['private-key', 'disabled'];
 	if (!validWalletModes.includes(config.wallet.mode)) {
-		console.error(`Error: Invalid wallet mode '${config.wallet.mode}'. Valid modes are: ${validWalletModes.join(', ')}`);
-		process.exit(1);
+		throw new Error(`Invalid wallet mode '${config.wallet.mode}'. Valid modes are: ${validWalletModes.join(', ')}`);
 	}
 
 	// Validate transport mode
 	const validTransportModes = ['stdio', 'streamable-http', 'http-sse'];
 	if (!validTransportModes.includes(config.server.transport)) {
-		console.error(`Error: Invalid transport mode '${config.server.transport}'. Valid modes are: ${validTransportModes.join(', ')}`);
-		process.exit(1);
+		throw new Error(`Invalid transport mode '${config.server.transport}'. Valid modes are: ${validTransportModes.join(', ')}`);
 	}
 
 	// Validate port
 	if (config.server.port < 1 || config.server.port > 65535) {
-		console.error(`Error: Invalid port '${config.server.port}'. Port must be a number between 1 and 65535.`);
-		process.exit(1);
+		throw new Error(`Invalid port '${config.server.port}'. Port must be a number between 1 and 65535.`);
+	}
+
+	if (config.server.host.trim().length === 0) {
+		throw new Error('SERVER_HOST must not be empty.');
+	}
+
+	if (config.wallet.mode === 'private-key' && !config.wallet.privateKey) {
+		throw new Error('PRIVATE_KEY is required when WALLET_MODE=private-key.');
+	}
+
+	if (config.wallet.mode === 'private-key' && !isValidPrivateKey(config.wallet.privateKey)) {
+		throw new Error('PRIVATE_KEY must be a valid 32-byte secp256k1 private key.');
 	}
 };
 
@@ -105,14 +115,20 @@ Environment Variables:
   SERVER_PORT         Server port for HTTP transports (default: 8080)
   SERVER_HOST         Server host (default: localhost)
   SERVER_PATH         Server path for HTTP transports (default: /mcp)
-  PRIVATE_KEY         Private key for wallet operations (optional)
+  PRIVATE_KEY         Required valid 32-byte key when WALLET_MODE=private-key
   WALLET_MODE         Wallet mode: private-key, disabled (default: disabled)
   MAINNET_RPC_URL     Custom RPC URL for Sei mainnet (optional)
   TESTNET_RPC_URL     Custom RPC URL for Sei testnet (optional)
 
+Supported Network Selectors:
+  Mainnet: sei, 1329, 0x531
+  Testnet: sei-testnet, 1328, 0x530
+  Unknown selectors are rejected and never fall back to mainnet.
+
 Security Note:
   Wallet mode is only supported with stdio transport. HTTP transports block
-  wallet mode to prevent cross-origin attacks from malicious websites.
+  wallet mode to prevent cross-origin attacks from malicious websites. HTTP
+  transports do not authenticate callers; bind locally or use a secure proxy.
 `
 		);
 

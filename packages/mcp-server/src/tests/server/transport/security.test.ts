@@ -114,50 +114,30 @@ describe('Security Module', () => {
 		});
 
 		describe('unsafe configurations', () => {
-			it('should exit with code 1 for streamable-http with wallet enabled', () => {
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
-				expect(consoleErrorSpy).toHaveBeenCalled();
+			it('should reject streamable-http with wallet enabled', () => {
+				expect(() => validateSecurityConfig('streamable-http', 'private-key')).toThrow('Wallet mode cannot be used with HTTP transports');
+				expect(processExitSpy).not.toHaveBeenCalled();
 			});
 
-			it('should exit with code 1 for http-sse with wallet enabled', () => {
-				expect(() => {
-					validateSecurityConfig('http-sse', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
-				expect(consoleErrorSpy).toHaveBeenCalled();
+			it('should reject http-sse with wallet enabled', () => {
+				expect(() => validateSecurityConfig('http-sse', 'private-key')).toThrow('Wallet mode cannot be used with HTTP transports');
+				expect(processExitSpy).not.toHaveBeenCalled();
 			});
 
-			it('should log security error message for unsafe config', () => {
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'private-key');
-				}).toThrow();
-
-				// Verify error messages were logged
-				expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('SECURITY ERROR'));
-				expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Wallet mode cannot be used with HTTP transports'));
+			it('should not terminate the process directly for unsafe config', () => {
+				expect(() => validateSecurityConfig('streamable-http', 'private-key')).toThrow();
+				expect(consoleErrorSpy).not.toHaveBeenCalled();
+				expect(processExitSpy).not.toHaveBeenCalled();
 			});
 		});
 
 		describe('wallet mode variations', () => {
 			it('should block private-key wallet mode on streamable-http', () => {
-				expect(() => {
-					validateSecurityConfig('streamable-http', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
+				expect(() => validateSecurityConfig('streamable-http', 'private-key')).toThrow('Wallet mode cannot be used with HTTP transports');
 			});
 
 			it('should block private-key wallet mode on http-sse', () => {
-				expect(() => {
-					validateSecurityConfig('http-sse', 'private-key');
-				}).toThrow('process.exit called with code 1');
-
-				expect(processExitSpy).toHaveBeenCalledWith(1);
+				expect(() => validateSecurityConfig('http-sse', 'private-key')).toThrow('Wallet mode cannot be used with HTTP transports');
 			});
 
 			it('should allow disabled wallet mode on all transports', () => {

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
-import { config, formatPrivateKey, getPrivateKeyAsHex, getWalletMode, isWalletEnabled, loadConfig } from '../../core/config.js';
+import { config, formatPrivateKey, getPrivateKeyAsHex, getWalletMode, isValidPrivateKey, isWalletEnabled, loadConfig } from '../../core/config.js';
 
 describe('Config Module - Actual Implementation', () => {
 	const originalConfig = { ...config };
@@ -44,10 +44,27 @@ describe('Config Module - Actual Implementation', () => {
 			expect(freshConfig.privateKey).toBe('0xabcdef1234567890');
 		});
 
-		test('should fall back to a disabled wallet when env parsing fails', () => {
-			const freshConfig = loadConfig({ PRIVATE_KEY: 123, WALLET_MODE: 'private-key' });
-			expect(freshConfig.privateKey).toBeUndefined();
-			expect(freshConfig.walletMode).toBe('disabled');
+		test('rejects invalid environment values instead of silently disabling the wallet', () => {
+			expect(() => loadConfig({ PRIVATE_KEY: 123, WALLET_MODE: 'private-key' })).toThrow();
+		});
+
+		test('requires a private key in private-key wallet mode', () => {
+			expect(() => loadConfig({ WALLET_MODE: 'private-key' })).toThrow('PRIVATE_KEY is required');
+		});
+
+		test('rejects malformed and zero private keys in private-key wallet mode', () => {
+			expect(() => loadConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: 'not-a-key' })).toThrow('valid 32-byte secp256k1 private key');
+			expect(() => loadConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '0'.repeat(64) })).toThrow('valid 32-byte secp256k1 private key');
+		});
+
+		test('accepts a valid private key in private-key wallet mode', () => {
+			const privateKey = '1'.repeat(64);
+			expect(isValidPrivateKey(privateKey)).toBe(true);
+			expect(loadConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: privateKey })).toEqual({
+				privateKey: `0x${privateKey}`,
+				walletMode: 'private-key',
+				walletApiKey: undefined
+			});
 		});
 	});
 
