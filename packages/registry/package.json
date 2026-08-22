@@ -14,7 +14,11 @@
 		"build": "rm -rf dist && bun run build:types && bun run build:esm",
 		"build:types": "tsc --project ./tsconfig.json && printf \"export * from './src/index.js';\\n\" > dist/index.d.ts && bun ../../scripts/fix-dts-extensions.ts dist",
 		"build:esm": "bun ../../scripts/build-registry.ts",
-		"test": "bun test --isolate src"
+		"check:artifact": "bun ../../scripts/check-registry-artifact.ts",
+		"check:images": "bun ../../scripts/check-registry-images.ts",
+		"check:submodules": "bun ../../scripts/check-registry-submodules.ts",
+		"test": "bun run check:submodules && bun test --isolate src",
+		"verify:release-data": "bun run check:submodules && bun run build && bun run test && bun run check:artifact && bun run check:images"
 	},
 	"exports": {
 		".": {
