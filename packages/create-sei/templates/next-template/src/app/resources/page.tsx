@@ -96,7 +96,7 @@ export default function ResourcesPage() {
 										</Stack>
 									</Paper>
 
-									<Card withBorder radius="md" p="md" component="a" href="https://docs.sei.io/ai/mcp-server" target="_blank" rel="noreferrer">
+									<Card withBorder radius="md" p="md" component="a" href="https://github.com/sei-protocol/sei-js/tree/main/packages/mcp-server#readme" target="_blank" rel="noreferrer">
 										<Group gap="sm">
 											<ThemeIcon size={32} radius="md" color="orange" variant="light">
 												<IconBook size={16} />

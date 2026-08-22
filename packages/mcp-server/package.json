@@ -14,8 +14,8 @@
 	"scripts": {
 		"build": "rm -rf dist && tsc --project ./tsconfig.json",
 		"start": "node dist/index.js",
-		"start:http": "node dist/index.js --streamable-http",
-		"start:http-sse": "node dist/index.js --http-sse",
+		"start:http": "SERVER_TRANSPORT=streamable-http node dist/index.js",
+		"start:http-sse": "SERVER_TRANSPORT=http-sse node dist/index.js",
 		"inspect": "npx -y @modelcontextprotocol/inspector",
 		"dev": "bun --watch src/index.ts",
 		"test": "bun test --isolate src"
