@@ -39,10 +39,9 @@ function isValidProjectName(projectName: unknown): projectName is string {
 	}
 
 	if (
-		projectName !== projectName.toLowerCase() ||
 		projectName === 'node_modules' ||
 		projectName === 'favicon.ico' ||
-		/[. ]$/.test(projectName) ||
+		projectName.endsWith('.') ||
 		windowsReservedNameRe.test(projectName) ||
 		!validNpmProjectNameRe.test(projectName)
 	) {
@@ -94,9 +93,14 @@ function isDirectChildName(name: string): boolean {
 	return name.length > 0 && name !== '.' && name !== '..' && !name.includes('/') && !name.includes('\\') && !name.includes('\0');
 }
 
-async function resolveExtension(extension: string | undefined): Promise<{ name: string; source: string } | undefined> {
+interface ExtensionResolution {
+	extension?: { name: string; source: string };
+	warning?: string;
+}
+
+async function resolveExtension(extension: string | undefined): Promise<ExtensionResolution> {
 	if (!extension) {
-		return undefined;
+		return {};
 	}
 
 	if (!isDirectChildName(extension)) {
@@ -114,13 +118,14 @@ async function resolveExtension(extension: string | undefined): Promise<{ name: 
 	}
 
 	if (!extensionDirs.includes(extension)) {
-		console.warn(`Warning: Extension '${extension}' not found. Continuing with base template.`);
-		return undefined;
+		return { warning: `Warning: Extension '${extension}' not found. Continuing with base template.` };
 	}
 
 	return {
-		name: extension,
-		source: path.join(extensionsPath, extension)
+		extension: {
+			name: extension,
+			source: path.join(extensionsPath, extension)
+		}
 	};
 }
 
@@ -149,9 +154,13 @@ async function runWizard(options: WizardOptions): Promise<void> {
 		return;
 	}
 
-	const extension = await resolveExtension(options.extension);
+	const extensionResolution = await resolveExtension(options.extension);
 
 	printWelcomeMessage();
+	if (extensionResolution.warning) {
+		console.warn(extensionResolution.warning);
+	}
+	const extension = extensionResolution.extension;
 
 	let dAppName = '';
 	if (options.name) {

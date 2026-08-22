@@ -339,7 +339,7 @@ function Examples() {
 							</Paper>
 
 							{hash && (
-								<Alert color="dark" variant="light" radius="md" py={4}>
+								<Alert color="gray" variant="light" radius="md" py={4}>
 									<Stack gap={4}>
 										<Text size="xs" fw={600}>
 											Transaction Hash

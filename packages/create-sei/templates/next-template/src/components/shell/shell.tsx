@@ -25,7 +25,7 @@ export default function Shell({ children }: PropsWithChildren) {
 								component={Link}
 								href="/resources"
 								variant="light"
-								c="gray"
+								color="gray"
 								size="lg"
 								radius="md"
 								aria-label="View Resources"
@@ -43,7 +43,7 @@ export default function Shell({ children }: PropsWithChildren) {
 								component={Link}
 								href="/development"
 								variant="light"
-								c="gray"
+								color="gray"
 								size="lg"
 								radius="md"
 								aria-label="View Development Guide"
@@ -60,7 +60,7 @@ export default function Shell({ children }: PropsWithChildren) {
 							{isConnected && address ? (
 								<ActionIcon
 									variant="light"
-									c="red"
+									color="red"
 									size="lg"
 									radius="md"
 									onClick={() => disconnect()}

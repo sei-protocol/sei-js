@@ -206,7 +206,7 @@ const customSeiChain = defineChain({
 									href="https://wagmi.sh/react/getting-started"
 									target="_blank"
 									variant="light"
-									c="dark"
+									color="gray"
 									size="sm"
 									radius="md"
 									leftSection={<IconExternalLink size={14} />}
@@ -218,7 +218,7 @@ const customSeiChain = defineChain({
 									href="https://viem.sh/"
 									target="_blank"
 									variant="light"
-									c="dark"
+									color="gray"
 									size="sm"
 									radius="md"
 									leftSection={<IconExternalLink size={14} />}
@@ -242,7 +242,7 @@ const customSeiChain = defineChain({
 									href="https://www.rainbowkit.com/docs/introduction"
 									target="_blank"
 									variant="light"
-									c="dark"
+									color="gray"
 									size="sm"
 									radius="md"
 									leftSection={<IconExternalLink size={14} />}

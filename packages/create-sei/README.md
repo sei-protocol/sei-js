@@ -18,3 +18,9 @@
 ```bash
 npx @sei-js/create-sei app -n my-sei-app
 ```
+
+## Release verification
+
+`bun run test:create-sei-release -- --precompiles-source local` builds a candidate `@sei-js/precompiles` tarball at the version computed by Changesets and validates both generated variants. Pull requests run this mode in the dedicated create-sei smoke workflow.
+
+After `@sei-js/precompiles` has been staged to npm, dispatch the same workflow in `registry` mode. Registry mode leaves the generated manifest untouched, verifies npm resolves the exact computed release version, and reports audit findings without blocking verification of install, check, build, and production runtime behavior.

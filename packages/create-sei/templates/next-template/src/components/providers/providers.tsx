@@ -7,6 +7,7 @@ import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode, useMemo } from "react";
 import { createConfig, http, WagmiProvider } from "wagmi";
+import { SEI_NEUTRAL_RAMP } from "@/theme";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import { sei, seiTestnet } from "viem/chains";
@@ -15,7 +16,7 @@ const queryClient = new QueryClient();
 const theme = createTheme({
 	autoContrast: true,
 	colors: {
-		gray: ["#f5f5f7", "#f5f5f7", "#cccccc", "#999999", "#666666", "#666666", "#333333", "#333333", "#131313", "#000000"],
+		gray: SEI_NEUTRAL_RAMP,
 		seiGold: ["#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22"],
 		seiMaroon: ["#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014"],
 	},

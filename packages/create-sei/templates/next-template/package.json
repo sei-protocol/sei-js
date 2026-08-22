@@ -45,7 +45,6 @@
 	"overrides": {
 		"@metamask/sdk": "0.33.1",
 		"@metamask/sdk-communication-layer": "0.33.1",
-		"@vercel/blob": "2.8.0",
 		"postcss": "8.5.26",
 		"sharp": "0.35.3",
 		"use-sync-external-store": "1.6.0",

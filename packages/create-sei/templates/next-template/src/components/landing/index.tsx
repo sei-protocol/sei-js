@@ -5,7 +5,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { IconBook, IconCode, IconRocket } from "@tabler/icons-react";
 import Link from "next/link";
 
-const technologyLabels = ["Next.js 15.5", "Mantine UI", "Tailwind CSS", "Biome", "RainbowKit", "Wagmi + Viem", "Vercel"];
+const technologyLabels = ["Next.js 15.5", "Mantine UI", "Tailwind CSS", "Biome", "RainbowKit", "Wagmi + Viem"];
 
 export default function Landing() {
 	return (
@@ -17,8 +17,8 @@ export default function Landing() {
 						Welcome to Your Sei dApp
 					</Title>
 					<Text size="lg" c="dimmed" maw={600}>
-						A production-ready starter template built with Next.js, Mantine UI, RainbowKit, Tailwind CSS, and Wagmi with easy deployment to Vercel. Everything
-						you need to build and run production-grade dApps on Sei.
+						A production-ready starter template built with Next.js, Mantine UI, RainbowKit, Tailwind CSS, and Wagmi. Everything you need to build and run
+						production-grade dApps on Sei.
 					</Text>
 
 					{/* Tech Stack Badges */}
