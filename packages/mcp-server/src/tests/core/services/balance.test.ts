@@ -179,7 +179,7 @@ describe('Balance Service', () => {
 			await expect(isNFTOwner('invalid', VALID_OWNER_ADDRESS, 1n)).rejects.toThrow('Invalid address');
 		});
 
-		test('should return false if there is an error', async () => {
+		test('should propagate owner lookup RPC errors', async () => {
 			// Import mocked modules
 			const { readContract } = await import('../../../core/services/contracts.js');
 			const { utils } = await import('../../../core/services/utils.js');
@@ -190,21 +190,10 @@ describe('Balance Service', () => {
 			});
 			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
 
-			// Mock console.error to avoid cluttering test output
-			const originalConsoleError = console.error;
-			console.error = () => {};
-
-			// Call the function
-			const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n);
-
-			// Verify results
-			expect(result).toBe(false);
-
-			// Restore console.error
-			console.error = originalConsoleError;
+			await expect(isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n)).rejects.toThrow('NFT does not exist');
 		});
 
-		test('should return false if there is a non-Error object thrown', async () => {
+		test('should propagate non-Error owner lookup failures', async () => {
 			// Import mocked modules
 			const { readContract } = await import('../../../core/services/contracts.js');
 			const { utils } = await import('../../../core/services/utils.js');
@@ -215,18 +204,7 @@ describe('Balance Service', () => {
 			});
 			(utils.validateAddress as jest.Mock).mockImplementation((address) => address as `0x${string}`);
 
-			// Mock console.error to avoid cluttering test output
-			const originalConsoleError = console.error;
-			console.error = () => {};
-
-			// Call the function
-			const result = await isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n);
-
-			// Verify results
-			expect(result).toBe(false);
-
-			// Restore console.error
-			console.error = originalConsoleError;
+			await expect(isNFTOwner(VALID_TOKEN_ADDRESS, VALID_OWNER_ADDRESS, 1n)).rejects.toBe('String error message');
 		});
 	});
 

@@ -1,564 +1,433 @@
-import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
-import type { Server } from 'node:http';
-import type { Request, Response } from 'express';
+import { afterEach, describe, expect, it, jest } from 'bun:test';
+import { createServer } from 'node:http';
+import { createConnection } from 'node:net';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+import type { Response } from 'express';
+import { HttpSseTransport } from '../../../server/transport/http-sse.js';
 
-// Mock dependencies
-jest.mock('express', () => {
-	const mockApp = {
-		use: jest.fn(),
-		options: jest.fn(),
-		get: jest.fn(),
-		post: jest.fn(),
-		listen: jest.fn()
-	};
-	const express = jest.fn(() => mockApp);
-	(express as any).json = jest.fn();
-	return { default: express };
-});
+const HOST = '127.0.0.1';
+const PATH = '/mcp';
 
-jest.mock('../../../server/transport/security.js', () => ({
-	createCorsMiddleware: jest.fn(() => 'cors-middleware'),
-	validateSecurityConfig: jest.fn()
-}));
+function textOf(result: Awaited<ReturnType<Client['callTool']>>): string {
+	if (!('content' in result)) throw new Error('Expected an immediate tool result');
+	const content = (result as { content: Array<{ type: string; text?: string }> }).content[0];
+	if (content?.type !== 'text') throw new Error('Expected a text tool result');
+	if (content.text === undefined) throw new Error('Expected text content');
+	return content.text;
+}
 
-jest.mock('@modelcontextprotocol/sdk/server/sse.js', () => ({
-	SSEServerTransport: jest.fn()
-}));
+async function waitFor(predicate: () => boolean): Promise<void> {
+	const deadline = Date.now() + 5_000;
+	while (!predicate()) {
+		if (Date.now() >= deadline) throw new Error('Timed out waiting for SSE cleanup');
+		await Bun.sleep(5);
+	}
+}
+
+async function withTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
+	let timer: ReturnType<typeof setTimeout> | undefined;
+	try {
+		return await Promise.race([
+			promise,
+			new Promise<never>((_resolve, reject) => {
+				timer = setTimeout(() => reject(new Error(`${label} timed out`)), 5_000);
+			})
+		]);
+	} finally {
+		if (timer) clearTimeout(timer);
+	}
+}
 
 describe('HttpSseTransport', () => {
-	let HttpSseTransport: any;
-	let mockExpress: jest.MockedFunction<any>;
-	let mockApp: any;
-	let mockServer: any;
-	let mockCreateCorsMiddleware: jest.MockedFunction<any>;
-	let mockValidateSecurityConfig: jest.MockedFunction<any>;
-	let mockSSEServerTransport: jest.MockedFunction<any>;
-	let mockTransport: any;
-	let mockMcpServer: any;
-	let consoleErrorSpy: jest.SpyInstance;
+	const clients: Client[] = [];
+	const transports: HttpSseTransport[] = [];
+	const bootstrapServers: McpServer[] = [];
+	let consoleErrorSpy: jest.SpiedFunction<typeof console.error>;
 
-	beforeEach(async () => {
-		jest.clearAllMocks();
+	afterEach(async () => {
+		await Promise.allSettled(clients.splice(0).map((client) => client.close()));
+		await Promise.allSettled(transports.splice(0).map((transport) => transport.stop()));
+		await Promise.allSettled(bootstrapServers.splice(0).map((server) => server.close()));
+		consoleErrorSpy?.mockRestore();
+	});
 
-		// Import mocked modules
-		const expressModule = await import('express');
-		const securityModule = await import('../../../server/transport/security.js');
-		const { SSEServerTransport } = await import('@modelcontextprotocol/sdk/server/sse.js');
-
-		mockExpress = (expressModule.default ?? expressModule) as unknown as jest.MockedFunction<any>;
-		mockCreateCorsMiddleware = securityModule.createCorsMiddleware as jest.MockedFunction<any>;
-		mockValidateSecurityConfig = securityModule.validateSecurityConfig as jest.MockedFunction<any>;
-		mockSSEServerTransport = SSEServerTransport as unknown as jest.MockedFunction<any>;
-
-		// Setup mock objects
-		mockApp = {
-			use: jest.fn(),
-			options: jest.fn(),
-			get: jest.fn(),
-			post: jest.fn(),
-			listen: jest.fn()
-		};
-
-		mockServer = {
-			on: jest.fn(),
-			close: jest.fn()
-		};
-
-		mockTransport = {
-			handleMessage: jest.fn(),
-			sessionId: 'mock-session-id'
-		};
-
-		mockMcpServer = {
-			connect: jest.fn()
-		};
-
-		// Configure mocks
-		mockExpress.mockReturnValue(mockApp);
-		(mockExpress as any).json = jest.fn().mockReturnValue('json-middleware');
-		mockCreateCorsMiddleware.mockReturnValue('cors-middleware');
-		mockSSEServerTransport.mockImplementation(() => mockTransport);
-
-		// Import the class after mocks are set up
-		const { HttpSseTransport: ImportedHttpSseTransport } = await import('../../../server/transport/http-sse.js');
-		HttpSseTransport = ImportedHttpSseTransport;
-
-		// Spy on console.error
+	it('terminates wallet-enabled HTTP before invoking the listener', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const processExit = jest.spyOn(process, 'exit').mockImplementation((code) => {
+			throw new Error(`process.exit called with code ${code}`);
+		});
+		const listenFactory = jest.fn();
+		const transport = new HttpSseTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key' }, { listenFactory });
+
+		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
+		expect(processExit).toHaveBeenCalledWith(1);
+		expect(listenFactory).not.toHaveBeenCalled();
+		processExit.mockRestore();
 	});
 
-	afterEach(() => {
-		consoleErrorSpy.mockRestore();
+	it('isolates two concurrent clients and closes every session on shutdown', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const sessionServerCloseCounts: number[] = [];
+		const sessionTransportCloseCounts: number[] = [];
+		let nextSession = 0;
+
+		const transport = new HttpSseTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => {
+					const sessionIndex = nextSession++;
+					sessionServerCloseCounts[sessionIndex] = 0;
+					const server = new McpServer({ name: `session-${sessionIndex}`, version: '1.0.0' });
+					server.tool('session_identity', 'Return the server session identity', {}, async () => ({
+						content: [{ type: 'text', text: `session-${sessionIndex}` }]
+					}));
+					const originalClose = server.close.bind(server);
+					server.close = async () => {
+						sessionServerCloseCounts[sessionIndex]++;
+						await originalClose();
+					};
+					return server;
+				},
+				transportFactory: (endpoint, response) => {
+					const sessionIndex = sessionTransportCloseCounts.length;
+					sessionTransportCloseCounts[sessionIndex] = 0;
+					const sessionTransport = new SSEServerTransport(endpoint, response);
+					const originalClose = sessionTransport.close.bind(sessionTransport);
+					sessionTransport.close = async () => {
+						sessionTransportCloseCounts[sessionIndex]++;
+						await originalClose();
+					};
+					return sessionTransport;
+				}
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+
+		const sigintListeners = process.listenerCount('SIGINT');
+		const sigtermListeners = process.listenerCount('SIGTERM');
+		await transport.start(bootstrap);
+		expect(process.listenerCount('SIGINT')).toBe(sigintListeners);
+		expect(process.listenerCount('SIGTERM')).toBe(sigtermListeners);
+
+		const port = transport.getListeningPort();
+		expect(port).toBeNumber();
+		const url = new URL(`http://${HOST}:${port}${PATH}`);
+		const clientA = new Client({ name: 'client-a', version: '1.0.0' });
+		const clientB = new Client({ name: 'client-b', version: '1.0.0' });
+		clients.push(clientA, clientB);
+
+		await Promise.all([clientA.connect(new SSEClientTransport(url)), clientB.connect(new SSEClientTransport(url))]);
+		const [firstA, firstB] = await Promise.all([
+			clientA.callTool({ name: 'session_identity', arguments: {} }),
+			clientB.callTool({ name: 'session_identity', arguments: {} })
+		]);
+		const identityA = textOf(firstA);
+		const identityB = textOf(firstB);
+
+		expect(new Set([identityA, identityB])).toEqual(new Set(['session-0', 'session-1']));
+		const [secondA, secondB] = await Promise.all([
+			clientA.callTool({ name: 'session_identity', arguments: {} }),
+			clientB.callTool({ name: 'session_identity', arguments: {} })
+		]);
+		expect(textOf(secondA)).toBe(identityA);
+		expect(textOf(secondB)).toBe(identityB);
+
+		await transport.stop();
+		expect(sessionServerCloseCounts).toHaveLength(2);
+		expect(sessionTransportCloseCounts).toHaveLength(2);
+		expect(sessionServerCloseCounts.every((count) => count >= 1)).toBe(true);
+		expect(sessionTransportCloseCounts.every((count) => count >= 1)).toBe(true);
+		expect(transport.getListeningPort()).toBeUndefined();
 	});
 
-	describe('Constructor', () => {
-		it('should initialize with http-sse mode', () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			expect(transport.mode).toBe('http-sse');
-		});
+	it('caps concurrent sessions with 503 and releases capacity on disconnect', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let serverCount = 0;
+		const transport = new HttpSseTransport(
+			{ port: 0, host: HOST, path: PATH, maxSessions: 1 },
+			{
+				serverFactory: async () => {
+					serverCount++;
+					return new McpServer({ name: `limited-session-${serverCount}`, version: '1.0.0' });
+				}
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
 
-		it('should create express app and setup middleware and routes', () => {
-			new HttpSseTransport(3000, 'localhost', '/sse');
+		const port = transport.getListeningPort();
+		if (port === undefined) throw new Error('SSE transport did not start');
+		const url = new URL(`http://${HOST}:${port}${PATH}`);
+		const firstClient = new Client({ name: 'limited-a', version: '1.0.0' });
+		clients.push(firstClient);
+		await firstClient.connect(new SSEClientTransport(url));
 
-			expect(mockExpress).toHaveBeenCalled();
-			expect(mockApp.use).toHaveBeenCalledWith('json-middleware');
-			expect(mockCreateCorsMiddleware).toHaveBeenCalled();
-			expect(mockApp.use).toHaveBeenCalledWith('cors-middleware');
-			expect(mockApp.get).toHaveBeenCalledWith('/health', expect.any(Function));
-			expect(mockApp.get).toHaveBeenCalledWith('/sse', expect.any(Function));
-			expect(mockApp.post).toHaveBeenCalledWith('/sse/message', expect.any(Function));
-		});
+		const rejected = await fetch(url, { headers: { accept: 'text/event-stream' } });
+		expect(rejected.status).toBe(503);
+		expect(await rejected.json()).toEqual({ error: 'Maximum SSE sessions reached' });
+		expect(serverCount).toBe(1);
+
+		await firstClient.close();
+		clients.splice(clients.indexOf(firstClient), 1);
+		await waitFor(() => (transport as unknown as { activeSessionSlots: number }).activeSessionSlots === 0);
+
+		const secondClient = new Client({ name: 'limited-b', version: '1.0.0' });
+		clients.push(secondClient);
+		await secondClient.connect(new SSEClientTransport(url));
+		expect(serverCount).toBe(2);
 	});
 
-	describe('Health endpoint', () => {
-		it('should respond with status ok', () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const mockReq = {};
-			const mockRes = { json: jest.fn() };
+	it('closes both session resources when an SSE response disconnects', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let serverCloseCount = 0;
+		let transportCloseCount = 0;
+		const transport = new HttpSseTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => {
+					const server = new McpServer({ name: 'disconnect-session', version: '1.0.0' });
+					const originalClose = server.close.bind(server);
+					server.close = async () => {
+						serverCloseCount++;
+						await originalClose();
+					};
+					return server;
+				},
+				transportFactory: (endpoint, response) => {
+					const sessionTransport = new SSEServerTransport(endpoint, response);
+					const originalClose = sessionTransport.close.bind(sessionTransport);
+					sessionTransport.close = async () => {
+						transportCloseCount++;
+						await originalClose();
+					};
+					return sessionTransport;
+				}
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
 
-			// Get the health endpoint handler
-			const healthHandler = mockApp.get.mock.calls.find((call) => call[0] === '/health')[1];
-			healthHandler(mockReq, mockRes);
-
-			expect(mockRes.json).toHaveBeenCalledWith({
-				status: 'ok',
-				timestamp: expect.any(String)
+		const port = transport.getListeningPort();
+		if (port === undefined) throw new Error('SSE transport did not start');
+		const socket = createConnection({ host: HOST, port });
+		await new Promise<void>((resolve, reject) => {
+			let response = '';
+			socket.once('error', reject);
+			socket.on('data', (chunk) => {
+				response += chunk.toString();
+				if (response.includes('event: endpoint')) resolve();
+			});
+			socket.once('connect', () => {
+				socket.write(`GET ${PATH} HTTP/1.1\r\nHost: ${HOST}:${port}\r\nAccept: text/event-stream\r\n\r\n`);
 			});
 		});
+		const socketClosed = new Promise<void>((resolve) => socket.once('close', resolve));
+		socket.destroy();
+		await socketClosed;
+		await waitFor(() => serverCloseCount >= 1 && transportCloseCount >= 1);
 	});
 
-	describe('SSE endpoint', () => {
-		it('should create SSE transport and connect to MCP server', () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
+	it('handles repeated response errors with exactly-once session cleanup', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let response: Response | undefined;
+		const sessionServerClose = jest.fn().mockResolvedValue(undefined);
+		const sessionServer = {
+			connect: jest.fn(async (sessionTransport: SSEServerTransport) => sessionTransport.start()),
+			close: sessionServerClose
+		} as unknown as McpServer;
+		const sessionTransportClose = jest.fn().mockRejectedValue(new Error('simulated transport cleanup failure'));
+		const transport = new HttpSseTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => sessionServer,
+				transportFactory: (endpoint, sessionResponse) => {
+					response = sessionResponse;
+					const sessionTransport = new SSEServerTransport(endpoint, sessionResponse);
+					sessionTransport.close = sessionTransportClose;
+					return sessionTransport;
+				}
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
 
-			// Mock MCP server
-			(transport as any).mcpServer = mockMcpServer;
-
-			const mockReq = {
-				ip: '127.0.0.1',
-				on: jest.fn()
-			};
-			const mockRes = {};
-
-			// Get the SSE endpoint handler
-			const sseHandler = mockApp.get.mock.calls.find((call) => call[0] === '/sse')[1];
-			sseHandler(mockReq, mockRes);
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('SSE connection from 127.0.0.1');
-			expect(mockMcpServer.connect).toHaveBeenCalledWith(mockTransport);
-			expect(mockReq.on).toHaveBeenCalledWith('close', expect.any(Function));
+		const port = transport.getListeningPort();
+		if (port === undefined) throw new Error('SSE transport did not start');
+		const socket = createConnection({ host: HOST, port });
+		socket.once('connect', () => {
+			socket.write(`GET ${PATH} HTTP/1.1\r\nHost: ${HOST}:${port}\r\nAccept: text/event-stream\r\n\r\n`);
 		});
+		await waitFor(() => response !== undefined);
+		response?.emit('error', new Error('simulated response failure'));
+		response?.emit('error', new Error('repeated response failure'));
+		response?.socket?.emit('error', new Error('simulated socket failure'));
+		await waitFor(() => sessionServerClose.mock.calls.length === 1);
 
-		it('should handle connection without MCP server', () => {
-			new HttpSseTransport(3000, 'localhost', '/sse');
-
-			const mockReq = {
-				ip: '127.0.0.1',
-				on: jest.fn()
-			};
-			const mockRes = {};
-
-			// Get the SSE endpoint handler
-			const sseHandler = mockApp.get.mock.calls.find((call) => call[0] === '/sse')[1];
-			sseHandler(mockReq, mockRes);
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('SSE connection from 127.0.0.1');
-			expect(mockMcpServer.connect).not.toHaveBeenCalled();
-		});
-
-		it('should clean up connection on close', () => {
-			new HttpSseTransport(3000, 'localhost', '/sse');
-
-			const mockReq = {
-				ip: '127.0.0.1',
-				on: jest.fn()
-			};
-			const mockRes = {};
-
-			// Get the SSE endpoint handler
-			const sseHandler = mockApp.get.mock.calls.find((call) => call[0] === '/sse')[1];
-			sseHandler(mockReq, mockRes);
-
-			// Get the close handler
-			const closeHandler = mockReq.on.mock.calls.find((call) => call[0] === 'close')![1];
-			closeHandler();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith(`SSE connection closed for session ${mockTransport.sessionId}`);
-		});
-
-		it('should use the transport sessionId as the connections key', () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-
-			const mockReq = { ip: '127.0.0.1', on: jest.fn() };
-			const mockRes = {};
-
-			const sseHandler = mockApp.get.mock.calls.find((call) => call[0] === '/sse')[1];
-			sseHandler(mockReq, mockRes);
-
-			expect(mockSSEServerTransport).toHaveBeenCalledWith('/sse/message', mockRes);
-			expect((transport as any).connections.has(mockTransport.sessionId)).toBe(true);
-		});
-
-		it('should assign unique session IDs to concurrent connections', () => {
-			const mockTransport1 = { handleMessage: jest.fn(), sessionId: 'session-id-1' };
-			const mockTransport2 = { handleMessage: jest.fn(), sessionId: 'session-id-2' };
-			mockSSEServerTransport.mockImplementationOnce(() => mockTransport1).mockImplementationOnce(() => mockTransport2);
-
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			(transport as any).mcpServer = mockMcpServer;
-
-			const mockReq1 = { ip: '127.0.0.1', on: jest.fn() };
-			const mockReq2 = { ip: '127.0.0.2', on: jest.fn() };
-
-			const sseHandler = mockApp.get.mock.calls.find((call) => call[0] === '/sse')[1];
-			sseHandler(mockReq1, {});
-			sseHandler(mockReq2, {});
-
-			expect((transport as any).connections.has('session-id-1')).toBe(true);
-			expect((transport as any).connections.has('session-id-2')).toBe(true);
-			expect((transport as any).connections.size).toBe(2);
-		});
+		expect(sessionServerClose).toHaveBeenCalledTimes(1);
+		expect(sessionTransportClose).toHaveBeenCalledTimes(1);
+		expect(consoleErrorSpy).toHaveBeenCalledWith('Error closing SSE session:', 'Failed to close all SSE session resources.');
+		socket.destroy();
 	});
 
-	describe('Message endpoint', () => {
-		it('should handle message with active transport', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
+	it('cancels pending startup and supports a clean restart', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const delayedServer = createServer();
+		let delayedCloseCount = 0;
+		delayedServer.close = ((callback?: (error?: Error) => void) => {
+			delayedCloseCount++;
+			queueMicrotask(() => callback?.());
+			return delayedServer;
+		}) as typeof delayedServer.close;
+		let listenCount = 0;
+		const transport = new HttpSseTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => new McpServer({ name: 'session', version: '1.0.0' }),
+				transportFactory: (endpoint, sessionResponse) => new SSEServerTransport(endpoint, sessionResponse),
+				listenFactory: (app, port, host) => (listenCount++ === 0 ? delayedServer : app.listen(port, host))
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
 
-			// Add a connection to the transport
-			(transport as any).connections.set('test-session', mockTransport);
+		const starting = transport.start(bootstrap);
+		const stopping = transport.stop();
+		await expect(withTimeout(starting, 'cancelled SSE startup')).rejects.toThrow('stopped during startup');
+		await withTimeout(stopping, 'SSE stop during startup');
+		expect(delayedCloseCount).toBe(1);
 
-			const mockReq = { body: { test: 'message' }, query: { sessionId: 'test-session' } };
-			const mockRes = {
-				status: jest.fn().mockReturnThis(),
-				end: jest.fn(),
-				json: jest.fn()
-			};
-
-			// Get the message endpoint handler
-			const messageHandler = mockApp.post.mock.calls.find((call) => call[0] === '/sse/message')[1];
-			await messageHandler(mockReq, mockRes);
-
-			expect(mockTransport.handleMessage).toHaveBeenCalledWith({ test: 'message' });
-			expect(mockRes.status).toHaveBeenCalledWith(200);
-			expect(mockRes.end).toHaveBeenCalled();
-		});
-
-		it('should return 400 when sessionId query param is missing', async () => {
-			new HttpSseTransport(3000, 'localhost', '/sse');
-
-			const mockReq = { body: { test: 'message' }, query: {} };
-			const mockRes = {
-				status: jest.fn().mockReturnThis(),
-				json: jest.fn()
-			};
-
-			// Get the message endpoint handler
-			const messageHandler = mockApp.post.mock.calls.find((call) => call[0] === '/sse/message')[1];
-			await messageHandler(mockReq, mockRes);
-
-			expect(mockRes.status).toHaveBeenCalledWith(400);
-			expect(mockRes.json).toHaveBeenCalledWith({ error: 'Missing sessionId' });
-		});
-
-		it('should return 404 when sessionId does not match any active session', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			(transport as any).connections.set('real-session-id', mockTransport);
-
-			const mockReq = { body: { test: 'message' }, query: { sessionId: 'bogus-session-id' } };
-			const mockRes = {
-				status: jest.fn().mockReturnThis(),
-				json: jest.fn()
-			};
-
-			// Get the message endpoint handler
-			const messageHandler = mockApp.post.mock.calls.find((call) => call[0] === '/sse/message')[1];
-			await messageHandler(mockReq, mockRes);
-
-			expect(mockRes.status).toHaveBeenCalledWith(404);
-			expect(mockRes.json).toHaveBeenCalledWith({ error: 'Session not found' });
-			expect(mockTransport.handleMessage).not.toHaveBeenCalled();
-		});
-
-		it('should route message only to the transport matching the sessionId', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-
-			const mockTransportA = { handleMessage: jest.fn() };
-			const mockTransportB = { handleMessage: jest.fn() };
-			(transport as any).connections.set('session-a', mockTransportA);
-			(transport as any).connections.set('session-b', mockTransportB);
-
-			const mockReq = { body: { jsonrpc: '2.0', method: 'ping', id: 1 }, query: { sessionId: 'session-b' } };
-			const mockRes = {
-				status: jest.fn().mockReturnThis(),
-				end: jest.fn(),
-				json: jest.fn()
-			};
-
-			// Get the message endpoint handler
-			const messageHandler = mockApp.post.mock.calls.find((call) => call[0] === '/sse/message')[1];
-			await messageHandler(mockReq, mockRes);
-
-			expect(mockTransportB.handleMessage).toHaveBeenCalledWith({ jsonrpc: '2.0', method: 'ping', id: 1 });
-			expect(mockTransportA.handleMessage).not.toHaveBeenCalled();
-			expect(mockRes.status).toHaveBeenCalledWith(200);
-		});
-
-		it('should reject a request even when another valid session exists', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			(transport as any).connections.set('legitimate-session', mockTransport);
-
-			// Attacker sends request with no sessionId
-			const mockReq = { body: { jsonrpc: '2.0', method: 'tools/call', id: 2 }, query: {} };
-			const mockRes = {
-				status: jest.fn().mockReturnThis(),
-				json: jest.fn()
-			};
-
-			const messageHandler = mockApp.post.mock.calls.find((call) => call[0] === '/sse/message')[1];
-			await messageHandler(mockReq, mockRes);
-
-			expect(mockRes.status).toHaveBeenCalledWith(400);
-			expect(mockTransport.handleMessage).not.toHaveBeenCalled();
-		});
-
-		it('should handle transport errors', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-
-			// Add a connection that will throw an error
-			mockTransport.handleMessage.mockRejectedValue(new Error('Transport error'));
-			(transport as any).connections.set('test-session', mockTransport);
-
-			const mockReq = { body: { test: 'message' }, query: { sessionId: 'test-session' } };
-			const mockRes = {
-				status: jest.fn().mockReturnThis(),
-				json: jest.fn()
-			};
-
-			// Get the message endpoint handler
-			const messageHandler = mockApp.post.mock.calls.find((call) => call[0] === '/sse/message')[1];
-			await messageHandler(mockReq, mockRes);
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Error handling message:', expect.any(Error));
-			expect(mockRes.status).toHaveBeenCalledWith(500);
-			expect(mockRes.json).toHaveBeenCalledWith({ error: 'Internal server error' });
-		});
+		await withTimeout(transport.start(bootstrap), 'restarted SSE startup');
+		expect(transport.getListeningPort()).toBeNumber();
+		await withTimeout(transport.stop(), 'restarted SSE shutdown');
 	});
 
-	describe('start', () => {
-		it('should start server and resolve on success', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-
-			// Mock successful server start
-			mockApp.listen.mockImplementation((port, host, callback) => {
-				callback();
-				return mockServer;
-			});
-
-			await transport.start(mockMcpServer);
-
-			expect(mockApp.listen).toHaveBeenCalledWith(3000, 'localhost', expect.any(Function));
-			expect(consoleErrorSpy).toHaveBeenCalledWith('MCP Server ready (http-sse transport on localhost:3000/sse)');
-			expect(mockServer.on).toHaveBeenCalledWith('error', expect.any(Function));
+	it('rejects occupied ports and serves health checks after startup', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const occupied = createServer();
+		await new Promise<void>((resolve, reject) => {
+			occupied.once('error', reject);
+			occupied.listen(0, HOST, resolve);
 		});
+		const address = occupied.address();
+		if (!address || typeof address === 'string') throw new Error('Expected an occupied TCP port');
 
-		it('should reject on server error', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const testError = new Error('Server start error');
+		const blocked = new HttpSseTransport({ port: address.port, host: HOST, path: PATH });
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await expect(blocked.start(bootstrap)).rejects.toMatchObject({ code: 'EADDRINUSE' });
+		await new Promise<void>((resolve, reject) => occupied.close((error) => (error ? reject(error) : resolve())));
 
-			// Mock server error during start
-			mockApp.listen.mockImplementation(() => {
-				return mockServer;
-			});
-
-			const startPromise = transport.start(mockMcpServer);
-
-			// Trigger the error handler
-			const errorHandler = mockServer.on.mock.calls.find((call) => call[0] === 'error')[1];
-			errorHandler(testError);
-
-			await expect(startPromise).rejects.toThrow('Server start error');
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting server:', testError);
-		});
-
-		it('should setup process signal handlers', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const processOnSpy = jest.spyOn(process, 'on').mockImplementation(() => process);
-
-			mockApp.listen.mockImplementation((port, host, callback) => {
-				callback();
-				return mockServer;
-			});
-
-			await transport.start(mockMcpServer);
-
-			expect(processOnSpy).toHaveBeenCalledWith('SIGINT', expect.any(Function));
-			expect(processOnSpy).toHaveBeenCalledWith('SIGTERM', expect.any(Function));
-
-			processOnSpy.mockRestore();
-		});
-
-		it('should handle cleanup on SIGINT', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const processOnSpy = jest.spyOn(process, 'on').mockImplementation(() => process);
-
-			mockApp.listen.mockImplementation((port, host, callback) => {
-				callback();
-				return mockServer;
-			});
-
-			await transport.start(mockMcpServer);
-
-			// Get the SIGINT handler
-			const sigintHandler = processOnSpy.mock.calls.find((call) => call[0] === 'SIGINT')![1];
-			sigintHandler();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Shutting down HTTP SSE server...');
-			expect(mockServer.close).toHaveBeenCalled();
-
-			processOnSpy.mockRestore();
-		});
-
-		it('should handle cleanup when httpServer is null', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			const processOnSpy = jest.spyOn(process, 'on').mockImplementation(() => process);
-
-			// Don't start the server, so httpServer remains null
-
-			// Get the SIGINT handler by calling start but without actually starting
-			mockApp.listen.mockImplementation((port, host, callback) => {
-				callback();
-				return mockServer;
-			});
-
-			await transport.start(mockMcpServer);
-
-			// Manually set httpServer to null to test the branch
-			(transport as any).httpServer = null;
-
-			// Get the SIGINT handler
-			const sigintHandler = processOnSpy.mock.calls.find((call) => call[0] === 'SIGINT')![1];
-			sigintHandler();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Shutting down HTTP SSE server...');
-			// Should not attempt to close server when it's null
-			expect(mockServer.close).not.toHaveBeenCalled();
-
-			processOnSpy.mockRestore();
-		});
+		const transport = new HttpSseTransport({ port: 0, host: HOST, path: PATH });
+		transports.push(transport);
+		await transport.start(bootstrap);
+		const health = await fetch(`http://${HOST}:${transport.getListeningPort()}/health`);
+		expect(health.status).toBe(200);
+		expect(await health.json()).toMatchObject({ status: 'ok' });
 	});
 
-	describe('stop', () => {
-		it('should close server and resolve', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-
-			// Set up server
-			(transport as any).httpServer = mockServer;
-			mockServer.close.mockImplementation((callback) => {
-				callback();
-			});
-
-			await transport.stop();
-
-			expect(mockServer.close).toHaveBeenCalledWith(expect.any(Function));
-			expect(consoleErrorSpy).toHaveBeenCalledWith('HTTP SSE server stopped');
+	it('releases a reserved slot when SSE transport creation fails', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const transportFactory = jest.fn(() => {
+			throw new Error('simulated SSE constructor failure');
 		});
+		const transport = new HttpSseTransport({ port: 0, host: HOST, path: PATH, maxSessions: 1 }, { transportFactory });
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
+		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
 
-		it('should resolve immediately if no server', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-
-			await transport.stop();
-
-			expect(mockServer.close).not.toHaveBeenCalled();
-		});
-
-		it('should handle server close without callback', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-
-			// Set up server that doesn't call callback
-			(transport as any).httpServer = mockServer;
-			mockServer.close.mockImplementation(() => {
-				// Don't call callback
-			});
-
-			// This should still resolve due to the promise structure
-			const stopPromise = transport.stop();
-
-			// Manually trigger callback to test the path
-			const closeCallback = mockServer.close.mock.calls[0][0];
-			closeCallback();
-
-			await stopPromise;
-			expect(consoleErrorSpy).toHaveBeenCalledWith('HTTP SSE server stopped');
-		});
+		expect((await fetch(url)).status).toBe(500);
+		expect((await fetch(url)).status).toBe(500);
+		expect(transportFactory).toHaveBeenCalledTimes(2);
 	});
 
-	describe('integration scenarios', () => {
-		it('should handle complete start-stop lifecycle', async () => {
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
+	it('attempts every session close and aggregates shutdown failures', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const sessionServerClose = jest.fn().mockRejectedValue(new Error('server close failed'));
+		const sessionServer = {
+			connect: jest.fn(async (sessionTransport: SSEServerTransport) => sessionTransport.start()),
+			close: sessionServerClose
+		} as unknown as McpServer;
+		const sessionTransportClose = jest.fn().mockRejectedValue(new Error('transport close failed'));
+		const transport = new HttpSseTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => sessionServer,
+				transportFactory: (endpoint, response) => {
+					const sessionTransport = new SSEServerTransport(endpoint, response);
+					sessionTransport.close = sessionTransportClose;
+					return sessionTransport;
+				}
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
 
-			// Mock successful server start
-			mockApp.listen.mockImplementation((port, host, callback) => {
-				callback();
-				return mockServer;
+		const port = transport.getListeningPort();
+		if (port === undefined) throw new Error('SSE transport did not start');
+		const socket = createConnection({ host: HOST, port });
+		socket.on('error', () => {});
+		await new Promise<void>((resolve) => {
+			let response = '';
+			socket.on('data', (chunk) => {
+				response += chunk.toString();
+				if (response.includes('event: endpoint')) resolve();
 			});
-			mockServer.close.mockImplementation((callback) => {
-				callback();
+			socket.once('connect', () => {
+				socket.write(`GET ${PATH} HTTP/1.1\r\nHost: ${HOST}:${port}\r\nAccept: text/event-stream\r\n\r\n`);
 			});
+		});
+		await expect(transport.stop()).rejects.toBeInstanceOf(AggregateError);
 
-			await transport.start(mockMcpServer);
-			await transport.stop();
+		expect(sessionTransportClose).toHaveBeenCalledTimes(1);
+		expect(sessionServerClose).toHaveBeenCalledTimes(1);
+		await expect(transport.stop()).resolves.toBeUndefined();
+		socket.destroy();
+	});
 
-			expect(mockApp.listen).toHaveBeenCalled();
-			expect(mockServer.close).toHaveBeenCalled();
+	it('rejects messages without a valid session and validates a nonempty host', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const invalidHost = new HttpSseTransport({ port: 8080, host: '   ', path: PATH });
+		const unused = new McpServer({ name: 'unused', version: '1.0.0' });
+		bootstrapServers.push(unused);
+		await expect(invalidHost.start(unused)).rejects.toThrow('SERVER_HOST must not be empty');
+		const invalidLimit = new HttpSseTransport({ port: 8080, host: HOST, path: PATH, maxSessions: 0 });
+		await expect(invalidLimit.start(unused)).rejects.toThrow('SSE_MAX_SESSIONS must be a positive integer');
+
+		const transport = new HttpSseTransport({ port: 0, host: HOST, path: PATH });
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
+		const baseUrl = `http://${HOST}:${transport.getListeningPort()}${PATH}/message`;
+
+		const missing = await fetch(baseUrl, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ jsonrpc: '2.0', method: 'ping', id: 1 })
+		});
+		const unknown = await fetch(`${baseUrl}?sessionId=unknown`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ jsonrpc: '2.0', method: 'ping', id: 2 })
 		});
 
-		it('should handle multiple connections and cleanup', () => {
-			const mockTransport1 = { handleMessage: jest.fn(), sessionId: 'session-id-1' };
-			const mockTransport2 = { handleMessage: jest.fn(), sessionId: 'session-id-2' };
-			mockSSEServerTransport.mockImplementationOnce(() => mockTransport1).mockImplementationOnce(() => mockTransport2);
-
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			(transport as any).mcpServer = mockMcpServer;
-
-			// Simulate multiple SSE connections
-			const mockReq1 = { ip: '127.0.0.1', on: jest.fn() };
-			const mockReq2 = { ip: '127.0.0.2', on: jest.fn() };
-
-			const sseHandler = mockApp.get.mock.calls.find((call) => call[0] === '/sse')[1];
-			sseHandler(mockReq1, {});
-			sseHandler(mockReq2, {});
-
-			expect((transport as any).connections.size).toBe(2);
-
-			// Close first connection
-			const closeHandler1 = mockReq1.on.mock.calls.find((call) => call[0] === 'close')![1];
-			closeHandler1();
-
-			expect((transport as any).connections.size).toBe(1);
-			expect((transport as any).connections.has('session-id-2')).toBe(true);
-		});
-
-		it('should not route a message to the first connected client when the request targets a second client', async () => {
-			const mockTransport1 = { handleMessage: jest.fn(), sessionId: 'session-id-1' };
-			const mockTransport2 = { handleMessage: jest.fn(), sessionId: 'session-id-2' };
-			mockSSEServerTransport.mockImplementationOnce(() => mockTransport1).mockImplementationOnce(() => mockTransport2);
-
-			const transport = new HttpSseTransport(3000, 'localhost', '/sse');
-			(transport as any).mcpServer = mockMcpServer;
-
-			const sseHandler = mockApp.get.mock.calls.find((call) => call[0] === '/sse')[1];
-			sseHandler({ ip: '127.0.0.1', on: jest.fn() }, {});
-			sseHandler({ ip: '127.0.0.2', on: jest.fn() }, {});
-
-			// POST targeting client 2 — client 1's transport must not be invoked
-			const mockReq = { body: { jsonrpc: '2.0', method: 'tools/call', id: 99 }, query: { sessionId: 'session-id-2' } };
-			const mockRes = { status: jest.fn().mockReturnThis(), end: jest.fn(), json: jest.fn() };
-
-			const messageHandler = mockApp.post.mock.calls.find((call) => call[0] === '/sse/message')[1];
-			await messageHandler(mockReq, mockRes);
-
-			expect(mockTransport2.handleMessage).toHaveBeenCalledWith({ jsonrpc: '2.0', method: 'tools/call', id: 99 });
-			expect(mockTransport1.handleMessage).not.toHaveBeenCalled();
-		});
+		expect(missing.status).toBe(400);
+		expect(unknown.status).toBe(404);
 	});
 });

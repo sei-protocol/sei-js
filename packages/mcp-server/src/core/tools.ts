@@ -1,10 +1,59 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Address, Hash, Hex } from 'viem';
 import { z } from 'zod';
-import { DEFAULT_NETWORK, getRpcUrl, getSupportedNetworks } from './chains.js';
+import { DEFAULT_NETWORK, getSupportedNetworks, networkSchema } from './chains.js';
 import { isWalletEnabled } from './config.js';
+import { sanitizeError } from './errors.js';
 import * as services from './services/index.js';
 import { getWalletProvider } from './wallet/index.js';
+
+const READ_ONLY_TOOL_NAMES = new Set([
+	'check_nft_ownership',
+	'estimate_gas',
+	'get_balance',
+	'get_block_by_number',
+	'get_chain_info',
+	'get_erc1155_balance',
+	'get_erc1155_token_uri',
+	'get_erc20_balance',
+	'get_latest_block',
+	'get_nft_balance',
+	'get_nft_info',
+	'get_supported_networks',
+	'get_token_balance',
+	'get_token_balance_erc20',
+	'get_token_info',
+	'get_transaction',
+	'get_transaction_receipt',
+	'is_contract',
+	'read_contract'
+]);
+
+export function withToolRegistrationPolicy(server: McpServer, walletEnabled: boolean): McpServer {
+	const registerTool = server.tool.bind(server) as unknown as (
+		name: string,
+		description: string,
+		schema: Record<string, z.ZodTypeAny>,
+		handler: (...args: never[]) => unknown
+	) => unknown;
+
+	return new Proxy(server, {
+		get(target, property) {
+			if (property === 'tool') {
+				return (name: string, description: string, schema: Record<string, z.ZodTypeAny>, handler: (...args: never[]) => unknown) => {
+					if (!walletEnabled && !READ_ONLY_TOOL_NAMES.has(name)) {
+						console.error(`Tool registration suppressed by wallet policy: ${name}`);
+						return undefined;
+					}
+					return registerTool(name, description, 'network' in schema ? { ...schema, network: networkSchema.optional() } : schema, handler);
+				};
+			}
+
+			const value = Reflect.get(target, property, target);
+			return typeof value === 'function' ? value.bind(target) : value;
+		}
+	});
+}
 
 /**
  * Register all EVM-related tools with the MCP server
@@ -12,13 +61,13 @@ import { getWalletProvider } from './wallet/index.js';
  * @param server The MCP server instance
  */
 export function registerEVMTools(server: McpServer) {
-	// Register read-only tools (always available)
-	registerReadOnlyTools(server);
+	const policyServer = withToolRegistrationPolicy(server, isWalletEnabled());
 
-	// Register wallet-dependent tools (only if wallet is enabled)
-	if (isWalletEnabled()) {
-		registerWalletTools(server);
-	}
+	// Register read-only tools (always available)
+	registerReadOnlyTools(policyServer);
+
+	// Register the remaining contract, token, and wallet tools under the policy.
+	registerExtendedTools(policyServer);
 }
 
 /**
@@ -38,8 +87,6 @@ function registerReadOnlyTools(server: McpServer) {
 			try {
 				const chainId = await services.getChainId(network);
 				const blockNumber = await services.getBlockNumber(network);
-				const rpcUrl = getRpcUrl(network);
-
 				return {
 					content: [
 						{
@@ -48,8 +95,7 @@ function registerReadOnlyTools(server: McpServer) {
 								{
 									network,
 									chainId,
-									blockNumber: blockNumber.toString(),
-									rpcUrl
+									blockNumber: blockNumber.toString()
 								},
 								null,
 								2
@@ -62,7 +108,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching chain info: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching chain info: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -95,7 +141,7 @@ function registerReadOnlyTools(server: McpServer) {
 				content: [
 					{
 						type: 'text',
-						text: `Error fetching supported networks: ${error instanceof Error ? error.message : String(error)}`
+						text: `Error fetching supported networks: ${sanitizeError(error)}`
 					}
 				],
 				isError: true
@@ -130,7 +176,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching block ${blockNumber}: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching block ${blockNumber}: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -163,7 +209,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching latest block: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching latest block: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -208,7 +254,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching balance: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -256,7 +302,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching ERC20 balance for ${address}: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC20 balance for ${address}: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -303,7 +349,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching token balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching token balance: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -339,7 +385,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching transaction ${txHash}: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching transaction ${txHash}: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -373,7 +419,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching transaction receipt ${txHash}: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching transaction receipt ${txHash}: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -426,7 +472,7 @@ function registerReadOnlyTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error estimating gas: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error estimating gas: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -437,9 +483,9 @@ function registerReadOnlyTools(server: McpServer) {
 }
 
 /**
- * Register wallet-dependent tools that require wallet functionality
+ * Register contract/token inspection tools and conditionally register signing tools.
  */
-function registerWalletTools(server: McpServer) {
+function registerExtendedTools(server: McpServer) {
 	// TRANSFER TOOLS
 
 	// Transfer Sei
@@ -478,7 +524,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error transferring Sei: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error transferring Sei: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -526,7 +572,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error transferring ERC20 tokens: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error transferring ERC20 tokens: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -578,7 +624,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error approving token spending: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error approving token spending: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -627,7 +673,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error transferring NFT: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error transferring NFT: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -676,7 +722,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error transferring ERC1155 tokens: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error transferring ERC1155 tokens: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -724,7 +770,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error transferring tokens: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error transferring tokens: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -773,7 +819,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error reading contract: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error reading contract: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -828,7 +874,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error writing to contract: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error writing to contract: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -885,7 +931,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error deploying contract: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error deploying contract: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -928,7 +974,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error checking if address is a contract: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error checking if address is a contract: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -970,7 +1016,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching token info: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching token info: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -1018,7 +1064,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching ERC20 balance for ${address}: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC20 balance for ${address}: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -1046,7 +1092,7 @@ function registerWalletTools(server: McpServer) {
 				try {
 					owner = await services.getERC721Owner(tokenAddress, parsedTokenId, network);
 				} catch (error) {
-					ownerError = error instanceof Error ? error.message : String(error);
+					ownerError = sanitizeError(error);
 				}
 
 				return {
@@ -1073,7 +1119,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching NFT info: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching NFT info: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -1120,7 +1166,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error checking NFT ownership: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error checking NFT ownership: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -1164,7 +1210,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching ERC1155 token URI: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC1155 token URI: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -1208,7 +1254,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching NFT balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching NFT balance: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -1254,7 +1300,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error fetching ERC1155 token balance: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error fetching ERC1155 token balance: ${sanitizeError(error)}`
 						}
 					],
 					isError: true
@@ -1308,7 +1354,7 @@ function registerWalletTools(server: McpServer) {
 					content: [
 						{
 							type: 'text',
-							text: `Error deriving address from private key: ${error instanceof Error ? error.message : String(error)}`
+							text: `Error deriving address from private key: ${sanitizeError(error)}`
 						}
 					],
 					isError: true

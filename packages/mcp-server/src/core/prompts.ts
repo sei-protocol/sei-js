@@ -1,7 +1,31 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { DEFAULT_NETWORK } from './chains.js';
+import { DEFAULT_NETWORK, networkSchema, normalizeNetwork } from './chains.js';
 import { isWalletEnabled } from './config.js';
+
+const networkListSchema = z
+	.string()
+	.superRefine((value, context) => {
+		const networks = value.split(',').map((network) => network.trim());
+		if (networks.length === 0 || networks.some((network) => network.length === 0)) {
+			context.addIssue({ code: z.ZodIssueCode.custom, message: 'At least one supported network is required.' });
+			return;
+		}
+		for (const network of networks) {
+			try {
+				normalizeNetwork(network);
+			} catch {
+				context.addIssue({ code: z.ZodIssueCode.custom, message: `Unsupported network: ${network}` });
+			}
+		}
+	})
+	.transform((value) =>
+		value
+			.split(',')
+			.map((network) => normalizeNetwork(network.trim()))
+			.join(',')
+	)
+	.describe("Comma-separated supported networks (for example, 'sei,1328' or '0x531,sei-testnet').");
 
 /**
  * Register all EVM-related prompts with the MCP server
@@ -28,7 +52,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'Explore information about a specific block',
 		{
 			blockNumber: z.string().optional().describe('Block number to explore. If not provided, latest block will be used.'),
-			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
+			network: networkSchema.optional()
 		},
 		({ blockNumber, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -51,7 +75,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'Analyze a specific transaction',
 		{
 			txHash: z.string().describe('Transaction hash to analyze'),
-			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
+			network: networkSchema.optional()
 		},
 		({ txHash, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -72,7 +96,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'Analyze an EVM address',
 		{
 			address: z.string().describe('Sei 0x address to analyze'),
-			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
+			network: networkSchema.optional()
 		},
 		({ address, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -94,7 +118,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		{
 			contractAddress: z.string().describe('The contract address'),
 			abiJson: z.string().optional().describe('The contract ABI as a JSON string'),
-			network: z.string().optional().describe('Network name or chain ID. Defaults to Sei mainnet.')
+			network: networkSchema.optional()
 		},
 		({ contractAddress, abiJson, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -136,7 +160,7 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'compare_networks',
 		'Compare Sei networks',
 		{
-			networkList: z.string().describe("Comma-separated list of networks to compare (for example, 'sei,sei-testnet')")
+			networkList: networkListSchema
 		},
 		({ networkList }) => {
 			const networks = networkList.split(',').map((n) => n.trim());
@@ -160,9 +184,9 @@ function registerReadOnlyPrompts(server: McpServer) {
 		'Analyze an ERC20 or NFT token',
 		{
 			tokenAddress: z.string().describe('Token contract address to analyze'),
-			tokenType: z.string().optional().describe('Type of token to analyze (erc20, erc721/nft, or auto-detect). Defaults to auto.'),
+			tokenType: z.enum(['auto', 'erc20', 'erc721', 'nft']).optional().describe('Type of token to analyze. Defaults to auto.'),
 			tokenId: z.string().optional().describe('Token ID (required for NFT analysis)'),
-			network: z.string().optional().describe("Network name ('sei' or 'sei-testnet') or chain ID. Defaults to Sei mainnet.")
+			network: networkSchema.optional()
 		},
 		({ tokenAddress, tokenType = 'auto', tokenId, network = DEFAULT_NETWORK }) => {
 			let promptText = '';
@@ -173,6 +197,8 @@ function registerReadOnlyPrompts(server: McpServer) {
 				promptText = `Please analyze the NFT with token ID ${tokenId} from the collection at address ${tokenAddress} on the ${network} network. Provide information about the collection name, token details, ownership history if available, and any other relevant information about this specific NFT.`;
 			} else if (tokenType === 'nft' || tokenType === 'erc721') {
 				promptText = `Please analyze the NFT collection at address ${tokenAddress} on the ${network} network. Provide information about the collection name, symbol, total supply if available, floor price if available, and any other relevant details about this NFT collection.`;
+			} else {
+				throw new Error(`Unsupported token type: ${String(tokenType)}`);
 			}
 
 			return {
@@ -215,7 +241,7 @@ function registerWalletPrompts(server: McpServer) {
 		{
 			toAddress: z.string().describe('The recipient address'),
 			amount: z.string().describe('The amount to send (in SEI)'),
-			network: z.string().optional().describe('Network name or chain ID. Defaults to Sei mainnet.')
+			network: networkSchema.optional()
 		},
 		({ toAddress, amount, network = DEFAULT_NETWORK }) => ({
 			messages: [
@@ -238,7 +264,7 @@ function registerWalletPrompts(server: McpServer) {
 			tokenAddress: z.string().describe('The token contract address'),
 			toAddress: z.string().describe('The recipient address'),
 			amount: z.string().describe('The amount to transfer'),
-			network: z.string().optional().describe('Network name or chain ID. Defaults to Sei mainnet.')
+			network: networkSchema.optional()
 		},
 		({ tokenAddress, toAddress, amount, network = DEFAULT_NETWORK }) => ({
 			messages: [

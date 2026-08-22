@@ -1,9 +1,13 @@
-import dotenv from 'dotenv';
+import { config as loadDotenv } from 'dotenv';
 import type { Hex } from 'viem';
 import { z } from 'zod';
+import { formatPrivateKey, validatePrivateKeyConfiguration } from './private-key.js';
 
-// Load environment variables from .env file
-dotenv.config();
+export { formatPrivateKey, isValidPrivateKey, validatePrivateKeyConfiguration } from './private-key.js';
+
+// Loading .env is nonthrowing and must happen before RPC modules read process.env.
+// Validation remains lazy and runs inside parseArgs/main.
+loadDotenv();
 
 // Wallet mode types
 export type WalletMode = 'private-key' | 'disabled';
@@ -15,14 +19,6 @@ const envSchema = z.object({
 	WALLET_API_KEY: z.string().optional() // Used for wallet providers
 });
 
-// Format private key with 0x prefix if it exists
-export const formatPrivateKey = (key?: string): string | undefined => {
-	if (!key) return undefined;
-
-	// Ensure the private key has 0x prefix
-	return key.startsWith('0x') ? key : `0x${key}`;
-};
-
 export interface AppConfig {
 	privateKey: string | undefined;
 	walletMode: WalletMode;
@@ -30,17 +26,26 @@ export interface AppConfig {
 }
 
 export const loadConfig = (environment: Record<string, unknown> = process.env): AppConfig => {
-	const env = envSchema.safeParse(environment);
+	const env = envSchema.parse(environment);
+	const privateKey = formatPrivateKey(env.PRIVATE_KEY);
 
-	return {
-		privateKey: env.success ? formatPrivateKey(env.data.PRIVATE_KEY) : undefined,
-		walletMode: (env.success ? env.data.WALLET_MODE : 'disabled') as WalletMode,
-		walletApiKey: env.success ? env.data.WALLET_API_KEY : undefined
-	};
+	validatePrivateKeyConfiguration(env.WALLET_MODE, env.PRIVATE_KEY);
+
+	return { privateKey, walletMode: env.WALLET_MODE, walletApiKey: env.WALLET_API_KEY };
 };
 
-// Export validated environment variables with formatted private key
-export const config = loadConfig();
+// Module import is deliberately nonthrowing. parseArgs initializes this object
+// only after all environment validation succeeds.
+export const config: AppConfig = {
+	privateKey: undefined,
+	walletMode: 'disabled',
+	walletApiKey: undefined
+};
+
+export function initializeConfig(environment: Record<string, unknown> = process.env): AppConfig {
+	Object.assign(config, loadConfig(environment));
+	return config;
+}
 
 /**
  * Get the private key from environment variable as a Hex type for viem.

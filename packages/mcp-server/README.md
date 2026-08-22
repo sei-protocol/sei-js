@@ -55,9 +55,11 @@ To enable transactions and wallet tools, set `WALLET_MODE` to `private-key` and 
 }
 ```
 
-The `0x` prefix on `PRIVATE_KEY` is optional. Use a dedicated wallet with limited funds and never commit its private key.
+`PRIVATE_KEY` must be a valid 32-byte secp256k1 private key; the `0x` prefix is optional. Startup fails instead of silently disabling wallet tools when private-key mode is misconfigured. Use a dedicated wallet with limited funds and never commit its private key.
 
 Wallet mode is supported only with the default stdio transport. HTTP transports reject `WALLET_MODE=private-key` because exposing signing tools over HTTP would allow unsafe cross-origin requests.
+
+Wallet-disabled mode still includes every non-signing tool, including contract reads, contract detection, gas estimates, token/NFT metadata, balances, and ownership checks. Only signing or broadcasting operations are hidden.
 
 ## HTTP Transports
 
@@ -96,15 +98,32 @@ HTTP transports do not authenticate callers or validate `Origin`/`Host`. Bind to
 
 `http-sse` is retained for older clients; use `streamable-http` for new integrations.
 
+Each legacy SSE connection has an isolated MCP server session. Both HTTP transports close active MCP request/session resources during graceful shutdown, and listener startup failures (including an occupied port) terminate startup with a nonzero exit status.
+
+Legacy SSE accepts at most 100 concurrent sessions by default. Set `SSE_MAX_SESSIONS` to a positive integer to tune the limit; excess connections receive HTTP 503. This limit reduces unauthenticated memory exhaustion risk but does not replace an authenticating reverse proxy.
+
+Streamable HTTP accepts at most 100 active requests by default. Set `STREAMABLE_HTTP_MAX_REQUESTS` to a positive integer to tune the limit; excess requests receive HTTP 503.
+
+HTTP transports create and close an isolated MCP server for each session or request; startup does not allocate an unused bootstrap server. Programmatic callers can use `main()`, which reports and rethrows ordinary startup failures. The packaged executable uses `runCli()` to convert those failures into exit code 1. The wallet-on-HTTP guard is stricter: it terminates immediately with exit code 1 before any listener or signing surface is created.
+
 ## Configuration
 
 - `SERVER_TRANSPORT`: `stdio` (default), `streamable-http`, or `http-sse`
-- `SERVER_HOST`: HTTP listener host (default: `localhost`)
+- `SERVER_HOST`: Nonempty HTTP listener host (default: `localhost`)
 - `SERVER_PORT`: HTTP listener port (default: `8080`)
 - `SERVER_PATH`: HTTP endpoint path (default: `/mcp`). For `http-sse`, this is the GET event stream; clients POST messages to `{SERVER_PATH}/message?sessionId=<id>`.
+- `SSE_MAX_SESSIONS`: Maximum concurrent legacy SSE sessions (default: `100`)
+- `STREAMABLE_HTTP_MAX_REQUESTS`: Maximum concurrent Streamable HTTP requests (default: `100`)
 - `WALLET_MODE`: `disabled` (default) or `private-key`
 - `PRIVATE_KEY`: Private key used when `WALLET_MODE=private-key`
 - `MAINNET_RPC_URL`: Optional custom Sei mainnet RPC URL
 - `TESTNET_RPC_URL`: Optional custom Sei testnet RPC URL
+
+Network arguments accept only the supported canonical names and chain ID strings:
+
+- Sei mainnet: `sei`, `1329`, or `0x531`
+- Sei testnet: `sei-testnet`, `1328`, or `0x530`
+
+Unknown selectors are rejected and never fall back to mainnet. Configured RPC URLs are used only for upstream connections; MCP chain-info responses omit them, and upstream errors redact URLs and credential-bearing details.
 
 Run `npx -y @sei-js/mcp-server --help` for the current configuration reference.

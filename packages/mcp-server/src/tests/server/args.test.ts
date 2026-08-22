@@ -33,6 +33,8 @@ describe('Args Module', () => {
 		delete process.env.SERVER_PORT;
 		delete process.env.SERVER_HOST;
 		delete process.env.SERVER_PATH;
+		delete process.env.SSE_MAX_SESSIONS;
+		delete process.env.STREAMABLE_HTTP_MAX_REQUESTS;
 		delete process.env.WALLET_MODE;
 		delete process.env.PRIVATE_KEY;
 		delete process.env.MAINNET_RPC_URL;
@@ -110,7 +112,9 @@ describe('Args Module', () => {
 				port: 8080,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'disabled'
+				walletMode: 'disabled',
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
 			});
 		});
 
@@ -120,7 +124,7 @@ describe('Args Module', () => {
 			process.env.SERVER_HOST = '0.0.0.0';
 			process.env.SERVER_PATH = '/api/mcp';
 			process.env.WALLET_MODE = 'private-key';
-			process.env.PRIVATE_KEY = 'test-key';
+			process.env.PRIVATE_KEY = '1'.repeat(64);
 
 			const result = parseArgs();
 
@@ -129,7 +133,9 @@ describe('Args Module', () => {
 				port: 3001,
 				host: '0.0.0.0',
 				path: '/api/mcp',
-				walletMode: 'private-key'
+				walletMode: 'private-key',
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
 			});
 		});
 
@@ -157,26 +163,61 @@ describe('Args Module', () => {
 			expect(result.port).toBe(8080); // Should fallback to default
 		});
 
-		it('should handle negative port numbers by using parsed value', () => {
+		it('should reject invalid nonblank ports for HTTP transports', () => {
+			process.env.SERVER_TRANSPORT = 'streamable-http';
+			process.env.SERVER_PORT = 'invalid-port';
+			expect(() => parseArgs()).toThrow("Invalid port 'NaN'");
+
 			process.env.SERVER_PORT = '-1';
-
-			const result = parseArgs();
-
-			expect(result.port).toBe(-1); // parseInt returns -1, validation will catch this
-		});
-
-		it('should handle floating point port numbers by truncating', () => {
+			expect(() => parseArgs()).toThrow("Invalid port '-1'");
 			process.env.SERVER_PORT = '3000.5';
-
-			const result = parseArgs();
-
-			expect(result.port).toBe(3000); // parseInt truncates
+			expect(() => parseArgs()).toThrow("Invalid port '3000.5'");
 		});
 
 		it('should call dotenv config to load .env file', () => {
 			parseArgs();
 
 			expect(mockDotenvConfig).toHaveBeenCalled();
+		});
+
+		it('loads and validates the legacy SSE session limit', () => {
+			process.env.SERVER_TRANSPORT = 'http-sse';
+			process.env.SSE_MAX_SESSIONS = '12';
+			expect(parseArgs().maxSseSessions).toBe(12);
+
+			process.env.SSE_MAX_SESSIONS = '0';
+			expect(() => parseArgs()).toThrow("Invalid SSE_MAX_SESSIONS '0'");
+
+			process.env.SSE_MAX_SESSIONS = '1.5';
+			expect(() => parseArgs()).toThrow("Invalid SSE_MAX_SESSIONS '1.5'");
+
+			process.env.SSE_MAX_SESSIONS = 'not-a-number';
+			expect(() => parseArgs()).toThrow("Invalid SSE_MAX_SESSIONS 'NaN'");
+		});
+
+		it('loads and validates the Streamable HTTP request limit', () => {
+			process.env.SERVER_TRANSPORT = 'streamable-http';
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = '12';
+			expect(parseArgs().maxStreamableRequests).toBe(12);
+
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = '0';
+			expect(() => parseArgs()).toThrow("Invalid STREAMABLE_HTTP_MAX_REQUESTS '0'");
+
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = 'not-a-number';
+			expect(() => parseArgs()).toThrow("Invalid STREAMABLE_HTTP_MAX_REQUESTS 'NaN'");
+		});
+
+		it('ignores invalid HTTP-only settings for stdio', () => {
+			process.env.SERVER_TRANSPORT = 'stdio';
+			process.env.SERVER_PORT = 'not-a-port';
+			process.env.SSE_MAX_SESSIONS = 'not-a-limit';
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = 'also-not-a-limit';
+
+			expect(parseArgs()).toMatchObject({
+				port: 8080,
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
+			});
 		});
 
 		it('should handle all RPC URL environment variables', () => {
@@ -199,40 +240,34 @@ describe('Args Module', () => {
 			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for invalid wallet mode', () => {
+		it('should throw for invalid wallet mode', () => {
 			process.env.WALLET_MODE = 'invalid-mode';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid wallet mode 'invalid-mode'. Valid modes are: private-key, disabled");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid wallet mode 'invalid-mode'. Valid modes are: private-key, disabled");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for invalid transport mode', () => {
+		it('should throw for invalid transport mode', () => {
 			process.env.SERVER_TRANSPORT = 'invalid-transport';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid transport mode 'invalid-transport'. Valid modes are: stdio, streamable-http, http-sse");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid transport mode 'invalid-transport'. Valid modes are: stdio, streamable-http, http-sse");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for port below valid range', () => {
+		it('should throw for port below valid range', () => {
+			process.env.SERVER_TRANSPORT = 'http-sse';
 			process.env.SERVER_PORT = '0';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid port '0'. Port must be a number between 1 and 65535.");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid port '0'. Port must be a number between 1 and 65535.");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
-		it('should exit with error for port above valid range', () => {
+		it('should throw for port above valid range', () => {
+			process.env.SERVER_TRANSPORT = 'streamable-http';
 			process.env.SERVER_PORT = '65536';
 
-			parseArgs();
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith("Error: Invalid port '65536'. Port must be a number between 1 and 65535.");
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(() => parseArgs()).toThrow("Invalid port '65536'. Port must be a number between 1 and 65535.");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
 		it('should accept minimum valid port', () => {
@@ -267,9 +302,27 @@ describe('Args Module', () => {
 			for (const mode of validModes) {
 				jest.clearAllMocks();
 				process.env.WALLET_MODE = mode;
+				process.env.PRIVATE_KEY = mode === 'private-key' ? '1'.repeat(64) : undefined;
 
 				expect(() => parseArgs()).not.toThrow();
 				expect(processExitSpy).not.toHaveBeenCalled();
+			}
+		});
+
+		it('requires PRIVATE_KEY in private-key wallet mode', () => {
+			process.env.WALLET_MODE = 'private-key';
+			delete process.env.PRIVATE_KEY;
+			expect(() => parseArgs()).toThrow('PRIVATE_KEY is required when WALLET_MODE=private-key');
+		});
+
+		it('rejects an invalid PRIVATE_KEY without including it in the error', () => {
+			process.env.WALLET_MODE = 'private-key';
+			process.env.PRIVATE_KEY = 'clearly-invalid-test-value';
+			expect(() => parseArgs()).toThrow('PRIVATE_KEY must be a valid 32-byte secp256k1 private key');
+			try {
+				parseArgs();
+			} catch (error) {
+				expect(String(error)).not.toContain(process.env.PRIVATE_KEY);
 			}
 		});
 	});
@@ -326,6 +379,7 @@ describe('Args Module', () => {
 			process.env.SERVER_TRANSPORT = 'streamable-http';
 			process.env.SERVER_PORT = '9000';
 			process.env.WALLET_MODE = 'private-key';
+			process.env.PRIVATE_KEY = '1'.repeat(64);
 
 			const result = parseArgs();
 
@@ -344,20 +398,32 @@ describe('Args Module', () => {
 				port: 9000,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'private-key'
+				walletMode: 'private-key',
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
 			});
 		});
 	});
 
 	describe('edge cases and error scenarios', () => {
-		it('should handle empty string environment variables', () => {
+		it('treats blank optional HTTP and stdio values as defaults', () => {
 			process.env.SERVER_HOST = '';
 			process.env.SERVER_PATH = '';
+			process.env.SERVER_PORT = '';
+			process.env.SSE_MAX_SESSIONS = '';
+			process.env.STREAMABLE_HTTP_MAX_REQUESTS = '';
 
-			const result = parseArgs();
+			expect(parseArgs()).toMatchObject({
+				mode: 'stdio',
+				host: 'localhost',
+				path: '/mcp',
+				port: 8080,
+				maxSseSessions: 100,
+				maxStreamableRequests: 100
+			});
 
-			expect(result.host).toBe(''); // Empty string should be preserved
-			expect(result.path).toBe('/'); // Empty path should be normalized to /
+			process.env.SERVER_TRANSPORT = 'http-sse';
+			expect(parseArgs()).toMatchObject({ host: 'localhost', port: 8080, maxSseSessions: 100 });
 		});
 
 		it('should handle whitespace in environment variables', () => {
@@ -378,16 +444,13 @@ describe('Args Module', () => {
 			expect(result.path).toBe('/api/mcp-v1.0_test@special');
 		});
 
-		it('should handle multiple validation errors by exiting on first', () => {
+		it('should report the first of multiple validation errors', () => {
 			process.env.WALLET_MODE = 'invalid';
 			process.env.SERVER_TRANSPORT = 'also-invalid';
 			process.env.SERVER_PORT = '0';
 
-			parseArgs();
-
-			// Should exit on first validation error (wallet mode)
-			expect(processExitSpy).toHaveBeenCalledWith(1);
-			expect(processExitSpy).toHaveBeenCalled();
+			expect(() => parseArgs()).toThrow("Invalid wallet mode 'invalid'");
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 
 		it('should handle process.env being undefined for specific keys', () => {

@@ -71,6 +71,16 @@ describe('Client Service', () => {
 			expect(client2).toBe(client1);
 		});
 
+		test('should share a client across canonical, decimal, and hexadecimal selectors', () => {
+			const canonical = getPublicClient('sei');
+			const decimal = getPublicClient('1329');
+			const hexadecimal = getPublicClient('0x531');
+
+			expect(decimal).toBe(canonical);
+			expect(hexadecimal).toBe(canonical);
+			expect(createPublicClient).toHaveBeenCalledTimes(1);
+		});
+
 		test('should throw error if cache has key but client is undefined', () => {
 			// We need to access the private clientCache to simulate this edge case
 			// First, get a reference to the client
@@ -104,22 +114,21 @@ describe('Client Service', () => {
 			// First call for 'sei' network
 			const seiClient = getPublicClient('sei');
 
-			// Setup mocks for 'ethereum' network
-			const ethereumChain = { id: 1, name: 'Ethereum' };
-			const ethereumRpcUrl = 'https://rpc.ethereum.io';
-			const ethereumPublicClient = { readContract: jest.fn() } as unknown as PublicClient;
+			// Setup mocks for the supported testnet
+			const testnetChain = { id: 1328, name: 'Sei Testnet' };
+			const testnetRpcUrl = 'https://rpc.testnet.example';
+			const testnetPublicClient = { readContract: jest.fn() } as unknown as PublicClient;
 
-			(getChain as jest.Mock).mockReturnValue(ethereumChain);
-			(getRpcUrl as jest.Mock).mockReturnValue(ethereumRpcUrl);
-			(createPublicClient as jest.Mock).mockReturnValue(ethereumPublicClient);
+			(getChain as jest.Mock).mockReturnValue(testnetChain);
+			(getRpcUrl as jest.Mock).mockReturnValue(testnetRpcUrl);
+			(createPublicClient as jest.Mock).mockReturnValue(testnetPublicClient);
 
-			// Call for 'ethereum' network
-			const ethereumClient = getPublicClient('ethereum');
+			const testnetClient = getPublicClient('sei-testnet');
 
-			expect(getChain).toHaveBeenCalledWith('ethereum');
-			expect(getRpcUrl).toHaveBeenCalledWith('ethereum');
-			expect(ethereumClient).toBe(ethereumPublicClient);
-			expect(ethereumClient).not.toBe(seiClient);
+			expect(getChain).toHaveBeenCalledWith('sei-testnet');
+			expect(getRpcUrl).toHaveBeenCalledWith('sei-testnet');
+			expect(testnetClient).toBe(testnetPublicClient);
+			expect(testnetClient).not.toBe(seiClient);
 		});
 
 		// This test verifies that getPublicClient works with no network parameter
