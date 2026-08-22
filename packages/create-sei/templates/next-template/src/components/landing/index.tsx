@@ -5,13 +5,15 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { IconBook, IconCode, IconRocket } from "@tabler/icons-react";
 import Link from "next/link";
 
+const technologyLabels = ["Next.js 15.5", "Mantine UI", "Tailwind CSS", "Biome", "RainbowKit", "Wagmi + Viem", "Vercel"];
+
 export default function Landing() {
 	return (
 		<Container size="md" py="xl">
 			<Stack gap="xl" align="center">
 				{/* Hero Section */}
 				<Stack gap="md" align="center" ta="center">
-					<Title order={1} size="h1" fw={700} c="gray.9">
+					<Title order={1} size="h1" fw={700} c="seiMaroon.9" className="sei-heading">
 						Welcome to Your Sei dApp
 					</Title>
 					<Text size="lg" c="dimmed" maw={600}>
@@ -21,102 +23,22 @@ export default function Landing() {
 
 					{/* Tech Stack Badges */}
 					<Group gap="xs" mt="sm">
-						<Badge
-							variant="light"
-							color="blue"
-							style={{
-								backgroundColor: "rgb(239 246 255)",
-								color: "rgb(29 78 216)",
-								border: "1px solid rgb(191 219 254)",
-							}}
-						>
-							Next.js 14
-						</Badge>
-						<Badge
-							variant="light"
-							color="violet"
-							style={{
-								backgroundColor: "rgb(250 245 255)",
-								color: "rgb(109 40 217)",
-								border: "1px solid rgb(196 181 253)",
-							}}
-						>
-							Mantine UI
-						</Badge>
-						<Badge
-							variant="light"
-							color="cyan"
-							style={{
-								backgroundColor: "rgb(236 254 255)",
-								color: "rgb(14 116 144)",
-								border: "1px solid rgb(165 243 252)",
-							}}
-						>
-							Tailwind CSS
-						</Badge>
-						<Badge
-							variant="light"
-							color="yellow"
-							style={{
-								backgroundColor: "rgb(254 249 195)",
-								color: "rgb(161 98 7)",
-								border: "1px solid rgb(254 240 138)",
-							}}
-						>
-							Biome
-						</Badge>
-						<Badge
-							variant="light"
-							color="orange"
-							style={{
-								backgroundColor: "rgb(255 247 237)",
-								color: "rgb(194 65 12)",
-								border: "1px solid rgb(254 215 170)",
-							}}
-						>
-							RainbowKit
-						</Badge>
-						<Badge
-							variant="light"
-							color="teal"
-							style={{
-								backgroundColor: "rgb(240 253 250)",
-								color: "rgb(15 118 110)",
-								border: "1px solid rgb(153 246 228)",
-							}}
-						>
-							Wagmi + Viem
-						</Badge>
-						<Badge
-							variant="light"
-							color="dark"
-							style={{
-								backgroundColor: "rgb(249 250 251)",
-								color: "rgb(17 24 39)",
-								border: "1px solid rgb(209 213 219)",
-							}}
-						>
-							Vercel
-						</Badge>
+						{technologyLabels.map((label) => (
+							<Badge key={label} variant="outline" color="gray">
+								{label}
+							</Badge>
+						))}
 					</Group>
 				</Stack>
 
 				{/* Primary Call to Action - Connect Wallet */}
-				<Card
-					withBorder
-					radius="xl"
-					p="xl"
-					bg="gradient-to-r from-blue-50 to-purple-50"
-					w="100%"
-					maw={600}
-					style={{ border: "2px solid var(--mantine-color-blue-2)" }}
-				>
+				<Card withBorder radius="xl" p="xl" w="100%" maw={600} bg="white" style={{ border: "2px solid var(--sei-maroon)" }}>
 					<Stack gap="lg" align="center" ta="center">
-						<ThemeIcon size={64} radius="xl" color="blue" variant="light">
+						<ThemeIcon size={64} radius="xl" variant="outline" color="seiMaroon">
 							<IconRocket size={32} />
 						</ThemeIcon>
 						<Stack gap="sm" align="center">
-							<Text fw={700} size="xl" c="blue.8">
+							<Text fw={700} size="xl" c="seiMaroon.9" className="sei-heading">
 								Connect Your Wallet to Get Started
 							</Text>
 							<Text size="md" c="dimmed" maw={400}>

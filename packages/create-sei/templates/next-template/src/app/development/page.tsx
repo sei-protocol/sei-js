@@ -12,11 +12,11 @@ export default function DevelopmentPage() {
 					{/* Header */}
 					<div>
 						<Group gap="md" align="center" mb="lg">
-							<ThemeIcon size={48} radius="md" c="purple" variant="light">
+							<ThemeIcon size={48} radius="md" variant="outline" color="seiMaroon">
 								<IconCode size={24} />
 							</ThemeIcon>
 							<div>
-								<Title order={1} fw={700} c="gray.9">
+								<Title order={1} fw={700} c="seiMaroon.9" className="sei-heading">
 									Continue Development
 								</Title>
 								<Text size="lg" c="gray.6" mt={4}>
@@ -37,7 +37,7 @@ export default function DevelopmentPage() {
 								<Paper
 									p="md"
 									radius="md"
-									bg="blue.0"
+									bg="white"
 									withBorder
 									component="a"
 									href="https://wagmi.sh/react/getting-started"
@@ -46,18 +46,18 @@ export default function DevelopmentPage() {
 								>
 									<Group gap="sm" justify="space-between">
 										<Group gap="sm">
-											<Text fw={600} c="blue.8">
+											<Text fw={600} c="seiMaroon.9">
 												Wagmi:
 											</Text>
 											<Text c="gray.7">React hooks for Ethereum - useAccount, useBalance, useSendTransaction, useContract</Text>
 										</Group>
-										<IconExternalLink size={16} color="var(--mantine-color-blue-8)" />
+										<IconExternalLink size={16} color="var(--sei-maroon)" />
 									</Group>
 								</Paper>
 								<Paper
 									p="md"
 									radius="md"
-									bg="green.0"
+									bg="white"
 									withBorder
 									component="a"
 									href="https://viem.sh/"
@@ -66,18 +66,18 @@ export default function DevelopmentPage() {
 								>
 									<Group gap="sm" justify="space-between">
 										<Group gap="sm">
-											<Text fw={600} c="green.8">
+											<Text fw={600} c="seiMaroon.9">
 												Viem:
 											</Text>
 											<Text c="gray.7">TypeScript interface for Ethereum - formatEther, parseEther, contract interactions</Text>
 										</Group>
-										<IconExternalLink size={16} color="var(--mantine-color-green-8)" />
+										<IconExternalLink size={16} color="var(--sei-maroon)" />
 									</Group>
 								</Paper>
 								<Paper
 									p="md"
 									radius="md"
-									bg="orange.0"
+									bg="white"
 									withBorder
 									component="a"
 									href="https://www.rainbowkit.com/docs/introduction"
@@ -86,12 +86,12 @@ export default function DevelopmentPage() {
 								>
 									<Group gap="sm" justify="space-between">
 										<Group gap="sm">
-											<Text fw={600} c="orange.8">
+											<Text fw={600} c="seiMaroon.9">
 												RainbowKit:
 											</Text>
 											<Text c="gray.7">Beautiful wallet connection UI with support for 100+ wallets</Text>
 										</Group>
-										<IconExternalLink size={16} color="var(--mantine-color-orange-8)" />
+										<IconExternalLink size={16} color="var(--sei-maroon)" />
 									</Group>
 								</Paper>
 							</Stack>
@@ -155,7 +155,7 @@ const customSeiChain = defineChain({
 							<Text c="gray.7">You're all set to build! Here are some ideas to get you started:</Text>
 							<Stack gap="sm">
 								<Group gap="sm">
-									<Text fw={600} c="purple.7">
+									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">
@@ -163,7 +163,7 @@ const customSeiChain = defineChain({
 									</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="purple.7">
+									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">
@@ -171,7 +171,7 @@ const customSeiChain = defineChain({
 									</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="purple.7">
+									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">
@@ -179,13 +179,13 @@ const customSeiChain = defineChain({
 									</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="purple.7">
+									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">Implement multi-chain support by extending the chain configuration</Text>
 								</Group>
 								<Group gap="sm">
-									<Text fw={600} c="purple.7">
+									<Text fw={600} c="seiGold.9" ff="var(--sei-font-mono)">
 										•
 									</Text>
 									<Text c="gray.7">Add more Sei precompiles for advanced blockchain interactions</Text>
@@ -206,7 +206,7 @@ const customSeiChain = defineChain({
 									href="https://wagmi.sh/react/getting-started"
 									target="_blank"
 									variant="light"
-									c="blue"
+									c="dark"
 									size="sm"
 									radius="md"
 									leftSection={<IconExternalLink size={14} />}
@@ -218,7 +218,7 @@ const customSeiChain = defineChain({
 									href="https://viem.sh/"
 									target="_blank"
 									variant="light"
-									c="green"
+									c="dark"
 									size="sm"
 									radius="md"
 									leftSection={<IconExternalLink size={14} />}
@@ -229,8 +229,8 @@ const customSeiChain = defineChain({
 									component="a"
 									href="https://docs.sei.io/"
 									target="_blank"
-									variant="light"
-									c="orange"
+									variant="filled"
+									color="seiMaroon"
 									size="sm"
 									radius="md"
 									leftSection={<IconExternalLink size={14} />}
@@ -242,7 +242,7 @@ const customSeiChain = defineChain({
 									href="https://www.rainbowkit.com/docs/introduction"
 									target="_blank"
 									variant="light"
-									c="purple"
+									c="dark"
 									size="sm"
 									radius="md"
 									leftSection={<IconExternalLink size={14} />}

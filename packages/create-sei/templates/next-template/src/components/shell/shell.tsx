@@ -13,12 +13,12 @@ export default function Shell({ children }: PropsWithChildren) {
 	const { disconnect } = useDisconnect();
 
 	return (
-		<AppShell header={{ height: 64 }} padding="md">
-			<AppShell.Header>
+		<AppShell header={{ height: 72 }} footer={{ height: 56 }} padding="md">
+			<AppShell.Header bg="white" style={{ borderColor: "var(--sei-neutral-50)" }}>
 				<Container size="xl" h="100%">
 					<Group justify="space-between" align="center" h="100%">
-						<Link href="/" aria-label="Sei">
-							<Image src="https://cdn.sei.io/assets/sei-icon.svg" alt="Sei" width={28} height={28} style={{ display: "block" }} />
+						<Link href="/" aria-label="Sei home" className="sei-brand-link">
+							<Image src="/brand/sei-lockup-light.svg" alt="Sei" width={104} height={40} priority style={{ display: "block" }} />
 						</Link>
 						<Group align="center" gap="md">
 							<ActionIcon
@@ -83,6 +83,13 @@ export default function Shell({ children }: PropsWithChildren) {
 				</Container>
 			</AppShell.Header>
 			<AppShell.Main>{children}</AppShell.Main>
+			<AppShell.Footer bg="white" style={{ borderColor: "var(--sei-neutral-50)" }}>
+				<Container size="xl" h="100%">
+					<Group justify="center" align="center" h="100%">
+						<Image src="/brand/powered-by-sei-light.png" alt="Powered by Sei" width={192} height={28} style={{ display: "block" }} />
+					</Group>
+				</Container>
+			</AppShell.Footer>
 		</AppShell>
 	);
 }

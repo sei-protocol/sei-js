@@ -1,9 +1,9 @@
 "use client";
 
-import { MantineProvider } from "@mantine/core";
+import { createTheme, MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { connectorsForWallets, lightTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
+import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode, useMemo } from "react";
 import { createConfig, http, WagmiProvider } from "wagmi";
@@ -12,12 +12,27 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { sei, seiTestnet } from "viem/chains";
 
 const queryClient = new QueryClient();
+const theme = createTheme({
+	autoContrast: true,
+	colors: {
+		gray: ["#f5f5f7", "#f5f5f7", "#cccccc", "#999999", "#666666", "#666666", "#333333", "#333333", "#131313", "#000000"],
+		seiGold: ["#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22", "#966f22"],
+		seiMaroon: ["#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014", "#600014"],
+	},
+	fontFamily: "var(--sei-font-body)",
+	fontFamilyMonospace: "var(--sei-font-mono)",
+	headings: {
+		fontFamily: "var(--sei-font-display)",
+	},
+	primaryColor: "seiMaroon",
+	primaryShade: 9,
+});
 
 const connectors = connectorsForWallets(
 	[
 		{
 			groupName: "Recommended",
-			wallets: [metaMaskWallet],
+			wallets: [injectedWallet],
 		},
 	],
 	{
@@ -61,11 +76,11 @@ export default function Providers({ children }: ProvidersProps) {
 	return (
 		<WagmiProvider config={config}>
 			<QueryClientProvider client={queryClient}>
-				<MantineProvider defaultColorScheme="light">
+				<MantineProvider defaultColorScheme="light" theme={theme}>
 					<Notifications />
 					<RainbowKitProvider
 						theme={lightTheme({
-							accentColor: "#9E1F19",
+							accentColor: "var(--sei-maroon)",
 							accentColorForeground: "white",
 							borderRadius: "medium",
 							fontStack: "system",

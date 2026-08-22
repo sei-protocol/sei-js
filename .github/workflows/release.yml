@@ -51,6 +51,10 @@ jobs:
       - name: Validate Published Packages
         run: bun run lint:pack:all
 
+      - name: Validate generated create-sei applications
+        timeout-minutes: 15
+        run: bun run test:create-sei-release
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1

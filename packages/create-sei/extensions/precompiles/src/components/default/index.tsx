@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { CodeHighlight } from '@mantine/code-highlight';
-import { ActionIcon, Badge, Button, Card, Collapse, Container, Flex, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from '@sei-js/precompiles';
-import { IconBulb, IconChevronDown, IconChevronUp, IconCopy, IconDatabase } from '@tabler/icons-react';
-import { useState } from 'react';
-import { usePublicClient } from 'wagmi';
+import { CodeHighlight } from "@mantine/code-highlight";
+import { ActionIcon, Badge, Button, Card, Collapse, Container, Flex, Group, Paper, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { BANK_PRECOMPILE_ABI, BANK_PRECOMPILE_ADDRESS } from "@sei-js/precompiles";
+import { IconBulb, IconChevronDown, IconChevronUp, IconCopy, IconDatabase } from "@tabler/icons-react";
+import { useState } from "react";
+import { usePublicClient } from "wagmi";
 
 function Examples() {
-	const [supply, setSupply] = useState('');
+	const [supply, setSupply] = useState("");
 	const [showCode, setShowCode] = useState(false);
 
 	const publicClient = usePublicClient();
@@ -18,7 +18,7 @@ function Examples() {
 		if (num.length > 10) {
 			return `${(Number(num) / 1000000 / 1000000000).toLocaleString(navigator.language, {
 				minimumFractionDigits: decimals,
-				maximumFractionDigits: decimals
+				maximumFractionDigits: decimals,
 			})} B`;
 		}
 		return (Number(num) / 1000000).toLocaleString(navigator.language);
@@ -28,17 +28,17 @@ function Examples() {
 		try {
 			navigator.clipboard.writeText(text).then(() => {
 				notifications.show({
-					title: 'Copied!',
-					message: 'Code copied to clipboard',
-					color: 'green'
+					title: "Copied!",
+					message: "Code copied to clipboard",
+					color: "green",
 				});
 			});
 		} catch (err) {
-			console.error('Failed to copy text: ', err);
+			console.error("Failed to copy text: ", err);
 			notifications.show({
-				title: 'Error',
-				message: 'Failed to copy to clipboard',
-				color: 'red'
+				title: "Error",
+				message: "Failed to copy to clipboard",
+				color: "red",
 			});
 		}
 	};
@@ -52,16 +52,16 @@ function Examples() {
 			const result = await publicClient.readContract({
 				abi: BANK_PRECOMPILE_ABI,
 				address: BANK_PRECOMPILE_ADDRESS,
-				functionName: 'supply',
-				args: ['usei']
+				functionName: "supply",
+				args: ["usei"],
 			});
 			setSupply(result.toString());
 		} catch (error) {
-			console.error('Error fetching supply:', error);
+			console.error("Error fetching supply:", error);
 			notifications.show({
-				title: 'Error',
-				message: 'Failed to fetch SEI supply',
-				color: 'red'
+				title: "Error",
+				message: "Failed to fetch SEI supply",
+				color: "red",
 			});
 		}
 	};
@@ -88,11 +88,11 @@ const getSeiSupply = async () => {
 				{/* Header */}
 				<div>
 					<Group gap="md" align="center" mb="lg">
-						<ThemeIcon size={48} radius="md" c="orange" variant="light">
+						<ThemeIcon size={48} radius="md" variant="outline" color="seiMaroon">
 							<IconBulb size={24} />
 						</ThemeIcon>
 						<div>
-							<Title order={1} fw={700} c="gray.9">
+							<Title order={1} fw={700} c="seiMaroon.9" className="sei-heading">
 								Sei Precompiles
 							</Title>
 							<Text size="lg" c="gray.6" mt={4}>
@@ -108,7 +108,7 @@ const getSeiSupply = async () => {
 						<Flex justify="space-between" align="flex-start">
 							<Stack gap="xs">
 								<Group gap="md">
-									<ThemeIcon size={40} radius="md" color="orange" variant="light">
+									<ThemeIcon size={40} radius="md" variant="outline" color="seiMaroon">
 										<IconDatabase size={20} />
 									</ThemeIcon>
 									<Title order={3} fw={600} c="gray.9">
@@ -116,13 +116,13 @@ const getSeiSupply = async () => {
 									</Title>
 								</Group>
 								<Text size="sm" c="gray.6">
-									Query total SEI supply using Sei's native{' '}
-									<Text component="a" href="https://docs.sei.io/evm/precompiles/cosmwasm-precompiles/bank" target="_blank" c="orange" td="underline">
+									Query total SEI supply using Sei's native{" "}
+									<Text component="a" href="https://docs.sei.io/evm/precompiles/cosmwasm-precompiles/bank" target="_blank" c="seiMaroon.9" td="underline">
 										Bank precompile
 									</Text>
 								</Text>
 							</Stack>
-							<Badge color="orange" variant="light" size="md" radius="md">
+							<Badge variant="outline" color="gray" size="md" radius="md">
 								precompiles
 							</Badge>
 						</Flex>
@@ -135,7 +135,7 @@ const getSeiSupply = async () => {
 								<Flex align="baseline" gap="xs">
 									{supply ? (
 										<>
-											<Text fw={700} size="xl" c="gray.9" ff="monospace">
+											<Text fw={700} size="xl" c="seiGold.9" ff="var(--sei-font-mono)">
 												{formatLargeSeiNumber(supply, 2)}
 											</Text>
 											<Text size="sm" c="gray.6" fw={500}>
@@ -155,8 +155,8 @@ const getSeiSupply = async () => {
 										</Paper>
 									)}
 								</Flex>
-								<Button onClick={getSeiSupply} size="sm" radius="md" variant="light" color="orange" leftSection={<IconDatabase size={14} />}>
-									{supply ? 'Refresh' : 'Query Supply'}
+								<Button onClick={getSeiSupply} size="sm" radius="md" variant="filled" color="seiMaroon" leftSection={<IconDatabase size={14} />}>
+									{supply ? "Refresh" : "Query Supply"}
 								</Button>
 							</Flex>
 						</Paper>
@@ -170,7 +170,7 @@ const getSeiSupply = async () => {
 								leftSection={showCode ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
 								onClick={() => setShowCode(!showCode)}
 							>
-								{showCode ? 'Hide' : 'View'} Implementation
+								{showCode ? "Hide" : "View"} Implementation
 							</Button>
 							{showCode && (
 								<ActionIcon variant="subtle" color="gray" size="sm" radius="md" onClick={() => copyToClipboard(codeExample)}>

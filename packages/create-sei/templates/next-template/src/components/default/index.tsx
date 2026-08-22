@@ -80,7 +80,7 @@ function Examples() {
 			notifications.show({
 				title: "Missing Information",
 				message: "Please enter recipient address and amount",
-				color: "orange",
+				color: "yellow",
 			});
 			return;
 		}
@@ -106,11 +106,11 @@ function Examples() {
 				{/* Header */}
 				<div>
 					<Group gap="md" align="center" mb="lg">
-						<ThemeIcon size={48} radius="md" c="blue" variant="light">
+						<ThemeIcon size={48} radius="md" variant="outline" color="seiMaroon">
 							<IconBulb size={24} />
 						</ThemeIcon>
 						<div>
-							<Title order={1} fw={700} c="gray.9">
+							<Title order={1} fw={700} c="seiMaroon.9" className="sei-heading">
 								Interactive Examples
 							</Title>
 							<Text size="lg" c="gray.6" mt={4}>
@@ -126,7 +126,7 @@ function Examples() {
 						<Flex justify="space-between" align="flex-start">
 							<Stack gap="xs">
 								<Group gap="md">
-									<ThemeIcon size={40} radius="md" color="blue" variant="light">
+									<ThemeIcon size={40} radius="md" variant="outline" color="seiMaroon">
 										<IconWallet size={20} />
 									</ThemeIcon>
 									<Title order={4} fw={600} c="gray.9">
@@ -137,7 +137,7 @@ function Examples() {
 									Access wallet information using Wagmi's useAccount hook
 								</Text>
 							</Stack>
-							<Badge color="blue" variant="light" size="md" radius="md">
+							<Badge variant="outline" color="gray" size="md" radius="md">
 								address
 							</Badge>
 						</Flex>
@@ -151,7 +151,7 @@ function Examples() {
 								</Code>
 								{isConnected && address && (
 									<Group gap="xs">
-										<ActionIcon variant="light" color="blue" size="sm" radius="md" onClick={() => copyToClipboard(address)} aria-label="Copy address">
+										<ActionIcon variant="outline" color="dark" size="sm" radius="md" onClick={() => copyToClipboard(address)} aria-label="Copy address">
 											<IconCopy size={14} />
 										</ActionIcon>
 										<ActionIcon variant="light" color="red" size="sm" radius="md" onClick={() => disconnect()} aria-label="Disconnect wallet">
@@ -195,7 +195,7 @@ function Examples() {
 							<Flex justify="space-between" align="flex-start">
 								<Stack gap="xs">
 									<Flex align="center" gap="md">
-										<ThemeIcon size={40} radius="md" color="green" variant="light">
+										<ThemeIcon size={40} radius="md" variant="outline" color="seiGold">
 											<IconCoins size={20} />
 										</ThemeIcon>
 										<Title order={3} size="h3" fw={600}>
@@ -206,7 +206,7 @@ function Examples() {
 										Query your wallet's SEI balance using Wagmi's usePublicClient hook
 									</Text>
 								</Stack>
-								<Badge color="green" variant="light" size="md" radius="md">
+								<Badge variant="outline" color="gray" size="md" radius="md">
 									balance
 								</Badge>
 							</Flex>
@@ -218,7 +218,7 @@ function Examples() {
 									<Flex align="baseline" gap="xs">
 										{balance ? (
 											<>
-												<Text fw={700} size="xl" c="gray.9" ff="monospace">
+												<Text fw={700} size="xl" c="seiGold.9" ff="var(--sei-font-mono)">
 													{Number.parseFloat(balance).toFixed(4)}
 												</Text>
 												<Text size="sm" c="gray.6" fw={500}>
@@ -243,8 +243,8 @@ function Examples() {
 										disabled={!address}
 										size="sm"
 										radius="md"
-										variant="light"
-										color="green"
+										variant="filled"
+										color="seiMaroon"
 										leftSection={<IconCoins size={14} />}
 									>
 										{balance ? "Refresh" : "Check Balance"}
@@ -284,7 +284,7 @@ function Examples() {
 							<Flex direction="row" justify="space-between" align="flex-start">
 								<Stack gap="xs">
 									<Flex direction="row" align="center" gap="md" mb="md">
-										<ThemeIcon size={40} radius="md" color="blue" variant="light">
+										<ThemeIcon size={40} radius="md" variant="outline" color="seiMaroon">
 											<IconSend size={20} />
 										</ThemeIcon>
 										<Title order={3} size="h3" fw={600} c="gray.9">
@@ -295,7 +295,7 @@ function Examples() {
 										Send SEI tokens using Wagmi's transaction hooks with real-time status
 									</Text>
 								</Stack>
-								<Badge color="blue" variant="light" size="md" radius="md">
+								<Badge variant="outline" color="gray" size="md" radius="md">
 									transfer
 								</Badge>
 							</Flex>
@@ -329,8 +329,8 @@ function Examples() {
 										disabled={isPending || !address || !recipient || !amount}
 										size="md"
 										radius="md"
-										variant="light"
-										color="blue"
+										variant="filled"
+										color="seiMaroon"
 										px="sm"
 									>
 										{isPending ? <Loader size={16} /> : <IconSend size={16} />}
@@ -339,7 +339,7 @@ function Examples() {
 							</Paper>
 
 							{hash && (
-								<Alert color="blue" variant="light" radius="md" py={4}>
+								<Alert color="dark" variant="light" radius="md" py={4}>
 									<Stack gap={4}>
 										<Text size="xs" fw={600}>
 											Transaction Hash

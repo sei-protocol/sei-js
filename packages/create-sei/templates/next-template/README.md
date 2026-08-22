@@ -22,11 +22,25 @@ bun run check
 bun run build
 ```
 
+## Image handling
+
+Next.js image optimization is disabled because Next 15.5.21 declares only vulnerable Sharp 0.34.x releases. The manifest resolves secure Sharp 0.35.x for audit safety, while images are served unoptimized until Next.js supports that Sharp line.
+
+## Sei brand
+
+The assets in `public/brand` come unchanged from the [official Sei brand kit](https://brand.sei.io). The primary lockup is used in the header, the horizontal “Powered by Sei” asset appears in the footer, and the standalone mark is reserved for app-icon metadata. Preserve their proportions and clearspace; do not redraw or recolor them.
+
+Black and white are the base palette. `--sei-maroon` (`#600014`) is reserved for primary actions and headlines, while `--sei-gold` (`#966F22`) is reserved for data and highlights. Reusable palette and typography tokens live in `src/app/globals.css`.
+
+The Mantine theme maps `gray` to the official neutral ramp; ordinary and dimmed text resolves to `#666666` or darker for accessible contrast on white and `#F5F5F7`.
+
+The public brand archive does not include the proprietary Lateral or ABC Repro Mono font files, so this starter uses license-safe system fallback stacks. Teams with appropriately licensed fonts can map Lateral and ABC Repro Mono to the documented CSS font tokens.
+
 ## Project structure
 
 - `src/app/layout.tsx` wraps every route with the wallet and UI providers.
 - `src/app/page.tsx` shows the landing page until a wallet connects, then shows the interactive examples.
-- `src/components/providers/providers.tsx` configures Wagmi, RainbowKit, and the selected Sei network. It registers MetaMask by default; add other wallets to its `wallets` list.
+- `src/components/providers/providers.tsx` configures Wagmi, RainbowKit, and the selected Sei network. It registers the injected browser-wallet connector by default; add other wallets to its `wallets` list.
 - `src/components/shell/shell.tsx` provides the shared app shell around the landing and connected views.
 - `src/components/landing/index.tsx` contains the disconnected landing page.
 - `src/components/default/index.tsx` contains the connected wallet, balance, and transaction examples.
@@ -46,7 +60,7 @@ WalletConnect-based wallets require a real project ID from [WalletConnect Cloud]
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your-project-id
 ```
 
-The fallback value in the template is only a placeholder, so WalletConnect-based wallets will not connect until you replace it. The bundled MetaMask connector works without a WalletConnect project ID when the MetaMask browser extension is installed.
+The fallback value in the template is only a placeholder, so WalletConnect-based wallets will not connect until you replace it. The bundled injected connector works without a WalletConnect project ID for installed browser wallets such as MetaMask.
 
 ## Learn more
 
