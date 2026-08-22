@@ -24,10 +24,13 @@
 		"lint:pack:exports": "bun scripts/check-precompile-exports.ts",
 		"lint:pack:runtime": "bun scripts/check-mcp-cli.ts",
 		"release": "changeset publish && git push --follow-tags",
-		"release:internal": "bun run build && bun run changeset && bun run changeset version --snapshot internal && bun run changeset publish --no-git-tag --snapshot --tag internal",
-		"test": "bun run --filter '*' test",
+		"release:internal": "bun run build && bun run changeset && bun run changeset version --snapshot internal && bun run sync-lockfile && bun run changeset publish --no-git-tag --snapshot --tag internal",
+		"sync-lockfile": "bun install --lockfile-only && bun scripts/sync-workspace-versions.ts",
+		"version-packages": "changeset version && bun run sync-lockfile",
+		"test": "bun run --filter '*' test && bun run test:scripts",
 		"test:all": "bun run test",
 		"test:coverage": "bun test --isolate --coverage --coverage-reporter=lcov packages",
+		"test:scripts": "bun test --isolate scripts",
 		"typecheck": "tsc --project tsconfig.test.json"
 	},
 	"devDependencies": {
@@ -37,6 +40,7 @@
 		"@types/bun": "^1.3.0",
 		"@types/node": "^22.13.13",
 		"esbuild": "^0.28.2",
+		"jsonc-parser": "^3.3.1",
 		"publint": "0.3.23",
 		"typescript": "^5.8.2"
 	},

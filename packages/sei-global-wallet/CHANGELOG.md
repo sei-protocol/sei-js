@@ -1,4 +1,4 @@
-# @sei-js/global-wallet
+# @sei-js/sei-global-wallet
 
 ## 1.4.1
 

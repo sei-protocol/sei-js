@@ -1,4 +1,4 @@
-# @sei-js/create-sei-app
+# @sei-js/create-sei
 
 ## 1.0.1
 
