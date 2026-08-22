@@ -54,23 +54,47 @@ const waitForHealth = async (child: ReturnType<typeof Bun.spawn>, port: number):
 	return false;
 };
 
+const killProcessTree = (child: ReturnType<typeof Bun.spawn>, signal: 'SIGTERM' | 'SIGKILL') => {
+	if (typeof child.pid === 'number') {
+		try {
+			process.kill(-child.pid, signal);
+			return;
+		} catch {
+			// Process group kill is unsupported (Windows) or the group is already gone.
+		}
+	}
+
+	child.kill(signal === 'SIGKILL' ? 9 : undefined);
+};
+
 const stopChild = async (child: ReturnType<typeof Bun.spawn>): Promise<void> => {
 	if (child.exitCode !== null) return;
 
-	child.kill();
+	killProcessTree(child, 'SIGTERM');
 	const stopped = await Promise.race([child.exited.then(() => true), Bun.sleep(2_000).then(() => false)]);
 	if (!stopped) {
-		child.kill(9);
-		await child.exited;
+		killProcessTree(child, 'SIGKILL');
+		await Promise.race([child.exited.then(() => undefined), Bun.sleep(2_000)]);
 	}
+};
+
+const collectProcessOutput = async (stdoutPromise: Promise<string>, stderrPromise: Promise<string>): Promise<[string, string]> => {
+	const result = await Promise.race([Promise.all([stdoutPromise, stderrPromise]), Bun.sleep(2_000).then(() => null)]);
+	if (!result) {
+		return ['', 'timed out waiting for process output after shutdown'];
+	}
+
+	return result;
 };
 
 const checkHttpStart = async (script: 'start:http' | 'start:http-sse', transport: 'streamable-http' | 'http-sse') => {
 	const port = await getAvailablePort();
 	const child = Bun.spawn(['bun', 'run', '--cwd', packageDir, script], {
 		cwd: root,
+		detached: true,
 		env: {
 			...process.env,
+			// Intentionally stdio: the package script must override this inherited value.
 			SERVER_TRANSPORT: 'stdio',
 			SERVER_HOST: '127.0.0.1',
 			SERVER_PORT: String(port),
@@ -83,16 +107,20 @@ const checkHttpStart = async (script: 'start:http' | 'start:http-sse', transport
 	});
 	const stdoutPromise = new Response(child.stdout).text();
 	const stderrPromise = new Response(child.stderr).text();
-	const healthy = await waitForHealth(child, port);
 
-	await stopChild(child);
-	const [stdout, stderr] = await Promise.all([stdoutPromise, stderrPromise]);
-	if (!healthy || !stderr.includes(`MCP Server ready (${transport} transport`)) {
-		throw new Error(
-			`MCP HTTP startup check failed for ${script}: exit=${child.exitCode}, healthy=${healthy}, stdout=${JSON.stringify(stdout.trim())}, stderr=${JSON.stringify(
-				stderr.trim()
-			)}`
-		);
+	try {
+		const healthy = await waitForHealth(child, port);
+		await stopChild(child);
+		const [stdout, stderr] = await collectProcessOutput(stdoutPromise, stderrPromise);
+		if (!healthy || !stderr.includes(`MCP Server ready (${transport} transport`)) {
+			throw new Error(
+				`MCP HTTP startup check failed for ${script}: exit=${child.exitCode}, healthy=${healthy}, stdout=${JSON.stringify(stdout.trim())}, stderr=${JSON.stringify(
+					stderr.trim()
+				)}`
+			);
+		}
+	} finally {
+		await stopChild(child);
 	}
 };
 

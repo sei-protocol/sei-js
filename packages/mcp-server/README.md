@@ -77,7 +77,8 @@ To run the published package directly:
 # Recommended: Streamable HTTP at http://localhost:8080/mcp
 SERVER_TRANSPORT=streamable-http npx -y @sei-js/mcp-server
 
-# Legacy HTTP/SSE at http://localhost:8080/mcp
+# Legacy HTTP/SSE: GET http://localhost:8080/mcp for the event stream,
+# POST http://localhost:8080/mcp/message?sessionId=<id> for client messages
 SERVER_TRANSPORT=http-sse npx -y @sei-js/mcp-server
 ```
 
@@ -91,6 +92,8 @@ SERVER_PATH=/api/mcp \
 npx -y @sei-js/mcp-server
 ```
 
+HTTP transports do not authenticate callers or validate `Origin`/`Host`. Bind to `127.0.0.1` for local use, and put any public exposure behind an authenticating reverse proxy.
+
 `http-sse` is retained for older clients; use `streamable-http` for new integrations.
 
 ## Configuration
@@ -98,7 +101,7 @@ npx -y @sei-js/mcp-server
 - `SERVER_TRANSPORT`: `stdio` (default), `streamable-http`, or `http-sse`
 - `SERVER_HOST`: HTTP listener host (default: `localhost`)
 - `SERVER_PORT`: HTTP listener port (default: `8080`)
-- `SERVER_PATH`: HTTP endpoint path (default: `/mcp`)
+- `SERVER_PATH`: HTTP endpoint path (default: `/mcp`). For `http-sse`, this is the GET event stream; clients POST messages to `{SERVER_PATH}/message?sessionId=<id>`.
 - `WALLET_MODE`: `disabled` (default) or `private-key`
 - `PRIVATE_KEY`: Private key used when `WALLET_MODE=private-key`
 - `MAINNET_RPC_URL`: Optional custom Sei mainnet RPC URL
