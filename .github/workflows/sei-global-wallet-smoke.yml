@@ -1,0 +1,48 @@
+name: Sei Global Wallet Consumer Smoke
+
+on:
+  pull_request:
+    paths:
+      - '.changeset/**'
+      - '.github/workflows/sei-global-wallet-smoke.yml'
+      - 'bun.lock'
+      - 'package.json'
+      - 'packages/sei-global-wallet/**'
+      - 'scripts/check-sei-global-wallet.ts'
+      - 'tsconfig.base.json'
+      - 'tsconfig.test.json'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  consumers:
+    name: npm, Bun, edge, and browser consumers
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.14'
+
+      - name: Install workspace dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Verify npm and waived Bun consumers
+        run: bun run test:sei-global-wallet-release
