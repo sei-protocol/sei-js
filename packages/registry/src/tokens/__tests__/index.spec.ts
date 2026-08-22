@@ -21,6 +21,22 @@ const EXPECTED_CANONICAL_MAINNET_ASSETS = [
 	{ label: 'fastUSD', symbol: 'fastUSD', base: '0x37a4dD9CED2b19Cfe8FAC251cd727b5787E45269', type_asset: 'erc20' }
 ] as const;
 
+function tokenWithAliases(aliases: unknown): Record<string, unknown> {
+	return {
+		name: 'Alias fixture',
+		description: 'Fixture for denomination aliases',
+		symbol: 'ALIAS',
+		base: 'ualias',
+		display: 'alias',
+		denom_units: [
+			{ denom: 'ualias', exponent: 0, aliases },
+			{ denom: 'alias', exponent: 6 }
+		],
+		images: {},
+		type_asset: 'sdk.coin'
+	};
+}
+
 describe('community asset list', () => {
 	it('validates the reviewed upstream shape and pointer metadata', () => {
 		const parsed = parseTokenList(AssetListJSON);
@@ -79,6 +95,16 @@ describe('community asset list', () => {
 		};
 
 		expect(() => parseTokenList(malformed)).toThrow('denom_units must contain two units');
+	});
+
+	it('validates and preserves optional denomination aliases', () => {
+		const parsed = parseTokenList({ fixture: [tokenWithAliases(['microalias', 'uALIAS'])] });
+		expect(parsed.fixture[0]?.denom_units[0]?.aliases).toEqual(['microalias', 'uALIAS']);
+	});
+
+	it('rejects malformed denomination aliases', () => {
+		expect(() => parseTokenList({ fixture: [tokenWithAliases('microalias')] })).toThrow('aliases must be an array');
+		expect(() => parseTokenList({ fixture: [tokenWithAliases(['microalias', 7])] })).toThrow('aliases[1] must be a string');
 	});
 
 	it('retains only supported networks with reviewed source and runtime counts', () => {

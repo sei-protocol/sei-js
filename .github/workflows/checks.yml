@@ -37,8 +37,14 @@ jobs:
       - name: Lint, Format & Type Check
         run: bun run check
 
+      - name: Verify Registry Submodules
+        run: bun run --cwd packages/registry check:submodules
+
       - name: Build All Packages
         run: bun run build
+
+      - name: Verify Registry Artifact
+        run: bun run --cwd packages/registry check:artifact
 
       - name: Test
         run: bun run test

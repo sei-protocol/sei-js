@@ -94,16 +94,25 @@ function parseToken(value: unknown, path: string): RegistryToken {
 	const denomUnits = value.denom_units.map((unit, index) => {
 		const unitPath = `${path}.denom_units[${index}]`;
 		assert(isRecord(unit), `${unitPath} must be an object`);
-		assertOnlyKeys(unit, new Set(['denom', 'exponent']), unitPath);
+		assertOnlyKeys(unit, new Set(['denom', 'exponent', 'aliases']), unitPath);
 		assert(typeof unit.denom === 'string', `${unitPath}.denom must be a string`);
 		assert(Number.isInteger(unit.exponent) && Number(unit.exponent) >= 0, `${unitPath}.exponent must be a non-negative integer`);
 		if (index === 0) {
 			assert(unit.exponent === 0, `${unitPath}.exponent must be 0 for the base denomination`);
 		}
+		let aliases: string[] | undefined;
+		if (unit.aliases !== undefined) {
+			assert(Array.isArray(unit.aliases), `${unitPath}.aliases must be an array`);
+			aliases = unit.aliases.map((alias, aliasIndex) => {
+				assert(typeof alias === 'string', `${unitPath}.aliases[${aliasIndex}] must be a string`);
+				return alias;
+			});
+		}
 
 		return {
 			denom: unit.denom,
-			exponent: Number(unit.exponent)
+			exponent: Number(unit.exponent),
+			...(aliases === undefined ? {} : { aliases })
 		};
 	});
 

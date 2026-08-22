@@ -16,7 +16,7 @@ The current reviewed community asset-list values are:
 
 `check:submodules` parses each stage-0 gitlink OID from the index and requires the initialized checkout to be at that exact OID with a clean worktree and the expected configured/origin remote. The community gitlink and checkout must also equal the reviewed revision above. A release must not bundle an unstaged gitlink update or local submodule edits.
 
-The registry package `test` script runs this live repository check before unit tests. The root `test` script invokes every package test, so both the Checks and Release workflows enforce it; both workflows must continue using `actions/checkout` with `submodules: recursive`.
+Registry package and root unit tests are hermetic and do not inspect live git state. The Checks and Release workflows enforce this repository check explicitly before building; both workflows must continue using `actions/checkout` with `submodules: recursive`. They also run `check:artifact` immediately after the build.
 
 ## Review and repin the community asset list
 Never update the gitlink by blindly checking out a moving branch. Review a candidate commit and then check out its full SHA.
@@ -56,7 +56,7 @@ git diff --cached --submodule=short -- packages/registry/community-assetlist
 bun run --cwd packages/registry check:submodules
 ```
 
-The community index entry must be mode `160000`, stage `0`, and OID `964ca87f7cff8d8791ad1e994628fa410faae61e`. The chain-registry index OID and checkout must remain `855440d90df49246498d0870c6be5de5af56dada`. Update `REVIEWED_ASSETLIST_REVISION`, deterministic counts and canonical fixtures, this runbook, the README migration notes, and the changeset in the same change.
+The community index entry must be mode `160000`, stage `0`, and OID `964ca87f7cff8d8791ad1e994628fa410faae61e`. The chain-registry index OID and checkout must remain `855440d90df49246498d0870c6be5de5af56dada`. Update `REVIEWED_ASSETLIST_REVISION`, deterministic counts and canonical fixtures, every documented source/retained/filtered/pointer/image count in the README and runbook, and the changeset in the same change.
 
 ## Validate schema and filtering
 The package validator checks every upstream network entry for the public token shape, allowed asset types, denomination field types, image metadata, and pointer metadata. The deterministic tests then verify supported networks, source and retained counts, canonical assets, IBC/ICS-20 removal, and source/runtime parity.
@@ -67,6 +67,8 @@ bun run typecheck
 ```
 
 Also review the upstream Draft-07 schema itself. At the current pin, that schema requires exactly two denomination units for every token, but upstream's `ForU AI Genesis` ERC-721 intentionally has an empty `denom_units` array. The package retains this non-IBC asset and validates its fields while allowing the non-fungible exception. Do not rewrite pinned upstream metadata during packaging, and do not generalize this exception to malformed fungible assets without a separate review.
+
+Unknown fields, unknown enum values, and missing current required fields intentionally fail at import and build time. A reviewed pin should never silently discard or broaden newly introduced metadata: update the public types, validator, tests, and documentation as one reviewed change. Runtime validation is deliberately retained so source execution and the generated bundle enforce the same schema.
 
 The source and esbuild plugin share `filterTokenList`; both reject malformed fields and remove an asset if:
 - `base` starts with `ibc/`, case-insensitively;
@@ -84,7 +86,7 @@ bun test --isolate scripts/registry-release.test.ts
 
 `check:artifact` imports the generated ESM bundle and deep-compares `TOKEN_LIST` with a fresh validation and filtering pass over the pinned submodule source.
 
-The release-script tests use simulated git command results for exact gitlinks, wrong recorded OIDs, mismatched checkouts, dirty worktrees, missing/uninitialized worktrees, and remote mismatches. They do not require the current worktree gitlink to be staged:
+The release-script tests use simulated git command results for exact gitlinks, wrong recorded OIDs, mismatched checkouts, dirty worktrees, missing/uninitialized worktrees, and remote mismatches. They also test image retry behavior with injected responses. They do not inspect current git state, build packages, mutate `dist`, or make network requests:
 
 ```bash
 bun test --isolate scripts/registry-release.test.ts
@@ -97,7 +99,7 @@ Ordinary unit tests validate URL shape and deterministic URL collection without 
 bun run --cwd packages/registry check:images
 ```
 
-The checker probes every unique retained PNG/SVG URL with bounded concurrency and a timeout. It reports each HTTP status or network failure and exits nonzero if any URL fails. Record the number of URLs checked and the result in the release evidence. The current reviewed pin has 48 unique retained image URLs.
+The checker probes every unique retained PNG/SVG URL with bounded concurrency and a timeout. A 429 or 5xx response receives one bounded retry after a short backoff; a second failure remains a hard error. It reports each final HTTP status or network failure and exits nonzero if any URL fails. Record the number of URLs checked and the result in the release evidence. The current reviewed pin has 48 unique retained image URLs.
 
 Remediation verification on 2026-08-22: all 48 retained image URLs returned successful HTTP responses.
 
@@ -115,12 +117,19 @@ The dry run should contain only package metadata and `dist`; it must not contain
 ## Full repository verification
 ```bash
 bun run check
-bun run build
-bun run test
 bun run --cwd packages/registry check:submodules
+bun run build
+bun run --cwd packages/registry check:artifact
+bun run test
 git -C packages/registry/community-assetlist status --short
 git -C packages/registry/chain-registry status --short
 git status --short
 ```
 
-Before release, confirm the only registry changes are the reviewed gitlink, intended source/tests/docs/scripts, and changeset. Re-run the live image check close to publication because external URL health can change independently of the pinned JSON.
+The full manual release-data gate runs the submodule check once, then build, hermetic unit tests, artifact comparison, and live image verification:
+
+```bash
+bun run --cwd packages/registry verify:release-data
+```
+
+Before release, confirm the only registry changes are the reviewed gitlink, intended source/tests/docs/scripts, workflows, and changeset. Re-run the live image check close to publication because external URL health can change independently of the pinned JSON.

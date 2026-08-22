@@ -1,8 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { checkRegistryArtifact } from './check-registry-artifact';
-import { retainedRegistryImageUrls } from './check-registry-images';
+import { checkRegistryImageUrl, retainedRegistryImageUrls } from './check-registry-images';
 import {
 	ASSETLIST_REMOTE,
 	CHAIN_REGISTRY_REMOTE,
@@ -12,8 +9,6 @@ import {
 	type RegistrySubmoduleEnvironment
 } from './check-registry-submodules';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const decoder = new TextDecoder();
 const COMMUNITY_PATH = 'packages/registry/community-assetlist';
 const CHAIN_PATH = 'packages/registry/chain-registry';
 const CHAIN_REVISION = '855440d90df49246498d0870c6be5de5af56dada';
@@ -161,18 +156,47 @@ describe('registry release data', () => {
 		expect(urls.every((url) => url.startsWith('https://'))).toBeTrue();
 	});
 
-	test('generates a bundle identical to the filtered submodule source', async () => {
-		const build = Bun.spawnSync(['bun', 'run', '--cwd', 'packages/registry', 'build'], {
-			cwd: root,
-			stdout: 'pipe',
-			stderr: 'pipe'
+	test('retries a transient image response once with backoff', async () => {
+		const statuses = [429, 200];
+		const delays: number[] = [];
+		let requests = 0;
+		const failure = await checkRegistryImageUrl('https://example.com/image.png', {
+			retryDelayMs: 25,
+			dependencies: {
+				request: async () => {
+					requests += 1;
+					return new Response(null, { status: statuses.shift() });
+				},
+				sleep: async (milliseconds) => {
+					delays.push(milliseconds);
+				}
+			}
 		});
-		if (build.exitCode !== 0) {
-			throw new Error(`Registry build failed:\n${decoder.decode(build.stderr)}\n${decoder.decode(build.stdout)}`);
-		}
 
-		const tokenList = await checkRegistryArtifact();
-		expect(tokenList['pacific-1']).toHaveLength(46);
-		expect(tokenList['atlantic-2']).toHaveLength(7);
+		expect(failure).toBeUndefined();
+		expect(requests).toBe(2);
+		expect(delays).toEqual([25]);
+	});
+
+	test('fails after one retry for persistent transient image responses', async () => {
+		const statuses = [503, 500];
+		const delays: number[] = [];
+		let requests = 0;
+		const failure = await checkRegistryImageUrl('https://example.com/image.png', {
+			retryDelayMs: 25,
+			dependencies: {
+				request: async () => {
+					requests += 1;
+					return new Response(null, { status: statuses.shift() });
+				},
+				sleep: async (milliseconds) => {
+					delays.push(milliseconds);
+				}
+			}
+		});
+
+		expect(failure).toContain('HTTP 500');
+		expect(requests).toBe(2);
+		expect(delays).toEqual([25]);
 	});
 });
