@@ -1,14 +1,5 @@
 # Changelog
 
-## Unreleased
-
-### Patch Changes
-
-- Isolate legacy SSE clients with one MCP server per session and make both HTTP transports await listener startup, surface bind failures, and close active resources during shutdown.
-- Remove RPC URLs from MCP responses and sanitize credential-bearing upstream errors.
-- Strictly validate supported Sei network selectors, private-key wallet configuration, HTTP hosts, and token-analysis prompt inputs.
-- Keep all non-signing tools available without a wallet, use ERC-721 `safeTransferFrom`, and propagate NFT owner lookup failures.
-
 ## 0.3.3
 
 ### Patch Changes
