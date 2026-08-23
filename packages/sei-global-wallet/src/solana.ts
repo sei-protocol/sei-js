@@ -2,4 +2,5 @@ import { registerSolanaStandard } from './lib/registerSolanaStandard.js';
 
 registerSolanaStandard();
 
-export { createSolanaWallet } from '@dynamic-labs/global-wallet-client/solana';
+export { createSolanaWallet } from './lib/dynamicSolana.js';
+export { registerSolanaStandard };

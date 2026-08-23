@@ -31,6 +31,7 @@
 		"test:all": "bun run test",
 		"test:coverage": "bun test --isolate --coverage --coverage-reporter=lcov packages",
 		"test:create-sei-release": "bun run --cwd packages/create-sei test:release",
+		"test:sei-global-wallet-release": "bun scripts/check-sei-global-wallet.ts",
 		"test:scripts": "bun test --isolate scripts",
 		"typecheck": "tsc --project tsconfig.test.json"
 	},
