@@ -14,6 +14,10 @@ interface WalletConfig {
 	};
 }
 
+// Dynamic previously passed environmentId as the EIP-6963 uuid. Keep that
+// stable identity (deliberate deviation from EIP-6963's per-session wording).
+const environmentId = '36b63d10-7ba6-49a3-9614-22f471b9283c';
+
 export const config: WalletConfig = {
 	// Wallet name will be seen as the Wallet name
 	walletName: 'Sei Global Wallet',
@@ -26,12 +30,11 @@ export const config: WalletConfig = {
 	// URL of your wallet domain (e.g. https://dynamic.example.com)
 	walletUrl: 'https://global-wallet.sei.io',
 	// Environment ID of your wallet (e.g. 1234567890)
-	environmentId: '36b63d10-7ba6-49a3-9614-22f471b9283c',
+	environmentId,
 	// EIP6963 configuration
 	eip6963: {
 		// RDNS of your wallet (e.g. com.example.wallet)
 		rdns: 'io.sei.global-wallet',
-		// Stable UUIDv4 for the EIP-6963 provider identity.
-		uuid: '36b63d10-7ba6-49a3-9614-22f471b9283c'
+		uuid: environmentId
 	}
 };

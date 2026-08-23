@@ -10,6 +10,7 @@ describe('sei-global-wallet config', () => {
 		expect(config.environmentId).toBe('36b63d10-7ba6-49a3-9614-22f471b9283c');
 		expect(config.eip6963.rdns).toBe('io.sei.global-wallet');
 		expect(config.eip6963.uuid).toBe('36b63d10-7ba6-49a3-9614-22f471b9283c');
+		expect(config.eip6963.uuid).toBe(config.environmentId);
 		expect(config.eip6963.uuid).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
 	});
 

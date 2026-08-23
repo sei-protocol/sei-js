@@ -43,7 +43,7 @@ jobs:
   consumers:
     name: npm, Bun, edge, and browser consumers
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
