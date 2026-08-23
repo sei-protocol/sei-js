@@ -5,26 +5,24 @@ import { isWalletEnabled } from './config.js';
 
 const networkListSchema = z
 	.string()
-	.superRefine((value, context) => {
+	.transform((value, context) => {
 		const networks = value.split(',').map((network) => network.trim());
 		if (networks.length === 0 || networks.some((network) => network.length === 0)) {
 			context.addIssue({ code: z.ZodIssueCode.custom, message: 'At least one supported network is required.' });
-			return;
+			return z.NEVER;
 		}
+
+		const normalizedNetworks: string[] = [];
 		for (const network of networks) {
 			try {
-				normalizeNetwork(network);
+				normalizedNetworks.push(normalizeNetwork(network));
 			} catch {
 				context.addIssue({ code: z.ZodIssueCode.custom, message: `Unsupported network: ${network}` });
 			}
 		}
+
+		return normalizedNetworks.length === networks.length ? normalizedNetworks.join(',') : z.NEVER;
 	})
-	.transform((value) =>
-		value
-			.split(',')
-			.map((network) => normalizeNetwork(network.trim()))
-			.join(',')
-	)
 	.describe("Comma-separated supported networks (for example, 'sei,1328' or '0x531,sei-testnet').");
 
 /**
