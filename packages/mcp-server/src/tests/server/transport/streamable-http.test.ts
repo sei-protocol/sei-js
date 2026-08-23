@@ -1,377 +1,387 @@
-import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
-import type { Server } from 'node:http';
+import { afterEach, describe, expect, it, jest } from 'bun:test';
+import { createServer, type Server } from 'node:http';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { Request, Response } from 'express';
+import { StreamableHttpTransport } from '../../../server/transport/streamable-http.js';
 
-// Mock dependencies
-jest.mock('express', () => {
-	const mockApp = {
-		use: jest.fn(),
-		get: jest.fn(),
-		post: jest.fn(),
-		listen: jest.fn()
-	};
-	const express = Object.assign(
-		jest.fn(() => mockApp),
-		{ json: jest.fn() }
-	);
-	return { default: express };
-});
+const HOST = '127.0.0.1';
+const PATH = '/mcp';
 
-jest.mock('../../../server/transport/security.js', () => ({
-	createCorsMiddleware: jest.fn(() => 'cors-middleware'),
-	validateSecurityConfig: jest.fn()
-}));
+async function listenOnRandomPort(server: Server): Promise<number> {
+	await new Promise<void>((resolve, reject) => {
+		server.once('error', reject);
+		server.listen(0, HOST, resolve);
+	});
+	const address = server.address();
+	if (!address || typeof address === 'string') throw new Error('Expected a TCP listener');
+	return address.port;
+}
 
-jest.mock('@modelcontextprotocol/sdk/server/streamableHttp.js', () => ({
-	StreamableHTTPServerTransport: jest.fn()
-}));
+async function closeServer(server: Server): Promise<void> {
+	if (!server.listening) return;
+	await new Promise<void>((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
+}
 
-jest.mock('../../../server/server.js', () => ({
-	getServer: jest.fn()
-}));
+async function withTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
+	let timer: ReturnType<typeof setTimeout> | undefined;
+	try {
+		return await Promise.race([
+			promise,
+			new Promise<never>((_resolve, reject) => {
+				timer = setTimeout(() => reject(new Error(`${label} timed out`)), 5_000);
+			})
+		]);
+	} finally {
+		if (timer) clearTimeout(timer);
+	}
+}
 
 describe('StreamableHttpTransport', () => {
-	let StreamableHttpTransport: any;
-	let mockExpress: jest.MockedFunction<any> & { json: jest.Mock };
-	let mockApp: any;
-	let mockServer: any;
-	let mockGetServer: jest.MockedFunction<() => Promise<any>>;
-	let mockStreamableTransport: any;
-	let mockMcpServer: any;
-	let consoleErrorSpy: jest.SpyInstance;
-	let consoleLogSpy: jest.SpyInstance;
+	const transports: StreamableHttpTransport[] = [];
+	const occupiedServers: Server[] = [];
+	const clients: Client[] = [];
+	const bootstrapServers: McpServer[] = [];
+	let consoleErrorSpy: jest.SpiedFunction<typeof console.error>;
 
-	beforeEach(async () => {
-		jest.clearAllMocks();
+	afterEach(async () => {
+		await Promise.allSettled(clients.splice(0).map((client) => client.close()));
+		await Promise.allSettled(transports.splice(0).map((transport) => transport.stop()));
+		await Promise.allSettled(occupiedServers.splice(0).map((server) => closeServer(server)));
+		await Promise.allSettled(bootstrapServers.splice(0).map((server) => server.close()));
+		consoleErrorSpy?.mockRestore();
+	});
 
-		// Import mocked modules
-		const expressModule = await import('express');
-		const serverModule = await import('../../../server/server.js');
-		const { StreamableHTTPServerTransport } = await import('@modelcontextprotocol/sdk/server/streamableHttp.js');
-
-		mockExpress = (expressModule.default ?? expressModule) as unknown as typeof mockExpress;
-		mockGetServer = serverModule.getServer as jest.MockedFunction<() => Promise<any>>;
-
-		// Setup mock objects
-		mockApp = {
-			use: jest.fn(),
-			get: jest.fn(),
-			post: jest.fn(),
-			listen: jest.fn()
-		};
-		mockServer = {
-			on: jest.fn(),
-			close: jest.fn()
-		};
-		mockMcpServer = {
-			connect: jest.fn(),
-			close: jest.fn()
-		};
-		mockStreamableTransport = {
-			handleRequest: jest.fn(),
-			close: jest.fn()
-		};
-
-		// Import security mock
-		const securityModule = await import('../../../server/transport/security.js');
-		const mockCreateCorsMiddleware = securityModule.createCorsMiddleware as jest.MockedFunction<any>;
-		mockCreateCorsMiddleware.mockReturnValue('cors-middleware');
-
-		// Setup default mocks
-		mockExpress.mockReturnValue(mockApp);
-		mockExpress.json = jest.fn().mockReturnValue('json-middleware');
-		mockApp.listen.mockReturnValue(mockServer);
-		mockGetServer.mockResolvedValue(mockMcpServer);
-		(StreamableHTTPServerTransport as unknown as jest.Mock).mockImplementation(() => mockStreamableTransport);
-
-		// Setup spies
+	it('terminates wallet-enabled HTTP before invoking the listener', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-		consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+		const processExit = jest.spyOn(process, 'exit').mockImplementation((code) => {
+			throw new Error(`process.exit called with code ${code}`);
+		});
+		const listenFactory = jest.fn();
+		const transport = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key' }, { listenFactory });
 
-		// Import the class after mocks are set up
-		const transportModule = await import('../../../server/transport/streamable-http.js');
-		StreamableHttpTransport = transportModule.StreamableHttpTransport;
+		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
+		expect(processExit).toHaveBeenCalledWith(1);
+		expect(listenFactory).not.toHaveBeenCalled();
+		processExit.mockRestore();
 	});
 
-	afterEach(() => {
-		consoleErrorSpy.mockRestore();
-		consoleLogSpy.mockRestore();
+	it('resolves start only after listening and rejects an empty host', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const bootstrap = { close: jest.fn() } as unknown as McpServer;
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH });
+		transports.push(transport);
+
+		await transport.start(bootstrap);
+		const port = transport.getListeningPort();
+		expect(typeof port).toBe('number');
+		const health = await fetch(`http://${HOST}:${port}/health`);
+		expect(health.status).toBe(200);
+		expect(await health.json()).toMatchObject({ status: 'ok' });
+
+		const invalidHost = new StreamableHttpTransport({ port: 8080, host: '   ', path: PATH });
+		await expect(invalidHost.start(bootstrap)).rejects.toThrow('SERVER_HOST must not be empty');
+		const invalidLimit = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, maxActiveRequests: 0 });
+		await expect(invalidLimit.start(bootstrap)).rejects.toThrow('STREAMABLE_HTTP_MAX_REQUESTS must be a positive integer');
 	});
 
-	describe('Constructor', () => {
-		it('should initialize with default values', () => {
-			const transport = new StreamableHttpTransport();
-			expect(transport.mode).toBe('streamable-http');
-		});
-
-		it('should initialize with custom values', () => {
-			const transport = new StreamableHttpTransport(3000, '0.0.0.0', '/custom');
-			expect(transport.mode).toBe('streamable-http');
-		});
-	});
-
-	describe('start', () => {
-		it('should start server successfully', async () => {
-			const transport = new StreamableHttpTransport();
-			const mockServerParam = { mock: 'server' };
-
-			await transport.start(mockServerParam);
-
-			// Verify express setup
-			expect(mockExpress).toHaveBeenCalled();
-			expect(mockExpress.json).toHaveBeenCalled();
-			expect(mockApp.use).toHaveBeenCalledWith('json-middleware');
-
-			// Verify CORS middleware setup
-			expect(mockApp.use).toHaveBeenCalledWith('cors-middleware');
-
-			// Verify POST route setup
-			expect(mockApp.post).toHaveBeenCalledWith('/mcp', expect.any(Function));
-
-			// Verify server listen
-			expect(mockApp.listen).toHaveBeenCalledWith(8080, 'localhost', expect.any(Function));
-
-			// Verify server error handler
-			expect(mockServer.on).toHaveBeenCalledWith('error', expect.any(Function));
-		});
-
-		it('should setup CORS middleware', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			// Verify CORS middleware was set up
-			expect(mockApp.use).toHaveBeenCalledWith('cors-middleware');
-		});
-
-		it('should call validateSecurityConfig on start', async () => {
-			const securityModule = await import('../../../server/transport/security.js');
-			const mockValidateSecurityConfig = securityModule.validateSecurityConfig as jest.MockedFunction<any>;
-
-			const transport = new StreamableHttpTransport(8080, 'localhost', '/mcp', 'disabled');
-			await transport.start({ mock: 'server' });
-
-			expect(mockValidateSecurityConfig).toHaveBeenCalledWith('streamable-http', 'disabled');
-		});
-
-		it('should setup health endpoint', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			// Verify health endpoint was set up
-			expect(mockApp.get).toHaveBeenCalledWith('/health', expect.any(Function));
-		});
-
-		it('should return health status from health endpoint', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			// Get the health endpoint handler
-			const healthHandler = mockApp.get.mock.calls.find((call: any[]) => call[0] === '/health')?.[1];
-			expect(healthHandler).toBeDefined();
-
-			const mockReq = {};
-			const mockRes = { json: jest.fn() };
-
-			healthHandler(mockReq, mockRes);
-
-			expect(mockRes.json).toHaveBeenCalledWith({
-				status: 'ok',
-				timestamp: expect.any(String)
-			});
-		});
-
-		it('should handle successful MCP requests', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			// Get the POST handler
-			const postHandler = mockApp.post.mock.calls[0][1];
-
-			const mockReq = { body: { test: 'data' } } as Request;
-			const mockRes = {
-				on: jest.fn(),
-				headersSent: false
-			};
-
-			await postHandler(mockReq, mockRes as unknown as Response);
-
-			expect(mockGetServer).toHaveBeenCalled();
-			expect(mockMcpServer.connect).toHaveBeenCalledWith(mockStreamableTransport);
-			expect(mockStreamableTransport.handleRequest).toHaveBeenCalledWith(mockReq, mockRes, mockReq.body);
-		});
-
-		it('should handle request close events', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			const postHandler = mockApp.post.mock.calls[0][1];
-			const mockReq = { body: {} } as Request;
-			const mockRes = {
-				on: jest.fn(),
-				headersSent: false
-			};
-
-			await postHandler(mockReq, mockRes as unknown as Response);
-
-			// Get the close event handler
-			const closeHandler = mockRes.on.mock.calls.find((call) => call[0] === 'close')?.[1];
-			expect(closeHandler).toBeDefined();
-
-			// Trigger close event
-			closeHandler!();
-
-			expect(consoleLogSpy).toHaveBeenCalledWith('Request closed');
-			expect(mockStreamableTransport.close).toHaveBeenCalled();
-			expect(mockMcpServer.close).toHaveBeenCalled();
-		});
-
-		it('should handle MCP request errors', async () => {
-			const testError = new Error('MCP error');
-			mockGetServer.mockRejectedValue(testError);
-
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			const postHandler = mockApp.post.mock.calls[0][1];
-			const mockReq = { body: {} } as Request;
-			const mockRes = {
-				on: jest.fn(),
-				headersSent: false,
-				status: jest.fn().mockReturnThis(),
-				json: jest.fn()
-			} as any as Response;
-
-			await postHandler(mockReq, mockRes);
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Error handling MCP request:', testError);
-			expect(mockRes.status).toHaveBeenCalledWith(500);
-			expect(mockRes.json).toHaveBeenCalledWith({
-				jsonrpc: '2.0',
-				error: {
-					code: -32603,
-					message: 'Internal server error'
-				},
-				id: null
-			});
-		});
-
-		it('should not send error response if headers already sent', async () => {
-			const testError = new Error('MCP error');
-			mockGetServer.mockRejectedValue(testError);
-
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			const postHandler = mockApp.post.mock.calls[0][1];
-			const mockReq = { body: {} } as Request;
-			const mockRes = {
-				on: jest.fn(),
-				headersSent: true,
-				status: jest.fn(),
-				json: jest.fn()
-			} as any as Response;
-
-			await postHandler(mockReq, mockRes);
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Error handling MCP request:', testError);
-			expect(mockRes.status).not.toHaveBeenCalled();
-			expect(mockRes.json).not.toHaveBeenCalled();
-		});
-
-		it('should log server ready message', () => {
-			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-			// Mock the listen method to accept a callback as the third parameter
-			mockApp.listen.mockImplementation((port, host, callback) => {
-				if (typeof callback === 'function') {
-					callback();
+	it('serves a real local MCP client request', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => {
+					const server = new McpServer({ name: 'request-server', version: '1.0.0' });
+					server.tool('local_identity', 'Return a local test response', {}, async () => ({
+						content: [{ type: 'text', text: 'local-streamable-response' }]
+					}));
+					return server;
 				}
-				return mockServer;
-			});
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
 
-			const transport = new StreamableHttpTransport(3000, '0.0.0.0', '/test');
-			transport.start();
+		const client = new Client({ name: 'streamable-client', version: '1.0.0' });
+		clients.push(client);
+		await client.connect(new StreamableHTTPClientTransport(new URL(`http://${HOST}:${transport.getListeningPort()}${PATH}`)));
+		const result = await client.callTool({ name: 'local_identity', arguments: {} });
 
-			expect(consoleErrorSpy).toHaveBeenCalledWith('MCP Server ready (streamable-http transport on 0.0.0.0:3000/test)');
-		});
-
-		it('should handle server startup errors', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			// Get the error handler
-			const errorHandler = mockServer.on.mock.calls.find((call) => call[0] === 'error')?.[1];
-			const testError = new Error('Server startup error');
-
-			errorHandler(testError);
-
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Error starting server:', testError);
-		});
+		if (!('content' in result) || !Array.isArray(result.content)) throw new Error('Expected an immediate tool result');
+		expect(result.content[0]).toMatchObject({ type: 'text', text: 'local-streamable-response' });
 	});
 
-	describe('stop', () => {
-		it('should stop server successfully', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
-
-			const closeCallback = jest.fn();
-			mockServer.close.mockImplementation((callback) => callback());
-
-			await transport.stop();
-
-			expect(mockServer.close).toHaveBeenCalledWith(expect.any(Function));
+	it('caps active requests with 503 and releases capacity after completion', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let releaseFirst!: () => void;
+		const firstReleased = new Promise<void>((resolve) => {
+			releaseFirst = resolve;
 		});
-
-		it('should resolve immediately if no server', async () => {
-			const transport = new StreamableHttpTransport();
-			// Don't call start(), so server remains undefined
-			await expect(transport.stop()).resolves.toBeUndefined();
+		let firstStarted!: () => void;
+		const started = new Promise<void>((resolve) => {
+			firstStarted = resolve;
 		});
+		let requestCount = 0;
+		const serverFactory = jest.fn(async () => ({ connect: jest.fn(), close: jest.fn() }) as unknown as McpServer);
+		const transportFactory = jest.fn(
+			() =>
+				({
+					close: jest.fn(),
+					handleRequest: jest.fn(async (_request: Request, response: Response) => {
+						requestCount++;
+						if (requestCount === 1) {
+							firstStarted();
+							await firstReleased;
+						}
+						response.status(200).json({ jsonrpc: '2.0', result: {}, id: requestCount });
+					})
+				}) as unknown as StreamableHTTPServerTransport
+		);
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, maxActiveRequests: 1 }, { serverFactory, transportFactory });
+		transports.push(transport);
+		await transport.start();
+		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
+		const body = JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} });
+		const first = fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+		await started;
 
-		it('should resolve immediately if server is null', async () => {
-			const transport = new StreamableHttpTransport();
-			transport.start();
-			// Manually set server to null to test the else branch
-			(transport as any).server = null;
-			await expect(transport.stop()).resolves.toBeUndefined();
+		const rejected = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+		expect(rejected.status).toBe(503);
+		expect(await rejected.json()).toEqual({ error: 'Maximum Streamable HTTP requests reached' });
+		expect(serverFactory).toHaveBeenCalledTimes(1);
+
+		releaseFirst();
+		expect((await first).status).toBe(200);
+		await withTimeout(
+			(async () => {
+				while ((transport as unknown as { activeRequestSlots: number }).activeRequestSlots !== 0) await Bun.sleep(5);
+			})(),
+			'request capacity release'
+		);
+		expect((await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body })).status).toBe(200);
+		expect(serverFactory).toHaveBeenCalledTimes(2);
+	});
+
+	it('rejects EADDRINUSE when the configured port is occupied', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const occupied = createServer();
+		occupiedServers.push(occupied);
+		const port = await listenOnRandomPort(occupied);
+		const transport = new StreamableHttpTransport({ port, host: HOST, path: PATH });
+		transports.push(transport);
+
+		try {
+			await transport.start({ close: jest.fn() } as unknown as McpServer);
+			throw new Error('Expected the occupied port to reject');
+		} catch (error) {
+			expect((error as NodeJS.ErrnoException).code).toBe('EADDRINUSE');
+		}
+		expect(transport.getListeningPort()).toBeUndefined();
+	});
+
+	it('releases reserved capacity when request transport creation fails', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const requestServerClose = jest.fn();
+		const serverFactory = jest.fn(async () => ({ close: requestServerClose }) as unknown as McpServer);
+		const transportFactory = jest.fn(() => {
+			throw new Error('simulated request transport constructor failure');
 		});
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, maxActiveRequests: 1 }, { serverFactory, transportFactory });
+		transports.push(transport);
+		await transport.start();
+		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
+		const request = {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} })
+		};
 
-		it('should handle server becoming null during stop process', async () => {
-			const transport = new StreamableHttpTransport();
-			transport.start();
+		expect((await fetch(url, request)).status).toBe(500);
+		expect((await fetch(url, request)).status).toBe(500);
+		expect(transportFactory).toHaveBeenCalledTimes(2);
+		expect(requestServerClose).toHaveBeenCalledTimes(2);
+	});
 
-			// Mock the server to become null after the outer if check but before inner if check
-			const originalServer = (transport as any).server;
-			let callCount = 0;
-			Object.defineProperty(transport, 'server', {
-				get: () => {
-					callCount++;
-					// First call (outer if) returns server, second call (inner if) returns null
-					return callCount === 1 ? originalServer : null;
-				},
-				set: (value) => {
-					// Allow setting to undefined in the callback
-				},
-				configurable: true
-			});
-
-			await expect(transport.stop()).resolves.toBeUndefined();
+	it('closes active request transports and MCP servers during shutdown', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let requestStarted!: () => void;
+		const started = new Promise<void>((resolve) => {
+			requestStarted = resolve;
 		});
+		let releaseRequest: (() => void) | undefined;
 
-		it('should handle server close with undefined server in callback', async () => {
-			const transport = new StreamableHttpTransport();
-			await transport.start({ mock: 'server' });
+		const requestServer = {
+			connect: jest.fn().mockResolvedValue(undefined),
+			close: jest.fn().mockResolvedValue(undefined)
+		} as unknown as McpServer;
+		const requestTransport = {
+			close: jest.fn(async () => {
+				releaseRequest?.();
+			}),
+			handleRequest: jest.fn(async () => {
+				requestStarted();
+				await new Promise<void>((resolve) => {
+					releaseRequest = resolve;
+				});
+			})
+		} as unknown as StreamableHTTPServerTransport;
 
-			// Mock server.close to call callback after server is set to undefined
-			mockServer.close.mockImplementation((callback) => {
-				// Simulate server being undefined in the callback
-				(transport as any).server = undefined;
-				callback();
-			});
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => requestServer,
+				transportFactory: () => requestTransport
+			}
+		);
+		transports.push(transport);
+		await transport.start({ close: jest.fn() } as unknown as McpServer);
+		const request = fetch(`http://${HOST}:${transport.getListeningPort()}${PATH}`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} })
+		}).catch(() => undefined);
 
-			await transport.stop();
+		await withTimeout(started, 'request startup');
+		await withTimeout(transport.stop(), 'transport shutdown');
+		void request;
 
-			expect(mockServer.close).toHaveBeenCalled();
+		expect(requestTransport.close).toHaveBeenCalled();
+		expect(requestServer.close).toHaveBeenCalled();
+		expect(transport.getListeningPort()).toBeUndefined();
+	});
+
+	it('handles repeated response errors with exactly-once request cleanup', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let incomingRequest: Request | undefined;
+		let response: Response | undefined;
+		let requestStarted!: () => void;
+		const started = new Promise<void>((resolve) => {
+			requestStarted = resolve;
 		});
+		let releaseRequest: (() => void) | undefined;
+		const requestServerClose = jest.fn().mockResolvedValue(undefined);
+		const requestServer = {
+			connect: jest.fn().mockResolvedValue(undefined),
+			close: requestServerClose
+		} as unknown as McpServer;
+		const requestTransport = {
+			close: jest.fn(async () => releaseRequest?.()),
+			handleRequest: jest.fn(async (request: Request, requestResponse: Response) => {
+				incomingRequest = request;
+				response = requestResponse;
+				requestStarted();
+				await new Promise<void>((resolve) => {
+					releaseRequest = resolve;
+				});
+			})
+		} as unknown as StreamableHTTPServerTransport;
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => requestServer,
+				transportFactory: () => requestTransport
+			}
+		);
+		transports.push(transport);
+		await transport.start({ close: jest.fn() } as unknown as McpServer);
+		const request = fetch(`http://${HOST}:${transport.getListeningPort()}${PATH}`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} })
+		}).catch(() => undefined);
+
+		await withTimeout(started, 'request startup');
+		response?.emit('error', new Error('simulated response failure'));
+		response?.emit('error', new Error('repeated response failure'));
+		incomingRequest?.emit('error', new Error('simulated request failure'));
+		incomingRequest?.socket.emit('error', new Error('simulated socket failure'));
+		await withTimeout(
+			(async () => {
+				while (requestServerClose.mock.calls.length === 0) await Bun.sleep(5);
+			})(),
+			'response error cleanup'
+		);
+
+		expect(requestTransport.close).toHaveBeenCalledTimes(1);
+		expect(requestServerClose).toHaveBeenCalledTimes(1);
+		await transport.stop();
+		void request;
+	});
+
+	it('cancels pending startup and supports a clean restart', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const delayedServer = createServer();
+		let delayedCloseCount = 0;
+		delayedServer.close = ((callback?: (error?: Error) => void) => {
+			delayedCloseCount++;
+			queueMicrotask(() => callback?.());
+			return delayedServer;
+		}) as typeof delayedServer.close;
+		let listenCount = 0;
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => new McpServer({ name: 'request', version: '1.0.0' }),
+				transportFactory: () => ({ close: jest.fn() }) as unknown as StreamableHTTPServerTransport,
+				listenFactory: (app, port, host) => (listenCount++ === 0 ? delayedServer : app.listen(port, host))
+			}
+		);
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+
+		const starting = transport.start(bootstrap);
+		const stopping = transport.stop();
+		await expect(withTimeout(starting, 'cancelled Streamable HTTP startup')).rejects.toThrow('stopped during startup');
+		await withTimeout(stopping, 'Streamable HTTP stop during startup');
+		expect(delayedCloseCount).toBe(1);
+
+		await withTimeout(transport.start(bootstrap), 'restarted Streamable HTTP startup');
+		expect(transport.getListeningPort()).toBeNumber();
+		await withTimeout(transport.stop(), 'restarted Streamable HTTP shutdown');
+	});
+
+	it('attempts every request close and aggregates shutdown failures', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		let requestStarted!: () => void;
+		const started = new Promise<void>((resolve) => {
+			requestStarted = resolve;
+		});
+		const requestServer = {
+			connect: jest.fn().mockResolvedValue(undefined),
+			close: jest.fn().mockRejectedValue(new Error('server close failed'))
+		} as unknown as McpServer;
+		const requestTransport = {
+			close: jest.fn().mockRejectedValue(new Error('transport close failed')),
+			handleRequest: jest.fn(async () => {
+				requestStarted();
+				await new Promise(() => {});
+			})
+		} as unknown as StreamableHTTPServerTransport;
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH },
+			{
+				serverFactory: async () => requestServer,
+				transportFactory: () => requestTransport
+			}
+		);
+		transports.push(transport);
+		await transport.start({ close: jest.fn() } as unknown as McpServer);
+		const request = fetch(`http://${HOST}:${transport.getListeningPort()}${PATH}`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} })
+		}).catch(() => undefined);
+		await withTimeout(started, 'request startup');
+
+		await expect(transport.stop()).rejects.toBeInstanceOf(AggregateError);
+		expect(requestTransport.close).toHaveBeenCalledTimes(1);
+		expect(requestServer.close).toHaveBeenCalledTimes(1);
+		await expect(transport.stop()).resolves.toBeUndefined();
+		void request;
 	});
 });

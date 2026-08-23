@@ -158,14 +158,8 @@ export async function isNFTOwner(tokenAddress: string, ownerAddress: string, tok
 	const validatedTokenAddress = services.helpers.validateAddress(tokenAddress);
 	const validatedOwnerAddress = services.helpers.validateAddress(ownerAddress);
 
-	try {
-		const actualOwner = await readERC721Owner(validatedTokenAddress, tokenId, network);
-
-		return actualOwner.toLowerCase() === validatedOwnerAddress.toLowerCase();
-	} catch (error: unknown) {
-		console.error(`Error checking NFT ownership: ${error instanceof Error ? error.message : String(error)}`);
-		return false;
-	}
+	const actualOwner = await readERC721Owner(validatedTokenAddress, tokenId, network);
+	return actualOwner.toLowerCase() === validatedOwnerAddress.toLowerCase();
 }
 
 /**

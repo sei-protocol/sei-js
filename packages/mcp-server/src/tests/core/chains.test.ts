@@ -10,6 +10,8 @@ import {
 	getRpcUrl,
 	getSupportedNetworks,
 	networkNameMap,
+	networkSchema,
+	normalizeNetwork,
 	resolveChainId,
 	rpcUrlMap
 } from '../../core/chains.js';
@@ -72,11 +74,41 @@ describe('chains module', () => {
 			expect(resolveChainId('0x530')).toBe(1328);
 		});
 
-		test('defaults to DEFAULT_CHAIN_ID for unknown network names', () => {
-			expect(resolveChainId('unknown-network')).toBe(DEFAULT_CHAIN_ID);
-			expect(resolveChainId('')).toBe(DEFAULT_CHAIN_ID);
-			expect(resolveChainId('   ')).toBe(DEFAULT_CHAIN_ID);
-			expect(resolveChainId('1e3')).toBe(DEFAULT_CHAIN_ID);
+		test.each(['unknown-network', '', '   ', '1e3', '9999'])('rejects unknown selector %s', (selector) => {
+			expect(() => resolveChainId(selector)).toThrow(`Unsupported network: ${selector}`);
+		});
+
+		test('rejects unsupported numeric chain IDs', () => {
+			expect(() => resolveChainId(9999)).toThrow('Unsupported network: 9999');
+		});
+	});
+
+	describe('normalizeNetwork', () => {
+		test.each([
+			['sei', 'sei'],
+			['1329', 'sei'],
+			['0x531', 'sei'],
+			['sei-testnet', 'sei-testnet'],
+			['1328', 'sei-testnet'],
+			['0x530', 'sei-testnet']
+		] as const)('normalizes %s to %s', (selector, expected) => {
+			expect(normalizeNetwork(selector)).toBe(expected);
+		});
+	});
+
+	describe('networkSchema', () => {
+		test('accepts only advertised supported string selectors', () => {
+			expect(['sei', '1329', '0x531'].map((selector) => networkSchema.parse(selector))).toEqual(['sei', 'sei', 'sei']);
+			expect(['sei-testnet', '1328', '0x530'].map((selector) => networkSchema.parse(selector))).toEqual(['sei-testnet', 'sei-testnet', 'sei-testnet']);
+			expect(['SEI', ' Sei-Testnet ', '0X531', ' 0X530 '].map((selector) => networkSchema.parse(selector))).toEqual([
+				'sei',
+				'sei-testnet',
+				'sei',
+				'sei-testnet'
+			]);
+			expect(networkSchema.safeParse('unknown-network').success).toBe(false);
+			expect(networkSchema.safeParse(' 9999 ').success).toBe(false);
+			expect(networkSchema.safeParse(1329).success).toBe(false);
 		});
 	});
 
@@ -92,23 +124,6 @@ describe('chains module', () => {
 			expect(getChain('sei-testnet')).toBe(seiTestnet);
 		});
 
-		test('returns sei chain when network name exists but chain mapping is missing', () => {
-			// Create a temporary entry in networkNameMap for a non-existent chain ID
-			networkNameMap['test-network'] = 9999;
-
-			try {
-				// This should return sei as fallback since chainMap[9999] doesn't exist
-				expect(getChain('test-network')).toBe(sei);
-			} finally {
-				// Restore the original map
-				for (const key of Object.keys(networkNameMap)) {
-					if (key !== 'sei' && key !== 'sei-testnet') {
-						delete networkNameMap[key];
-					}
-				}
-			}
-		});
-
 		test('returns chain for case-insensitive network name', () => {
 			expect(getChain('SEI')).toBe(sei);
 			expect(getChain('Sei-Testnet')).toBe(seiTestnet);
@@ -118,17 +133,21 @@ describe('chains module', () => {
 			expect(getChain()).toBe(sei);
 		});
 
-		test('returns sei chain for unknown numeric chain ID', () => {
-			expect(getChain(9999)).toBe(sei);
+		test('accepts supported decimal and hexadecimal string IDs', () => {
+			expect(getChain('1329')).toBe(sei);
+			expect(getChain('0x530')).toBe(seiTestnet);
 		});
 
-		test('throws error for numeric string that is not in networkNameMap', () => {
-			// This should throw an error just like other unknown network names
+		test('throws error for unsupported numeric strings', () => {
 			expect(() => getChain('9999')).toThrow('Unsupported network: 9999');
 		});
 
 		test('throws error for unknown network name', () => {
 			expect(() => getChain('unknown-network')).toThrow('Unsupported network: unknown-network');
+		});
+
+		test('throws error for unsupported numeric chain IDs', () => {
+			expect(() => getChain(9999)).toThrow('Unsupported network: 9999');
 		});
 	});
 
@@ -144,8 +163,14 @@ describe('chains module', () => {
 			expect(getRpcUrl('sei-testnet')).toBe('https://evm-rpc-testnet.sei-apis.com');
 		});
 
-		test('returns default RPC URL for unknown chain ID', () => {
-			expect(getRpcUrl(9999)).toBe(DEFAULT_RPC_URL);
+		test('accepts supported decimal and hexadecimal string IDs', () => {
+			expect(getRpcUrl('1329')).toBe('https://evm-rpc.sei-apis.com');
+			expect(getRpcUrl('0x530')).toBe('https://evm-rpc-testnet.sei-apis.com');
+		});
+
+		test('rejects unknown chain IDs instead of falling back', () => {
+			expect(() => getRpcUrl(9999)).toThrow('Unsupported network: 9999');
+			expect(() => getRpcUrl('unknown-network')).toThrow('Unsupported network: unknown-network');
 		});
 
 		test('returns default RPC URL when no parameter is provided', () => {

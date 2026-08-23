@@ -1,5 +1,6 @@
 import { type Address, getContract, type Hash, parseEther, parseUnits } from 'viem';
 import { DEFAULT_NETWORK } from '../chains.js';
+import { sanitizeError } from '../errors.js';
 import { getPublicClient, getWalletClientFromProvider } from './clients.js';
 import * as services from './index.js';
 
@@ -49,7 +50,7 @@ const erc721TransferAbi = [
 			{ type: 'address', name: 'to' },
 			{ type: 'uint256', name: 'tokenId' }
 		],
-		name: 'transferFrom',
+		name: 'safeTransferFrom',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function'
@@ -320,7 +321,7 @@ export async function transferERC721(
 	const hash = await walletClient.writeContract({
 		address: validatedTokenAddress,
 		abi: erc721TransferAbi,
-		functionName: 'transferFrom',
+		functionName: 'safeTransferFrom',
 		args: [fromAddress, validatedToAddress, tokenId],
 		account: walletClient.account,
 		chain: walletClient.chain
@@ -341,7 +342,7 @@ export async function transferERC721(
 	try {
 		[name, symbol] = await Promise.all([contract.read.name(), contract.read.symbol()]);
 	} catch (error) {
-		console.error('Error fetching NFT metadata:', error);
+		console.error('Error fetching NFT metadata:', sanitizeError(error));
 	}
 
 	return {

@@ -21,6 +21,55 @@ const checkVersion = async (entrypoint: string) => {
 	}
 };
 
+const redactDiagnostics = (value: string, secrets: string[]): string =>
+	secrets.reduce((sanitized, secret) => (secret ? sanitized.split(secret).join('[redacted]') : sanitized), value);
+
+const checkPackagedBinFailure = async (
+	name: string,
+	environment: Record<string, string>,
+	expectedError: string,
+	secrets: string[],
+	allowAdditionalLines = false,
+	forbiddenText: string[] = []
+): Promise<void> => {
+	const entrypoint = join(packageDir, 'bin/mcp-server.js');
+	const child = Bun.spawn(['node', entrypoint], {
+		cwd: root,
+		env: {
+			...process.env,
+			...environment
+		},
+		stdin: 'ignore',
+		stdout: 'pipe',
+		stderr: 'pipe'
+	});
+	const [exitCode, stdout, stderr] = await Promise.all([child.exited, new Response(child.stdout).text(), new Response(child.stderr).text()]);
+	const output = `${stdout}\n${stderr}`;
+	const unexpectedLines = stderr
+		.split(/\r?\n/)
+		.map((line) => line.trim())
+		.filter((line) => line && line !== expectedError && !line.startsWith('Supported networks:'));
+	const leakedSecret = secrets.some((secret) => secret && output.includes(secret));
+	const containsForbiddenText = forbiddenText.some((value) => output.includes(value));
+	const hasUncaughtStack = /(?:^|\n)\s*(?:at\s|file:\/\/|node:internal\/)|uncaught|unhandled(?:Promise)?rejection/i.test(output);
+
+	if (
+		exitCode !== 1 ||
+		stdout.trim() ||
+		!stderr.split(/\r?\n/).includes(expectedError) ||
+		(!allowAdditionalLines && unexpectedLines.length > 0) ||
+		leakedSecret ||
+		containsForbiddenText ||
+		hasUncaughtStack
+	) {
+		throw new Error(
+			`MCP packaged-bin failure check failed for ${name}: exit=${exitCode}, stdout=${JSON.stringify(redactDiagnostics(stdout.trim(), secrets))}, stderr=${JSON.stringify(
+				redactDiagnostics(stderr.trim(), secrets)
+			)}`
+		);
+	}
+};
+
 const getAvailablePort = async (): Promise<number> =>
 	new Promise((resolve, reject) => {
 		const server = createServer();
@@ -126,6 +175,32 @@ const checkHttpStart = async (script: 'start:http' | 'start:http-sse', transport
 
 await checkVersion(join(packageDir, 'bin/mcp-server.js'));
 await checkVersion(join(packageDir, 'dist/index.js'));
+const malformedPrivateKey = 'malformed-private-key-test-value';
+await checkPackagedBinFailure(
+	'malformed private key',
+	{
+		WALLET_MODE: 'private-key',
+		PRIVATE_KEY: malformedPrivateKey,
+		SERVER_TRANSPORT: 'stdio'
+	},
+	'Error starting MCP server: PRIVATE_KEY must be a valid 32-byte secp256k1 private key.',
+	[malformedPrivateKey]
+);
+const httpWalletPrivateKey = '1'.repeat(64);
+await checkPackagedBinFailure(
+	'wallet over HTTP',
+	{
+		WALLET_MODE: 'private-key',
+		PRIVATE_KEY: httpWalletPrivateKey,
+		SERVER_TRANSPORT: 'http-sse',
+		SERVER_HOST: '127.0.0.1',
+		SERVER_PORT: String(await getAvailablePort())
+	},
+	'║ Wallet mode cannot be used with HTTP transports!               ║',
+	[httpWalletPrivateKey],
+	true,
+	['Supported networks:']
+);
 await checkHttpStart('start:http', 'streamable-http');
 await checkHttpStart('start:http-sse', 'http-sse');
 

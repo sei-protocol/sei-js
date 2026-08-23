@@ -27,7 +27,8 @@ jest.mock('../../server/package-info.js', () => ({
 }));
 
 jest.mock('../../core/chains.js', () => ({
-	getSupportedNetworks: jest.fn()
+	getSupportedNetworks: jest.fn(),
+	rpcUrlMap: {}
 }));
 
 type GetServerFunction = () => Promise<McpServer>;
@@ -120,16 +121,16 @@ describe('Server Module', () => {
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Supported networks:', 'sei, sei-testnet');
 		});
 
-		it('should handle server initialization error and exit', async () => {
+		it('should sanitize and propagate server initialization errors', async () => {
 			const testError = new Error('Initialization failed');
 			mockGetPackageInfo.mockImplementation(() => {
 				throw testError;
 			});
 
-			await expect(getServer()).rejects.toThrow('process.exit called');
+			await expect(getServer()).rejects.toThrow('Initialization failed');
 
-			expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to initialize server:', testError);
-			expect(processExitSpy).toHaveBeenCalledWith(1);
+			expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to initialize server:', 'Initialization failed');
+			expect(processExitSpy).not.toHaveBeenCalled();
 		});
 	});
 });
