@@ -9,13 +9,32 @@ on:
       - 'package.json'
       - 'packages/sei-global-wallet/**'
       - 'scripts/check-sei-global-wallet.ts'
+      - 'scripts/dynamic-package-lock*'
       - 'tsconfig.base.json'
       - 'tsconfig.test.json'
+  # The publishing commit is the merge of the generated "Version Packages" pull
+  # request, so a pull_request-only trigger never gates the release itself.
+  push:
+    branches: [main]
+    paths:
+      - '.changeset/**'
+      - '.github/workflows/sei-global-wallet-smoke.yml'
+      - 'bun.lock'
+      - 'package.json'
+      - 'packages/sei-global-wallet/**'
+      - 'scripts/check-sei-global-wallet.ts'
+      - 'scripts/dynamic-package-lock*'
+      - 'tsconfig.base.json'
+      - 'tsconfig.test.json'
+  # Consumer installs resolve live registry and advisory data, which drifts
+  # without any change in this repository.
+  schedule:
+    - cron: '17 6 * * *'
   workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read

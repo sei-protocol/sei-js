@@ -24,7 +24,8 @@
 		"test": "bun test --isolate src"
 	},
 	"dependencies": {
-		"@dynamic-labs/global-wallet-client": "4.96.3",
+		"@dynamic-labs/global-wallet-client": "^4.96.3",
+		"@wallet-standard/wallet": "^1.1.0",
 		"events": "3.3.0",
 		"process": "0.11.10"
 	},
@@ -40,15 +41,14 @@
 		"zksync-sso": "0.2.0"
 	},
 	"peerDependencies": {
-		"@dynamic-labs/ethereum-aa": "4.96.3",
+		"@dynamic-labs/ethereum-aa": "^4.15.0",
 		"@solana/wallet-standard-features": "^1.2.0",
-		"@solana/web3.js": "1.98.1",
+		"@solana/web3.js": "^1.92.1",
 		"@wallet-standard/base": "^1.0.1",
 		"@wallet-standard/features": "^1.0.3",
 		"@wallet-standard/wallet": "^1.1.0",
-		"@zerodev/sdk": "5.5.7",
-		"viem": "2.45.3",
-		"zksync-sso": "0.2.0"
+		"@zerodev/sdk": "^5.4.36",
+		"viem": "^2.7.12"
 	},
 	"peerDependenciesMeta": {
 		"viem": {
@@ -73,9 +73,6 @@
 			"optional": true
 		},
 		"@dynamic-labs/ethereum-aa": {
-			"optional": true
-		},
-		"zksync-sso": {
 			"optional": true
 		}
 	},

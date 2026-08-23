@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
-import { findStaleDynamicPackages } from './dynamic-package-lock.js';
+import { collectDynamicLineVersions, findDynamicLineConflicts, formatDynamicLineConflicts } from './dynamic-package-lock.js';
 
 interface ProcessResult {
 	exitCode: number;
@@ -34,8 +34,52 @@ interface PackageLock {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const packageDir = join(root, 'packages/sei-global-wallet');
 const temporaryRoot = await mkdtemp(join(tmpdir(), 'sei-global-wallet-release-'));
+// Documented in packages/sei-global-wallet/README.md: skips the clean npm
+// consumers and the whole Bun path, so it never substitutes for a full run.
 const fastCheck = process.env.SEI_GLOBAL_WALLET_FAST_CHECK === '1';
-const acceptedBunAdvisories = ['GHSA-378v-28hj-76wf', 'GHSA-58qx-3vcg-4xpx', 'GHSA-96hv-2xvq-fx4p'] as const;
+const acceptedBunAdvisories: readonly string[] = ['GHSA-378v-28hj-76wf', 'GHSA-58qx-3vcg-4xpx', 'GHSA-96hv-2xvq-fx4p'];
+
+const manifest = JSON.parse(await readFile(join(packageDir, 'package.json'), 'utf8')) as {
+	dependencies: Record<string, string>;
+	peerDependencies: Record<string, string>;
+};
+const dynamicRange = manifest.dependencies['@dynamic-labs/global-wallet-client'];
+
+// The versions the consumers are built against: Dynamic 4.96.3's own peer
+// contract. The published peer ranges stay wider than these on purpose, so an
+// application that already carries one of these packages keeps resolving.
+const testedPeerVersions = {
+	'@dynamic-labs/ethereum-aa': '4.96.3',
+	'@solana/wallet-standard-features': '^1.2.0',
+	'@solana/web3.js': '1.98.1',
+	'@wallet-standard/base': '^1.0.1',
+	'@wallet-standard/features': '^1.0.3',
+	'@wallet-standard/wallet': '^1.1.0',
+	'@zerodev/sdk': '5.5.7',
+	viem: '2.45.3',
+	'zksync-sso': '0.2.0'
+} as const;
+
+// Guards the two from drifting: every version the harness installs has to be
+// allowed by the range the package publishes.
+for (const [name, tested] of Object.entries(testedPeerVersions)) {
+	const declared = manifest.peerDependencies[name];
+	if (!declared || tested.startsWith('^')) continue;
+
+	assert(Bun.semver.satisfies(tested, declared), `Harness installs ${name}@${tested}, which the published ${name}@${declared} peer range excludes`);
+}
+
+// The published manifest carries a range so consumers inherit upstream fixes;
+// exactness belongs to the lockfile, not the contract.
+const assertSatisfiesDynamicRange = (version: string | undefined, label: string) => {
+	assert(version, `${label} did not resolve @dynamic-labs/global-wallet-client`);
+	assert(Bun.semver.satisfies(version, dynamicRange), `${label} resolved @dynamic-labs/global-wallet-client@${version}, outside the declared ${dynamicRange}`);
+	return version;
+};
+
+const reportWaiverProgress = (message: string) => {
+	console.warn(`[waiver] ${message}`);
+};
 
 const run = async (command: string[], cwd: string, allowFailure = false): Promise<ProcessResult> => {
 	const child = Bun.spawn(command, {
@@ -100,18 +144,10 @@ const fullConsumerManifest = (tarball: string, packageManager: 'bun' | 'npm') =>
 	private: true,
 	type: 'module',
 	dependencies: {
-		'@dynamic-labs/ethereum-aa': '4.96.3',
+		...testedPeerVersions,
 		'@sei-js/sei-global-wallet': `file:${tarball}`,
-		'@solana/wallet-standard-features': '^1.2.0',
-		'@solana/web3.js': '1.98.1',
-		'@wallet-standard/base': '^1.0.1',
-		'@wallet-standard/features': '^1.0.3',
-		'@wallet-standard/wallet': '^1.1.0',
-		'@zerodev/sdk': '5.5.7',
 		'ethjs-unit': '0.1.6',
-		'number-to-bn': '1.7.0',
-		viem: '2.45.3',
-		'zksync-sso': '0.2.0'
+		'number-to-bn': '1.7.0'
 	},
 	devDependencies: {
 		esbuild: '0.28.2',
@@ -120,6 +156,52 @@ const fullConsumerManifest = (tarball: string, packageManager: 'bun' | 'npm') =>
 	},
 	overrides: packageManager === 'npm' ? npmSafeOverrides : baseSafeOverrides
 });
+
+/**
+ * Typechecks the entrypoints that need no optional peer, with `skipLibCheck`
+ * off, inside a consumer where no optional peer is installed. The full consumer
+ * installs every peer and skips lib checks, so it cannot catch an emitted
+ * declaration that leaks a type from a peer the consumer never installed.
+ */
+const assertDeclarationsResolveWithoutOptionalPeers = async (consumerDir: string) => {
+	await writeFile(
+		join(consumerDir, 'strict-types.ts'),
+		`import Wallet, { connect } from '@sei-js/sei-global-wallet';
+import { eip6963ProviderInfo, registerEIP6963Provider, unregisterEIP6963Provider } from '@sei-js/sei-global-wallet/eip6963';
+import { createEIP1193Provider } from '@sei-js/sei-global-wallet/ethereum';
+
+void [Wallet, connect, eip6963ProviderInfo, registerEIP6963Provider, unregisterEIP6963Provider, createEIP1193Provider];
+`
+	);
+	await writeJson(join(consumerDir, 'tsconfig.strict.json'), {
+		compilerOptions: {
+			lib: ['ES2022', 'DOM'],
+			module: 'ESNext',
+			moduleResolution: 'Bundler',
+			noEmit: true,
+			skipLibCheck: false,
+			strict: true,
+			target: 'ES2022'
+		},
+		files: ['strict-types.ts']
+	});
+
+	// Uses the workspace compiler so the minimal consumer stays free of a
+	// TypeScript install, which would otherwise pollute its audit surface.
+	const strictTypecheck = await run([join(root, 'node_modules/.bin/tsc'), '--project', 'tsconfig.strict.json'], consumerDir, true);
+	const output = `${strictTypecheck.stdout}${strictTypecheck.stderr}`;
+	// Upstream declarations are outside this package's control, so only fail on
+	// diagnostics raised against what this package publishes.
+	const ownDiagnostics = output
+		.split('\n')
+		.filter((line) => /@sei-js\/sei-global-wallet\/dist\/.*error TS/.test(line))
+		.sort();
+	assert.deepEqual(
+		ownDiagnostics,
+		[],
+		`Published declarations do not resolve without optional peers installed:\n${ownDiagnostics.join('\n')}\n\nFull output:\n${output}`
+	);
+};
 
 const setupConsumerFiles = async (consumerDir: string) => {
 	await writeFile(
@@ -486,44 +568,78 @@ const assertAuditClean = (report: AuditReport, label: string) => {
 };
 
 const assertAcceptedBunAudit = (result: ProcessResult) => {
-	assert.notEqual(result.exitCode, 0, 'Bun AA consumer audit unexpectedly reported a clean dependency tree');
+	if (result.exitCode === 0) {
+		reportWaiverProgress(
+			'the Bun AA consumer now audits clean: every accepted advisory was fixed upstream. Delete the waiver from packages/sei-global-wallet/README.md and acceptedBunAdvisories in this script.'
+		);
+		return;
+	}
+
 	const report = parseJsonOutput<Record<string, Array<{ severity?: string; url?: string }>>>(result.stdout);
-	assert.deepEqual(Object.keys(report).sort(), ['bn.js', 'ws']);
-	assert.equal(report['bn.js']?.length, 1);
-	assert.equal(report['bn.js']?.[0]?.severity, 'moderate');
-	assert.equal(report['bn.js']?.[0]?.url, 'https://github.com/advisories/GHSA-378v-28hj-76wf');
-	assert.equal(report.ws?.length, 2);
-	assert.deepEqual(
-		report.ws?.map(({ severity, url }) => ({ severity, url })).sort((a, b) => (a.url ?? '').localeCompare(b.url ?? '')),
-		[
-			{
-				severity: 'moderate',
-				url: 'https://github.com/advisories/GHSA-58qx-3vcg-4xpx'
-			},
-			{
-				severity: 'high',
-				url: 'https://github.com/advisories/GHSA-96hv-2xvq-fx4p'
-			}
-		]
-	);
 	const serialized = JSON.stringify(report);
-	const advisories = [...new Set(serialized.match(/GHSA-[a-z0-9-]+/gi) ?? [])].sort();
-	assert.deepEqual(advisories, [...acceptedBunAdvisories].sort());
+	const reported = new Set(serialized.match(/GHSA-[a-z0-9-]+/gi) ?? []);
+
+	// A subset check, not an exact set: the advisory database changes on its own
+	// schedule, so a withdrawn or upstream-fixed advisory must not fail an
+	// unrelated pull request, while any new exposure still must.
+	const unwaived = [...reported].filter((advisory) => !acceptedBunAdvisories.includes(advisory)).sort();
+	assert.deepEqual(
+		unwaived,
+		[],
+		`Bun AA consumer reported advisories outside the accepted waiver: ${unwaived.join(', ')}. Assess them and update packages/sei-global-wallet/README.md before releasing.`
+	);
+
+	const fixed = acceptedBunAdvisories.filter((advisory) => !reported.has(advisory));
+	if (fixed.length > 0) {
+		reportWaiverProgress(
+			`Bun no longer reports ${fixed.join(', ')}. Narrow the waiver in packages/sei-global-wallet/README.md and acceptedBunAdvisories in this script.`
+		);
+	}
+
+	// The documented Axios and UUID overrides must still be taking effect.
 	assert.doesNotMatch(serialized, /axios|uuid/i);
+	console.log(
+		`Bun AA consumer advisories, all within the waiver: ${Object.entries(report)
+			.map(([name, findings]) => `${name} (${findings.map(({ severity }) => severity).join(', ')})`)
+			.join('; ')}`
+	);
 };
 
 const assertNpmDynamicGraph = (lock: PackageLock) => {
-	assert.equal(lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version, '4.96.3');
-	assert.equal(lock.packages['node_modules/@dynamic-labs/ethereum-aa']?.version, '4.96.3');
+	const resolved = assertSatisfiesDynamicRange(lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version, 'npm consumer');
+	assert.equal(lock.packages['node_modules/@dynamic-labs/ethereum-aa']?.version, testedPeerVersions['@dynamic-labs/ethereum-aa']);
 
-	const stale = findStaleDynamicPackages(lock.packages);
-	assert.deepEqual(stale, [], `Unexpected stale Dynamic 4.96.1 npm resolutions: ${stale.map(([location]) => location).join(', ')}`);
+	const conflicts = findDynamicLineConflicts(lock.packages, resolved);
+	assert.deepEqual(conflicts, [], `npm consumer kept a stale Dynamic ${resolved} subtree: ${formatDynamicLineConflicts(conflicts)}`);
+
+	return resolved;
 };
 
 const assertBunDynamicGraph = (lockText: string) => {
-	assert.match(lockText, /"@dynamic-labs\/global-wallet-client": \["@dynamic-labs\/global-wallet-client@4\.96\.3"/);
-	assert.match(lockText, /"@dynamic-labs\/ethereum-aa": \["@dynamic-labs\/ethereum-aa@4\.96\.3"/);
-	assert.doesNotMatch(lockText, /@dynamic-labs\/[^"]+@4\.96\.1/, 'Bun lockfile retained a stale Dynamic 4.96.1 resolution');
+	// Bun records every resolution as a "<name>@<version>" specifier rather than
+	// as install locations, so group the specifiers instead of lock paths.
+	const versions = new Map<string, Set<string>>();
+	for (const [, name, version] of lockText.matchAll(/"(@dynamic-labs\/[^"@/]+)@([^"]+)"/g)) {
+		versions.set(name, (versions.get(name) ?? new Set()).add(version));
+	}
+
+	const walletClient = [...(versions.get('@dynamic-labs/global-wallet-client') ?? [])];
+	assert.equal(walletClient.length, 1, `Bun consumer resolved multiple Dynamic clients: ${walletClient.join(', ')}`);
+	const resolved = assertSatisfiesDynamicRange(walletClient[0], 'Bun consumer');
+	assert(
+		[...(versions.get('@dynamic-labs/ethereum-aa') ?? [])].includes(testedPeerVersions['@dynamic-labs/ethereum-aa']),
+		`Bun consumer did not resolve @dynamic-labs/ethereum-aa@${testedPeerVersions['@dynamic-labs/ethereum-aa']}`
+	);
+
+	// Same major-line invariant as the npm graph: versions outside the client's
+	// major belong to unrelated dependents, such as zksync-sso's Dynamic 5.x.
+	const line = `${resolved.split('.')[0]}.`;
+	const conflicts = [...versions]
+		.map(([name, resolved]) => [name, [...resolved].filter((version) => version.startsWith(line)).sort()] as const)
+		.filter(([, inLine]) => inLine.length > 1)
+		.map(([name, inLine]) => `${name}@{${inLine.join(', ')}}`)
+		.sort();
+	assert.deepEqual(conflicts, [], `Bun consumer kept a stale Dynamic ${resolved} subtree: ${conflicts.join(', ')}`);
 };
 
 const assertBrowserMetafile = async (metafilePath: string, lock: PackageLock) => {
@@ -533,6 +649,8 @@ const assertBrowserMetafile = async (metafilePath: string, lock: PackageLock) =>
 	};
 	const inputs = Object.keys(metafile.inputs);
 	assert(inputs.some((path) => path.includes('node_modules/@dynamic-labs/global-wallet-client/')));
+	const clientVersion = assertSatisfiesDynamicRange(lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version, 'Browser bundle lockfile');
+	const lineVersions = collectDynamicLineVersions(lock.packages, clientVersion);
 	const resolvedDynamicInputs = new Map<string, string>();
 	for (const path of inputs) {
 		const normalizedPath = path.replaceAll('\\', '/');
@@ -546,10 +664,19 @@ const assertBrowserMetafile = async (metafilePath: string, lock: PackageLock) =>
 		const lockLocation = normalizedPath.slice(lockStart, packageStart + packageName.length);
 		const version = lock.packages[lockLocation]?.version;
 		assert(version, `Metafile input did not resolve to its nearest npm lock installation: ${path} -> ${lockLocation}`);
-		assert.notEqual(version, '4.96.1', `Unexpected stale Dynamic runtime in bundle: ${path} -> ${lockLocation}@${version}`);
-		resolvedDynamicInputs.set(lockLocation, version);
+		const inLine = [...(lineVersions.get(packageName) ?? [])];
+		// The lock is already asserted conflict-free within the client's major
+		// line, so a bundled input from that line must be its single version.
+		if (inLine.length > 0) {
+			assert.deepEqual(inLine, [version], `Bundle pulled a stale Dynamic runtime: ${path} -> ${lockLocation}@${version}, expected ${inLine.join(', ')}`);
+		}
+		resolvedDynamicInputs.set(packageName, version);
 	}
-	assert.equal(resolvedDynamicInputs.get('node_modules/@dynamic-labs/global-wallet-client'), '4.96.3');
+	assert.equal(
+		resolvedDynamicInputs.get('@dynamic-labs/global-wallet-client'),
+		clientVersion,
+		'Browser bundle did not load the Dynamic client the lockfile resolved'
+	);
 	const runtimeImports = Object.values(metafile.outputs).flatMap((output) => output.imports ?? []);
 	assert(!runtimeImports.some(({ path }) => path === 'node:worker_threads' || path === 'worker_threads'));
 };
@@ -580,12 +707,18 @@ try {
 			Object.entries(unwaivedLock.packages)
 				.filter(([location]) => location === `node_modules/${name}` || location.endsWith(`/node_modules/${name}`))
 				.map(([, metadata]) => metadata.version);
-		assert(lockedVersions('axios').includes('1.16.0'));
-		assert(lockedVersions('uuid').includes('11.1.0'));
 		const unwaivedAuditResult = await run(['npm', 'audit', '--json'], unwaivedDir, true);
 		const unwaivedAudit = parseJsonOutput<AuditReport>(unwaivedAuditResult.stdout);
-		assert(unwaivedAudit.vulnerabilities?.axios, 'Unwaived npm audit did not expose vulnerable axios');
-		assert(unwaivedAudit.vulnerabilities?.uuid, 'Unwaived npm audit did not expose vulnerable uuid');
+		// Reported, not asserted: an unwaived consumer going clean means Dynamic
+		// corrected its transitive pins, which must not read as a CI failure.
+		const stillVulnerable = ['axios', 'uuid'].filter((name) => unwaivedAudit.vulnerabilities?.[name]);
+		if (stillVulnerable.length === 0) {
+			reportWaiverProgress(
+				'an npm consumer without overrides now audits clean: Dynamic corrected its transitive axios and uuid pins. Remove the override guidance from packages/sei-global-wallet/README.md and the changeset.'
+			);
+		} else {
+			console.log(`Overrides still required for ${stillVulnerable.map((name) => `${name}@${[...new Set(lockedVersions(name))].join('/')}`).join(', ')}`);
+		}
 
 		const waivedDir = join(temporaryRoot, 'npm-waived');
 		await mkdir(waivedDir);
@@ -602,6 +735,7 @@ try {
 		);
 		const waivedAudit = parseJsonOutput<AuditReport>((await run(['npm', 'audit', '--json'], waivedDir)).stdout);
 		assertAuditClean(waivedAudit, 'Waived npm consumer');
+		await assertDeclarationsResolveWithoutOptionalPeers(waivedDir);
 	}
 
 	const npmConsumerDir = join(temporaryRoot, 'npm-full');
@@ -655,10 +789,13 @@ try {
 	await assertBrowserMetafile(join(npmConsumerDir, 'edge-meta.json'), npmLock);
 	await runEdgeBundle(join(npmConsumerDir, 'edge-esbuild.js'));
 	const viteBuild = await run(['npx', '--no-install', 'vite', 'build'], npmConsumerDir);
+	// Vite routes externalization warnings through its own logger, which writes
+	// to stdout in most versions, so scan both streams.
+	const viteOutput = `${viteBuild.stdout}\n${viteBuild.stderr}`;
 	assert.doesNotMatch(
-		viteBuild.stderr,
+		viteOutput,
 		/(?:node:)?worker_threads.*externaliz|externaliz.*(?:node:)?worker_threads/i,
-		`Vite externalized worker_threads:\n${viteBuild.stderr}`
+		`Vite externalized worker_threads:\n${viteOutput}`
 	);
 	const viteFiles = (await readdir(join(npmConsumerDir, 'vite-dist'))).filter((path) => path.endsWith('.js'));
 	assert.equal(viteFiles.length, 1, `Expected one Vite bundle, found: ${viteFiles.join(', ')}`);

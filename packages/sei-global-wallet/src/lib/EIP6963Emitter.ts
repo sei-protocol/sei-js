@@ -16,7 +16,7 @@ export interface EIP6963ProviderDetail {
 }
 
 export const eip6963ProviderInfo: Readonly<EIP6963ProviderInfo> = Object.freeze({
-	icon: config.walletIcon as DataURIImage,
+	icon: config.walletIcon,
 	name: config.walletName,
 	rdns: config.eip6963.rdns,
 	uuid: config.eip6963.uuid

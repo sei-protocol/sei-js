@@ -7,23 +7,27 @@ type BrowserGlobal = typeof globalThis & {
 
 const runtime = globalThis as BrowserGlobal;
 
+const install = (key: 'global' | 'process', value: unknown) => {
+	Object.defineProperty(runtime, key, {
+		configurable: true,
+		enumerable: false,
+		value,
+		writable: true
+	});
+};
+
 // Dynamic 4.x reads Node-style globals in browser and edge-like runtimes, but
 // its own polyfills can execute later after bundling. Install only missing
 // values and preserve anything the consumer already set.
 if (typeof runtime.global === 'undefined') {
-	Object.defineProperty(runtime, 'global', {
-		configurable: true,
-		enumerable: false,
-		value: runtime,
-		writable: true
-	});
+	install('global', runtime);
 }
 
 if (typeof runtime.process === 'undefined') {
-	Object.defineProperty(runtime, 'process', {
-		configurable: true,
-		enumerable: false,
-		value: processShim,
-		writable: true
-	});
+	// Every library loaded after this point shares the shim, and
+	// `process/browser.js` ships an empty `env`. Libraries that branch on
+	// `process.env.NODE_ENV !== 'production'` would otherwise take their
+	// development path inside a production bundle.
+	processShim.env.NODE_ENV ??= 'production';
+	install('process', processShim);
 }

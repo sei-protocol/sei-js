@@ -14,8 +14,8 @@
 </div>
 
 > [!WARNING]
-> **Temporary consumer security waiver:** Dynamic Global Wallet Client 4.96.3 transitively pins vulnerable `axios@1.16.0` and `uuid@11.1.0`.
-> Dependency overrides are root-only in both npm and Bun; this package cannot propagate them to your application. Add the overrides below before installing.
+> **Temporary consumer security waiver:** Dynamic Global Wallet Client transitively pins vulnerable `axios` and `uuid` as of 4.96.3, the current floor.
+> Dependency overrides are root-only in both npm and Bun; this package cannot propagate them to your application. Add the overrides below before installing, and drop them once your install resolves a Dynamic release that corrects those pins.
 
 ## Required consumer overrides
 
@@ -80,7 +80,7 @@ Bun 1.3.14 does not support nested overrides. Do **not** globally override `bn.j
 
 For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches Viem's ws8 subtree while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. The result is audit-clean.
 
-The browser path is temporarily pinned to `viem@2.45.3`: the previously tested 2.55.19 pulls Ox Tempo's `node:worker_threads` path into Vite resolution, while 2.45.3 predates that path.
+The verifier builds its browser consumer against `viem@2.45.3`, because the previously tested 2.55.19 pulls Ox Tempo's `node:worker_threads` path into Vite resolution while 2.45.3 predates it. That is a property of the verifier's own bundle, not a constraint on applications: the published `viem` peer range stays `^2.7.12`. If your bundler externalizes `node:worker_threads` on a newer Viem, configure it in your application rather than downgrading.
 
 For Bun, scoped overrides are unavailable. The selected waiver therefore accepts exactly these unresolved optional-AA advisories while preserving compatible majors:
 
@@ -88,7 +88,7 @@ For Bun, scoped overrides are unavailable. The selected waiver therefore accepts
 - `GHSA-58qx-3vcg-4xpx` on Viem's `ws@8.18.3` — moderate, CVSS 4.4.
 - `GHSA-96hv-2xvq-fx4p` on Viem's `ws@8.18.3` — high, CVSS 7.5.
 
-Jayson remains on `ws@7.5.13`; globally forcing ws8 would violate that major contract. The verifier rejects every advisory outside this exact Bun set.
+Jayson remains on `ws@7.5.13`; globally forcing ws8 would violate that major contract. The verifier fails on any advisory outside this set, and reports rather than fails when one of them stops being reported, so an upstream fix or a withdrawn advisory never turns an unrelated pull request red.
 
 ## Quick start
 
@@ -114,23 +114,47 @@ The entrypoint dispatches the required initial `eip6963:announceProvider` event 
 - `@sei-js/sei-global-wallet/solana` registers the wallet-standard provider and exports `createSolanaWallet` and `registerSolanaStandard`.
 - `@sei-js/sei-global-wallet/zerodev` exports `createKernelClient`.
 
-All entrypoints are ESM-only. The package installs missing `global` and `process` aliases before loading Dynamic code in browsers and edge-like SSR runtimes, while preserving consumer-defined values. Consumers do not need Vite, esbuild, or other bundler shims.
+All entrypoints are ESM-only. Consumers do not need Vite, esbuild, or other bundler shims.
+
+### Globals installed on import
+
+Dynamic 4.x reads Node-style globals, so importing any entrypoint of this package defines them on `globalThis` when they are absent:
+
+- `globalThis.global`, aliased to `globalThis`.
+- `globalThis.process`, set to the `process/browser.js` shim with `env.NODE_ENV` set to `production`.
+
+Both are `configurable` and `writable`, and neither is installed when the consumer or runtime already defines it. `NODE_ENV` is set because the browser shim ships an empty `env`, and libraries that branch on `process.env.NODE_ENV !== 'production'` would otherwise take their development path inside a production bundle. These are true globals, so every library loaded afterwards observes them; if your application needs different values, define `global` and `process` before importing this package and they will be left alone.
 
 ## Optional peer versions
 
-The package mirrors Dynamic 4.96.3's optional peer contract. Install only the peers needed by the subpaths your application uses:
+Install only the peers needed by the subpaths your application uses. The declared ranges stay deliberately wide, because an optional peer still fails `npm install` with `ERESOLVE` once your application has the package at a version outside the range. The **verified** column is Dynamic 4.96.3's own peer contract, which is the set this package's release checks run against.
 
-- `@dynamic-labs/ethereum-aa@4.96.3`
-- `@solana/web3.js@1.98.1`
-- `@solana/wallet-standard-features@^1.2.0`
-- `@wallet-standard/base@^1.0.1`
-- `@wallet-standard/features@^1.0.3`
-- `@wallet-standard/wallet@^1.1.0`
-- `@zerodev/sdk@5.5.7`
-- `viem@2.45.3`
-- `zksync-sso@0.2.0`
+| Peer | Declared range | Verified against | Needed by |
+| --- | --- | --- | --- |
+| `viem` | `^2.7.12` | `2.45.3` | `./zerodev`, Dynamic AA |
+| `@dynamic-labs/ethereum-aa` | `^4.15.0` | `4.96.3` | `./zerodev` |
+| `@zerodev/sdk` | `^5.4.36` | `5.5.7` | `./zerodev` |
+| `@solana/web3.js` | `^1.92.1` | `1.98.1` | `./solana` |
+| `@solana/wallet-standard-features` | `^1.2.0` | `^1.2.0` | `./solana` |
+| `@wallet-standard/base` | `^1.0.1` | `^1.0.1` | `./solana` |
+| `@wallet-standard/features` | `^1.0.3` | `^1.0.3` | `./solana` |
+| `@wallet-standard/wallet` | `^1.1.0` | `^1.1.0` | `./solana` |
 
-Dynamic's direct wallet and AA packages resolve to 4.96.3. A full Bun lockfile regeneration showed that the previous isolated Dynamic 4.96.1 subtree beneath `@dynamic-labs-wallet/browser-wallet-client@1.0.92` was stale: its `^4.81.0` ranges resolve compatibly without 4.96.1. Clean npm and Bun graphs now contain no Dynamic 4.96.1 packages, and browser metafile checks reject their return as direct runtime code.
+> [!NOTE]
+> Dynamic 4.96.3 pins several of these exactly for itself, so a version outside the verified column can still be rejected by Dynamic's own peer contract during install, and is not covered by this package's checks. Prefer the verified versions; the wide ranges exist so that upgrading this package never breaks an install on its own.
+>
+> Dynamic also declares an optional `zksync-sso@0.2.0` peer for its zkSync path. This package does not redeclare it, so npm surfaces that requirement from Dynamic directly.
+
+Two dependencies exist for transitive resolution rather than for this package's own source, so neither is removable despite nothing here importing them:
+
+- `@wallet-standard/wallet`, because Dynamic's `./solana` module imports it, so `@sei-js/sei-global-wallet/solana` needs it present at runtime.
+- `events`, because `@zerodev/sdk` imports the bare `events` specifier. Bundling the `./zerodev` path for the browser fails with `Could not resolve "events"` unless that polyfill is in the tree.
+
+The root, `./eip6963`, and `./ethereum` entrypoints need no optional peer at all, including for type resolution. The release verifier typechecks them with `skipLibCheck: false` in a consumer that installs nothing but this package, so a published declaration that referenced a type from an uninstalled peer would fail the check.
+
+`@dynamic-labs/global-wallet-client` is a `^4.96.3` dependency rather than an exact pin, so applications inherit Dynamic's transitive fixes without waiting for a release here. This repository's lockfile pins the exact version it tests.
+
+A full Bun lockfile regeneration showed that the previous isolated Dynamic 4.96.1 subtree beneath `@dynamic-labs-wallet/browser-wallet-client@1.0.92` was stale: its `^4.81.0` ranges resolve compatibly without it. The verifier now asserts that no `@dynamic-labs/*` package resolves to more than one version, in npm and Bun graphs and in browser bundles, which stays meaningful across Dynamic upgrades.
 
 ## Brand asset
 
@@ -141,4 +165,6 @@ The pinned source includes its terminal newline and has SHA-256 `e288cd08b510afb
 
 ## Release verification
 
-The dedicated `Sei Global Wallet Consumer Smoke` workflow runs on wallet-related pull-request paths and can be started manually with `workflow_dispatch` before release. It executes `bun run test:sei-global-wallet-release`, including an audit-clean scoped npm consumer, a waiver-aware Bun consumer, native and bundled edge-like SSR, real local ZeroDev provider operations in esbuild/Vite, dependency graphs, and package contents. Its output names the exact accepted Bun set: `GHSA-378v-28hj-76wf`, `GHSA-58qx-3vcg-4xpx`, and `GHSA-96hv-2xvq-fx4p`; the verifier fails if Bun reports any new, missing, or different advisory. Regular package tests remain deterministic and do not perform clean consumer installs.
+The dedicated `Sei Global Wallet Consumer Smoke` workflow runs on wallet-related paths for pull requests and for pushes to `main` (so the publishing commit is gated too), daily on a schedule to catch registry and advisory drift, and on demand with `workflow_dispatch`. It executes `bun run test:sei-global-wallet-release`, including an audit-clean scoped npm consumer, a waiver-aware Bun consumer, declarations that resolve with no optional peer installed, native and bundled edge-like SSR, real local ZeroDev provider operations in esbuild/Vite, dependency graphs, and package contents. Regular package tests remain deterministic and do not perform clean consumer installs.
+
+`SEI_GLOBAL_WALLET_FAST_CHECK=1` shortens the local loop by skipping the two clean npm consumers and the entire Bun consumer path, so a green run under that flag covers neither the audit waiver nor Bun. Release verification must run without it, which is what CI does.

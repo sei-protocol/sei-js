@@ -25,7 +25,33 @@ describe('public entrypoints', () => {
 			import: './dist/zerodev.js',
 			default: './dist/zerodev.js'
 		});
-		expect(packageJson.peerDependencies['@dynamic-labs/ethereum-aa']).toBe('4.96.3');
 		expect(packageJson.peerDependenciesMeta['@dynamic-labs/ethereum-aa']).toEqual({ optional: true });
+	});
+
+	// Optional peers only stop erroring when absent; once an application has one,
+	// a narrower range than 1.4.1 published fails its install with ERESOLVE. Any
+	// change here must stay a superset of these ranges.
+	it('keeps every optional peer range compatible with the 1.4.1 contract', () => {
+		expect(packageJson.peerDependencies).toEqual({
+			'@dynamic-labs/ethereum-aa': '^4.15.0',
+			'@solana/wallet-standard-features': '^1.2.0',
+			'@solana/web3.js': '^1.92.1',
+			'@wallet-standard/base': '^1.0.1',
+			'@wallet-standard/features': '^1.0.3',
+			'@wallet-standard/wallet': '^1.1.0',
+			'@zerodev/sdk': '^5.4.36',
+			viem: '^2.7.12'
+		});
+	});
+
+	// Dynamic's ./solana module imports @wallet-standard/wallet directly, so the
+	// solana entrypoint needs it installed rather than merely declared as a peer.
+	it('keeps @wallet-standard/wallet installed for the solana entrypoint', () => {
+		expect(packageJson.dependencies['@wallet-standard/wallet']).toBe('^1.1.0');
+	});
+
+	// An exact pin would make every Dynamic transitive fix wait on a release here.
+	it('declares the Dynamic dependency as a range', () => {
+		expect(packageJson.dependencies['@dynamic-labs/global-wallet-client']).toBe('^4.96.3');
 	});
 });
