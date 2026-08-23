@@ -4,6 +4,7 @@ import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { BRAND_ASSET_HASHES } from '../brand-assets';
+import { hasPendingChangesets } from '../scripts/pending-changesets';
 import { selectPrecompilesSource } from '../scripts/select-precompiles-source';
 import { SEI_NEUTRAL_RAMP } from '../templates/next-template/src/theme';
 
@@ -80,6 +81,16 @@ describe('precompiles source selection', () => {
 		await expect(
 			selectPrecompilesSource({ currentVersion: '3.0.0', pendingVersion: '3.1.0', requestedSource: 'auto', targetVersion: '3.0.0' }, async () => false)
 		).rejects.toThrow('neither a matching local source nor the exact npm release is available');
+	});
+});
+
+describe('pending changeset detection', () => {
+	test('counts changeset markdown as pending', () => {
+		expect(hasPendingChangesets(['README.md', 'config.json', 'fix-create-sei-scaffold.md'])).toBe(true);
+	});
+
+	test('treats a versioned changeset folder as consumed', () => {
+		expect(hasPendingChangesets(['README.md', 'config.json'])).toBe(false);
 	});
 });
 

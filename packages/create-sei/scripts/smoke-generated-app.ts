@@ -3,10 +3,12 @@ import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { BRAND_ASSET_HASHES } from '../brand-assets';
+import { hasPendingChangesets } from './pending-changesets';
 import { type PrecompilesSource, type PrecompilesSourceSelection, type RequestedPrecompilesSource, selectPrecompilesSource } from './select-precompiles-source';
 
 const packageRoot = path.resolve(import.meta.dir, '..');
 const repositoryRoot = path.resolve(packageRoot, '../..');
+const changesetRoot = path.join(repositoryRoot, '.changeset');
 const precompilesRoot = path.join(repositoryRoot, 'packages/precompiles');
 const cliPath = path.join(packageRoot, 'dist/main.js');
 const templateManifestPath = path.join(packageRoot, 'templates/next-template/package.json');
@@ -88,6 +90,26 @@ async function pathExists(target: string): Promise<boolean> {
 		.catch(() => false);
 }
 
+async function computePendingReleasePlan(tempRoot: string): Promise<ReleasePlan> {
+	// A Version Packages branch consumes every changeset while it writes the bumped manifests
+	// this smoke test exists to validate, and `changeset status` rejects that state because the
+	// branch changes packages without a changeset. Only require a status report while changesets
+	// are still waiting to be released.
+	const changesetsPending = hasPendingChangesets(await fs.readdir(changesetRoot));
+	const releasePlanPath = path.join(tempRoot, 'changeset-status.json');
+	const exitCode = await run(
+		'Compute pending release metadata',
+		[process.execPath, 'run', 'changeset', 'status', '--output', releasePlanPath],
+		repositoryRoot,
+		changesetsPending
+	);
+	if (exitCode !== 0) {
+		console.log('Every changeset has already been consumed, so the error above is expected and no release is pending.');
+		return { releases: [] };
+	}
+	return JSON.parse(await fs.readFile(releasePlanPath, 'utf8')) as ReleasePlan;
+}
+
 async function resolvePrecompilesTarget(tempRoot: string): Promise<PrecompilesTarget> {
 	const templateManifest = JSON.parse(await fs.readFile(templateManifestPath, 'utf8')) as {
 		dependencies?: Record<string, string>;
@@ -97,9 +119,7 @@ async function resolvePrecompilesTarget(tempRoot: string): Promise<PrecompilesTa
 		throw new Error('The template must pin @sei-js/precompiles to one exact version.');
 	}
 
-	const releasePlanPath = path.join(tempRoot, 'changeset-status.json');
-	await run('Compute pending release metadata', [process.execPath, 'run', 'changeset', 'status', '--output', releasePlanPath], repositoryRoot);
-	const releasePlan = JSON.parse(await fs.readFile(releasePlanPath, 'utf8')) as ReleasePlan;
+	const releasePlan = await computePendingReleasePlan(tempRoot);
 	const pendingRelease = releasePlan.releases.find((release) => release.name === '@sei-js/precompiles');
 	const currentManifest = JSON.parse(await fs.readFile(path.join(precompilesRoot, 'package.json'), 'utf8')) as {
 		version: string;
