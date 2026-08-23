@@ -48,6 +48,7 @@ describe('public entrypoints', () => {
 	// solana entrypoint needs it installed rather than merely declared as a peer.
 	it('keeps @wallet-standard/wallet installed for the solana entrypoint', () => {
 		expect(packageJson.dependencies['@wallet-standard/wallet']).toBe('^1.1.0');
+		expect(packageJson.devDependencies['@wallet-standard/wallet']).toBeUndefined();
 	});
 
 	// An exact pin would make every Dynamic transitive fix wait on a release here.

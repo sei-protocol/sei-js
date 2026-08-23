@@ -7,8 +7,8 @@ Harden Sei Global Wallet browser, EIP-6963, and packaging behavior without chang
 New exports: `registerEIP6963Provider`, `unregisterEIP6963Provider`, `eip6963ProviderInfo`, and `registerSolanaStandard`.
 
 - Raise `@dynamic-labs/global-wallet-client` to `^4.96.3`, so applications inherit Dynamic's transitive fixes without waiting for a release here.
-- Initialize Dynamic's required `global` and `process` aliases before loading its modules in browsers and edge-like SSR runtimes, without consumer bundler configuration and without replacing consumer-defined values. `process.env.NODE_ENV` defaults to `production` so libraries loaded afterwards do not take a development branch inside a production bundle.
-- Dispatch the initial EIP-6963 announcement, re-announce on every provider request, expose cleanup helpers, use stable UUIDv4 provider metadata, and replace the non-square wordmark with the unmodified square black mark from the official Sei brand kit.
+- Initialize Dynamic's required `global` and `process` aliases before loading its modules in browsers and edge-like SSR runtimes, without consumer bundler configuration and without replacing consumer-defined values. Import mutates `globalThis` only when those values are absent. The `process` shim installed on `globalThis` is a copy, so the `process/browser.js` module singleton is not mutated. `process.env.NODE_ENV` defaults to `production` so libraries loaded afterwards do not take a development branch inside a production bundle.
+- Dispatch the initial EIP-6963 announcement, re-announce on every provider request, expose cleanup helpers, keep the EIP-6963 uuid equal to `environmentId` (the same identity Dynamic previously used), and replace the non-square wordmark with the unmodified square black mark from the official Sei brand kit.
 - Keep the root, `./eip6963`, and `./ethereum` entrypoints resolvable with no optional peer installed, including for types.
 - Verify real npm and Bun consumers, all five entrypoints, EIP-6963 and Solana registration, ZeroDev resolution, esbuild and Vite browser runtimes, SSR imports, types, audits, and package contents.
 

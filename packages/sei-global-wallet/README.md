@@ -34,7 +34,7 @@ Complete npm root overrides when the optional AA path is not enabled:
 }
 ```
 
-Complete Bun root overrides when the optional AA path is not enabled:
+Complete Bun root overrides. The block is the same with or without the optional AA path, because Bun cannot do nested overrides and must not globally override `bn.js` or `ws`:
 ```json
 {
 	"overrides": {
@@ -68,15 +68,7 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 }
 ```
 
-Bun 1.3.14 does not support nested overrides. Do **not** globally override `bn.js` or `ws`: Solana/borsh require bn5 while Jayson requires ws7. Bun AA consumers use the same complete safe root block shown above for Bun:
-```json
-{
-	"overrides": {
-		"axios": "1.18.0",
-		"uuid": "11.1.1"
-	}
-}
-```
+Bun 1.3.14 does not support nested overrides. Do **not** globally override `bn.js` or `ws`: Solana/borsh require bn5 while Jayson requires ws7. Bun's complete root override block is therefore the same with or without the optional AA path.
 
 For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches Viem's ws8 subtree while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. The result is audit-clean.
 
@@ -121,7 +113,7 @@ All entrypoints are ESM-only. Consumers do not need Vite, esbuild, or other bund
 Dynamic 4.x reads Node-style globals, so importing any entrypoint of this package defines them on `globalThis` when they are absent:
 
 - `globalThis.global`, aliased to `globalThis`.
-- `globalThis.process`, set to the `process/browser.js` shim with `env.NODE_ENV` set to `production`.
+- `globalThis.process`, set to a copy of the `process/browser.js` shim with `env.NODE_ENV` set to `production` (the `process/browser.js` module singleton is left unchanged).
 
 Both are `configurable` and `writable`, and neither is installed when the consumer or runtime already defines it. `NODE_ENV` is set because the browser shim ships an empty `env`, and libraries that branch on `process.env.NODE_ENV !== 'production'` would otherwise take their development path inside a production bundle. These are true globals, so every library loaded afterwards observes them; if your application needs different values, define `global` and `process` before importing this package and they will be left alone.
 
@@ -148,7 +140,7 @@ Install only the peers needed by the subpaths your application uses. The declare
 Two dependencies exist for transitive resolution rather than for this package's own source, so neither is removable despite nothing here importing them:
 
 - `@wallet-standard/wallet`, because Dynamic's `./solana` module imports it, so `@sei-js/sei-global-wallet/solana` needs it present at runtime.
-- `events`, because `@zerodev/sdk` imports the bare `events` specifier. Bundling the `./zerodev` path for the browser fails with `Could not resolve "events"` unless that polyfill is in the tree.
+- `events`, because `@zerodev/sdk` imports the bare `events` specifier. Bundling the `./zerodev` path for the browser fails with `Could not resolve "events"` unless that polyfill is in the tree. This only helps hoisted layouts (npm, Bun). Under pnpm's default isolated `node_modules` or Yarn PnP, `events` installed for `@sei-js/sei-global-wallet` is not on `@zerodev/sdk`'s resolution path, so those users still need a bundler alias or an application-level `events` dependency.
 
 The root, `./eip6963`, and `./ethereum` entrypoints need no optional peer at all, including for type resolution. The release verifier typechecks them with `skipLibCheck: false` in a consumer that installs nothing but this package, so a published declaration that referenced a type from an uninstalled peer would fail the check.
 

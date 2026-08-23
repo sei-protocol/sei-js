@@ -77,6 +77,13 @@ const assertSatisfiesDynamicRange = (version: string | undefined, label: string)
 	return version;
 };
 
+const assertMajor = (version: string | undefined, major: string, label: string) => {
+	assert(version, `${label} was not installed`);
+	assert(version.startsWith(`${major}.`), `${label} resolved ${version}, expected ${major}.x`);
+};
+
+const ghsaIdsIn = (value: unknown) => JSON.stringify(value).match(/GHSA-[a-z0-9-]+/gi) ?? [];
+
 const reportWaiverProgress = (message: string) => {
 	console.warn(`[waiver] ${message}`);
 };
@@ -576,20 +583,24 @@ const assertAcceptedBunAudit = (result: ProcessResult) => {
 	}
 
 	const report = parseJsonOutput<Record<string, Array<{ severity?: string; url?: string }>>>(result.stdout);
-	const serialized = JSON.stringify(report);
-	const reported = new Set(serialized.match(/GHSA-[a-z0-9-]+/gi) ?? []);
+	const auditFindings = Object.values(report).flat();
+	const missingGhsa = auditFindings.filter((finding) => ghsaIdsIn(finding).length === 0);
+	assert.deepEqual(missingGhsa, [], `Bun AA consumer findings without a GHSA id: ${JSON.stringify(missingGhsa)}`);
+
+	const reported = new Set(auditFindings.flatMap((finding) => ghsaIdsIn(finding)).map((advisory) => advisory.toLowerCase()));
+	const accepted = new Set(acceptedBunAdvisories.map((advisory) => advisory.toLowerCase()));
 
 	// A subset check, not an exact set: the advisory database changes on its own
 	// schedule, so a withdrawn or upstream-fixed advisory must not fail an
 	// unrelated pull request, while any new exposure still must.
-	const unwaived = [...reported].filter((advisory) => !acceptedBunAdvisories.includes(advisory)).sort();
+	const unwaived = [...reported].filter((advisory) => !accepted.has(advisory)).sort();
 	assert.deepEqual(
 		unwaived,
 		[],
 		`Bun AA consumer reported advisories outside the accepted waiver: ${unwaived.join(', ')}. Assess them and update packages/sei-global-wallet/README.md before releasing.`
 	);
 
-	const fixed = acceptedBunAdvisories.filter((advisory) => !reported.has(advisory));
+	const fixed = acceptedBunAdvisories.filter((advisory) => !reported.has(advisory.toLowerCase()));
 	if (fixed.length > 0) {
 		reportWaiverProgress(
 			`Bun no longer reports ${fixed.join(', ')}. Narrow the waiver in packages/sei-global-wallet/README.md and acceptedBunAdvisories in this script.`
@@ -597,7 +608,14 @@ const assertAcceptedBunAudit = (result: ProcessResult) => {
 	}
 
 	// The documented Axios and UUID overrides must still be taking effect.
-	assert.doesNotMatch(serialized, /axios|uuid/i);
+	// Match only those package names as Bun audit keys, not last path segments
+	// (`@lukeed/uuid`) or advisory titles that happen to contain "uuid".
+	const blockedOverridePackages = Object.keys(report).filter((name) => name === 'axios' || name === 'uuid');
+	assert.deepEqual(
+		blockedOverridePackages,
+		[],
+		`Bun AA consumer still reports ${blockedOverridePackages.join(', ')}; the documented Axios and UUID overrides are not taking effect.`
+	);
 	console.log(
 		`Bun AA consumer advisories, all within the waiver: ${Object.entries(report)
 			.map(([name, findings]) => `${name} (${findings.map(({ severity }) => severity).join(', ')})`)
@@ -747,11 +765,11 @@ try {
 	assertNpmDynamicGraph(npmLock);
 	assert.equal(npmLock.packages['node_modules/ethjs-unit/node_modules/bn.js']?.version, '4.12.5');
 	assert.equal(npmLock.packages['node_modules/number-to-bn/node_modules/bn.js']?.version, '4.12.5');
-	assert.equal(npmLock.packages['node_modules/bn.js']?.version, '5.2.5');
+	assertMajor(npmLock.packages['node_modules/bn.js']?.version, '5', 'hoisted bn.js');
 	assert.equal(npmLock.packages['node_modules/ws']?.version, '8.21.0');
 	assert.equal(npmLock.packages['node_modules/viem']?.dependencies?.ws, '8.18.3');
 	assert.equal(npmLock.packages['node_modules/jayson']?.dependencies?.ws, '^7.5.10');
-	assert.equal(npmLock.packages['node_modules/jayson/node_modules/ws']?.version, '7.5.13');
+	assertMajor(npmLock.packages['node_modules/jayson/node_modules/ws']?.version, '7', 'jayson nested ws');
 	await run(['node', 'check-ssr.mjs'], npmConsumerDir);
 	await run(['node', 'check-edge-native.mjs'], npmConsumerDir);
 	await run(['node', 'check-local-aa.mjs'], npmConsumerDir);
@@ -810,11 +828,11 @@ try {
 		await run(['bun', 'install'], bunConsumerDir);
 		const bunLock = await readFile(join(bunConsumerDir, 'bun.lock'), 'utf8');
 		assertBunDynamicGraph(bunLock);
-		assert.match(bunLock, /"bn\.js": \["bn\.js@5\.2\.5"/);
-		assert.match(bunLock, /"ethjs-unit\/bn\.js": \["bn\.js@4\.11\.6"/);
-		assert.match(bunLock, /"number-to-bn\/bn\.js": \["bn\.js@4\.11\.6"/);
-		assert.match(bunLock, /"jayson\/ws": \["ws@7\.5\.13"/);
-		assert.match(bunLock, /"ws": \["ws@8\.18\.3"/);
+		assert.match(bunLock, /"bn\.js": \["bn\.js@5\./);
+		assert.match(bunLock, /"ethjs-unit\/bn\.js": \["bn\.js@4\./);
+		assert.match(bunLock, /"number-to-bn\/bn\.js": \["bn\.js@4\./);
+		assert.match(bunLock, /"jayson\/ws": \["ws@7\./);
+		assert.match(bunLock, /"ws": \["ws@8\./);
 		await run(['bun', 'check-ssr.mjs'], bunConsumerDir);
 		await run(['bun', 'check-local-aa.mjs'], bunConsumerDir);
 		assertAcceptedBunAudit(await run(['bun', 'audit', '--json'], bunConsumerDir, true));
@@ -823,7 +841,7 @@ try {
 	console.log(
 		fastCheck
 			? 'Sei Global Wallet fast npm consumer checks passed.'
-			: `Sei Global Wallet consumer checks passed: npm scoped patched bn.js/ws8 while preserving Solana bn5/Jayson ws7 with a clean audit; Bun preserved compatible majors and accepted exactly ${acceptedBunAdvisories.join(', ')}.`
+			: 'Sei Global Wallet consumer checks passed: npm scoped patched bn.js/ws8 while preserving Solana bn5/Jayson ws7 with a clean audit; Bun preserved compatible majors within the accepted advisory waiver.'
 	);
 } finally {
 	await rm(temporaryRoot, { force: true, recursive: true });

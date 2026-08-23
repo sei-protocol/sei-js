@@ -35,6 +35,18 @@ describe('mcp sdk zod lock', () => {
 		).toBeUndefined();
 	});
 
+	test('mcp-server SDK range excludes versions that only declare zod 3', () => {
+		const mcpServerPackage = JSON.parse(readFileSync(join(import.meta.dir, '..', 'packages/mcp-server/package.json'), 'utf8')) as {
+			dependencies: { '@modelcontextprotocol/sdk': string };
+		};
+		const sdkRange = mcpServerPackage.dependencies['@modelcontextprotocol/sdk'];
+
+		expect(Bun.semver.satisfies('1.17.5', sdkRange)).toBe(false);
+		expect(Bun.semver.satisfies('1.22.0', sdkRange)).toBe(false);
+		expect(Bun.semver.satisfies('1.23.0', sdkRange)).toBe(true);
+		expect(Bun.semver.satisfies('1.30.0', sdkRange)).toBe(true);
+	});
+
 	test('the repo lockfile keeps the MCP SDK on the same zod as mcp-server', () => {
 		const parseErrors: ParseError[] = [];
 		const lockfile = parse(readFileSync(join(import.meta.dir, '..', 'bun.lock'), 'utf8'), parseErrors, {

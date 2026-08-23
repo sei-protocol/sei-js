@@ -35,7 +35,7 @@
       "version": "0.3.3",
       "bin": "./bin/mcp-server.js",
       "dependencies": {
-        "@modelcontextprotocol/sdk": "^1.17.5",
+        "@modelcontextprotocol/sdk": "^1.23.0",
         "@noble/hashes": "^1.8.0",
         "commander": "^14.0.0",
         "cors": "^2.8.5",
@@ -86,7 +86,6 @@
         "@solana/web3.js": "1.98.1",
         "@wallet-standard/base": "^1.0.1",
         "@wallet-standard/features": "^1.0.3",
-        "@wallet-standard/wallet": "^1.1.0",
         "@zerodev/sdk": "5.5.7",
         "typescript": "^5.7.3",
         "viem": "2.45.3",

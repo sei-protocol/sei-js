@@ -28,6 +28,10 @@ if (typeof runtime.process === 'undefined') {
 	// `process/browser.js` ships an empty `env`. Libraries that branch on
 	// `process.env.NODE_ENV !== 'production'` would otherwise take their
 	// development path inside a production bundle.
-	processShim.env.NODE_ENV ??= 'production';
-	install('process', processShim);
+	const processForGlobal = {
+		...processShim,
+		env: { ...processShim.env }
+	};
+	processForGlobal.env.NODE_ENV ??= 'production';
+	install('process', processForGlobal);
 }
