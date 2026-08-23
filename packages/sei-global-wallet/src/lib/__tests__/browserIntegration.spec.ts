@@ -1,5 +1,9 @@
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
 
+// This file imports the real Dynamic client against a hand-rolled EventTarget
+// window / MemoryStorage, so it will fail if Dynamic starts touching `document`
+// or `navigator`.
+
 class MemoryStorage implements Storage {
 	readonly #values = new Map<string, string>();
 
