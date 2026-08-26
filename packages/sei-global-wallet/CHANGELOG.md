@@ -1,5 +1,36 @@
 # @sei-js/sei-global-wallet
 
+## 2.0.0
+
+### Major Changes
+
+- 29311bc: Migrate the monorepo to Bun and publish ESM-only packages.
+
+  **Breaking:** all packages drop CommonJS (`require`) entry points and flatten `dist/`. Consumers must use ESM `import`. `@sei-js/precompiles` now ships an `exports` map with working `./ethers`, `./viem`, and `./precompiles` subpaths. `@sei-js/sei-global-wallet` keeps the `./solana` entrypoint.
+
+  Install, build, and test with Bun (`bun install`, `bun run build`, `bun run test`). `@sei-js/mcp-server` now requires Node.js 20 or newer. The MCP server and precompiles development toolchain use Viem 2.55.16. Generated apps target the new `@sei-js/precompiles` major. Packages continue to publish to npm via Changesets.
+
+### Minor Changes
+
+- 5b4bff7: Harden Sei Global Wallet browser, EIP-6963, and packaging behavior without changing what existing installs resolve.
+
+  New exports: `registerEIP6963Provider`, `unregisterEIP6963Provider`, `eip6963ProviderInfo`, and `registerSolanaStandard`.
+
+  - Raise `@dynamic-labs/global-wallet-client` to `^4.96.3`, so applications inherit Dynamic's transitive fixes without waiting for a release here.
+  - Initialize Dynamic's required `global` and `process` aliases before loading its modules in browsers and edge-like SSR runtimes, without consumer bundler configuration and without replacing consumer-defined values. Import mutates `globalThis` only when those values are absent. The `process` shim installed on `globalThis` is a copy, so the `process/browser.js` module singleton is not mutated. `process.env.NODE_ENV` defaults to `production` so libraries loaded afterwards do not take a development branch inside a production bundle.
+  - Dispatch the initial EIP-6963 announcement, re-announce on every provider request, expose cleanup helpers, keep the EIP-6963 uuid equal to `environmentId` (the same identity Dynamic previously used), and replace the non-square wordmark with the unmodified square black mark from the official Sei brand kit.
+  - Keep the root, `./eip6963`, and `./ethereum` entrypoints resolvable with no optional peer installed, including for types.
+  - Verify real npm and Bun consumers, all five entrypoints, EIP-6963 and Solana registration, ZeroDev resolution, esbuild and Vite browser runtimes, SSR imports, types, audits, and package contents.
+
+  Every optional peer range stays a superset of the 1.4.1 contract, and `@wallet-standard/wallet` stays a direct dependency, so no existing install changes how it resolves. The `events` dependency is present so bundlers can resolve the bare `events` specifier that `@zerodev/sdk` imports; browser builds of the `./zerodev` path fail without it. Dynamic 4.96.3's own peer contract is the version set this release is verified against; it is documented under [Optional peer versions](https://github.com/sei-protocol/sei-js/blob/main/packages/sei-global-wallet/README.md#optional-peer-versions) as guidance rather than enforced through narrowed ranges.
+
+  > [!WARNING]
+  > This release carries a temporary consumer security waiver: Dynamic transitively pins vulnerable `axios` and `uuid`, and dependency overrides in a library do not propagate to applications. See [Required consumer overrides](https://github.com/sei-protocol/sei-js/blob/main/packages/sei-global-wallet/README.md#required-consumer-overrides) for the exact override blocks and the accepted advisory set.
+
+### Patch Changes
+
+- da59b19: Standardize published package contents, licensing, and type resolution.
+
 ## 1.4.1
 
 ### Patch Changes

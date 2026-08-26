@@ -1,6 +1,6 @@
 {
 	"name": "@sei-js/precompiles",
-	"version": "2.1.3",
+	"version": "3.0.0",
 	"description": "TypeScript library for EVM interactions on the Sei blockchain",
 	"type": "module",
 	"main": "./dist/index.js",
