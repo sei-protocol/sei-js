@@ -1,5 +1,11 @@
 import { describe, expect, test } from 'bun:test';
-import { collectDynamicLineVersions, dynamicLockPackageName, findDynamicLineConflicts, formatDynamicLineConflicts } from './dynamic-package-lock.js';
+import {
+	collectDynamicLineVersions,
+	dynamicLockPackageName,
+	findDynamicLineConflicts,
+	formatDynamicLineConflicts,
+	listDynamicPackageInstallations
+} from './dynamic-package-lock.js';
 
 describe('dynamic package lock locations', () => {
 	test('names hoisted and nested Dynamic packages, and nothing else', () => {
@@ -9,6 +15,19 @@ describe('dynamic package lock locations', () => {
 		expect(dynamicLockPackageName('node_modules/a/node_modules/b/node_modules/@dynamic-labs/store')).toBe('@dynamic-labs/store');
 		expect(dynamicLockPackageName('node_modules/@dynamic-labs')).toBeUndefined();
 		expect(dynamicLockPackageName('node_modules/axios')).toBeUndefined();
+	});
+
+	test('lists a client installed only beneath the package that depends on it', () => {
+		expect(
+			listDynamicPackageInstallations(
+				{
+					'node_modules/@dynamic-labs/ethereum-aa': { version: '4.96.3' },
+					'node_modules/@sei-js/sei-global-wallet/node_modules/@dynamic-labs/global-wallet-client': { version: '4.96.4' },
+					'node_modules/@sei-js/sei-global-wallet/node_modules/@dynamic-labs/types': { version: '4.96.4' }
+				},
+				'@dynamic-labs/global-wallet-client'
+			)
+		).toEqual(['node_modules/@sei-js/sei-global-wallet/node_modules/@dynamic-labs/global-wallet-client@4.96.4']);
 	});
 
 	test('collects only the resolutions inside the requested major line', () => {
