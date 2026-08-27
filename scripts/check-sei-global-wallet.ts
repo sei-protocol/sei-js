@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
-import { collectDynamicLineVersions, findDynamicLineConflicts, formatDynamicLineConflicts } from './dynamic-package-lock.js';
+import { collectDynamicLineVersions, dynamicLockPackageName, findDynamicLineConflicts, formatDynamicLineConflicts } from './dynamic-package-lock.js';
 
 interface ProcessResult {
 	exitCode: number;
@@ -44,30 +44,6 @@ const manifest = JSON.parse(await readFile(join(packageDir, 'package.json'), 'ut
 	peerDependencies: Record<string, string>;
 };
 const dynamicRange = manifest.dependencies['@dynamic-labs/global-wallet-client'];
-
-// The versions the consumers are built against: Dynamic 4.96.3's own peer
-// contract. The published peer ranges stay wider than these on purpose, so an
-// application that already carries one of these packages keeps resolving.
-const testedPeerVersions = {
-	'@dynamic-labs/ethereum-aa': '4.96.3',
-	'@solana/wallet-standard-features': '^1.2.0',
-	'@solana/web3.js': '1.98.1',
-	'@wallet-standard/base': '^1.0.1',
-	'@wallet-standard/features': '^1.0.3',
-	'@wallet-standard/wallet': '^1.1.0',
-	'@zerodev/sdk': '5.5.7',
-	viem: '2.45.3',
-	'zksync-sso': '0.2.0'
-} as const;
-
-// Guards the two from drifting: every version the harness installs has to be
-// allowed by the range the package publishes.
-for (const [name, tested] of Object.entries(testedPeerVersions)) {
-	const declared = manifest.peerDependencies[name];
-	if (!declared || tested.startsWith('^')) continue;
-
-	assert(Bun.semver.satisfies(tested, declared), `Harness installs ${name}@${tested}, which the published ${name}@${declared} peer range excludes`);
-}
 
 // The published manifest carries a range so consumers inherit upstream fixes;
 // exactness belongs to the lockfile, not the contract.
@@ -115,6 +91,72 @@ const parseJsonOutput = <T>(output: string): T => {
 };
 
 const writeJson = (path: string, value: unknown) => writeFile(path, `${JSON.stringify(value, null, 2)}\n`);
+
+// `npm view` answers with a bare JSON scalar when one version matches the
+// specifier and with an array when several do, and it keeps warnings on stderr,
+// so the whole document parses.
+const viewJson = async <T>(specifier: string, field: string): Promise<T> =>
+	JSON.parse((await run(['npm', 'view', specifier, field, '--json'], root)).stdout.trim()) as T;
+
+const viewVersions = async (specifier: string) => [await viewJson<string | string[]>(specifier, 'version')].flat();
+
+const highestVersion = (versions: readonly string[]) => versions.reduce((highest, version) => (Bun.semver.order(version, highest) > 0 ? version : highest));
+
+/**
+ * Dynamic pins `@dynamic-labs/ethereum-aa` as an exact peer of the client and
+ * pins its internal packages to the client's version, so the AA version these
+ * consumers install has to track whatever `dynamicRange` resolves to now rather
+ * than a constant here. A stale pin does not fail the install: npm cannot place
+ * the newer client's exact peer next to an older root copy, so it nests the
+ * client under this package and duplicates the whole Dynamic runtime instead.
+ */
+const resolveDynamicContract = async () => {
+	const clientVersions = await viewVersions(`@dynamic-labs/global-wallet-client@${dynamicRange}`);
+	assert(clientVersions.length > 0, `No @dynamic-labs/global-wallet-client version satisfies the declared ${dynamicRange}`);
+	const client = highestVersion(clientVersions);
+
+	const peers = await viewJson<Record<string, string>>(`@dynamic-labs/global-wallet-client@${client}`, 'peerDependencies');
+	const aaRange = peers['@dynamic-labs/ethereum-aa'];
+	assert(aaRange, `@dynamic-labs/global-wallet-client@${client} no longer declares an @dynamic-labs/ethereum-aa peer`);
+
+	// Resolved to a concrete version, not passed through as a range, so the lock
+	// assertions below stay exact even if Dynamic ever loosens the peer.
+	const aaVersions = await viewVersions(`@dynamic-labs/ethereum-aa@${aaRange}`);
+	assert(aaVersions.length > 0, `No @dynamic-labs/ethereum-aa version satisfies the ${aaRange} peer of @dynamic-labs/global-wallet-client@${client}`);
+
+	return { client, ethereumAa: highestVersion(aaVersions) };
+};
+
+const dynamicContract = await resolveDynamicContract();
+console.log(
+	`Dynamic ${dynamicRange} resolves to global-wallet-client@${dynamicContract.client}, whose peer contract pins @dynamic-labs/ethereum-aa@${dynamicContract.ethereumAa}.`
+);
+
+// The versions the consumers are built against: the resolved Dynamic client's
+// own peer contract. The published peer ranges stay wider than these on
+// purpose, so an application that already carries one of these packages keeps
+// resolving.
+const testedPeerVersions = {
+	'@dynamic-labs/ethereum-aa': dynamicContract.ethereumAa,
+	'@solana/wallet-standard-features': '^1.2.0',
+	'@solana/web3.js': '1.98.1',
+	'@wallet-standard/base': '^1.0.1',
+	'@wallet-standard/features': '^1.0.3',
+	'@wallet-standard/wallet': '^1.1.0',
+	'@zerodev/sdk': '5.5.7',
+	viem: '2.45.3',
+	'zksync-sso': '0.2.0'
+} as const;
+
+// Guards the two from drifting: every version the harness installs has to be
+// allowed by the range the package publishes. This is what catches Dynamic
+// moving its own peer pin outside the range published here.
+for (const [name, tested] of Object.entries(testedPeerVersions)) {
+	const declared = manifest.peerDependencies[name];
+	if (!declared || tested.startsWith('^')) continue;
+
+	assert(Bun.semver.satisfies(tested, declared), `Harness installs ${name}@${tested}, which the published ${name}@${declared} peer range excludes`);
+}
 
 const baseSafeOverrides = {
 	axios: '1.18.0',
@@ -624,7 +666,20 @@ const assertAcceptedBunAudit = (result: ProcessResult) => {
 };
 
 const assertNpmDynamicGraph = (lock: PackageLock) => {
-	const resolved = assertSatisfiesDynamicRange(lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version, 'npm consumer');
+	const hoisted = lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version;
+	// An install that succeeds without a hoisted client means npm could not place
+	// the client's exact peers at the root and nested it instead, which duplicates
+	// the Dynamic runtime rather than failing. Name those locations, because
+	// "did not resolve" would point at a dependency that is in fact installed.
+	if (!hoisted) {
+		const nested = Object.entries(lock.packages)
+			.filter(([location]) => dynamicLockPackageName(location) === '@dynamic-labs/global-wallet-client')
+			.map(([location, metadata]) => `${location}@${metadata.version}`)
+			.sort();
+		assert.deepEqual(nested, [], `npm consumer nested @dynamic-labs/global-wallet-client instead of hoisting it: ${nested.join(', ')}`);
+	}
+
+	const resolved = assertSatisfiesDynamicRange(hoisted, 'npm consumer');
 	assert.equal(lock.packages['node_modules/@dynamic-labs/ethereum-aa']?.version, testedPeerVersions['@dynamic-labs/ethereum-aa']);
 
 	const conflicts = findDynamicLineConflicts(lock.packages, resolved);

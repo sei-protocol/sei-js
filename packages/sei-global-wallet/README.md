@@ -119,12 +119,12 @@ Both are `configurable` and `writable`, and neither is installed when the consum
 
 ## Optional peer versions
 
-Install only the peers needed by the subpaths your application uses. The declared ranges stay deliberately wide, because an optional peer still fails `npm install` with `ERESOLVE` once your application has the package at a version outside the range. The **verified** column is Dynamic 4.96.3's own peer contract, which is the set this package's release checks run against.
+Install only the peers needed by the subpaths your application uses. The declared ranges stay deliberately wide, because an optional peer still fails `npm install` with `ERESOLVE` once your application has the package at a version outside the range. The **verified** column is the resolved Dynamic client's own peer contract, which is the set this package's release checks run against.
 
 | Peer | Declared range | Verified against | Needed by |
 | --- | --- | --- | --- |
 | `viem` | `^2.7.12` | `2.45.3` | `./zerodev`, Dynamic AA |
-| `@dynamic-labs/ethereum-aa` | `^4.15.0` | `4.96.3` | `./zerodev` |
+| `@dynamic-labs/ethereum-aa` | `^4.15.0` | the resolved client's exact version | `./zerodev` |
 | `@zerodev/sdk` | `^5.4.36` | `5.5.7` | `./zerodev` |
 | `@solana/web3.js` | `^1.92.1` | `1.98.1` | `./solana` |
 | `@solana/wallet-standard-features` | `^1.2.0` | `^1.2.0` | `./solana` |
@@ -133,7 +133,9 @@ Install only the peers needed by the subpaths your application uses. The declare
 | `@wallet-standard/wallet` | `^1.1.0` | `^1.1.0` | `./solana` |
 
 > [!NOTE]
-> Dynamic 4.96.3 pins several of these exactly for itself, so a version outside the verified column can still be rejected by Dynamic's own peer contract during install, and is not covered by this package's checks. Prefer the verified versions; the wide ranges exist so that upgrading this package never breaks an install on its own.
+> Dynamic pins several of these exactly for itself, so a version outside the verified column can still be rejected by Dynamic's own peer contract during install, and is not covered by this package's checks. Prefer the verified versions; the wide ranges exist so that upgrading this package never breaks an install on its own.
+>
+> `@dynamic-labs/ethereum-aa` is the strictest of them, because Dynamic pins it to its client's exact version. Since `@dynamic-labs/global-wallet-client` is a range here, pinning an older `@dynamic-labs/ethereum-aa` than the client npm resolves does not fail the install: npm cannot place that exact peer beside your older copy, so it nests a second Dynamic runtime under this package instead. Keep it on the version the resolved client asks for, which `npm view @dynamic-labs/global-wallet-client@^4.96.3 peerDependencies` reports.
 >
 > Dynamic also declares an optional `zksync-sso@0.2.0` peer for its zkSync path. This package does not redeclare it, so npm surfaces that requirement from Dynamic directly.
 
@@ -144,7 +146,7 @@ Two dependencies exist for transitive resolution rather than for this package's 
 
 The root, `./eip6963`, and `./ethereum` entrypoints need no optional peer at all, including for type resolution. The release verifier typechecks them with `skipLibCheck: false` in a consumer that installs nothing but this package, so a published declaration that referenced a type from an uninstalled peer would fail the check.
 
-`@dynamic-labs/global-wallet-client` is a `^4.96.3` dependency rather than an exact pin, so applications inherit Dynamic's transitive fixes without waiting for a release here. This repository's lockfile pins the exact version it tests.
+`@dynamic-labs/global-wallet-client` is a `^4.96.3` dependency rather than an exact pin, so applications inherit Dynamic's transitive fixes without waiting for a release here. This repository's lockfile pins the exact version it tests. The consumer checks instead resolve that range against the registry on every run, so a Dynamic patch published inside it is exercised the way an application would actually receive it.
 
 A full Bun lockfile regeneration showed that the previous isolated Dynamic 4.96.1 subtree beneath `@dynamic-labs-wallet/browser-wallet-client@1.0.92` was stale: its `^4.81.0` ranges resolve compatibly without it. The verifier now asserts that no `@dynamic-labs/*` package resolves to more than one version, in npm and Bun graphs and in browser bundles, which stays meaningful across Dynamic upgrades.
 
