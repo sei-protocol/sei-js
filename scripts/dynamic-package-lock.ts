@@ -3,6 +3,13 @@ const DYNAMIC_PACKAGE_LOCATION = /(?:^|\/)node_modules\/(@dynamic-labs\/[^/]+)$/
 /** Returns the `@dynamic-labs/*` package a lock location installs, at any nesting depth. */
 export const dynamicLockPackageName = (location: string) => location.match(DYNAMIC_PACKAGE_LOCATION)?.[1];
 
+/** Lists every npm lock location for one Dynamic package, including nested copies. */
+export const listDynamicPackageInstallations = (packages: Record<string, { version?: string }>, packageName: string) =>
+	Object.entries(packages)
+		.filter(([location]) => dynamicLockPackageName(location) === packageName)
+		.map(([location, metadata]) => `${location}@${metadata.version}`)
+		.sort();
+
 const majorOf = (version: string) => version.split('.')[0];
 
 /**

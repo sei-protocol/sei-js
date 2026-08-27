@@ -5,7 +5,8 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
-import { collectDynamicLineVersions, findDynamicLineConflicts, formatDynamicLineConflicts } from './dynamic-package-lock.js';
+import { highestVersion, normalizeNpmViewVersions, parseNpmViewResult } from './dynamic-package-contract.js';
+import { collectDynamicLineVersions, findDynamicLineConflicts, formatDynamicLineConflicts, listDynamicPackageInstallations } from './dynamic-package-lock.js';
 
 interface ProcessResult {
 	exitCode: number;
@@ -33,7 +34,6 @@ interface PackageLock {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const packageDir = join(root, 'packages/sei-global-wallet');
-const temporaryRoot = await mkdtemp(join(tmpdir(), 'sei-global-wallet-release-'));
 // Documented in packages/sei-global-wallet/README.md: skips the clean npm
 // consumers and the whole Bun path, so it never substitutes for a full run.
 const fastCheck = process.env.SEI_GLOBAL_WALLET_FAST_CHECK === '1';
@@ -44,30 +44,6 @@ const manifest = JSON.parse(await readFile(join(packageDir, 'package.json'), 'ut
 	peerDependencies: Record<string, string>;
 };
 const dynamicRange = manifest.dependencies['@dynamic-labs/global-wallet-client'];
-
-// The versions the consumers are built against: Dynamic 4.96.3's own peer
-// contract. The published peer ranges stay wider than these on purpose, so an
-// application that already carries one of these packages keeps resolving.
-const testedPeerVersions = {
-	'@dynamic-labs/ethereum-aa': '4.96.3',
-	'@solana/wallet-standard-features': '^1.2.0',
-	'@solana/web3.js': '1.98.1',
-	'@wallet-standard/base': '^1.0.1',
-	'@wallet-standard/features': '^1.0.3',
-	'@wallet-standard/wallet': '^1.1.0',
-	'@zerodev/sdk': '5.5.7',
-	viem: '2.45.3',
-	'zksync-sso': '0.2.0'
-} as const;
-
-// Guards the two from drifting: every version the harness installs has to be
-// allowed by the range the package publishes.
-for (const [name, tested] of Object.entries(testedPeerVersions)) {
-	const declared = manifest.peerDependencies[name];
-	if (!declared || tested.startsWith('^')) continue;
-
-	assert(Bun.semver.satisfies(tested, declared), `Harness installs ${name}@${tested}, which the published ${name}@${declared} peer range excludes`);
-}
 
 // The published manifest carries a range so consumers inherit upstream fixes;
 // exactness belongs to the lockfile, not the contract.
@@ -116,6 +92,69 @@ const parseJsonOutput = <T>(output: string): T => {
 
 const writeJson = (path: string, value: unknown) => writeFile(path, `${JSON.stringify(value, null, 2)}\n`);
 
+const viewJson = async <T>(specifier: string, field: string): Promise<T | undefined> => {
+	const command = ['npm', 'view', specifier, field, '--json'];
+	return parseNpmViewResult<T>(await run(command, root, true), command.join(' '));
+};
+
+const viewVersions = async (specifier: string) => normalizeNpmViewVersions(await viewJson<string | string[]>(specifier, 'version'));
+
+/**
+ * Dynamic pins `@dynamic-labs/ethereum-aa` as an exact peer of the client and
+ * pins its internal packages to the client's version, so the AA version these
+ * consumers install has to track whatever `dynamicRange` resolves to now rather
+ * than a constant here. A stale pin does not fail the install: npm cannot place
+ * the newer client's exact peer next to an older root copy, so it nests the
+ * client under this package and duplicates the whole Dynamic runtime instead.
+ */
+const resolveDynamicContract = async () => {
+	const clientVersions = await viewVersions(`@dynamic-labs/global-wallet-client@${dynamicRange}`);
+	assert(clientVersions.length > 0, `No @dynamic-labs/global-wallet-client version satisfies the declared ${dynamicRange}`);
+	const client = highestVersion(clientVersions);
+
+	const peers = await viewJson<Record<string, string>>(`@dynamic-labs/global-wallet-client@${client}`, 'peerDependencies');
+	const aaRange = peers?.['@dynamic-labs/ethereum-aa'];
+	assert(aaRange, `@dynamic-labs/global-wallet-client@${client} no longer declares an @dynamic-labs/ethereum-aa peer`);
+
+	// Resolved to a concrete version, not passed through as a range, so the lock
+	// assertions below stay exact even if Dynamic ever loosens the peer.
+	const aaVersions = await viewVersions(`@dynamic-labs/ethereum-aa@${aaRange}`);
+	assert(aaVersions.length > 0, `No @dynamic-labs/ethereum-aa version satisfies the ${aaRange} peer of @dynamic-labs/global-wallet-client@${client}`);
+
+	return { client, ethereumAa: highestVersion(aaVersions) };
+};
+
+// AA follows the resolved Dynamic client's exact peer; the remaining versions
+// are the fixed compatibility set these consumers exercise. The published peer
+// ranges stay wider on purpose, so an application that already carries one of
+// these packages keeps resolving.
+const makeTestedPeerVersions = (ethereumAa: string) =>
+	({
+		'@dynamic-labs/ethereum-aa': ethereumAa,
+		'@solana/wallet-standard-features': '^1.2.0',
+		'@solana/web3.js': '1.98.1',
+		'@wallet-standard/base': '^1.0.1',
+		'@wallet-standard/features': '^1.0.3',
+		'@wallet-standard/wallet': '^1.1.0',
+		'@zerodev/sdk': '5.5.7',
+		viem: '2.45.3',
+		'zksync-sso': '0.2.0'
+	}) as const;
+
+type TestedPeerVersions = ReturnType<typeof makeTestedPeerVersions>;
+
+const assertTestedPeersFitPublishedRanges = (testedPeerVersions: TestedPeerVersions) => {
+	// Guards the two from drifting: every version the harness installs has to be
+	// allowed by the range the package publishes. This is what catches Dynamic
+	// moving its own peer pin outside the range published here.
+	for (const [name, tested] of Object.entries(testedPeerVersions)) {
+		const declared = manifest.peerDependencies[name];
+		if (!declared || tested.startsWith('^')) continue;
+
+		assert(Bun.semver.satisfies(tested, declared), `Harness installs ${name}@${tested}, which the published ${name}@${declared} peer range excludes`);
+	}
+};
+
 const baseSafeOverrides = {
 	axios: '1.18.0',
 	uuid: '11.1.1'
@@ -146,12 +185,13 @@ const walletOnlyManifest = (tarball: string, overrides?: Record<string, unknown>
 	...(overrides ? { overrides } : {})
 });
 
-const fullConsumerManifest = (tarball: string, packageManager: 'bun' | 'npm') => ({
+const fullConsumerManifest = (tarball: string, packageManager: 'bun' | 'npm', dynamicClientVersion: string, testedPeerVersions: TestedPeerVersions) => ({
 	name: 'sei-global-wallet-full-consumer',
 	private: true,
 	type: 'module',
 	dependencies: {
 		...testedPeerVersions,
+		'@dynamic-labs/global-wallet-client': dynamicClientVersion,
 		'@sei-js/sei-global-wallet': `file:${tarball}`,
 		'ethjs-unit': '0.1.6',
 		'number-to-bn': '1.7.0'
@@ -623,9 +663,20 @@ const assertAcceptedBunAudit = (result: ProcessResult) => {
 	);
 };
 
-const assertNpmDynamicGraph = (lock: PackageLock) => {
-	const resolved = assertSatisfiesDynamicRange(lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version, 'npm consumer');
-	assert.equal(lock.packages['node_modules/@dynamic-labs/ethereum-aa']?.version, testedPeerVersions['@dynamic-labs/ethereum-aa']);
+const assertNpmDynamicGraph = (lock: PackageLock, expectedClientVersion: string, expectedAaVersion: string) => {
+	const hoisted = lock.packages['node_modules/@dynamic-labs/global-wallet-client']?.version;
+	// An install that succeeds without a hoisted client means npm could not place
+	// the client's exact peers at the root and nested it instead, which duplicates
+	// the Dynamic runtime rather than failing. Name those locations, because
+	// "did not resolve" would point at a dependency that is in fact installed.
+	if (!hoisted) {
+		const nested = listDynamicPackageInstallations(lock.packages, '@dynamic-labs/global-wallet-client');
+		assert.deepEqual(nested, [], `npm consumer nested @dynamic-labs/global-wallet-client instead of hoisting it: ${nested.join(', ')}`);
+	}
+
+	const resolved = assertSatisfiesDynamicRange(hoisted, 'npm consumer');
+	assert.equal(resolved, expectedClientVersion, `npm consumer resolved client ${resolved}, expected the preflight contract ${expectedClientVersion}`);
+	assert.equal(lock.packages['node_modules/@dynamic-labs/ethereum-aa']?.version, expectedAaVersion);
 
 	const conflicts = findDynamicLineConflicts(lock.packages, resolved);
 	assert.deepEqual(conflicts, [], `npm consumer kept a stale Dynamic ${resolved} subtree: ${formatDynamicLineConflicts(conflicts)}`);
@@ -633,7 +684,7 @@ const assertNpmDynamicGraph = (lock: PackageLock) => {
 	return resolved;
 };
 
-const assertBunDynamicGraph = (lockText: string) => {
+const assertBunDynamicGraph = (lockText: string, expectedClientVersion: string, expectedAaVersion: string) => {
 	// Bun records every resolution as a "<name>@<version>" specifier rather than
 	// as install locations, so group the specifiers instead of lock paths.
 	const versions = new Map<string, Set<string>>();
@@ -644,9 +695,10 @@ const assertBunDynamicGraph = (lockText: string) => {
 	const walletClient = [...(versions.get('@dynamic-labs/global-wallet-client') ?? [])];
 	assert.equal(walletClient.length, 1, `Bun consumer resolved multiple Dynamic clients: ${walletClient.join(', ')}`);
 	const resolved = assertSatisfiesDynamicRange(walletClient[0], 'Bun consumer');
+	assert.equal(resolved, expectedClientVersion, `Bun consumer resolved client ${resolved}, expected the preflight contract ${expectedClientVersion}`);
 	assert(
-		[...(versions.get('@dynamic-labs/ethereum-aa') ?? [])].includes(testedPeerVersions['@dynamic-labs/ethereum-aa']),
-		`Bun consumer did not resolve @dynamic-labs/ethereum-aa@${testedPeerVersions['@dynamic-labs/ethereum-aa']}`
+		[...(versions.get('@dynamic-labs/ethereum-aa') ?? [])].includes(expectedAaVersion),
+		`Bun consumer did not resolve @dynamic-labs/ethereum-aa@${expectedAaVersion}`
 	);
 
 	// Same major-line invariant as the npm graph: versions outside the client's
@@ -699,7 +751,15 @@ const assertBrowserMetafile = async (metafilePath: string, lock: PackageLock) =>
 	assert(!runtimeImports.some(({ path }) => path === 'node:worker_threads' || path === 'worker_threads'));
 };
 
+const temporaryRoot = await mkdtemp(join(tmpdir(), 'sei-global-wallet-release-'));
 try {
+	const dynamicContract = await resolveDynamicContract();
+	console.log(
+		`Dynamic ${dynamicRange} resolves to global-wallet-client@${dynamicContract.client}, whose peer contract pins @dynamic-labs/ethereum-aa@${dynamicContract.ethereumAa}.`
+	);
+	const testedPeerVersions = makeTestedPeerVersions(dynamicContract.ethereumAa);
+	assertTestedPeersFitPublishedRanges(testedPeerVersions);
+
 	await run(['bun', 'run', '--cwd', packageDir, 'build'], root);
 	const pack = await run(['npm', 'pack', '--json', '--pack-destination', temporaryRoot], packageDir);
 	const [packResult] = parseJsonOutput<PackResult[]>(pack.stdout);
@@ -758,11 +818,11 @@ try {
 
 	const npmConsumerDir = join(temporaryRoot, 'npm-full');
 	await mkdir(npmConsumerDir);
-	await writeJson(join(npmConsumerDir, 'package.json'), fullConsumerManifest(tarball, 'npm'));
+	await writeJson(join(npmConsumerDir, 'package.json'), fullConsumerManifest(tarball, 'npm', dynamicContract.client, testedPeerVersions));
 	await setupConsumerFiles(npmConsumerDir);
 	await run(['npm', 'install', '--no-audit', '--no-fund'], npmConsumerDir);
 	const npmLock = JSON.parse(await readFile(join(npmConsumerDir, 'package-lock.json'), 'utf8')) as PackageLock;
-	assertNpmDynamicGraph(npmLock);
+	assertNpmDynamicGraph(npmLock, dynamicContract.client, dynamicContract.ethereumAa);
 	assert.equal(npmLock.packages['node_modules/ethjs-unit/node_modules/bn.js']?.version, '4.12.5');
 	assert.equal(npmLock.packages['node_modules/number-to-bn/node_modules/bn.js']?.version, '4.12.5');
 	assertMajor(npmLock.packages['node_modules/bn.js']?.version, '5', 'hoisted bn.js');
@@ -823,11 +883,11 @@ try {
 	if (!fastCheck) {
 		const bunConsumerDir = join(temporaryRoot, 'bun-full');
 		await mkdir(bunConsumerDir);
-		await writeJson(join(bunConsumerDir, 'package.json'), fullConsumerManifest(tarball, 'bun'));
+		await writeJson(join(bunConsumerDir, 'package.json'), fullConsumerManifest(tarball, 'bun', dynamicContract.client, testedPeerVersions));
 		await setupConsumerFiles(bunConsumerDir);
 		await run(['bun', 'install'], bunConsumerDir);
 		const bunLock = await readFile(join(bunConsumerDir, 'bun.lock'), 'utf8');
-		assertBunDynamicGraph(bunLock);
+		assertBunDynamicGraph(bunLock, dynamicContract.client, dynamicContract.ethereumAa);
 		assert.match(bunLock, /"bn\.js": \["bn\.js@5\./);
 		assert.match(bunLock, /"ethjs-unit\/bn\.js": \["bn\.js@4\./);
 		assert.match(bunLock, /"number-to-bn\/bn\.js": \["bn\.js@4\./);
