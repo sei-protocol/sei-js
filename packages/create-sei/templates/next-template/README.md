@@ -30,7 +30,9 @@ bun run build
 
 ## Image handling
 
-Next.js image optimization is disabled so the generated app needs no native Sharp build. Next 15.5.25 declares Sharp `^0.34.3 || ^0.35.4`, and the manifest pins `0.35.4`, the release that clears the libheif advisory in that range, so enabling optimization is a template choice rather than a security tradeoff.
+Next.js image optimization is disabled so the generated app needs no native Sharp build. Turning it on is a template choice rather than a security tradeoff.
+
+The manifest's `sharp` override is a separate matter and has to stay. The pinned Next 15 line declares Sharp `^0.34.3 || ^0.35.4`, and the `0.34.x` half of that range is still inside [GHSA-rgj7-g3m4-5g8c](https://github.com/advisories/GHSA-rgj7-g3m4-5g8c), so `0.35.4` is the advisory floor. Loosening or removing the override reintroduces a high audit finding whether or not optimization is enabled.
 
 ## Development bundler
 
