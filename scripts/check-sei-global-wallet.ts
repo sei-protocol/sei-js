@@ -20,7 +20,7 @@ interface AuditReport {
 			total?: number;
 		};
 	};
-	vulnerabilities?: Record<string, unknown>;
+	vulnerabilities?: Record<string, { via?: Array<string | { url?: string }> }>;
 }
 
 interface PackResult {
@@ -37,7 +37,15 @@ const packageDir = join(root, 'packages/sei-global-wallet');
 // Documented in packages/sei-global-wallet/README.md: skips the clean npm
 // consumers and the whole Bun path, so it never substitutes for a full run.
 const fastCheck = process.env.SEI_GLOBAL_WALLET_FAST_CHECK === '1';
-const acceptedBunAdvisories: readonly string[] = ['GHSA-378v-28hj-76wf', 'GHSA-58qx-3vcg-4xpx', 'GHSA-96hv-2xvq-fx4p'];
+// Advisories accepted on the optional AA path only, where no fix is reachable.
+// The default wallet-only consumer stays strictly audit-clean, so neither list
+// can excuse a finding an application gets from a plain install.
+//
+// `stream-json` is shared by both: the Solana RPC client's CommonJS `jayson`
+// requires it, and every version outside the advisory is ESM-only under a moved
+// `src/` layout, so an override turns the advisory into a MODULE_NOT_FOUND.
+const acceptedNpmAdvisories: readonly string[] = ['GHSA-528h-pc64-c93x'];
+const acceptedBunAdvisories: readonly string[] = ['GHSA-378v-28hj-76wf', 'GHSA-528h-pc64-c93x', 'GHSA-58qx-3vcg-4xpx', 'GHSA-96hv-2xvq-fx4p'];
 
 const manifest = JSON.parse(await readFile(join(packageDir, 'package.json'), 'utf8')) as {
 	dependencies: Record<string, string>;
@@ -155,10 +163,15 @@ const assertTestedPeersFitPublishedRanges = (testedPeerVersions: TestedPeerVersi
 	}
 };
 
+// Exact transitive pins Dynamic carries that a root override has to correct.
+// Flat by necessity: Bun cannot nest overrides, so every entry here has to be
+// safe to apply globally.
 const baseSafeOverrides = {
 	axios: '1.18.0',
+	sharp: '0.35.4',
 	uuid: '11.1.1'
 };
+const overriddenTransitivePins = Object.keys(baseSafeOverrides);
 const npmRuntimeOverrides = {
 	...baseSafeOverrides,
 	viem: {
@@ -611,7 +624,59 @@ const runEdgeBundle = async (bundlePath: string) => {
 };
 
 const assertAuditClean = (report: AuditReport, label: string) => {
-	assert.equal(report.metadata?.vulnerabilities?.total ?? Object.keys(report.vulnerabilities ?? {}).length, 0, `${label} audit was not clean`);
+	const findings = Object.entries(report.vulnerabilities ?? {})
+		.map(([name, entry]) => {
+			const urls = (entry.via ?? []).filter((via) => typeof via === 'object').map((via) => via.url);
+			return urls.length > 0 ? `${name} (${urls.join(', ')})` : name;
+		})
+		.sort();
+	assert.equal(report.metadata?.vulnerabilities?.total ?? findings.length, 0, `${label} audit was not clean: ${findings.join('; ')}`);
+};
+
+/**
+ * A subset check, not an exact set: the advisory database changes on its own
+ * schedule, so a withdrawn or upstream-fixed advisory must not fail an
+ * unrelated pull request, while any new exposure still must.
+ */
+const assertWithinWaiver = (reported: ReadonlySet<string>, accepted: readonly string[], label: string) => {
+	const acceptedIds = new Set(accepted.map((advisory) => advisory.toLowerCase()));
+	const unwaived = [...reported].filter((advisory) => !acceptedIds.has(advisory)).sort();
+	assert.deepEqual(
+		unwaived,
+		[],
+		`${label} reported advisories outside the accepted waiver: ${unwaived.join(', ')}. Assess them and update packages/sei-global-wallet/README.md before releasing.`
+	);
+
+	const fixed = accepted.filter((advisory) => !reported.has(advisory.toLowerCase()));
+	if (fixed.length > 0) {
+		reportWaiverProgress(
+			`${label} no longer reports ${fixed.join(', ')}. Narrow the waiver in packages/sei-global-wallet/README.md and the accepted advisory list in this script.`
+		);
+	}
+};
+
+const assertAcceptedNpmAudit = (result: ProcessResult, label: string) => {
+	const report = parseJsonOutput<AuditReport>(result.stdout);
+	if ((report.metadata?.vulnerabilities?.total ?? Object.keys(report.vulnerabilities ?? {}).length) === 0) {
+		reportWaiverProgress(
+			`${label} now audits clean: every accepted advisory was fixed upstream. Delete the waiver from packages/sei-global-wallet/README.md and acceptedNpmAdvisories in this script.`
+		);
+		return;
+	}
+
+	// Read each id from the advisory's own `url` rather than scanning the whole
+	// report: npm advisory titles cite unrelated GHSA ids (sharp's libheif title
+	// names two), which a blanket scan would count as separate findings.
+	const advisories = Object.values(report.vulnerabilities ?? {})
+		.flatMap((entry) => entry.via ?? [])
+		.filter((via): via is { url?: string } => typeof via === 'object')
+		.map((advisory) => ({ advisory, id: advisory.url?.match(/GHSA-[a-z0-9-]+/i)?.[0] }));
+	const missingGhsa = advisories.filter(({ id }) => !id).map(({ advisory }) => advisory);
+	assert.deepEqual(missingGhsa, [], `${label} findings without a GHSA url: ${JSON.stringify(missingGhsa)}`);
+
+	const reportedIds = advisories.flatMap(({ id }) => (id ? [id] : []));
+	assertWithinWaiver(new Set(reportedIds.map((id) => id.toLowerCase())), acceptedNpmAdvisories, label);
+	console.log(`${label} advisories, all within the waiver: ${[...new Set(reportedIds)].sort().join(', ')}`);
 };
 
 const assertAcceptedBunAudit = (result: ProcessResult) => {
@@ -628,33 +693,16 @@ const assertAcceptedBunAudit = (result: ProcessResult) => {
 	assert.deepEqual(missingGhsa, [], `Bun AA consumer findings without a GHSA id: ${JSON.stringify(missingGhsa)}`);
 
 	const reported = new Set(auditFindings.flatMap((finding) => ghsaIdsIn(finding)).map((advisory) => advisory.toLowerCase()));
-	const accepted = new Set(acceptedBunAdvisories.map((advisory) => advisory.toLowerCase()));
+	assertWithinWaiver(reported, acceptedBunAdvisories, 'Bun AA consumer');
 
-	// A subset check, not an exact set: the advisory database changes on its own
-	// schedule, so a withdrawn or upstream-fixed advisory must not fail an
-	// unrelated pull request, while any new exposure still must.
-	const unwaived = [...reported].filter((advisory) => !accepted.has(advisory)).sort();
-	assert.deepEqual(
-		unwaived,
-		[],
-		`Bun AA consumer reported advisories outside the accepted waiver: ${unwaived.join(', ')}. Assess them and update packages/sei-global-wallet/README.md before releasing.`
-	);
-
-	const fixed = acceptedBunAdvisories.filter((advisory) => !reported.has(advisory.toLowerCase()));
-	if (fixed.length > 0) {
-		reportWaiverProgress(
-			`Bun no longer reports ${fixed.join(', ')}. Narrow the waiver in packages/sei-global-wallet/README.md and acceptedBunAdvisories in this script.`
-		);
-	}
-
-	// The documented Axios and UUID overrides must still be taking effect.
-	// Match only those package names as Bun audit keys, not last path segments
+	// The documented root overrides must still be taking effect. Match only
+	// those package names as Bun audit keys, not last path segments
 	// (`@lukeed/uuid`) or advisory titles that happen to contain "uuid".
-	const blockedOverridePackages = Object.keys(report).filter((name) => name === 'axios' || name === 'uuid');
+	const blockedOverridePackages = Object.keys(report).filter((name) => overriddenTransitivePins.includes(name));
 	assert.deepEqual(
 		blockedOverridePackages,
 		[],
-		`Bun AA consumer still reports ${blockedOverridePackages.join(', ')}; the documented Axios and UUID overrides are not taking effect.`
+		`Bun AA consumer still reports ${blockedOverridePackages.join(', ')}; the documented ${overriddenTransitivePins.join(', ')} overrides are not taking effect.`
 	);
 	console.log(
 		`Bun AA consumer advisories, all within the waiver: ${Object.entries(report)
@@ -789,10 +837,12 @@ try {
 		const unwaivedAudit = parseJsonOutput<AuditReport>(unwaivedAuditResult.stdout);
 		// Reported, not asserted: an unwaived consumer going clean means Dynamic
 		// corrected its transitive pins, which must not read as a CI failure.
-		const stillVulnerable = ['axios', 'uuid'].filter((name) => unwaivedAudit.vulnerabilities?.[name]);
+		// Derived from the override block so a newly waived package cannot be
+		// left out of this reporting and make a partial fix read as a full one.
+		const stillVulnerable = overriddenTransitivePins.filter((name) => unwaivedAudit.vulnerabilities?.[name]);
 		if (stillVulnerable.length === 0) {
 			reportWaiverProgress(
-				'an npm consumer without overrides now audits clean: Dynamic corrected its transitive axios and uuid pins. Remove the override guidance from packages/sei-global-wallet/README.md and the changeset.'
+				`an npm consumer without overrides now audits clean: Dynamic corrected its transitive ${overriddenTransitivePins.join(', ')} pins. Remove the override guidance from packages/sei-global-wallet/README.md and the changeset.`
 			);
 		} else {
 			console.log(`Overrides still required for ${stillVulnerable.map((name) => `${name}@${[...new Set(lockedVersions(name))].join('/')}`).join(', ')}`);
@@ -811,7 +861,9 @@ try {
 			],
 			waivedDir
 		);
-		const waivedAudit = parseJsonOutput<AuditReport>((await run(['npm', 'audit', '--json'], waivedDir)).stdout);
+		// `npm audit` exits non-zero on any finding, so let the assertion below
+		// report which advisory broke the consumer instead of a raw spawn error.
+		const waivedAudit = parseJsonOutput<AuditReport>((await run(['npm', 'audit', '--json'], waivedDir, true)).stdout);
 		assertAuditClean(waivedAudit, 'Waived npm consumer');
 		await assertDeclarationsResolveWithoutOptionalPeers(waivedDir);
 	}
@@ -878,7 +930,7 @@ try {
 	const viteFiles = (await readdir(join(npmConsumerDir, 'vite-dist'))).filter((path) => path.endsWith('.js'));
 	assert.equal(viteFiles.length, 1, `Expected one Vite bundle, found: ${viteFiles.join(', ')}`);
 	await runBrowserBundle(join(npmConsumerDir, 'vite-dist', viteFiles[0]), true);
-	assertAuditClean(parseJsonOutput<AuditReport>((await run(['npm', 'audit', '--json'], npmConsumerDir)).stdout), 'Full npm consumer');
+	assertAcceptedNpmAudit(await run(['npm', 'audit', '--json'], npmConsumerDir, true), 'Full npm consumer');
 
 	if (!fastCheck) {
 		const bunConsumerDir = join(temporaryRoot, 'bun-full');
@@ -901,7 +953,7 @@ try {
 	console.log(
 		fastCheck
 			? 'Sei Global Wallet fast npm consumer checks passed.'
-			: 'Sei Global Wallet consumer checks passed: npm scoped patched bn.js/ws8 while preserving Solana bn5/Jayson ws7 with a clean audit; Bun preserved compatible majors within the accepted advisory waiver.'
+			: 'Sei Global Wallet consumer checks passed: the wallet-only npm consumer audited clean, npm scoped patched bn.js/ws8 while preserving Solana bn5/Jayson ws7, and both full consumers stayed within the accepted advisory waiver.'
 	);
 } finally {
 	await rm(temporaryRoot, { force: true, recursive: true });

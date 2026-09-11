@@ -14,7 +14,7 @@
 </div>
 
 > [!WARNING]
-> **Temporary consumer security waiver:** Dynamic Global Wallet Client transitively pins vulnerable `axios` and `uuid` as of 4.96.3, the current floor.
+> **Temporary consumer security waiver:** Dynamic Global Wallet Client transitively pins vulnerable `axios`, `sharp`, and `uuid` as of 4.96.3, the current floor.
 > Dependency overrides are root-only in both npm and Bun; this package cannot propagate them to your application. Add the overrides below before installing, and drop them once your install resolves a Dynamic release that corrects those pins.
 
 ## Required consumer overrides
@@ -26,6 +26,7 @@ Complete npm root overrides when the optional AA path is not enabled:
 {
 	"overrides": {
 		"axios": "1.18.0",
+		"sharp": "0.35.4",
 		"uuid": "11.1.1",
 		"viem": {
 			"ws": "8.21.0"
@@ -39,14 +40,16 @@ Complete Bun root overrides. The block is the same with or without the optional 
 {
 	"overrides": {
 		"axios": "1.18.0",
+		"sharp": "0.35.4",
 		"uuid": "11.1.1"
 	}
 }
 ```
 
-The Axios and UUID overrides are temporary until Dynamic updates its exact transitive pins:
+The Axios, Sharp, and UUID overrides are temporary until Dynamic updates its exact transitive pins:
 
 - The high-severity Axios issue is in the Node HTTP adapter and requires a prerequisite prototype-pollution/interceptor pattern. Browser wallet paths do not use that adapter, which reduces exploitability but does not make the vulnerable install acceptable.
+- The high-severity Sharp issue is the bundled libheif heap overflow reported as `GHSA-rgj7-g3m4-5g8c`, reached through `@dynamic-labs/iconic`'s exact `sharp@0.35.0` pin. It is only triggered by decoding untrusted HEIF input, which no wallet path does, and `sharp` is a build-time image dependency that never reaches a browser bundle. The override is a patch-level move within `0.35.x`, so it carries no API change.
 - The UUID issue affects the v3, v5, and v6 buffer APIs. Dynamic's observed call sites use UUID v4, which reduces exploitability but does not clear the audit finding.
 
 Applications using the optional `./zerodev` / Dynamic account-abstraction path must also replace the vulnerable exact `bn.js@4.11.6` copies used by `ethjs-unit` and `number-to-bn`. The complete npm root override block is:
@@ -60,6 +63,7 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 		"number-to-bn": {
 			"bn.js": "4.12.5"
 		},
+		"sharp": "0.35.4",
 		"uuid": "11.1.1",
 		"viem": {
 			"ws": "8.21.0"
@@ -70,17 +74,21 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 
 Bun 1.3.14 does not support nested overrides. Do **not** globally override `bn.js` or `ws`: Solana/borsh require bn5 while Jayson requires ws7. Bun's complete root override block is therefore the same with or without the optional AA path.
 
-For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches Viem's ws8 subtree while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. The result is audit-clean.
+For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches Viem's ws8 subtree while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. With the overrides above, a wallet-only npm install audits clean; the optional AA path carries the one `stream-json` advisory described below, on npm and Bun alike.
 
 The verifier builds its browser consumer against `viem@2.45.3`, because the previously tested 2.55.19 pulls Ox Tempo's `node:worker_threads` path into Vite resolution while 2.45.3 predates it. That is a property of the verifier's own bundle, not a constraint on applications: the published `viem` peer range stays `^2.7.12`. If your bundler externalizes `node:worker_threads` on a newer Viem, configure it in your application rather than downgrading.
 
-For Bun, scoped overrides are unavailable. The selected waiver therefore accepts exactly these unresolved optional-AA advisories while preserving compatible majors:
+One advisory on the optional AA path has no fix any override can reach, on either package manager:
+
+- `GHSA-528h-pc64-c93x` on `stream-json@1.9.1` — moderate, CVSS 6.2. Reached through the Solana RPC client's `jayson`, which requires `stream-json` as CommonJS. The advisory covers every version up to `3.4.0`, and `3.5.0` onward is ESM-only under a moved `src/` layout, so overriding it to a fixed version replaces the advisory with a `MODULE_NOT_FOUND` on `jayson`'s own require. The finding is an `O(depth²)` slowdown in the `pick`/`ignore`/`filter`/`replace` filters, reachable only by feeding crafted deeply nested JSON through them, which no wallet path does.
+
+For Bun, scoped overrides are unavailable, so the waiver also accepts these advisories that npm resolves with the scoped blocks above, while preserving compatible majors:
 
 - `GHSA-378v-28hj-76wf` on `bn.js@4.11.6` — moderate, CVSS 5.3.
 - `GHSA-58qx-3vcg-4xpx` on Viem's `ws@8.18.3` — moderate, CVSS 4.4.
 - `GHSA-96hv-2xvq-fx4p` on Viem's `ws@8.18.3` — high, CVSS 7.5.
 
-Jayson remains on `ws@7.5.13`; globally forcing ws8 would violate that major contract. The verifier fails on any advisory outside this set, and reports rather than fails when one of them stops being reported, so an upstream fix or a withdrawn advisory never turns an unrelated pull request red.
+Jayson remains on `ws@7.5.13`; globally forcing ws8 would violate that major contract. The verifier fails on any advisory outside each waiver, and reports rather than fails when one of them stops being reported, so an upstream fix or a withdrawn advisory never turns an unrelated pull request red. The wallet-only npm consumer is held to a strictly clean audit with no waiver at all, so nothing here excuses a finding that a default install would hand an application.
 
 ## Quick start
 
@@ -159,6 +167,6 @@ The pinned source includes its terminal newline and has SHA-256 `e288cd08b510afb
 
 ## Release verification
 
-The dedicated `Sei Global Wallet Consumer Smoke` workflow runs on wallet-related paths for pull requests and for pushes to `main` (so the publishing commit is gated too), daily on a schedule to catch registry and advisory drift, and on demand with `workflow_dispatch`. It executes `bun run test:sei-global-wallet-release`, including an audit-clean scoped npm consumer, a waiver-aware Bun consumer, declarations that resolve with no optional peer installed, native and bundled edge-like SSR, real local ZeroDev provider operations in esbuild/Vite, dependency graphs, and package contents. Regular package tests remain deterministic and do not perform clean consumer installs.
+The dedicated `Sei Global Wallet Consumer Smoke` workflow runs on wallet-related paths for pull requests and for pushes to `main` (so the publishing commit is gated too), daily on a schedule to catch registry and advisory drift, and on demand with `workflow_dispatch`. It executes `bun run test:sei-global-wallet-release`, including an audit-clean wallet-only npm consumer, waiver-aware full npm and Bun consumers, declarations that resolve with no optional peer installed, native and bundled edge-like SSR, real local ZeroDev provider operations in esbuild/Vite, dependency graphs, and package contents. Regular package tests remain deterministic and do not perform clean consumer installs.
 
-`SEI_GLOBAL_WALLET_FAST_CHECK=1` shortens the local loop by skipping the two clean npm consumers and the entire Bun consumer path, so a green run under that flag covers neither the audit waiver nor Bun. Release verification must run without it, which is what CI does.
+`SEI_GLOBAL_WALLET_FAST_CHECK=1` shortens the local loop by skipping the two clean npm consumers and the entire Bun consumer path, so a green run under that flag covers neither the strictly clean wallet-only audit nor the Bun waiver. Release verification must run without it, which is what CI does.
