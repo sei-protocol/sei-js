@@ -5,6 +5,16 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import {
+	type AuditReport,
+	advisoriesFixedUpstream,
+	advisoriesOutsideWaiver,
+	describeAuditFindings,
+	ghsaIdsIn,
+	npmAuditFailureReason,
+	npmReportedAdvisories
+} from './consumer-audit.js';
+import { documentedOverrideBlocks } from './documented-overrides.js';
 import { highestVersion, normalizeNpmViewVersions, parseNpmViewResult } from './dynamic-package-contract.js';
 import { collectDynamicLineVersions, findDynamicLineConflicts, formatDynamicLineConflicts, listDynamicPackageInstallations } from './dynamic-package-lock.js';
 
@@ -12,15 +22,6 @@ interface ProcessResult {
 	exitCode: number;
 	stderr: string;
 	stdout: string;
-}
-
-interface AuditReport {
-	metadata?: {
-		vulnerabilities?: {
-			total?: number;
-		};
-	};
-	vulnerabilities?: Record<string, { via?: Array<string | { url?: string }> }>;
 }
 
 interface PackResult {
@@ -65,8 +66,6 @@ const assertMajor = (version: string | undefined, major: string, label: string) 
 	assert(version, `${label} was not installed`);
 	assert(version.startsWith(`${major}.`), `${label} resolved ${version}, expected ${major}.x`);
 };
-
-const ghsaIdsIn = (value: unknown) => JSON.stringify(value).match(/GHSA-[a-z0-9-]+/gi) ?? [];
 
 const reportWaiverProgress = (message: string) => {
 	console.warn(`[waiver] ${message}`);
@@ -186,6 +185,21 @@ const npmSafeOverrides = {
 	'number-to-bn': {
 		'bn.js': '4.12.5'
 	}
+};
+
+/**
+ * The README's override blocks are the only form of this guidance an
+ * application can act on, and they are maintained by hand in three places, so
+ * they are asserted against the sets the consumers below actually install.
+ * Documented-but-untested overrides would otherwise be possible.
+ */
+const assertDocumentedOverridesMatch = async () => {
+	const readme = await readFile(join(packageDir, 'README.md'), 'utf8');
+	assert.deepEqual(
+		documentedOverrideBlocks(readme, 'Required consumer overrides'),
+		[npmRuntimeOverrides, baseSafeOverrides, npmSafeOverrides],
+		'The README override blocks no longer match the sets this verifier installs. Expected npm without the AA path, then Bun, then npm with it.'
+	);
 };
 
 const walletOnlyManifest = (tarball: string, overrides?: Record<string, unknown>) => ({
@@ -623,31 +637,32 @@ const runEdgeBundle = async (bundlePath: string) => {
 	});
 };
 
-const assertAuditClean = (report: AuditReport, label: string) => {
-	const findings = Object.entries(report.vulnerabilities ?? {})
-		.map(([name, entry]) => {
-			const urls = (entry.via ?? []).filter((via) => typeof via === 'object').map((via) => via.url);
-			return urls.length > 0 ? `${name} (${urls.join(', ')})` : name;
-		})
-		.sort();
-	assert.equal(report.metadata?.vulnerabilities?.total ?? findings.length, 0, `${label} audit was not clean: ${findings.join('; ')}`);
+/**
+ * The audits below allow a non-zero exit so a finding reports as the advisory
+ * that caused it rather than as a raw spawn dump. That makes validating the
+ * body mandatory: `npm audit` fails the same way when it cannot reach the
+ * registry, and that error payload would otherwise read as zero findings.
+ */
+const parseNpmAudit = (result: ProcessResult, label: string) => {
+	const report = parseJsonOutput<AuditReport>(result.stdout);
+	const failure = npmAuditFailureReason(report);
+	assert(!failure, `${label} ${failure}:\n${result.stderr}${result.stdout}`);
+	return report;
 };
 
-/**
- * A subset check, not an exact set: the advisory database changes on its own
- * schedule, so a withdrawn or upstream-fixed advisory must not fail an
- * unrelated pull request, while any new exposure still must.
- */
-const assertWithinWaiver = (reported: ReadonlySet<string>, accepted: readonly string[], label: string) => {
-	const acceptedIds = new Set(accepted.map((advisory) => advisory.toLowerCase()));
-	const unwaived = [...reported].filter((advisory) => !acceptedIds.has(advisory)).sort();
+const assertAuditClean = (report: AuditReport, label: string) => {
+	assert.equal(report.metadata?.vulnerabilities?.total, 0, `${label} audit was not clean: ${describeAuditFindings(report).join('; ')}`);
+};
+
+const assertWithinWaiver = (reported: readonly string[], accepted: readonly string[], label: string) => {
+	const unwaived = advisoriesOutsideWaiver(reported, accepted);
 	assert.deepEqual(
 		unwaived,
 		[],
 		`${label} reported advisories outside the accepted waiver: ${unwaived.join(', ')}. Assess them and update packages/sei-global-wallet/README.md before releasing.`
 	);
 
-	const fixed = accepted.filter((advisory) => !reported.has(advisory.toLowerCase()));
+	const fixed = advisoriesFixedUpstream(reported, accepted);
 	if (fixed.length > 0) {
 		reportWaiverProgress(
 			`${label} no longer reports ${fixed.join(', ')}. Narrow the waiver in packages/sei-global-wallet/README.md and the accepted advisory list in this script.`
@@ -655,28 +670,19 @@ const assertWithinWaiver = (reported: ReadonlySet<string>, accepted: readonly st
 	}
 };
 
-const assertAcceptedNpmAudit = (result: ProcessResult, label: string) => {
-	const report = parseJsonOutput<AuditReport>(result.stdout);
-	if ((report.metadata?.vulnerabilities?.total ?? Object.keys(report.vulnerabilities ?? {}).length) === 0) {
+const assertAcceptedNpmAudit = (report: AuditReport, label: string) => {
+	if (report.metadata?.vulnerabilities?.total === 0) {
 		reportWaiverProgress(
 			`${label} now audits clean: every accepted advisory was fixed upstream. Delete the waiver from packages/sei-global-wallet/README.md and acceptedNpmAdvisories in this script.`
 		);
 		return;
 	}
 
-	// Read each id from the advisory's own `url` rather than scanning the whole
-	// report: npm advisory titles cite unrelated GHSA ids (sharp's libheif title
-	// names two), which a blanket scan would count as separate findings.
-	const advisories = Object.values(report.vulnerabilities ?? {})
-		.flatMap((entry) => entry.via ?? [])
-		.filter((via): via is { url?: string } => typeof via === 'object')
-		.map((advisory) => ({ advisory, id: advisory.url?.match(/GHSA-[a-z0-9-]+/i)?.[0] }));
-	const missingGhsa = advisories.filter(({ id }) => !id).map(({ advisory }) => advisory);
-	assert.deepEqual(missingGhsa, [], `${label} findings without a GHSA url: ${JSON.stringify(missingGhsa)}`);
+	const { ids, withoutId } = npmReportedAdvisories(report);
+	assert.deepEqual(withoutId, [], `${label} findings without a GHSA url: ${JSON.stringify(withoutId)}`);
 
-	const reportedIds = advisories.flatMap(({ id }) => (id ? [id] : []));
-	assertWithinWaiver(new Set(reportedIds.map((id) => id.toLowerCase())), acceptedNpmAdvisories, label);
-	console.log(`${label} advisories, all within the waiver: ${[...new Set(reportedIds)].sort().join(', ')}`);
+	assertWithinWaiver(ids, acceptedNpmAdvisories, label);
+	console.log(`${label} advisories, all within the waiver: ${ids.join(', ')}`);
 };
 
 const assertAcceptedBunAudit = (result: ProcessResult) => {
@@ -692,8 +698,11 @@ const assertAcceptedBunAudit = (result: ProcessResult) => {
 	const missingGhsa = auditFindings.filter((finding) => ghsaIdsIn(finding).length === 0);
 	assert.deepEqual(missingGhsa, [], `Bun AA consumer findings without a GHSA id: ${JSON.stringify(missingGhsa)}`);
 
-	const reported = new Set(auditFindings.flatMap((finding) => ghsaIdsIn(finding)).map((advisory) => advisory.toLowerCase()));
-	assertWithinWaiver(reported, acceptedBunAdvisories, 'Bun AA consumer');
+	assertWithinWaiver(
+		auditFindings.flatMap((finding) => ghsaIdsIn(finding)),
+		acceptedBunAdvisories,
+		'Bun AA consumer'
+	);
 
 	// The documented root overrides must still be taking effect. Match only
 	// those package names as Bun audit keys, not last path segments
@@ -807,6 +816,7 @@ try {
 	);
 	const testedPeerVersions = makeTestedPeerVersions(dynamicContract.ethereumAa);
 	assertTestedPeersFitPublishedRanges(testedPeerVersions);
+	await assertDocumentedOverridesMatch();
 
 	await run(['bun', 'run', '--cwd', packageDir, 'build'], root);
 	const pack = await run(['npm', 'pack', '--json', '--pack-destination', temporaryRoot], packageDir);
@@ -833,8 +843,7 @@ try {
 			Object.entries(unwaivedLock.packages)
 				.filter(([location]) => location === `node_modules/${name}` || location.endsWith(`/node_modules/${name}`))
 				.map(([, metadata]) => metadata.version);
-		const unwaivedAuditResult = await run(['npm', 'audit', '--json'], unwaivedDir, true);
-		const unwaivedAudit = parseJsonOutput<AuditReport>(unwaivedAuditResult.stdout);
+		const unwaivedAudit = parseNpmAudit(await run(['npm', 'audit', '--json'], unwaivedDir, true), 'Unwaived npm consumer');
 		// Reported, not asserted: an unwaived consumer going clean means Dynamic
 		// corrected its transitive pins, which must not read as a CI failure.
 		// Derived from the override block so a newly waived package cannot be
@@ -861,10 +870,7 @@ try {
 			],
 			waivedDir
 		);
-		// `npm audit` exits non-zero on any finding, so let the assertion below
-		// report which advisory broke the consumer instead of a raw spawn error.
-		const waivedAudit = parseJsonOutput<AuditReport>((await run(['npm', 'audit', '--json'], waivedDir, true)).stdout);
-		assertAuditClean(waivedAudit, 'Waived npm consumer');
+		assertAuditClean(parseNpmAudit(await run(['npm', 'audit', '--json'], waivedDir, true), 'Waived npm consumer'), 'Waived npm consumer');
 		await assertDeclarationsResolveWithoutOptionalPeers(waivedDir);
 	}
 
@@ -930,7 +936,7 @@ try {
 	const viteFiles = (await readdir(join(npmConsumerDir, 'vite-dist'))).filter((path) => path.endsWith('.js'));
 	assert.equal(viteFiles.length, 1, `Expected one Vite bundle, found: ${viteFiles.join(', ')}`);
 	await runBrowserBundle(join(npmConsumerDir, 'vite-dist', viteFiles[0]), true);
-	assertAcceptedNpmAudit(await run(['npm', 'audit', '--json'], npmConsumerDir, true), 'Full npm consumer');
+	assertAcceptedNpmAudit(parseNpmAudit(await run(['npm', 'audit', '--json'], npmConsumerDir, true), 'Full npm consumer'), 'Full npm consumer');
 
 	if (!fastCheck) {
 		const bunConsumerDir = join(temporaryRoot, 'bun-full');
