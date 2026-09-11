@@ -30,11 +30,11 @@ bun run build
 
 ## Image handling
 
-Next.js image optimization is disabled because Next 15.5.21 declares only vulnerable Sharp 0.34.x releases. The manifest resolves secure Sharp 0.35.x for audit safety, while images are served unoptimized until Next.js supports that Sharp line.
+Next.js image optimization is disabled so the generated app needs no native Sharp build. Next 15.5.25 declares Sharp `^0.34.3 || ^0.35.4`, and the manifest pins `0.35.4`, the release that clears the libheif advisory in that range, so enabling optimization is a template choice rather than a security tradeoff.
 
 ## Development bundler
 
-`bun run dev` uses the Next 15 webpack default. Do not add `--turbopack`: Next 15.5.21 cannot express the required `false` alias for MetaMask SDK's mobile-only storage import in Turbopack without adding a synthetic replacement module. The production build and smoke use the validated webpack alias in `next.config.mjs`.
+`bun run dev` uses the Next 15 webpack default. Do not add `--turbopack`: the pinned Next 15 line cannot express the required `false` alias for MetaMask SDK's mobile-only storage import in Turbopack without adding a synthetic replacement module. The production build and smoke use the validated webpack alias in `next.config.mjs`.
 
 ## Sei brand
 
