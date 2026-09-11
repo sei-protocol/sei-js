@@ -5,8 +5,10 @@ const nextConfig = {
 		ignoreDuringBuilds: true,
 	},
 	images: {
-		// Next 15.5.21 declares vulnerable Sharp 0.34.x. Keep the secure 0.35.x
-		// override for resolution, but do not rely on its unsupported optimizer API.
+		// Next 15.5.25 declares Sharp `^0.34.3 || ^0.35.4`, so the pinned 0.35.4 is
+		// inside its supported range. Images stay unoptimized so the generated app
+		// needs no native Sharp build; that is now a template choice, not a
+		// security constraint.
 		unoptimized: true,
 	},
 	webpack: (config) => {
