@@ -45,9 +45,10 @@ async function listWalletTools(mode: HttpMode, url: URL): Promise<string[]> {
 async function deriveAddressFromPrivateKey(client: Client): Promise<string> {
 	const result = await client.callTool({ name: 'get_address_from_private_key', arguments: {} });
 	expect(result.isError).toBeFalsy();
-	const text = result.content.find((block) => block.type === 'text');
-	expect(text).toEqual(expect.objectContaining({ type: 'text' }));
-	return JSON.parse((text as { text: string }).text).address;
+	if (!('content' in result)) throw new Error('Expected an immediate tool result');
+	const content = (result as { content: Array<{ type: string; text?: string }> }).content[0];
+	if (content?.type !== 'text' || content.text === undefined) throw new Error('Expected a text tool result');
+	return JSON.parse(content.text).address;
 }
 
 describe('HTTP wallet isolation across later starts', () => {
