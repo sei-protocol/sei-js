@@ -9,10 +9,6 @@ jest.mock('../server/transport/index.js', () => ({
 	createTransport: jest.fn()
 }));
 
-jest.mock('../core/config.js', () => ({
-	isWalletEnabled: jest.fn()
-}));
-
 jest.mock('../core/wallet/index.js', () => ({
 	resetWalletProvider: jest.fn()
 }));
@@ -24,10 +20,10 @@ jest.mock('../server/args.js', () => ({
 describe('index', () => {
 	let mockGetServer: jest.MockedFunction<() => Promise<unknown>>;
 	let mockCreateTransport: jest.MockedFunction<(config: unknown) => unknown>;
-	let mockIsWalletEnabled: jest.MockedFunction<() => boolean>;
 	let mockParseArgs: jest.MockedFunction<() => unknown>;
 	let mockTransport: { start: jest.Mock; stop: jest.Mock };
 	let mockServer: { close: jest.Mock };
+	let mockAppConfig: Readonly<{ privateKey: string | undefined; walletMode: 'private-key' | 'disabled'; walletApiKey: string | undefined }>;
 	let consoleErrorSpy: jest.SpyInstance;
 	let processExitSpy: jest.SpyInstance;
 	let originalExitCode: number | string | null | undefined;
@@ -39,12 +35,10 @@ describe('index', () => {
 		// Import mocked modules
 		const serverModule = await import('../server/server.js');
 		const transportModule = await import('../server/transport/index.js');
-		const configModule = await import('../core/config.js');
 		const argsModule = await import('../server/args.js');
 
 		mockGetServer = serverModule.getServer as jest.MockedFunction<() => Promise<unknown>>;
 		mockCreateTransport = transportModule.createTransport as jest.MockedFunction<(config: unknown) => unknown>;
-		mockIsWalletEnabled = configModule.isWalletEnabled as jest.MockedFunction<() => boolean>;
 		mockParseArgs = argsModule.parseArgs as jest.MockedFunction<() => unknown>;
 
 		// Setup mock objects
@@ -57,10 +51,10 @@ describe('index', () => {
 		};
 
 		// Setup default mock implementations
-		mockParseArgs.mockReturnValue({ mode: 'stdio' });
+		mockAppConfig = Object.freeze({ privateKey: '0xabc', walletMode: 'private-key', walletApiKey: undefined });
+		mockParseArgs.mockReturnValue({ mode: 'stdio', walletMode: 'private-key', appConfig: mockAppConfig });
 		mockGetServer.mockResolvedValue(mockServer);
 		mockCreateTransport.mockReturnValue(mockTransport);
-		mockIsWalletEnabled.mockReturnValue(true);
 
 		// Spy on console and process
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -89,13 +83,13 @@ describe('index', () => {
 		expect(mockGetServer).toHaveBeenCalled();
 		expect(mockCreateTransport).toHaveBeenCalled();
 		expect(mockTransport.start).toHaveBeenCalledWith(mockServer);
-		expect(mockIsWalletEnabled).toHaveBeenCalled();
 		expect(consoleErrorSpy).not.toHaveBeenCalled();
 		await runtime?.stop();
 	});
 
 	it('should log warning when wallet is disabled', async () => {
-		mockIsWalletEnabled.mockReturnValue(false);
+		const appConfig = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
+		mockParseArgs.mockReturnValue({ mode: 'stdio', walletMode: 'disabled', appConfig });
 
 		const indexModule = await import('../index.js');
 		const runtime = await indexModule.main();
@@ -181,7 +175,7 @@ describe('index', () => {
 		expect(mockTransport.stop).toHaveBeenCalledTimes(1);
 		expect(mockServer.close).toHaveBeenCalledTimes(1);
 		const walletModule = await import('../core/wallet/index.js');
-		expect(walletModule.resetWalletProvider).toHaveBeenCalled();
+		expect(walletModule.resetWalletProvider).toHaveBeenCalledWith(mockAppConfig);
 	});
 
 	it('runs graceful shutdown once and allows signal handlers to be removed', async () => {

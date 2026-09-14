@@ -4,6 +4,7 @@ import {
 	formatPrivateKey,
 	getPrivateKeyAsHex,
 	getRuntimeConfig,
+	getScopedAppConfig,
 	getWalletMode,
 	initializeConfig,
 	isValidPrivateKey,
@@ -99,12 +100,26 @@ describe('Config Module - Actual Implementation', () => {
 			});
 			expect(snapshot).not.toBe(config);
 			expect(Object.isFrozen(snapshot)).toBe(true);
+			expect(snapshotConfig(snapshot)).toBe(snapshot);
 
 			const privateKey = '3'.repeat(64);
 			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: privateKey });
 			expect(snapshot.walletMode).toBe('disabled');
 			expect(snapshot.privateKey).toBeUndefined();
 			expect(config.walletMode).toBe('private-key');
+		});
+
+		test('runWithAppConfig rejects mutable configuration objects', () => {
+			expect(() =>
+				runWithAppConfig(
+					{
+						privateKey: undefined,
+						walletMode: 'disabled',
+						walletApiKey: undefined
+					},
+					() => undefined
+				)
+			).toThrow('runWithAppConfig requires a frozen AppConfig snapshot.');
 		});
 
 		test('runWithAppConfig makes getters read the snapshot instead of the process singleton', () => {
@@ -122,9 +137,11 @@ describe('Config Module - Actual Implementation', () => {
 				expect(getWalletMode()).toBe('disabled');
 				expect(getPrivateKeyAsHex()).toBeUndefined();
 				expect(getRuntimeConfig()).toBe(snapshot);
+				expect(getScopedAppConfig()).toBe(snapshot);
 			});
 			expect(isWalletEnabled()).toBe(true);
 			expect(getPrivateKeyAsHex()).toBe('0xabcdef');
+			expect(getScopedAppConfig()).toBeUndefined();
 		});
 
 		test('wrapWithAppConfig keeps later callbacks on the snapshot', () => {

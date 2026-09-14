@@ -45,15 +45,17 @@ describe('Server Module', () => {
 	let consoleErrorSpy: jest.SpiedFunction<typeof console.error>;
 	let processExitSpy: jest.SpiedFunction<typeof process.exit>;
 	let mockServerInstance: any;
+	let mockConnect: jest.Mock;
 
 	beforeEach(async () => {
 		jest.clearAllMocks();
 
 		// Create mock server instance
+		mockConnect = jest.fn().mockResolvedValue(undefined);
 		mockServerInstance = {
 			name: '@sei-js/mcp-server',
 			version: '1.0.0',
-			connect: jest.fn().mockResolvedValue(undefined)
+			connect: mockConnect
 		};
 
 		// Import mocked functions first
@@ -120,6 +122,16 @@ describe('Server Module', () => {
 			await getServer();
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Supported networks:', 'sei, sei-testnet');
+		});
+
+		it('forwards all connect arguments after binding runtime context', async () => {
+			const server = await getServer();
+			const transport = { start: jest.fn() };
+			const options = { testOption: true };
+
+			await (server.connect as unknown as (...args: unknown[]) => Promise<void>)(transport, options);
+
+			expect(mockConnect).toHaveBeenCalledWith(transport, options);
 		});
 
 		it('should sanitize and propagate server initialization errors', async () => {

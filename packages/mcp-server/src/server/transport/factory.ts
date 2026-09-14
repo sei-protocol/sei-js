@@ -4,8 +4,6 @@ import { StreamableHttpTransport } from './streamable-http.js';
 import type { McpTransport, TransportConfig } from './types.js';
 
 export const createTransport = (config: TransportConfig): McpTransport => {
-	const appConfig = config.appConfig ? { appConfig: config.appConfig } : {};
-
 	switch (config.mode) {
 		case 'stdio':
 			return new StdioTransport(config.appConfig);
@@ -17,7 +15,7 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 				path: config.path,
 				walletMode: config.walletMode,
 				maxActiveRequests: config.maxStreamableRequests,
-				...appConfig
+				appConfig: config.appConfig
 			});
 
 		case 'http-sse':
@@ -27,7 +25,7 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 				path: config.path,
 				walletMode: config.walletMode,
 				maxSessions: config.maxSseSessions,
-				...appConfig
+				appConfig: config.appConfig
 			});
 
 		default:

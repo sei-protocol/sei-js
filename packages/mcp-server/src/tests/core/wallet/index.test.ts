@@ -6,11 +6,9 @@ import type { WalletProvider } from '../../../core/wallet/types.js';
 
 // Mock dependencies
 jest.mock('../../../core/config.js', () => {
-	const config = { privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined };
 	return {
 		getWalletMode: jest.fn(),
-		getRuntimeConfig: jest.fn(() => config),
-		config
+		getScopedAppConfig: jest.fn()
 	};
 });
 
@@ -22,7 +20,7 @@ jest.mock('../../../core/wallet/providers/disabled.js', () => ({
 	DisabledWalletProvider: jest.fn()
 }));
 
-import { getRuntimeConfig, getWalletMode, config as processConfig } from '../../../core/config.js';
+import { getScopedAppConfig, getWalletMode } from '../../../core/config.js';
 
 describe('Wallet Provider', () => {
 	const mockPrivateKeyProvider: WalletProvider = {
@@ -48,7 +46,7 @@ describe('Wallet Provider', () => {
 		// Reset all mocks
 		jest.resetAllMocks();
 
-		(getRuntimeConfig as jest.Mock).mockImplementation(() => processConfig);
+		(getScopedAppConfig as jest.Mock).mockReturnValue(undefined);
 
 		// Setup default mock implementations
 		(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
@@ -101,22 +99,34 @@ describe('Wallet Provider', () => {
 
 		test('keeps a snapshot provider after resetWalletProvider clears the process memo', () => {
 			const snapshot = { privateKey: '0xabc', walletMode: 'private-key' as const, walletApiKey: undefined };
-			(getRuntimeConfig as jest.Mock).mockReturnValue(snapshot);
+			(getScopedAppConfig as jest.Mock).mockReturnValue(snapshot);
 
 			const provider1 = getWalletProvider();
-			expect(PrivateKeyWalletProvider).toHaveBeenCalledWith('0xabc');
+			expect(PrivateKeyWalletProvider).toHaveBeenCalledWith({ privateKey: '0xabc' });
 			expect(getWalletMode).not.toHaveBeenCalled();
 			expect(provider1).toBe(mockPrivateKeyProvider);
 
 			resetWalletProvider();
 			jest.clearAllMocks();
-			(getRuntimeConfig as jest.Mock).mockReturnValue(snapshot);
+			(getScopedAppConfig as jest.Mock).mockReturnValue(snapshot);
 			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
 
 			const provider2 = getWalletProvider();
 			expect(provider2).toBe(provider1);
 			expect(PrivateKeyWalletProvider).not.toHaveBeenCalled();
 			expect(getWalletMode).not.toHaveBeenCalled();
+		});
+
+		test('recreates only the provider for a reset snapshot', () => {
+			const snapshot = { privateKey: '0xabc', walletMode: 'private-key' as const, walletApiKey: undefined };
+			const providerAfterReset = { ...mockPrivateKeyProvider };
+			(getScopedAppConfig as jest.Mock).mockReturnValue(snapshot);
+			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementationOnce(() => mockPrivateKeyProvider).mockImplementationOnce(() => providerAfterReset);
+
+			expect(getWalletProvider()).toBe(mockPrivateKeyProvider);
+			resetWalletProvider(snapshot);
+			expect(getWalletProvider()).toBe(providerAfterReset);
+			expect(PrivateKeyWalletProvider).toHaveBeenCalledTimes(2);
 		});
 	});
 

@@ -1,6 +1,5 @@
 import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { isWalletEnabled } from './core/config.js';
 import { sanitizeError } from './core/errors.js';
 import { resetWalletProvider } from './core/wallet/index.js';
 import { parseArgs } from './server/args.js';
@@ -53,7 +52,7 @@ export async function startMcpServer(): Promise<RunningMcpServer> {
 		throw error;
 	}
 
-	if (!isWalletEnabled()) console.error('Wallet functionality is disabled. Signing and broadcasting tools are not available.');
+	if (config.walletMode === 'disabled') console.error('Wallet functionality is disabled. Signing and broadcasting tools are not available.');
 
 	let stopPromise: Promise<void> | undefined;
 	let removeShutdownHandlers = () => {};
@@ -65,7 +64,7 @@ export async function startMcpServer(): Promise<RunningMcpServer> {
 					const errors = await collectOperationErrors([() => transport.stop(), () => server?.close()]);
 					throwCollectedErrors(errors, 'Failed to stop all MCP server resources.');
 				} finally {
-					resetWalletProvider();
+					if (config.appConfig) resetWalletProvider(config.appConfig);
 				}
 			})();
 		}

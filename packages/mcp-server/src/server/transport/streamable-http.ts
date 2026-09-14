@@ -3,7 +3,7 @@ import type { Socket } from 'node:net';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { type Request, type Response } from 'express';
-import { type AppConfig, runWithAppConfig, snapshotConfig } from '../../core/config.js';
+import { type AppConfigSnapshot, runWithAppConfig, snapshotConfig } from '../../core/config.js';
 import { sanitizeError } from '../../core/errors.js';
 import { getServer } from '../server.js';
 import { closeHttpServer, collectOperationErrors, runAllOperations, throwCollectedErrors } from './lifecycle.js';
@@ -21,7 +21,7 @@ export interface StreamableHttpTransportOptions {
 	host?: string;
 	path?: string;
 	walletMode?: WalletMode;
-	appConfig?: AppConfig;
+	appConfig?: AppConfigSnapshot;
 	maxActiveRequests?: number;
 }
 
@@ -56,7 +56,7 @@ export class StreamableHttpTransport implements McpTransport {
 	private readonly host: string;
 	private readonly path: string;
 	private readonly walletMode: WalletMode;
-	private readonly appConfig: AppConfig;
+	private readonly appConfig: AppConfigSnapshot;
 	private readonly serverFactory: StreamableServerFactory;
 	private readonly transportFactory: StreamableTransportFactory;
 	private readonly listenFactory: StreamableListenFactory;
@@ -67,7 +67,7 @@ export class StreamableHttpTransport implements McpTransport {
 		this.host = options.host ?? 'localhost';
 		this.path = options.path ?? '/mcp';
 		this.walletMode = options.walletMode ?? 'disabled';
-		this.appConfig = options.appConfig ?? snapshotConfig();
+		this.appConfig = snapshotConfig(options.appConfig);
 		this.maxActiveRequests = options.maxActiveRequests ?? DEFAULT_MAX_STREAMABLE_REQUESTS;
 		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory =
@@ -98,7 +98,7 @@ export class StreamableHttpTransport implements McpTransport {
 	}
 
 	async start(_server?: McpServer): Promise<void> {
-		validateSecurityConfig(this.mode, this.walletMode);
+		validateSecurityConfig(this.mode, this.walletMode, this.appConfig.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
 		}

@@ -4,8 +4,8 @@ import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { privateKeyToAccount } from 'viem/accounts';
-import { config, initializeConfig, isWalletEnabled, snapshotConfig } from '../../../core/config.js';
-import { resetWalletProvider } from '../../../core/wallet/index.js';
+import { config, initializeConfig, isWalletEnabled, runWithAppConfig, snapshotConfig } from '../../../core/config.js';
+import { getWalletProvider, resetWalletProvider } from '../../../core/wallet/index.js';
 import { getServer } from '../../../server/server.js';
 import { HttpSseTransport } from '../../../server/transport/http-sse.js';
 import { StreamableHttpTransport } from '../../../server/transport/streamable-http.js';
@@ -125,6 +125,31 @@ describe('HTTP wallet isolation across later starts', () => {
 		expect(listenFactory).not.toHaveBeenCalled();
 		processExit.mockRestore();
 	});
+
+	it.each([
+		['http-sse', undefined],
+		['http-sse', 'disabled'],
+		['streamable-http', undefined],
+		['streamable-http', 'disabled']
+	] as const)('rejects %s when appConfig enables the wallet and walletMode is %s', async (mode, walletMode) => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const processExit = jest.spyOn(process, 'exit').mockImplementation((code) => {
+			throw new Error(`process.exit called with code ${code}`);
+		});
+		const listenFactory = jest.fn();
+		const appConfig = snapshotConfig({
+			privateKey: `0x${PRIVATE_KEY}`,
+			walletMode: 'private-key',
+			walletApiKey: undefined
+		});
+		const options = { port: 8080, host: HOST, path: PATH, walletMode, appConfig };
+		const transport = mode === 'http-sse' ? new HttpSseTransport(options, { listenFactory }) : new StreamableHttpTransport(options, { listenFactory });
+
+		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
+		expect(processExit).toHaveBeenCalledWith(1);
+		expect(listenFactory).not.toHaveBeenCalled();
+		processExit.mockRestore();
+	});
 });
 
 describe('stdio wallet isolation after another runtime stop', () => {
@@ -154,10 +179,14 @@ describe('stdio wallet isolation after another runtime stop', () => {
 		await Promise.all([client.connect(clientTransport), server.connect(serverTransport)]);
 
 		try {
+			const listed = await client.listTools();
+			expect(listed.tools.filter((tool) => WALLET_TOOLS.has(tool.name))).not.toEqual([]);
 			expect(await deriveAddressFromPrivateKey(client)).toBe(expectedAddress);
 
 			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: keyB });
-			resetWalletProvider();
+			const otherAppConfig = snapshotConfig();
+			runWithAppConfig(otherAppConfig, () => getWalletProvider());
+			resetWalletProvider(otherAppConfig);
 			expect(isWalletEnabled()).toBe(true);
 			expect(config.privateKey).toBe(`0x${keyB}`);
 

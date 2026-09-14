@@ -64,10 +64,10 @@ describe('PrivateKeyWalletProvider', () => {
 			expect(provider.isAvailable()).toBe(false);
 		});
 
-		test('does not read the process singleton when constructed with an explicit key slot', () => {
+		test('does not read the process singleton when constructed with explicit options', () => {
 			(getPrivateKeyAsHex as jest.Mock).mockReturnValue(mockPrivateKey);
 
-			const provider = new PrivateKeyWalletProvider(undefined);
+			const provider = new PrivateKeyWalletProvider({ privateKey: undefined });
 
 			expect(provider.isAvailable()).toBe(false);
 			expect(getPrivateKeyAsHex).not.toHaveBeenCalled();

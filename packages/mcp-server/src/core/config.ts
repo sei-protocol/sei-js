@@ -26,6 +26,8 @@ export interface AppConfig {
 	walletApiKey: string | undefined;
 }
 
+export type AppConfigSnapshot = Readonly<AppConfig>;
+
 export const loadConfig = (environment: Record<string, unknown> = process.env): AppConfig => {
 	const env = envSchema.parse(environment);
 	const privateKey = formatPrivateKey(env.PRIVATE_KEY);
@@ -48,14 +50,15 @@ export function initializeConfig(environment: Record<string, unknown> = process.
 	return config;
 }
 
-const runtimeConfig = new AsyncLocalStorage<AppConfig>();
+const runtimeConfig = new AsyncLocalStorage<AppConfigSnapshot>();
 
 /**
  * Copy of the process singleton as it existed at a given start.
- * HTTP transports close over this object so a later initializeConfig() cannot
- * change an already-running listener's tool policy or signer.
+ * Transports close over this object so a later initializeConfig() cannot
+ * change an already-running runtime's tool policy or signer.
  */
-export function snapshotConfig(source: AppConfig = config): AppConfig {
+export function snapshotConfig(source: Readonly<AppConfig> = config): AppConfigSnapshot {
+	if (Object.isFrozen(source)) return source;
 	return Object.freeze({
 		privateKey: source.privateKey,
 		walletMode: source.walletMode,
@@ -63,7 +66,8 @@ export function snapshotConfig(source: AppConfig = config): AppConfig {
 	});
 }
 
-export function runWithAppConfig<T>(appConfig: AppConfig, fn: () => T): T {
+export function runWithAppConfig<T>(appConfig: AppConfigSnapshot, fn: () => T): T {
+	if (!Object.isFrozen(appConfig)) throw new TypeError('runWithAppConfig requires a frozen AppConfig snapshot.');
 	return runtimeConfig.run(appConfig, fn);
 }
 
@@ -71,12 +75,20 @@ export function runWithAppConfig<T>(appConfig: AppConfig, fn: () => T): T {
  * Bind a callback to an AppConfig snapshot so later initializeConfig()
  * mutations cannot change wallet policy mid-request.
  */
-export function wrapWithAppConfig<Args extends unknown[], Result>(appConfig: AppConfig, fn: (...args: Args) => Result): (...args: Args) => Result {
+export function wrapWithAppConfig<Args extends unknown[], Result>(appConfig: AppConfigSnapshot, fn: (...args: Args) => Result): (...args: Args) => Result {
 	return (...args: Args): Result => runWithAppConfig(appConfig, () => fn(...args));
 }
 
-export function getRuntimeConfig(): AppConfig {
-	return runtimeConfig.getStore() ?? config;
+export function getScopedAppConfig(): AppConfigSnapshot | undefined {
+	return runtimeConfig.getStore();
+}
+
+/**
+ * Runtime request paths must establish an AsyncLocalStorage scope. The mutable
+ * process config remains the fallback for direct configuration helpers.
+ */
+export function getRuntimeConfig(): Readonly<AppConfig> {
+	return getScopedAppConfig() ?? config;
 }
 
 /**

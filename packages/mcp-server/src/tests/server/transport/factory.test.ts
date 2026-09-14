@@ -78,7 +78,8 @@ describe('Transport Factory', () => {
 				host: '0.0.0.0',
 				path: '/api/mcp',
 				walletMode: 'private-key',
-				maxActiveRequests: undefined
+				maxActiveRequests: undefined,
+				appConfig: undefined
 			});
 			expect(transport).toBe(mockStreamableInstance);
 		});
@@ -103,7 +104,8 @@ describe('Transport Factory', () => {
 				host: '127.0.0.1',
 				path: '/sse',
 				walletMode: 'disabled',
-				maxSessions: 25
+				maxSessions: 25,
+				appConfig: undefined
 			});
 			expect(transport).toBe(mockSseInstance);
 		});
@@ -191,7 +193,8 @@ describe('Transport Factory', () => {
 				expect(StreamableHttpTransport).toHaveBeenCalledWith({
 					...params,
 					walletMode: 'disabled',
-					maxActiveRequests: undefined
+					maxActiveRequests: undefined,
+					appConfig: undefined
 				});
 				expect(transport).toBe(mockInstance);
 
@@ -219,7 +222,8 @@ describe('Transport Factory', () => {
 				host: '::1',
 				path: '/',
 				walletMode: 'private-key',
-				maxSessions: undefined
+				maxSessions: undefined,
+				appConfig: undefined
 			});
 			expect(transport1).toBe(mockInstance1);
 
@@ -244,7 +248,8 @@ describe('Transport Factory', () => {
 				host: '0.0.0.0',
 				path: '/very/long/path/to/test/edge/cases',
 				walletMode: 'disabled',
-				maxActiveRequests: undefined
+				maxActiveRequests: undefined,
+				appConfig: undefined
 			});
 			expect(transport2).toBe(mockInstance2);
 		});

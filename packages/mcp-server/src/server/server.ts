@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
 import { getSupportedNetworks } from '../core/chains.js';
-import { type AppConfig, config as processConfig, runWithAppConfig, wrapWithAppConfig } from '../core/config.js';
+import { type AppConfigSnapshot, runWithAppConfig, snapshotConfig, wrapWithAppConfig } from '../core/config.js';
 import { sanitizeError } from '../core/errors.js';
 import { registerEVMPrompts } from '../core/prompts.js';
 import { registerEVMResources } from '../core/resources.js';
@@ -9,7 +9,7 @@ import { registerEVMTools } from '../core/tools.js';
 import { createDocsSearchTool } from '../docs/index.js';
 import { getPackageInfo } from './package-info.js';
 
-function bindTransportToAppConfig(transport: Transport, appConfig: AppConfig): void {
+function bindTransportToAppConfig(transport: Transport, appConfig: AppConfigSnapshot): void {
 	const start = transport.start.bind(transport);
 	let bound = false;
 	transport.start = async () => {
@@ -21,17 +21,19 @@ function bindTransportToAppConfig(transport: Transport, appConfig: AppConfig): v
 	};
 }
 
-function bindServerToAppConfig(server: McpServer, appConfig: AppConfig): McpServer {
+function bindServerToAppConfig(server: McpServer, appConfig: AppConfigSnapshot): McpServer {
 	const connect = server.connect.bind(server);
-	server.connect = (async (transport: Transport) => {
+	server.connect = (async (...args: Parameters<McpServer['connect']>) => {
+		const [transport] = args;
 		bindTransportToAppConfig(transport, appConfig);
-		return connect(transport);
+		return connect(...args);
 	}) as typeof server.connect;
 	return server;
 }
 
-export const getServer = async (appConfig: AppConfig = processConfig) => {
-	return runWithAppConfig(appConfig, async () => {
+export const getServer = async (appConfig: AppConfigSnapshot = snapshotConfig()) => {
+	const config = snapshotConfig(appConfig);
+	return runWithAppConfig(config, async () => {
 		try {
 			const packageInfo = getPackageInfo();
 			const server = new McpServer({
@@ -46,7 +48,7 @@ export const getServer = async (appConfig: AppConfig = processConfig) => {
 
 			console.error('Supported networks:', getSupportedNetworks().join(', '));
 
-			return bindServerToAppConfig(server, appConfig);
+			return bindServerToAppConfig(server, config);
 		} catch (error) {
 			console.error('Failed to initialize server:', sanitizeError(error));
 			throw error;

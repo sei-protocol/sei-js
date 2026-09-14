@@ -1,17 +1,17 @@
-import { type AppConfig, getRuntimeConfig, getWalletMode, config as processConfig } from '../config.js';
+import { type AppConfigSnapshot, getScopedAppConfig, getWalletMode } from '../config.js';
 import { DisabledWalletProvider } from './providers/disabled.js';
 import { PrivateKeyWalletProvider } from './providers/private-key.js';
 import type { WalletProvider } from './types.js';
 
-const providersByConfig = new WeakMap<AppConfig, WalletProvider>();
+const providersByConfig = new WeakMap<AppConfigSnapshot, WalletProvider>();
 
 // Cache for the process-global singleton only. Instance snapshots use the WeakMap.
 let walletProviderInstance: WalletProvider | null = null;
 
-function createWalletProvider(appConfig: AppConfig): WalletProvider {
+function createWalletProvider(appConfig: AppConfigSnapshot): WalletProvider {
 	switch (appConfig.walletMode) {
 		case 'private-key':
-			return new PrivateKeyWalletProvider(appConfig.privateKey);
+			return new PrivateKeyWalletProvider({ privateKey: appConfig.privateKey });
 		case 'disabled':
 			return new DisabledWalletProvider();
 		default:
@@ -19,7 +19,7 @@ function createWalletProvider(appConfig: AppConfig): WalletProvider {
 	}
 }
 
-function providerForSnapshot(appConfig: AppConfig): WalletProvider {
+function providerForSnapshot(appConfig: AppConfigSnapshot): WalletProvider {
 	const cached = providersByConfig.get(appConfig);
 	if (cached) return cached;
 	const provider = createWalletProvider(appConfig);
@@ -31,8 +31,8 @@ function providerForSnapshot(appConfig: AppConfig): WalletProvider {
  * Get the wallet provider instance based on configuration
  */
 export function getWalletProvider(): WalletProvider {
-	const runtime = getRuntimeConfig();
-	if (runtime !== processConfig) {
+	const runtime = getScopedAppConfig();
+	if (runtime) {
 		return providerForSnapshot(runtime);
 	}
 
@@ -57,10 +57,14 @@ export function getWalletProvider(): WalletProvider {
 }
 
 /**
- * Reset the wallet provider instance (useful for testing)
+ * Release one runtime's provider, or reset the process fallback for tests.
  */
-export function resetWalletProvider(): void {
-	walletProviderInstance = null;
+export function resetWalletProvider(appConfig?: AppConfigSnapshot): void {
+	if (appConfig) {
+		providersByConfig.delete(appConfig);
+	} else {
+		walletProviderInstance = null;
+	}
 }
 
 export { DisabledWalletProvider } from './providers/disabled.js';
