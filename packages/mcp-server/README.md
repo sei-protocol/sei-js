@@ -104,7 +104,7 @@ Legacy SSE accepts at most 100 concurrent sessions by default. Set `SSE_MAX_SESS
 
 Streamable HTTP accepts at most 100 active requests by default. Set `STREAMABLE_HTTP_MAX_REQUESTS` to a positive integer to tune the limit; excess requests receive HTTP 503.
 
-HTTP transports create and close an isolated MCP server for each session or request; startup does not allocate an unused bootstrap server. Programmatic callers can use `main()`, which reports and rethrows ordinary startup failures. The packaged executable uses `runCli()` to convert those failures into exit code 1. The wallet-on-HTTP guard is stricter: it terminates immediately with exit code 1 before any listener or signing surface is created. Each `main()` call snapshots wallet configuration for that runtime, so a later start cannot expose signing tools on an already-running HTTP listener.
+HTTP transports create and close an isolated MCP server for each session or request; startup does not allocate an unused bootstrap server. Programmatic callers can use `main()`, which reports and rethrows ordinary startup failures. The packaged executable uses `runCli()` to convert those failures into exit code 1. The wallet-on-HTTP guard is stricter: it terminates immediately with exit code 1 before any listener or signing surface is created. Each `main()` call snapshots wallet configuration for that runtime, so a later start cannot expose signing tools on an already-running HTTP listener or rebind a still-running stdio server's signer.
 
 ## Configuration
 

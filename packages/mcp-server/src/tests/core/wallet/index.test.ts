@@ -22,7 +22,7 @@ jest.mock('../../../core/wallet/providers/disabled.js', () => ({
 	DisabledWalletProvider: jest.fn()
 }));
 
-import { getWalletMode } from '../../../core/config.js';
+import { getRuntimeConfig, getWalletMode, config as processConfig } from '../../../core/config.js';
 
 describe('Wallet Provider', () => {
 	const mockPrivateKeyProvider: WalletProvider = {
@@ -47,6 +47,8 @@ describe('Wallet Provider', () => {
 
 		// Reset all mocks
 		jest.resetAllMocks();
+
+		(getRuntimeConfig as jest.Mock).mockImplementation(() => processConfig);
 
 		// Setup default mock implementations
 		(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
@@ -95,6 +97,26 @@ describe('Wallet Provider', () => {
 			(getWalletMode as jest.Mock).mockReturnValue('unknown-mode');
 
 			expect(() => getWalletProvider()).toThrow('Unknown wallet mode: unknown-mode');
+		});
+
+		test('keeps a snapshot provider after resetWalletProvider clears the process memo', () => {
+			const snapshot = { privateKey: '0xabc', walletMode: 'private-key' as const, walletApiKey: undefined };
+			(getRuntimeConfig as jest.Mock).mockReturnValue(snapshot);
+
+			const provider1 = getWalletProvider();
+			expect(PrivateKeyWalletProvider).toHaveBeenCalledWith('0xabc');
+			expect(getWalletMode).not.toHaveBeenCalled();
+			expect(provider1).toBe(mockPrivateKeyProvider);
+
+			resetWalletProvider();
+			jest.clearAllMocks();
+			(getRuntimeConfig as jest.Mock).mockReturnValue(snapshot);
+			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
+
+			const provider2 = getWalletProvider();
+			expect(provider2).toBe(provider1);
+			expect(PrivateKeyWalletProvider).not.toHaveBeenCalled();
+			expect(getWalletMode).not.toHaveBeenCalled();
 		});
 	});
 

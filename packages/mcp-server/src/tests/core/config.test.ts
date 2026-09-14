@@ -10,7 +10,8 @@ import {
 	isWalletEnabled,
 	loadConfig,
 	runWithAppConfig,
-	snapshotConfig
+	snapshotConfig,
+	wrapWithAppConfig
 } from '../../core/config.js';
 
 describe('Config Module - Actual Implementation', () => {
@@ -124,6 +125,22 @@ describe('Config Module - Actual Implementation', () => {
 			});
 			expect(isWalletEnabled()).toBe(true);
 			expect(getPrivateKeyAsHex()).toBe('0xabcdef');
+		});
+
+		test('wrapWithAppConfig keeps later callbacks on the snapshot', () => {
+			config.walletMode = 'private-key';
+			const snapshot = snapshotConfig({
+				privateKey: undefined,
+				walletMode: 'disabled',
+				walletApiKey: undefined
+			});
+			const readMode = wrapWithAppConfig(snapshot, () => getWalletMode());
+
+			expect(getWalletMode()).toBe('private-key');
+			expect(readMode()).toBe('disabled');
+			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '4'.repeat(64) });
+			expect(getWalletMode()).toBe('private-key');
+			expect(readMode()).toBe('disabled');
 		});
 	});
 

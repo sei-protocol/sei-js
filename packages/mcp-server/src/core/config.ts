@@ -67,6 +67,14 @@ export function runWithAppConfig<T>(appConfig: AppConfig, fn: () => T): T {
 	return runtimeConfig.run(appConfig, fn);
 }
 
+/**
+ * Bind a callback to an AppConfig snapshot so later initializeConfig()
+ * mutations cannot change wallet policy mid-request.
+ */
+export function wrapWithAppConfig<Args extends unknown[], Result>(appConfig: AppConfig, fn: (...args: Args) => Result): (...args: Args) => Result {
+	return (...args: Args): Result => runWithAppConfig(appConfig, () => fn(...args));
+}
+
 export function getRuntimeConfig(): AppConfig {
 	return runtimeConfig.getStore() ?? config;
 }

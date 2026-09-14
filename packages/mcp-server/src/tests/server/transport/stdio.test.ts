@@ -48,6 +48,39 @@ describe('StdioTransport', () => {
 	});
 
 	describe('start', () => {
+		it('scopes request handling to the construction snapshot after connect', async () => {
+			const configModule = await import('../../../core/config.js');
+			const { config, getWalletMode, initializeConfig, snapshotConfig } = configModule;
+			const originalConfig = { ...config };
+			const seenModes: string[] = [];
+			const mockTransportInstance = {
+				onmessage: undefined as ((message: unknown) => void) | undefined
+			};
+			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
+			mockServer.connect.mockImplementation(async (transport: { onmessage?: (message: unknown) => void }) => {
+				transport.onmessage = () => {
+					seenModes.push(getWalletMode());
+				};
+			});
+
+			try {
+				const appConfig = snapshotConfig({
+					privateKey: undefined,
+					walletMode: 'disabled',
+					walletApiKey: undefined
+				});
+				const transport = new StdioTransport(appConfig);
+				await transport.start(mockServer);
+
+				initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '1'.repeat(64) });
+				expect(getWalletMode()).toBe('private-key');
+				mockTransportInstance.onmessage?.({ jsonrpc: '2.0', method: 'tools/list', id: 1 });
+				expect(seenModes).toEqual(['disabled']);
+			} finally {
+				Object.assign(config, originalConfig);
+			}
+		});
+
 		it('should create StdioServerTransport and connect server', async () => {
 			const mockTransportInstance = {
 				connect: jest.fn()

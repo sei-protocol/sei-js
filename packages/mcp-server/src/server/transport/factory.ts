@@ -8,7 +8,7 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 
 	switch (config.mode) {
 		case 'stdio':
-			return new StdioTransport();
+			return new StdioTransport(config.appConfig);
 
 		case 'streamable-http':
 			return new StreamableHttpTransport({

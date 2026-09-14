@@ -52,7 +52,8 @@ describe('Server Module', () => {
 		// Create mock server instance
 		mockServerInstance = {
 			name: '@sei-js/mcp-server',
-			version: '1.0.0'
+			version: '1.0.0',
+			connect: jest.fn().mockResolvedValue(undefined)
 		};
 
 		// Import mocked functions first

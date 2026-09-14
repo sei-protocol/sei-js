@@ -55,7 +55,7 @@ describe('Transport Factory', () => {
 
 			const transport = createTransport(config);
 
-			expect(StdioTransport).toHaveBeenCalledWith();
+			expect(StdioTransport).toHaveBeenCalledWith(undefined);
 			expect(transport).toBe(mockStdioInstance);
 		});
 
@@ -106,6 +106,27 @@ describe('Transport Factory', () => {
 				maxSessions: 25
 			});
 			expect(transport).toBe(mockSseInstance);
+		});
+
+		it('forwards a frozen appConfig snapshot to stdio transport', () => {
+			const appConfig = Object.freeze({
+				privateKey: `0x${'1'.repeat(64)}`,
+				walletMode: 'private-key' as const,
+				walletApiKey: undefined
+			});
+			const config: TransportConfig = {
+				mode: 'stdio',
+				walletMode: 'private-key',
+				appConfig,
+				port: 3000,
+				host: 'localhost',
+				path: '/mcp'
+			};
+			StdioTransport.mockImplementation(() => ({ mode: 'stdio' }));
+
+			createTransport(config);
+
+			expect(StdioTransport).toHaveBeenCalledWith(appConfig);
 		});
 
 		it('forwards a frozen appConfig snapshot to HTTP transports', () => {
