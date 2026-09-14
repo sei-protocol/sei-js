@@ -13,6 +13,10 @@ jest.mock('../core/config.js', () => ({
 	isWalletEnabled: jest.fn()
 }));
 
+jest.mock('../core/wallet/index.js', () => ({
+	resetWalletProvider: jest.fn()
+}));
+
 jest.mock('../server/args.js', () => ({
 	parseArgs: jest.fn()
 }));
@@ -176,6 +180,8 @@ describe('index', () => {
 		await expect(runtime?.stop()).rejects.toBeInstanceOf(AggregateError);
 		expect(mockTransport.stop).toHaveBeenCalledTimes(1);
 		expect(mockServer.close).toHaveBeenCalledTimes(1);
+		const walletModule = await import('../core/wallet/index.js');
+		expect(walletModule.resetWalletProvider).toHaveBeenCalled();
 	});
 
 	it('runs graceful shutdown once and allows signal handlers to be removed', async () => {

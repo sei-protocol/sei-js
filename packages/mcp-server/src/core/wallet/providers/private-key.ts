@@ -13,8 +13,8 @@ import { WalletProviderError } from '../types.js';
 export class PrivateKeyWalletProvider implements WalletProvider {
 	private privateKey: string | undefined;
 
-	constructor() {
-		this.privateKey = getPrivateKeyAsHex();
+	constructor(...key: [] | [string | undefined]) {
+		this.privateKey = key.length === 0 ? getPrivateKeyAsHex() : key[0];
 	}
 
 	isAvailable(): boolean {

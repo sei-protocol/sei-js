@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from 'node:async_hooks';
 import { config as loadDotenv } from 'dotenv';
 import type { Hex } from 'viem';
 import { z } from 'zod';
@@ -47,13 +48,36 @@ export function initializeConfig(environment: Record<string, unknown> = process.
 	return config;
 }
 
+const runtimeConfig = new AsyncLocalStorage<AppConfig>();
+
+/**
+ * Copy of the process singleton as it existed at a given start.
+ * HTTP transports close over this object so a later initializeConfig() cannot
+ * change an already-running listener's tool policy or signer.
+ */
+export function snapshotConfig(source: AppConfig = config): AppConfig {
+	return Object.freeze({
+		privateKey: source.privateKey,
+		walletMode: source.walletMode,
+		walletApiKey: source.walletApiKey
+	});
+}
+
+export function runWithAppConfig<T>(appConfig: AppConfig, fn: () => T): T {
+	return runtimeConfig.run(appConfig, fn);
+}
+
+export function getRuntimeConfig(): AppConfig {
+	return runtimeConfig.getStore() ?? config;
+}
+
 /**
  * Get the private key from environment variable as a Hex type for viem.
  * Returns undefined if the PRIVATE_KEY environment variable is not set.
  * @returns Private key from environment variable as Hex or undefined
  */
 export function getPrivateKeyAsHex(): Hex | undefined {
-	return config.privateKey as Hex | undefined;
+	return getRuntimeConfig().privateKey as Hex | undefined;
 }
 
 /**
@@ -61,7 +85,7 @@ export function getPrivateKeyAsHex(): Hex | undefined {
  * @returns True if wallet functionality should be available
  */
 export function isWalletEnabled(): boolean {
-	return config.walletMode !== 'disabled';
+	return getRuntimeConfig().walletMode !== 'disabled';
 }
 
 /**
@@ -69,5 +93,5 @@ export function isWalletEnabled(): boolean {
  * @returns The configured wallet mode
  */
 export function getWalletMode(): WalletMode {
-	return config.walletMode;
+	return getRuntimeConfig().walletMode;
 }

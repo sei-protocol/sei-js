@@ -11,7 +11,7 @@ like bugs in isolation but are deliberate.
 ## 1. `packages/mcp-server` is the security surface
 
 This package hands blockchain capabilities to an LLM client, so it is the one
-place in the repo where a subtle regression can cost users funds. Two
+place in the repo where a subtle regression can cost users funds. Three
 invariants are load-bearing and are enforced in code rather than by convention:
 
 - **Wallet mode is stdio-only.** `validateSecurityConfig()` in
@@ -20,6 +20,13 @@ invariants are load-bearing and are enforced in code rather than by convention:
   transports are reachable cross-origin, so a signing key behind one is a
   drain-the-wallet primitive. Any change that narrows this check, makes it
   non-fatal, or adds a transport that bypasses it is a finding.
+- **HTTP tool and signing policy is instance-scoped.** Each HTTP transport
+  closes over the `AppConfig` snapshot that passed `validateSecurityConfig`.
+  New sessions and requests must not consult a later `initializeConfig()` /
+  `main()` mutation of the process singleton. Treat a default `serverFactory`
+  that calls unbound `getServer()`, or request handling that reads wallet
+  state outside `runWithAppConfig`, as a regression. Keep the isolation tests
+  in `src/tests/server/transport/wallet-isolation.test.ts` meaningful.
 - **SSE messages are bound to their session.**
   `src/server/transport/http-sse.ts` keys `connections` by
   `transport.sessionId` and requires a matching `?sessionId=` on

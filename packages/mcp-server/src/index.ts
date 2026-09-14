@@ -2,6 +2,7 @@ import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { isWalletEnabled } from './core/config.js';
 import { sanitizeError } from './core/errors.js';
+import { resetWalletProvider } from './core/wallet/index.js';
 import { parseArgs } from './server/args.js';
 import { getServer } from './server/server.js';
 import { createTransport } from './server/transport/index.js';
@@ -38,7 +39,7 @@ export function registerShutdownHandlers(stop: () => Promise<void>): () => void 
 
 export async function startMcpServer(): Promise<RunningMcpServer> {
 	const config = parseArgs();
-	const server = config.mode === 'stdio' ? await getServer() : undefined;
+	const server = config.mode === 'stdio' ? await getServer(config.appConfig) : undefined;
 	let transport: McpTransport | undefined;
 
 	try {
@@ -60,8 +61,12 @@ export async function startMcpServer(): Promise<RunningMcpServer> {
 		if (!stopPromise) {
 			removeShutdownHandlers();
 			stopPromise = (async () => {
-				const errors = await collectOperationErrors([() => transport.stop(), () => server?.close()]);
-				throwCollectedErrors(errors, 'Failed to stop all MCP server resources.');
+				try {
+					const errors = await collectOperationErrors([() => transport.stop(), () => server?.close()]);
+					throwCollectedErrors(errors, 'Failed to stop all MCP server resources.');
+				} finally {
+					resetWalletProvider();
+				}
 			})();
 		}
 		return stopPromise;

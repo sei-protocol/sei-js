@@ -108,6 +108,34 @@ describe('Transport Factory', () => {
 			expect(transport).toBe(mockSseInstance);
 		});
 
+		it('forwards a frozen appConfig snapshot to HTTP transports', () => {
+			const appConfig = Object.freeze({
+				privateKey: undefined,
+				walletMode: 'disabled' as const,
+				walletApiKey: undefined
+			});
+			const config: TransportConfig = {
+				mode: 'streamable-http',
+				walletMode: 'disabled',
+				appConfig,
+				port: 8080,
+				host: 'localhost',
+				path: '/mcp'
+			};
+			StreamableHttpTransport.mockImplementation(() => ({ mode: 'streamable-http' }));
+
+			createTransport(config);
+
+			expect(StreamableHttpTransport).toHaveBeenCalledWith({
+				port: 8080,
+				host: 'localhost',
+				path: '/mcp',
+				walletMode: 'disabled',
+				maxActiveRequests: undefined,
+				appConfig
+			});
+		});
+
 		it('should throw error for unsupported transport mode', () => {
 			const config = {
 				mode: 'unsupported-mode',

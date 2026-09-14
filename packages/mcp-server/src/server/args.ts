@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { config as dotenvConfig } from 'dotenv';
-import { initializeConfig } from '../core/config.js';
+import { initializeConfig, snapshotConfig } from '../core/config.js';
 import { validatePrivateKeyConfiguration } from '../core/private-key.js';
 import { getPackageInfo } from './package-info.js';
 import type { TransportConfig, TransportMode } from './transport/types.js';
@@ -147,14 +147,15 @@ Security Note:
 	const config = loadConfig();
 
 	validateConfig(config);
-	initializeConfig(process.env);
+	const appConfig = snapshotConfig(initializeConfig(process.env));
 
 	return {
 		mode: config.server.transport,
 		port: Number.isNaN(config.server.port) ? DEFAULT_CONFIG.server.port : config.server.port,
 		host: config.server.host,
 		path: config.server.path,
-		walletMode: config.wallet.mode,
+		walletMode: appConfig.walletMode,
+		appConfig,
 		maxSseSessions:
 			Number.isInteger(config.server.sseMaxSessions) && config.server.sseMaxSessions > 0 ? config.server.sseMaxSessions : DEFAULT_CONFIG.server.sseMaxSessions,
 		maxStreamableRequests:

@@ -5,9 +5,14 @@ import { PrivateKeyWalletProvider } from '../../../core/wallet/providers/private
 import type { WalletProvider } from '../../../core/wallet/types.js';
 
 // Mock dependencies
-jest.mock('../../../core/config.js', () => ({
-	getWalletMode: jest.fn()
-}));
+jest.mock('../../../core/config.js', () => {
+	const config = { privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined };
+	return {
+		getWalletMode: jest.fn(),
+		getRuntimeConfig: jest.fn(() => config),
+		config
+	};
+});
 
 jest.mock('../../../core/wallet/providers/private-key.js', () => ({
 	PrivateKeyWalletProvider: jest.fn()

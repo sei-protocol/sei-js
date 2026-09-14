@@ -3,6 +3,7 @@ import type { Socket } from 'node:net';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { type Request, type Response } from 'express';
+import { type AppConfig, runWithAppConfig, snapshotConfig } from '../../core/config.js';
 import { sanitizeError } from '../../core/errors.js';
 import { getServer } from '../server.js';
 import { closeHttpServer, collectOperationErrors, runAllOperations, throwCollectedErrors } from './lifecycle.js';
@@ -20,6 +21,7 @@ export interface StreamableHttpTransportOptions {
 	host?: string;
 	path?: string;
 	walletMode?: WalletMode;
+	appConfig?: AppConfig;
 	maxActiveRequests?: number;
 }
 
@@ -54,6 +56,7 @@ export class StreamableHttpTransport implements McpTransport {
 	private readonly host: string;
 	private readonly path: string;
 	private readonly walletMode: WalletMode;
+	private readonly appConfig: AppConfig;
 	private readonly serverFactory: StreamableServerFactory;
 	private readonly transportFactory: StreamableTransportFactory;
 	private readonly listenFactory: StreamableListenFactory;
@@ -64,8 +67,9 @@ export class StreamableHttpTransport implements McpTransport {
 		this.host = options.host ?? 'localhost';
 		this.path = options.path ?? '/mcp';
 		this.walletMode = options.walletMode ?? 'disabled';
+		this.appConfig = options.appConfig ?? snapshotConfig();
 		this.maxActiveRequests = options.maxActiveRequests ?? DEFAULT_MAX_STREAMABLE_REQUESTS;
-		this.serverFactory = dependencies.serverFactory ?? getServer;
+		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory =
 			dependencies.transportFactory ??
 			(() =>
@@ -142,7 +146,7 @@ export class StreamableHttpTransport implements McpTransport {
 			let activeRequest: ActiveRequest | undefined;
 			let requestServer: McpServer | undefined;
 			try {
-				const server = await this.serverFactory();
+				const server = await runWithAppConfig(this.appConfig, () => this.serverFactory());
 				requestServer = server;
 				const transport = this.transportFactory();
 				activeRequest = { server, transport, releaseSlot };
@@ -187,7 +191,7 @@ export class StreamableHttpTransport implements McpTransport {
 				}
 
 				await server.connect(transport);
-				await transport.handleRequest(req, res, req.body);
+				await runWithAppConfig(this.appConfig, () => transport.handleRequest(req, res, req.body));
 			} catch (error) {
 				console.error('Error handling MCP request:', sanitizeError(error));
 				if (!res.headersSent) {

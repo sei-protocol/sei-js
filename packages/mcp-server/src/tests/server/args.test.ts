@@ -113,9 +113,15 @@ describe('Args Module', () => {
 				host: 'localhost',
 				path: '/mcp',
 				walletMode: 'disabled',
+				appConfig: {
+					privateKey: undefined,
+					walletMode: 'disabled',
+					walletApiKey: undefined
+				},
 				maxSseSessions: 100,
 				maxStreamableRequests: 100
 			});
+			expect(Object.isFrozen(result.appConfig)).toBe(true);
 		});
 
 		it('should load configuration from environment variables', () => {
@@ -134,6 +140,11 @@ describe('Args Module', () => {
 				host: '0.0.0.0',
 				path: '/api/mcp',
 				walletMode: 'private-key',
+				appConfig: {
+					privateKey: `0x${'1'.repeat(64)}`,
+					walletMode: 'private-key',
+					walletApiKey: undefined
+				},
 				maxSseSessions: 100,
 				maxStreamableRequests: 100
 			});
@@ -358,6 +369,7 @@ describe('Args Module', () => {
 			expect(result).toHaveProperty('host');
 			expect(result).toHaveProperty('path');
 			expect(result).toHaveProperty('walletMode');
+			expect(result).toHaveProperty('appConfig');
 
 			// Verify types
 			expect(typeof result.mode).toBe('string');
@@ -399,6 +411,11 @@ describe('Args Module', () => {
 				host: 'localhost',
 				path: '/mcp',
 				walletMode: 'private-key',
+				appConfig: {
+					privateKey: `0x${'1'.repeat(64)}`,
+					walletMode: 'private-key',
+					walletApiKey: undefined
+				},
 				maxSseSessions: 100,
 				maxStreamableRequests: 100
 			});

@@ -3,6 +3,7 @@ import type { Socket } from 'node:net';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import express, { type Request, type Response } from 'express';
+import { type AppConfig, runWithAppConfig, snapshotConfig } from '../../core/config.js';
 import { sanitizeError } from '../../core/errors.js';
 import { getServer } from '../server.js';
 import { closeHttpServer, collectOperationErrors, runAllOperations, throwCollectedErrors } from './lifecycle.js';
@@ -20,6 +21,7 @@ export interface HttpSseTransportOptions {
 	host: string;
 	path: string;
 	walletMode?: WalletMode;
+	appConfig?: AppConfig;
 	maxSessions?: number;
 }
 
@@ -54,6 +56,7 @@ export class HttpSseTransport implements McpTransport {
 	private readonly host: string;
 	private readonly path: string;
 	private readonly walletMode: WalletMode;
+	private readonly appConfig: AppConfig;
 	private readonly serverFactory: McpServerFactory;
 	private readonly transportFactory: SseServerTransportFactory;
 	private readonly listenFactory: SseListenFactory;
@@ -64,8 +67,9 @@ export class HttpSseTransport implements McpTransport {
 		this.host = options.host;
 		this.path = options.path;
 		this.walletMode = options.walletMode ?? 'disabled';
+		this.appConfig = options.appConfig ?? snapshotConfig();
 		this.maxSessions = options.maxSessions ?? DEFAULT_MAX_SSE_SESSIONS;
-		this.serverFactory = dependencies.serverFactory ?? getServer;
+		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory = dependencies.transportFactory ?? ((endpoint, response) => new SSEServerTransport(endpoint, response));
 		this.listenFactory = dependencies.listenFactory ?? ((app, port, host) => app.listen(port, host));
 		this.app = express();
@@ -140,7 +144,7 @@ export class HttpSseTransport implements McpTransport {
 			req.socket.on('error', onDisconnect);
 
 			try {
-				const server = await this.serverFactory();
+				const server = await runWithAppConfig(this.appConfig, () => this.serverFactory());
 				session = { server, transport, releaseSlot };
 
 				if (this.state !== 'running' || disconnected) {
@@ -188,7 +192,7 @@ export class HttpSseTransport implements McpTransport {
 			}
 
 			try {
-				await session.transport.handlePostMessage(req, res, req.body);
+				await runWithAppConfig(this.appConfig, () => session.transport.handlePostMessage(req, res, req.body));
 			} catch (error) {
 				console.error('Error handling SSE message:', sanitizeError(error));
 				if (!res.headersSent) {
