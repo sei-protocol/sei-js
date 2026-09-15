@@ -998,10 +998,11 @@ describe('EVM Tools', () => {
 			);
 		});
 
-		test('rejects wallet-enabled registration without an active runtime scope', () => {
+		test('rejects tool registration without an active runtime scope', () => {
 			(getScopedAppConfig as jest.Mock).mockReturnValue(undefined);
 
-			expect(() => withToolRegistrationPolicy(server, true)).toThrow('Wallet-enabled tool registration requires an active AppConfig scope.');
+			expect(() => withToolRegistrationPolicy(server, true)).toThrow('Tool registration requires an active AppConfig scope.');
+			expect(() => withToolRegistrationPolicy(server, false)).toThrow('Tool registration requires an active AppConfig scope.');
 		});
 
 		test('hides unknown future tools by default and forwards non-tool methods', () => {

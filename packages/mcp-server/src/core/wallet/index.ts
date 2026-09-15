@@ -5,7 +5,8 @@ import type { WalletProvider } from './types.js';
 
 const providersByConfig = new WeakMap<AppConfigSnapshot, WalletProvider>();
 
-// Cache for the process-global singleton only. Instance snapshots use the WeakMap.
+// Deliberate process-lifetime fallback for direct, unscoped consumers.
+// Runtime snapshots use the WeakMap and are evicted by their own stop().
 let walletProviderInstance: WalletProvider | null = null;
 
 function createWalletProvider(appConfig: AppConfigSnapshot): WalletProvider {

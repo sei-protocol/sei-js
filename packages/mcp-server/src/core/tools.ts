@@ -7,7 +7,7 @@ import { sanitizeError } from './errors.js';
 import * as services from './services/index.js';
 import { getWalletProvider } from './wallet/index.js';
 
-export const READ_ONLY_TOOL_NAMES: ReadonlySet<string> = new Set([
+const READ_ONLY_TOOL_NAMES = new Set([
 	'check_nft_ownership',
 	'estimate_gas',
 	'get_balance',
@@ -26,17 +26,14 @@ export const READ_ONLY_TOOL_NAMES: ReadonlySet<string> = new Set([
 	'get_transaction',
 	'get_transaction_receipt',
 	'is_contract',
-	'read_contract',
-	'search_docs'
+	'read_contract'
 ]);
 
 export function withToolRegistrationPolicy(server: McpServer, walletEnabled: boolean): McpServer {
 	// Tool callbacks run after server construction, potentially after another
 	// runtime updates process config. Capture this server's validated snapshot.
 	const appConfig = getScopedAppConfig();
-	if (walletEnabled && !appConfig) {
-		throw new Error('Wallet-enabled tool registration requires an active AppConfig scope.');
-	}
+	if (!appConfig) throw new Error('Tool registration requires an active AppConfig scope.');
 	const registerTool = server.tool.bind(server) as unknown as (
 		name: string,
 		description: string,
@@ -52,7 +49,7 @@ export function withToolRegistrationPolicy(server: McpServer, walletEnabled: boo
 						console.error(`Tool registration suppressed by wallet policy: ${name}`);
 						return undefined;
 					}
-					const runtimeHandler = appConfig ? wrapWithAppConfig(appConfig, handler) : handler;
+					const runtimeHandler = wrapWithAppConfig(appConfig, handler);
 					return registerTool(name, description, 'network' in schema ? { ...schema, network: networkSchema.optional() } : schema, runtimeHandler);
 				};
 			}

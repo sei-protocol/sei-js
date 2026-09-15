@@ -5,7 +5,6 @@ import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { privateKeyToAccount } from 'viem/accounts';
 import { config, initializeConfig, isWalletEnabled, runWithAppConfig, snapshotConfig } from '../../../core/config.js';
-import { READ_ONLY_TOOL_NAMES } from '../../../core/tools.js';
 import { getWalletProvider, resetWalletProvider } from '../../../core/wallet/index.js';
 import { getServer } from '../../../server/server.js';
 import { HttpSseTransport } from '../../../server/transport/http-sse.js';
@@ -14,19 +13,38 @@ import { StreamableHttpTransport } from '../../../server/transport/streamable-ht
 const HOST = '127.0.0.1';
 const PATH = '/mcp';
 const PRIVATE_KEY = '1'.repeat(64);
+const EXPECTED_HTTP_TOOL_NAMES = [
+	'check_nft_ownership',
+	'estimate_gas',
+	'get_balance',
+	'get_block_by_number',
+	'get_chain_info',
+	'get_erc1155_balance',
+	'get_erc1155_token_uri',
+	'get_erc20_balance',
+	'get_latest_block',
+	'get_nft_balance',
+	'get_nft_info',
+	'get_supported_networks',
+	'get_token_balance',
+	'get_token_balance_erc20',
+	'get_token_info',
+	'get_transaction',
+	'get_transaction_receipt',
+	'is_contract',
+	'read_contract',
+	'search_docs'
+].sort();
 
 type HttpMode = 'http-sse' | 'streamable-http';
 
-async function listUnsafeTools(mode: HttpMode, url: URL): Promise<string[]> {
+async function listTools(mode: HttpMode, url: URL): Promise<string[]> {
 	const client = new Client({ name: `wallet-isolation-${mode}`, version: '1.0.0' });
 	const transport = mode === 'http-sse' ? new SSEClientTransport(url) : new StreamableHTTPClientTransport(url);
 	await client.connect(transport);
 	try {
 		const listed = await client.listTools();
-		return listed.tools
-			.map((tool) => tool.name)
-			.filter((name) => !READ_ONLY_TOOL_NAMES.has(name))
-			.sort();
+		return listed.tools.map((tool) => tool.name).sort();
 	} finally {
 		await client.close();
 	}
@@ -70,18 +88,18 @@ describe('HTTP wallet isolation across later starts', () => {
 		await transport.start();
 
 		const url = new URL(`http://${HOST}:${transport.getListeningPort()}${PATH}`);
-		expect(await listUnsafeTools(mode, url)).toEqual([]);
+		expect(await listTools(mode, url)).toEqual(EXPECTED_HTTP_TOOL_NAMES);
 
 		process.env.WALLET_MODE = 'private-key';
 		process.env.PRIVATE_KEY = PRIVATE_KEY;
-		expect(await listUnsafeTools(mode, url)).toEqual([]);
+		expect(await listTools(mode, url)).toEqual(EXPECTED_HTTP_TOOL_NAMES);
 		expect(isWalletEnabled()).toBe(false);
 
 		initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: PRIVATE_KEY });
 		process.env.WALLET_MODE = 'disabled';
 		delete process.env.PRIVATE_KEY;
 		expect(isWalletEnabled()).toBe(true);
-		expect(await listUnsafeTools(mode, url)).toEqual([]);
+		expect(await listTools(mode, url)).toEqual(EXPECTED_HTTP_TOOL_NAMES);
 	});
 
 	it.each(['http-sse', 'streamable-http'] as const)('snapshots a mutable %s appConfig at construction', async (mode) => {
@@ -97,7 +115,7 @@ describe('HTTP wallet isolation across later starts', () => {
 		appConfig.walletMode = 'private-key';
 		appConfig.privateKey = `0x${PRIVATE_KEY}`;
 		const url = new URL(`http://${HOST}:${transport.getListeningPort()}${PATH}`);
-		expect(await listUnsafeTools(mode, url)).toEqual([]);
+		expect(await listTools(mode, url)).toEqual(EXPECTED_HTTP_TOOL_NAMES);
 	});
 
 	it('still terminates a direct private-key HTTP start before listen', async () => {
@@ -176,7 +194,7 @@ describe('stdio wallet isolation after another runtime stop', () => {
 
 		try {
 			const listed = await client.listTools();
-			expect(listed.tools.filter((tool) => !READ_ONLY_TOOL_NAMES.has(tool.name))).not.toEqual([]);
+			expect(listed.tools.map((tool) => tool.name)).toContain('get_address_from_private_key');
 			expect(await deriveAddressFromPrivateKey(client)).toBe(expectedAddress);
 
 			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: keyB });

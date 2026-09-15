@@ -62,11 +62,7 @@ const runtimeConfig = new AsyncLocalStorage<AppConfigSnapshot>();
  */
 export function snapshotConfig(source: Readonly<AppConfig> = config): AppConfigSnapshot {
 	if (Object.isFrozen(source)) return source;
-	return Object.freeze({
-		privateKey: source.privateKey,
-		walletMode: source.walletMode,
-		walletApiKey: source.walletApiKey
-	});
+	return Object.freeze({ ...source });
 }
 
 export function runWithAppConfig<T>(appConfig: AppConfigSnapshot, fn: () => T): T {
