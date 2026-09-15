@@ -3,11 +3,12 @@ import type { Socket } from 'node:net';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { type Request, type Response } from 'express';
+import { type AppConfigSnapshot, runWithAppConfig, snapshotConfig } from '../../core/config.js';
 import { sanitizeError } from '../../core/errors.js';
 import { getServer } from '../server.js';
 import { closeHttpServer, collectOperationErrors, runAllOperations, throwCollectedErrors } from './lifecycle.js';
 import { createCorsMiddleware, validateSecurityConfig } from './security.js';
-import type { McpTransport, TransportMode, WalletMode } from './types.js';
+import type { McpTransport, TransportMode } from './types.js';
 
 export type StreamableServerFactory = () => Promise<McpServer>;
 export type StreamableTransportFactory = () => StreamableHTTPServerTransport;
@@ -19,7 +20,7 @@ export interface StreamableHttpTransportOptions {
 	port?: number;
 	host?: string;
 	path?: string;
-	walletMode?: WalletMode;
+	appConfig: AppConfigSnapshot;
 	maxActiveRequests?: number;
 }
 
@@ -53,19 +54,20 @@ export class StreamableHttpTransport implements McpTransport {
 	private readonly port: number;
 	private readonly host: string;
 	private readonly path: string;
-	private readonly walletMode: WalletMode;
+	private readonly appConfig: AppConfigSnapshot;
 	private readonly serverFactory: StreamableServerFactory;
 	private readonly transportFactory: StreamableTransportFactory;
 	private readonly listenFactory: StreamableListenFactory;
 	private readonly maxActiveRequests: number;
 
-	constructor(options: StreamableHttpTransportOptions = {}, dependencies: StreamableHttpTransportDependencies = {}) {
+	constructor(options: StreamableHttpTransportOptions, dependencies: StreamableHttpTransportDependencies = {}) {
 		this.port = options.port ?? 8080;
 		this.host = options.host ?? 'localhost';
 		this.path = options.path ?? '/mcp';
-		this.walletMode = options.walletMode ?? 'disabled';
+		if (!options.appConfig) throw new Error('appConfig is required.');
+		this.appConfig = snapshotConfig(options.appConfig);
 		this.maxActiveRequests = options.maxActiveRequests ?? DEFAULT_MAX_STREAMABLE_REQUESTS;
-		this.serverFactory = dependencies.serverFactory ?? getServer;
+		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory =
 			dependencies.transportFactory ??
 			(() =>
@@ -94,7 +96,7 @@ export class StreamableHttpTransport implements McpTransport {
 	}
 
 	async start(_server?: McpServer): Promise<void> {
-		validateSecurityConfig(this.mode, this.walletMode);
+		validateSecurityConfig(this.mode, this.appConfig.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
 		}
@@ -142,7 +144,7 @@ export class StreamableHttpTransport implements McpTransport {
 			let activeRequest: ActiveRequest | undefined;
 			let requestServer: McpServer | undefined;
 			try {
-				const server = await this.serverFactory();
+				const server = await runWithAppConfig(this.appConfig, () => this.serverFactory());
 				requestServer = server;
 				const transport = this.transportFactory();
 				activeRequest = { server, transport, releaseSlot };
@@ -186,8 +188,8 @@ export class StreamableHttpTransport implements McpTransport {
 					return;
 				}
 
-				await server.connect(transport);
-				await transport.handleRequest(req, res, req.body);
+				await runWithAppConfig(this.appConfig, () => server.connect(transport));
+				await runWithAppConfig(this.appConfig, () => transport.handleRequest(req, res, req.body));
 			} catch (error) {
 				console.error('Error handling MCP request:', sanitizeError(error));
 				if (!res.headersSent) {

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { type AppConfigSnapshot, getScopedAppConfig, snapshotConfig } from '../../core/config.js';
 
 // Mock all dependencies
 jest.mock('@modelcontextprotocol/sdk/server/mcp.js', () => ({
@@ -31,7 +32,8 @@ jest.mock('../../core/chains.js', () => ({
 	rpcUrlMap: {}
 }));
 
-type GetServerFunction = () => Promise<McpServer>;
+type GetServerFunction = (appConfig: AppConfigSnapshot) => Promise<McpServer>;
+const APP_CONFIG = snapshotConfig({ privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
 
 describe('Server Module', () => {
 	let getServer: GetServerFunction;
@@ -52,7 +54,8 @@ describe('Server Module', () => {
 		// Create mock server instance
 		mockServerInstance = {
 			name: '@sei-js/mcp-server',
-			version: '1.0.0'
+			version: '1.0.0',
+			connect: jest.fn().mockResolvedValue(undefined)
 		};
 
 		// Import mocked functions first
@@ -100,7 +103,7 @@ describe('Server Module', () => {
 
 	describe('getServer', () => {
 		it('should call all initialization functions', async () => {
-			await getServer();
+			await getServer(APP_CONFIG);
 
 			expect(mockGetPackageInfo).toHaveBeenCalled();
 			expect(mockRegisterEVMResources).toHaveBeenCalled();
@@ -116,9 +119,28 @@ describe('Server Module', () => {
 		it('should log supported networks', async () => {
 			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-			await getServer();
+			await getServer(APP_CONFIG);
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Supported networks:', 'sei, sei-testnet');
+		});
+
+		it('binds legacy and current registration callbacks to the runtime snapshot', async () => {
+			await getServer(APP_CONFIG);
+			const scopedServer = mockRegisterEVMTools.mock.calls[0][0] as McpServer;
+			const seenConfigs: unknown[] = [];
+
+			for (const method of ['tool', 'resource', 'prompt', 'registerTool', 'registerResource', 'registerPrompt'] as const) {
+				let registeredCallback: (() => void) | undefined;
+				mockServerInstance[method] = jest.fn((...args: unknown[]) => {
+					registeredCallback = args.at(-1) as () => void;
+				});
+				(scopedServer[method] as (...args: unknown[]) => unknown)('name', 'description', {}, () => {
+					seenConfigs.push(getScopedAppConfig());
+				});
+				registeredCallback?.();
+			}
+
+			expect(seenConfigs).toEqual([APP_CONFIG, APP_CONFIG, APP_CONFIG, APP_CONFIG, APP_CONFIG, APP_CONFIG]);
 		});
 
 		it('should sanitize and propagate server initialization errors', async () => {
@@ -127,7 +149,7 @@ describe('Server Module', () => {
 				throw testError;
 			});
 
-			await expect(getServer()).rejects.toThrow('Initialization failed');
+			await expect(getServer(APP_CONFIG)).rejects.toThrow('Initialization failed');
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to initialize server:', 'Initialization failed');
 			expect(processExitSpy).not.toHaveBeenCalled();

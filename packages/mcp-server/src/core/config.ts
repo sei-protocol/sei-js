@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from 'node:async_hooks';
 import { config as loadDotenv } from 'dotenv';
 import type { Hex } from 'viem';
 import { z } from 'zod';
@@ -25,6 +26,9 @@ export interface AppConfig {
 	walletApiKey: string | undefined;
 }
 
+declare const snapshotBrand: unique symbol;
+export type AppConfigSnapshot = Readonly<AppConfig> & { readonly [snapshotBrand]: true };
+
 export const loadConfig = (environment: Record<string, unknown> = process.env): AppConfig => {
 	const env = envSchema.parse(environment);
 	const privateKey = formatPrivateKey(env.PRIVATE_KEY);
@@ -42,8 +46,57 @@ export const config: AppConfig = {
 	walletApiKey: undefined
 };
 
+let warnedAboutUnscopedWalletRead = false;
+
 export function initializeConfig(environment: Record<string, unknown> = process.env): AppConfig {
 	Object.assign(config, loadConfig(environment));
+	warnedAboutUnscopedWalletRead = false;
+	return config;
+}
+
+const runtimeConfig = new AsyncLocalStorage<AppConfigSnapshot>();
+
+/**
+ * Copy of the process singleton as it existed at a given start.
+ * Transports close over this object so a later initializeConfig() cannot
+ * change an already-running runtime's tool policy or signer.
+ */
+export function snapshotConfig(source: Readonly<AppConfig> = config): AppConfigSnapshot {
+	if (Object.isFrozen(source)) return source as AppConfigSnapshot;
+	return Object.freeze({ ...source }) as AppConfigSnapshot;
+}
+
+export function runWithAppConfig<T>(appConfig: AppConfigSnapshot, fn: () => T): T {
+	if (!Object.isFrozen(appConfig)) throw new TypeError('runWithAppConfig requires a frozen AppConfig snapshot.');
+	return runtimeConfig.run(appConfig, fn);
+}
+
+/**
+ * Bind a callback to an AppConfig snapshot so later initializeConfig()
+ * mutations cannot change wallet policy mid-request.
+ */
+export function wrapWithAppConfig<Args extends unknown[], Result>(appConfig: AppConfigSnapshot, fn: (...args: Args) => Result): (...args: Args) => Result {
+	return (...args: Args): Result => runWithAppConfig(appConfig, () => fn(...args));
+}
+
+export function getScopedAppConfig(): AppConfigSnapshot | undefined {
+	return runtimeConfig.getStore();
+}
+
+/**
+ * Runtime request paths must establish an AsyncLocalStorage scope. The mutable
+ * process config remains the fallback for direct configuration helpers.
+ */
+export function getRuntimeConfig(): Readonly<AppConfig> {
+	const scopedConfig = getScopedAppConfig();
+	if (scopedConfig) return scopedConfig;
+	// Direct helpers intentionally retain the process fallback. Warn once per
+	// initialization in either wallet direction so a lost runtime scope is
+	// visible without flooding stderr.
+	if (!warnedAboutUnscopedWalletRead) {
+		warnedAboutUnscopedWalletRead = true;
+		console.error('Wallet configuration was read outside an MCP runtime scope; using the mutable process configuration.');
+	}
 	return config;
 }
 
@@ -53,7 +106,7 @@ export function initializeConfig(environment: Record<string, unknown> = process.
  * @returns Private key from environment variable as Hex or undefined
  */
 export function getPrivateKeyAsHex(): Hex | undefined {
-	return config.privateKey as Hex | undefined;
+	return getRuntimeConfig().privateKey as Hex | undefined;
 }
 
 /**
@@ -61,7 +114,7 @@ export function getPrivateKeyAsHex(): Hex | undefined {
  * @returns True if wallet functionality should be available
  */
 export function isWalletEnabled(): boolean {
-	return config.walletMode !== 'disabled';
+	return getRuntimeConfig().walletMode !== 'disabled';
 }
 
 /**
@@ -69,5 +122,5 @@ export function isWalletEnabled(): boolean {
  * @returns The configured wallet mode
  */
 export function getWalletMode(): WalletMode {
-	return config.walletMode;
+	return getRuntimeConfig().walletMode;
 }

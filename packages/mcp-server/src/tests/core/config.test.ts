@@ -1,13 +1,19 @@
-import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, jest, test } from 'bun:test';
+import type { AppConfigSnapshot } from '../../core/config.js';
 import {
 	config,
 	formatPrivateKey,
 	getPrivateKeyAsHex,
+	getRuntimeConfig,
+	getScopedAppConfig,
 	getWalletMode,
 	initializeConfig,
 	isValidPrivateKey,
 	isWalletEnabled,
-	loadConfig
+	loadConfig,
+	runWithAppConfig,
+	snapshotConfig,
+	wrapWithAppConfig
 } from '../../core/config.js';
 
 describe('Config Module - Actual Implementation', () => {
@@ -84,6 +90,95 @@ describe('Config Module - Actual Implementation', () => {
 				walletMode: 'private-key',
 				walletApiKey: undefined
 			});
+		});
+
+		test('snapshots freeze a copy that later initializeConfig mutations cannot change', () => {
+			const snapshot = snapshotConfig();
+			expect(snapshot).toMatchObject({
+				privateKey: undefined,
+				walletMode: 'disabled',
+				walletApiKey: undefined
+			});
+			expect(snapshot).not.toBe(config);
+			expect(Object.isFrozen(snapshot)).toBe(true);
+			expect(snapshotConfig(snapshot)).toBe(snapshot);
+
+			const privateKey = '3'.repeat(64);
+			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: privateKey });
+			expect(snapshot.walletMode).toBe('disabled');
+			expect(snapshot.privateKey).toBeUndefined();
+			expect(config.walletMode).toBe('private-key');
+		});
+
+		test('runWithAppConfig rejects mutable configuration objects', () => {
+			expect(() =>
+				runWithAppConfig(
+					{
+						privateKey: undefined,
+						walletMode: 'disabled',
+						walletApiKey: undefined
+					} as unknown as AppConfigSnapshot,
+					() => undefined
+				)
+			).toThrow('runWithAppConfig requires a frozen AppConfig snapshot.');
+		});
+
+		test('runWithAppConfig makes getters read the snapshot instead of the process singleton', () => {
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+			config.walletMode = 'private-key';
+			config.privateKey = '0xabcdef';
+			const snapshot = snapshotConfig({
+				privateKey: undefined,
+				walletMode: 'disabled',
+				walletApiKey: undefined
+			});
+
+			expect(isWalletEnabled()).toBe(true);
+			runWithAppConfig(snapshot, () => {
+				expect(isWalletEnabled()).toBe(false);
+				expect(getWalletMode()).toBe('disabled');
+				expect(getPrivateKeyAsHex()).toBeUndefined();
+				expect(getRuntimeConfig()).toBe(snapshot);
+				expect(getScopedAppConfig()).toBe(snapshot);
+			});
+			expect(isWalletEnabled()).toBe(true);
+			expect(getPrivateKeyAsHex()).toBe('0xabcdef');
+			expect(getScopedAppConfig()).toBeUndefined();
+			consoleErrorSpy.mockRestore();
+		});
+
+		test('warns once per initialization for reads outside a runtime scope', () => {
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '5'.repeat(64) });
+
+			expect(getWalletMode()).toBe('private-key');
+			expect(isWalletEnabled()).toBe(true);
+			expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+
+			initializeConfig({ WALLET_MODE: 'disabled' });
+			expect(getWalletMode()).toBe('disabled');
+			expect(isWalletEnabled()).toBe(false);
+			expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+			expect(consoleErrorSpy).toHaveBeenCalledWith('Wallet configuration was read outside an MCP runtime scope; using the mutable process configuration.');
+			consoleErrorSpy.mockRestore();
+		});
+
+		test('wrapWithAppConfig keeps later callbacks on the snapshot', () => {
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+			config.walletMode = 'private-key';
+			const snapshot = snapshotConfig({
+				privateKey: undefined,
+				walletMode: 'disabled',
+				walletApiKey: undefined
+			});
+			const readMode = wrapWithAppConfig(snapshot, () => getWalletMode());
+
+			expect(getWalletMode()).toBe('private-key');
+			expect(readMode()).toBe('disabled');
+			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '4'.repeat(64) });
+			expect(getWalletMode()).toBe('private-key');
+			expect(readMode()).toBe('disabled');
+			consoleErrorSpy.mockRestore();
 		});
 	});
 

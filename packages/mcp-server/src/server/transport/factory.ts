@@ -6,15 +6,15 @@ import type { McpTransport, TransportConfig } from './types.js';
 export const createTransport = (config: TransportConfig): McpTransport => {
 	switch (config.mode) {
 		case 'stdio':
-			return new StdioTransport();
+			return new StdioTransport(config.appConfig);
 
 		case 'streamable-http':
 			return new StreamableHttpTransport({
 				port: config.port,
 				host: config.host,
 				path: config.path,
-				walletMode: config.walletMode,
-				maxActiveRequests: config.maxStreamableRequests
+				maxActiveRequests: config.maxStreamableRequests,
+				appConfig: config.appConfig
 			});
 
 		case 'http-sse':
@@ -22,8 +22,8 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 				port: config.port,
 				host: config.host,
 				path: config.path,
-				walletMode: config.walletMode,
-				maxSessions: config.maxSseSessions
+				maxSessions: config.maxSseSessions,
+				appConfig: config.appConfig
 			});
 
 		default:

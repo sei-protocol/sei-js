@@ -3,11 +3,12 @@ import type { Socket } from 'node:net';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import express, { type Request, type Response } from 'express';
+import { type AppConfigSnapshot, runWithAppConfig, snapshotConfig } from '../../core/config.js';
 import { sanitizeError } from '../../core/errors.js';
 import { getServer } from '../server.js';
 import { closeHttpServer, collectOperationErrors, runAllOperations, throwCollectedErrors } from './lifecycle.js';
 import { createCorsMiddleware, validateSecurityConfig } from './security.js';
-import type { McpTransport, WalletMode } from './types.js';
+import type { McpTransport } from './types.js';
 
 export type McpServerFactory = () => Promise<McpServer>;
 export type SseServerTransportFactory = (endpoint: string, response: Response) => SSEServerTransport;
@@ -19,7 +20,7 @@ export interface HttpSseTransportOptions {
 	port: number;
 	host: string;
 	path: string;
-	walletMode?: WalletMode;
+	appConfig: AppConfigSnapshot;
 	maxSessions?: number;
 }
 
@@ -53,7 +54,7 @@ export class HttpSseTransport implements McpTransport {
 	private readonly port: number;
 	private readonly host: string;
 	private readonly path: string;
-	private readonly walletMode: WalletMode;
+	private readonly appConfig: AppConfigSnapshot;
 	private readonly serverFactory: McpServerFactory;
 	private readonly transportFactory: SseServerTransportFactory;
 	private readonly listenFactory: SseListenFactory;
@@ -63,9 +64,10 @@ export class HttpSseTransport implements McpTransport {
 		this.port = options.port;
 		this.host = options.host;
 		this.path = options.path;
-		this.walletMode = options.walletMode ?? 'disabled';
+		if (!options.appConfig) throw new Error('appConfig is required.');
+		this.appConfig = snapshotConfig(options.appConfig);
 		this.maxSessions = options.maxSessions ?? DEFAULT_MAX_SSE_SESSIONS;
-		this.serverFactory = dependencies.serverFactory ?? getServer;
+		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory = dependencies.transportFactory ?? ((endpoint, response) => new SSEServerTransport(endpoint, response));
 		this.listenFactory = dependencies.listenFactory ?? ((app, port, host) => app.listen(port, host));
 		this.app = express();
@@ -140,7 +142,7 @@ export class HttpSseTransport implements McpTransport {
 			req.socket.on('error', onDisconnect);
 
 			try {
-				const server = await this.serverFactory();
+				const server = await runWithAppConfig(this.appConfig, () => this.serverFactory());
 				session = { server, transport, releaseSlot };
 
 				if (this.state !== 'running' || disconnected) {
@@ -149,7 +151,7 @@ export class HttpSseTransport implements McpTransport {
 				}
 
 				this.connections.set(sessionId, session);
-				await server.connect(transport);
+				await runWithAppConfig(this.appConfig, () => server.connect(transport));
 
 				if (this.state !== 'running' || disconnected) {
 					await this.closeSession(sessionId);
@@ -188,7 +190,7 @@ export class HttpSseTransport implements McpTransport {
 			}
 
 			try {
-				await session.transport.handlePostMessage(req, res, req.body);
+				await runWithAppConfig(this.appConfig, () => session.transport.handlePostMessage(req, res, req.body));
 			} catch (error) {
 				console.error('Error handling SSE message:', sanitizeError(error));
 				if (!res.headersSent) {
@@ -221,7 +223,7 @@ export class HttpSseTransport implements McpTransport {
 	}
 
 	async start(_server?: McpServer): Promise<void> {
-		validateSecurityConfig(this.mode, this.walletMode);
+		validateSecurityConfig(this.mode, this.appConfig.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
 		}

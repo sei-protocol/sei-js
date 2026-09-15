@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
+import { snapshotConfig } from '../../../core/config.js';
 import type { TransportConfig } from '../../../server/transport/types.js';
 
 // Mock transport classes
@@ -13,6 +14,9 @@ jest.mock('../../../server/transport/streamable-http.js', () => ({
 jest.mock('../../../server/transport/http-sse.js', () => ({
 	HttpSseTransport: jest.fn()
 }));
+
+const DISABLED_APP_CONFIG = snapshotConfig({ privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
+const PRIVATE_KEY_APP_CONFIG = snapshotConfig({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key', walletApiKey: undefined });
 
 describe('Transport Factory', () => {
 	let createTransport: any;
@@ -44,7 +48,7 @@ describe('Transport Factory', () => {
 		it('should create StdioTransport for stdio mode', () => {
 			const config: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
@@ -55,14 +59,14 @@ describe('Transport Factory', () => {
 
 			const transport = createTransport(config);
 
-			expect(StdioTransport).toHaveBeenCalledWith();
+			expect(StdioTransport).toHaveBeenCalledWith(DISABLED_APP_CONFIG);
 			expect(transport).toBe(mockStdioInstance);
 		});
 
 		it('should create StreamableHttpTransport for streamable-http mode', () => {
 			const config: TransportConfig = {
 				mode: 'streamable-http',
-				walletMode: 'private-key',
+				appConfig: PRIVATE_KEY_APP_CONFIG,
 				port: 8080,
 				host: '0.0.0.0',
 				path: '/api/mcp'
@@ -77,8 +81,8 @@ describe('Transport Factory', () => {
 				port: 8080,
 				host: '0.0.0.0',
 				path: '/api/mcp',
-				walletMode: 'private-key',
-				maxActiveRequests: undefined
+				maxActiveRequests: undefined,
+				appConfig: PRIVATE_KEY_APP_CONFIG
 			});
 			expect(transport).toBe(mockStreamableInstance);
 		});
@@ -86,7 +90,7 @@ describe('Transport Factory', () => {
 		it('should create HttpSseTransport for http-sse mode', () => {
 			const config: TransportConfig = {
 				mode: 'http-sse',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 9000,
 				host: '127.0.0.1',
 				path: '/sse',
@@ -102,16 +106,62 @@ describe('Transport Factory', () => {
 				port: 9000,
 				host: '127.0.0.1',
 				path: '/sse',
-				walletMode: 'disabled',
-				maxSessions: 25
+				maxSessions: 25,
+				appConfig: DISABLED_APP_CONFIG
 			});
 			expect(transport).toBe(mockSseInstance);
+		});
+
+		it('forwards a frozen appConfig snapshot to stdio transport', () => {
+			const appConfig = snapshotConfig({
+				privateKey: `0x${'1'.repeat(64)}`,
+				walletMode: 'private-key' as const,
+				walletApiKey: undefined
+			});
+			const config: TransportConfig = {
+				mode: 'stdio',
+				appConfig,
+				port: 3000,
+				host: 'localhost',
+				path: '/mcp'
+			};
+			StdioTransport.mockImplementation(() => ({ mode: 'stdio' }));
+
+			createTransport(config);
+
+			expect(StdioTransport).toHaveBeenCalledWith(appConfig);
+		});
+
+		it('forwards a frozen appConfig snapshot to HTTP transports', () => {
+			const appConfig = snapshotConfig({
+				privateKey: undefined,
+				walletMode: 'disabled' as const,
+				walletApiKey: undefined
+			});
+			const config: TransportConfig = {
+				mode: 'streamable-http',
+				appConfig,
+				port: 8080,
+				host: 'localhost',
+				path: '/mcp'
+			};
+			StreamableHttpTransport.mockImplementation(() => ({ mode: 'streamable-http' }));
+
+			createTransport(config);
+
+			expect(StreamableHttpTransport).toHaveBeenCalledWith({
+				port: 8080,
+				host: 'localhost',
+				path: '/mcp',
+				maxActiveRequests: undefined,
+				appConfig
+			});
 		});
 
 		it('should throw error for unsupported transport mode', () => {
 			const config = {
 				mode: 'unsupported-mode',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
@@ -130,7 +180,7 @@ describe('Transport Factory', () => {
 			configs.forEach((params, index) => {
 				const config: TransportConfig = {
 					mode: 'streamable-http',
-					walletMode: 'disabled',
+					appConfig: DISABLED_APP_CONFIG,
 					...params
 				};
 
@@ -141,8 +191,8 @@ describe('Transport Factory', () => {
 
 				expect(StreamableHttpTransport).toHaveBeenCalledWith({
 					...params,
-					walletMode: 'disabled',
-					maxActiveRequests: undefined
+					maxActiveRequests: undefined,
+					appConfig: DISABLED_APP_CONFIG
 				});
 				expect(transport).toBe(mockInstance);
 
@@ -154,7 +204,7 @@ describe('Transport Factory', () => {
 			// Test with minimal path
 			const config1: TransportConfig = {
 				mode: 'http-sse',
-				walletMode: 'private-key',
+				appConfig: PRIVATE_KEY_APP_CONFIG,
 				port: 1,
 				host: '::1', // IPv6 localhost
 				path: '/'
@@ -169,8 +219,8 @@ describe('Transport Factory', () => {
 				port: 1,
 				host: '::1',
 				path: '/',
-				walletMode: 'private-key',
-				maxSessions: undefined
+				maxSessions: undefined,
+				appConfig: PRIVATE_KEY_APP_CONFIG
 			});
 			expect(transport1).toBe(mockInstance1);
 
@@ -179,7 +229,7 @@ describe('Transport Factory', () => {
 			// Test with maximum port number
 			const config2: TransportConfig = {
 				mode: 'streamable-http',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 65535,
 				host: '0.0.0.0',
 				path: '/very/long/path/to/test/edge/cases'
@@ -194,8 +244,8 @@ describe('Transport Factory', () => {
 				port: 65535,
 				host: '0.0.0.0',
 				path: '/very/long/path/to/test/edge/cases',
-				walletMode: 'disabled',
-				maxActiveRequests: undefined
+				maxActiveRequests: undefined,
+				appConfig: DISABLED_APP_CONFIG
 			});
 			expect(transport2).toBe(mockInstance2);
 		});
@@ -206,7 +256,7 @@ describe('Transport Factory', () => {
 			// This test ensures TypeScript compilation catches invalid configs
 			const validConfig: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
@@ -218,7 +268,7 @@ describe('Transport Factory', () => {
 		it('should return McpTransport interface', () => {
 			const config: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
@@ -244,7 +294,7 @@ describe('Transport Factory', () => {
 		it('should handle transport constructor errors', () => {
 			const config: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
@@ -264,7 +314,7 @@ describe('Transport Factory', () => {
 
 		it('should handle config with missing mode', () => {
 			const invalidConfig = {
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
@@ -277,9 +327,9 @@ describe('Transport Factory', () => {
 	describe('integration scenarios', () => {
 		it('should create different transport types in sequence', () => {
 			const configs: TransportConfig[] = [
-				{ mode: 'stdio', walletMode: 'disabled', port: 3000, host: 'localhost', path: '/mcp' },
-				{ mode: 'streamable-http', walletMode: 'private-key', port: 8080, host: '0.0.0.0', path: '/api' },
-				{ mode: 'http-sse', walletMode: 'disabled', port: 9000, host: '127.0.0.1', path: '/sse' }
+				{ mode: 'stdio', appConfig: DISABLED_APP_CONFIG, port: 3000, host: 'localhost', path: '/mcp' },
+				{ mode: 'streamable-http', appConfig: PRIVATE_KEY_APP_CONFIG, port: 8080, host: '0.0.0.0', path: '/api' },
+				{ mode: 'http-sse', appConfig: DISABLED_APP_CONFIG, port: 9000, host: '127.0.0.1', path: '/sse' }
 			];
 
 			const mockInstances = [{ mode: 'stdio' }, { mode: 'streamable-http' }, { mode: 'http-sse' }];
@@ -303,7 +353,7 @@ describe('Transport Factory', () => {
 		it('should handle repeated creation of same transport type', () => {
 			const config: TransportConfig = {
 				mode: 'streamable-http',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'

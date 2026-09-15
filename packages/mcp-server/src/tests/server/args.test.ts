@@ -112,10 +112,15 @@ describe('Args Module', () => {
 				port: 8080,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'disabled',
+				appConfig: {
+					privateKey: undefined,
+					walletMode: 'disabled',
+					walletApiKey: undefined
+				},
 				maxSseSessions: 100,
 				maxStreamableRequests: 100
 			});
+			expect(Object.isFrozen(result.appConfig)).toBe(true);
 		});
 
 		it('should load configuration from environment variables', () => {
@@ -133,7 +138,11 @@ describe('Args Module', () => {
 				port: 3001,
 				host: '0.0.0.0',
 				path: '/api/mcp',
-				walletMode: 'private-key',
+				appConfig: {
+					privateKey: `0x${'1'.repeat(64)}`,
+					walletMode: 'private-key',
+					walletApiKey: undefined
+				},
 				maxSseSessions: 100,
 				maxStreamableRequests: 100
 			});
@@ -357,14 +366,14 @@ describe('Args Module', () => {
 			expect(result).toHaveProperty('port');
 			expect(result).toHaveProperty('host');
 			expect(result).toHaveProperty('path');
-			expect(result).toHaveProperty('walletMode');
+			expect(result).toHaveProperty('appConfig');
 
 			// Verify types
 			expect(typeof result.mode).toBe('string');
 			expect(typeof result.port).toBe('number');
 			expect(typeof result.host).toBe('string');
 			expect(typeof result.path).toBe('string');
-			expect(typeof result.walletMode).toBe('string');
+			expect(typeof result.appConfig.walletMode).toBe('string');
 		});
 
 		it('should handle getPackageInfo errors gracefully', () => {
@@ -398,7 +407,11 @@ describe('Args Module', () => {
 				port: 9000,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'private-key',
+				appConfig: {
+					privateKey: `0x${'1'.repeat(64)}`,
+					walletMode: 'private-key',
+					walletApiKey: undefined
+				},
 				maxSseSessions: 100,
 				maxStreamableRequests: 100
 			});

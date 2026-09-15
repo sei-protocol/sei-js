@@ -6,6 +6,10 @@ import { getPrivateKeyAsHex } from '../../config.js';
 import type { TransactionRequest, WalletProvider } from '../types.js';
 import { WalletProviderError } from '../types.js';
 
+export interface PrivateKeyWalletProviderOptions {
+	privateKey: string | undefined;
+}
+
 /**
  * Private Key Wallet Provider
  * Uses a private key from environment variables
@@ -13,8 +17,8 @@ import { WalletProviderError } from '../types.js';
 export class PrivateKeyWalletProvider implements WalletProvider {
 	private privateKey: string | undefined;
 
-	constructor() {
-		this.privateKey = getPrivateKeyAsHex();
+	constructor(options?: PrivateKeyWalletProviderOptions) {
+		this.privateKey = options ? options.privateKey : getPrivateKeyAsHex();
 	}
 
 	isAvailable(): boolean {
