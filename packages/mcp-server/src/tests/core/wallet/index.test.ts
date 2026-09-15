@@ -6,9 +6,11 @@ import type { WalletProvider } from '../../../core/wallet/types.js';
 
 // Mock dependencies
 jest.mock('../../../core/config.js', () => {
+	const config = { privateKey: undefined as string | undefined, walletMode: 'disabled', walletApiKey: undefined };
 	return {
-		getWalletMode: jest.fn(),
-		getScopedAppConfig: jest.fn()
+		config,
+		getScopedAppConfig: jest.fn(),
+		snapshotConfig: jest.fn(() => Object.freeze({ ...config }))
 	};
 });
 
@@ -20,7 +22,7 @@ jest.mock('../../../core/wallet/providers/disabled.js', () => ({
 	DisabledWalletProvider: jest.fn()
 }));
 
-import { getScopedAppConfig, getWalletMode } from '../../../core/config.js';
+import { getScopedAppConfig, config as processConfig, snapshotConfig } from '../../../core/config.js';
 
 describe('Wallet Provider', () => {
 	const mockPrivateKeyProvider: WalletProvider = {
@@ -46,7 +48,9 @@ describe('Wallet Provider', () => {
 		// Reset all mocks
 		jest.resetAllMocks();
 
+		Object.assign(processConfig, { privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
 		(getScopedAppConfig as jest.Mock).mockReturnValue(undefined);
+		(snapshotConfig as jest.Mock).mockImplementation(() => Object.freeze({ ...processConfig }));
 
 		// Setup default mock implementations
 		(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
@@ -55,27 +59,23 @@ describe('Wallet Provider', () => {
 
 	describe('getWalletProvider', () => {
 		test('should create and return PrivateKeyWalletProvider for private-key mode', () => {
-			(getWalletMode as jest.Mock).mockReturnValue('private-key');
+			Object.assign(processConfig, { privateKey: '0xabc', walletMode: 'private-key' });
 
 			const provider = getWalletProvider();
 
-			expect(getWalletMode).toHaveBeenCalled();
-			expect(PrivateKeyWalletProvider).toHaveBeenCalled();
+			expect(PrivateKeyWalletProvider).toHaveBeenCalledWith({ privateKey: '0xabc' });
 			expect(provider).toBe(mockPrivateKeyProvider);
 		});
 
 		test('should create and return DisabledWalletProvider for disabled mode', () => {
-			(getWalletMode as jest.Mock).mockReturnValue('disabled');
-
 			const provider = getWalletProvider();
 
-			expect(getWalletMode).toHaveBeenCalled();
 			expect(DisabledWalletProvider).toHaveBeenCalled();
 			expect(provider).toBe(mockDisabledProvider);
 		});
 
 		test('should return cached provider on subsequent calls', () => {
-			(getWalletMode as jest.Mock).mockReturnValue('private-key');
+			Object.assign(processConfig, { privateKey: '0xabc', walletMode: 'private-key' });
 
 			// First call
 			const provider1 = getWalletProvider();
@@ -86,13 +86,13 @@ describe('Wallet Provider', () => {
 			// Second call should return cached provider
 			const provider2 = getWalletProvider();
 
-			expect(getWalletMode).not.toHaveBeenCalled();
+			expect(snapshotConfig).not.toHaveBeenCalled();
 			expect(PrivateKeyWalletProvider).not.toHaveBeenCalled();
 			expect(provider2).toBe(provider1);
 		});
 
 		test('should throw error for unknown wallet mode', () => {
-			(getWalletMode as jest.Mock).mockReturnValue('unknown-mode');
+			processConfig.walletMode = 'unknown-mode' as never;
 
 			expect(() => getWalletProvider()).toThrow('Unknown wallet mode: unknown-mode');
 		});
@@ -103,7 +103,6 @@ describe('Wallet Provider', () => {
 
 			const provider1 = getWalletProvider();
 			expect(PrivateKeyWalletProvider).toHaveBeenCalledWith({ privateKey: '0xabc' });
-			expect(getWalletMode).not.toHaveBeenCalled();
 			expect(provider1).toBe(mockPrivateKeyProvider);
 
 			resetWalletProvider();
@@ -114,7 +113,6 @@ describe('Wallet Provider', () => {
 			const provider2 = getWalletProvider();
 			expect(provider2).toBe(provider1);
 			expect(PrivateKeyWalletProvider).not.toHaveBeenCalled();
-			expect(getWalletMode).not.toHaveBeenCalled();
 		});
 
 		test('recreates only the provider for a reset snapshot', () => {
@@ -132,7 +130,7 @@ describe('Wallet Provider', () => {
 
 	describe('resetWalletProvider', () => {
 		test('should reset the wallet provider instance', () => {
-			(getWalletMode as jest.Mock).mockReturnValue('private-key');
+			Object.assign(processConfig, { privateKey: '0xabc', walletMode: 'private-key' });
 
 			// Create separate mock instances for each call
 			const mockProvider1: WalletProvider = {

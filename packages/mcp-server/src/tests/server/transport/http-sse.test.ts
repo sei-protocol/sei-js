@@ -62,10 +62,7 @@ describe('HttpSseTransport', () => {
 			throw new Error(`process.exit called with code ${code}`);
 		});
 		const listenFactory = jest.fn();
-		const transport = new HttpSseTransport(
-			{ port: 8080, host: HOST, path: PATH, walletMode: 'private-key', appConfig: PRIVATE_KEY_APP_CONFIG },
-			{ listenFactory }
-		);
+		const transport = new HttpSseTransport({ port: 8080, host: HOST, path: PATH, appConfig: PRIVATE_KEY_APP_CONFIG }, { listenFactory });
 
 		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
 		expect(processExit).toHaveBeenCalledWith(1);

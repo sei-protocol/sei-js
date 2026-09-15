@@ -1,4 +1,4 @@
-import { type AppConfigSnapshot, getScopedAppConfig, getWalletMode } from '../config.js';
+import { type AppConfigSnapshot, getScopedAppConfig, config as processConfig, snapshotConfig } from '../config.js';
 import { DisabledWalletProvider } from './providers/disabled.js';
 import { PrivateKeyWalletProvider } from './providers/private-key.js';
 import type { WalletProvider } from './types.js';
@@ -40,24 +40,12 @@ export function getWalletProvider(): WalletProvider {
 		return walletProviderInstance;
 	}
 
-	const mode = getWalletMode();
-
-	switch (mode) {
-		case 'private-key':
-			walletProviderInstance = new PrivateKeyWalletProvider();
-			break;
-		case 'disabled':
-			walletProviderInstance = new DisabledWalletProvider();
-			break;
-		default:
-			throw new Error(`Unknown wallet mode: ${mode}`);
-	}
-
+	walletProviderInstance = createWalletProvider(snapshotConfig(processConfig));
 	return walletProviderInstance;
 }
 
 /**
- * Release one runtime's provider, or reset the process fallback for tests.
+ * Evict one runtime's cached provider, or reset the process fallback for tests.
  */
 export function resetWalletProvider(appConfig?: AppConfigSnapshot): void {
 	if (appConfig) {

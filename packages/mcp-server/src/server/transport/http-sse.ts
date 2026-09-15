@@ -8,7 +8,7 @@ import { sanitizeError } from '../../core/errors.js';
 import { getServer } from '../server.js';
 import { closeHttpServer, collectOperationErrors, runAllOperations, throwCollectedErrors } from './lifecycle.js';
 import { createCorsMiddleware, validateSecurityConfig } from './security.js';
-import type { McpTransport, WalletMode } from './types.js';
+import type { McpTransport } from './types.js';
 
 export type McpServerFactory = () => Promise<McpServer>;
 export type SseServerTransportFactory = (endpoint: string, response: Response) => SSEServerTransport;
@@ -21,8 +21,6 @@ export interface HttpSseTransportOptions {
 	host: string;
 	path: string;
 	appConfig: AppConfigSnapshot;
-	/** @deprecated Wallet mode is derived from appConfig. */
-	walletMode?: WalletMode;
 	maxSessions?: number;
 }
 
@@ -68,9 +66,6 @@ export class HttpSseTransport implements McpTransport {
 		this.path = options.path;
 		if (!options.appConfig) throw new Error('appConfig is required.');
 		this.appConfig = snapshotConfig(options.appConfig);
-		if (options.walletMode !== undefined && options.walletMode !== this.appConfig.walletMode) {
-			throw new Error('walletMode must match appConfig.walletMode.');
-		}
 		this.maxSessions = options.maxSessions ?? DEFAULT_MAX_SSE_SESSIONS;
 		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory = dependencies.transportFactory ?? ((endpoint, response) => new SSEServerTransport(endpoint, response));

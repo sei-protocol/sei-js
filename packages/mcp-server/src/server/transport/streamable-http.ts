@@ -8,7 +8,7 @@ import { sanitizeError } from '../../core/errors.js';
 import { getServer } from '../server.js';
 import { closeHttpServer, collectOperationErrors, runAllOperations, throwCollectedErrors } from './lifecycle.js';
 import { createCorsMiddleware, validateSecurityConfig } from './security.js';
-import type { McpTransport, TransportMode, WalletMode } from './types.js';
+import type { McpTransport, TransportMode } from './types.js';
 
 export type StreamableServerFactory = () => Promise<McpServer>;
 export type StreamableTransportFactory = () => StreamableHTTPServerTransport;
@@ -21,8 +21,6 @@ export interface StreamableHttpTransportOptions {
 	host?: string;
 	path?: string;
 	appConfig: AppConfigSnapshot;
-	/** @deprecated Wallet mode is derived from appConfig. */
-	walletMode?: WalletMode;
 	maxActiveRequests?: number;
 }
 
@@ -68,9 +66,6 @@ export class StreamableHttpTransport implements McpTransport {
 		this.path = options.path ?? '/mcp';
 		if (!options.appConfig) throw new Error('appConfig is required.');
 		this.appConfig = snapshotConfig(options.appConfig);
-		if (options.walletMode !== undefined && options.walletMode !== this.appConfig.walletMode) {
-			throw new Error('walletMode must match appConfig.walletMode.');
-		}
 		this.maxActiveRequests = options.maxActiveRequests ?? DEFAULT_MAX_STREAMABLE_REQUESTS;
 		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory =

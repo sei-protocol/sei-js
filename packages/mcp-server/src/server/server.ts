@@ -18,6 +18,8 @@ export const getServer = async (appConfig: AppConfigSnapshot) => {
 				version: packageInfo.version
 			});
 
+			// Resources and prompts are wallet-independent. Any future
+			// wallet-sensitive callback must use the scoped tool policy below.
 			registerEVMResources(server);
 			registerEVMTools(server);
 			registerEVMPrompts(server);
