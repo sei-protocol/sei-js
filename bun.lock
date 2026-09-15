@@ -18,7 +18,7 @@
     },
     "packages/create-sei": {
       "name": "@sei-js/create-sei",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "bin": "./dist/main.js",
       "dependencies": {
         "boxen": "^7.1.1",
@@ -32,7 +32,7 @@
     },
     "packages/mcp-server": {
       "name": "@sei-js/mcp-server",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "bin": "./bin/mcp-server.js",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.23.0",
@@ -74,7 +74,7 @@
     },
     "packages/sei-global-wallet": {
       "name": "@sei-js/sei-global-wallet",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "dependencies": {
         "@dynamic-labs/global-wallet-client": "^4.96.3",
         "@wallet-standard/wallet": "^1.1.0",
