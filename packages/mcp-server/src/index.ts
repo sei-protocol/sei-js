@@ -52,7 +52,7 @@ export async function startMcpServer(): Promise<RunningMcpServer> {
 		throw error;
 	}
 
-	if (config.walletMode === 'disabled') console.error('Wallet functionality is disabled. Signing and broadcasting tools are not available.');
+	if (config.appConfig.walletMode === 'disabled') console.error('Wallet functionality is disabled. Signing and broadcasting tools are not available.');
 
 	let stopPromise: Promise<void> | undefined;
 	let removeShutdownHandlers = () => {};

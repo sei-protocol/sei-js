@@ -191,6 +191,8 @@ describe('stdio wallet isolation after another runtime stop', () => {
 		initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: keyA });
 		const appConfig = snapshotConfig();
 		const server = await getServer(appConfig);
+		// The real SDK transport verifies that registered handlers carry the
+		// snapshot without relying on transport.onmessage interception.
 		const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
 		const client = new Client({ name: 'stdio-wallet-isolation', version: '1.0.0' });
 		await Promise.all([client.connect(clientTransport), server.connect(serverTransport)]);

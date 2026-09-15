@@ -47,7 +47,6 @@ describe('Transport Factory', () => {
 		it('should create StdioTransport for stdio mode', () => {
 			const config: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
@@ -66,7 +65,6 @@ describe('Transport Factory', () => {
 		it('should create StreamableHttpTransport for streamable-http mode', () => {
 			const config: TransportConfig = {
 				mode: 'streamable-http',
-				walletMode: 'private-key',
 				appConfig: PRIVATE_KEY_APP_CONFIG,
 				port: 8080,
 				host: '0.0.0.0',
@@ -91,7 +89,6 @@ describe('Transport Factory', () => {
 		it('should create HttpSseTransport for http-sse mode', () => {
 			const config: TransportConfig = {
 				mode: 'http-sse',
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 9000,
 				host: '127.0.0.1',
@@ -122,7 +119,6 @@ describe('Transport Factory', () => {
 			});
 			const config: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'private-key',
 				appConfig,
 				port: 3000,
 				host: 'localhost',
@@ -143,7 +139,6 @@ describe('Transport Factory', () => {
 			});
 			const config: TransportConfig = {
 				mode: 'streamable-http',
-				walletMode: 'disabled',
 				appConfig,
 				port: 8080,
 				host: 'localhost',
@@ -165,7 +160,7 @@ describe('Transport Factory', () => {
 		it('should throw error for unsupported transport mode', () => {
 			const config = {
 				mode: 'unsupported-mode',
-				walletMode: 'disabled',
+				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
 				path: '/mcp'
@@ -184,7 +179,6 @@ describe('Transport Factory', () => {
 			configs.forEach((params, index) => {
 				const config: TransportConfig = {
 					mode: 'streamable-http',
-					walletMode: 'disabled',
 					appConfig: DISABLED_APP_CONFIG,
 					...params
 				};
@@ -209,7 +203,6 @@ describe('Transport Factory', () => {
 			// Test with minimal path
 			const config1: TransportConfig = {
 				mode: 'http-sse',
-				walletMode: 'private-key',
 				appConfig: PRIVATE_KEY_APP_CONFIG,
 				port: 1,
 				host: '::1', // IPv6 localhost
@@ -235,7 +228,6 @@ describe('Transport Factory', () => {
 			// Test with maximum port number
 			const config2: TransportConfig = {
 				mode: 'streamable-http',
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 65535,
 				host: '0.0.0.0',
@@ -263,7 +255,6 @@ describe('Transport Factory', () => {
 			// This test ensures TypeScript compilation catches invalid configs
 			const validConfig: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
@@ -276,7 +267,6 @@ describe('Transport Factory', () => {
 		it('should return McpTransport interface', () => {
 			const config: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
@@ -303,7 +293,6 @@ describe('Transport Factory', () => {
 		it('should handle transport constructor errors', () => {
 			const config: TransportConfig = {
 				mode: 'stdio',
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
@@ -324,7 +313,6 @@ describe('Transport Factory', () => {
 
 		it('should handle config with missing mode', () => {
 			const invalidConfig = {
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',
@@ -338,9 +326,9 @@ describe('Transport Factory', () => {
 	describe('integration scenarios', () => {
 		it('should create different transport types in sequence', () => {
 			const configs: TransportConfig[] = [
-				{ mode: 'stdio', walletMode: 'disabled', appConfig: DISABLED_APP_CONFIG, port: 3000, host: 'localhost', path: '/mcp' },
-				{ mode: 'streamable-http', walletMode: 'private-key', appConfig: PRIVATE_KEY_APP_CONFIG, port: 8080, host: '0.0.0.0', path: '/api' },
-				{ mode: 'http-sse', walletMode: 'disabled', appConfig: DISABLED_APP_CONFIG, port: 9000, host: '127.0.0.1', path: '/sse' }
+				{ mode: 'stdio', appConfig: DISABLED_APP_CONFIG, port: 3000, host: 'localhost', path: '/mcp' },
+				{ mode: 'streamable-http', appConfig: PRIVATE_KEY_APP_CONFIG, port: 8080, host: '0.0.0.0', path: '/api' },
+				{ mode: 'http-sse', appConfig: DISABLED_APP_CONFIG, port: 9000, host: '127.0.0.1', path: '/sse' }
 			];
 
 			const mockInstances = [{ mode: 'stdio' }, { mode: 'streamable-http' }, { mode: 'http-sse' }];
@@ -364,7 +352,6 @@ describe('Transport Factory', () => {
 		it('should handle repeated creation of same transport type', () => {
 			const config: TransportConfig = {
 				mode: 'streamable-http',
-				walletMode: 'disabled',
 				appConfig: DISABLED_APP_CONFIG,
 				port: 3000,
 				host: 'localhost',

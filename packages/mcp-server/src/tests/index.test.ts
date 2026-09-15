@@ -52,7 +52,7 @@ describe('index', () => {
 
 		// Setup default mock implementations
 		mockAppConfig = Object.freeze({ privateKey: '0xabc', walletMode: 'private-key', walletApiKey: undefined });
-		mockParseArgs.mockReturnValue({ mode: 'stdio', walletMode: 'private-key', appConfig: mockAppConfig });
+		mockParseArgs.mockReturnValue({ mode: 'stdio', appConfig: mockAppConfig });
 		mockGetServer.mockResolvedValue(mockServer);
 		mockCreateTransport.mockReturnValue(mockTransport);
 
@@ -89,7 +89,7 @@ describe('index', () => {
 
 	it('should log warning when wallet is disabled', async () => {
 		const appConfig = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
-		mockParseArgs.mockReturnValue({ mode: 'stdio', walletMode: 'disabled', appConfig });
+		mockParseArgs.mockReturnValue({ mode: 'stdio', appConfig });
 
 		const indexModule = await import('../index.js');
 		const runtime = await indexModule.main();
@@ -143,7 +143,7 @@ describe('index', () => {
 
 	it('does not construct an unused bootstrap server for HTTP transports', async () => {
 		const appConfig = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
-		mockParseArgs.mockReturnValue({ mode: 'http-sse', walletMode: 'disabled', appConfig });
+		mockParseArgs.mockReturnValue({ mode: 'http-sse', appConfig });
 		const indexModule = await import('../index.js');
 		const runtime = await indexModule.main();
 

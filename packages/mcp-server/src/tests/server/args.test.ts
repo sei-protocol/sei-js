@@ -112,7 +112,6 @@ describe('Args Module', () => {
 				port: 8080,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'disabled',
 				appConfig: {
 					privateKey: undefined,
 					walletMode: 'disabled',
@@ -139,7 +138,6 @@ describe('Args Module', () => {
 				port: 3001,
 				host: '0.0.0.0',
 				path: '/api/mcp',
-				walletMode: 'private-key',
 				appConfig: {
 					privateKey: `0x${'1'.repeat(64)}`,
 					walletMode: 'private-key',
@@ -368,7 +366,6 @@ describe('Args Module', () => {
 			expect(result).toHaveProperty('port');
 			expect(result).toHaveProperty('host');
 			expect(result).toHaveProperty('path');
-			expect(result).toHaveProperty('walletMode');
 			expect(result).toHaveProperty('appConfig');
 
 			// Verify types
@@ -376,7 +373,7 @@ describe('Args Module', () => {
 			expect(typeof result.port).toBe('number');
 			expect(typeof result.host).toBe('string');
 			expect(typeof result.path).toBe('string');
-			expect(typeof result.walletMode).toBe('string');
+			expect(typeof result.appConfig.walletMode).toBe('string');
 		});
 
 		it('should handle getPackageInfo errors gracefully', () => {
@@ -410,7 +407,6 @@ describe('Args Module', () => {
 				port: 9000,
 				host: 'localhost',
 				path: '/mcp',
-				walletMode: 'private-key',
 				appConfig: {
 					privateKey: `0x${'1'.repeat(64)}`,
 					walletMode: 'private-key',

@@ -11,7 +11,6 @@ export interface McpTransport {
 
 export interface TransportConfig {
 	mode: TransportMode;
-	walletMode: WalletMode;
 	appConfig: AppConfigSnapshot;
 	port: number; // Required for HTTP-based transports
 	host: string; // Required for HTTP-based transports

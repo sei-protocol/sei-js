@@ -5,6 +5,8 @@ jest.mock('@modelcontextprotocol/sdk/server/stdio.js', () => ({
 	StdioServerTransport: jest.fn()
 }));
 
+const APP_CONFIG = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
+
 describe('StdioTransport', () => {
 	let StdioTransport: any;
 	let mockStdioServerTransport: jest.MockedClass<any>;
@@ -37,57 +39,28 @@ describe('StdioTransport', () => {
 
 	describe('Constructor', () => {
 		it('should initialize with stdio mode', () => {
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 			expect(transport.mode).toBe('stdio');
 		});
 
 		it('should not have transport initially', () => {
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 			expect((transport as any).transport).toBeUndefined();
+		});
+
+		it('requires an appConfig snapshot', () => {
+			expect(() => new StdioTransport()).toThrow('appConfig is required.');
 		});
 	});
 
 	describe('start', () => {
-		it('scopes request handling to the construction snapshot after connect', async () => {
-			const configModule = await import('../../../core/config.js');
-			const { config, getWalletMode, initializeConfig, snapshotConfig } = configModule;
-			const originalConfig = { ...config };
-			const seenModes: string[] = [];
-			const mockTransportInstance = {
-				onmessage: undefined as ((message: unknown) => void) | undefined
-			};
-			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
-			mockServer.connect.mockImplementation(async (transport: { onmessage?: (message: unknown) => void }) => {
-				transport.onmessage = () => {
-					seenModes.push(getWalletMode());
-				};
-			});
-
-			try {
-				const appConfig = snapshotConfig({
-					privateKey: undefined,
-					walletMode: 'disabled',
-					walletApiKey: undefined
-				});
-				const transport = new StdioTransport(appConfig);
-				await transport.start(mockServer);
-
-				initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '1'.repeat(64) });
-				expect(getWalletMode()).toBe('private-key');
-				mockTransportInstance.onmessage?.({ jsonrpc: '2.0', method: 'tools/list', id: 1 });
-				expect(seenModes).toEqual(['disabled']);
-			} finally {
-				Object.assign(config, originalConfig);
-			}
-		});
-
 		it('should create StdioServerTransport and connect server', async () => {
 			const mockTransportInstance = {
 				connect: jest.fn()
 			};
 			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
 
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 			await transport.start(mockServer);
 
 			expect(mockStdioServerTransport).toHaveBeenCalledWith();
@@ -99,7 +72,7 @@ describe('StdioTransport', () => {
 			const mockTransportInstance = {};
 			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
 
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 			await transport.start(mockServer);
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith('MCP Server ready (stdio transport)');
@@ -112,7 +85,7 @@ describe('StdioTransport', () => {
 			const connectionError = new Error('Connection failed');
 			mockServer.connect.mockRejectedValue(connectionError);
 
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 
 			await expect(transport.start(mockServer)).rejects.toThrow('Connection failed');
 			expect(mockStdioServerTransport).toHaveBeenCalledWith();
@@ -125,7 +98,7 @@ describe('StdioTransport', () => {
 				throw constructorError;
 			});
 
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 
 			await expect(transport.start(mockServer)).rejects.toThrow('Transport creation failed');
 			expect(mockServer.connect).not.toHaveBeenCalled();
@@ -134,7 +107,7 @@ describe('StdioTransport', () => {
 
 	describe('stop', () => {
 		it('should set transport to undefined', async () => {
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 
 			// Set up transport first
 			const mockTransportInstance = {};
@@ -151,7 +124,7 @@ describe('StdioTransport', () => {
 		});
 
 		it('should resolve immediately if no transport exists', async () => {
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 
 			// Don't start transport, just stop
 			await expect(transport.stop()).resolves.toBeUndefined();
@@ -159,7 +132,7 @@ describe('StdioTransport', () => {
 		});
 
 		it('should not throw errors during stop', async () => {
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 
 			// Start and then stop multiple times
 			const mockTransportInstance = {};
@@ -174,7 +147,7 @@ describe('StdioTransport', () => {
 
 	describe('mode property', () => {
 		it('should always return stdio', () => {
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 			expect(transport.mode).toBe('stdio');
 
 			// Verify it's readonly - TypeScript prevents assignment but doesn't throw at runtime
@@ -188,7 +161,7 @@ describe('StdioTransport', () => {
 			const mockTransportInstance = {};
 			mockStdioServerTransport.mockImplementation(() => mockTransportInstance);
 
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 
 			// Start
 			await transport.start(mockServer);
@@ -211,7 +184,7 @@ describe('StdioTransport', () => {
 				return callCount === 1 ? mockTransportInstance1 : mockTransportInstance2;
 			});
 
-			const transport = new StdioTransport();
+			const transport = new StdioTransport(APP_CONFIG);
 
 			// First start
 			await transport.start(mockServer);

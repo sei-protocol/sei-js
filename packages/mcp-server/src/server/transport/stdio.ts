@@ -1,7 +1,6 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { type AppConfigSnapshot, runWithAppConfig, snapshotConfig } from '../../core/config.js';
-import { bindTransportToAppConfig } from '../server.js';
 import type { McpTransport, TransportMode } from './types.js';
 
 export class StdioTransport implements McpTransport {
@@ -9,7 +8,8 @@ export class StdioTransport implements McpTransport {
 	private readonly appConfig: AppConfigSnapshot;
 	private transport?: StdioServerTransport;
 
-	constructor(appConfig?: AppConfigSnapshot) {
+	constructor(appConfig: AppConfigSnapshot) {
+		if (!appConfig) throw new Error('appConfig is required.');
 		this.appConfig = snapshotConfig(appConfig);
 	}
 
@@ -17,7 +17,6 @@ export class StdioTransport implements McpTransport {
 		if (!server) throw new Error('STDIO transport requires an MCP server.');
 		const transport = new StdioServerTransport();
 		this.transport = transport;
-		bindTransportToAppConfig(transport, this.appConfig);
 		await runWithAppConfig(this.appConfig, () => server.connect(transport));
 		console.error('MCP Server ready (stdio transport)');
 	}

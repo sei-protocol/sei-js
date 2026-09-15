@@ -154,7 +154,6 @@ Security Note:
 		port: Number.isNaN(config.server.port) ? DEFAULT_CONFIG.server.port : config.server.port,
 		host: config.server.host,
 		path: config.server.path,
-		walletMode: appConfig.walletMode,
 		appConfig,
 		maxSseSessions:
 			Number.isInteger(config.server.sseMaxSessions) && config.server.sseMaxSessions > 0 ? config.server.sseMaxSessions : DEFAULT_CONFIG.server.sseMaxSessions,

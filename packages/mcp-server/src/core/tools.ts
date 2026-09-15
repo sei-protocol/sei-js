@@ -2,7 +2,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Address, Hash, Hex } from 'viem';
 import { z } from 'zod';
 import { DEFAULT_NETWORK, getSupportedNetworks, networkSchema } from './chains.js';
-import { isWalletEnabled } from './config.js';
+import { getScopedAppConfig, isWalletEnabled, wrapWithAppConfig } from './config.js';
 import { sanitizeError } from './errors.js';
 import * as services from './services/index.js';
 import { getWalletProvider } from './wallet/index.js';
@@ -30,6 +30,9 @@ const READ_ONLY_TOOL_NAMES = new Set([
 ]);
 
 export function withToolRegistrationPolicy(server: McpServer, walletEnabled: boolean): McpServer {
+	// Tool callbacks run after server construction, potentially after another
+	// runtime updates process config. Capture this server's validated snapshot.
+	const appConfig = getScopedAppConfig();
 	const registerTool = server.tool.bind(server) as unknown as (
 		name: string,
 		description: string,
@@ -45,7 +48,8 @@ export function withToolRegistrationPolicy(server: McpServer, walletEnabled: boo
 						console.error(`Tool registration suppressed by wallet policy: ${name}`);
 						return undefined;
 					}
-					return registerTool(name, description, 'network' in schema ? { ...schema, network: networkSchema.optional() } : schema, handler);
+					const runtimeHandler = appConfig ? wrapWithAppConfig(appConfig, handler) : handler;
+					return registerTool(name, description, 'network' in schema ? { ...schema, network: networkSchema.optional() } : schema, runtimeHandler);
 				};
 			}
 

@@ -146,14 +146,14 @@ describe('Config Module - Actual Implementation', () => {
 			consoleErrorSpy.mockRestore();
 		});
 
-		test('warns once when an enabled wallet is read outside a runtime scope', () => {
+		test('warns on every enabled-wallet read outside a runtime scope', () => {
 			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '5'.repeat(64) });
 
 			expect(getWalletMode()).toBe('private-key');
 			expect(isWalletEnabled()).toBe(true);
 
-			expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+			expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Wallet configuration was read outside an MCP runtime scope; using the mutable process configuration.');
 			consoleErrorSpy.mockRestore();
 		});
