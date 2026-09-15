@@ -69,3 +69,43 @@ Import the canonical Sei mainnet and testnet definitions from the package root o
 import { sei, seiTestnet } from '@sei-js/precompiles';
 // or: import { sei, seiTestnet } from '@sei-js/precompiles/viem';
 ```
+
+## Reading logs across a block range
+
+`eth_getLogs` is capped per call, so any history longer than the cap has to be
+walked in chunks. `getLogsInRange` does that walk with ranges the node accepts:
+
+```ts
+import { createPublicClient, http, parseAbiItem } from 'viem';
+import { getLogsInRange, seiTestnet } from '@sei-js/precompiles';
+
+const client = createPublicClient({ chain: seiTestnet, transport: http() });
+
+const logs = await getLogsInRange(client, {
+	address: '0x…',
+	event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
+	fromBlock: 267_000_000n,
+	onChunk: ({ toBlock, head }) => console.log(`${toBlock}/${head}`)
+});
+```
+
+`MAX_GET_LOGS_BLOCK_RANGE` is `2000n`, which is what the public endpoints
+enforce on both networks. **The range is inclusive of both ends**, so the check
+the node applies is `toBlock - fromBlock + 1 <= 2000`; a 2000-block span
+succeeds and a 2001-block span is rejected with `block range too large (2001),
+maximum allowed is 2000 blocks`. Pass a smaller `chunkSize` for a provider with
+a tighter limit.
+
+Reads run to the current head. Sei finalises a block as it is produced, so
+there is no reorg window to wait out and no confirmation depth to subtract —
+pass an explicit `toBlock` if you want to lag head deliberately.
+
+`blockRanges` exposes the same arithmetic without making requests, for planning
+a backfill or driving a bounded worker pool:
+
+```ts
+import { blockRanges } from '@sei-js/precompiles';
+
+const chunks = [...blockRanges(1_000_000n, 1_006_000n)];
+// [{ fromBlock: 1000000n, toBlock: 1001999n }, … ]
+```
