@@ -151,7 +151,7 @@ export class HttpSseTransport implements McpTransport {
 				}
 
 				this.connections.set(sessionId, session);
-				await server.connect(transport);
+				await runWithAppConfig(this.appConfig, () => server.connect(transport));
 
 				if (this.state !== 'running' || disconnected) {
 					await this.closeSession(sessionId);

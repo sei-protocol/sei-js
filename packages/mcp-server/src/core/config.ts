@@ -91,8 +91,9 @@ export function getRuntimeConfig(): Readonly<AppConfig> {
 	const scopedConfig = getScopedAppConfig();
 	if (scopedConfig) return scopedConfig;
 	// Direct helpers intentionally retain the process fallback. Warn once per
-	// initialization so a lost runtime scope is visible without flooding stderr.
-	if (config.walletMode !== 'disabled' && !warnedAboutUnscopedWalletRead) {
+	// initialization in either wallet direction so a lost runtime scope is
+	// visible without flooding stderr.
+	if (!warnedAboutUnscopedWalletRead) {
 		warnedAboutUnscopedWalletRead = true;
 		console.error('Wallet configuration was read outside an MCP runtime scope; using the mutable process configuration.');
 	}

@@ -188,7 +188,7 @@ export class StreamableHttpTransport implements McpTransport {
 					return;
 				}
 
-				await server.connect(transport);
+				await runWithAppConfig(this.appConfig, () => server.connect(transport));
 				await runWithAppConfig(this.appConfig, () => transport.handleRequest(req, res, req.body));
 			} catch (error) {
 				console.error('Error handling MCP request:', sanitizeError(error));

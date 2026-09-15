@@ -124,12 +124,12 @@ describe('Server Module', () => {
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Supported networks:', 'sei, sei-testnet');
 		});
 
-		it('binds tool, resource, and prompt callbacks to the runtime snapshot', async () => {
+		it('binds legacy and current registration callbacks to the runtime snapshot', async () => {
 			await getServer(APP_CONFIG);
 			const scopedServer = mockRegisterEVMTools.mock.calls[0][0] as McpServer;
 			const seenConfigs: unknown[] = [];
 
-			for (const method of ['tool', 'resource', 'prompt'] as const) {
+			for (const method of ['tool', 'resource', 'prompt', 'registerTool', 'registerResource', 'registerPrompt'] as const) {
 				let registeredCallback: (() => void) | undefined;
 				mockServerInstance[method] = jest.fn((...args: unknown[]) => {
 					registeredCallback = args.at(-1) as () => void;
@@ -140,7 +140,7 @@ describe('Server Module', () => {
 				registeredCallback?.();
 			}
 
-			expect(seenConfigs).toEqual([APP_CONFIG, APP_CONFIG, APP_CONFIG]);
+			expect(seenConfigs).toEqual([APP_CONFIG, APP_CONFIG, APP_CONFIG, APP_CONFIG, APP_CONFIG, APP_CONFIG]);
 		});
 
 		it('should sanitize and propagate server initialization errors', async () => {

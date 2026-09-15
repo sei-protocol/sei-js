@@ -8,7 +8,7 @@ import { registerEVMTools } from '../core/tools.js';
 import { createDocsSearchTool } from '../docs/index.js';
 import { getPackageInfo } from './package-info.js';
 
-const SCOPED_REGISTRATION_METHODS = new Set<PropertyKey>(['tool', 'resource', 'prompt']);
+const SCOPED_REGISTRATION_METHODS = new Set<PropertyKey>(['tool', 'resource', 'prompt', 'registerTool', 'registerResource', 'registerPrompt']);
 
 function withScopedCallbacks(server: McpServer, appConfig: AppConfigSnapshot): McpServer {
 	return new Proxy(server, {

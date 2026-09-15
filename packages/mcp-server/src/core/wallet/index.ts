@@ -33,6 +33,8 @@ export function getWalletProvider(): WalletProvider {
 		return providerForSnapshot(runtime);
 	}
 
+	// Unscoped callers get a fresh provider so mutable process config cannot
+	// leave a stale signer memoized across initializeConfig() calls.
 	return createWalletProvider(snapshotConfig(getRuntimeConfig()));
 }
 
