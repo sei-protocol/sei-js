@@ -26,7 +26,8 @@ export interface AppConfig {
 	walletApiKey: string | undefined;
 }
 
-export type AppConfigSnapshot = Readonly<AppConfig>;
+declare const snapshotBrand: unique symbol;
+export type AppConfigSnapshot = Readonly<AppConfig> & { readonly [snapshotBrand]: true };
 
 export const loadConfig = (environment: Record<string, unknown> = process.env): AppConfig => {
 	const env = envSchema.parse(environment);
@@ -61,8 +62,8 @@ const runtimeConfig = new AsyncLocalStorage<AppConfigSnapshot>();
  * change an already-running runtime's tool policy or signer.
  */
 export function snapshotConfig(source: Readonly<AppConfig> = config): AppConfigSnapshot {
-	if (Object.isFrozen(source)) return source;
-	return Object.freeze({ ...source });
+	if (Object.isFrozen(source)) return source as AppConfigSnapshot;
+	return Object.freeze({ ...source }) as AppConfigSnapshot;
 }
 
 export function runWithAppConfig<T>(appConfig: AppConfigSnapshot, fn: () => T): T {

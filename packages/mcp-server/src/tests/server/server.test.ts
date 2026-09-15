@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { AppConfigSnapshot } from '../../core/config.js';
+import { type AppConfigSnapshot, getScopedAppConfig, snapshotConfig } from '../../core/config.js';
 
 // Mock all dependencies
 jest.mock('@modelcontextprotocol/sdk/server/mcp.js', () => ({
@@ -33,7 +33,7 @@ jest.mock('../../core/chains.js', () => ({
 }));
 
 type GetServerFunction = (appConfig: AppConfigSnapshot) => Promise<McpServer>;
-const APP_CONFIG = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
+const APP_CONFIG = snapshotConfig({ privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
 
 describe('Server Module', () => {
 	let getServer: GetServerFunction;
@@ -122,6 +122,25 @@ describe('Server Module', () => {
 			await getServer(APP_CONFIG);
 
 			expect(consoleErrorSpy).toHaveBeenCalledWith('Supported networks:', 'sei, sei-testnet');
+		});
+
+		it('binds tool, resource, and prompt callbacks to the runtime snapshot', async () => {
+			await getServer(APP_CONFIG);
+			const scopedServer = mockRegisterEVMTools.mock.calls[0][0] as McpServer;
+			const seenConfigs: unknown[] = [];
+
+			for (const method of ['tool', 'resource', 'prompt'] as const) {
+				let registeredCallback: (() => void) | undefined;
+				mockServerInstance[method] = jest.fn((...args: unknown[]) => {
+					registeredCallback = args.at(-1) as () => void;
+				});
+				(scopedServer[method] as (...args: unknown[]) => unknown)('name', 'description', {}, () => {
+					seenConfigs.push(getScopedAppConfig());
+				});
+				registeredCallback?.();
+			}
+
+			expect(seenConfigs).toEqual([APP_CONFIG, APP_CONFIG, APP_CONFIG]);
 		});
 
 		it('should sanitize and propagate server initialization errors', async () => {

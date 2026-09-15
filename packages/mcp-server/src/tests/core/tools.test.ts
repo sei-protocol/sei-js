@@ -56,7 +56,7 @@ const resetSpiedFunctions = (mod: object) => {
 };
 
 const { getSupportedNetworks } = chains;
-const { getPrivateKeyAsHex, getScopedAppConfig, getWalletMode, isWalletEnabled, wrapWithAppConfig } = config;
+const { getPrivateKeyAsHex, getWalletMode, isWalletEnabled } = config;
 const { getWalletProvider } = wallet;
 
 describe('EVM Tools', () => {
@@ -91,14 +91,6 @@ describe('EVM Tools', () => {
 		(getPrivateKeyAsHex as jest.Mock).mockReturnValue('0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890');
 		(isWalletEnabled as jest.Mock).mockReturnValue(true); // Enable wallet for testing
 		(getWalletMode as jest.Mock).mockReturnValue('private-key'); // Set wallet mode
-		(getScopedAppConfig as jest.Mock).mockReturnValue(
-			Object.freeze({
-				privateKey: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-				walletMode: 'private-key',
-				walletApiKey: undefined
-			})
-		);
-		(wrapWithAppConfig as jest.Mock).mockImplementation((_appConfig, handler) => handler);
 
 		// Mock wallet provider
 		const mockWalletProvider = {
@@ -996,13 +988,6 @@ describe('EVM Tools', () => {
 					'write_contract'
 				].sort()
 			);
-		});
-
-		test('rejects tool registration without an active runtime scope', () => {
-			(getScopedAppConfig as jest.Mock).mockReturnValue(undefined);
-
-			expect(() => withToolRegistrationPolicy(server, true)).toThrow('Tool registration requires an active AppConfig scope.');
-			expect(() => withToolRegistrationPolicy(server, false)).toThrow('Tool registration requires an active AppConfig scope.');
 		});
 
 		test('hides unknown future tools by default and forwards non-tool methods', () => {

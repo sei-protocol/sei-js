@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
+import { snapshotConfig } from '../../../core/config.js';
 import type { TransportConfig } from '../../../server/transport/types.js';
 
 // Mock transport classes
@@ -14,8 +15,8 @@ jest.mock('../../../server/transport/http-sse.js', () => ({
 	HttpSseTransport: jest.fn()
 }));
 
-const DISABLED_APP_CONFIG = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
-const PRIVATE_KEY_APP_CONFIG = Object.freeze({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key' as const, walletApiKey: undefined });
+const DISABLED_APP_CONFIG = snapshotConfig({ privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
+const PRIVATE_KEY_APP_CONFIG = snapshotConfig({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key', walletApiKey: undefined });
 
 describe('Transport Factory', () => {
 	let createTransport: any;
@@ -112,7 +113,7 @@ describe('Transport Factory', () => {
 		});
 
 		it('forwards a frozen appConfig snapshot to stdio transport', () => {
-			const appConfig = Object.freeze({
+			const appConfig = snapshotConfig({
 				privateKey: `0x${'1'.repeat(64)}`,
 				walletMode: 'private-key' as const,
 				walletApiKey: undefined
@@ -132,7 +133,7 @@ describe('Transport Factory', () => {
 		});
 
 		it('forwards a frozen appConfig snapshot to HTTP transports', () => {
-			const appConfig = Object.freeze({
+			const appConfig = snapshotConfig({
 				privateKey: undefined,
 				walletMode: 'disabled' as const,
 				walletApiKey: undefined

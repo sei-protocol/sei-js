@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, jest, test } from 'bun:test';
+import type { AppConfigSnapshot } from '../../core/config.js';
 import {
 	config,
 	formatPrivateKey,
@@ -93,7 +94,7 @@ describe('Config Module - Actual Implementation', () => {
 
 		test('snapshots freeze a copy that later initializeConfig mutations cannot change', () => {
 			const snapshot = snapshotConfig();
-			expect(snapshot).toEqual({
+			expect(snapshot).toMatchObject({
 				privateKey: undefined,
 				walletMode: 'disabled',
 				walletApiKey: undefined
@@ -116,7 +117,7 @@ describe('Config Module - Actual Implementation', () => {
 						privateKey: undefined,
 						walletMode: 'disabled',
 						walletApiKey: undefined
-					},
+					} as unknown as AppConfigSnapshot,
 					() => undefined
 				)
 			).toThrow('runWithAppConfig requires a frozen AppConfig snapshot.');

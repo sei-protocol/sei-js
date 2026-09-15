@@ -4,7 +4,7 @@ import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { privateKeyToAccount } from 'viem/accounts';
-import { config, initializeConfig, isWalletEnabled, runWithAppConfig, snapshotConfig } from '../../../core/config.js';
+import { type AppConfigSnapshot, config, initializeConfig, isWalletEnabled, runWithAppConfig, snapshotConfig } from '../../../core/config.js';
 import { getWalletProvider, resetWalletProvider } from '../../../core/wallet/index.js';
 import { getServer } from '../../../server/server.js';
 import { HttpSseTransport } from '../../../server/transport/http-sse.js';
@@ -13,6 +13,8 @@ import { StreamableHttpTransport } from '../../../server/transport/streamable-ht
 const HOST = '127.0.0.1';
 const PATH = '/mcp';
 const PRIVATE_KEY = '1'.repeat(64);
+// Intentionally mirrors the EVM read-only policy plus search_docs without
+// importing its implementation, so additions require explicit review here.
 const EXPECTED_HTTP_TOOL_NAMES = [
 	'check_nft_ownership',
 	'estimate_gas',
@@ -68,7 +70,6 @@ describe('HTTP wallet isolation across later starts', () => {
 		await Promise.allSettled(transports.splice(0).map((transport) => transport.stop()));
 		consoleErrorSpy?.mockRestore();
 		Object.assign(config, originalConfig);
-		resetWalletProvider();
 		delete process.env.WALLET_MODE;
 		delete process.env.PRIVATE_KEY;
 	});
@@ -107,8 +108,8 @@ describe('HTTP wallet isolation across later starts', () => {
 		const appConfig = { privateKey: undefined as string | undefined, walletMode: 'disabled' as 'disabled' | 'private-key', walletApiKey: undefined };
 		const transport =
 			mode === 'http-sse'
-				? new HttpSseTransport({ port: 0, host: HOST, path: PATH, appConfig })
-				: new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, appConfig });
+				? new HttpSseTransport({ port: 0, host: HOST, path: PATH, appConfig: appConfig as unknown as AppConfigSnapshot })
+				: new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, appConfig: appConfig as unknown as AppConfigSnapshot });
 		transports.push(transport);
 		await transport.start();
 
@@ -171,7 +172,6 @@ describe('stdio wallet isolation after another runtime stop', () => {
 	afterEach(() => {
 		consoleErrorSpy?.mockRestore();
 		Object.assign(config, originalConfig);
-		resetWalletProvider();
 		delete process.env.WALLET_MODE;
 		delete process.env.PRIVATE_KEY;
 	});

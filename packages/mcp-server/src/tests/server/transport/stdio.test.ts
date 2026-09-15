@@ -1,11 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, jest, test } from 'bun:test';
+import { snapshotConfig } from '../../../core/config.js';
 
 // Mock dependencies
 jest.mock('@modelcontextprotocol/sdk/server/stdio.js', () => ({
 	StdioServerTransport: jest.fn()
 }));
 
-const APP_CONFIG = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
+const APP_CONFIG = snapshotConfig({ privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
 
 describe('StdioTransport', () => {
 	let StdioTransport: any;

@@ -1,13 +1,9 @@
-import { type AppConfigSnapshot, getScopedAppConfig, config as processConfig, snapshotConfig } from '../config.js';
+import { type AppConfigSnapshot, getRuntimeConfig, getScopedAppConfig, snapshotConfig } from '../config.js';
 import { DisabledWalletProvider } from './providers/disabled.js';
 import { PrivateKeyWalletProvider } from './providers/private-key.js';
 import type { WalletProvider } from './types.js';
 
 const providersByConfig = new WeakMap<AppConfigSnapshot, WalletProvider>();
-
-// Deliberate process-lifetime fallback for direct, unscoped consumers.
-// Runtime snapshots use the WeakMap and are evicted by their own stop().
-let walletProviderInstance: WalletProvider | null = null;
 
 function createWalletProvider(appConfig: AppConfigSnapshot): WalletProvider {
 	switch (appConfig.walletMode) {
@@ -37,23 +33,14 @@ export function getWalletProvider(): WalletProvider {
 		return providerForSnapshot(runtime);
 	}
 
-	if (walletProviderInstance) {
-		return walletProviderInstance;
-	}
-
-	walletProviderInstance = createWalletProvider(snapshotConfig(processConfig));
-	return walletProviderInstance;
+	return createWalletProvider(snapshotConfig(getRuntimeConfig()));
 }
 
 /**
- * Evict one runtime's cached provider, or reset the process fallback for tests.
+ * Evict one runtime's cached provider.
  */
-export function resetWalletProvider(appConfig?: AppConfigSnapshot): void {
-	if (appConfig) {
-		providersByConfig.delete(appConfig);
-	} else {
-		walletProviderInstance = null;
-	}
+export function resetWalletProvider(appConfig: AppConfigSnapshot): void {
+	providersByConfig.delete(appConfig);
 }
 
 export { DisabledWalletProvider } from './providers/disabled.js';

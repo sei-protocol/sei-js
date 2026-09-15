@@ -6,12 +6,13 @@ import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import type { Response } from 'express';
+import { snapshotConfig } from '../../../core/config.js';
 import { HttpSseTransport } from '../../../server/transport/http-sse.js';
 
 const HOST = '127.0.0.1';
 const PATH = '/mcp';
-const DISABLED_APP_CONFIG = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
-const PRIVATE_KEY_APP_CONFIG = Object.freeze({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key' as const, walletApiKey: undefined });
+const DISABLED_APP_CONFIG = snapshotConfig({ privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
+const PRIVATE_KEY_APP_CONFIG = snapshotConfig({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key', walletApiKey: undefined });
 
 function textOf(result: Awaited<ReturnType<Client['callTool']>>): string {
 	if (!('content' in result)) throw new Error('Expected an immediate tool result');

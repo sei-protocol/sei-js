@@ -9,8 +9,9 @@ jest.mock('../../../core/config.js', () => {
 	const config = { privateKey: undefined as string | undefined, walletMode: 'disabled', walletApiKey: undefined };
 	return {
 		config,
+		getRuntimeConfig: jest.fn(() => config),
 		getScopedAppConfig: jest.fn(),
-		snapshotConfig: jest.fn(() => Object.freeze({ ...config }))
+		snapshotConfig: jest.fn((source = config) => Object.freeze({ ...source }))
 	};
 });
 
@@ -22,7 +23,7 @@ jest.mock('../../../core/wallet/providers/disabled.js', () => ({
 	DisabledWalletProvider: jest.fn()
 }));
 
-import { getScopedAppConfig, config as processConfig, snapshotConfig } from '../../../core/config.js';
+import { getRuntimeConfig, getScopedAppConfig, config as processConfig, snapshotConfig } from '../../../core/config.js';
 
 describe('Wallet Provider', () => {
 	const mockPrivateKeyProvider: WalletProvider = {
@@ -42,15 +43,13 @@ describe('Wallet Provider', () => {
 	};
 
 	beforeEach(() => {
-		// Reset wallet provider instance before each test
-		resetWalletProvider();
-
 		// Reset all mocks
 		jest.resetAllMocks();
 
 		Object.assign(processConfig, { privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
+		(getRuntimeConfig as jest.Mock).mockReturnValue(processConfig);
 		(getScopedAppConfig as jest.Mock).mockReturnValue(undefined);
-		(snapshotConfig as jest.Mock).mockImplementation(() => Object.freeze({ ...processConfig }));
+		(snapshotConfig as jest.Mock).mockImplementation((source = processConfig) => Object.freeze({ ...source }));
 
 		// Setup default mock implementations
 		(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
@@ -74,21 +73,17 @@ describe('Wallet Provider', () => {
 			expect(provider).toBe(mockDisabledProvider);
 		});
 
-		test('should return cached provider on subsequent calls', () => {
+		test('should not memoize providers outside a runtime scope', () => {
 			Object.assign(processConfig, { privateKey: '0xabc', walletMode: 'private-key' });
+			const provider2: WalletProvider = { ...mockPrivateKeyProvider };
+			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementationOnce(() => mockPrivateKeyProvider).mockImplementationOnce(() => provider2);
 
-			// First call
 			const provider1 = getWalletProvider();
+			const nextProvider = getWalletProvider();
 
-			// Reset mocks to verify they aren't called again
-			jest.clearAllMocks();
-
-			// Second call should return cached provider
-			const provider2 = getWalletProvider();
-
-			expect(snapshotConfig).not.toHaveBeenCalled();
-			expect(PrivateKeyWalletProvider).not.toHaveBeenCalled();
-			expect(provider2).toBe(provider1);
+			expect(PrivateKeyWalletProvider).toHaveBeenCalledTimes(2);
+			expect(nextProvider).toBe(provider2);
+			expect(nextProvider).not.toBe(provider1);
 		});
 
 		test('should throw error for unknown wallet mode', () => {
@@ -97,18 +92,16 @@ describe('Wallet Provider', () => {
 			expect(() => getWalletProvider()).toThrow('Unknown wallet mode: unknown-mode');
 		});
 
-		test('keeps a snapshot provider after resetWalletProvider clears the process memo', () => {
-			const snapshot = { privateKey: '0xabc', walletMode: 'private-key' as const, walletApiKey: undefined };
+		test('returns the cached provider for a runtime snapshot', () => {
+			const snapshot = snapshotConfig({ privateKey: '0xabc', walletMode: 'private-key', walletApiKey: undefined });
 			(getScopedAppConfig as jest.Mock).mockReturnValue(snapshot);
 
 			const provider1 = getWalletProvider();
 			expect(PrivateKeyWalletProvider).toHaveBeenCalledWith({ privateKey: '0xabc' });
 			expect(provider1).toBe(mockPrivateKeyProvider);
 
-			resetWalletProvider();
 			jest.clearAllMocks();
 			(getScopedAppConfig as jest.Mock).mockReturnValue(snapshot);
-			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementation(() => mockPrivateKeyProvider);
 
 			const provider2 = getWalletProvider();
 			expect(provider2).toBe(provider1);
@@ -116,7 +109,7 @@ describe('Wallet Provider', () => {
 		});
 
 		test('recreates only the provider for a reset snapshot', () => {
-			const snapshot = { privateKey: '0xabc', walletMode: 'private-key' as const, walletApiKey: undefined };
+			const snapshot = snapshotConfig({ privateKey: '0xabc', walletMode: 'private-key', walletApiKey: undefined });
 			const providerAfterReset = { ...mockPrivateKeyProvider };
 			(getScopedAppConfig as jest.Mock).mockReturnValue(snapshot);
 			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementationOnce(() => mockPrivateKeyProvider).mockImplementationOnce(() => providerAfterReset);
@@ -125,46 +118,6 @@ describe('Wallet Provider', () => {
 			resetWalletProvider(snapshot);
 			expect(getWalletProvider()).toBe(providerAfterReset);
 			expect(PrivateKeyWalletProvider).toHaveBeenCalledTimes(2);
-		});
-	});
-
-	describe('resetWalletProvider', () => {
-		test('should reset the wallet provider instance', () => {
-			Object.assign(processConfig, { privateKey: '0xabc', walletMode: 'private-key' });
-
-			// Create separate mock instances for each call
-			const mockProvider1: WalletProvider = {
-				getName: () => 'private-key',
-				isAvailable: () => true,
-				getAddress: jest.fn(),
-				signTransaction: jest.fn(),
-				getWalletClient: jest.fn()
-			};
-			const mockProvider2: WalletProvider = {
-				getName: () => 'private-key',
-				isAvailable: () => true,
-				getAddress: jest.fn(),
-				signTransaction: jest.fn(),
-				getWalletClient: jest.fn()
-			};
-
-			// Mock constructor to return different instances on each call
-			(PrivateKeyWalletProvider as unknown as jest.Mock).mockImplementationOnce(() => mockProvider1).mockImplementationOnce(() => mockProvider2);
-
-			// Create provider instance
-			const provider1 = getWalletProvider();
-			expect(provider1).toBe(mockProvider1);
-
-			// Reset the provider
-			resetWalletProvider();
-
-			// Create new provider instance
-			const provider2 = getWalletProvider();
-			expect(provider2).toBe(mockProvider2);
-
-			// Should have created a new instance
-			expect(PrivateKeyWalletProvider).toHaveBeenCalledTimes(2);
-			expect(provider2).not.toBe(provider1);
 		});
 	});
 });

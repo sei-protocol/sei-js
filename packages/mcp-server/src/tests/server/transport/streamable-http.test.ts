@@ -5,12 +5,13 @@ import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { Request, Response } from 'express';
+import { snapshotConfig } from '../../../core/config.js';
 import { StreamableHttpTransport } from '../../../server/transport/streamable-http.js';
 
 const HOST = '127.0.0.1';
 const PATH = '/mcp';
-const DISABLED_APP_CONFIG = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
-const PRIVATE_KEY_APP_CONFIG = Object.freeze({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key' as const, walletApiKey: undefined });
+const DISABLED_APP_CONFIG = snapshotConfig({ privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
+const PRIVATE_KEY_APP_CONFIG = snapshotConfig({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key', walletApiKey: undefined });
 
 async function listenOnRandomPort(server: Server): Promise<number> {
 	await new Promise<void>((resolve, reject) => {
