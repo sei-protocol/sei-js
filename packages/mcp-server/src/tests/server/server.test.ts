@@ -134,6 +134,21 @@ describe('Server Module', () => {
 			expect(mockConnect).toHaveBeenCalledWith(transport, options);
 		});
 
+		it('binds an onmessage handler assigned after connect', async () => {
+			const { getScopedAppConfig } = await import('../../core/config.js');
+			const server = await getServer();
+			const transport = { start: jest.fn(), onmessage: undefined as ((message: unknown) => void) | undefined };
+			let sawRuntimeScope = false;
+
+			await server.connect(transport as never);
+			transport.onmessage = () => {
+				sawRuntimeScope = getScopedAppConfig() !== undefined;
+			};
+			transport.onmessage({});
+
+			expect(sawRuntimeScope).toBe(true);
+		});
+
 		it('should sanitize and propagate server initialization errors', async () => {
 			const testError = new Error('Initialization failed');
 			mockGetPackageInfo.mockImplementation(() => {

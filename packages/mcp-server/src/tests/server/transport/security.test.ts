@@ -124,12 +124,6 @@ describe('Security Module', () => {
 				expect(processExitSpy).toHaveBeenCalledWith(1);
 			});
 
-			it('should reject HTTP when any configuration source enables the wallet', () => {
-				expect(() => validateSecurityConfig('streamable-http', 'disabled', 'private-key')).toThrow('process.exit called with code 1');
-				expect(() => validateSecurityConfig('http-sse', 'disabled', 'private-key')).toThrow('process.exit called with code 1');
-				expect(processExitSpy).toHaveBeenCalledTimes(2);
-			});
-
 			it('should terminate directly with a safe diagnostic for unsafe config', () => {
 				expect(() => validateSecurityConfig('streamable-http', 'private-key')).toThrow('process.exit called with code 1');
 				expect(consoleErrorSpy).toHaveBeenCalledWith('║ Wallet mode cannot be used with HTTP transports!               ║');

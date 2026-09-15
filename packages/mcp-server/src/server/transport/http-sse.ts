@@ -20,8 +20,9 @@ export interface HttpSseTransportOptions {
 	port: number;
 	host: string;
 	path: string;
+	appConfig: AppConfigSnapshot;
+	/** @deprecated Wallet mode is derived from appConfig. */
 	walletMode?: WalletMode;
-	appConfig?: AppConfigSnapshot;
 	maxSessions?: number;
 }
 
@@ -55,7 +56,6 @@ export class HttpSseTransport implements McpTransport {
 	private readonly port: number;
 	private readonly host: string;
 	private readonly path: string;
-	private readonly walletMode: WalletMode;
 	private readonly appConfig: AppConfigSnapshot;
 	private readonly serverFactory: McpServerFactory;
 	private readonly transportFactory: SseServerTransportFactory;
@@ -66,8 +66,11 @@ export class HttpSseTransport implements McpTransport {
 		this.port = options.port;
 		this.host = options.host;
 		this.path = options.path;
-		this.walletMode = options.walletMode ?? 'disabled';
+		if (!options.appConfig) throw new Error('appConfig is required.');
 		this.appConfig = snapshotConfig(options.appConfig);
+		if (options.walletMode !== undefined && options.walletMode !== this.appConfig.walletMode) {
+			throw new Error('walletMode must match appConfig.walletMode.');
+		}
 		this.maxSessions = options.maxSessions ?? DEFAULT_MAX_SSE_SESSIONS;
 		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory = dependencies.transportFactory ?? ((endpoint, response) => new SSEServerTransport(endpoint, response));
@@ -225,7 +228,7 @@ export class HttpSseTransport implements McpTransport {
 	}
 
 	async start(_server?: McpServer): Promise<void> {
-		validateSecurityConfig(this.mode, this.walletMode, this.appConfig.walletMode);
+		validateSecurityConfig(this.mode, this.appConfig.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
 		}

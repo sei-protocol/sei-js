@@ -94,19 +94,19 @@ describe('HTTP wallet isolation across later starts', () => {
 		expect(await listWalletTools(mode, url)).toEqual([]);
 	});
 
-	it.each(['http-sse', 'streamable-http'] as const)('snapshots %s at construction when appConfig is omitted', async (mode) => {
+	it.each(['http-sse', 'streamable-http'] as const)('snapshots a mutable %s appConfig at construction', async (mode) => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-		Object.assign(config, { privateKey: undefined, walletMode: 'disabled', walletApiKey: undefined });
+		const appConfig = { privateKey: undefined as string | undefined, walletMode: 'disabled' as 'disabled' | 'private-key', walletApiKey: undefined };
 		const transport =
 			mode === 'http-sse'
-				? new HttpSseTransport({ port: 0, host: HOST, path: PATH, walletMode: 'disabled' })
-				: new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, walletMode: 'disabled' });
+				? new HttpSseTransport({ port: 0, host: HOST, path: PATH, appConfig })
+				: new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, appConfig });
 		transports.push(transport);
 		await transport.start();
 
-		initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: PRIVATE_KEY });
+		appConfig.walletMode = 'private-key';
+		appConfig.privateKey = `0x${PRIVATE_KEY}`;
 		const url = new URL(`http://${HOST}:${transport.getListeningPort()}${PATH}`);
-		expect(isWalletEnabled()).toBe(true);
 		expect(await listWalletTools(mode, url)).toEqual([]);
 	});
 
@@ -116,8 +116,9 @@ describe('HTTP wallet isolation across later starts', () => {
 			throw new Error(`process.exit called with code ${code}`);
 		});
 		const listenFactory = jest.fn();
-		const streamable = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key' }, { listenFactory });
-		const sse = new HttpSseTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key' }, { listenFactory });
+		const appConfig = snapshotConfig({ privateKey: `0x${PRIVATE_KEY}`, walletMode: 'private-key', walletApiKey: undefined });
+		const streamable = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key', appConfig }, { listenFactory });
+		const sse = new HttpSseTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key', appConfig }, { listenFactory });
 
 		await expect(streamable.start()).rejects.toThrow('process.exit called with code 1');
 		await expect(sse.start()).rejects.toThrow('process.exit called with code 1');
@@ -126,12 +127,7 @@ describe('HTTP wallet isolation across later starts', () => {
 		processExit.mockRestore();
 	});
 
-	it.each([
-		['http-sse', undefined],
-		['http-sse', 'disabled'],
-		['streamable-http', undefined],
-		['streamable-http', 'disabled']
-	] as const)('rejects %s when appConfig enables the wallet and walletMode is %s', async (mode, walletMode) => {
+	it.each(['http-sse', 'streamable-http'] as const)('rejects %s when appConfig enables the wallet and walletMode is omitted', async (mode) => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		const processExit = jest.spyOn(process, 'exit').mockImplementation((code) => {
 			throw new Error(`process.exit called with code ${code}`);
@@ -142,13 +138,34 @@ describe('HTTP wallet isolation across later starts', () => {
 			walletMode: 'private-key',
 			walletApiKey: undefined
 		});
-		const options = { port: 8080, host: HOST, path: PATH, walletMode, appConfig };
+		const options = { port: 8080, host: HOST, path: PATH, appConfig };
 		const transport = mode === 'http-sse' ? new HttpSseTransport(options, { listenFactory }) : new StreamableHttpTransport(options, { listenFactory });
 
 		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
 		expect(processExit).toHaveBeenCalledWith(1);
 		expect(listenFactory).not.toHaveBeenCalled();
 		processExit.mockRestore();
+	});
+
+	it.each(['http-sse', 'streamable-http'] as const)('rejects conflicting compatibility walletMode for %s at construction', (mode) => {
+		const appConfig = snapshotConfig({
+			privateKey: `0x${PRIVATE_KEY}`,
+			walletMode: 'private-key',
+			walletApiKey: undefined
+		});
+		const options = { port: 8080, host: HOST, path: PATH, walletMode: 'disabled' as const, appConfig };
+
+		expect(() => (mode === 'http-sse' ? new HttpSseTransport(options) : new StreamableHttpTransport(options))).toThrow(
+			'walletMode must match appConfig.walletMode.'
+		);
+	});
+
+	it.each(['http-sse', 'streamable-http'] as const)('requires an explicit appConfig for %s', (mode) => {
+		const options = { port: 8080, host: HOST, path: PATH };
+
+		expect(() => (mode === 'http-sse' ? new HttpSseTransport(options as never) : new StreamableHttpTransport(options as never))).toThrow(
+			'appConfig is required.'
+		);
 	});
 });
 

@@ -13,7 +13,6 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 				port: config.port,
 				host: config.host,
 				path: config.path,
-				walletMode: config.walletMode,
 				maxActiveRequests: config.maxStreamableRequests,
 				appConfig: config.appConfig
 			});
@@ -23,7 +22,6 @@ export const createTransport = (config: TransportConfig): McpTransport => {
 				port: config.port,
 				host: config.host,
 				path: config.path,
-				walletMode: config.walletMode,
 				maxSessions: config.maxSseSessions,
 				appConfig: config.appConfig
 			});

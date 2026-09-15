@@ -20,8 +20,9 @@ export interface StreamableHttpTransportOptions {
 	port?: number;
 	host?: string;
 	path?: string;
+	appConfig: AppConfigSnapshot;
+	/** @deprecated Wallet mode is derived from appConfig. */
 	walletMode?: WalletMode;
-	appConfig?: AppConfigSnapshot;
 	maxActiveRequests?: number;
 }
 
@@ -55,19 +56,21 @@ export class StreamableHttpTransport implements McpTransport {
 	private readonly port: number;
 	private readonly host: string;
 	private readonly path: string;
-	private readonly walletMode: WalletMode;
 	private readonly appConfig: AppConfigSnapshot;
 	private readonly serverFactory: StreamableServerFactory;
 	private readonly transportFactory: StreamableTransportFactory;
 	private readonly listenFactory: StreamableListenFactory;
 	private readonly maxActiveRequests: number;
 
-	constructor(options: StreamableHttpTransportOptions = {}, dependencies: StreamableHttpTransportDependencies = {}) {
+	constructor(options: StreamableHttpTransportOptions, dependencies: StreamableHttpTransportDependencies = {}) {
 		this.port = options.port ?? 8080;
 		this.host = options.host ?? 'localhost';
 		this.path = options.path ?? '/mcp';
-		this.walletMode = options.walletMode ?? 'disabled';
+		if (!options.appConfig) throw new Error('appConfig is required.');
 		this.appConfig = snapshotConfig(options.appConfig);
+		if (options.walletMode !== undefined && options.walletMode !== this.appConfig.walletMode) {
+			throw new Error('walletMode must match appConfig.walletMode.');
+		}
 		this.maxActiveRequests = options.maxActiveRequests ?? DEFAULT_MAX_STREAMABLE_REQUESTS;
 		this.serverFactory = dependencies.serverFactory ?? (() => getServer(this.appConfig));
 		this.transportFactory =
@@ -98,7 +101,7 @@ export class StreamableHttpTransport implements McpTransport {
 	}
 
 	async start(_server?: McpServer): Promise<void> {
-		validateSecurityConfig(this.mode, this.walletMode, this.appConfig.walletMode);
+		validateSecurityConfig(this.mode, this.appConfig.walletMode);
 		if (this.host.trim().length === 0) {
 			throw new Error('SERVER_HOST must not be empty.');
 		}

@@ -9,16 +9,40 @@ import { registerEVMTools } from '../core/tools.js';
 import { createDocsSearchTool } from '../docs/index.js';
 import { getPackageInfo } from './package-info.js';
 
-function bindTransportToAppConfig(transport: Transport, appConfig: AppConfigSnapshot): void {
-	const start = transport.start.bind(transport);
-	let bound = false;
-	transport.start = async () => {
-		if (!bound && transport.onmessage) {
-			bound = true;
-			transport.onmessage = wrapWithAppConfig(appConfig, transport.onmessage);
+const transportConfigs = new WeakMap<Transport, AppConfigSnapshot>();
+
+function findPropertyDescriptor(target: object, property: PropertyKey): PropertyDescriptor | undefined {
+	let current: object | null = target;
+	while (current) {
+		const descriptor = Object.getOwnPropertyDescriptor(current, property);
+		if (descriptor) return descriptor;
+		current = Object.getPrototypeOf(current);
+	}
+	return undefined;
+}
+
+export function bindTransportToAppConfig(transport: Transport, appConfig: AppConfigSnapshot): void {
+	const existingConfig = transportConfigs.get(transport);
+	if (existingConfig) {
+		if (existingConfig !== appConfig) throw new Error('MCP transport is already bound to a different AppConfig snapshot.');
+		return;
+	}
+
+	const initialHandler = transport.onmessage;
+	const descriptor = findPropertyDescriptor(transport, 'onmessage');
+	let boundHandler: Transport['onmessage'];
+	Object.defineProperty(transport, 'onmessage', {
+		configurable: true,
+		enumerable: true,
+		get: () => (descriptor?.get ? descriptor.get.call(transport) : boundHandler),
+		set: (handler: Transport['onmessage']) => {
+			const wrappedHandler = handler ? wrapWithAppConfig(appConfig, handler) : undefined;
+			if (descriptor?.set) descriptor.set.call(transport, wrappedHandler);
+			else boundHandler = wrappedHandler;
 		}
-		return start();
-	};
+	});
+	transportConfigs.set(transport, appConfig);
+	if (initialHandler) transport.onmessage = initialHandler;
 }
 
 function bindServerToAppConfig(server: McpServer, appConfig: AppConfigSnapshot): McpServer {

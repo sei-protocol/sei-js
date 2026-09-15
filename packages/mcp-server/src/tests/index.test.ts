@@ -142,7 +142,8 @@ describe('index', () => {
 	});
 
 	it('does not construct an unused bootstrap server for HTTP transports', async () => {
-		mockParseArgs.mockReturnValue({ mode: 'http-sse' });
+		const appConfig = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
+		mockParseArgs.mockReturnValue({ mode: 'http-sse', walletMode: 'disabled', appConfig });
 		const indexModule = await import('../index.js');
 		const runtime = await indexModule.main();
 

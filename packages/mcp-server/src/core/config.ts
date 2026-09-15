@@ -45,8 +45,11 @@ export const config: AppConfig = {
 	walletApiKey: undefined
 };
 
+let warnedAboutUnscopedWalletRead = false;
+
 export function initializeConfig(environment: Record<string, unknown> = process.env): AppConfig {
 	Object.assign(config, loadConfig(environment));
+	warnedAboutUnscopedWalletRead = false;
 	return config;
 }
 
@@ -88,7 +91,13 @@ export function getScopedAppConfig(): AppConfigSnapshot | undefined {
  * process config remains the fallback for direct configuration helpers.
  */
 export function getRuntimeConfig(): Readonly<AppConfig> {
-	return getScopedAppConfig() ?? config;
+	const scopedConfig = getScopedAppConfig();
+	if (scopedConfig) return scopedConfig;
+	if (config.walletMode !== 'disabled' && !warnedAboutUnscopedWalletRead) {
+		warnedAboutUnscopedWalletRead = true;
+		console.error('Wallet configuration was read outside an MCP runtime scope; using the mutable process configuration.');
+	}
+	return config;
 }
 
 /**

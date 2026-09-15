@@ -64,7 +64,7 @@ export async function startMcpServer(): Promise<RunningMcpServer> {
 					const errors = await collectOperationErrors([() => transport.stop(), () => server?.close()]);
 					throwCollectedErrors(errors, 'Failed to stop all MCP server resources.');
 				} finally {
-					if (config.appConfig) resetWalletProvider(config.appConfig);
+					resetWalletProvider(config.appConfig);
 				}
 			})();
 		}

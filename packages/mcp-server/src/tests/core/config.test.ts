@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, jest, test } from 'bun:test';
 import {
 	config,
 	formatPrivateKey,
@@ -123,6 +123,7 @@ describe('Config Module - Actual Implementation', () => {
 		});
 
 		test('runWithAppConfig makes getters read the snapshot instead of the process singleton', () => {
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 			config.walletMode = 'private-key';
 			config.privateKey = '0xabcdef';
 			const snapshot = snapshotConfig({
@@ -142,9 +143,23 @@ describe('Config Module - Actual Implementation', () => {
 			expect(isWalletEnabled()).toBe(true);
 			expect(getPrivateKeyAsHex()).toBe('0xabcdef');
 			expect(getScopedAppConfig()).toBeUndefined();
+			consoleErrorSpy.mockRestore();
+		});
+
+		test('warns once when an enabled wallet is read outside a runtime scope', () => {
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '5'.repeat(64) });
+
+			expect(getWalletMode()).toBe('private-key');
+			expect(isWalletEnabled()).toBe(true);
+
+			expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+			expect(consoleErrorSpy).toHaveBeenCalledWith('Wallet configuration was read outside an MCP runtime scope; using the mutable process configuration.');
+			consoleErrorSpy.mockRestore();
 		});
 
 		test('wrapWithAppConfig keeps later callbacks on the snapshot', () => {
+			const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 			config.walletMode = 'private-key';
 			const snapshot = snapshotConfig({
 				privateKey: undefined,
@@ -158,6 +173,7 @@ describe('Config Module - Actual Implementation', () => {
 			initializeConfig({ WALLET_MODE: 'private-key', PRIVATE_KEY: '4'.repeat(64) });
 			expect(getWalletMode()).toBe('private-key');
 			expect(readMode()).toBe('disabled');
+			consoleErrorSpy.mockRestore();
 		});
 	});
 

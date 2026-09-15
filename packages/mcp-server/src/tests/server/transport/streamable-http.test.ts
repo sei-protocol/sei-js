@@ -9,6 +9,8 @@ import { StreamableHttpTransport } from '../../../server/transport/streamable-ht
 
 const HOST = '127.0.0.1';
 const PATH = '/mcp';
+const DISABLED_APP_CONFIG = Object.freeze({ privateKey: undefined, walletMode: 'disabled' as const, walletApiKey: undefined });
+const PRIVATE_KEY_APP_CONFIG = Object.freeze({ privateKey: `0x${'1'.repeat(64)}`, walletMode: 'private-key' as const, walletApiKey: undefined });
 
 async function listenOnRandomPort(server: Server): Promise<number> {
 	await new Promise<void>((resolve, reject) => {
@@ -60,7 +62,10 @@ describe('StreamableHttpTransport', () => {
 			throw new Error(`process.exit called with code ${code}`);
 		});
 		const listenFactory = jest.fn();
-		const transport = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, walletMode: 'private-key' }, { listenFactory });
+		const transport = new StreamableHttpTransport(
+			{ port: 8080, host: HOST, path: PATH, walletMode: 'private-key', appConfig: PRIVATE_KEY_APP_CONFIG },
+			{ listenFactory }
+		);
 
 		await expect(transport.start()).rejects.toThrow('process.exit called with code 1');
 		expect(processExit).toHaveBeenCalledWith(1);
@@ -71,7 +76,7 @@ describe('StreamableHttpTransport', () => {
 	it('resolves start only after listening and rejects an empty host', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		const bootstrap = { close: jest.fn() } as unknown as McpServer;
-		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH });
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG });
 		transports.push(transport);
 
 		await transport.start(bootstrap);
@@ -81,16 +86,16 @@ describe('StreamableHttpTransport', () => {
 		expect(health.status).toBe(200);
 		expect(await health.json()).toMatchObject({ status: 'ok' });
 
-		const invalidHost = new StreamableHttpTransport({ port: 8080, host: '   ', path: PATH });
+		const invalidHost = new StreamableHttpTransport({ port: 8080, host: '   ', path: PATH, appConfig: DISABLED_APP_CONFIG });
 		await expect(invalidHost.start(bootstrap)).rejects.toThrow('SERVER_HOST must not be empty');
-		const invalidLimit = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, maxActiveRequests: 0 });
+		const invalidLimit = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG, maxActiveRequests: 0 });
 		await expect(invalidLimit.start(bootstrap)).rejects.toThrow('STREAMABLE_HTTP_MAX_REQUESTS must be a positive integer');
 	});
 
 	it('serves a real local MCP client request', async () => {
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 		const transport = new StreamableHttpTransport(
-			{ port: 0, host: HOST, path: PATH },
+			{ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG },
 			{
 				serverFactory: async () => {
 					const server = new McpServer({ name: 'request-server', version: '1.0.0' });
@@ -141,7 +146,10 @@ describe('StreamableHttpTransport', () => {
 					})
 				}) as unknown as StreamableHTTPServerTransport
 		);
-		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, maxActiveRequests: 1 }, { serverFactory, transportFactory });
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG, maxActiveRequests: 1 },
+			{ serverFactory, transportFactory }
+		);
 		transports.push(transport);
 		await transport.start();
 		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
@@ -171,7 +179,7 @@ describe('StreamableHttpTransport', () => {
 		const occupied = createServer();
 		occupiedServers.push(occupied);
 		const port = await listenOnRandomPort(occupied);
-		const transport = new StreamableHttpTransport({ port, host: HOST, path: PATH });
+		const transport = new StreamableHttpTransport({ port, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG });
 		transports.push(transport);
 
 		try {
@@ -190,7 +198,10 @@ describe('StreamableHttpTransport', () => {
 		const transportFactory = jest.fn(() => {
 			throw new Error('simulated request transport constructor failure');
 		});
-		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, maxActiveRequests: 1 }, { serverFactory, transportFactory });
+		const transport = new StreamableHttpTransport(
+			{ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG, maxActiveRequests: 1 },
+			{ serverFactory, transportFactory }
+		);
 		transports.push(transport);
 		await transport.start();
 		const url = `http://${HOST}:${transport.getListeningPort()}${PATH}`;
@@ -231,7 +242,7 @@ describe('StreamableHttpTransport', () => {
 		} as unknown as StreamableHTTPServerTransport;
 
 		const transport = new StreamableHttpTransport(
-			{ port: 0, host: HOST, path: PATH },
+			{ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG },
 			{
 				serverFactory: async () => requestServer,
 				transportFactory: () => requestTransport
@@ -280,7 +291,7 @@ describe('StreamableHttpTransport', () => {
 			})
 		} as unknown as StreamableHTTPServerTransport;
 		const transport = new StreamableHttpTransport(
-			{ port: 0, host: HOST, path: PATH },
+			{ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG },
 			{
 				serverFactory: async () => requestServer,
 				transportFactory: () => requestTransport
@@ -323,7 +334,7 @@ describe('StreamableHttpTransport', () => {
 		}) as typeof delayedServer.close;
 		let listenCount = 0;
 		const transport = new StreamableHttpTransport(
-			{ port: 0, host: HOST, path: PATH },
+			{ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG },
 			{
 				serverFactory: async () => new McpServer({ name: 'request', version: '1.0.0' }),
 				transportFactory: () => ({ close: jest.fn() }) as unknown as StreamableHTTPServerTransport,
@@ -363,7 +374,7 @@ describe('StreamableHttpTransport', () => {
 			})
 		} as unknown as StreamableHTTPServerTransport;
 		const transport = new StreamableHttpTransport(
-			{ port: 0, host: HOST, path: PATH },
+			{ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG },
 			{
 				serverFactory: async () => requestServer,
 				transportFactory: () => requestTransport
