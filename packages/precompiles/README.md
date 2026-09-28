@@ -72,39 +72,86 @@ import { sei, seiTestnet } from '@sei-js/precompiles';
 
 ## Reading logs across a block range
 
-`eth_getLogs` is capped per call, so any history longer than the cap has to be
-walked in chunks. `getLogsInRange` does that walk with ranges the node accepts:
+`eth_getLogs` is capped per request, so reading more history than one request
+allows means walking it in chunks. `getLogsInRange` walks a range and returns
+every log in it, and `streamLogsInRange` yields each chunk as it lands. Both
+take a viem client and the same filter viem's `getLogs` takes (`address`,
+`event` with `args`, `events`, `strict`):
 
 ```ts
 import { createPublicClient, http, parseAbiItem } from 'viem';
-import { getLogsInRange, seiTestnet } from '@sei-js/precompiles';
+import { getLogsInRange, sei } from '@sei-js/precompiles/viem';
 
-const client = createPublicClient({ chain: seiTestnet, transport: http() });
+const client = createPublicClient({ chain: sei, transport: http() });
+const head = await client.getBlockNumber();
 
 const logs = await getLogsInRange(client, {
 	address: '0x…',
 	event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
-	fromBlock: 267_000_000n,
-	onChunk: ({ toBlock, head }) => console.log(`${toBlock}/${head}`)
+	args: { to: '0x…' },
+	fromBlock: head - 20_000n,
+	toBlock: head
 });
 ```
 
-`MAX_GET_LOGS_BLOCK_RANGE` is `2000n`, which is what the public endpoints
-enforce on both networks. **The range is inclusive of both ends**, so the check
-the node applies is `toBlock - fromBlock + 1 <= 2000`; a 2000-block span
-succeeds and a 2001-block span is rejected with `block range too large (2001),
-maximum allowed is 2000 blocks`. Pass a smaller `chunkSize` for a provider with
-a tighter limit.
-
-Reads run to the current head. Sei finalises a block as it is produced, so
-there is no reorg window to wait out and no confirmation depth to subtract —
-pass an explicit `toBlock` if you want to lag head deliberately.
-
-`blockRanges` exposes the same arithmetic without making requests, for planning
-a backfill or driving a bounded worker pool:
+For a long backfill, use the stream and store each chunk before asking for the
+next. Memory then holds one chunk at a time, and a walk that fails part way
+through resumes from the block after the last `toBlock` you stored. `events`
+takes a whole contract ABI as well, keeping only its events:
 
 ```ts
-import { blockRanges } from '@sei-js/precompiles';
+import { streamLogsInRange } from '@sei-js/precompiles/viem';
+
+for await (const chunk of streamLogsInRange(client, { address: '0x…', events: abi, fromBlock: cursor + 1n })) {
+	await save(chunk.logs, chunk.toBlock);
+}
+```
+
+What the walk handles so you don't have to:
+
+- **The inclusive boundary.** `MAX_GET_LOGS_BLOCK_RANGE` is `2000n`, the
+  `max_blocks_for_log` default both public endpoints enforce. The node counts a
+  span as `toBlock - fromBlock + 1`, so 2000 blocks passes and 2001 is refused
+  with `block range too large (2001), maximum allowed is 2000 blocks`. If a node
+  allows fewer, the walk drops to the maximum its refusal names.
+- **Heavy spans.** From sei-chain v6.7 a node refuses a request matching more
+  than `max_log_no_block` logs (10,000 by default) with `query matches too many
+  logs`. Before v6.7 it serves a bounded request whole, and on a busy range that
+  can pass viem's 10 MiB `maxResponseBodySize` instead. Either way, and when the
+  node or the client times out on a span, the walk halves the span and asks
+  again. It then holds below the span that failed and only tries it again after
+  a run of successes, so a steadily dense range isn't refused on every other
+  request. A single block still too heavy can't be split, so that's thrown and
+  the fix is a narrower filter.
+- **Busy nodes.** Sei's `server too busy`, `server I/O saturated` and `system
+  overloaded` refusals and its large query rate limit are retried with backoff
+  (`retryCount`, `retryDelay`). viem's transport doesn't retry these itself,
+  because they arrive as JSON-RPC `-32000`. The rate limit only applies to
+  spans over 100 blocks, so when it outlasts the retries the walk steps down to
+  100 rather than giving up.
+- **Open-ended requests.** Every request carries an explicit `toBlock`. Nodes
+  before sei-chain v6.7 silently cut a request missing either bound off at the
+  log cap, which reads exactly like a quiet range.
+
+Without a `toBlock`, the walk reads to the head. Sei finalises a block as it is
+produced, so there's no reorg window to wait out and no confirmation depth to
+subtract. Pass an explicit `toBlock` to lag head deliberately.
+
+Public endpoints prune history, and the public mainnet endpoint keeps well under
+a day of it. A `fromBlock` older than a node keeps is refused with
+`requested fromBlock … is before earliest available block …`, so a backfill
+over months of history needs an archive node. The walk reads `eth_getLogs`,
+which leaves out the logs Sei synthesises for CosmWasm and pointer activity;
+`sei_getLogs` includes those.
+
+`blockRanges` gives the same fixed-width plan without making any requests, for
+estimating a backfill or handing ranges to a bounded worker pool where each
+worker calls `getLogsInRange` with an explicit `toBlock`. Keep a pool against a
+public endpoint to a few workers, since a node allows about 30 requests a
+second over 100 blocks, shared by every client it serves:
+
+```ts
+import { blockRanges } from '@sei-js/precompiles/viem';
 
 const chunks = [...blockRanges(1_000_000n, 1_006_000n)];
 // [{ fromBlock: 1000000n, toBlock: 1001999n }, … ]

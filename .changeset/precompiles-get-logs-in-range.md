@@ -2,14 +2,10 @@
 '@sei-js/precompiles': minor
 ---
 
-Add `getLogsInRange`, `blockRanges` and `MAX_GET_LOGS_BLOCK_RANGE` for reading logs across a block range.
+Add `getLogsInRange`, `streamLogsInRange`, `blockRanges` and `MAX_GET_LOGS_BLOCK_RANGE` for reading logs across a block range.
 
-`eth_getLogs` is capped per call, so reading any history longer than the cap means walking it in chunks. That loop is short but has two failure modes that both look like a working indexer, and every project that needs logs writes it again.
+`eth_getLogs` is capped per request, so reading more history than one request allows means walking it in chunks, and every project that needs logs writes that loop again. This walk only sends requests a Sei node can answer. Spans are counted inclusively the way the node counts them (2000 blocks passes, 2001 is refused). A span too heavy to answer is halved and asked again, whether the node refuses it for matching more than `max_log_no_block` logs (sei-chain v6.7 and later), the response passes viem's size limit (before v6.7, when bounded requests are served whole), or the span times out. A node whose refusal names a smaller `max_blocks_for_log` is walked at that, and busy or rate limited refusals are retried with backoff. Every request carries an explicit `toBlock`, because nodes before v6.7 silently cut an open-ended request off at the log cap.
 
-The first is the inclusive boundary. The public endpoints allow 2000 blocks and apply the check as `toBlock - fromBlock + 1 <= 2000`, so a range built as `from + 2000` asks for 2001 blocks and is rejected on every chunk with `block range too large (2001), maximum allowed is 2000 blocks`. Measured on both networks: 2000 succeeds, 2001 does not. Writing the loop conservatively at half the cap works but doubles the round trips a backfill needs.
+`streamLogsInRange` yields each chunk with its logs, so a backfill can store as it goes and resume from the last `toBlock`. `getLogsInRange` collects the walk into one array and awaits an optional `onChunk` for each chunk. Both take viem's `getLogs` filter (`address`, `event` with `args`, `events`, `strict`), accept a whole contract ABI as `events`, and take any viem `Client`, including one that carries an account. Without a `toBlock` they read to the head, since Sei finalises a block as it is produced. `blockRanges` gives the fixed-width plan without making requests.
 
-The second is the confirmation depth most EVM indexing code carries by default. Sei finalises a block as it is produced, so there is no reorg window to wait out; a default lag copied from an Ethereum-shaped library is latency with nothing behind it. `getLogsInRange` reads to head, and a caller who wants to lag head passes an explicit `toBlock`.
-
-`blockRanges` exposes the same arithmetic as a generator without making requests, so a caller can plan a backfill or drive a bounded worker pool instead of one sequential loop. `onChunk` reports progress, because a backfill over long history is thousands of requests and is otherwise indistinguishable from a hang.
-
-No dependency or peer range changes: this uses the `viem` peer already declared, and `PublicClient` is accepted rather than constructed so it works with whatever transport and chain the caller has configured.
+No dependency or peer range changes: this uses the `viem` peer already declared.

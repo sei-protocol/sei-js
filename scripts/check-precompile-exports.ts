@@ -56,6 +56,17 @@ for (const [name, chainId] of [
 		missing.push(`root and viem subpaths do not share ${name} chain identity`);
 	}
 }
+for (const name of ['getLogsInRange', 'streamLogsInRange', 'blockRanges'] as const) {
+	if (typeof viemModule[name] !== 'function') {
+		missing.push(`${name} is not a function`);
+	}
+	if (rootModule[name] !== viemModule[name]) {
+		missing.push(`root and viem subpaths do not share ${name} identity`);
+	}
+}
+if (viemModule.MAX_GET_LOGS_BLOCK_RANGE !== 2000n || rootModule.MAX_GET_LOGS_BLOCK_RANGE !== viemModule.MAX_GET_LOGS_BLOCK_RANGE) {
+	missing.push('MAX_GET_LOGS_BLOCK_RANGE missing or invalid');
+}
 if (!precompilesModule.BANK_PRECOMPILE_ADDRESS) {
 	missing.push('BANK_PRECOMPILE_ADDRESS missing');
 }
