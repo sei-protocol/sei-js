@@ -98,6 +98,12 @@ export type StreamLogsInRangeParameters<
 	retryCount?: number | undefined;
 	/** Milliseconds before the first retry, doubling on each one after. Defaults to 500. */
 	retryDelay?: number | undefined;
+	/**
+	 * Stops the walk when aborted, before the next request or part way through
+	 * a wait between retries. A request already sent still runs to completion,
+	 * since viem's `getLogs` takes no signal.
+	 */
+	signal?: AbortSignal | undefined;
 };
 
 /**
@@ -188,7 +194,8 @@ const MAX_RETRY_WAIT = 30_000;
  *   `retryCount` times with exponential backoff. They arrive as JSON-RPC
  *   `-32000`, which viem's transport doesn't retry on its own. The rate limit
  *   only applies to spans over 100 blocks, so when it outlasts the retries the
- *   walk steps down to 100 rather than giving up.
+ *   walk steps down to 100 rather than giving up, and a later probe back over
+ *   100 that meets it again steps straight back down without waiting.
  * - Without a `toBlock`, a final chunk refused as `after latest available
  *   block` is retried the same way, since a node behind a load balancer can
  *   trail the one that reported the head.
@@ -239,7 +246,7 @@ export async function* streamLogsInRange<
 	client: Client<Transport, chain>,
 	parameters: StreamLogsInRangeParameters<abiEvent, abiEvents, strict>
 ): AsyncGenerator<LogsChunk<abiEvent, abiEvents, strict>, void, undefined> {
-	const { fromBlock, toBlock, chunkSize = MAX_GET_LOGS_BLOCK_RANGE, retryCount = 3, retryDelay = 500, ...filter } = parameters;
+	const { fromBlock, toBlock, chunkSize = MAX_GET_LOGS_BLOCK_RANGE, retryCount = 3, retryDelay = 500, signal, ...filter } = parameters;
 	assertBlock('fromBlock', fromBlock);
 	if (toBlock !== undefined) assertBlock('toBlock', toBlock);
 	assertChunkSize(chunkSize);
@@ -266,6 +273,7 @@ export async function* streamLogsInRange<
 		match = { ...filter, events } as typeof filter;
 	}
 
+	throwIfAborted(signal);
 	// A fresh head, not viem's cached one, which trails by the client's polling
 	// interval (four seconds by default, about eight Sei blocks).
 	const endBlock = toBlock ?? (await getAction(client, getBlockNumber, 'getBlockNumber')({ cacheTime: 0 }));
@@ -280,8 +288,10 @@ export async function* streamLogsInRange<
 	let retries = 0;
 	let timeouts = 0;
 	let answered = false;
+	let limited = false;
 	let from = fromBlock;
 	while (from <= endBlock) {
+		throwIfAborted(signal);
 		const to = rangeEnd(from, width, endBlock);
 		const span = to - from + 1n;
 		let logs: GetLogsReturnType<abiEvent, abiEvents, strict>;
@@ -311,13 +321,18 @@ export async function* streamLogsInRange<
 				retries = 0;
 				continue;
 			}
+			// Once the rate limit has pushed the walk under 100 blocks, a later probe
+			// back over it steps straight down again rather than waiting out the
+			// backoff on a node that is still throttling.
+			const stepDown = kind === 'rate-limited' && span > RATE_LIMIT_FREE_SPAN && (limited || retries >= retryCount);
 			const transient = kind === 'busy' || kind === 'rate-limited' || (kind === 'behind' && toBlock === undefined);
-			if (transient && retries < retryCount) {
-				await sleep(Math.min(retryDelay * 2 ** retries, Math.max(retryDelay, MAX_RETRY_WAIT)));
+			if (transient && !stepDown && retries < retryCount) {
+				await sleep(Math.min(retryDelay * 2 ** retries, Math.max(retryDelay, MAX_RETRY_WAIT)), signal);
 				retries += 1;
 				continue;
 			}
-			if (kind === 'rate-limited' && span > RATE_LIMIT_FREE_SPAN) {
+			if (stepDown) {
+				limited = true;
 				heavy = RATE_LIMIT_FREE_SPAN + 1n;
 				width = RATE_LIMIT_FREE_SPAN;
 				streak = 0;
@@ -441,19 +456,26 @@ type Refusal = 'heavy' | 'client-timeout' | 'busy' | 'rate-limited' | 'behind' |
 /**
  * Which way a failed `eth_getLogs` can be answered differently, if any.
  *
- * Sei's refusals are matched on the node's own wording (`evmrpc/filter.go`,
- * `sei-db/ledger_db/receipt`), and viem's own errors by name. viem reports every
+ * Sei's refusals are matched on the node's own wording, which is the same at
+ * sei-chain v6.6.3 and v6.7.0-rc2:
+ * https://github.com/sei-protocol/sei-chain/blob/v6.7.0-rc2/evmrpc/filter.go (lines 622, 632, 642, 649, 789 and 927)
+ * and https://github.com/sei-protocol/sei-chain/blob/v6.7.0-rc2/sei-db/ledger_db/receipt/receipt_store.go (line 36).
+ * A change to that wording turns a refusal the walk answers into one it throws,
+ * so it is pinned by the spec. viem's own errors are matched by name. viem reports every
  * node refusal as `InvalidInputRpcError` with the generic short message "Missing
  * or invalid parameters" and keeps the node's text in `details`, so every name
  * and message along the cause chain is read.
  */
 function classifyRefusal(error: unknown): Refusal | undefined {
-	const { names, text } = describeError(error);
+	const { names, codes, text } = describeError(error);
 	// Checked before the text, whose details read "The request timed out.".
 	if (names.includes('TimeoutError')) return 'client-timeout';
-	// "query matches too many logs" and "query matches too many log bytes",
-	// viem's response size cap, and a node that timed out on the span.
-	if (names.includes('ResponseBodyTooLargeError') || /query matches too many log|request timed out/i.test(text)) return 'heavy';
+	// "query matches too many logs" and "query matches too many log bytes", and
+	// viem's response size cap.
+	if (names.includes('ResponseBodyTooLargeError') || /query matches too many log/i.test(text)) return 'heavy';
+	// The node's own timeout on the span, which comes with JSON-RPC -32002. The
+	// same words from a gateway in front of an endpoint that is down don't count.
+	if (codes.includes(-32002) && /request timed out/i.test(text)) return 'heavy';
 	const range = /block range too large \(\d+\), maximum allowed is (\d+) blocks/i.exec(text);
 	if (range) return new RangeRefusal(range[1] === undefined ? undefined : BigInt(range[1]));
 	if (/log query rate limit exceeded/i.test(text)) return 'rate-limited';
@@ -462,8 +484,9 @@ function classifyRefusal(error: unknown): Refusal | undefined {
 	return undefined;
 }
 
-function describeError(error: unknown): { names: string[]; text: string } {
+function describeError(error: unknown): { names: string[]; codes: number[]; text: string } {
 	const names: string[] = [];
+	const codes: number[] = [];
 	const parts: string[] = [];
 	let current: unknown = error;
 	for (let depth = 0; current !== undefined && current !== null && depth < 8; depth += 1) {
@@ -471,20 +494,22 @@ function describeError(error: unknown): { names: string[]; text: string } {
 			parts.push(String(current));
 			break;
 		}
-		const { name, message, details, shortMessage, cause } = current as {
+		const { name, code, message, details, shortMessage, cause } = current as {
 			name?: unknown;
+			code?: unknown;
 			message?: unknown;
 			details?: unknown;
 			shortMessage?: unknown;
 			cause?: unknown;
 		};
 		if (typeof name === 'string') names.push(name);
+		if (typeof code === 'number') codes.push(code);
 		for (const part of [message, details, shortMessage]) {
 			if (typeof part === 'string') parts.push(part);
 		}
 		current = cause;
 	}
-	return { names, text: parts.join('\n') };
+	return { names, codes, text: parts.join('\n') };
 }
 
 function isEventEntry(entry: unknown): boolean {
@@ -509,6 +534,29 @@ function describe(value: unknown): string {
 	return String(value);
 }
 
-function sleep(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+function throwIfAborted(signal: AbortSignal | undefined): void {
+	if (signal?.aborted) throw abortReason(signal);
+}
+
+function abortReason(signal: AbortSignal): unknown {
+	return signal.reason ?? new Error('The walk was aborted.');
+}
+
+function sleep(ms: number, signal: AbortSignal | undefined): Promise<void> {
+	return new Promise((resolve, reject) => {
+		if (signal?.aborted) {
+			reject(abortReason(signal));
+			return;
+		}
+		let timer: ReturnType<typeof setTimeout> | undefined;
+		const onAbort = () => {
+			clearTimeout(timer);
+			reject(abortReason(signal as AbortSignal));
+		};
+		signal?.addEventListener('abort', onAbort, { once: true });
+		timer = setTimeout(() => {
+			signal?.removeEventListener('abort', onAbort);
+			resolve();
+		}, ms);
+	});
 }

@@ -332,6 +332,17 @@ describe('streamLogsInRange', () => {
 			expect(calls.map(span)).toEqual([2000n, 1000n, 1000n]);
 		});
 
+		it('does not take a gateway saying "request timed out" for the node timing out', async () => {
+			// Only the node's own -32002 means the span was the problem. The same
+			// words from a proxy in front of a dead endpoint would otherwise halve
+			// all the way down before throwing.
+			const { client, calls } = recordingClient(1_999n, () => {
+				throw new Error('502 Bad Gateway: upstream request timed out');
+			});
+			await expect(drain(streamLogsInRange(client, { fromBlock: 0n }))).rejects.toThrow(/upstream request timed out/);
+			expect(calls.length).toBe(1);
+		});
+
 		it('halves when the node times out on the span', async () => {
 			let refused = false;
 			const { client, calls } = recordingClient(1_999n, () => {
@@ -493,6 +504,60 @@ describe('streamLogsInRange', () => {
 			expectContiguous(chunks, 0n, 1_999n);
 			expect(calls.slice(0, 5).map(span)).toEqual([2000n, 2000n, 2000n, 2000n, 100n]);
 			for (const c of chunks) expect(span(c)).toBeLessThanOrEqual(100n);
+		});
+
+		it('steps straight back down when a later probe over 100 blocks meets the rate limit again', async () => {
+			// The backoff is paid once. After that, each probe back up costs one
+			// refused request rather than another round of waiting.
+			const { client, calls } = recordingClient(1_999n, (request) => {
+				if (span(request) > 100n) throw nodeRefusal('log query rate limit exceeded for large queries, please try again later');
+				return [];
+			});
+			await drain(streamLogsInRange(client, { fromBlock: 0n, retryDelay: 0 }));
+			const spans = calls.map(span);
+			expect(spans.filter((s) => s === 200n).length).toBe(2);
+			for (let i = 0; i < spans.length - 1; i++) {
+				if (spans[i] === 200n) expect(spans[i + 1]).toBe(100n);
+			}
+			expect(calls.length).toBe(4 + 20 + 2);
+		});
+	});
+
+	describe('when aborted', () => {
+		it('makes no request when the signal is already aborted', async () => {
+			const { client, calls, headReads } = recordingClient(9_999n);
+			const controller = new AbortController();
+			controller.abort(new Error('shutting down'));
+			await expect(drain(streamLogsInRange(client, { fromBlock: 0n, signal: controller.signal }))).rejects.toThrow('shutting down');
+			expect(calls).toEqual([]);
+			expect(headReads).toEqual([]);
+		});
+
+		it('stops before the next request', async () => {
+			const { client, calls } = recordingClient(9_999n);
+			const controller = new AbortController();
+			await expect(
+				getLogsInRange(client, {
+					fromBlock: 0n,
+					signal: controller.signal,
+					onChunk: () => controller.abort(new Error('shutting down'))
+				})
+			).rejects.toThrow('shutting down');
+			expect(calls.length).toBe(1);
+		});
+
+		it('stops part way through a wait between retries', async () => {
+			const { client, calls } = recordingClient(1_999n, () => {
+				throw nodeRefusal('server too busy, rejecting new request (pending: 900, threshold: 800)');
+			});
+			const controller = new AbortController();
+			setTimeout(() => controller.abort(new Error('shutting down')), 20);
+			const started = performance.now();
+			await expect(drain(streamLogsInRange(client, { fromBlock: 0n, retryCount: 1, retryDelay: 3_000, signal: controller.signal }))).rejects.toThrow(
+				'shutting down'
+			);
+			expect(performance.now() - started).toBeLessThan(1_000);
+			expect(calls.length).toBe(1);
 		});
 	});
 
