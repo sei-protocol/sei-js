@@ -110,13 +110,13 @@ for await (const chunk of streamLogsInRange(client, { address: '0x…', events: 
 What the walk handles so you don't have to:
 
 - **The inclusive boundary.** `MAX_GET_LOGS_BLOCK_RANGE` is `2000n`, the
-  `max_blocks_for_log` default both public endpoints enforce. The node counts a
+  [`max_blocks_for_log` default](https://github.com/sei-protocol/sei-chain/blob/v6.7.0-rc2/evmrpc/config/config.go#L337-L339) both public endpoints enforce. The node counts a
   span as `toBlock - fromBlock + 1`, so 2000 blocks passes and 2001 is refused
   with `block range too large (2001), maximum allowed is 2000 blocks`. If a node
   allows fewer, the walk drops to the maximum its refusal names.
 - **Heavy spans.** From sei-chain v6.7 a node refuses a request matching more
-  than `max_log_no_block` logs (10,000 by default) with `query matches too many
-  logs`. Before v6.7 it serves a bounded request whole, and on a busy range that
+  than `max_log_no_block` logs ([10,000 by default](https://github.com/sei-protocol/sei-chain/blob/v6.7.0-rc2/evmrpc/config/config.go#L337-L339)) with `query matches
+  too many logs`. Before v6.7 it serves a bounded request whole, and on a busy range that
   can pass viem's 10 MiB `maxResponseBodySize` instead. Either way, and when the
   node or the client times out on a span, the walk halves the span and asks
   again. It then holds below the span that failed and only tries it again after
@@ -126,9 +126,9 @@ What the walk handles so you don't have to:
 - **Busy nodes.** Sei's `server too busy`, `server I/O saturated` and `system
   overloaded` refusals and its large query rate limit are retried with backoff
   (`retryCount`, `retryDelay`). viem's transport doesn't retry these itself,
-  because they arrive as JSON-RPC `-32000`. The rate limit only applies to
-  spans over 100 blocks, so when it outlasts the retries the walk steps down to
-  100 rather than giving up.
+  because they arrive as JSON-RPC `-32000`. The rate limit [only applies to
+  spans over 100 blocks](https://github.com/sei-protocol/sei-chain/blob/v6.7.0-rc2/evmrpc/filter.go#L50-L51), so when it outlasts the retries the walk steps
+  down to 100 rather than giving up.
 - **Open-ended requests.** Every request carries an explicit `toBlock`. Nodes
   before sei-chain v6.7 silently cut a request missing either bound off at the
   log cap, which reads exactly like a quiet range.
@@ -137,8 +137,8 @@ Without a `toBlock`, the walk reads to the head. Sei finalises a block as it is
 produced, so there's no reorg window to wait out and no confirmation depth to
 subtract. Pass an explicit `toBlock` to lag head deliberately.
 
-Public endpoints prune history, and the public mainnet endpoint keeps well under
-a day of it. A `fromBlock` older than a node keeps is refused with
+Public endpoints prune history, and how much they keep is up to each provider.
+A `fromBlock` older than a node keeps is refused with
 `requested fromBlock … is before earliest available block …`, so a backfill
 over months of history needs an archive node. The walk reads `eth_getLogs`,
 which leaves out the logs Sei synthesises for CosmWasm and pointer activity;
@@ -147,8 +147,8 @@ which leaves out the logs Sei synthesises for CosmWasm and pointer activity;
 `blockRanges` gives the same fixed-width plan without making any requests, for
 estimating a backfill or handing ranges to a bounded worker pool where each
 worker calls `getLogsInRange` with an explicit `toBlock`. Keep a pool against a
-public endpoint to a few workers, since a node allows about 30 requests a
-second over 100 blocks, shared by every client it serves:
+public endpoint to a few workers, since by default a node allows
+[30 requests a second over 100 blocks](https://github.com/sei-protocol/sei-chain/blob/v6.7.0-rc2/evmrpc/filter.go#L50-L51), shared by every client it serves:
 
 ```ts
 import { blockRanges } from '@sei-js/precompiles/viem';

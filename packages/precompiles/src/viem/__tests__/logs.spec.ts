@@ -521,6 +521,23 @@ describe('streamLogsInRange', () => {
 			}
 			expect(calls.length).toBe(4 + 20 + 2);
 		});
+
+		it('waits out a later spell of throttling again once a probe over 100 blocks has got through', async () => {
+			// Throttled for the first four requests, clear for a stretch, then
+			// throttled again from the eighteenth on.
+			const { client, calls } = recordingClient(19_999n, (request, index) => {
+				if (span(request) > 100n && (index < 4 || index >= 18)) {
+					throw nodeRefusal('log query rate limit exceeded for large queries, please try again later');
+				}
+				return [];
+			});
+			await drain(streamLogsInRange(client, { fromBlock: 0n, retryDelay: 0 }));
+			const spans = calls.map(span);
+			// Stepped down, eight chunks at 100, then a probe at 200 that gets through.
+			expect(spans.slice(0, 13)).toEqual([2000n, 2000n, 2000n, 2000n, ...Array(8).fill(100n), 200n]);
+			// So the second spell is retried at the same span before stepping down.
+			expect(spans.slice(18, 23)).toEqual([2000n, 2000n, 2000n, 2000n, 100n]);
+		});
 	});
 
 	describe('when aborted', () => {
@@ -547,16 +564,32 @@ describe('streamLogsInRange', () => {
 		});
 
 		it('stops part way through a wait between retries', async () => {
+			// The wait here never ends on its own: scheduling it aborts the walk
+			// instead, so the signal is the only way out of it. A walk that ignores
+			// the signal would sit in the wait forever, and with setTimeout mocked
+			// bun's own test timeout can't fire either, so a real timer fails it.
+			const realSetTimeout = globalThis.setTimeout;
 			const { client, calls } = recordingClient(1_999n, () => {
 				throw nodeRefusal('server too busy, rejecting new request (pending: 900, threshold: 800)');
 			});
 			const controller = new AbortController();
-			setTimeout(() => controller.abort(new Error('shutting down')), 20);
-			const started = performance.now();
-			await expect(drain(streamLogsInRange(client, { fromBlock: 0n, retryCount: 1, retryDelay: 3_000, signal: controller.signal }))).rejects.toThrow(
-				'shutting down'
-			);
-			expect(performance.now() - started).toBeLessThan(1_000);
+			const waits: number[] = [];
+			let stuckTimer: ReturnType<typeof setTimeout> | undefined;
+			const stuck = new Promise<never>((_, reject) => {
+				stuckTimer = realSetTimeout(() => reject(new Error('the wait ignored the signal')), 1_000);
+			});
+			const spy = jest.spyOn(globalThis, 'setTimeout').mockImplementation(((_fn: () => void, ms?: number) => {
+				waits.push(ms ?? 0);
+				controller.abort(new Error('shutting down'));
+				return 0;
+			}) as unknown as typeof setTimeout);
+			try {
+				await expect(Promise.race([drain(streamLogsInRange(client, { fromBlock: 0n, signal: controller.signal })), stuck])).rejects.toThrow('shutting down');
+			} finally {
+				spy.mockRestore();
+				clearTimeout(stuckTimer);
+			}
+			expect(waits).toEqual([500]);
 			expect(calls.length).toBe(1);
 		});
 	});

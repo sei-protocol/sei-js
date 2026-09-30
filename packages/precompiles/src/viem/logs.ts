@@ -194,11 +194,13 @@ const MAX_RETRY_WAIT = 30_000;
  *   `retryCount` times with exponential backoff. They arrive as JSON-RPC
  *   `-32000`, which viem's transport doesn't retry on its own. The rate limit
  *   only applies to spans over 100 blocks, so when it outlasts the retries the
- *   walk steps down to 100 rather than giving up, and a later probe back over
- *   100 that meets it again steps straight back down without waiting.
- * - Without a `toBlock`, a final chunk refused as `after latest available
- *   block` is retried the same way, since a node behind a load balancer can
- *   trail the one that reported the head.
+ *   walk steps down to 100 rather than giving up. While that lasts, a probe
+ *   back over 100 that meets it again steps straight back down without
+ *   waiting, and once a probe gets through, the next spell of throttling is
+ *   waited out again first.
+ * - Without a `toBlock`, a chunk refused as `after latest available block` is
+ *   retried the same way, since a node behind a load balancer can trail the
+ *   one that reported the head.
  *
  * Anything else, such as a `fromBlock` older than the node retains, is thrown
  * as is. Always sending `toBlock` matters on its own: nodes before sei-chain
@@ -345,6 +347,9 @@ export async function* streamLogsInRange<
 		retries = 0;
 		timeouts = 0;
 		streak += 1;
+		// A span over 100 got through, so the throttling has passed. The next
+		// spell of it gets the usual backoff before the walk steps down again.
+		if (span > RATE_LIMIT_FREE_SPAN) limited = false;
 		yield { fromBlock: from, toBlock: to, endBlock, logs };
 		from = to + 1n;
 		let next = width * 2n > ceiling ? ceiling : width * 2n;
@@ -413,8 +418,9 @@ export async function getLogsInRange<
  * it will take at best) or for handing ranges to a bounded worker pool, where
  * each worker calls {@link getLogsInRange} with an explicit `toBlock` and so
  * keeps the halving and retries within its own range. Keep a pool against a
- * public endpoint to a few workers: a node allows about 30 requests a second
- * over 100 blocks, shared by every client it serves.
+ * public endpoint to a few workers: by default a node allows 30 requests a
+ * second over 100 blocks, shared by every client it serves (`GlobalRPSLimit`
+ * and `RPSLimitThreshold` in sei-chain's `evmrpc/filter.go`).
  *
  * @example
  * ```ts
