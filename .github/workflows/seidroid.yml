@@ -1,0 +1,90 @@
+# Wiring only. The review logic lives in sei-protocol/uci and the reviewer binary in
+# sei-protocol/sei-internal-skills; both document their own behaviour and inputs.
+#
+#   @seidroid review                  review this pull request
+#   @seidroid review close            destroy this pull request's session now
+#
+# A review request is read from a top-level comment, an inline review comment or a
+# review body. Post it as the whole comment: the @seidroid assistant (ai-assist.yml)
+# answers any other comment that mentions @seidroid. A teardown is read from a
+# top-level comment only.
+name: seidroid review
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  pull_request:
+    types: [opened, ready_for_review, synchronize, reopened, closed]
+
+permissions: {}
+
+jobs:
+  seidroid-review:
+    if: >-
+      (github.event_name == 'pull_request' &&
+        github.event.action != 'closed') ||
+      (((github.event_name == 'issue_comment' &&
+          github.event.issue.pull_request != null) ||
+        github.event_name == 'pull_request_review_comment' ||
+        github.event_name == 'pull_request_review') &&
+        contains(github.event.comment.body || github.event.review.body,
+          '@seidroid review') &&
+        !contains(github.event.comment.body || github.event.review.body,
+          '@seidroid review close'))
+    uses: sei-protocol/uci/.github/workflows/seidroid-review.yml@0dc48cfb58b6c88f528b6def9784524d444ed0f6 # v0.0.26
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+      issues: write
+    secrets:
+      OMNIGENT_MACHINE_CLIENT_SECRET: ${{ secrets.OMNIGENT_MACHINE_CLIENT_SECRET }}
+      SEIDROID_APP_ID: ${{ secrets.PLATFORM_CODE_AGENT_APP_ID }}
+      SEIDROID_APP_PRIVATE_KEY: ${{ secrets.PLATFORM_CODE_AGENT_APP_PK }}
+    with:
+      mode: review
+      allowed-team: 'sei-protocol/sei-core'
+
+  # Anchored, unlike the review job's `contains`. A comment that quotes the
+  # teardown command beside a real `@seidroid review` line would otherwise route
+  # here and destroy the session. PLT-1182 fixes the grammar once in uci.
+  seidroid-review-close:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '@seidroid review close')
+    uses: sei-protocol/uci/.github/workflows/seidroid-review.yml@0dc48cfb58b6c88f528b6def9784524d444ed0f6 # v0.0.26
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+      issues: write
+    secrets:
+      OMNIGENT_MACHINE_CLIENT_SECRET: ${{ secrets.OMNIGENT_MACHINE_CLIENT_SECRET }}
+      SEIDROID_APP_ID: ${{ secrets.PLATFORM_CODE_AGENT_APP_ID }}
+      SEIDROID_APP_PRIVATE_KEY: ${{ secrets.PLATFORM_CODE_AGENT_APP_PK }}
+    with:
+      mode: close
+      allowed-team: 'sei-protocol/sei-core'
+
+  # Does not cover a fork: GitHub withholds secrets from a `pull_request` run whose
+  # head is a fork, so the close fails and the sandbox is left running. On a fork
+  # pull request, comment `@seidroid review close` before merging.
+  seidroid-review-reclaim:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    uses: sei-protocol/uci/.github/workflows/seidroid-review.yml@0dc48cfb58b6c88f528b6def9784524d444ed0f6 # v0.0.26
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+      issues: write
+    secrets:
+      OMNIGENT_MACHINE_CLIENT_SECRET: ${{ secrets.OMNIGENT_MACHINE_CLIENT_SECRET }}
+      SEIDROID_APP_ID: ${{ secrets.PLATFORM_CODE_AGENT_APP_ID }}
+      SEIDROID_APP_PRIVATE_KEY: ${{ secrets.PLATFORM_CODE_AGENT_APP_PK }}
+    with:
+      mode: close
