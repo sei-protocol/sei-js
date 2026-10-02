@@ -166,7 +166,7 @@ const assertTestedPeersFitPublishedRanges = (testedPeerVersions: TestedPeerVersi
 // Flat by necessity: Bun cannot nest overrides, so every entry here has to be
 // safe to apply globally.
 const baseSafeOverrides = {
-	axios: '1.18.0',
+	axios: '1.20.0',
 	sharp: '0.35.4',
 	uuid: '11.1.1'
 };
