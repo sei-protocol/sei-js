@@ -25,7 +25,7 @@ Complete npm root overrides when the optional AA path is not enabled:
 ```json
 {
 	"overrides": {
-		"axios": "1.18.0",
+		"axios": "1.20.0",
 		"sharp": "0.35.4",
 		"uuid": "11.1.1",
 		"viem": {
@@ -39,7 +39,7 @@ Complete Bun root overrides. The block is the same with or without the optional 
 ```json
 {
 	"overrides": {
-		"axios": "1.18.0",
+		"axios": "1.20.0",
 		"sharp": "0.35.4",
 		"uuid": "11.1.1"
 	}
@@ -48,7 +48,7 @@ Complete Bun root overrides. The block is the same with or without the optional 
 
 The Axios, Sharp, and UUID overrides are temporary until Dynamic updates its exact transitive pins:
 
-- The high-severity Axios issue is in the Node HTTP adapter and requires a prerequisite prototype-pollution/interceptor pattern. Browser wallet paths do not use that adapter, which reduces exploitability but does not make the vulnerable install acceptable.
+- Dynamic pins `axios@1.16.0` exactly, and `1.20.0` is the first release outside every advisory reported against it. The high-severity Axios issues are in Node-only transports (the HTTP adapter, opt-in HTTP/2, and `NO_PROXY` handling) or are prototype-pollution gadgets that need a separate pollution primitive in the same process. Browser wallet paths do not use the Node transports, which reduces exploitability but does not make the vulnerable install acceptable; the `toFormData` and fetch-adapter gadgets apply in browsers too.
 - The high-severity Sharp issue is the bundled libheif heap overflow reported as `GHSA-rgj7-g3m4-5g8c`, reached through `@dynamic-labs/iconic`'s exact `sharp@0.35.0` pin. It is only triggered by decoding untrusted HEIF input, which no wallet path does, and `sharp` is a build-time image dependency that never reaches a browser bundle. The override is a patch-level move within `0.35.x`, so it carries no API change.
 - The UUID issue affects the v3, v5, and v6 buffer APIs. Dynamic's observed call sites use UUID v4, which reduces exploitability but does not clear the audit finding.
 
@@ -56,7 +56,7 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 ```json
 {
 	"overrides": {
-		"axios": "1.18.0",
+		"axios": "1.20.0",
 		"ethjs-unit": {
 			"bn.js": "4.12.5"
 		},
