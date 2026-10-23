@@ -43,10 +43,17 @@ const fastCheck = process.env.SEI_GLOBAL_WALLET_FAST_CHECK === '1';
 // can excuse a finding an application gets from a plain install.
 //
 // `stream-json` is shared by both: the Solana RPC client's CommonJS `jayson`
-// requires it, and every version outside the advisory is ESM-only under a moved
-// `src/` layout, so an override turns the advisory into a MODULE_NOT_FOUND.
-const acceptedNpmAdvisories: readonly string[] = ['GHSA-528h-pc64-c93x'];
-const acceptedBunAdvisories: readonly string[] = ['GHSA-378v-28hj-76wf', 'GHSA-528h-pc64-c93x', 'GHSA-58qx-3vcg-4xpx', 'GHSA-96hv-2xvq-fx4p'];
+// requires it, and every version outside its advisories is ESM-only under a
+// moved `src/` layout, so an override turns them into a MODULE_NOT_FOUND.
+const acceptedNpmAdvisories: readonly string[] = ['GHSA-528h-pc64-c93x', 'GHSA-hqr4-qq8f-hg3x', 'GHSA-mjw6-4jj6-33hc'];
+const acceptedBunAdvisories: readonly string[] = [
+	'GHSA-378v-28hj-76wf',
+	'GHSA-528h-pc64-c93x',
+	'GHSA-58qx-3vcg-4xpx',
+	'GHSA-96hv-2xvq-fx4p',
+	'GHSA-hqr4-qq8f-hg3x',
+	'GHSA-mjw6-4jj6-33hc'
+];
 
 const manifest = JSON.parse(await readFile(join(packageDir, 'package.json'), 'utf8')) as {
 	dependencies: Record<string, string>;
@@ -167,7 +174,7 @@ const assertTestedPeersFitPublishedRanges = (testedPeerVersions: TestedPeerVersi
 // safe to apply globally.
 const baseSafeOverrides = {
 	axios: '1.20.0',
-	sharp: '0.35.4',
+	sharp: '0.35.5',
 	uuid: '11.1.1'
 };
 const overriddenTransitivePins = Object.keys(baseSafeOverrides);
@@ -226,7 +233,7 @@ const fullConsumerManifest = (tarball: string, packageManager: 'bun' | 'npm', dy
 	devDependencies: {
 		esbuild: '0.28.2',
 		typescript: '5.9.3',
-		vite: '8.2.2'
+		vite: '8.2.4'
 	},
 	overrides: packageManager === 'npm' ? npmSafeOverrides : baseSafeOverrides
 });
