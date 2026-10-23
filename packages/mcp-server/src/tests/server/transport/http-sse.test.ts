@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, jest } from 'bun:test';
 import { createServer } from 'node:http';
 import { createConnection } from 'node:net';
+import { gzipSync } from 'node:zlib';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -338,6 +339,26 @@ describe('HttpSseTransport', () => {
 		const health = await fetch(`http://${HOST}:${transport.getListeningPort()}/health`);
 		expect(health.status).toBe(200);
 		expect(await health.json()).toMatchObject({ status: 'ok' });
+	});
+
+	it('rejects a compressed body with trailing bytes and keeps serving', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const transport = new HttpSseTransport({ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG });
+		transports.push(transport);
+		const bootstrap = new McpServer({ name: 'bootstrap', version: '1.0.0' });
+		bootstrapServers.push(bootstrap);
+		await transport.start(bootstrap);
+		const baseUrl = `http://${HOST}:${transport.getListeningPort()}`;
+
+		const body = Buffer.concat([gzipSync(JSON.stringify({ jsonrpc: '2.0', method: 'ping', id: 1 })), Buffer.from('trailing')]);
+		const response = await fetch(`${baseUrl}${PATH}/message?sessionId=unknown`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json', 'content-encoding': 'gzip' },
+			body
+		});
+
+		expect(response.status).toBe(415);
+		expect((await fetch(`${baseUrl}/health`)).status).toBe(200);
 	});
 
 	it('releases a reserved slot when SSE transport creation fails', async () => {
