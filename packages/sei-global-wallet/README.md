@@ -26,7 +26,7 @@ Complete npm root overrides when the optional AA path is not enabled:
 {
 	"overrides": {
 		"axios": "1.20.0",
-		"sharp": "0.35.4",
+		"sharp": "0.35.5",
 		"uuid": "11.1.1",
 		"viem": {
 			"ws": "8.21.0"
@@ -40,7 +40,7 @@ Complete Bun root overrides. The block is the same with or without the optional 
 {
 	"overrides": {
 		"axios": "1.20.0",
-		"sharp": "0.35.4",
+		"sharp": "0.35.5",
 		"uuid": "11.1.1"
 	}
 }
@@ -49,7 +49,7 @@ Complete Bun root overrides. The block is the same with or without the optional 
 The Axios, Sharp, and UUID overrides are temporary until Dynamic updates its exact transitive pins:
 
 - Dynamic pins `axios@1.16.0` exactly, and `1.20.0` is the first release outside every advisory reported against it. The high-severity Axios issues are in Node-only transports (the HTTP adapter, opt-in HTTP/2, and `NO_PROXY` handling) or are prototype-pollution gadgets that need a separate pollution primitive in the same process. Browser wallet paths do not use the Node transports, which reduces exploitability but does not make the vulnerable install acceptable; the `toFormData` and fetch-adapter gadgets apply in browsers too.
-- The high-severity Sharp issue is the bundled libheif heap overflow reported as `GHSA-rgj7-g3m4-5g8c`, reached through `@dynamic-labs/iconic`'s exact `sharp@0.35.0` pin. It is only triggered by decoding untrusted HEIF input, which no wallet path does, and `sharp` is a build-time image dependency that never reaches a browser bundle. The override is a patch-level move within `0.35.x`, so it carries no API change.
+- `@dynamic-labs/iconic` pins `sharp@0.35.0` exactly, and `0.35.5` is the first release outside both high-severity Sharp advisories against it: the bundled libheif heap overflow `GHSA-rgj7-g3m4-5g8c`, triggered by decoding untrusted HEIF input, and the bundled librsvg memory bug `GHSA-wq5f-xc86-pv6w` (CVE-2026-96889), triggered by decoding untrusted SVG input, which can lead to remote code execution on glibc-based Linux. No wallet path decodes images, and `sharp` is a build-time image dependency that never reaches a browser bundle. The override is a patch-level move within `0.35.x`, so it carries no API change.
 - The UUID issue affects the v3, v5, and v6 buffer APIs. Dynamic's observed call sites use UUID v4, which reduces exploitability but does not clear the audit finding.
 
 Applications using the optional `./zerodev` / Dynamic account-abstraction path must also replace the vulnerable exact `bn.js@4.11.6` copies used by `ethjs-unit` and `number-to-bn`. The complete npm root override block is:
@@ -63,7 +63,7 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 		"number-to-bn": {
 			"bn.js": "4.12.5"
 		},
-		"sharp": "0.35.4",
+		"sharp": "0.35.5",
 		"uuid": "11.1.1",
 		"viem": {
 			"ws": "8.21.0"
@@ -74,13 +74,15 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 
 Bun 1.3.14 does not support nested overrides. Do **not** globally override `bn.js` or `ws`: Solana/borsh require bn5 while Jayson requires ws7. Bun's complete root override block is therefore the same with or without the optional AA path.
 
-For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches Viem's ws8 subtree while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. With the overrides above, a wallet-only npm install audits clean; the optional AA path carries the one `stream-json` advisory described below, on npm and Bun alike.
+For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches Viem's ws8 subtree while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. With the overrides above, a wallet-only npm install audits clean; the optional AA path carries the three `stream-json` advisories described below, on npm and Bun alike.
 
 The verifier builds its browser consumer against `viem@2.45.3`, because the previously tested 2.55.19 pulls Ox Tempo's `node:worker_threads` path into Vite resolution while 2.45.3 predates it. That is a property of the verifier's own bundle, not a constraint on applications: the published `viem` peer range stays `^2.7.12`. If your bundler externalizes `node:worker_threads` on a newer Viem, configure it in your application rather than downgrading.
 
-One advisory on the optional AA path has no fix any override can reach, on either package manager:
+Three advisories on the optional AA path have no fix any override can reach, on either package manager. All three are on `stream-json@1.9.1`, which the Solana RPC client's `jayson` requires as CommonJS. Every release outside them is ESM-only under a moved `src/` layout (`3.5.0` onward for the first, `3.6.0` onward for the other two), so overriding `stream-json` to a fixed version replaces the advisories with a `MODULE_NOT_FOUND` on `jayson`'s own require. `jayson` loads `stream-json` only in its TCP and TLS transports, and the Solana RPC client uses `jayson/lib/client/browser`, which never does:
 
-- `GHSA-528h-pc64-c93x` on `stream-json@1.9.1` — moderate, CVSS 6.2. Reached through the Solana RPC client's `jayson`, which requires `stream-json` as CommonJS. The advisory covers every version up to `3.4.0`, and `3.5.0` onward is ESM-only under a moved `src/` layout, so overriding it to a fixed version replaces the advisory with a `MODULE_NOT_FOUND` on `jayson`'s own require. The finding is an `O(depth²)` slowdown in the `pick`/`ignore`/`filter`/`replace` filters, reachable only by feeding crafted deeply nested JSON through them, which no wallet path does.
+- `GHSA-528h-pc64-c93x` — moderate, CVSS 6.2. An `O(depth²)` slowdown in the `pick`/`ignore`/`filter`/`replace` filters, reachable only by feeding crafted deeply nested JSON through them, which no wallet path does.
+- `GHSA-hqr4-qq8f-hg3x` — moderate, CVSS 6.2. A quadratic re-scan of long comments in the JSONC parser and verifier. `stream-json@1.9.1` ships no JSONC parser, so the advisory matches it by version range only.
+- `GHSA-mjw6-4jj6-33hc` — moderate, CVSS 5.1. A `__proto__` key in streamed JSON replaces the prototype of the object `Assembler` builds. `jayson` parses streams that way only in its TCP and TLS transports.
 
 For Bun, scoped overrides are unavailable, so the waiver also accepts these advisories that npm resolves with the scoped blocks above, while preserving compatible majors:
 
