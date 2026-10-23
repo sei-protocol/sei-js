@@ -32,7 +32,7 @@ bun run build
 
 Next.js image optimization is disabled so the generated app needs no native Sharp build. Turning it on is a template choice rather than a security tradeoff.
 
-The manifest's `sharp` override is a separate matter and has to stay. The pinned Next 15 line declares Sharp `^0.34.3 || ^0.35.4`, and the `0.34.x` half of that range is still inside [GHSA-rgj7-g3m4-5g8c](https://github.com/advisories/GHSA-rgj7-g3m4-5g8c), so `0.35.4` is the advisory floor. Loosening or removing the override reintroduces a high audit finding whether or not optimization is enabled.
+The manifest's `sharp` override is a separate matter and has to stay. The pinned Next 15 line declares Sharp `^0.34.3 || ^0.35.5`, and the `0.34.x` half of that range is still inside [GHSA-rgj7-g3m4-5g8c](https://github.com/advisories/GHSA-rgj7-g3m4-5g8c) and [GHSA-wq5f-xc86-pv6w](https://github.com/advisories/GHSA-wq5f-xc86-pv6w), so `0.35.5` is the advisory floor. Loosening or removing the override reintroduces high audit findings whether or not optimization is enabled.
 
 ## Development bundler
 
