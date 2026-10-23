@@ -117,7 +117,8 @@ export class StreamableHttpTransport implements McpTransport {
 
 		this.state = 'starting';
 		this.app = express();
-		this.app.use(express.json());
+		// No compressed request bodies: body-parser's decoder can crash the process (GHSA-27r3-jxmh-p828).
+		this.app.use(express.json({ inflate: false }));
 		this.app.use(createCorsMiddleware());
 
 		this.app.get('/health', (_req: Request, res: Response) => {

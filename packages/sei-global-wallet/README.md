@@ -14,7 +14,7 @@
 </div>
 
 > [!WARNING]
-> **Temporary consumer security waiver:** Dynamic Global Wallet Client transitively pins vulnerable `axios`, `sharp`, and `uuid` as of 4.96.3, the current floor.
+> **Temporary consumer security waiver:** Dynamic Global Wallet Client transitively pins vulnerable `axios`, `sharp`, `uuid`, and `zod` as of 4.96.3, the current floor.
 > Dependency overrides are root-only in both npm and Bun; this package cannot propagate them to your application. Add the overrides below before installing, and drop them once your install resolves a Dynamic release that corrects those pins.
 
 ## Required consumer overrides
@@ -30,7 +30,8 @@ Complete npm root overrides when the optional AA path is not enabled:
 		"uuid": "11.1.1",
 		"viem": {
 			"ws": "8.21.0"
-		}
+		},
+		"zod": "4.6.7"
 	}
 }
 ```
@@ -41,16 +42,18 @@ Complete Bun root overrides. The block is the same with or without the optional 
 	"overrides": {
 		"axios": "1.20.0",
 		"sharp": "0.35.5",
-		"uuid": "11.1.1"
+		"uuid": "11.1.1",
+		"zod": "4.6.7"
 	}
 }
 ```
 
-The Axios, Sharp, and UUID overrides are temporary until Dynamic updates its exact transitive pins:
+The Axios, Sharp, UUID, and Zod overrides are temporary until Dynamic updates its exact transitive pins:
 
 - Dynamic pins `axios@1.16.0` exactly, and `1.20.0` is the first release outside every advisory reported against it. The high-severity Axios issues are in Node-only transports (the HTTP adapter, opt-in HTTP/2, and `NO_PROXY` handling) or are prototype-pollution gadgets that need a separate pollution primitive in the same process. Browser wallet paths do not use the Node transports, which reduces exploitability but does not make the vulnerable install acceptable; the `toFormData` and fetch-adapter gadgets apply in browsers too.
 - `@dynamic-labs/iconic` pins `sharp@0.35.0` exactly, and `0.35.5` is the first release outside both high-severity Sharp advisories against it: the bundled libheif heap overflow `GHSA-rgj7-g3m4-5g8c`, triggered by decoding untrusted HEIF input, and the bundled librsvg memory bug `GHSA-wq5f-xc86-pv6w` (CVE-2026-96889), triggered by decoding untrusted SVG input, which can lead to remote code execution on glibc-based Linux. No wallet path decodes images, and `sharp` is a build-time image dependency that never reaches a browser bundle. The override is a patch-level move within `0.35.x`, so it carries no API change.
 - The UUID issue affects the v3, v5, and v6 buffer APIs. Dynamic's observed call sites use UUID v4, which reduces exploitability but does not clear the audit finding.
+- `@dynamic-labs-sdk/client` and `@dynamic-labs/wallet-book` pin `zod@4.0.5` exactly, inside the high-severity `GHSA-mrhx-c7xc-m3w5` (CVSS 7.5): an array schema without a length constraint records an issue for every failing element, so one large array can exhaust memory. `4.6.6` is the first fixed release, and the override uses `4.6.7`, the current one, which stays on Zod 4. Because the override is global, it also moves any Zod 3 dependency of your application onto Zod 4, such as the `zod@3.22.4` that `@reown/appkit-wallet` pins under wagmi's WalletConnect connector. If you have one, scope the override on npm to the two Dynamic packages instead, as `"@dynamic-labs-sdk/client": { "zod": "4.6.7" }` and `"@dynamic-labs/wallet-book": { "zod": "4.6.7" }`; Bun cannot scope overrides.
 
 Applications using the optional `./zerodev` / Dynamic account-abstraction path must also replace the vulnerable exact `bn.js@4.11.6` copies used by `ethjs-unit` and `number-to-bn`. The complete npm root override block is:
 ```json
@@ -67,7 +70,8 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 		"uuid": "11.1.1",
 		"viem": {
 			"ws": "8.21.0"
-		}
+		},
+		"zod": "4.6.7"
 	}
 }
 ```

@@ -33,14 +33,14 @@
 		"typescript": "^5.8.3"
 	},
 	"dependencies": {
-		"@modelcontextprotocol/sdk": "^1.23.0",
+		"@modelcontextprotocol/sdk": "^1.32.0",
 		"@noble/hashes": "^1.8.0",
 		"commander": "^14.0.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
 		"express": "^4.21.2",
 		"viem": "2.55.16",
-		"zod": "^4.0.5"
+		"zod": "^4.6.6"
 	},
 	"keywords": [
 		"mcp",

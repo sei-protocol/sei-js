@@ -175,7 +175,8 @@ const assertTestedPeersFitPublishedRanges = (testedPeerVersions: TestedPeerVersi
 const baseSafeOverrides = {
 	axios: '1.20.0',
 	sharp: '0.35.5',
-	uuid: '11.1.1'
+	uuid: '11.1.1',
+	zod: '4.6.7'
 };
 const overriddenTransitivePins = Object.keys(baseSafeOverrides);
 const npmRuntimeOverrides = {

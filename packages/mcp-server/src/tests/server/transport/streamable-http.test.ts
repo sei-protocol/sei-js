@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, jest } from 'bun:test';
 import { createServer, type Server } from 'node:http';
+import { gzipSync } from 'node:zlib';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -88,6 +89,25 @@ describe('StreamableHttpTransport', () => {
 		await expect(invalidHost.start(bootstrap)).rejects.toThrow('SERVER_HOST must not be empty');
 		const invalidLimit = new StreamableHttpTransport({ port: 8080, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG, maxActiveRequests: 0 });
 		await expect(invalidLimit.start(bootstrap)).rejects.toThrow('STREAMABLE_HTTP_MAX_REQUESTS must be a positive integer');
+	});
+
+	it('rejects a compressed body with trailing bytes and keeps serving', async () => {
+		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		const bootstrap = { close: jest.fn() } as unknown as McpServer;
+		const transport = new StreamableHttpTransport({ port: 0, host: HOST, path: PATH, appConfig: DISABLED_APP_CONFIG });
+		transports.push(transport);
+		await transport.start(bootstrap);
+		const baseUrl = `http://${HOST}:${transport.getListeningPort()}`;
+
+		const body = Buffer.concat([gzipSync(JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1, params: {} })), Buffer.from('trailing')]);
+		const response = await fetch(`${baseUrl}${PATH}`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json', 'content-encoding': 'gzip' },
+			body
+		});
+
+		expect(response.status).toBe(415);
+		expect((await fetch(`${baseUrl}/health`)).status).toBe(200);
 	});
 
 	it('serves a real local MCP client request', async () => {

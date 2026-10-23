@@ -15,4 +15,7 @@ Five advisories landed against the pinned `next@15.5.25` and the `sharp@0.35.4` 
 
 Next 15.5.28 declares Sharp `^0.34.3 || ^0.35.5`, so the override stays inside the range Next supports. The image notes in the template README and `next.config.mjs` now name `0.35.5` as the advisory floor, because the `0.34.x` half of Next's range is inside both Sharp advisories.
 
-The remaining `decode-uri-component` finding is moderate and does not block the smoke.
+Generated apps still report two advisories on install:
+
+- `GHSA-mrhx-c7xc-m3w5` — high, memory exhaustion in Zod's array validation, `<4.6.6`. It reaches every generated app through the `zod@3.22.4` that `@reown/appkit-wallet` pins exactly under wagmi's WalletConnect connector, and Reown's newest release, 1.8.24, still pins it. Zod published no fixed 3.x release, so the only override would move Reown onto Zod 4, a major it does not declare support for.
+- `GHSA-vcc3-ghjq-m6fr` — moderate, denial of service in `decode-uri-component`, `<=0.4.2`.
