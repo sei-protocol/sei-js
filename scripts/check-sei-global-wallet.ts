@@ -638,10 +638,14 @@ const runEdgeBundle = async (bundlePath: string) => {
 		filename: bundlePath,
 		timeout: 10_000
 	});
-	assert.deepEqual(context.__edgeCheck, {
-		aliases: true,
-		entrypoints: true
-	});
+	// The result object belongs to the vm realm, and a strict deep comparison rejects its foreign prototype.
+	assert.deepEqual(
+		{ ...(context.__edgeCheck as Record<string, unknown>) },
+		{
+			aliases: true,
+			entrypoints: true
+		}
+	);
 };
 
 /**

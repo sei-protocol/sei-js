@@ -19,7 +19,7 @@
 npx @sei-js/create-sei app -n my-sei-app
 ```
 
-Generated applications require Bun 1.3.14 or newer. Their dependency overrides and smoke coverage are Bun-specific; using npm, Yarn, or pnpm can resolve a different, unverified security graph.
+Generated applications require Bun 1.4.4 or newer. Their dependency overrides and smoke coverage are Bun-specific; using npm, Yarn, or pnpm can resolve a different, unverified security graph.
 
 ## Release verification
 
