@@ -387,7 +387,12 @@ describe('StreamableHttpTransport', () => {
 		}).catch(() => undefined);
 		await withTimeout(started, 'request startup');
 
-		await expect(transport.stop()).rejects.toBeInstanceOf(AggregateError);
+		// Under Bun 1.4, `expect(...).rejects` never settles a stop() that has to close a live request.
+		const stopError = await transport.stop().then(
+			() => undefined,
+			(error: unknown) => error
+		);
+		expect(stopError).toBeInstanceOf(AggregateError);
 		expect(requestTransport.close).toHaveBeenCalledTimes(1);
 		expect(requestServer.close).toHaveBeenCalledTimes(1);
 		await expect(transport.stop()).resolves.toBeUndefined();

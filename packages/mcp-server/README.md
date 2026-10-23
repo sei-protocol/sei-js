@@ -15,7 +15,7 @@
 
 ## Requirements
 
-Node.js 20 or newer.
+Node.js 22.23.4 or a later 22.x release, 24.22.1 or a later 24.x release, or 26.12.1 and newer. Earlier releases ship a Brotli decoder affected by [CVE-2026-111497](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases), which `fetch` uses to decompress the RPC and docs responses this server reads.
 
 ## Quick Start
 
