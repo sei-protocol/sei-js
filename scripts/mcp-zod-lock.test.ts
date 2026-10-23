@@ -35,7 +35,7 @@ describe('mcp sdk zod lock', () => {
 		).toBeUndefined();
 	});
 
-	test('mcp-server SDK range excludes versions that only declare zod 3', () => {
+	test('mcp-server SDK range excludes zod-3-only and advisory-affected versions', () => {
 		const mcpServerPackage = JSON.parse(readFileSync(join(import.meta.dir, '..', 'packages/mcp-server/package.json'), 'utf8')) as {
 			dependencies: { '@modelcontextprotocol/sdk': string };
 		};
@@ -43,8 +43,9 @@ describe('mcp sdk zod lock', () => {
 
 		expect(Bun.semver.satisfies('1.17.5', sdkRange)).toBe(false);
 		expect(Bun.semver.satisfies('1.22.0', sdkRange)).toBe(false);
-		expect(Bun.semver.satisfies('1.23.0', sdkRange)).toBe(true);
-		expect(Bun.semver.satisfies('1.30.0', sdkRange)).toBe(true);
+		// GHSA-46jr-4wx8-v453 and GHSA-6prh-2h8m-c8cw are fixed in 1.32.0.
+		expect(Bun.semver.satisfies('1.31.0', sdkRange)).toBe(false);
+		expect(Bun.semver.satisfies('1.32.0', sdkRange)).toBe(true);
 	});
 
 	test('the repo lockfile keeps the MCP SDK on the same zod as mcp-server', () => {
