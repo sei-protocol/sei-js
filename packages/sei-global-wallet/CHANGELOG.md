@@ -1,5 +1,29 @@
 # @sei-js/sei-global-wallet
 
+## 2.0.2
+
+### Patch Changes
+
+- 8821593: Raise the documented `sharp` override to `0.35.5`, and accept the two new `stream-json` advisories that no override can reach.
+
+  Advisories published since October 5 turned the nightly consumer smoke red without any change in this repository.
+
+  `GHSA-wq5f-xc86-pv6w` covers `sharp` below `0.35.5`: a memory bug in the bundled librsvg (CVE-2026-96889) that can lead to remote code execution on glibc-based Linux when decoding untrusted SVG input. It reaches applications through `@dynamic-labs/iconic`'s exact `sharp@0.35.0` pin, the path the existing `0.35.4` override already corrects, so the wallet-only npm consumer, which is held to a strictly clean audit, reported `sharp` plus the eight packages above it in the dependency chain. The [Required consumer overrides](https://github.com/sei-protocol/sei-js/blob/main/packages/sei-global-wallet/README.md#required-consumer-overrides) blocks now carry `"sharp": "0.35.5"`, a patch-level move inside the pinned minor, and the README's Sharp note covers both advisories.
+
+  `GHSA-hqr4-qq8f-hg3x` and `GHSA-mjw6-4jj6-33hc` cover `stream-json` below `3.6.0`, which the Solana RPC client's `jayson` requires as CommonJS on the optional AA path. `3.6.0` is still ESM-only under the moved `src/` layout, so like `GHSA-528h-pc64-c93x` they cannot be overridden without breaking `jayson`'s require, and both are now accepted for the npm and Bun AA consumers. Neither is reachable from a wallet. `stream-json@1.9.1` ships no JSONC parser, which the first covers, and `jayson` runs the `Assembler` the second covers only in its TCP and TLS transports, while the Solana RPC client uses `jayson/lib/client/browser`. The wallet-only npm consumer still has no waiver.
+
+  The verifier's browser consumer moves from `vite@8.2.2` to `8.2.4`, clearing six Vite and bundled `launch-editor` advisories published on October 20 and 21 against its own build tooling.
+
+  No published dependency or peer range changes.
+
+- 8da8c09: Add `"zod": "4.6.7"` to the documented consumer overrides, clearing `GHSA-mrhx-c7xc-m3w5` on the wallet path.
+
+  `GHSA-mrhx-c7xc-m3w5` (high, CVSS 7.5) covers Zod's array validation: an array schema without a length constraint records an issue for every failing element, so one large array can exhaust memory. It was published on October 1, and since its October 23 update it reports the `zod@4.0.5` that `@dynamic-labs-sdk/client` and `@dynamic-labs/wallet-book` pin exactly. The newest `@dynamic-labs-sdk/client`, 1.45.0, still pins it. The wallet-only npm consumer, which is held to a strictly clean audit, reported `zod` plus the eight packages above it in the dependency chain, so the consumer smoke failed without any change in this repository.
+
+  All three [Required consumer overrides](https://github.com/sei-protocol/sei-js/blob/main/packages/sei-global-wallet/README.md#required-consumer-overrides) blocks now carry `"zod": "4.6.7"`, a minor-level move inside Zod 4. Nothing else in the wallet's dependency graph, including the optional AA path, needs Zod 3, so the override is safe as one of Bun's global overrides. Applications with a Zod 3 dependency of their own, such as the one wagmi's WalletConnect connector installs, can scope the override on npm instead, as the README describes.
+
+  No published dependency or peer range changes.
+
 ## 2.0.1
 
 ### Patch Changes

@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.0.2
+
+### Patch Changes
+
+- ce15c1d: Raise the supported Node.js range to the releases that patch the Brotli decoder advisory `GHSA-9v8h-qqgm-4m35` (CVE-2026-111497).
+
+  **This drops support for Node.js 20, and for 22.x, 24.x, and 26.x releases before 22.23.4, 24.22.1, and 26.12.1.** npm only warns about the engine mismatch, but Yarn 1, and npm with `engine-strict` set, refuse to install this release on them.
+
+  Node.js bundles Google's Brotli library, and the decoder in Brotli 1.0.3 through 1.2.0 can be driven into an out-of-bounds write by a crafted compressed stream. Node fixed it in the [October 21, 2026 security releases](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases): 22.23.4, 24.22.1, and 26.12.1. Node 20 is end-of-life and gets no fix.
+
+  The server reaches that decoder through `fetch`, which decompresses Brotli-encoded responses automatically: viem's HTTP transport for the configured RPC endpoints, and the docs client for `https://docs.sei.io/mcp`. Its own HTTP transports do not, because they reject every compressed request body with a 415.
+
+  `engines.node` moves from `>=20.0.0` to `^22.23.4 || ^24.22.1 || >=26.12.1`, and the README's requirement matches.
+
+  No dependency or peer range changes.
+
+- 8da8c09: Reject compressed request bodies on the `streamable-http` and `http-sse` transports, the documented workaround for the `body-parser` advisory `GHSA-27r3-jxmh-p828`.
+
+  `GHSA-27r3-jxmh-p828` (high, CVSS 7.5, published October 23) covers `body-parser` below `1.20.9`, and `2.x` below `2.4.0`. With default options, `body-parser` pipes a request that carries a `Content-Encoding` into a decompression stream and leaves that stream without an error listener, so a compressed frame followed by trailing bytes can raise an uncaught exception that terminates the process. Parsing runs before routing, so the request needs no valid session or route. Both HTTP transports parse JSON with Express 4's `express.json()`.
+
+  A fresh install resolves the fixed `body-parser@1.20.9`, but Express 4 accepts `~1.20.5`, so no dependency floor in this package can move an existing lockfile off a vulnerable copy. Both transports now pass `inflate: false`, so a request body with any `Content-Encoding` other than `identity` gets a 415 before a decompression stream exists, whichever `body-parser` is installed. The SDK's HTTP client transports send uncompressed JSON, and stdio is not affected.
+
+- 8da8c09: Raise the `@modelcontextprotocol/sdk` floor from `^1.23.0` to `^1.32.0` and the `zod` floor from `^4.0.5` to `^4.6.6`, so an in-place upgrade cannot keep a release inside their advisories.
+
+  A fresh install already resolved fixed releases of both, but the old floors let an existing lockfile keep vulnerable ones. Three of the advisories reach this server:
+
+  - `GHSA-46jr-4wx8-v453` — high, `@modelcontextprotocol/sdk` `>=1.3.0 <1.32.0`. The SDK put no limit on how many array elements and object keys it validated in one request, so one unauthenticated HTTP request could exhaust the server's memory. It affects the `streamable-http` and `http-sse` transports; stdio is not affected.
+  - `GHSA-mrhx-c7xc-m3w5` — high, `zod` `<4.6.6`. An array schema without a length constraint records an issue for every failing element, so one large array can exhaust memory. Tool arguments are validated with Zod.
+  - `GHSA-6prh-2h8m-c8cw` — moderate, `@modelcontextprotocol/sdk` `<1.32.0`. The SDK's HTTP client transports followed redirects to any origin and re-sent the `mcp-session-id` header, and on a `307` or `308` the request body. The docs client reaches `https://docs.sei.io/mcp` through `StreamableHTTPClientTransport`.
+
+  The other three SDK advisories fixed in 1.31.0 and 1.32.0 do not reach it: the server passes no `taskStore` (`GHSA-22jm-h49p-29qw`), uses no SDK OAuth client (`GHSA-6qxp-vccf-f47h`), and does not use `requireBearerAuth()` (`GHSA-rvq5-wwqv-78pq`).
+
+  No other dependency changes.
+
 ## 1.0.1
 
 ### Patch Changes

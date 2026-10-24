@@ -1,5 +1,35 @@
 # @sei-js/create-sei
 
+## 2.0.2
+
+### Patch Changes
+
+- ce15c1d: Require Bun 1.4.4 for generated applications, the first Bun release outside the Brotli decoder advisory `GHSA-9v8h-qqgm-4m35` (CVE-2026-111497).
+
+  Bun vendors Google's Brotli library for `node:zlib` and for decompressing `fetch` responses. The `1.3.14` the template pinned ships Brotli 1.1.0, and Bun 1.4.3 still ships 1.2.0, both inside the advisory's 1.0.3 through 1.2.0 range. Bun 1.4.4 ships Brotli 1.2.1, and there is no fixed 1.3.x release.
+
+  The template's `packageManager` moves from `bun@1.3.14` to `bun@1.4.4`, and the generated README and this package's README name 1.4.4 as the minimum. The release smoke now runs on Bun 1.4.4, so that is the version the template's overrides are validated with.
+
+  No published dependency or peer range changes.
+
+- a61b860: Bump the Next template's `next` and `sharp` pins to clear five newly published advisories.
+
+  Five advisories landed against the pinned `next@15.5.25` and the `sharp@0.35.4` override, so every generated app installed them without any change to the template:
+
+  - `GHSA-2464-fhr4-w9xw` — critical, unauthenticated remote code execution in the Image Optimization API, `>=10.0.0 <=15.5.27`.
+  - `GHSA-p3m5-59mp-jv5r` — high, denial of service in the App Router through Server Actions, `>=13.0.0 <=15.5.27`.
+  - `GHSA-mcj8-r9mp-w47p` and `GHSA-4jqv-mc3x-m676` — moderate, cache poisoning of SSG and ISR pages, `>=15.0.0 <15.5.27`.
+  - `GHSA-wq5f-xc86-pv6w` — high, a memory bug in Sharp's bundled librsvg (CVE-2026-96889) that can allow remote code execution on glibc-based Linux, `<0.35.5`.
+
+  `next` moves `15.5.25` to `15.5.28` and the `sharp` override `0.35.4` to `0.35.5`, both inside their pinned minors.
+
+  Next 15.5.28 declares Sharp `^0.34.3 || ^0.35.5`, so the override stays inside the range Next supports. The image notes in the template README and `next.config.mjs` now name `0.35.5` as the advisory floor, because the `0.34.x` half of Next's range is inside both Sharp advisories.
+
+  Generated apps still report two advisories on install:
+
+  - `GHSA-mrhx-c7xc-m3w5` — high, memory exhaustion in Zod's array validation, `<4.6.6`. It reaches every generated app through the `zod@3.22.4` that `@reown/appkit-wallet` pins exactly under wagmi's WalletConnect connector, and Reown's newest release, 1.8.24, still pins it. Zod published no fixed 3.x release, so the only override would move Reown onto Zod 4, a major it does not declare support for.
+  - `GHSA-vcc3-ghjq-m6fr` — moderate, denial of service in `decode-uri-component`, `<=0.4.2`.
+
 ## 2.0.1
 
 ### Patch Changes
