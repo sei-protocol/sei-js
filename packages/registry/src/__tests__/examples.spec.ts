@@ -4,7 +4,7 @@ import ts from 'typescript';
 import * as registry from '../index';
 
 const PACKAGE_ROOT = join(import.meta.dir, '../..');
-const CODE_BLOCK = /^```(?:ts|tsx|typescript)\n([\s\S]*?)^```/gm;
+const CODE_BLOCK = /^```(?:ts|tsx|typescript)(?:[ \t][^\n]*)?\r?\n([\s\S]*?)^```/gm;
 const JSDOC_COMMENT = /\/\*\*[\s\S]*?\*\//g;
 
 interface Example {
@@ -22,26 +22,26 @@ function codeBlocks(file: string, text: string, firstLine = 1): Example[] {
 	return [...text.matchAll(CODE_BLOCK)].map((match) => ({ file, line: firstLine + lineAt(text, match.index) - 1, code: match[1] }));
 }
 
-function jsdocExamples(file: string): Example[] {
+function jsdocExamples(file: string): { blocks: Example[]; withoutCode: string[] } {
 	const source = readFileSync(join(PACKAGE_ROOT, file), 'utf8');
-	return [...source.matchAll(JSDOC_COMMENT)].flatMap((comment) => {
+	const blocks: Example[] = [];
+	const withoutCode: string[] = [];
+	for (const comment of source.matchAll(JSDOC_COMMENT)) {
 		const line = lineAt(source, comment.index);
 		const text = comment[0].replace(/^[ \t]*\* ?/gm, '');
-		const blocks = codeBlocks(file, text, line);
-		if (text.includes('@example') && blocks.length === 0) {
-			throw new Error(`${file}:${line} has an @example without a TypeScript code block`);
-		}
-		return blocks;
-	});
+		const found = codeBlocks(file, text, line);
+		if (text.includes('@example') && found.length === 0) withoutCode.push(`${file}:${line}`);
+		blocks.push(...found);
+	}
+	return { blocks, withoutCode };
 }
 
-const examples = [
-	...codeBlocks('README.md', readFileSync(join(PACKAGE_ROOT, 'README.md'), 'utf8')),
-	...readdirSync(join(PACKAGE_ROOT, 'src'), { recursive: true, encoding: 'utf8' })
-		.filter((path) => path.endsWith('.ts') && !path.includes('__tests__'))
-		.sort()
-		.flatMap((path) => jsdocExamples(join('src', path)))
-];
+const sources = readdirSync(join(PACKAGE_ROOT, 'src'), { recursive: true, encoding: 'utf8' })
+	.filter((path) => path.endsWith('.ts') && !path.includes('__tests__'))
+	.sort()
+	.map((path) => jsdocExamples(join('src', path)));
+const examples = [...codeBlocks('README.md', readFileSync(join(PACKAGE_ROOT, 'README.md'), 'utf8')), ...sources.flatMap(({ blocks }) => blocks)];
+const examplesWithoutCode = sources.flatMap(({ withoutCode }) => withoutCode);
 
 function typeCheck(examples: Example[]): string[] {
 	const files = new Map(examples.map((example, index) => [join(PACKAGE_ROOT, `example-${index}.ts`), example]));
@@ -73,15 +73,19 @@ function typeCheck(examples: Example[]): string[] {
 		});
 }
 
+function bindingNames(name: ts.BindingName): string[] {
+	if (ts.isIdentifier(name)) return [name.text];
+	return name.elements.flatMap((element) => (ts.isOmittedExpression(element) ? [] : bindingNames(element.name)));
+}
+
 function declaredNames(code: string): string[] {
 	return ts
 		.createSourceFile('example.ts', code, ts.ScriptTarget.Latest)
 		.statements.filter(ts.isVariableStatement)
-		.flatMap(({ declarationList }) => declarationList.declarations.map(({ name }) => name))
-		.filter(ts.isIdentifier)
-		.map(({ text }) => text);
+		.flatMap(({ declarationList }) => declarationList.declarations.flatMap(({ name }) => bindingNames(name)));
 }
 
+// Examples have to be synchronous: top-level await throws here, and a value logged later from a callback is not checked.
 function run(code: string): Record<string, unknown> {
 	const { outputText } = ts.transpileModule(`${code}\nexport { ${declaredNames(code).join(', ')} };`, {
 		compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 }
@@ -96,6 +100,12 @@ function run(code: string): Record<string, unknown> {
 }
 
 describe('documented examples', () => {
+	it('include the README, the JSDoc, and code for every @example', () => {
+		expect(examples.some(({ file }) => file === 'README.md')).toBeTrue();
+		expect(examples.some(({ file }) => file !== 'README.md')).toBeTrue();
+		expect(examplesWithoutCode).toEqual([]);
+	});
+
 	it('type-check against the package source', () => {
 		expect(typeCheck(examples)).toEqual([]);
 	}, 30_000);
