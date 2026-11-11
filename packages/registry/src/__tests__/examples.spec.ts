@@ -6,6 +6,7 @@ import * as registry from '../index';
 const PACKAGE_ROOT = join(import.meta.dir, '../..');
 const CODE_BLOCK = /^```(?:ts|tsx|typescript)(?:[ \t][^\n]*)?\r?\n([\s\S]*?)^```/gm;
 const JSDOC_COMMENT = /\/\*\*[\s\S]*?\*\//g;
+const EXAMPLE_TAG = /^@example\b[\s\S]*?(?=^@|(?![\s\S]))/gm;
 
 interface Example {
 	file: string;
@@ -29,9 +30,10 @@ function jsdocExamples(file: string): { blocks: Example[]; withoutCode: string[]
 	for (const comment of source.matchAll(JSDOC_COMMENT)) {
 		const line = lineAt(source, comment.index);
 		const text = comment[0].replace(/^[ \t]*\* ?/gm, '');
-		const found = codeBlocks(file, text, line);
-		if (text.includes('@example') && found.length === 0) withoutCode.push(`${file}:${line}`);
-		blocks.push(...found);
+		blocks.push(...codeBlocks(file, text, line));
+		for (const tag of text.matchAll(EXAMPLE_TAG)) {
+			if (codeBlocks(file, tag[0]).length === 0) withoutCode.push(`${file}:${line + lineAt(text, tag.index) - 1}`);
+		}
 	}
 	return { blocks, withoutCode };
 }
