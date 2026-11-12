@@ -46,14 +46,7 @@ const fastCheck = process.env.SEI_GLOBAL_WALLET_FAST_CHECK === '1';
 // requires it, and every version outside its advisories is ESM-only under a
 // moved `src/` layout, so an override turns them into a MODULE_NOT_FOUND.
 const acceptedNpmAdvisories: readonly string[] = ['GHSA-528h-pc64-c93x', 'GHSA-hqr4-qq8f-hg3x', 'GHSA-mjw6-4jj6-33hc'];
-const acceptedBunAdvisories: readonly string[] = [
-	'GHSA-378v-28hj-76wf',
-	'GHSA-528h-pc64-c93x',
-	'GHSA-58qx-3vcg-4xpx',
-	'GHSA-96hv-2xvq-fx4p',
-	'GHSA-hqr4-qq8f-hg3x',
-	'GHSA-mjw6-4jj6-33hc'
-];
+const acceptedBunAdvisories: readonly string[] = ['GHSA-378v-28hj-76wf', 'GHSA-528h-pc64-c93x', 'GHSA-hqr4-qq8f-hg3x', 'GHSA-mjw6-4jj6-33hc'];
 
 const manifest = JSON.parse(await readFile(join(packageDir, 'package.json'), 'utf8')) as {
 	dependencies: Record<string, string>;
@@ -151,11 +144,19 @@ const makeTestedPeerVersions = (ethereumAa: string) =>
 		'@wallet-standard/features': '^1.0.3',
 		'@wallet-standard/wallet': '^1.1.0',
 		'@zerodev/sdk': '5.5.7',
-		viem: '2.45.3',
+		viem: '2.57.19',
 		'zksync-sso': '0.2.0'
 	}) as const;
 
 type TestedPeerVersions = ReturnType<typeof makeTestedPeerVersions>;
+
+// Current Viem releases depend on an Ox that ships a Tempo `VirtualMaster`
+// miner, whose Node worker pool imports `node:worker_threads` through a
+// constant. Vite resolves it, and warns, while loading the module graph. No
+// wallet path reaches the miner and it is tree-shaken out, which the bundle
+// scan in runBrowserBundle enforces, so it is the only importer the Vite check
+// tolerates.
+const toleratedWorkerThreadsImporter = /(?:^|\/)node_modules\/ox\/_esm\/tempo\/internal\/virtualMasterPool\.js$/;
 
 const assertTestedPeersFitPublishedRanges = (testedPeerVersions: TestedPeerVersions) => {
 	// Guards the two from drifting: every version the harness installs has to be
@@ -897,7 +898,7 @@ try {
 	assert.equal(npmLock.packages['node_modules/number-to-bn/node_modules/bn.js']?.version, '4.12.5');
 	assertMajor(npmLock.packages['node_modules/bn.js']?.version, '5', 'hoisted bn.js');
 	assert.equal(npmLock.packages['node_modules/ws']?.version, '8.21.0');
-	assert.equal(npmLock.packages['node_modules/viem']?.dependencies?.ws, '8.18.3');
+	assert.equal(npmLock.packages['node_modules/viem']?.dependencies?.ws, '8.21.0');
 	assert.equal(npmLock.packages['node_modules/jayson']?.dependencies?.ws, '^7.5.10');
 	assertMajor(npmLock.packages['node_modules/jayson/node_modules/ws']?.version, '7', 'jayson nested ws');
 	await run(['node', 'check-ssr.mjs'], npmConsumerDir);
@@ -940,11 +941,18 @@ try {
 	// Vite routes externalization warnings through its own logger, which writes
 	// to stdout in most versions, so scan both streams.
 	const viteOutput = `${viteBuild.stdout}\n${viteBuild.stderr}`;
-	assert.doesNotMatch(
-		viteOutput,
-		/(?:node:)?worker_threads.*externaliz|externaliz.*(?:node:)?worker_threads/i,
-		`Vite externalized worker_threads:\n${viteOutput}`
+	const workerThreadsExternalizations = viteOutput
+		.split('\n')
+		.filter((line) => /(?:node:)?worker_threads.*externaliz|externaliz.*(?:node:)?worker_threads/i.test(line));
+	const unexpectedExternalizations = workerThreadsExternalizations.filter(
+		(line) => !toleratedWorkerThreadsImporter.test(line.match(/imported by "([^"]+)"/)?.[1]?.replaceAll('\\', '/') ?? '')
 	);
+	assert.deepEqual(unexpectedExternalizations, [], `Vite externalized worker_threads:\n${viteOutput}`);
+	if (workerThreadsExternalizations.length === 0) {
+		reportWaiverProgress(
+			"Vite no longer externalizes node:worker_threads for Ox's Tempo miner. Remove toleratedWorkerThreadsImporter from this script and the Vite note from packages/sei-global-wallet/README.md."
+		);
+	}
 	const viteFiles = (await readdir(join(npmConsumerDir, 'vite-dist'))).filter((path) => path.endsWith('.js'));
 	assert.equal(viteFiles.length, 1, `Expected one Vite bundle, found: ${viteFiles.join(', ')}`);
 	await runBrowserBundle(join(npmConsumerDir, 'vite-dist', viteFiles[0]), true);
@@ -971,7 +979,7 @@ try {
 	console.log(
 		fastCheck
 			? 'Sei Global Wallet fast npm consumer checks passed.'
-			: 'Sei Global Wallet consumer checks passed: the wallet-only npm consumer audited clean, npm scoped patched bn.js/ws8 while preserving Solana bn5/Jayson ws7, and both full consumers stayed within the accepted advisory waiver.'
+			: 'Sei Global Wallet consumer checks passed: the wallet-only npm consumer audited clean, npm scoped patched bn.js while preserving Solana bn5/Jayson ws7, and both full consumers stayed within the accepted advisory waiver.'
 	);
 } finally {
 	await rm(temporaryRoot, { force: true, recursive: true });

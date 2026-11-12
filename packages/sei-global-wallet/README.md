@@ -78,9 +78,9 @@ Applications using the optional `./zerodev` / Dynamic account-abstraction path m
 
 Bun 1.3.14 does not support nested overrides. Do **not** globally override `bn.js` or `ws`: Solana/borsh require bn5 while Jayson requires ws7. Bun's complete root override block is therefore the same with or without the optional AA path.
 
-For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches Viem's ws8 subtree while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. With the overrides above, a wallet-only npm install audits clean; the optional AA path carries the three `stream-json` advisories described below, on npm and Bun alike.
+For npm, scoped `bn.js@4.12.5` stays on the legacy dependencies' expected major while Solana resolves `bn.js@5.2.5`. Scoped `ws@8.21.0` patches the ws8 subtree of any Viem older than 2.54.2, while Jayson resolves `ws@7.5.13` from its `^7.5.10` range. Viem 2.54.2 and later, which Dynamic 4.104.0 and later require, already pin `ws@8.21.0`, so on those the override changes nothing. With the overrides above, a wallet-only npm install audits clean; the optional AA path carries the three `stream-json` advisories described below, on npm and Bun alike.
 
-The verifier builds its browser consumer against `viem@2.45.3`, because the previously tested 2.55.19 pulls Ox Tempo's `node:worker_threads` path into Vite resolution while 2.45.3 predates it. That is a property of the verifier's own bundle, not a constraint on applications: the published `viem` peer range stays `^2.7.12`. If your bundler externalizes `node:worker_threads` on a newer Viem, configure it in your application rather than downgrading.
+The verifier builds its browser consumer against `viem@2.57.19`, because Dynamic 4.104.0 raised its `viem` peer to `^2.54.2`. Every Viem in that range depends on an Ox whose Tempo `VirtualMaster` miner loads `node:worker_threads` for its Node worker pool, so Vite warns that it externalized `node:worker_threads` for `ox/_esm/tempo/internal/virtualMasterPool.js`. No wallet path reaches the miner, and it is tree-shaken out of the bundle. The verifier tolerates that one warning, and still fails if Vite externalizes `node:worker_threads` for any other module or if a browser or edge bundle contains a `worker_threads` path. The published `viem` peer range stays `^2.7.12`. If your own Vite build prints the same warning, it comes from Viem's Ox dependency rather than this package.
 
 Three advisories on the optional AA path have no fix any override can reach, on either package manager. All three are on `stream-json@1.9.1`, which the Solana RPC client's `jayson` requires as CommonJS. Every release outside them is ESM-only under a moved `src/` layout (`3.5.0` onward for the first, `3.6.0` onward for the other two), so overriding `stream-json` to a fixed version replaces the advisories with a `MODULE_NOT_FOUND` on `jayson`'s own require. `jayson` loads `stream-json` only in its TCP and TLS transports, and the Solana RPC client uses `jayson/lib/client/browser`, which never does:
 
@@ -88,13 +88,11 @@ Three advisories on the optional AA path have no fix any override can reach, on 
 - `GHSA-hqr4-qq8f-hg3x` — moderate, CVSS 6.2. A quadratic re-scan of long comments in the JSONC parser and verifier. `stream-json@1.9.1` ships no JSONC parser, so the advisory matches it by version range only.
 - `GHSA-mjw6-4jj6-33hc` — moderate, CVSS 5.1. A `__proto__` key in streamed JSON replaces the prototype of the object `Assembler` builds. `jayson` parses streams that way only in its TCP and TLS transports.
 
-For Bun, scoped overrides are unavailable, so the waiver also accepts these advisories that npm resolves with the scoped blocks above, while preserving compatible majors:
+For Bun, scoped overrides are unavailable, so the waiver also accepts this advisory that npm resolves with the scoped blocks above, while preserving compatible majors:
 
 - `GHSA-378v-28hj-76wf` on `bn.js@4.11.6` — moderate, CVSS 5.3.
-- `GHSA-58qx-3vcg-4xpx` on Viem's `ws@8.18.3` — moderate, CVSS 4.4.
-- `GHSA-96hv-2xvq-fx4p` on Viem's `ws@8.18.3` — high, CVSS 7.5.
 
-Jayson remains on `ws@7.5.13`; globally forcing ws8 would violate that major contract. The verifier fails on any advisory outside each waiver, and reports rather than fails when one of them stops being reported, so an upstream fix or a withdrawn advisory never turns an unrelated pull request red. The wallet-only npm consumer is held to a strictly clean audit with no waiver at all, so nothing here excuses a finding that a default install would hand an application.
+Viem's `ws` advisories `GHSA-58qx-3vcg-4xpx` and `GHSA-96hv-2xvq-fx4p` are no longer waived, because Viem 2.54.2 and later pin the fixed `ws@8.21.0`. A Bun application that holds an older Viem should upgrade it rather than override `ws` globally: Jayson remains on `ws@7.5.13`, and globally forcing ws8 would violate that major contract. The verifier fails on any advisory outside each waiver, and reports rather than fails when one of them stops being reported, so an upstream fix or a withdrawn advisory never turns an unrelated pull request red. The wallet-only npm consumer is held to a strictly clean audit with no waiver at all, so nothing here excuses a finding that a default install would hand an application.
 
 ## Quick start
 
@@ -137,7 +135,7 @@ Install only the peers needed by the subpaths your application uses. The declare
 
 | Peer | Declared range | Verified against | Needed by |
 | --- | --- | --- | --- |
-| `viem` | `^2.7.12` | `2.45.3` | `./zerodev`, Dynamic AA |
+| `viem` | `^2.7.12` | `2.57.19` | `./zerodev`, Dynamic AA |
 | `@dynamic-labs/ethereum-aa` | `^4.15.0` | `4.96.3+` (exact client match) | `./zerodev` |
 | `@zerodev/sdk` | `^5.4.36` | `5.5.7` | `./zerodev` |
 | `@solana/web3.js` | `^1.92.1` | `1.98.1` | `./solana` |
